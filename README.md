@@ -1,4 +1,6 @@
 
-# SDR_trends_1993-2021_Thessaloniki
+# SDR trends 1993-2021 Thessaloniki
 
 Source files of a paper
+
+
