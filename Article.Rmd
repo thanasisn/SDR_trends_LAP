@@ -79,7 +79,12 @@ we remove data with azimuth angle between $35^\circ$ and $120^\circ$ and SZA gre
 
 ![this is a caption](images/longtermtrendsALL-2.pdf)
 
-
+<!-- \tiny -->
+```{r echo=F, cap="dfsfdffds fs"}
+pp <- data.table::fread("./figures/tbl_longterm_trends.dat")
+pander::pander(pp)
+```
+<!-- \normalsize -->
 
 
 
@@ -88,3 +93,7 @@ we remove data with azimuth angle between $35^\circ$ and $120^\circ$ and SZA gre
 
 **END**
 
+<!-- ```{r trackercomm, echo=F, fig.cap="Διάγραμμα συνδέσεων του tracker, κατάλληλη σειρά σύνδεσης (1-2-3) ή (3-2-1)."} -->
+<!-- knitr::include_graphics("figure/trackercomm.png") -->
+<!-- ``` -->
+<!-- όπως φαίνονται στο Σχήμα \@ref(fig:trackercomm). -->
