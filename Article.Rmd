@@ -8,7 +8,7 @@ abstract:
 
 documentclass:  article
 classoption:    a4paper,oneside
-fontsize:       10pt
+fontsize:       12pt
 geometry:       "left=0.5in,right=0.5in,top=0.5in,bottom=0.5in"
 link-citations: yes
 colorlinks:     yes
@@ -55,33 +55,35 @@ knitr::opts_chunk$set(fig.align  = "center" )
 
 ## Data description 
 
-....... span
+<!-- time span -->
+Time span for CM21 is 1993-2022 and 2016-2022 for CHP1.
 
-...... measuremetns CHP1 CM21
-
-....... screening
-
-....... Quality assurance [cite]
-
-Data quality for radiation measurements as described by
-CN Long and Y Shi, September 2006, DOE/SC-ARM/TR-074.
-Quality Control Procedures/The QCRad Value Added Product Surface
-Radiation Measurement Quality Control Testing Including Climatology_Long2006.pdf"
-
-## Data preperation
+...... Measurements CHP1 CM21
 
 
-
-Due to the large measurement assertenty near the horizon we exclude all measurements
-with greater than SZA $85^\circ$. Moreover, due to nearby hills and buildings
+<!-- screening -->
+All measurements have been manually screened for inconsistencies and obviously 
+problematic data have been excluded.
+<!-- physical quantities -->
+The conversions to irradiance was done using the calibration factor  .......chp1.... cmp21......
+, and adjusting for the dark signal offset daily, using the nights before and after each day.
+<!-- Quality assurance -->
+A radiation data quality assurance procedure was applied adjusted for the site,
+based on methods of Long and Shi [-@long_automated_2008; -@Long2006].
+<!-- Data preparation -->
+Due to the large measurement uncertainty near the horizon we exclude all measurements
+with SZA greater than $85^\circ$. Moreover, due to nearby hills and buildings
 we remove data with azimuth angle between $35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$.
 
 
 
+![this is a caption](images/longtermtrendsALL-2.pdf)
 
 
 
-## Agregation 
+
+
+## Aggregation 
 
 
 **END**
