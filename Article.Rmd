@@ -69,7 +69,7 @@ The conversions to irradiance was done using the calibration factor  .......chp1
 , and adjusting for the dark signal offset daily, using the nights before and after each day.
 <!-- Quality assurance -->
 A radiation data quality assurance procedure was applied adjusted for the site,
-based on methods of Long and Shi [-@long_automated_2008; -@Long2006].
+based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006].
 <!-- Data preparation -->
 Due to the large measurement uncertainty near the horizon we exclude all measurements
 with SZA greater than $85^\circ$. Moreover, due to nearby hills and buildings
@@ -82,7 +82,8 @@ we remove data with azimuth angle between $35^\circ$ and $120^\circ$ and SZA gre
 <!-- \tiny -->
 ```{r echo=F, cap="dfsfdffds fs"}
 pp <- data.table::fread("./figures/tbl_longterm_trends.dat")
-pander::pander(pp)
+pander::pander(pp,
+               caption = "Table of trends and stats")
 ```
 <!-- \normalsize -->
 

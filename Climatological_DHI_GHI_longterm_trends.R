@@ -1,12 +1,11 @@
 # /* !/usr/bin/env Rscript */
 # /* Copyright (C) 2022 Athanasios Natsis <natsisthanasis@gmail.com> */
 #' ---
-#' title:         "Trends of SDR in Thessaloniki "
-#' author:
-#'   - Natsis Athanasios^[Laboratory of Atmospheric Physics,AUTH, natsisthanasis@gmail.com]
-#'   - Jane Doe^[Institution Two, jane@example.org]
-#' abstract:
-#'   "Study of GHI and DNI radiation for 'clear sky' and all sly conditions."
+#' title:         ""
+#' author:        "Natsis Athanasios"
+#' institute:     "AUTH"
+#' affiliation:   "Laboratory of Atmospheric Physics"
+#' abstract:      "Read "
 #'
 #' documentclass:  article
 #' classoption:    a4paper,oneside
@@ -63,9 +62,9 @@ Script.Name <- tryCatch({ funr::sys.script() },
                         error = function(e) { cat(paste("\nUnresolved script name: ", e),"\n\n")
                             return("Climatological_") })
 if(!interactive()) {
-    pdf(  file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".pdf", Script.Name))))
-    sink( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".out", Script.Name))), split=TRUE)
-    filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime//",  basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
+    pdf(  file = paste0("~/Aerosols/REPORTS/runtime/", basename(sub("\\.R$",".pdf", Script.Name))))
+    sink( file = paste0("~/Aerosols/REPORTS/runtime/", basename(sub("\\.R$",".out", Script.Name))), split=TRUE)
+    filelock::lock(paste0("~/Aerosols/LOGs/",  basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
 par(pch = ".")
@@ -96,10 +95,6 @@ tag       <- paste0("Natsis Athanasios LAP AUTH ", strftime(Sys.time(), format =
 CS_file   <- "/home/athan/DATA/Common_application/Clear_Sky.Rds"
 
 TEST      <- TRUE
-
-col_DIR_att    <- "#2166ac"
-col_DIR_transp <- "#9970ab"
-col_GLB_att    <- "#1a9850"
 
 
 MIN_ELEVA  <- 5  ## use data when sun above that
@@ -147,11 +142,6 @@ if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file))
     cat(paste("Load data from Clear Sky proccess from parsed\n"))
     DATA <- readRDS(CS_file)
 }
-
-
-#' ### Data range
-#' Time data span `r range(DATA$Date)`
-#'
 
 
 
@@ -366,47 +356,47 @@ CLEAR_daily_seas <-
 
 #+ echo=F, include=F
 ## ~ Plots longterm  ####
-plot( ALL_daily_mean$Date, ALL_daily_mean$DIR_att   , col = col_DIR_att    )
-plot( ALL_daily_mean$Date, ALL_daily_mean$GLB_att   , col = col_GLB_att    )
-plot( ALL_daily_mean$Date, ALL_daily_mean$DIR_transp, col = col_DIR_transp )
+plot( ALL_daily_mean$Date, ALL_daily_mean$DIR_att )
+plot( ALL_daily_mean$Date, ALL_daily_mean$GLB_att )
+plot( ALL_daily_mean$Date, ALL_daily_mean$DIR_transp )
 
-plot( ALL_daily_mean$doy,  ALL_daily_mean$DIR_att   , col = col_DIR_att    )
-plot( ALL_daily_mean$doy,  ALL_daily_mean$GLB_att   , col = col_GLB_att    )
-plot( ALL_daily_mean$doy,  ALL_daily_mean$DIR_transp, col = col_DIR_transp )
+plot( ALL_daily_mean$doy, ALL_daily_mean$DIR_att )
+plot( ALL_daily_mean$doy, ALL_daily_mean$GLB_att )
+plot( ALL_daily_mean$doy, ALL_daily_mean$DIR_transp )
 
-plot( ALL_daily_mean$doy,  ALL_daily_mean$GLB_att_N, col = col_DIR_att    )
-plot( ALL_daily_mean$doy,  ALL_daily_mean$DIR_att_N, col = col_GLB_att    )
+plot( ALL_daily_mean$doy, ALL_daily_mean$GLB_att_N)
+plot( ALL_daily_mean$doy, ALL_daily_mean$DIR_att_N)
 
-hist(ALL_daily_mean$DIR_att_N, col = col_DIR_att    )
-hist(ALL_daily_mean$GLB_att_N, col = col_GLB_att    )
+hist(ALL_daily_mean$DIR_att_N)
+hist(ALL_daily_mean$GLB_att_N)
 
-plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$DIR_att   , col = col_DIR_att    )
-plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$GLB_att   , col = col_GLB_att    )
-plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$DIR_transp, col = col_DIR_transp )
+plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$DIR_att )
+plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$GLB_att )
+plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$DIR_transp )
 
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$DIR_att   , col = col_DIR_att    )
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$GLB_att   , col = col_GLB_att    )
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$DIR_transp, col = col_DIR_transp )
+plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$DIR_att )
+plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$GLB_att )
+plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$DIR_transp )
 
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$GLB_att_N, col = col_DIR_att    )
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$DIR_att_N, col = col_GLB_att    )
+plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$GLB_att_N)
+plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$DIR_att_N)
 
 hist( CLEAR_daily_mean$DIR_att_N)
 hist( CLEAR_daily_mean$GLB_att_N)
 
 ## ~ Plots seasonal ####
 
-plot( ALL_daily_seas$doy, ALL_daily_seas$DIR_att_seas   , col = col_DIR_att    )
-plot( ALL_daily_seas$doy, ALL_daily_seas$GLB_att_seas   , col = col_GLB_att    )
-plot( ALL_daily_seas$doy, ALL_daily_seas$DIR_transp_seas, col = col_DIR_transp )
-plot( ALL_daily_seas$doy, ALL_daily_seas$DIR_att_N_seas , col = col_DIR_att    )
-plot( ALL_daily_seas$doy, ALL_daily_seas$GLB_att_N_seas , col = col_GLB_att    )
+plot( ALL_daily_seas$doy, ALL_daily_seas$DIR_att_seas )
+plot( ALL_daily_seas$doy, ALL_daily_seas$GLB_att_seas )
+plot( ALL_daily_seas$doy, ALL_daily_seas$DIR_transp_seas )
+plot( ALL_daily_seas$doy, ALL_daily_seas$GLB_att_N_seas)
+plot( ALL_daily_seas$doy, ALL_daily_seas$DIR_att_N_seas)
 
-plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$DIR_att_seas   , col = col_DIR_att    )
-plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$GLB_att_seas   , col = col_GLB_att    )
-plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$DIR_transp_seas, col = col_DIR_transp )
-plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$DIR_att_N_seas, col = col_DIR_att    )
-plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$GLB_att_N_seas, col = col_GLB_att    )
+plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$DIR_att_seas )
+plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$GLB_att_seas )
+plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$DIR_transp_seas )
+plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$GLB_att_N_seas)
+plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$DIR_att_N_seas)
 
 
 
@@ -440,16 +430,14 @@ CLEAR_daily_seas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_trans
 #+ echo=F, include=F
 
 
-col = col_DIR_att
-col = col_GLB_att
-col = col_DIR_transp
+
 
 
 #### ~ Plot of trends  ####
 
 #' \newpage
 #' ## Trends on all sky conditions data
-#+ longtermtrendsALL, echo=F, include=T
+#+ echo=F, include=T
 
 gather <- data.frame()
 timefactor <- 1
@@ -507,7 +495,7 @@ title(paste("All sky daily Direct transparency"),cex=0.9)
 
 #' \newpage
 #' ## Trends on clear sky data
-#+ longtermtrendsCS, echo=F, include=T
+#+ echo=F, include=T
 
 plot(CLEAR_daily_seas$Date, CLEAR_daily_seas$DIR_att, pch  = ".", xlab = "" )
 lm1 <- lm( DIR_att ~ Date , data = CLEAR_daily_seas)
@@ -570,7 +558,6 @@ pprint[, slope.sd := slope.sd/timefactor*365 ]
 
 pander(pprint,
        cap = "Slope is in %/year")
-myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat")
 #+ echo=F, include=F
 
 ## Test plots of all variables
