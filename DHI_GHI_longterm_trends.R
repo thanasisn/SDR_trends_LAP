@@ -145,6 +145,11 @@ if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file))
 }
 
 
+#' ### Data range
+#' Time data span `r range(DATA$Date)`
+#'
+
+
 
 
 #' ### Filter min elevation
@@ -438,7 +443,7 @@ CLEAR_daily_seas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_trans
 
 #' \newpage
 #' ## Trends on all sky conditions data
-#+ longtermtrends, echo=F, include=T
+#+ longtermtrendsALL, echo=F, include=T
 
 gather <- data.frame()
 timefactor <- 1
@@ -496,7 +501,7 @@ title(paste("All sky daily Direct transparency"),cex=0.9)
 
 #' \newpage
 #' ## Trends on clear sky data
-#+ echo=F, include=T
+#+ longtermtrendsCS, echo=F, include=T
 
 plot(CLEAR_daily_seas$Date, CLEAR_daily_seas$DIR_att, pch  = ".", xlab = "" )
 lm1 <- lm( DIR_att ~ Date , data = CLEAR_daily_seas)
@@ -559,6 +564,7 @@ pprint[, slope.sd := slope.sd/timefactor*365 ]
 
 pander(pprint,
        cap = "Slope is in %/year")
+myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat")
 #+ echo=F, include=F
 
 ## Test plots of all variables
