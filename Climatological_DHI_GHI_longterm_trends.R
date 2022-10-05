@@ -438,7 +438,7 @@ CLEAR_daily_seas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_trans
 
 #' \newpage
 #' ## Trends on all sky conditions data
-#+ echo=F, include=T
+#+ longtermtrends, echo=F, include=T
 
 gather <- data.frame()
 timefactor <- 1
