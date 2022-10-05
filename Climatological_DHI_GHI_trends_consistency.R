@@ -163,7 +163,7 @@ DATA <- DATA[ Elevat >= MIN_ELEVA ]
 DATA <- DATA[ ! (Azimuth > 35 & Azimuth < 120 & Elevat < 10) ]
 #+ echo=F, include=T
 
-
+#### ~~ RMD mark ####
 
 #' ### Keep only data characterized as 'good' by the Radiation Quality control procedure
 #+ echo=F, include=T
