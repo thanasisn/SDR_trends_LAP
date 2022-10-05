@@ -503,12 +503,15 @@ hist(szatrends[var==vars[2],N], breaks = 100)
 
 # szatrends <- szatrends[ N > 50]
 
+##TODO pch by am/pm
+##TODO col by variable
+
 plot(szatrends$SZA,szatrends$N)
 
-#+ echo=F, include=T
+#+ szatrends, echo=F, include=T
 for (type in unique(szatrends$DATA)) {
     for (avar in unique(szatrends$var)) {
-        type
+
 
         subdata <- szatrends[ szatrends$DATA == type & szatrends$var == avar , ]
 
