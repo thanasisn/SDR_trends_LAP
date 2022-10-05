@@ -94,7 +94,7 @@ pander::pander(pp,
 
 **END**
 
-<!-- ```{r trackercomm, echo=F, fig.cap="Διάγραμμα συνδέσεων του tracker, κατάλληλη σειρά σύνδεσης (1-2-3) ή (3-2-1)."} -->
-<!-- knitr::include_graphics("figure/trackercomm.png") -->
-<!-- ``` -->
-<!-- όπως φαίνονται στο Σχήμα \@ref(fig:trackercomm). -->
+```{r trackercomm, echo=F, fig.cap="Διάγραμμα συνδέσεων του tracker, κατάλληλη σειρά σύνδεσης (1-2-3) ή (3-2-1)."}
+knitr::include_graphics("images/longtermtrendsALL-1.pdf")
+```
+νονται στο Σχήμα \@ref(fig:trackercomm).
