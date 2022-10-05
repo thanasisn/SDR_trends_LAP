@@ -148,7 +148,6 @@ if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file))
     DATA <- readRDS(CS_file)
 }
 
-
 #' ### Data range
 #' Time data span `r range(DATA$Date)`
 #'
@@ -440,10 +439,6 @@ CLEAR_daily_seas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_trans
 #+ echo=F, include=F
 
 
-col = col_DIR_att
-col = col_GLB_att
-col = col_DIR_transp
-
 
 #### ~ Plot of trends  ####
 
@@ -454,7 +449,7 @@ col = col_DIR_transp
 gather <- data.frame()
 timefactor <- 1
 
-plot(ALL_daily_seas$Date, ALL_daily_seas$DIR_att, pch  = ".", xlab = "" )
+plot(ALL_daily_seas$Date, ALL_daily_seas$DIR_att, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_DIR_att )
 lm1 <- lm( DIR_att ~ Date , data = ALL_daily_seas)
 gather <- rbind(gather,
                 data.table(
@@ -467,10 +462,10 @@ abline(lm1)
 fit <- lm1[[1]]
 legend('top', lty = 1, bty = "n",
        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/timefactor*365),3),'* year'))
-title(paste("All day daily Direct"),cex=0.9)
+title(paste("All day Direct"),cex=0.8)
 
 
-plot(ALL_daily_seas$Date, ALL_daily_seas$GLB_att, pch  = ".", xlab = "" )
+plot(ALL_daily_seas$Date, ALL_daily_seas$GLB_att, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_GLB_att )
 lm1 <- lm( GLB_att ~ Date , data = ALL_daily_seas)
 gather <- rbind(gather,
                 data.table(
@@ -483,10 +478,10 @@ abline(lm1)
 fit <- lm1[[1]]
 legend('top', lty = 1, bty = "n",
        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/timefactor*365),3),'* year'))
-title(paste("All sky daily Global"),cex=0.9)
+title(paste("All sky Global"),cex=0.8)
 
 
-plot(ALL_daily_seas$Date, ALL_daily_seas$DIR_transp, pch  = ".", xlab = "" )
+plot(ALL_daily_seas$Date, ALL_daily_seas$DIR_transp, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_DIR_transp )
 lm1 <- lm( DIR_transp ~ Date , data = ALL_daily_seas)
 gather <- rbind(gather,
                 data.table(
@@ -499,7 +494,7 @@ abline(lm1)
 fit <- lm1[[1]]
 legend('top', lty = 1, bty = "n",
        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/timefactor*365),3),'* year'))
-title(paste("All sky daily Direct transparency"),cex=0.9)
+title(paste("All sky Direct transparency"),cex=0.8)
 
 
 
@@ -509,7 +504,7 @@ title(paste("All sky daily Direct transparency"),cex=0.9)
 #' ## Trends on clear sky data
 #+ longtermtrendsCS, echo=F, include=T
 
-plot(CLEAR_daily_seas$Date, CLEAR_daily_seas$DIR_att, pch  = ".", xlab = "" )
+plot(CLEAR_daily_seas$Date, CLEAR_daily_seas$DIR_att, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_DIR_att )
 lm1 <- lm( DIR_att ~ Date , data = CLEAR_daily_seas)
 gather <- rbind(gather,
                 data.table(
@@ -522,10 +517,10 @@ abline(lm1)
 fit <- lm1[[1]]
 legend('top', lty = 1, bty = "n",
        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/timefactor*365),3),'* year'))
-title(paste("Clear Sky daily Direct"),cex=0.9)
+title(paste("Clear Sky Direct"),cex=0.8)
 
 
-plot(CLEAR_daily_seas$Date, CLEAR_daily_seas$GLB_att, pch  = ".", xlab = "" )
+plot(CLEAR_daily_seas$Date, CLEAR_daily_seas$GLB_att, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_GLB_att )
 lm1 <- lm( GLB_att ~ Date , data = CLEAR_daily_seas)
 gather <- rbind(gather,
                 data.table(
@@ -538,10 +533,10 @@ abline(lm1)
 fit <- lm1[[1]]
 legend('top', lty = 1, bty = "n",
        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/timefactor*365),3),'* year'))
-title(paste("Clear Sky daily Global"),cex=0.9)
+title(paste("Clear Sky Global"), cex=0.8)
 
 
-plot(CLEAR_daily_seas$Date, CLEAR_daily_seas$DIR_transp, pch  = ".", xlab = "" )
+plot(CLEAR_daily_seas$Date, CLEAR_daily_seas$DIR_transp, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_DIR_transp )
 lm1 <- lm( DIR_transp ~ Date , data = CLEAR_daily_mean)
 gather <- rbind(gather,
                 data.table(
@@ -554,7 +549,7 @@ abline(lm1)
 fit <- lm1[[1]]
 legend('top', lty = 1, bty = "n",
        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/timefactor*365),3),'* year'))
-title(paste("Clear Sky daily Direct transparency"),cex=0.9)
+title(paste("Clear Sky Direct transparency"), cex=0.8)
 
 
 wecare <- grep("intercept", names(gather), value = T, invert = T)
