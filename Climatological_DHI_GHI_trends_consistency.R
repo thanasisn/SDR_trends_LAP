@@ -1,11 +1,12 @@
 # /* !/usr/bin/env Rscript */
 # /* Copyright (C) 2022 Athanasios Natsis <natsisthanasis@gmail.com> */
 #' ---
-#' title:         ""
-#' author:        "Natsis Athanasios"
-#' institute:     "AUTH"
-#' affiliation:   "Laboratory of Atmospheric Physics"
-#' abstract:      "Read "
+#' title:         "Trends of SDR in Thessaloniki "
+#' author:
+#'   - Natsis Athanasios^[Laboratory of Atmospheric Physics,AUTH, natsisthanasis@gmail.com]
+#'   - Jane Doe^[Institution Two, jane@example.org]
+#' abstract:
+#'   "Study of GHI and DNI radiation for 'clear sky' and all sly conditions."
 #'
 #' documentclass:  article
 #' classoption:    a4paper,oneside

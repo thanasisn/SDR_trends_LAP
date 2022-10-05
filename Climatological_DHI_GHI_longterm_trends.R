@@ -1,11 +1,12 @@
 # /* !/usr/bin/env Rscript */
 # /* Copyright (C) 2022 Athanasios Natsis <natsisthanasis@gmail.com> */
 #' ---
-#' title:         ""
-#' author:        "Natsis Athanasios"
-#' institute:     "AUTH"
-#' affiliation:   "Laboratory of Atmospheric Physics"
-#' abstract:      "Read "
+#' title:         "Trends of SDR in Thessaloniki "
+#' author:
+#'   - Natsis Athanasios^[Laboratory of Atmospheric Physics,AUTH, natsisthanasis@gmail.com]
+#'   - Jane Doe^[Institution Two, jane@example.org]
+#' abstract:
+#'   "Study of GHI and DNI radiation for 'clear sky' and all sly conditions."
 #'
 #' documentclass:  article
 #' classoption:    a4paper,oneside
@@ -24,7 +25,6 @@
 #'     number_sections:  no
 #'     fig_caption:      no
 #'     keep_tex:         no
-#'     keep_rmd:         yes
 #'     latex_engine:     xelatex
 #'     toc:              yes
 #'     fig_width:        7
@@ -63,9 +63,9 @@ Script.Name <- tryCatch({ funr::sys.script() },
                         error = function(e) { cat(paste("\nUnresolved script name: ", e),"\n\n")
                             return("Climatological_") })
 if(!interactive()) {
-    pdf(  file = paste0("~/Aerosols/REPORTS/runtime/", basename(sub("\\.R$",".pdf", Script.Name))))
-    sink( file = paste0("~/Aerosols/REPORTS/runtime/", basename(sub("\\.R$",".out", Script.Name))), split=TRUE)
-    filelock::lock(paste0("~/Aerosols/LOGs/",  basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
+    pdf(  file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".pdf", Script.Name))))
+    sink( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".out", Script.Name))), split=TRUE)
+    filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime//",  basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
 par(pch = ".")
