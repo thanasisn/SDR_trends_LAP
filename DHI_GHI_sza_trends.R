@@ -63,9 +63,9 @@ Script.Name <- tryCatch({ funr::sys.script() },
                         error = function(e) { cat(paste("\nUnresolved script name: ", e),"\n\n")
                             return("Climatological_") })
 if(!interactive()) {
-    pdf(  file = paste0("~/Aerosols/REPORTS/runtime/", basename(sub("\\.R$",".pdf", Script.Name))))
-    sink( file = paste0("~/Aerosols/REPORTS/runtime/", basename(sub("\\.R$",".out", Script.Name))), split=TRUE)
-    filelock::lock(paste0("~/Aerosols/LOGs/",  basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
+    pdf(  file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".pdf", Script.Name))))
+    sink( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".out", Script.Name))), split=TRUE)
+    filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime//",  basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
 par(pch = ".")
@@ -98,6 +98,9 @@ CS_file   <- "/home/athan/DATA/Common_application/Clear_Sky.Rds"
 
 TEST      <- TRUE
 
+col_DIR_att    <- "#2166ac"
+col_DIR_transp <- "#9970ab"
+col_GLB_att    <- "#1a9850"
 
 MIN_ELEVA  <- 5  ## use data when sun above that
 SZA_BIN    <- 1
@@ -144,6 +147,10 @@ if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file))
     cat(paste("Load data from Clear Sky proccess from parsed\n"))
     DATA <- readRDS(CS_file)
 }
+
+#' ### Data range
+#' Time data span `r range(DATA$Date)`
+#'
 
 
 
