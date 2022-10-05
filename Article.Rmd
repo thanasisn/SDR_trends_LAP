@@ -48,7 +48,7 @@ knitr::opts_chunk$set(dev        = "pdf"   )
 # knitr::opts_chunk$set(dev        = "png"    )
 knitr::opts_chunk$set(out.width  = "80%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
-# knitr::opts_chunk$set(fig.pos    = '!h'    )
+knitr::opts_chunk$set(fig.pos    = '!h'    )
 
 ```
 
@@ -75,12 +75,18 @@ Due to the large measurement uncertainty near the horizon we exclude all measure
 with SZA greater than $85^\circ$. Moreover, due to nearby hills and buildings
 we remove data with azimuth angle between $35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$.
 
+```{r trackercomm, echo=F, fig.cap="tracker"}
+knitr::include_graphics("./images/longtermtrendsALL-2.pdf")
+```
+
+This is it \@ref(fig:trackercomm).
 
 
-![this is a caption](images/longtermtrendsALL-2.pdf)
+\FloatBarrier
+
 
 <!-- \tiny -->
-```{r echo=F, cap="dfsfdffds fs"}
+```{r echo=F}
 pp <- data.table::fread("./figures/tbl_longterm_trends.dat")
 pander::pander(pp,
                caption = "Table of trends and stats")
@@ -94,7 +100,3 @@ pander::pander(pp,
 
 **END**
 
-```{r trackercomm, echo=F, fig.cap="Διάγραμμα συνδέσεων του tracker, κατάλληλη σειρά σύνδεσης (1-2-3) ή (3-2-1)."}
-knitr::include_graphics("images/longtermtrendsALL-1.pdf")
-```
-νονται στο Σχήμα \@ref(fig:trackercomm).
