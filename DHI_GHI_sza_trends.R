@@ -495,11 +495,9 @@ for (DBn in dbs) {
 hist(gather$N[gather$N>50], breaks = 100)
 
 szatrends <- gather
-szatrends$preNoon[ szatrends$preNoon == T ] <- 2
-szatrends$preNoon[ szatrends$preNoon == F ] <- 3
 
 szatrends <- data.table(szatrends)
-setorder(szatrends_seas,SZA)
+setorder(szatrends,SZA)
 
 szatrends[ var == "DIR_att",    col := col_DIR_att    ]
 szatrends[ var == "GLB_att",    col := col_GLB_att    ]
@@ -520,12 +518,9 @@ hist(szatrends[var==vars[2],N], breaks = 100)
 
 plot(szatrends$SZA,szatrends$N)
 
-## vars to plot
+## stats vars to plot
 wecare <- grep( "^slope|^N",names(szatrends),ignore.case = T, value = T)
 
-wenames <- sub("\\."," ",wecare)
-
-gsub("(\\D)(\\D+)", "\\U\\1\\L\\2", wenames, perl = TRUE)
 
 #+ szatrends, echo=F, include=T
 ## ALL - CS
@@ -536,70 +531,82 @@ for (type in unique(szatrends$DATA)) {
         for (awe in wecare) {
             awename <- gsub("(\\D)(\\D+)", "\\U\\1\\L\\2", sub("\\."," ", awe), perl = TRUE)
 
-            ## selece All/CS and DIR/GLB/trans
+            ## select All/CS and DIR/GLB/trans
             subdata <- szatrends[ szatrends$DATA == type &    ##
                                   szatrends$var  == avar , ]
 
             xlim <- range( subdata$SZA,    na.rm = T )
             ylim <- range( subdata[[awe]], na.rm = T )
 
+            pam  <- subdata[ preNoon == T ]
+            ppm  <- subdata[ preNoon == F ]
+
             plot(1, type="n", xlab="SZA", ylab=awename, xlim=xlim, ylim=ylim )
             abline(h=0)
             title(paste(awename,type, avar),cex=0.9)
 
-            points()
+            # lines(pam$SZA, pam[[awe]], pch =  pch_am, col = pam$col, type = "b")
+            # lines(pam$SZA, ppm[[awe]], pch =  pch_pm, col = pam$col, type = "b")
 
+            lines(pam$SZA, pam[[awe]], pch =  pch_am, col = 2, type = "b")
+            lines(ppm$SZA, ppm[[awe]], pch =  pch_pm, col = 3, type = "b")
+
+            legend("top",
+                   legend = c("Morning",       "Evening"),
+                   # col    = c(unique(pam$col), unique(ppm$col)),
+                   col    = c(2, 3),
+                   pch    = c(unique(pam$pch), unique(ppm$pch)), ncol = 2, bty = "n")
         }
 
-
-        subdata <- szatrends[ szatrends$DATA == type & szatrends$var == avar , ]
-
-        plot(subdata$SZA, subdata$slope, col = subdata$preNoon, pch = 19)
-        abline(h=0)
-        title(paste("Slope",type, avar),cex=0.9)
-        legend("top",
-               legend = c("Morning", "Evening"),
-               col    = c(2 , 3),
-               pch    = 19, ncol = 2, bty = "n")
-
-        plot(subdata$SZA, subdata$slope.sd, col = subdata$preNoon, pch = 19)
-        abline(h=0)
-        title(paste("Slope sd",type, avar),cex=0.9)
-        legend("top",
-               legend = c("Morning", "Evening"),
-               col    = c(2 , 3),
-               pch    = 19, ncol = 2, bty = "n")
-
-        plot(subdata$SZA, subdata$slope.t, col = subdata$preNoon, pch = 19)
-        abline(h=0)
-        title(paste("Slope t",type, avar),cex=0.9)
-        legend("top",
-               legend = c("Morning", "Evening"),
-               col    = c(2 , 3),
-               pch    = 19, ncol = 2, bty = "n")
-
-        plot(subdata$SZA, subdata$slope.p, col = subdata$preNoon, pch = 19)
-        abline(h=0)
-        title(paste("Slope p",type, avar),cex=0.9)
-        legend("top",
-               legend = c("Morning", "Evening"),
-               col    = c(2 , 3),
-               pch    = 19, ncol = 2, bty = "n")
-
-        plot(subdata$SZA, subdata$Rsqrd, col = subdata$preNoon, pch = 19)
-        abline(h=0)
-        title(paste("Slope Rsq",type, avar),cex=0.9)
-        legend("top",
-               legend = c("Morning", "Evening"),
-               col    = c(2 , 3),
-               pch    = 19, ncol = 2, bty = "n")
-
-        plot(subdata$SZA, subdata$N, col = subdata$preNoon, pch = 19)
-        title(paste("N",type, avar),cex=0.9)
-        legend("top",
-               legend = c("Morning", "Evening"),
-               col    = c(2 , 3),
-               pch    = 19, ncol = 2, bty = "n")
+#
+#         subdata <- szatrends[ szatrends$DATA == type & szatrends$var == avar , ]
+#
+#         plot(subdata$SZA, subdata$slope, col = subdata$preNoon, pch = 19)
+#         abline(h=0)
+#         title(paste("Slope",type, avar),cex=0.9)
+#         legend("top",
+#                legend = c("Morning", "Evening"),
+#                col    = c(2 , 3),
+#                pch    = 19, ncol = 2, bty = "n")
+#
+#         plot(subdata$SZA, subdata$slope.sd, col = subdata$preNoon, pch = 19)
+#         abline(h=0)
+#         title(paste("Slope sd",type, avar),cex=0.9)
+#         legend("top",
+#                legend = c("Morning", "Evening"),
+#                col    = c(2 , 3),
+#                pch    = 19, ncol = 2, bty = "n")
+#
+#         plot(subdata$SZA, subdata$slope.t, col = subdata$preNoon, pch = 19)
+#         abline(h=0)
+#         title(paste("Slope t",type, avar),cex=0.9)
+#         legend("top",
+#                legend = c("Morning", "Evening"),
+#                col    = c(2 , 3),
+#                pch    = 19, ncol = 2, bty = "n")
+#
+#         plot(subdata$SZA, subdata$slope.p, col = subdata$preNoon, pch = 19)
+#         abline(h=0)
+#         title(paste("Slope p",type, avar),cex=0.9)
+#         legend("top",
+#                legend = c("Morning", "Evening"),
+#                col    = c(2 , 3),
+#                pch    = 19, ncol = 2, bty = "n")
+#
+#         plot(subdata$SZA, subdata$Rsqrd, col = subdata$preNoon, pch = 19)
+#         abline(h=0)
+#         title(paste("Slope Rsq",type, avar),cex=0.9)
+#         legend("top",
+#                legend = c("Morning", "Evening"),
+#                col    = c(2 , 3),
+#                pch    = 19, ncol = 2, bty = "n")
+#
+#         plot(subdata$SZA, subdata$N, col = subdata$preNoon, pch = 19)
+#         title(paste("N",type, avar),cex=0.9)
+#         legend("top",
+#                legend = c("Morning", "Evening"),
+#                col    = c(2 , 3),
+#                pch    = 19, ncol = 2, bty = "n")
 
     }
 }
@@ -621,15 +628,10 @@ for (type in unique(szatrends$DATA)) {
 #' \newpage
 #' ## Plot of SZA trends for season of year
 #+ echo=F, include=F
-timefactor <- 1
-vars   <- c("DIR_att", "GLB_att", "DIR_transp")
-dbs    <- c("ALL_daily_seas", "CLEAR_daily_seas")
-season <- c("Winter", "Spring", "Summer", "Automn")
-
-
-
-
-
+timefactor  <- 1  ## to display % per year
+vars        <- c("DIR_att", "GLB_att", "DIR_transp")
+dbs         <- c("ALL_daily_seas", "CLEAR_daily_seas")
+season      <- c("Winter", "Spring", "Summer", "Automn")
 gather_seas <- data.frame()
 
 for (DBn in dbs) {
@@ -696,7 +698,6 @@ szatrends_seas[ preNoon == F, pch := pch_pm ]
 
 hist(szatrends_seas[DATA==dbs[1],N], breaks = 100)
 hist(szatrends_seas[DATA==dbs[2],N], breaks = 100)
-
 hist(szatrends_seas[var==vars[1],N], breaks = 100)
 hist(szatrends_seas[var==vars[2],N], breaks = 100)
 
@@ -705,17 +706,61 @@ hist(szatrends_seas[var==vars[2],N], breaks = 100)
 plot(szatrends_seas$SZA,szatrends_seas$N)
 
 
+## stats vars to plot
+wecare <- grep( "^slope|^N",names(szatrends_seas),ignore.case = T, value = T)
 
 
 #+ echo=F, include=T
+## Winter - Summer ....
 for (ase in season) {
-
+    ## ALL - Clear sky
     for (type in unique(szatrends_seas$DATA)) {
+        ## DIR - GLB - transp
         for (avar in unique(szatrends_seas$var)) {
 
-            subdata <- szatrends_seas[ szatrends_seas$DATA   == type &
-                                       szatrends_seas$var    == avar &
-                                       szatrends_seas$Season == ase    , ]
+
+
+
+
+            ## statistic variable
+            for (awe in wecare) {
+                awename <- gsub("(\\D)(\\D+)", "\\U\\1\\L\\2", sub("\\."," ", awe), perl = TRUE)
+
+                ## select All/CS  DIR/GLB/trans winter/summer
+                subdata <- szatrends_seas[ DATA   == type &
+                                           var    == avar &
+                                           Season == ase    , ]
+
+                xlim <- range( subdata$SZA,    na.rm = T )
+                ylim <- range( subdata[[awe]], na.rm = T )
+
+                pam  <- subdata[ preNoon == T ]
+                ppm  <- subdata[ preNoon == F ]
+
+                plot(1, type="n", xlab="SZA", ylab=awename, xlim=xlim, ylim=ylim )
+                abline(h=0)
+                title(paste(ase,awename,type, avar),cex=0.9)
+
+                # lines(pam$SZA, pam[[awe]], pch =  pch_am, col = pam$col, type = "b")
+                # lines(pam$SZA, ppm[[awe]], pch =  pch_pm, col = pam$col, type = "b")
+
+                lines(pam$SZA, pam[[awe]], pch =  pch_am, col = 2, type = "b")
+                lines(ppm$SZA, ppm[[awe]], pch =  pch_pm, col = 3, type = "b")
+
+                legend("top",
+                       legend = c("Morning",       "Evening"),
+                       # col    = c(unique(pam$col), unique(ppm$col)),
+                       col    = c(2, 3),
+                       pch    = c(unique(pam$pch), unique(ppm$pch)), ncol = 2, bty = "n")
+            }
+
+
+
+
+
+            subdata <- szatrends_seas[ DATA   == type &
+                                       var    == avar &
+                                       Season == ase    , ]
 
 
             pam <- subdata[ preNoon == T ]
@@ -768,7 +813,6 @@ for (ase in season) {
             #        col    = c(2 , 3),
             #        pch    = 19, ncol = 2, bty = "n")
 
-            # hist(subdata$N, breaks = 100)
         }
     }
 
