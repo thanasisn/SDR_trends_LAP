@@ -69,11 +69,25 @@ The conversions to irradiance was done using the calibration factor  .......chp1
 , and adjusting for the dark signal offset daily, using the nights before and after each day.
 <!-- Quality assurance -->
 A radiation data quality assurance procedure was applied adjusted for the site,
-based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006].
+based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006]. Only data characterized with low quality indicators was rejected.
 <!-- Data preparation -->
 Due to the large measurement uncertainty near the horizon we exclude all measurements
 with SZA greater than $85^\circ$. Moreover, due to nearby hills and buildings
-we remove data with azimuth angle between $35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$.
+we remove data with azimuth angle between $35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$, as at those cases the Sun can not viewed by the instruments.
+
+
+## Data process
+We take some steps in order to make the measurements comparable throughout the dataset. 
+<!-- 1au -->
+We adjusted all measurements to the mean distance between Sun and Earth.
+<!-- TSI -->
+And, we make all measurements relative to the ......TSI...... , using an homogenized timeseries of satellite TSI data.
+
+<!-- Clear Sky -->
+We will use two dataset of our measurements, one for all sky conditions (ALL), which is the whole available data, and one filtered for 'clear sky' conditions (CS). The latter was created using ..........
+....
+
+
 
 ```{r trackercomm, echo=F, fig.cap="tracker"}
 knitr::include_graphics("./images/longtermtrendsALL-2.pdf")

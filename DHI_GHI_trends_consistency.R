@@ -103,6 +103,10 @@ TEST      <- TRUE
 col_DIR_att    <- "#2166ac"
 col_DIR_transp <- "#9970ab"
 col_GLB_att    <- "#1a9850"
+pch_am         <-  1
+pch_pm         <-  4
+pch_ampm       <- 13 ## try 10
+pch_daily      <- 19
 
 MIN_ELEVA  <- 5  ## use data when sun above that
 SZA_BIN    <- 1
