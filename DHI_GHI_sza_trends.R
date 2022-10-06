@@ -101,6 +101,10 @@ TEST      <- TRUE
 col_DIR_att    <- "#2166ac"
 col_DIR_transp <- "#9970ab"
 col_GLB_att    <- "#1a9850"
+pch_am         <-  1
+pch_pm         <-  4
+pch_ampm       <- 13 ## try 10
+pch_daily      <- 19
 
 MIN_ELEVA  <- 5  ## use data when sun above that
 SZA_BIN    <- 1
@@ -641,8 +645,17 @@ for (DBn in dbs) {
 hist(gather_seas$N[gather_seas$N>50], breaks = 100)
 
 szatrends_seas <- gather_seas
-szatrends_seas$preNoon[ szatrends_seas$preNoon == T ] <- 2
-szatrends_seas$preNoon[ szatrends_seas$preNoon == F ] <- 3
+
+
+## define plot colors
+##TODO
+szatrends_seas$preNoon[ szatrends_seas$preNoon == T, col := 2 ]
+szatrends_seas$preNoon[ szatrends_seas$preNoon == F, col := 3 ]
+szatrends_seas$preNoon[ szatrends_seas$preNoon == T, pch := pch_am ]
+szatrends_seas$preNoon[ szatrends_seas$preNoon == F, pch := pch_pm ]
+
+
+
 szatrends_seas <- data.table(szatrends_seas)
 
 hist(szatrends_seas[DATA==dbs[1],N], breaks = 100)
@@ -655,6 +668,9 @@ hist(szatrends_seas[var==vars[2],N], breaks = 100)
 
 plot(szatrends_seas$SZA,szatrends_seas$N)
 
+
+
+
 #+ echo=F, include=T
 for (ase in season) {
 
@@ -665,7 +681,7 @@ for (ase in season) {
                                        szatrends_seas$var    == avar &
                                        szatrends_seas$Season == ase    , ]
 
-            plot(subdata$SZA, subdata$slope, col = subdata$preNoon, pch = 19)
+            plot(subdata$SZA, subdata$slope, col = subdata$col, pch = subdata$pch)
             abline(h=0)
             title(paste(ase, "Slope",type, avar),cex=0.9)
             legend("top",
