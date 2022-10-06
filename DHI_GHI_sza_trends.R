@@ -517,6 +517,14 @@ hist(szatrends[var==vars[2],N], breaks = 100)
 
 
 plot(szatrends$SZA,szatrends$N)
+test <- szatrends[ DATA == "CLEAR_daily_seas" & var == "DIR_att" ]
+plot(test$SZA, test$N, pch =19)
+abline(h=50)
+
+szatrends[ N <= 50, slope := NA]
+
+
+
 
 ## stats vars to plot
 wecare <- grep( "^slope|^N",names(szatrends),ignore.case = T, value = T)
@@ -705,7 +713,6 @@ hist(szatrends_seas[var==vars[2],N], breaks = 100)
 
 plot(szatrends_seas$SZA,szatrends_seas$N)
 
-
 ## stats vars to plot
 wecare <- grep( "^slope|^N",names(szatrends_seas),ignore.case = T, value = T)
 
@@ -717,10 +724,6 @@ for (ase in season) {
     for (type in unique(szatrends_seas$DATA)) {
         ## DIR - GLB - transp
         for (avar in unique(szatrends_seas$var)) {
-
-
-
-
 
             ## statistic variable
             for (awe in wecare) {
