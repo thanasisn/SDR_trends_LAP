@@ -517,6 +517,7 @@ hist(szatrends[var==vars[2],N], breaks = 100)
 
 
 plot(szatrends$SZA,szatrends$N)
+
 test <- szatrends[ DATA == "CLEAR_daily_seas" & var == "DIR_att" ]
 plot(test$SZA, test$N, pch =19)
 abline(h=50)
@@ -712,6 +713,15 @@ hist(szatrends_seas[var==vars[2],N], breaks = 100)
 # szatrends_seas <- szatrends_seas[ N > 50]
 
 plot(szatrends_seas$SZA,szatrends_seas$N)
+
+stop("DDDD")
+test <- szatrends_seas[ DATA == "CLEAR_daily_seas" & var == "DIR_att" ]
+plot(test$SZA, test$N, pch =19)
+abline(h=50)
+
+szatrends[ N <= 50, slope := NA]
+
+
 
 ## stats vars to plot
 wecare <- grep( "^slope|^N",names(szatrends_seas),ignore.case = T, value = T)
