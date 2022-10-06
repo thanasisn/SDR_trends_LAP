@@ -48,7 +48,7 @@
 knitr::opts_chunk$set(comment    = ""      )
 knitr::opts_chunk$set(dev        = "pdf"   )
 # knitr::opts_chunk$set(dev        = "png"    )
-knitr::opts_chunk$set(out.width  = "90%"   )
+knitr::opts_chunk$set(out.width  = "80%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
 knitr::opts_chunk$set(cache      =  T       )
 # knitr::opts_chunk$set(fig.pos    = '!h'    )
@@ -522,7 +522,7 @@ test <- szatrends[ DATA == "CLEAR_daily_seas" & var == "DIR_att" ]
 plot(test$SZA, test$N, pch =19)
 abline(h=50)
 
-szatrends[ N <= 50, slope := NA]
+szatrends[ N <= 30*4, slope := NA]
 
 
 
@@ -652,7 +652,6 @@ for (DBn in dbs) {
     DB[ month(Date) %in% c( 6, 7, 8), Season := "Summer"]
     DB[ month(Date) %in% c( 9,10,11), Season := "Automn"]
 
-
     for (ase in season) {
         for (avar in vars) {
             for (anoon in unique( DB$preNoon)) {
@@ -718,7 +717,7 @@ test <- szatrends_seas[ DATA == "CLEAR_daily_seas" & var == "DIR_att" ]
 plot(test$SZA, test$N, pch =19)
 abline(h=50/4)
 
-szatrends[ N <= 50/4, slope := NA]
+szatrends[ N <= 30, slope := NA]
 
 
 
@@ -726,7 +725,7 @@ szatrends[ N <= 50/4, slope := NA]
 wecare <- grep( "^slope|^N",names(szatrends_seas),ignore.case = T, value = T)
 
 
-#+ echo=F, include=T
+#+ szatrendsseas, echo=F, include=T
 ## Winter - Summer ....
 for (ase in season) {
     ## ALL - Clear sky
@@ -768,24 +767,23 @@ for (ase in season) {
 
 
 
-
-
-            subdata <- szatrends_seas[ DATA   == type &
-                                       var    == avar &
-                                       Season == ase    , ]
-
-
-            pam <- subdata[ preNoon == T ]
-            ppm <- subdata[ preNoon == F ]
-
-            plot(subdata$SZA, subdata$slope, col = subdata$col, pch = subdata$pch)
-            abline(h=0)
-            title(paste(ase, "Slope",type, avar),cex=0.9)
-            legend("top",
-                   legend = c("Morning", "Evening"),
-                   col    = c(2 , 3),
-                   pch    = c(pch_am,     pch_pm), ncol = 2, bty = "n")
-
+#
+#             subdata <- szatrends_seas[ DATA   == type &
+#                                        var    == avar &
+#                                        Season == ase    , ]
+#
+#
+#             pam <- subdata[ preNoon == T ]
+#             ppm <- subdata[ preNoon == F ]
+#
+#             plot(subdata$SZA, subdata$slope, col = subdata$col, pch = subdata$pch)
+#             abline(h=0)
+#             title(paste(ase, "Slope",type, avar),cex=0.9)
+#             legend("top",
+#                    legend = c("Morning", "Evening"),
+#                    col    = c(2 , 3),
+#                    pch    = c(pch_am,     pch_pm), ncol = 2, bty = "n")
+#
             # plot(subdata$SZA, subdata$slope.sd, col = subdata$preNoon, pch = 19)
             # abline(h=0)
             # title(paste("Slope sd",type, avar),cex=0.9)
