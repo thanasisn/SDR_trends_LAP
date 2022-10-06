@@ -679,10 +679,6 @@ vars    <- c("GLB_att", "DIR_att", "DIR_transp")
 dbs     <- c("ALL_monthly_seas", "CLEAR_monthly_seas")
 basevar <- c("Year","Month","SZA","preNoon")
 
-# gather <- expand.grid( Year  = unique(c(ALL_monthly_seas$Year,  CLEAR_monthly_seas$Year)),
-#                        Month = unique(c(ALL_monthly_seas$Month, CLEAR_monthly_seas$Month)),
-#                        SZA   = unique(c(ALL_monthly_seas$SZA,   CLEAR_monthly_seas$SZA)),
-#                        preNoon = unique(c(ALL_monthly_seas$preNoon,   CLEAR_monthly_seas$preNoon)))
 
 
 ## compute cumsums for each category and sza
