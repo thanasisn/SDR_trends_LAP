@@ -714,12 +714,11 @@ hist(szatrends_seas[var==vars[2],N], breaks = 100)
 
 plot(szatrends_seas$SZA,szatrends_seas$N)
 
-stop("DDDD")
 test <- szatrends_seas[ DATA == "CLEAR_daily_seas" & var == "DIR_att" ]
 plot(test$SZA, test$N, pch =19)
-abline(h=50)
+abline(h=50/4)
 
-szatrends[ N <= 50, slope := NA]
+szatrends[ N <= 50/4, slope := NA]
 
 
 
