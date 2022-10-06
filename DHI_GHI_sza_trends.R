@@ -620,8 +620,16 @@ for (type in unique(szatrends$DATA)) {
     }
 }
 
+options(error = function() {
+    if (interactive()) {
+        require("beepr"); beep(10)
+        system("notify-send -u normal 'R session' 'An error occured!'")
+    }
+})
 
+if (interactive())
 
+stop()
 
 
 
