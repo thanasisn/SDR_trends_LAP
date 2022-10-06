@@ -1,4 +1,4 @@
-# /* !/usr/bin/env Rscript */
+#!/usr/bin/env Rscript
 # /* Copyright (C) 2022 Athanasios Natsis <natsisthanasis@gmail.com> */
 #' ---
 #' title:         "Trends of SDR in Thessaloniki "
@@ -86,6 +86,15 @@ source("~/CODE/FUNCTIONS/R/linear_regrassion_capture.R")
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 
 
+options(error = function() {
+    if (interactive()) {
+        # require("beepr"); beep(10)
+        system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
+        system("notify-send -u normal -t 30000 'R session' 'An error occured!'")
+    }
+})
+
+
 ####  Variables  ####
 panderOptions('table.alignment.default', 'right')
 panderOptions('table.split.table',        120   )
@@ -101,6 +110,10 @@ col_DIR_att    <- "#2166ac"
 col_DIR_transp <- "#9970ab"
 col_GLB_att    <- "#1a9850"
 
+pch_am         <-  1
+pch_pm         <-  4
+pch_ampm       <- 13 ## try 10
+pch_daily      <- 19
 
 MIN_ELEVA  <- 5  ## use data when sun above that
 SZA_BIN    <- 1

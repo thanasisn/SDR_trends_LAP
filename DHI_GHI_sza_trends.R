@@ -1,4 +1,4 @@
-# /* !/usr/bin/env Rscript */
+#!/usr/bin/env Rscript
 # /* Copyright (C) 2022 Athanasios Natsis <natsisthanasis@gmail.com> */
 #' ---
 #' title:         "Trends of SDR in Thessaloniki "
@@ -85,6 +85,14 @@ source("~/CODE/FUNCTIONS/R/sumNA.R")
 source("~/CODE/FUNCTIONS/R/linear_regrassion_capture.R")
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 
+
+options(error = function() {
+    if (interactive()) {
+        # require("beepr"); beep(10)
+        system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
+        system("notify-send -u normal -t 30000 'R session' 'An error occured!'")
+    }
+})
 
 
 ####  Variables  ####
@@ -518,11 +526,17 @@ hist(szatrends[var==vars[2],N], breaks = 100)
 
 plot(szatrends$SZA,szatrends$N)
 
-test <- szatrends[ DATA == "CLEAR_daily_seas" & var == "DIR_att" ]
-plot(test$SZA, test$N, pch =19)
+test1 <- szatrends[ DATA == "CLEAR_daily_seas" & var == "DIR_att" ]
+test2 <- szatrends[ DATA == "CLEAR_daily_seas" & var == "GLB_att" ]
+plot(test1$SZA, test1$N, pch =19)
 abline(h=50)
+plot(test2$SZA, test2$N, pch =19)
+abline(h=300)
 
-szatrends[ N <= 30*4, slope := NA]
+# szatrends[ var == "GLB_att"    & N <= 300, slope := NA ]
+# szatrends[ var == "DIR_att"    & N <=  50, slope := NA ]
+# szatrends[ var == "DIR_transp" & N <=  50, slope := NA ]
+
 
 
 
@@ -620,16 +634,6 @@ for (type in unique(szatrends$DATA)) {
     }
 }
 
-options(error = function() {
-    if (interactive()) {
-        require("beepr"); beep(10)
-        system("notify-send -u normal 'R session' 'An error occured!'")
-    }
-})
-
-if (interactive())
-
-stop()
 
 
 
@@ -637,13 +641,9 @@ stop()
 
 
 
-
-
-
-
-####  Plot of SZA trends for season of year ####
+####  Plot of SZA trends for each season of year ####
 #' \newpage
-#' ## Plot of SZA trends for season of year
+#' ## Plot of SZA trends for each season of year
 #+ echo=F, include=F
 timefactor  <- 1  ## to display % per year
 vars        <- c("DIR_att", "GLB_att", "DIR_transp")
@@ -726,6 +726,18 @@ plot(test$SZA, test$N, pch =19)
 abline(h=50/4)
 
 szatrends[ N <= 30, slope := NA]
+
+
+test1 <- szatrends_seas[ DATA == "CLEAR_daily_seas" & var == "DIR_att" ]
+test2 <- szatrends_seas[ DATA == "CLEAR_daily_seas" & var == "GLB_att" ]
+plot(test1$SZA, test1$N, pch =19)
+abline(h=50/4)
+plot(test2$SZA, test2$N, pch =19)
+abline(h=300/4)
+
+# szatrends[ var == "GLB_att"    & N <= 300, slope := NA ]
+# szatrends[ var == "DIR_att"    & N <=  50, slope := NA ]
+# szatrends[ var == "DIR_transp" & N <=  50, slope := NA ]
 
 
 
@@ -835,8 +847,6 @@ for (ase in season) {
     }
 
 }
-
-
 
 
 
