@@ -9,7 +9,7 @@ SLIDY  = $(TARGET).html
 
 .DEFAULT_GOAL := pdf
 
-all: pdf slidy
+all: p1 pdf slidy
 
 ## will build default output from yaml
 ## using  rmarkdown::beamer_presentation output doesnt work well may need yaml file
@@ -29,4 +29,10 @@ $(SLIDY): $(RMD)
 	# setsid mimeopen  $@ &
 
 
+p1: DHI_GHI_longterm_trends.R
+DHI_GHI_longterm_trends.R: DHI_GHI_longterm_trends.pdf
+	Rscript -e "rmarkdown::render( '$?' )"
+	@echo "Building: $@"
+	@echo "Changed:  $?"
+	setsid evince    $@ &
 
