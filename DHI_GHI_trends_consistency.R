@@ -1,4 +1,4 @@
-#!/usr/bin/env Rscript
+# /* #!/usr/bin/env Rscript */
 # /* Copyright (C) 2022 Athanasios Natsis <natsisthanasis@gmail.com> */
 #' ---
 #' title:         "Trends of SDR in Thessaloniki "
