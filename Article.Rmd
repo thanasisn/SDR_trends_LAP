@@ -30,6 +30,7 @@ output:
     keep_tex:         no
     latex_engine:     xelatex
     toc:              yes
+    toc_depth:        4
     fig_width:        7
     fig_height:       4.5
   html_document:
@@ -65,7 +66,8 @@ Time span for CM21 is 1993-2022 and 2016-2022 for CHP1.
 All measurements have been manually screened for inconsistencies and obviously 
 problematic data have been excluded.
 <!-- physical quantities -->
-The conversions to irradiance was done using the calibration factor
+The conversions to irradiance was done using the available calibrations factors,
+for both instruments. For CHP1........
 .......chp1.... cmp21......
 , and adjusting for the dark signal offset daily, using the nights 
 before and after each day.
@@ -78,7 +80,7 @@ Due to the large measurement uncertainty near the horizon we exclude
 all measurements with SZA greater than $85^\circ$. Moreover, due to 
 nearby hills and buildings we remove data with azimuth angle between 
 $35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$, as at 
-those cases the Sun can not viewed by the instruments.
+those cases the Sun was not visible by the instruments.
 
 
 ## Data process
@@ -92,26 +94,33 @@ And, we make all measurements relative to the .........TSI.......... ,
 using an homogenized timeseries of satellite TSI data...........
 
 <!-- Clear Sky -->
-We will use two dataset of our measurements, one for all sky conditions (ALL),
-which is the whole available data, and one filtered for 'clear sky' 
+We using two selection of our measurements dataset, one with all sky conditions (ALL),
+consisting of the whole available data, and one filtered for 'clear sky' 
 conditions (CS). The latter was created, using a method adapted to our 
-site as proposed by @Long2000 and by @Reno2016.
+site, and was proposed by @Long2000 and by @Reno2016.
 
 
 
 
 ## Aggregation 
 
-Both dataset were aggregate in SZA bins by am, pm, am+pm
+Both dataset were aggregate in $1^\circ$ SZA bins by am, pm, am+pm
+
+some data was rejected.......
 
 by daily mean 
 
+daily sum
+
 seasonal daily mean
 
-Deseasonlized
+<!-- Deseasonalization -->
+We remove the natural occurring seasonal variation, by calculating the mean
+values for the corresponding time step, and subtracting them .........
 
 
-## Longterm trends
+
+## Long-term trends
 
 ```{r trackercomm, echo=F, fig.cap="tracker"}
 knitr::include_graphics("./images/longtermtrendsALL-2.pdf")

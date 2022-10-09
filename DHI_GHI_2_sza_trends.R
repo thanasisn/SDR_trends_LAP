@@ -27,6 +27,7 @@
 #'     keep_tex:         no
 #'     latex_engine:     xelatex
 #'     toc:              yes
+#'     toc_depth:        4
 #'     fig_width:        7
 #'     fig_height:       4.5
 #'   html_document:
@@ -543,11 +544,15 @@ abline(h=300)
 wecare <- grep( "^slope|^N",names(szatrends),ignore.case = T, value = T)
 
 
-#+ szatrends, echo=F, include=T
+#+ szatrends, echo=F, include=T, results = "asis"
 ## ALL - CS
 for (type in unique(szatrends$DATA)) {
     ## DIR - GLB - transp
     for (avar in unique(szatrends$var)) {
+
+        cat("\n\\newpage\n\n")
+        cat(paste("\n###", type, avar,"\n\n"))
+
         ## statistic variable
         for (awe in wecare) {
             awename <- gsub("(\\D)(\\D+)", "\\U\\1\\L\\2", sub("\\."," ", awe), perl = TRUE)
@@ -577,6 +582,8 @@ for (type in unique(szatrends$DATA)) {
                    # col    = c(unique(pam$col), unique(ppm$col)),
                    col    = c(2, 3),
                    pch    = c(unique(pam$pch), unique(ppm$pch)), ncol = 2, bty = "n")
+
+            cat("\n\n")
         }
 
 #
@@ -743,13 +750,16 @@ abline(h=300/4)
 wecare <- grep( "^slope|^N",names(szatrends_seas),ignore.case = T, value = T)
 
 
-#+ szatrendsseas, echo=F, include=T
+#+ szatrendsseas, echo=F, include=T, results = "asis"
 ## Winter - Summer ....
 for (ase in season) {
     ## ALL - Clear sky
     for (type in unique(szatrends_seas$DATA)) {
         ## DIR - GLB - transp
         for (avar in unique(szatrends_seas$var)) {
+
+            cat("\n\\newpage\n\n")
+            cat(paste("###",ase, type, avar,"\n\n"))
 
             ## statistic variable
             for (awe in wecare) {
