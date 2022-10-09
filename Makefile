@@ -57,7 +57,7 @@ $(SLIDY): $(RMD)
 
 
 ###   1. DHI_GHI_longterm_trends
-TARGET = DHI_GHI_longterm_trends
+TARGET = DHI_GHI_1_longterm_trends
 RMD    = $(TARGET).R
 PDF    = $(TARGET).pdf
 SLIDY  = $(TARGET).html
@@ -77,7 +77,7 @@ $(SLIDY): $(RMD)
 
 
 ###   2. DHI_GHI_sza_trends
-TARGET = DHI_GHI_sza_trends
+TARGET = DHI_GHI_2_sza_trends
 RMD    = $(TARGET).R
 PDF    = $(TARGET).pdf
 SLIDY  = $(TARGET).html
@@ -97,7 +97,7 @@ $(SLIDY): $(RMD)
 
 
 ###   3. DHI_GHI_trends_consistency
-TARGET = DHI_GHI_trends_consistency
+TARGET = DHI_GHI_3_trends_consistency
 RMD    = $(TARGET).R
 PDF    = $(TARGET).pdf
 SLIDY  = $(TARGET).html
