@@ -53,6 +53,44 @@ knitr::opts_chunk$set(fig.pos    = '!h'    )
 
 ```
 
+# Intoduction.
+
+# Data and methodology.
+
+## Preperation.
+
+<!-- measurement -->
+For both CM21 and CHP1 instruments, the mean signal over one minute is recorded every one minute.
+<!-- screening -->
+A manual screening processes, removes inconsistencies and erroneous recordings, that can occur on a long contentious operation, like this one.
+<!-- physical quantities -->
+The conversion to irradiance was done using the available calibrations factors. For CHP1, there is only the initial one by the manufacture, and for CM21 there are seven calibration procedure in the span of the period we investigate.
+<!-- Dark signal -->
+We have adjusted the measurements for the dark signal offset, by a daily value, using the nights before and after each day.
+<!-- Quality assurance -->
+A radiation data quality assurance procedure was applied, 
+adjusted for the site, based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006]. 
+Only data characterized as good quality were used in this stud.
+<!-- Data preparation -->
+Due to larger measurement uncertainty near the horizon, we exclude
+all measurements with SZA greater than $85^\circ$. 
+Moreover, due to some obstructions around the site (hills and buildings), we remove data with Azimuth angle between 
+$35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$. At 
+those cases the Sun, were not visible by the instruments.
+
+
+
+
+
+# Results
+
+# Conclusions
+
+
+
+---------------------------
+
+
 
 ## Data description 
 
@@ -62,25 +100,6 @@ Time span for CM21 is 1993-2022 and 2016-2022 for CHP1.
 ...... Measurements CHP1 CM21
 
 
-<!-- screening -->
-All measurements have been manually screened for inconsistencies and obviously 
-problematic data have been excluded.
-<!-- physical quantities -->
-The conversions to irradiance was done using the available calibrations factors,
-for both instruments. For CHP1........
-.......chp1.... cmp21......
-, and adjusting for the dark signal offset daily, using the nights 
-before and after each day.
-<!-- Quality assurance -->
-A radiation data quality assurance procedure was applied adjusted for the site,
-based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006]. 
-Only data characterized with low quality indicators was rejected.
-<!-- Data preparation -->
-Due to the large measurement uncertainty near the horizon we exclude
-all measurements with SZA greater than $85^\circ$. Moreover, due to 
-nearby hills and buildings we remove data with azimuth angle between 
-$35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$, as at 
-those cases the Sun was not visible by the instruments.
 
 
 ## Data process
