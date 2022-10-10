@@ -121,9 +121,21 @@ if ( !file.exists(common_data) | file.mtime(CS_file) > file.mtime(common_data) )
     DATA_all[  , CS_ref_HOR := NULL ]
     DATA_Clear[, CS_ref_HOR := NULL ]
 
+
+    ## 1. long-term
+
+
+
+
+
+
+
+    ## 2.
+
+
+
     ## save work space
     save(list = ls(all = TRUE),file = common_data)
-
 } else {
     cat(paste("\n\nLoad environment and data from: ", common_data,"\n\n"))
     load( file = common_data)

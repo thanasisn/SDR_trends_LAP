@@ -121,7 +121,7 @@ options(error = function() {
 #' #### Calculate daily means ####
 #+ echo=F, include=T
 
-ALL_daily_mean <- DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+ALL_1_daily_mean <- DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                                GLB_att       = mean(GLB_att,    na.rm = T),
                                HOR_att       = mean(HOR_att,    na.rm = T),
                                DIR_transp    = mean(DIR_transp, na.rm = T),
@@ -136,7 +136,7 @@ ALL_daily_mean <- DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                            by = .( Date = Day ) ]
 
 
-CLEAR_daily_mean <- DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+CLEAR_1_daily_mean <- DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                                    GLB_att       = mean(GLB_att,    na.rm = T),
                                    HOR_att       = mean(HOR_att,    na.rm = T),
                                    DIR_transp    = mean(DIR_transp, na.rm = T),
@@ -153,44 +153,39 @@ CLEAR_daily_mean <- DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
 
 
 #' #### Margin of error calculation for 0.95 confidence interval ####
-#+ echo=T, include=T
+#+ echo=F, include=T
 conf_param  <- 1-(1-Daily_confidence_limit)/2
 suppressWarnings({
-    ALL_daily_mean[,  DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
-    ALL_daily_mean[,  HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
-    ALL_daily_mean[,  GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
-    ALL_daily_mean[,  DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
-    CLEAR_daily_mean[,DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
-    CLEAR_daily_mean[,HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
-    CLEAR_daily_mean[,GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
-    CLEAR_daily_mean[,DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
+    ALL_1_daily_mean[,  DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
+    ALL_1_daily_mean[,  HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
+    ALL_1_daily_mean[,  GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
+    ALL_1_daily_mean[,  DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
+    CLEAR_1_daily_mean[,DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
+    CLEAR_1_daily_mean[,HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
+    CLEAR_1_daily_mean[,GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
+    CLEAR_1_daily_mean[,DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
 })
 #+ echo=F, include=F
 
 
 #' #### Exclude means with less than `r Daily_aggregation_N_lim` data points
 #+ echo=F, include=T
-ALL_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
-ALL_daily_mean[  GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
-ALL_daily_mean[  HOR_att_N <= Daily_aggregation_N_lim, HOR_att    := NA ]
-ALL_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
-CLEAR_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
-CLEAR_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, HOR_att    := NA ]
-CLEAR_daily_mean[GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
-CLEAR_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
-
-
-
-#####TODO
-# stop("TODO")
+ALL_1_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
+ALL_1_daily_mean[  GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
+ALL_1_daily_mean[  HOR_att_N <= Daily_aggregation_N_lim, HOR_att    := NA ]
+ALL_1_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
+CLEAR_1_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
+CLEAR_1_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, HOR_att    := NA ]
+CLEAR_1_daily_mean[GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
+CLEAR_1_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
 
 
 
 #' #### Calculate daily seasonal values ####
 #+ echo=F, include=T
 
-ALL_daily_seas <-
-    ALL_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+ALL_1_daily_seas <-
+    ALL_1_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
                        GLB_att_seas    = mean(GLB_att,    na.rm = T),
                        HOR_att_seas    = mean(HOR_att,    na.rm = T),
                        DIR_transp_seas = mean(DIR_transp, na.rm = T),
@@ -202,8 +197,8 @@ ALL_daily_seas <-
                        DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                    by = .( doy ) ]
 
-CLEAR_daily_seas <-
-    CLEAR_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+CLEAR_1_daily_seas <-
+    CLEAR_1_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
                          GLB_att_seas    = mean(GLB_att,    na.rm = T),
                          HOR_att_seas    = mean(HOR_att,    na.rm = T),
                          DIR_transp_seas = mean(DIR_transp, na.rm = T),
@@ -220,11 +215,8 @@ CLEAR_daily_seas <-
 #+ echo=F, include=F
 ## ~ Plots longterm  ####
 
-
-stop()
-
-
-data_list  <- list(ALL = ALL_daily_mean, CLEAR = CLEAR_daily_mean)
+data_list  <- list(ALL   = ALL_1_daily_mean,
+                   CLEAR = CLEAR_1_daily_mean)
 data_names <- c(
     "GLB_att",
     "DIR_att",
@@ -240,76 +232,96 @@ for(i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (xvar in by_var){
         for (yvar in wecare) {
-            col <- get(paste0(c("col",unlist(strsplit(var,split = "_" ))[1:2]),collapse = "_"))
+            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
             vect <- Dplot[[yvar]]
-            # hist(vect, main = yvar, breaks = 100, col = col)
             plot(Dplot[[xvar]], vect,
                  pch = ".", col = col,
-                 main = paste(names(data_list[1]), var),
+                 main = paste(names(data_list[i]), yvar),
                  xlab = xvar, ylab = yvar)
         }
     }
 }
-
-
-
-
-
-hist(ALL_daily_mean$DIR_att_N, col = col_DIR_att    )
-hist(ALL_daily_mean$GLB_att_N, col = col_GLB_att    )
-
-
-hist( CLEAR_daily_mean$DIR_att_N)
-hist( CLEAR_daily_mean$GLB_att_N)
-
-
-
-
-
+for(i in 1:length(data_list)) {
+    Dplot <- data_list[[i]]
+        for (yvar in wecare) {
+            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            vect <- Dplot[[yvar]]
+            hist(vect,
+                 main = paste(names(data_list[i]), yvar),
+                 breaks = 100, col = col)
+    }
+}
 
 ## ~ Plots seasonal ####
-
-plot( ALL_daily_seas$doy, ALL_daily_seas$DIR_att_seas   , col = col_DIR_att    )
-plot( ALL_daily_seas$doy, ALL_daily_seas$GLB_att_seas   , col = col_GLB_att    )
-plot( ALL_daily_seas$doy, ALL_daily_seas$DIR_transp_seas, col = col_DIR_transp )
-plot( ALL_daily_seas$doy, ALL_daily_seas$DIR_att_N_seas , col = col_DIR_att    )
-plot( ALL_daily_seas$doy, ALL_daily_seas$GLB_att_N_seas , col = col_GLB_att    )
-
-plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$DIR_att_seas   , col = col_DIR_att    )
-plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$GLB_att_seas   , col = col_GLB_att    )
-plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$DIR_transp_seas, col = col_DIR_transp )
-plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$DIR_att_N_seas, col = col_DIR_att    )
-plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$GLB_att_N_seas, col = col_GLB_att    )
+data_list  <- list(ALL_Seas   = ALL_1_daily_seas,
+                   CLEAR_Seas = CLEAR_1_daily_seas)
+data_names <- c(
+    "GLB_att",
+    "DIR_att",
+    "DIR_transp",
+    "HOR_att",
+    "GLB_att_N",
+    "DIR_att_N"
+)
+by_var     <- c("doy")
+wecare     <- unique(unlist(lapply(data_list, names)))
+wecare     <- grep(paste0(by_var,collapse = "|"), wecare, invert = T, value = T)
+for(i in 1:length(data_list)) {
+    Dplot <- data_list[[i]]
+    for (xvar in by_var){
+        for (yvar in wecare) {
+            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            vect <- Dplot[[yvar]]
+            plot(Dplot[[xvar]], vect,
+                 pch = ".", col = col,
+                 main = paste(names(data_list[i]), yvar),
+                 xlab = xvar, ylab = yvar)
+        }
+    }
+}
+for(i in 1:length(data_list)) {
+    Dplot <- data_list[[i]]
+    for (yvar in wecare) {
+        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+        vect <- Dplot[[yvar]]
+        hist(vect,
+             main = paste(names(data_list[i]), yvar),
+             breaks = 100, col = col)
+    }
+}
+rm(data_list)
 
 
 
 #' #### Calculate seasonal anomaly ####
 #+ echo=F, include=F
 
-ALL_daily_seas   <- merge(  ALL_daily_mean, ALL_daily_seas,   by = "doy", all = T)
-CLEAR_daily_seas <- merge(CLEAR_daily_mean, CLEAR_daily_seas, by = "doy", all = T)
+ALL_daily_DEseas   <- merge(  ALL_1_daily_mean, ALL_1_daily_seas,   by = "doy", all = T)
+CLEAR_daily_DEseas <- merge(CLEAR_1_daily_mean, CLEAR_1_daily_seas, by = "doy", all = T)
 
-setorder(ALL_daily_seas,Date)
-setorder(CLEAR_daily_seas,Date)
+setorder(ALL_daily_DEseas,Date)
+setorder(CLEAR_daily_DEseas,Date)
 
 
 ## anomaly
-# ALL_daily_seas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
-# ALL_daily_seas[   , GLB_att    := GLB_att    - GLB_att_seas    ]
-# ALL_daily_seas[   , DIR_transp := DIR_transp - DIR_transp_seas ]
-# CLEAR_daily_seas[ , DIR_att    := DIR_att    - DIR_att_seas    ]
-# CLEAR_daily_seas[ , GLB_att    := GLB_att    - GLB_att_seas    ]
-# CLEAR_daily_seas[ , DIR_transp := DIR_transp - DIR_transp_seas ]
+# ALL_daily_DEseas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
+# ALL_daily_DEseas[   , GLB_att    := GLB_att    - GLB_att_seas    ]
+# ALL_daily_DEseas[   , DIR_transp := DIR_transp - DIR_transp_seas ]
+# CLEAR_daily_DEseas[ , DIR_att    := DIR_att    - DIR_att_seas    ]
+# CLEAR_daily_DEseas[ , GLB_att    := GLB_att    - GLB_att_seas    ]
+# CLEAR_daily_DEseas[ , DIR_transp := DIR_transp - DIR_transp_seas ]
 
 
 ## relative anomaly
 #+ echo=T, include=T
-ALL_daily_seas[  , DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-ALL_daily_seas[  , GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-ALL_daily_seas[  , DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-CLEAR_daily_seas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLEAR_daily_seas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-CLEAR_daily_seas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+ALL_daily_DEseas[  , DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+ALL_daily_DEseas[  , HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+ALL_daily_DEseas[  , GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+ALL_daily_DEseas[  , DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+CLEAR_daily_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+CLEAR_daily_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+CLEAR_daily_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+CLEAR_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
 #+ echo=F, include=F
 
 
@@ -321,10 +333,10 @@ CLEAR_daily_seas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_trans
 #+ longtermtrendsALL, echo=F, include=T
 
 gather <- data.frame()
-timefactor <- 1
 
-plot(ALL_daily_seas$Date, ALL_daily_seas$DIR_att, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_DIR_att )
-lm1 <- lm( DIR_att ~ Date , data = ALL_daily_seas)
+
+plot(ALL_daily_DEseas$Date, ALL_daily_DEseas$DIR_att, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_DIR_att )
+lm1 <- lm( DIR_att ~ Date , data = ALL_daily_DEseas)
 gather <- rbind(gather,
                 data.table(
                     var  = "DIR_att",
@@ -335,12 +347,30 @@ gather <- rbind(gather,
 abline(lm1)
 fit <- lm1[[1]]
 legend('top', lty = 1, bty = "n",
-       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/timefactor*365),3),'* year'))
+       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/Days_of_year),3),'* year'))
 title(paste("All day Direct"),cex=0.8)
 
 
-plot(ALL_daily_seas$Date, ALL_daily_seas$GLB_att, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_GLB_att )
-lm1 <- lm( GLB_att ~ Date , data = ALL_daily_seas)
+plot(ALL_daily_DEseas$Date, ALL_daily_DEseas$HOR_att, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_HOR_att )
+lm1 <- lm( HOR_att ~ Date , data = ALL_daily_DEseas)
+gather <- rbind(gather,
+                data.table(
+                    var  = "HOR_att",
+                    data = "ALL",
+                    linear_regression_capture(lm1)
+                )
+)
+abline(lm1)
+fit <- lm1[[1]]
+legend('top', lty = 1, bty = "n",
+       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/Days_of_year),3),'* year'))
+title(paste("All day Direct HOR"),cex=0.8)
+
+
+
+
+plot(ALL_daily_DEseas$Date, ALL_daily_DEseas$GLB_att, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_GLB_att )
+lm1 <- lm( GLB_att ~ Date , data = ALL_daily_DEseas)
 gather <- rbind(gather,
                 data.table(
                     var  = "GLB_att",
@@ -351,12 +381,12 @@ gather <- rbind(gather,
 abline(lm1)
 fit <- lm1[[1]]
 legend('top', lty = 1, bty = "n",
-       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/timefactor*365),3),'* year'))
+       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/Days_of_year),3),'* year'))
 title(paste("All sky Global"),cex=0.8)
 
 
-plot(ALL_daily_seas$Date, ALL_daily_seas$DIR_transp, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_DIR_transp )
-lm1 <- lm( DIR_transp ~ Date , data = ALL_daily_seas)
+plot(ALL_daily_DEseas$Date, ALL_daily_DEseas$DIR_transp, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_DIR_transp )
+lm1 <- lm( DIR_transp ~ Date , data = ALL_daily_DEseas)
 gather <- rbind(gather,
                 data.table(
                     var  = "DIR_transp",
@@ -367,7 +397,7 @@ gather <- rbind(gather,
 abline(lm1)
 fit <- lm1[[1]]
 legend('top', lty = 1, bty = "n",
-       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/timefactor*365),3),'* year'))
+       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/Days_of_year),3),'* year'))
 title(paste("All sky Direct transparency"),cex=0.8)
 
 
@@ -378,8 +408,8 @@ title(paste("All sky Direct transparency"),cex=0.8)
 #' ## Trends on clear sky data
 #+ longtermtrendsCS, echo=F, include=T
 
-plot(CLEAR_daily_seas$Date, CLEAR_daily_seas$DIR_att, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_DIR_att )
-lm1 <- lm( DIR_att ~ Date , data = CLEAR_daily_seas)
+plot(CLEAR_daily_DEseas$Date, CLEAR_daily_DEseas$DIR_att, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_DIR_att )
+lm1 <- lm( DIR_att ~ Date , data = CLEAR_daily_DEseas)
 gather <- rbind(gather,
                 data.table(
                     var  = "DIR_att",
@@ -390,12 +420,30 @@ gather <- rbind(gather,
 abline(lm1)
 fit <- lm1[[1]]
 legend('top', lty = 1, bty = "n",
-       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/timefactor*365),3),'* year'))
+       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/Days_of_year),3),'* year'))
 title(paste("Clear Sky Direct"),cex=0.8)
 
 
-plot(CLEAR_daily_seas$Date, CLEAR_daily_seas$GLB_att, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_GLB_att )
-lm1 <- lm( GLB_att ~ Date , data = CLEAR_daily_seas)
+
+plot(CLEAR_daily_DEseas$Date, CLEAR_daily_DEseas$HOR_att, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_HOR_att )
+lm1 <- lm( HOR_att ~ Date , data = CLEAR_daily_DEseas)
+gather <- rbind(gather,
+                data.table(
+                    var  = "HOR_att",
+                    data = "CLEAR",
+                    linear_regression_capture(lm1)
+                )
+)
+abline(lm1)
+fit <- lm1[[1]]
+legend('top', lty = 1, bty = "n",
+       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/Days_of_year),3),'* year'))
+title(paste("Clear Sky Direct HOR"),cex=0.8)
+
+
+
+plot(CLEAR_daily_DEseas$Date, CLEAR_daily_DEseas$GLB_att, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_GLB_att )
+lm1 <- lm( GLB_att ~ Date , data = CLEAR_daily_DEseas)
 gather <- rbind(gather,
                 data.table(
                     var  = "GBL_att",
@@ -406,12 +454,12 @@ gather <- rbind(gather,
 abline(lm1)
 fit <- lm1[[1]]
 legend('top', lty = 1, bty = "n",
-       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/timefactor*365),3),'* year'))
+       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/Days_of_year),3),'* year'))
 title(paste("Clear Sky Global"), cex=0.8)
 
 
-plot(CLEAR_daily_seas$Date, CLEAR_daily_seas$DIR_transp, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_DIR_transp )
-lm1 <- lm( DIR_transp ~ Date , data = CLEAR_daily_mean)
+plot(CLEAR_daily_DEseas$Date, CLEAR_daily_DEseas$DIR_transp, pch  = ".", xlab = "", ylab = "Seasonal Delta [%]", col = col_DIR_transp )
+lm1 <- lm( DIR_transp ~ Date , data = CLEAR_1_daily_mean)
 gather <- rbind(gather,
                 data.table(
                     var  = "DIR_transp",
@@ -422,7 +470,7 @@ gather <- rbind(gather,
 abline(lm1)
 fit <- lm1[[1]]
 legend('top', lty = 1, bty = "n",
-       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/timefactor*365),3),'* year'))
+       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/Days_of_year),3),'* year'))
 title(paste("Clear Sky Direct transparency"), cex=0.8)
 
 
@@ -434,43 +482,36 @@ gather <- data.table(gather)
 #+ echo=F, include=T
 pprint <- gather[ , ..wecare]
 
-pprint[, slope    := slope/timefactor*365 ]
-pprint[, slope.sd := slope.sd/timefactor*365 ]
+## convert slope / year
+pprint[, slope    := slope    / Days_of_year ]
+pprint[, slope.sd := slope.sd / Days_of_year ]
 
 pander(pprint,
        cap = "Slope is in %/year")
 myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat")
 #+ echo=F, include=F
 
-## Test plots of all variables
-#+ echo=F, include=F
-data_list  <- list(ALL_daily_seas, CLEAR_daily_seas)
-data_names <- list("All data points", "All clear sky data points")
-by_var     <- "Date"
-wecare     <- unique(unlist(lapply(data_list, names)))
-wecare     <- grep(by_var, wecare, invert = T, value = T)
-for(i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    cat(paste("\n\n## ", i, "\n\n"))
-    for (var in wecare) {
-        vect <- Dplot[[var]]
-        hist(vect, main = var, breaks = 100)
-        plot(Dplot[[by_var]], vect, pch = ".", main = var)
-        # plot(Dplot$SZA, vect, pch = ".", main = var)
-        # plot(Dplot$SZA, vect, pch = ".", main = var)
-        # plot(cosde(Dplot$SZA), vect, pch = ".", main = var)
-    }
-}
 
 
-
-
-
-
-
-
-
-
+# ## Test plots of all variables
+# #+ echo=F, include=F
+# data_list  <- list(ALL_daily_DEseas, CLEAR_daily_DEseas)
+# data_names <- list("All data points", "All clear sky data points")
+# by_var     <- "Date"
+# wecare     <- unique(unlist(lapply(data_list, names)))
+# wecare     <- grep(by_var, wecare, invert = T, value = T)
+# for(i in 1:length(data_list)) {
+#     Dplot <- data_list[[i]]
+#     cat(paste("\n\n## ", i, "\n\n"))
+#     for (var in wecare) {
+#         vect <- Dplot[[var]]
+#         hist(vect, main = var, breaks = 100)
+#         plot(Dplot[[by_var]], vect, pch = ".", main = var)
+#         # plot(Dplot$SZA, vect, pch = ".", main = var)
+#         # plot(Dplot$SZA, vect, pch = ".", main = var)
+#         # plot(cosde(Dplot$SZA), vect, pch = ".", main = var)
+#     }
+# }
 
 
 
