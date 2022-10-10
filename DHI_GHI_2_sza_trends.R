@@ -90,6 +90,9 @@ source("~/CODE/FUNCTIONS/R/data.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
 
+## move to data_input for all three
+# rm(DATA_Clear)
+# rm(DATA_all)
 
 options(error = function() {
     if (interactive()) {
@@ -113,158 +116,217 @@ options(error = function() {
 #+ echo=F, include=T
 
 ALL_2_daily_mean <- DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
-                               GLB_att       = mean(GLB_att,    na.rm = T),
-                               DIR_transp    = mean(DIR_transp, na.rm = T),
-                               DIR_att_sd    = sd(  DIR_att,    na.rm = T),
-                               GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                               DIR_transp_sd = sd(  DIR_transp, na.rm = T),
-                               doy           = yday(Date),
-                               GLB_att_N     = sum(!is.na(GLB_att)),
-                               DIR_att_N     = sum(!is.na(DIR_att))  ),
+                                 HOR_att       = mean(HOR_att,    na.rm = T),
+                                 GLB_att       = mean(GLB_att,    na.rm = T),
+                                 DIR_transp    = mean(DIR_transp, na.rm = T),
+                                 DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                                 HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                                 GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                                 DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                                 doy           = yday(Date),
+                                 GLB_att_N     = sum(!is.na(GLB_att)),
+                                 HOR_att_N     = sum(!is.na(HOR_att)),
+                                 DIR_att_N     = sum(!is.na(DIR_att))  ),
                            by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                                   Date    = Day,
                                   preNoon = preNoon  ) ]
 
 
-CLEAR_daily_mean <- DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
-                                   GLB_att       = mean(GLB_att,    na.rm = T),
-                                   DIR_transp    = mean(DIR_transp, na.rm = T),
-                                   DIR_att_sd    = sd(  DIR_att,    na.rm = T),
-                                   GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                                   DIR_transp_sd = sd(DIR_transp, na.rm = T),
-                                   doy           = yday(Date),
-                                   GLB_att_N     = sum(!is.na(GLB_att)),
-                                   DIR_att_N     = sum(!is.na(DIR_att))  ),
+CLEAR_2_daily_mean <- DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                                     HOR_att       = mean(HOR_att,    na.rm = T),
+                                     GLB_att       = mean(GLB_att,    na.rm = T),
+                                     DIR_transp    = mean(DIR_transp, na.rm = T),
+                                     DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                                     HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                                     GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                                     DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                                     doy           = yday(Date),
+                                     GLB_att_N     = sum(!is.na(GLB_att)),
+                                     HOR_att_N     = sum(!is.na(HOR_att)),
+                                     DIR_att_N     = sum(!is.na(DIR_att))  ),
                                by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                                       Date    = Day,
                                       preNoon = preNoon ) ]
 
 
 
-#' #### Margin of error calculation for 0.95 confidence interval ####
+#' #### Margin of error calculation for `r SZA_confidence_limit` confidence interval ####
 #+ echo=T, include=T
-CONF_INTERV <- .95
-conf_param  <- 1-(1-CONF_INTERV)/2
+
+conf_param  <- 1-(1-SZA_confidence_limit)/2
 suppressWarnings({
 ALL_2_daily_mean[,   DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
+ALL_2_daily_mean[,   HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
 ALL_2_daily_mean[,   GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
 ALL_2_daily_mean[,   DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
-CLEAR_daily_mean[, DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
-CLEAR_daily_mean[, GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
-CLEAR_daily_mean[, DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
+CLEAR_2_daily_mean[, DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
+CLEAR_2_daily_mean[, HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
+CLEAR_2_daily_mean[, GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
+CLEAR_2_daily_mean[, DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
 })
 #+ echo=F, include=F
 
 
-#' #### Exclude means with less than `r SZA_THRES` data points
+#' #### Exclude means with less than `r SZA_aggregation_N_lim` data points
 #+ echo=F, include=T
-ALL_2_daily_mean[   DIR_att_N <= SZA_THRES, DIR_att    := NA ]
-ALL_2_daily_mean[   GLB_att_N <= SZA_THRES, GLB_att    := NA ]
-ALL_2_daily_mean[   DIR_att_N <= SZA_THRES, DIR_transp := NA ]
-CLEAR_daily_mean[ DIR_att_N <= SZA_THRES, DIR_att    := NA ]
-CLEAR_daily_mean[ GLB_att_N <= SZA_THRES, GLB_att    := NA ]
-CLEAR_daily_mean[ DIR_att_N <= SZA_THRES, DIR_transp := NA ]
+ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_att    := NA ]
+ALL_2_daily_mean[   HOR_att_N <= SZA_aggregation_N_lim, HOR_att    := NA ]
+ALL_2_daily_mean[   GLB_att_N <= SZA_aggregation_N_lim, GLB_att    := NA ]
+ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_transp := NA ]
+CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att    := NA ]
+CLEAR_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att    := NA ]
+CLEAR_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att    := NA ]
+CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp := NA ]
 
 
 
 #' #### Calculate daily seasonal values by SZA ####
 #+ echo=F, include=T
 
-ALL_daily_seas <-
+ALL_2_daily_seas <-
     ALL_2_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
-                       GLB_att_seas    = mean(GLB_att,    na.rm = T),
-                       DIR_transp_seas = mean(DIR_transp, na.rm = T),
-                       DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
-                       GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
-                       GLB_att_N_seas  = sum(!is.na(GLB_att)),
-                       DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
-                   by = .( doy, SZA, preNoon ) ]
-
-CLEAR_daily_seas <-
-    CLEAR_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+                         HOR_att_seas    = mean(HOR_att,    na.rm = T),
                          GLB_att_seas    = mean(GLB_att,    na.rm = T),
                          DIR_transp_seas = mean(DIR_transp, na.rm = T),
                          DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                         HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
                          GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
                          GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                         HOR_att_N_seas  = sum(!is.na(HOR_att)),
                          DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
+                     by = .( doy, SZA, preNoon ) ]
+
+CLEAR_2_daily_seas <-
+    CLEAR_2_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+                           HOR_att_seas    = mean(HOR_att,    na.rm = T),
+                           GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                           DIR_transp_seas = mean(DIR_transp, na.rm = T),
+                           DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                           HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
+                           GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
+                           GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                           HOR_att_N_seas  = sum(!is.na(HOR_att)),
+                           DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                      by = .( doy, SZA, preNoon ) ]
 
 
 
 #+ echo=F, include=F
 ## ~ Plots longterm  ####
-plot( ALL_2_daily_mean$Date, ALL_2_daily_mean$DIR_att )
-plot( ALL_2_daily_mean$Date, ALL_2_daily_mean$GLB_att )
-plot( ALL_2_daily_mean$Date, ALL_2_daily_mean$DIR_transp )
 
-plot( ALL_2_daily_mean$doy, ALL_2_daily_mean$DIR_att )
-plot( ALL_2_daily_mean$doy, ALL_2_daily_mean$GLB_att )
-plot( ALL_2_daily_mean$doy, ALL_2_daily_mean$DIR_transp )
-
-plot( ALL_2_daily_mean$doy, ALL_2_daily_mean$GLB_att_N)
-plot( ALL_2_daily_mean$doy, ALL_2_daily_mean$DIR_att_N)
-
-hist(ALL_2_daily_mean$DIR_att_N)
-hist(ALL_2_daily_mean$GLB_att_N)
-
-
-plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$DIR_att )
-plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$GLB_att )
-plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$DIR_transp )
-
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$DIR_att )
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$GLB_att )
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$DIR_transp )
-
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$GLB_att_N)
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$DIR_att_N)
-
-hist( CLEAR_daily_mean$DIR_att_N)
-hist( CLEAR_daily_mean$GLB_att_N)
+data_list  <- list(ALL   = ALL_2_daily_mean,
+                   CLEAR = CLEAR_2_daily_mean)
+data_names <- c(
+    "GLB_att",
+    "DIR_att",
+    "DIR_transp",
+    "HOR_att",
+    "GLB_att_N",
+    "DIR_att_N"
+)
+by_var     <- c("doy","SZA")
+wecare     <- unique(unlist(lapply(data_list, names)))
+wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
+for(i in 1:length(data_list)) {
+    Dplot <- data_list[[i]]
+    for (xvar in by_var){
+        for (yvar in wecare) {
+            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            vect <- Dplot[[yvar]]
+            plot(Dplot[[xvar]], vect,
+                 pch = ".", col = col,
+                 main = paste(names(data_list[i]), yvar),
+                 xlab = xvar, ylab = yvar)
+        }
+    }
+}
+for(i in 1:length(data_list)) {
+    Dplot <- data_list[[i]]
+        for (yvar in wecare) {
+            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            vect <- Dplot[[yvar]]
+            hist(vect,
+                 main = paste(names(data_list[i]), yvar),
+                 breaks = 100, col = col)
+    }
+}
 
 ## ~ Plots seasonal ####
+data_list  <- list(ALL_Seas   = ALL_2_daily_seas,
+                   CLEAR_Seas = CLEAR_2_daily_seas)
+data_names <- c(
+    "GLB_att",
+    "DIR_att",
+    "DIR_transp",
+    "HOR_att",
+    "GLB_att_N",
+    "DIR_att_N"
+)
+by_var     <- c("doy")
+wecare     <- unique(unlist(lapply(data_list, names)))
+wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
+for(i in 1:length(data_list)) {
+    Dplot <- data_list[[i]]
+    for (xvar in by_var){
+        for (yvar in wecare) {
+            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            vect <- Dplot[[yvar]]
+            plot(Dplot[[xvar]], vect,
+                 pch = ".", col = col,
+                 main = paste(names(data_list[i]), yvar),
+                 xlab = xvar, ylab = yvar)
+        }
+    }
+}
+for(i in 1:length(data_list)) {
+    Dplot <- data_list[[i]]
+    for (yvar in wecare) {
+        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+        vect <- Dplot[[yvar]]
+        hist(vect,
+             main = paste(names(data_list[i]), yvar),
+             breaks = 100, col = col)
+    }
+}
+rm(data_list)
 
-plot( ALL_daily_seas$doy, ALL_daily_seas$DIR_att_seas )
-plot( ALL_daily_seas$doy, ALL_daily_seas$GLB_att_seas )
-plot( ALL_daily_seas$doy, ALL_daily_seas$DIR_transp_seas )
-plot( ALL_daily_seas$doy, ALL_daily_seas$GLB_att_N_seas)
-plot( ALL_daily_seas$doy, ALL_daily_seas$DIR_att_N_seas)
 
-plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$DIR_att_seas )
-plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$GLB_att_seas )
-plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$DIR_transp_seas )
-plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$GLB_att_N_seas)
-plot( CLEAR_daily_seas$doy, CLEAR_daily_seas$DIR_att_N_seas)
+
+
+
+
+
+
+
 
 
 
 #' #### Calculate seasonal anomaly ####
 #+ echo=F, include=F
 
-ALL_daily_seas   <- merge(  ALL_2_daily_mean, ALL_daily_seas,   by = c("doy", "SZA", "preNoon"),  all = T)
-CLEAR_daily_seas <- merge(CLEAR_daily_mean, CLEAR_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
+ALL_daily_DEseas   <- merge(  ALL_2_daily_mean, ALL_2_daily_seas,   by = c("doy", "SZA", "preNoon"),  all = T)
+CLEAR_daily_DEseas <- merge(CLEAR_2_daily_mean, CLEAR_2_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
 
-setorder(ALL_daily_seas,Date)
-setorder(CLEAR_daily_seas,Date)
+setorder(ALL_daily_DEseas,Date)
+setorder(CLEAR_daily_DEseas,Date)
 
 
 ## anomaly
-# ALL_daily_seas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
-# ALL_daily_seas[   , GLB_att    := GLB_att    - GLB_att_seas    ]
-# ALL_daily_seas[   , DIR_transp := DIR_transp - DIR_transp_seas ]
-# CLEAR_daily_seas[ , DIR_att    := DIR_att    - DIR_att_seas    ]
-# CLEAR_daily_seas[ , GLB_att    := GLB_att    - GLB_att_seas    ]
-# CLEAR_daily_seas[ , DIR_transp := DIR_transp - DIR_transp_seas ]
+# ALL_daily_DEseas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
+# ALL_daily_DEseas[   , GLB_att    := GLB_att    - GLB_att_seas    ]
+# ALL_daily_DEseas[   , DIR_transp := DIR_transp - DIR_transp_seas ]
+# CLEAR_daily_DEseas[ , DIR_att    := DIR_att    - DIR_att_seas    ]
+# CLEAR_daily_DEseas[ , GLB_att    := GLB_att    - GLB_att_seas    ]
+# CLEAR_daily_DEseas[ , DIR_transp := DIR_transp - DIR_transp_seas ]
 
 ## relative anomaly
 #+ echo=T, include=T
-ALL_daily_seas[  , DIR_att   := 100 * ( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-ALL_daily_seas[  , GLB_att   := 100 * ( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-ALL_daily_seas[  , DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-CLEAR_daily_seas[, DIR_att   := 100 * ( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLEAR_daily_seas[, GLB_att   := 100 * ( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-CLEAR_daily_seas[, DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+ALL_daily_DEseas[  , DIR_att   := 100 * ( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+ALL_daily_DEseas[  , GLB_att   := 100 * ( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+ALL_daily_DEseas[  , DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+CLEAR_daily_DEseas[, DIR_att   := 100 * ( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+CLEAR_daily_DEseas[, GLB_att   := 100 * ( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+CLEAR_daily_DEseas[, DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
 #+ echo=F, include=F
 
 
@@ -275,7 +337,7 @@ CLEAR_daily_seas[, DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_tra
 #+ echo=F, include=F
 timefactor <- 1
 vars <- c("DIR_att", "GLB_att", "DIR_transp")
-dbs  <- c("ALL_daily_seas", "CLEAR_daily_seas")
+dbs  <- c("ALL_daily_DEseas", "CLEAR_daily_DEseas")
 
 gather <- data.frame()
 
@@ -339,8 +401,8 @@ hist(szatrends[var==vars[2],N], breaks = 100)
 
 plot(szatrends$SZA,szatrends$N)
 
-test1 <- szatrends[ DATA == "CLEAR_daily_seas" & var == "DIR_att" ]
-test2 <- szatrends[ DATA == "CLEAR_daily_seas" & var == "GLB_att" ]
+test1 <- szatrends[ DATA == "CLEAR_daily_DEseas" & var == "DIR_att" ]
+test2 <- szatrends[ DATA == "CLEAR_daily_DEseas" & var == "GLB_att" ]
 plot(test1$SZA, test1$N, pch =19)
 abline(h=50)
 plot(test2$SZA, test2$N, pch =19)
@@ -417,7 +479,7 @@ for (type in unique(szatrends$DATA)) {
 #+ echo=F, include=F
 timefactor  <- 1  ## to display % per year
 vars        <- c("DIR_att", "GLB_att", "DIR_transp")
-dbs         <- c("ALL_daily_seas", "CLEAR_daily_seas")
+dbs         <- c("ALL_daily_DEseas", "CLEAR_daily_DEseas")
 season      <- c("Winter", "Spring", "Summer", "Automn")
 gather_seas <- data.frame()
 
@@ -491,15 +553,15 @@ hist(szatrends_seas[var==vars[2],N], breaks = 100)
 
 plot(szatrends_seas$SZA,szatrends_seas$N)
 
-test <- szatrends_seas[ DATA == "CLEAR_daily_seas" & var == "DIR_att" ]
+test <- szatrends_seas[ DATA == "CLEAR_daily_DEseas" & var == "DIR_att" ]
 plot(test$SZA, test$N, pch =19)
 abline(h=50/4)
 
 szatrends[ N <= 30, slope := NA]
 
 
-test1 <- szatrends_seas[ DATA == "CLEAR_daily_seas" & var == "DIR_att" ]
-test2 <- szatrends_seas[ DATA == "CLEAR_daily_seas" & var == "GLB_att" ]
+test1 <- szatrends_seas[ DATA == "CLEAR_daily_DEseas" & var == "DIR_att" ]
+test2 <- szatrends_seas[ DATA == "CLEAR_daily_DEseas" & var == "GLB_att" ]
 plot(test1$SZA, test1$N, pch =19)
 abline(h=50/4)
 plot(test2$SZA, test2$N, pch =19)
@@ -557,64 +619,6 @@ for (ase in season) {
                        col    = c(2, 3),
                        pch    = c(unique(pam$pch), unique(ppm$pch)), ncol = 2, bty = "n")
             }
-
-
-
-#
-#             subdata <- szatrends_seas[ DATA   == type &
-#                                        var    == avar &
-#                                        Season == ase    , ]
-#
-#
-#             pam <- subdata[ preNoon == T ]
-#             ppm <- subdata[ preNoon == F ]
-#
-#             plot(subdata$SZA, subdata$slope, col = subdata$col, pch = subdata$pch)
-#             abline(h=0)
-#             title(paste(ase, "Slope",type, avar),cex=0.9)
-#             legend("top",
-#                    legend = c("Morning", "Evening"),
-#                    col    = c(2 , 3),
-#                    pch    = c(pch_am,     pch_pm), ncol = 2, bty = "n")
-#
-            # plot(subdata$SZA, subdata$slope.sd, col = subdata$preNoon, pch = 19)
-            # abline(h=0)
-            # title(paste("Slope sd",type, avar),cex=0.9)
-            # legend("top",
-            #        legend = c("Morning", "Evening"),
-            #        col    = c(2 , 3),
-            #        pch    = 19, ncol = 2, bty = "n")
-            #
-            # plot(subdata$SZA, subdata$slope.t, col = subdata$preNoon, pch = 19)
-            # abline(h=0)
-            # title(paste("Slope t",type, avar),cex=0.9)
-            # legend("top",
-            #        legend = c("Morning", "Evening"),
-            #        col    = c(2 , 3),
-            #        pch    = 19, ncol = 2, bty = "n")
-            #
-            # plot(subdata$SZA, subdata$slope.p, col = subdata$preNoon, pch = 19)
-            # abline(h=0)
-            # title(paste("Slope p",type, avar),cex=0.9)
-            # legend("top",
-            #        legend = c("Morning", "Evening"),
-            #        col    = c(2 , 3),
-            #        pch    = 19, ncol = 2, bty = "n")
-            #
-            # plot(subdata$SZA, subdata$Rsqrd, col = subdata$preNoon, pch = 19)
-            # abline(h=0)
-            # title(paste("Slope Rsq",type, avar),cex=0.9)
-            # legend("top",
-            #        legend = c("Morning", "Evening"),
-            #        col    = c(2 , 3),
-            #        pch    = 19, ncol = 2, bty = "n")
-            #
-            # plot(subdata$SZA, subdata$N, col = subdata$preNoon, pch = 19)
-            # title(paste("N",type, avar),cex=0.9)
-            # legend("top",
-            #        legend = c("Morning", "Evening"),
-            #        col    = c(2 , 3),
-            #        pch    = 19, ncol = 2, bty = "n")
 
         }
     }
