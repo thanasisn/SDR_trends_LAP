@@ -2,6 +2,8 @@
 
 ## Data input
 
+# file.remove(common_data)
+
 if ( !file.exists(common_data) | file.mtime(CS_file) > file.mtime(common_data) ){
     cat(paste("Create environment and data in: ", common_data))
 
@@ -122,7 +124,90 @@ if ( !file.exists(common_data) | file.mtime(CS_file) > file.mtime(common_data) )
     DATA_Clear[, CS_ref_HOR := NULL ]
 
 
-    ## 1. long-term
+    ####  1. long-term   #######################################################
+
+    ## ~ daily means of all data ####
+    ALL_1_daily_mean <- DATA_all[,.(DIR_att       = mean(DIR_att,    na.rm = T),
+                                    GLB_att       = mean(GLB_att,    na.rm = T),
+                                    HOR_att       = mean(HOR_att,    na.rm = T),
+                                    DIR_transp    = mean(DIR_transp, na.rm = T),
+                                    DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                                    GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                                    HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                                    DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                                    doy           = yday(Date),
+                                    GLB_att_N     = sum(!is.na(GLB_att)),
+                                    HOR_att_N     = sum(!is.na(HOR_att)),
+                                    DIR_att_N     = sum(!is.na(DIR_att))  ),
+                                 by = .( Date = Day ) ]
+
+    ## ~ daily means of clear sky data ####
+    CLEAR_1_daily_mean <- DATA_Clear[,.(DIR_att       = mean(DIR_att,    na.rm = T),
+                                        GLB_att       = mean(GLB_att,    na.rm = T),
+                                        HOR_att       = mean(HOR_att,    na.rm = T),
+                                        DIR_transp    = mean(DIR_transp, na.rm = T),
+                                        DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                                        GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                                        HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                                        DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                                        doy           = yday(Date),
+                                        GLB_att_N     = sum(!is.na(GLB_att)),
+                                        HOR_att_N     = sum(!is.na(HOR_att)),
+                                        DIR_att_N     = sum(!is.na(DIR_att))  ),
+                                     by = .( Date = Day ) ]
+
+
+    ## ~ compute confidence interval ####
+    conf_param  <- 1-(1-Daily_confidence_limit)/2
+    suppressWarnings({
+        ALL_1_daily_mean[,  DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
+        ALL_1_daily_mean[,  HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
+        ALL_1_daily_mean[,  GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
+        ALL_1_daily_mean[,  DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
+        CLEAR_1_daily_mean[,DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
+        CLEAR_1_daily_mean[,HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
+        CLEAR_1_daily_mean[,GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
+        CLEAR_1_daily_mean[,DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
+    })
+
+    ## ~ Exclude means with less than `r Daily_aggregation_N_lim` data points ####
+    ALL_1_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
+    ALL_1_daily_mean[  GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
+    ALL_1_daily_mean[  HOR_att_N <= Daily_aggregation_N_lim, HOR_att    := NA ]
+    ALL_1_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
+    CLEAR_1_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
+    CLEAR_1_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, HOR_att    := NA ]
+    CLEAR_1_daily_mean[GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
+    CLEAR_1_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
+
+
+    ## ~ Calculate daily seasonal values for all data ####
+    ALL_1_daily_seas <-
+        ALL_1_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+                             GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                             HOR_att_seas    = mean(HOR_att,    na.rm = T),
+                             DIR_transp_seas = mean(DIR_transp, na.rm = T),
+                             DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                             HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
+                             GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
+                             GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                             HOR_att_N_seas  = sum(!is.na(HOR_att)),
+                             DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
+                         by = .( doy ) ]
+
+    ## ~ Calculate daily seasonal values for clear sky data ####
+    CLEAR_1_daily_seas <-
+        CLEAR_1_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+                               GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                               HOR_att_seas    = mean(HOR_att,    na.rm = T),
+                               DIR_transp_seas = mean(DIR_transp, na.rm = T),
+                               DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                               HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
+                               GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
+                               GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                               HOR_att_N_seas  = sum(!is.na(HOR_att)),
+                               DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
+                           by = .( doy ) ]
 
 
 
@@ -133,6 +218,7 @@ if ( !file.exists(common_data) | file.mtime(CS_file) > file.mtime(common_data) )
     ## 2.
 
 
+    ## remove unwanted data frames from memory
 
     ## save work space
     save(list = ls(all = TRUE),file = common_data)

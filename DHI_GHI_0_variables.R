@@ -26,7 +26,7 @@ SZA_BIN                  <-  1
 MIN_N                    <-  4
 SEAS_MIN_N               <-  3
 
-Daily_aggregation_N_lim  <- 50
+Daily_aggregation_N_lim  <- 50         ## was SUM_THRES
 Daily_confidence_limit   <-  0.99
 SZA_THRES                <-  3
 

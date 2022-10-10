@@ -94,7 +94,7 @@ $(SLIDY): $(RMD)
 	@echo "Building: $@"
 	@echo "Changed:  $?"
 	# setsid mimeopen  $@ &
-r2: $(RUNT)
+r3: $(RUNT)
 $(RUNT): $(RMD)
 	Rscript $?
 

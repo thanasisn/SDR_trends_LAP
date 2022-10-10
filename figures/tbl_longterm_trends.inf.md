@@ -5,9 +5,9 @@
 ---------------
 
 Object name:    object      
-Date written:   2022-10-10 15:12:49.8 UTC  
+Date written:   2022-10-10 16:14:17.9 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat      
-Data file size: 995.0 B (995) 
+Data file size: 971.0 B (971) 
 Size in memory: 3384 bytes      
 Info file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.inf.md      
 Script name:    /home/athan/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_1_longterm_trends.R      
@@ -21,14 +21,14 @@ Notes:          NA
 
 ```
 Classes ‘data.table’ and 'data.frame':	8 obs. of  8 variables:
- $ var     : chr  "DIR_att" "HOR_att" "GLB_att" "DIR_transp" ...
+ $ var     : chr  "DIR_att" "DIR_transp" "GLB_att" "HOR_att" ...
  $ data    : chr  "ALL" "ALL" "ALL" "ALL" ...
- $ slope   : num  3.57e-07 6.61e-07 3.32e-06 2.75e-06 1.92e-06 ...
- $ slope.sd: num  6.60e-06 6.61e-06 3.26e-07 7.26e-06 1.36e-06 ...
- $ slope.t : num  0.0542 0.1 10.1629 0.3783 1.4138 ...
- $ slope.p : num  9.57e-01 9.20e-01 3.80e-24 7.05e-01 1.58e-01 ...
- $ Rsqrd   : num  1.41e-06 4.79e-06 1.02e-02 6.85e-05 1.46e-03 ...
- $ RsqrdAdj: num  -0.000478 -0.000474 0.010119 -0.00041 0.00073 ...
+ $ slope   : num  0.0477 0.3662 0.4425 0.0882 0.2564 ...
+ $ slope.sd: num  0.8802 0.968 0.0435 0.8823 0.1814 ...
+ $ slope.t : num  0.0542 0.3783 10.1629 0.1 1.4138 ...
+ $ slope.p : num  9.57e-01 7.05e-01 3.80e-24 9.20e-01 1.58e-01 ...
+ $ Rsqrd   : num  1.41e-06 6.85e-05 1.02e-02 4.79e-06 1.46e-03 ...
+ $ RsqrdAdj: num  -0.000478 -0.00041 0.010119 -0.000474 0.00073 ...
  - attr(*, ".internal.selfref")=<externalptr> 
 ```
 
@@ -46,25 +46,25 @@ Classes ‘data.table’ and 'data.frame':	8 obs. of  8 variables:
  Data Summary.
 ---------------
 
-|              var |             data |              slope |          slope.sd |          slope.t |
-|-----------------:|-----------------:|-------------------:|------------------:|-----------------:|
-|         Length:8 |         Length:8 | Min.   :-7.317e-07 | Min.   :1.410e-08 | Min.   :-2.66912 |
-| Class :character | Class :character | 1st Qu.: 2.587e-07 | 1st Qu.:2.981e-07 | 1st Qu.:-0.03593 |
-| Mode  :character | Mode  :character | Median : 1.292e-06 | Median :1.875e-06 | Median : 0.23916 |
-|               NA |               NA | Mean   : 1.389e-06 | Mean   :3.096e-06 | Mean   : 2.82894 |
-|               NA |               NA | 3rd Qu.: 2.778e-06 | 3rd Qu.:6.602e-06 | 3rd Qu.: 3.60108 |
-|               NA |               NA | Max.   : 3.317e-06 | Max.   :7.256e-06 | Max.   :13.49769 |
+|              var |             data |            slope |         slope.sd |          slope.t |          slope.p |
+|-----------------:|-----------------:|-----------------:|-----------------:|-----------------:|-----------------:|
+|         Length:8 |         Length:8 | Min.   :-0.09762 | Min.   :0.001882 | Min.   :-2.66912 | Min.   :0.000000 |
+| Class :character | Class :character | 1st Qu.: 0.03451 | 1st Qu.:0.039761 | 1st Qu.:-0.03593 | 1st Qu.:0.005771 |
+| Mode  :character | Mode  :character | Median : 0.17234 | Median :0.250063 | Median : 0.23916 | Median :0.431438 |
+|               NA |               NA | Mean   : 0.18525 | Mean   :0.413053 | Mean   : 2.82894 | Mean   :0.438397 |
+|               NA |               NA | 3rd Qu.: 0.37053 | 3rd Qu.:0.880710 | 3rd Qu.: 3.60108 | 3rd Qu.:0.799679 |
+|               NA |               NA | Max.   : 0.44252 | Max.   :0.967957 | Max.   :13.49769 | Max.   :0.956802 |
 
  
 
-|          slope.p |             Rsqrd |           RsqrdAdj |
-|-----------------:|------------------:|-------------------:|
-| Min.   :0.000000 | Min.   :1.406e-06 | Min.   :-0.0006634 |
-| 1st Qu.:0.005771 | 1st Qu.:5.260e-05 | 1st Qu.:-0.0004750 |
-| Median :0.431438 | Median :7.649e-04 | Median : 0.0001599 |
-| Mean   :0.438397 | Mean   :5.493e-03 | Mean   : 0.0050083 |
-| 3rd Qu.:0.799679 | 3rd Qu.:6.446e-03 | 3rd Qu.: 0.0058747 |
-| Max.   :0.956802 | Max.   :2.693e-02 | Max.   : 0.0267824 |
+|             Rsqrd |           RsqrdAdj |
+|------------------:|-------------------:|
+| Min.   :1.406e-06 | Min.   :-0.0006634 |
+| 1st Qu.:5.260e-05 | 1st Qu.:-0.0004750 |
+| Median :7.649e-04 | Median : 0.0001599 |
+| Mean   :5.493e-03 | Mean   : 0.0050083 |
+| 3rd Qu.:6.446e-03 | 3rd Qu.: 0.0058747 |
+| Max.   :2.693e-02 | Max.   : 0.0267824 |
 
 
 
@@ -85,16 +85,16 @@ Classes ‘data.table’ and 'data.frame':	8 obs. of  8 variables:
   * **slope**:
 
 
-    |       Min. |   1st Qu. |    Median |      Mean |   3rd Qu. |      Max. |
-    |-----------:|----------:|----------:|----------:|----------:|----------:|
-    | -7.317e-07 | 2.587e-07 | 1.292e-06 | 1.389e-06 | 2.778e-06 | 3.317e-06 |
+    |     Min. | 1st Qu. | Median |   Mean | 3rd Qu. |   Max. |
+    |---------:|--------:|-------:|-------:|--------:|-------:|
+    | -0.09762 | 0.03451 | 0.1723 | 0.1852 |  0.3705 | 0.4425 |
 
   * **slope.sd**:
 
 
-    |     Min. |   1st Qu. |    Median |      Mean |   3rd Qu. |      Max. |
-    |---------:|----------:|----------:|----------:|----------:|----------:|
-    | 1.41e-08 | 2.981e-07 | 1.875e-06 | 3.096e-06 | 6.602e-06 | 7.256e-06 |
+    |     Min. | 1st Qu. | Median |   Mean | 3rd Qu. |  Max. |
+    |---------:|--------:|-------:|-------:|--------:|------:|
+    | 0.001882 | 0.03976 | 0.2501 | 0.4131 |  0.8807 | 0.968 |
 
   * **slope.t**:
 
