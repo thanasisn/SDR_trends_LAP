@@ -27,6 +27,7 @@
 #'     keep_tex:         no
 #'     latex_engine:     xelatex
 #'     toc:              yes
+#'     toc_depth:        4
 #'     fig_width:        7
 #'     fig_height:       4.5
 #'   html_document:
@@ -37,8 +38,6 @@
 #'
 #' ---
 
-#'
-#'
 #+ echo=F, include=T
 
 
@@ -52,7 +51,6 @@ knitr::opts_chunk$set(out.width  = "80%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
 knitr::opts_chunk$set(cache      =  T       )
 # knitr::opts_chunk$set(fig.pos    = '!h'    )
-
 
 
 
@@ -80,7 +78,6 @@ par(pch = ".")
 ####  External code  ####
 library(data.table, quietly = T, warn.conflicts = F)
 library(pander,     quietly = T, warn.conflicts = F)
-
 
 ## Functions from `https://github.com/thanasisn/IStillBreakStuff/tree/main/FUNCTIONS/R`
 source("~/CODE/FUNCTIONS/R/sumNA.R")
@@ -209,21 +206,24 @@ DATA <- DATA[ ! (is.na(wattDIR) & is.na(wattGLB))  ]
 #' ### Move measurements to mean earth distance
 DATA[ , wattDIR_1au := wattDIR * (sun_dist ^ 2) ]
 DATA[ , wattGLB_1au := wattGLB * (sun_dist ^ 2) ]
+DATA[ , wattHOR_1au := wattHOR * (sun_dist ^ 2) ]
 #+ echo=F, include=T
 
 
-#' ### Relative to actual TSI at 1au variable representation
-DATA[ , DIR_att := wattDIR_1au / tsi_1au_comb ]
-DATA[ , GLB_att := wattGLB_1au / tsi_1au_comb ]
+# #' ### Relative to actual TSI at 1au variable representation
+# DATA[ , DIR_att := wattDIR_1au / tsi_1au_comb ]
+# DATA[ , GLB_att := wattGLB_1au / tsi_1au_comb ]
+# DATA[ , HOR_att := wattHOR_1au / tsi_1au_comb ]
 
 #' Using the actual values gives similar trends.
 
 #+ echo=F, include=T
 
-# #' ### Use original variable representation
-# DATA[ , DIR_att := wattDIR_1au ]
-# DATA[ , GLB_att := wattGLB_1au ]
-# #+ echo=F, include=T
+#' ### Use original variable representation
+DATA[ , DIR_att := wattDIR_1au ]
+DATA[ , GLB_att := wattGLB_1au ]
+DATA[ , HOR_att := wattHOR_1au ]
+#+ echo=F, include=T
 
 
 
