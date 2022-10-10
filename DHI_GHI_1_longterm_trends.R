@@ -27,6 +27,7 @@
 #'     keep_tex:         no
 #'     latex_engine:     xelatex
 #'     toc:              yes
+#'     toc_depth:        4
 #'     fig_width:        7
 #'     fig_height:       4.5
 #'   html_document:
@@ -78,86 +79,44 @@ par(pch = ".")
 library(data.table, quietly = T, warn.conflicts = F)
 library(pander,     quietly = T, warn.conflicts = F)
 
+panderOptions('table.alignment.default', 'right')
+panderOptions('table.split.table',        120   )
+
+
 ## Functions from `https://github.com/thanasisn/IStillBreakStuff/tree/main/FUNCTIONS/R`
 source("~/CODE/FUNCTIONS/R/sumNA.R")
 source("~/CODE/FUNCTIONS/R/linear_regrassion_capture.R")
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 
+## For this project
+source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
+source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
+
+
 
 options(error = function() {
     if (interactive()) {
-        # require("beepr"); beep(10)
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
         system("notify-send -u normal -t 30000 'R session' 'An error occured!'")
     }
 })
 
 
-####  Variables  ####
-panderOptions('table.alignment.default', 'right')
-panderOptions('table.split.table',        120   )
 
-DATA_DIR  <- "/home/athan/DATA/Broad_Band"
-CLEARdir  <- "/home/athan/DATA/Broad_Band/CS_id"
-tag       <- paste0("Natsis Athanasios LAP AUTH ", strftime(Sys.time(), format = "%b %Y" ))
-CS_file   <- "/home/athan/DATA/Common_application/Clear_Sky.Rds"
 
-TEST      <- TRUE
 
-col_DIR_att    <- "#2166ac"
-col_DIR_transp <- "#9970ab"
-col_GLB_att    <- "#1a9850"
-
-pch_am         <-  1
-pch_pm         <-  4
-pch_ampm       <- 13 ## try 10
-pch_daily      <- 19
-
-MIN_ELEVA  <- 5  ## use data when sun above that
-SZA_BIN    <- 1
-MIN_N      <- 4
-SEAS_MIN_N <- 3
-
-SUM_THRES  <- 50
-SZA_THRES  <- 3
 
 
 #' ## Data selection
+
+
 #+ echo=F, include=T
 
-####  Get data from Clear sky id data  ####
-input_files <- list.files( path    = CLEARdir,
-                           pattern = "Clear_Sky_[0-9]{4}.Rds",
-                           full.names = T )
 
-if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
-    cat(paste("Load data from Clear Sky proccess from original\n"))
-    DATA <- data.table()
-    for (af in input_files) {
-        temp <- readRDS(af)
-        ## drop some data
-        temp$CHP1temp        <- NULL
-        temp$CHP1tempSD      <- NULL
-        temp$CHP1tempUNC     <- NULL
-        temp$CS_ref          <- NULL
-        temp$Pressure_Source <- NULL
-        temp$chp1TempCF      <- NULL
-        temp$wattDIR_tmp_cr  <- NULL
-        temp$wattDIR_unc_NT  <- NULL
-        temp$wattDIR_unc_WT  <- NULL
-        temp$wattHOR_tmp_cr  <- NULL
-        temp$wattHOR_unc_NT  <- NULL
-        temp$wattHOR_unc_WT  <- NULL
 
-        DATA <- rbind(temp, DATA, fill = TRUE)
-        rm(temp)
-    }
-    ## this is used by old scripts
-    myRtools::write_RDS(object = DATA, file = CS_file)
-} else {
-    cat(paste("Load data from Clear Sky proccess from parsed\n"))
-    DATA <- readRDS(CS_file)
-}
+
+
+
 
 #' ### Data range
 #' Time data span `r range(DATA$Date)`
@@ -166,61 +125,30 @@ if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file))
 
 
 
-#' ### Filter min elevation
-#' Keep data with Sun elevation above `r MIN_ELEVA`
-DATA <- DATA[ Elevat >= MIN_ELEVA ]
-
-#' ### Bais paper obstacle filter
-DATA <- DATA[ ! (Azimuth > 35 & Azimuth < 120 & Elevat < 10) ]
-#+ echo=F, include=T
-
-
-#' ### Keep only data characterized as 'good' by the Radiation Quality control procedure
-#+ echo=F, include=T
-DATA[ QCF_DIR != "good", wattDIR := NA ]
-DATA[ QCF_DIR != "good", QCF_DIR := NA ]
-DATA[ QCF_GLB != "good", wattGLB := NA ]
-DATA[ QCF_GLB != "good", QCF_GLB := NA ]
-DATA <- DATA[ ! (is.na(wattDIR) & is.na(wattGLB))  ]
-
-
-
-## exclude some data for each instrument
-# DATA[ QCF_DIR == "Extremely rare limits min (3)", wattDIR := NA ]
-# DATA[ QCF_DIR == "Extremely rare limits min (3)", QCF_DIR := NA ]
-#
-# dirtb <- table(DATA$QCF_DIR)
-# for (aty in names(dirtb)[!names(dirtb) %in% "good"]) {
-#     temp <- DATA[ QCF_DIR == aty ]
-#     cat(nrow(temp),aty,"\n")
-# }
-# glbtb <- table(DATA$QCF_GLB)
-# for (aty in names(glbtb)[!names(glbtb) %in% "good"]) {
-#     temp <- DATA[ QCF_GLB == aty ]
-#     cat(nrow(temp),aty,"\n")
-# }
-
 
 
 #' ## Data preparation
 #' ### Move measurements to mean earth distance
 DATA[ , wattDIR_1au := wattDIR * (sun_dist ^ 2) ]
 DATA[ , wattGLB_1au := wattGLB * (sun_dist ^ 2) ]
+DATA[ , wattHOR_1au := wattHOR * (sun_dist ^ 2) ]
 #+ echo=F, include=T
 
 
-#' ### Relative to actual TSI at 1au variable representation
-DATA[ , DIR_att := wattDIR_1au / tsi_1au_comb ]
-DATA[ , GLB_att := wattGLB_1au / tsi_1au_comb ]
+# #' ### Relative to actual TSI at 1au variable representation
+# DATA[ , DIR_att := wattDIR_1au / tsi_1au_comb ]
+# DATA[ , GLB_att := wattGLB_1au / tsi_1au_comb ]
+# DATA[ , HOR_att := wattHOR_1au / tsi_1au_comb ]
 
 #' Using the actual values gives similar trends.
 
 #+ echo=F, include=T
 
-# #' ### Use original variable representation
-# DATA[ , DIR_att := wattDIR_1au ]
-# DATA[ , GLB_att := wattGLB_1au ]
-# #+ echo=F, include=T
+#' ### Use original variable representation
+DATA[ , DIR_att := wattDIR_1au ]
+DATA[ , GLB_att := wattGLB_1au ]
+DATA[ , HOR_att := wattHOR_1au ]
+#+ echo=F, include=T
 
 
 
@@ -300,24 +228,30 @@ rm(DATA)
 
 ALL_daily_mean <- DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                                GLB_att       = mean(GLB_att,    na.rm = T),
+                               HOR_att       = mean(HOR_att,    na.rm = T),
                                DIR_transp    = mean(DIR_transp, na.rm = T),
                                DIR_att_sd    = sd(  DIR_att,    na.rm = T),
                                GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                               HOR_att_sd    = sd(  HOR_att,    na.rm = T),
                                DIR_transp_sd = sd(DIR_transp, na.rm = T),
                                doy           = yday(Date),
                                GLB_att_N     = sum(!is.na(GLB_att)),
+                               HOR_att_N     = sum(!is.na(HOR_att)),
                                DIR_att_N     = sum(!is.na(DIR_att))  ),
                            by = .( Date = Day ) ]
 
 
 CLEAR_daily_mean <- DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                                    GLB_att       = mean(GLB_att,    na.rm = T),
+                                   HOR_att       = mean(HOR_att,    na.rm = T),
                                    DIR_transp    = mean(DIR_transp, na.rm = T),
                                    DIR_att_sd    = sd(  DIR_att,    na.rm = T),
                                    GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                                   HOR_att_sd    = sd(  HOR_att,    na.rm = T),
                                    DIR_transp_sd = sd(DIR_transp, na.rm = T),
                                    doy           = yday(Date),
                                    GLB_att_N     = sum(!is.na(GLB_att)),
+                                   HOR_att_N     = sum(!is.na(HOR_att)),
                                    DIR_att_N     = sum(!is.na(DIR_att))  ),
                                by = .( Date = Day ) ]
 
@@ -328,12 +262,13 @@ CLEAR_daily_mean <- DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
 CONF_INTERV <- .95
 conf_param  <- 1-(1-CONF_INTERV)/2
 suppressWarnings({
-ALL_daily_mean[,  DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
-ALL_daily_mean[,  GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
-ALL_daily_mean[,  DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
-CLEAR_daily_mean[,DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
-CLEAR_daily_mean[,GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
-CLEAR_daily_mean[,DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
+    ALL_daily_mean[,  DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
+    ALL_daily_mean[,  HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
+    ALL_daily_mean[,  GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
+    ALL_daily_mean[,  DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
+    CLEAR_daily_mean[,DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
+    CLEAR_daily_mean[,GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
+    CLEAR_daily_mean[,DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
 })
 #+ echo=F, include=F
 
@@ -342,10 +277,16 @@ CLEAR_daily_mean[,DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd
 #+ echo=F, include=T
 ALL_daily_mean[  DIR_att_N <= SUM_THRES, DIR_att    := NA ]
 ALL_daily_mean[  GLB_att_N <= SUM_THRES, GLB_att    := NA ]
+ALL_daily_mean[  HOR_att_N <= SUM_THRES, HOR_att    := NA ]
 ALL_daily_mean[  DIR_att_N <= SUM_THRES, DIR_transp := NA ]
 CLEAR_daily_mean[DIR_att_N <= SUM_THRES, DIR_att    := NA ]
 CLEAR_daily_mean[GLB_att_N <= SUM_THRES, GLB_att    := NA ]
 CLEAR_daily_mean[DIR_att_N <= SUM_THRES, DIR_transp := NA ]
+
+
+
+#####TODO
+stop("TODO")
 
 
 

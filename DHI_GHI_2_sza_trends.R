@@ -165,7 +165,6 @@ if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file))
 
 
 
-
 #' ### Filter min elevation
 #' Keep data with Sun elevation above `r MIN_ELEVA`
 DATA <- DATA[ Elevat >= MIN_ELEVA ]
@@ -206,21 +205,24 @@ DATA <- DATA[ ! (is.na(wattDIR) & is.na(wattGLB))  ]
 #' ### Move measurements to mean earth distance
 DATA[ , wattDIR_1au := wattDIR * (sun_dist ^ 2) ]
 DATA[ , wattGLB_1au := wattGLB * (sun_dist ^ 2) ]
+DATA[ , wattHOR_1au := wattHOR * (sun_dist ^ 2) ]
 #+ echo=F, include=T
 
 
-#' ### Relative to actual TSI at 1au variable representation
-DATA[ , DIR_att := wattDIR_1au / tsi_1au_comb ]
-DATA[ , GLB_att := wattGLB_1au / tsi_1au_comb ]
+# #' ### Relative to actual TSI at 1au variable representation
+# DATA[ , DIR_att := wattDIR_1au / tsi_1au_comb ]
+# DATA[ , GLB_att := wattGLB_1au / tsi_1au_comb ]
+# DATA[ , HOR_att := wattHOR_1au / tsi_1au_comb ]
 
 #' Using the actual values gives similar trends.
 
 #+ echo=F, include=T
 
-# #' ### Use original variable representation
-# DATA[ , DIR_att := wattDIR_1au ]
-# DATA[ , GLB_att := wattGLB_1au ]
-# #+ echo=F, include=T
+#' ### Use original variable representation
+DATA[ , DIR_att := wattDIR_1au ]
+DATA[ , GLB_att := wattGLB_1au ]
+DATA[ , HOR_att := wattHOR_1au ]
+#+ echo=F, include=T
 
 
 
