@@ -55,12 +55,8 @@ knitr::opts_chunk$set(fig.pos    = '!h'    )
 
 
 ```{r echo=F, include=T}
+## variables we use
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
-```
-
-```{r echo=T, include=T}
-
-paste(tag)
 ```
 
 
@@ -82,7 +78,7 @@ basic consepts
 ## Preperation.
 
 <!-- measurement -->
-For both CM21 and CHP1 instruments, the mean signal over one minute is recorded every one minute.
+For both CM21 and CHP1 instruments, the mean signal and the standard deviation over one minute is recorded every one minute.
 <!-- screening -->
 A manual screening processes, removes inconsistencies and erroneous recordings, that can occur on a long contentious operation, like this one.
 <!-- physical quantities -->
@@ -90,9 +86,7 @@ The conversion to irradiance was done using the available calibrations factors. 
 <!-- Dark signal -->
 We have adjusted the measurements for the dark signal offset, by a daily value, using the nights before and after each day.
 <!-- Quality assurance -->
-A radiation data quality assurance procedure was applied, 
-adjusted for the site, based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006]. 
-Only data characterized as good quality were used in this stud.
+A radiation data quality assurance procedure was applied, adjusted for the site, based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006]. Only data characterized as good quality were used in this stud.
 <!-- Data preparation -->
 Due to larger measurement uncertainty near the horizon, we exclude
 all measurements with SZA greater than $85^\circ$. 
@@ -107,13 +101,10 @@ To make the measurements comparable throughout the dataset.
 <!-- 1au -->
 We adjusted all values to the mean Sun and Earth distance.
 <!-- TSI -->
-And, we made all measurements relative to the TSI at 1au,
-in order to compensate for the the Suns intensity variability,
-using an homogenized timeseries of satellite TSI observations.
-As a result, we processed all radiation data as a fraction of Suns TSI.
+<!-- And, we made all measurements relative to the TSI at 1au, in order to compensate for the the Suns intensity variability, using an homogenized timeseries of satellite TSI observations. As a result, we processed all radiation data as a fraction of Suns TSI. -->
 
 <!-- Clear Sky -->
-For this analysis, we need .............
+In this analysis, we need .............
 , we using two selection of our measurements dataset, one with all sky conditions (ALL),
 consisting of the whole available data, and one filtered for 'clear sky' 
 conditions (CS). The latter was created, using a method adapted to our 
