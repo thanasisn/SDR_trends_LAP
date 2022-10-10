@@ -12,6 +12,10 @@ col_HOR_att              <- "#4244ac"
 col_DIR_transp           <- "#9970ab"
 col_GLB_att              <- "#1a9850"
 
+## https://www.rapidtables.com/calc/time/days-in-year.html
+# Days_of_year             <- 365.25   ## Mean Julian year
+Days_of_year             <- 365.2425 ## Mean Gregorian calendar year
+
 pch_am                   <-  1
 pch_pm                   <-  4
 pch_ampm                 <- 13 ## try 10
