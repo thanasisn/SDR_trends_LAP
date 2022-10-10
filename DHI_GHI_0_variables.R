@@ -5,7 +5,7 @@
 CLEARdir       <- "~/DATA/Broad_Band/CS_id"
 tag            <- paste0("Natsis Athanasios LAP AUTH ", strftime(Sys.time(), format = "%b %Y" ))
 CS_file        <- "~/DATA/Common_application/Clear_Sky.Rds"
-
+common_data    <- "~/MANUSCRIPTS/2022_sdr_trends/data/common_data.Rds"
 
 col_DIR_att    <- "#2166ac"
 col_HOR_att    <- "#4244ac"
