@@ -3,6 +3,7 @@
 ## Data input
 
 if ( !file.exists(common_data) | file.mtime(CS_file) > file.mtime(common_data) ){
+    cat(paste("Create environment and data in: ", common_data))
 
     ####  Get data from Clear sky id data  ####
     input_files <- list.files( path    = CLEARdir,
@@ -50,9 +51,10 @@ if ( !file.exists(common_data) | file.mtime(CS_file) > file.mtime(common_data) )
     #' ### Keep only data characterized as 'good' by the Radiation Quality control procedure
     #+ echo=F, include=T
     DATA[ QCF_DIR != "good", wattDIR := NA ]
-    DATA[ QCF_DIR != "good", QCF_DIR := NA ]
     DATA[ QCF_GLB != "good", wattGLB := NA ]
-    DATA[ QCF_GLB != "good", QCF_GLB := NA ]
+    DATA[, QCF_DIR := NULL ]
+    DATA[, QCF_GLB := NULL ]
+
     DATA <- DATA[ ! (is.na(wattDIR) & is.na(wattGLB))  ]
 
 
@@ -113,10 +115,16 @@ if ( !file.exists(common_data) | file.mtime(CS_file) > file.mtime(common_data) )
     # DATA_Clear <- DATA_all[ CSflag == 0 ]
     rm(DATA)
 
-    ## save workspace
+    ## remove unused columns
+    rm.cols.DT(DATA_all,   "CSflag_*")
+    rm.cols.DT(DATA_Clear, "CSflag_*")
+    DATA_all[  , CS_ref_HOR := NULL ]
+    DATA_Clear[, CS_ref_HOR := NULL ]
+
+    ## save work space
     save(list = ls(all = TRUE),file = common_data)
 
 } else {
-    cat(paste("Load environment and data from: ", common_data))
+    cat(paste("\n\nLoad environment and data from: ", common_data,"\n\n"))
     load( file = common_data)
 }

@@ -87,6 +87,8 @@ panderOptions('table.split.table',        120   )
 source("~/CODE/FUNCTIONS/R/sumNA.R")
 source("~/CODE/FUNCTIONS/R/linear_regrassion_capture.R")
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
+source("~/CODE/FUNCTIONS/R/data.R")
+
 
 ## For this project
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
@@ -105,10 +107,6 @@ options(error = function() {
 
 
 
-
-
-
-
 #+ echo=F, include=T
 
 #' ### Data range
@@ -116,18 +114,9 @@ options(error = function() {
 #'
 
 
-
-
-
-
-
-
 #### 1. Long term anomaly trends ####
 
 #' ## 1. Long term anomaly trends
-
-
-##TODO t-test and significance
 
 #' #### Calculate daily means ####
 #+ echo=F, include=T
@@ -165,30 +154,30 @@ CLEAR_daily_mean <- DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
 
 #' #### Margin of error calculation for 0.95 confidence interval ####
 #+ echo=T, include=T
-CONF_INTERV <- .95
-conf_param  <- 1-(1-CONF_INTERV)/2
+conf_param  <- 1-(1-Daily_confidence_limit)/2
 suppressWarnings({
     ALL_daily_mean[,  DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
     ALL_daily_mean[,  HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
     ALL_daily_mean[,  GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
     ALL_daily_mean[,  DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
     CLEAR_daily_mean[,DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
+    CLEAR_daily_mean[,HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
     CLEAR_daily_mean[,GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
     CLEAR_daily_mean[,DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
 })
 #+ echo=F, include=F
 
 
-#' #### Exclude means with less than `r SUM_THRES` data points
+#' #### Exclude means with less than `r Daily_aggregation_N_lim` data points
 #+ echo=F, include=T
-ALL_daily_mean[  DIR_att_N <= SUM_THRES, DIR_att    := NA ]
-ALL_daily_mean[  GLB_att_N <= SUM_THRES, GLB_att    := NA ]
-ALL_daily_mean[  HOR_att_N <= SUM_THRES, HOR_att    := NA ]
-ALL_daily_mean[  DIR_att_N <= SUM_THRES, DIR_transp := NA ]
-CLEAR_daily_mean[DIR_att_N <= SUM_THRES, DIR_att    := NA ]
-CLEAR_daily_mean[DIR_att_N <= SUM_THRES, HOR_att    := NA ]
-CLEAR_daily_mean[GLB_att_N <= SUM_THRES, GLB_att    := NA ]
-CLEAR_daily_mean[DIR_att_N <= SUM_THRES, DIR_transp := NA ]
+ALL_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
+ALL_daily_mean[  GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
+ALL_daily_mean[  HOR_att_N <= Daily_aggregation_N_lim, HOR_att    := NA ]
+ALL_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
+CLEAR_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
+CLEAR_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, HOR_att    := NA ]
+CLEAR_daily_mean[GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
+CLEAR_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
 
 
 
@@ -234,42 +223,49 @@ CLEAR_daily_seas <-
 
 stop()
 
-names(ALL_daily_mean)
 
-plot( ALL_daily_mean$Date, ALL_daily_mean$DIR_att   , col = col_DIR_att    )
-plot( ALL_daily_mean$Date, ALL_daily_mean$HOR_att   , col = col_HOR_att    )
-plot( ALL_daily_mean$Date, ALL_daily_mean$GLB_att   , col = col_GLB_att    )
-plot( ALL_daily_mean$Date, ALL_daily_mean$DIR_transp, col = col_DIR_transp )
+data_list  <- list(ALL = ALL_daily_mean, CLEAR = CLEAR_daily_mean)
+data_names <- c(
+    "GLB_att",
+    "DIR_att",
+    "DIR_transp",
+    "HOR_att",
+    "GLB_att_N",
+    "DIR_att_N"
+)
+by_var     <- c("Date","doy")
+wecare     <- unique(unlist(lapply(data_list, names)))
+wecare     <- grep(paste0(by_var,collapse = "|"), wecare, invert = T, value = T)
+for(i in 1:length(data_list)) {
+    Dplot <- data_list[[i]]
+    for (xvar in by_var){
+        for (yvar in wecare) {
+            col <- get(paste0(c("col",unlist(strsplit(var,split = "_" ))[1:2]),collapse = "_"))
+            vect <- Dplot[[yvar]]
+            # hist(vect, main = yvar, breaks = 100, col = col)
+            plot(Dplot[[xvar]], vect,
+                 pch = ".", col = col,
+                 main = paste(names(data_list[1]), var),
+                 xlab = xvar, ylab = yvar)
+        }
+    }
+}
 
-plot( ALL_daily_mean$doy,  ALL_daily_mean$DIR_att   , col = col_DIR_att    )
-plot( ALL_daily_mean$doy,  ALL_daily_mean$HOR_att   , col = col_HOR_att    )
-plot( ALL_daily_mean$doy,  ALL_daily_mean$GLB_att   , col = col_GLB_att    )
-plot( ALL_daily_mean$doy,  ALL_daily_mean$DIR_transp, col = col_DIR_transp )
 
-plot( ALL_daily_mean$doy,  ALL_daily_mean$GLB_att_N, col = col_DIR_att    )
-plot( ALL_daily_mean$doy,  ALL_daily_mean$DIR_att_N, col = col_GLB_att    )
+
 
 
 hist(ALL_daily_mean$DIR_att_N, col = col_DIR_att    )
 hist(ALL_daily_mean$GLB_att_N, col = col_GLB_att    )
-hist(ALL_daily_mean$HOR_att_N, col = col_HOR_att    )
 
-
-plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$DIR_att   , col = col_DIR_att    )
-plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$GLB_att   , col = col_GLB_att    )
-plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$HOR_att   , col = col_HOR_att    )
-plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$DIR_transp, col = col_DIR_transp )
-
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$DIR_att   , col = col_DIR_att    )
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$HOR_att   , col = col_HOR_att    )
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$GLB_att   , col = col_GLB_att    )
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$DIR_transp, col = col_DIR_transp )
-
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$GLB_att_N, col = col_DIR_att    )
-plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$DIR_att_N, col = col_GLB_att    )
 
 hist( CLEAR_daily_mean$DIR_att_N)
 hist( CLEAR_daily_mean$GLB_att_N)
+
+
+
+
+
 
 ## ~ Plots seasonal ####
 
