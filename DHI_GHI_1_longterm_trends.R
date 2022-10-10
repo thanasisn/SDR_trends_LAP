@@ -107,109 +107,15 @@ options(error = function() {
 
 
 
-#' ## Data selection
 
 
 #+ echo=F, include=T
 
-
-
-
-
-
-
 #' ### Data range
-#' Time data span `r range(DATA$Date)`
+#' Time data span `r range(DATA_all$Date)`
 #'
 
 
-
-
-
-
-#' ## Data preparation
-#' ### Move measurements to mean earth distance
-DATA[ , wattDIR_1au := wattDIR * (sun_dist ^ 2) ]
-DATA[ , wattGLB_1au := wattGLB * (sun_dist ^ 2) ]
-DATA[ , wattHOR_1au := wattHOR * (sun_dist ^ 2) ]
-#+ echo=F, include=T
-
-
-# #' ### Relative to actual TSI at 1au variable representation
-# DATA[ , DIR_att := wattDIR_1au / tsi_1au_comb ]
-# DATA[ , GLB_att := wattGLB_1au / tsi_1au_comb ]
-# DATA[ , HOR_att := wattHOR_1au / tsi_1au_comb ]
-
-#' Using the actual values gives similar trends.
-
-#+ echo=F, include=T
-
-#' ### Use original variable representation
-DATA[ , DIR_att := wattDIR_1au ]
-DATA[ , GLB_att := wattGLB_1au ]
-DATA[ , HOR_att := wattHOR_1au ]
-#+ echo=F, include=T
-
-
-
-
-# #' ### Ground effect removal?
-# #' Aerosol direct effects on global solar shortwave irradiance at high mountainous station Musala Bulgaria_Nojarov2021.pdf
-# DATA$wattGLB_1au <- DATA$wattGLB_1au / cosde(DATA$SZA)
-# DATA$wattDIR_1au <- DATA$wattDIR_1au / cosde(DATA$SZA)
-# #+ echo=F, include=T
-
-
-
-#' ### Calculate Bouguer atmospheric transparency
-#' see: Changes in solar radiation and their influence on temperature trend in Estonia 1955 2007_Russak2009.pdf
-DATA[, DIR_transp := ( wattDIR_1au / tsi_1au_comb ) ^ ( 1 / cosde(SZA) ) ]
-#+ echo=F, include=T
-
-
-
-## fix noon just in case
-DATA[ Azimuth <= 180 , preNoon := TRUE  ]
-DATA[ Azimuth >  180 , preNoon := FALSE ]
-
-
-
-#' ### Split data to Clear Sky and non Clear sky
-#' Method based and adapted to site from: Identification of Periods of Clear Sky
-#' Irradiance in Time Series of GHI Measurements
-#' _Matthew J. Reno and Clifford W. Hansen_.
-#+ echo=F, include=T
-DATA_all   <- DATA
-
-wecare     <- grep("CSflag_", names(DATA), value = T)
-## use only cm21 flags
-wecare     <- grep("_11", wecare, invert = T, value = T)
-DATA_Clear <- DATA[ rowSums( DATA[, ..wecare ], na.rm = T ) == 0, ]
-#+ echo=F, include=T
-
-## old flags
-# DATA_Clear <- DATA_all[ CSflag == 0 ]
-rm(DATA)
-
-
-
-# #### . . My CSid method   ####
-# #'
-# #' | CS Flag | Test |
-# #' |:-------:|:--------------------------------------------------------------|
-# #' |   NA    | Undefined, untested                                           |
-# #' |    0    | Passed as clear sky                                           |
-# #' |    1    | Mean value of irradiance during the time period (MeanVIP)     |
-# #' |    2    | Max Value of Irradiance during the time Period (MaxVIP)       |
-# #' |    3    | Variability in irradiance by the length (VIL)                 |
-# #' |    4    | Variance of Changes in the Time series (VCT)                  |
-# #' |    5    | Variability in the Shape of the irradiance Measurements (VSM) |
-# #' |    6    | Low Direct Irradiance limit (LDI)                             |
-# #' |    7    | Low Global Irradiance limit (LGI)                             |
-# #' |    8    | Too Few CS point for the day (FCS)                            |
-# #' |    9    | Too Few data points for the day                               |
-# #' |   10    | Missing Data                                                  |
-# #' |   11    | Direct irradiance simple threshold                            |
 
 
 
@@ -280,13 +186,14 @@ ALL_daily_mean[  GLB_att_N <= SUM_THRES, GLB_att    := NA ]
 ALL_daily_mean[  HOR_att_N <= SUM_THRES, HOR_att    := NA ]
 ALL_daily_mean[  DIR_att_N <= SUM_THRES, DIR_transp := NA ]
 CLEAR_daily_mean[DIR_att_N <= SUM_THRES, DIR_att    := NA ]
+CLEAR_daily_mean[DIR_att_N <= SUM_THRES, HOR_att    := NA ]
 CLEAR_daily_mean[GLB_att_N <= SUM_THRES, GLB_att    := NA ]
 CLEAR_daily_mean[DIR_att_N <= SUM_THRES, DIR_transp := NA ]
 
 
 
 #####TODO
-stop("TODO")
+# stop("TODO")
 
 
 
@@ -296,20 +203,26 @@ stop("TODO")
 ALL_daily_seas <-
     ALL_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
                        GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                       HOR_att_seas    = mean(HOR_att,    na.rm = T),
                        DIR_transp_seas = mean(DIR_transp, na.rm = T),
                        DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                       HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
                        GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
                        GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                       HOR_att_N_seas  = sum(!is.na(HOR_att)),
                        DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                    by = .( doy ) ]
 
 CLEAR_daily_seas <-
     CLEAR_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
                          GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                         HOR_att_seas    = mean(HOR_att,    na.rm = T),
                          DIR_transp_seas = mean(DIR_transp, na.rm = T),
                          DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                         HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
                          GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
                          GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                         HOR_att_N_seas  = sum(!is.na(HOR_att)),
                          DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                      by = .( doy ) ]
 
@@ -317,25 +230,38 @@ CLEAR_daily_seas <-
 
 #+ echo=F, include=F
 ## ~ Plots longterm  ####
+
+
+stop()
+
+names(ALL_daily_mean)
+
 plot( ALL_daily_mean$Date, ALL_daily_mean$DIR_att   , col = col_DIR_att    )
+plot( ALL_daily_mean$Date, ALL_daily_mean$HOR_att   , col = col_HOR_att    )
 plot( ALL_daily_mean$Date, ALL_daily_mean$GLB_att   , col = col_GLB_att    )
 plot( ALL_daily_mean$Date, ALL_daily_mean$DIR_transp, col = col_DIR_transp )
 
 plot( ALL_daily_mean$doy,  ALL_daily_mean$DIR_att   , col = col_DIR_att    )
+plot( ALL_daily_mean$doy,  ALL_daily_mean$HOR_att   , col = col_HOR_att    )
 plot( ALL_daily_mean$doy,  ALL_daily_mean$GLB_att   , col = col_GLB_att    )
 plot( ALL_daily_mean$doy,  ALL_daily_mean$DIR_transp, col = col_DIR_transp )
 
 plot( ALL_daily_mean$doy,  ALL_daily_mean$GLB_att_N, col = col_DIR_att    )
 plot( ALL_daily_mean$doy,  ALL_daily_mean$DIR_att_N, col = col_GLB_att    )
 
+
 hist(ALL_daily_mean$DIR_att_N, col = col_DIR_att    )
 hist(ALL_daily_mean$GLB_att_N, col = col_GLB_att    )
+hist(ALL_daily_mean$HOR_att_N, col = col_HOR_att    )
+
 
 plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$DIR_att   , col = col_DIR_att    )
 plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$GLB_att   , col = col_GLB_att    )
+plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$HOR_att   , col = col_HOR_att    )
 plot( CLEAR_daily_mean$Date, CLEAR_daily_mean$DIR_transp, col = col_DIR_transp )
 
 plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$DIR_att   , col = col_DIR_att    )
+plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$HOR_att   , col = col_HOR_att    )
 plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$GLB_att   , col = col_GLB_att    )
 plot( CLEAR_daily_mean$doy,  CLEAR_daily_mean$DIR_transp, col = col_DIR_transp )
 
