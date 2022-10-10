@@ -92,8 +92,8 @@ source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
 
 ## move to data_input for all three
-rm(DATA_Clear)
-rm(DATA_all)
+# rm(DATA_Clear)
+# rm(DATA_all)
 
 
 options(error = function() {
@@ -208,6 +208,7 @@ setorder(CLEAR_daily_DEseas,Date)
 
 
 ## anomaly
+# #' #### Use the actuar difference from seasonal
 # ALL_daily_DEseas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
 # ALL_daily_DEseas[   , GLB_att    := GLB_att    - GLB_att_seas    ]
 # ALL_daily_DEseas[   , DIR_transp := DIR_transp - DIR_transp_seas ]
@@ -216,8 +217,10 @@ setorder(CLEAR_daily_DEseas,Date)
 # CLEAR_daily_DEseas[ , DIR_transp := DIR_transp - DIR_transp_seas ]
 
 
+
 ## relative anomaly
-#+ echo=T, include=T
+#' #### Use the % difference from seasonal values
+#+ echo=F, include=T
 ALL_daily_DEseas[  , DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
 ALL_daily_DEseas[  , HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
 ALL_daily_DEseas[  , GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]

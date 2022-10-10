@@ -7,7 +7,7 @@
 if ( !file.exists(common_data) | file.mtime(CS_file) > file.mtime(common_data) ){
     cat(paste("Create environment and data in: ", common_data))
 
-    ####  Get data from Clear sky id data  ####
+    #### 0. Get data from Clear sky id data  ###################################
     input_files <- list.files( path    = CLEARdir,
                                pattern = "Clear_Sky_[0-9]{4}.Rds",
                                full.names = T )
@@ -124,7 +124,7 @@ if ( !file.exists(common_data) | file.mtime(CS_file) > file.mtime(common_data) )
     DATA_Clear[, CS_ref_HOR := NULL ]
 
 
-    ####  1. long-term   #######################################################
+    #### 1. long-term   #######################################################
 
     ## ~ daily means of all data ####
     ALL_1_daily_mean <- DATA_all[,.(DIR_att       = mean(DIR_att,    na.rm = T),
@@ -215,7 +215,17 @@ if ( !file.exists(common_data) | file.mtime(CS_file) > file.mtime(common_data) )
 
 
 
-    ## 2.
+    ####  2. Long term by SZA  #################################################
+
+
+
+
+
+
+
+
+
+
 
 
     ## remove unwanted data frames from memory

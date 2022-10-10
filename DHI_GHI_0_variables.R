@@ -28,5 +28,5 @@ SEAS_MIN_N               <-  3
 
 Daily_aggregation_N_lim  <- 50         ## was SUM_THRES
 Daily_confidence_limit   <-  0.99
-SZA_THRES                <-  3
-
+SZA_confidence_limit     <-  0.99
+SZA_aggregation_N_lim    <-  5         ## was SZA_THRES
