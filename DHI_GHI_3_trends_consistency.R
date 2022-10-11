@@ -70,228 +70,51 @@ if(!interactive()) {
 par(pch = ".")
 
 
-## FIXME this is for pdf output
-# options(warn=-1) ## hide warnings
-# options(warn=2)  ## stop on warnings
 
 #+ echo=F, include=T
 ####  External code  ####
 library(data.table, quietly = T, warn.conflicts = F)
 library(pander,     quietly = T, warn.conflicts = F)
 
+panderOptions('table.alignment.default', 'right')
+panderOptions('table.split.table',        120   )
+
 ## Functions from `https://github.com/thanasisn/IStillBreakStuff/tree/main/FUNCTIONS/R`
 source("~/CODE/FUNCTIONS/R/sumNA.R")
 source("~/CODE/FUNCTIONS/R/linear_regrassion_capture.R")
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
+source("~/CODE/FUNCTIONS/R/data.R")
 
+
+## For this project
+source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
+source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
+
+## move to data_input for all three
+# rm(DATA_Clear)
+# rm(DATA_all)
 
 options(error = function() {
     if (interactive()) {
-        # require("beepr"); beep(10)
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
         system("notify-send -u normal -t 30000 'R session' 'An error occured!'")
     }
 })
 
 
-####  Variables  ####
-panderOptions('table.alignment.default', 'right')
-panderOptions('table.split.table',        120   )
-
-DATA_DIR  <- "/home/athan/DATA/Broad_Band"
-CLEARdir  <- "/home/athan/DATA/Broad_Band/CS_id"
-tag       <- paste0("Natsis Athanasios LAP AUTH ", strftime(Sys.time(), format = "%b %Y" ))
-CS_file   <- "/home/athan/DATA/Common_application/Clear_Sky.Rds"
-
-TEST      <- TRUE
-
-col_DIR_att    <- "#2166ac"
-col_DIR_transp <- "#9970ab"
-col_GLB_att    <- "#1a9850"
-pch_am         <-  1
-pch_pm         <-  4
-pch_ampm       <- 13 ## try 10
-pch_daily      <- 19
-
-MIN_ELEVA  <- 5  ## use data when sun above that
-SZA_BIN    <- 1
-MIN_N      <- 4
-SEAS_MIN_N <- 3
-
-SUM_THRES  <- 50
-SZA_THRES  <- 3
 
 
-#' ## Data selection
+
+
+
+
 #+ echo=F, include=T
-
-####  Get data from Clear sky id data  ####
-input_files <- list.files( path       = CLEARdir,
-                           pattern    = "Clear_Sky_[0-9]{4}.Rds",
-                           full.names = T )
-
-if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
-    cat(paste("Load data from Clear Sky proccess from original\n"))
-    DATA <- data.table()
-    for (af in input_files) {
-        temp <- readRDS(af)
-        ## drop some data
-        temp$CHP1temp        <- NULL
-        temp$CHP1tempSD      <- NULL
-        temp$CHP1tempUNC     <- NULL
-        temp$CS_ref          <- NULL
-        temp$Pressure_Source <- NULL
-        temp$chp1TempCF      <- NULL
-        temp$wattDIR_tmp_cr  <- NULL
-        temp$wattDIR_unc_NT  <- NULL
-        temp$wattDIR_unc_WT  <- NULL
-        temp$wattHOR_tmp_cr  <- NULL
-        temp$wattHOR_unc_NT  <- NULL
-        temp$wattHOR_unc_WT  <- NULL
-
-        DATA <- rbind(temp, DATA, fill = TRUE)
-        rm(temp)
-    }
-    ## this is used by old scripts
-    myRtools::write_RDS(object = DATA, file = CS_file)
-} else {
-    cat(paste("Load data from Clear Sky proccess from parsed\n"))
-    DATA <- readRDS(CS_file)
-}
-
 #' ### Data range
 #' Time data span `r range(DATA$Date)`
 #'
 
 
 
-#' ### Filter min elevation
-#' Keep data with Sun elevation above `r MIN_ELEVA`
-DATA <- DATA[ Elevat >= MIN_ELEVA ]
-
-#' ### Bais paper obstacle filter
-DATA <- DATA[ ! (Azimuth > 35 & Azimuth < 120 & Elevat < 10) ]
-#+ echo=F, include=T
-
-#### ~~ RMD mark ####
-
-#' ### Keep only data characterized as 'good' by the Radiation Quality control procedure
-#+ echo=F, include=T
-DATA[ QCF_DIR != "good", wattDIR := NA ]
-DATA[ QCF_DIR != "good", QCF_DIR := NA ]
-DATA[ QCF_GLB != "good", wattGLB := NA ]
-DATA[ QCF_GLB != "good", QCF_GLB := NA ]
-DATA <- DATA[ ! (is.na(wattDIR) & is.na(wattGLB))  ]
-
-
-
-## exclude some data for each instrument
-# DATA[ QCF_DIR == "Extremely rare limits min (3)", wattDIR := NA ]
-# DATA[ QCF_DIR == "Extremely rare limits min (3)", QCF_DIR := NA ]
-#
-# dirtb <- table(DATA$QCF_DIR)
-# for (aty in names(dirtb)[!names(dirtb) %in% "good"]) {
-#     temp <- DATA[ QCF_DIR == aty ]
-#     cat(nrow(temp),aty,"\n")
-# }
-# glbtb <- table(DATA$QCF_GLB)
-# for (aty in names(glbtb)[!names(glbtb) %in% "good"]) {
-#     temp <- DATA[ QCF_GLB == aty ]
-#     cat(nrow(temp),aty,"\n")
-# }
-
-
-
-#' ## Data preparation
-#' ### Move measurements to mean earth distance
-DATA[ , wattDIR_1au := wattDIR * (sun_dist ^ 2) ]
-DATA[ , wattGLB_1au := wattGLB * (sun_dist ^ 2) ]
-DATA[ , wattHOR_1au := wattHOR * (sun_dist ^ 2) ]
-#+ echo=F, include=T
-
-
-# #' ### Relative to actual TSI at 1au variable representation
-# DATA[ , DIR_att := wattDIR_1au / tsi_1au_comb ]
-# DATA[ , GLB_att := wattGLB_1au / tsi_1au_comb ]
-# DATA[ , HOR_att := wattHOR_1au / tsi_1au_comb ]
-
-#' Using the actual values gives similar trends.
-
-#+ echo=F, include=T
-
-#' ### Use original variable representation
-DATA[ , DIR_att := wattDIR_1au ]
-DATA[ , GLB_att := wattGLB_1au ]
-DATA[ , HOR_att := wattHOR_1au ]
-#+ echo=F, include=T
-
-
-
-
-# #' ### Ground effect removal?
-# #' Aerosol direct effects on global solar shortwave irradiance at high mountainous station Musala Bulgaria_Nojarov2021.pdf
-# DATA$wattGLB_1au <- DATA$wattGLB_1au / cosde(DATA$SZA)
-# DATA$wattDIR_1au <- DATA$wattDIR_1au / cosde(DATA$SZA)
-# #+ echo=F, include=T
-
-
-
-#' ### Calculate Bouguer atmospheric transparency
-#' see: Changes in solar radiation and their influence on temperature trend in Estonia 1955 2007_Russak2009.pdf
-DATA[, DIR_transp := ( wattDIR_1au / tsi_1au_comb ) ^ ( 1 / cosde(SZA) ) ]
-#+ echo=F, include=T
-
-
-
-## fix noon just in case
-DATA[ Azimuth <= 180 , preNoon := TRUE  ]
-DATA[ Azimuth >  180 , preNoon := FALSE ]
-
-
-
-#' ### Split data to Clear Sky and non Clear sky
-#' Method based and adapted to site from: Identification of Periods of Clear Sky
-#' Irradiance in Time Series of GHI Measurements
-#' _Matthew J. Reno and Clifford W. Hansen_.
-#+ echo=F, include=T
-DATA_all   <- DATA
-
-wecare     <- grep("CSflag_", names(DATA), value = T)
-## use only cm21 flags
-wecare     <- grep("_11", wecare, invert = T, value = T)
-DATA_Clear <- DATA[ rowSums( DATA[, ..wecare ], na.rm = T ) == 0, ]
-#+ echo=F, include=T
-
-## old flags
-# DATA_Clear <- DATA_all[ CSflag == 0 ]
-rm(DATA)
-
-
-
-# #### . . My CSid method   ####
-# #'
-# #' | CS Flag | Test |
-# #' |:-------:|:--------------------------------------------------------------|
-# #' |   NA    | Undefined, untested                                           |
-# #' |    0    | Passed as clear sky                                           |
-# #' |    1    | Mean value of irradiance during the time period (MeanVIP)     |
-# #' |    2    | Max Value of Irradiance during the time Period (MaxVIP)       |
-# #' |    3    | Variability in irradiance by the length (VIL)                 |
-# #' |    4    | Variance of Changes in the Time series (VCT)                  |
-# #' |    5    | Variability in the Shape of the irradiance Measurements (VSM) |
-# #' |    6    | Low Direct Irradiance limit (LDI)                             |
-# #' |    7    | Low Global Irradiance limit (LGI)                             |
-# #' |    8    | Too Few CS point for the day (FCS)                            |
-# #' |    9    | Too Few data points for the day                               |
-# #' |   10    | Missing Data                                                  |
-# #' |   11    | Direct irradiance simple threshold                            |
-
-
-
-
-
-
-#### 3. Consistency of trends ####
 
 #' ## 3. Consistency of trends
 
@@ -303,32 +126,40 @@ rm(DATA)
 
 
 ## ! For sza prenoon and daily ####
-ALL_monthly_meanA <- DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
-                                  GLB_att       = mean(GLB_att,    na.rm = T),
-                                  DIR_transp    = mean(DIR_transp, na.rm = T),
-                                  DIR_att_sd    = sd(  DIR_att,    na.rm = T),
-                                  GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                                  DIR_transp_sd = sd(DIR_transp, na.rm = T),
-                                  GLB_att_N     = sum(!is.na(GLB_att)),
-                                  DIR_att_N     = sum(!is.na(DIR_att))  ),
-                              by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
-                                     Year    = year(Date),
-                                     Month   = month(Date),
-                                     preNoon = preNoon  ) ]
+ALL_monthly_meanA <-
+    DATA_all[,.(DIR_att       = mean(DIR_att,    na.rm = T),
+                GLB_att       = mean(GLB_att,    na.rm = T),
+                HOR_att       = mean(HOR_att,    na.rm = T),
+                DIR_transp    = mean(DIR_transp, na.rm = T),
+                DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                DIR_transp_sd = sd(DIR_transp, na.rm = T),
+                HOR_att_N     = sum(!is.na(HOR_att)),
+                GLB_att_N     = sum(!is.na(GLB_att)),
+                DIR_att_N     = sum(!is.na(DIR_att))  ),
+             by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                    Year    = year(Date),
+                    Month   = month(Date),
+                    preNoon = preNoon  ) ]
 
 
-ALL_monthly_meanB <- DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
-                                  GLB_att       = mean(GLB_att,    na.rm = T),
-                                  DIR_transp    = mean(DIR_transp, na.rm = T),
-                                  DIR_att_sd    = sd(  DIR_att,    na.rm = T),
-                                  GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                                  DIR_transp_sd = sd(DIR_transp, na.rm = T),
-                                  GLB_att_N     = sum(!is.na(GLB_att)),
-                                  DIR_att_N     = sum(!is.na(DIR_att)),
-                                  preNoon       = "Daily"),
-                              by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
-                                     Year    = year(Date),
-                                     Month   = month(Date) ) ]
+ALL_monthly_meanB <-
+    DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                 GLB_att       = mean(GLB_att,    na.rm = T),
+                 HOR_att       = mean(HOR_att,    na.rm = T),
+                 DIR_transp    = mean(DIR_transp, na.rm = T),
+                 DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                 HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                 GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                 DIR_transp_sd = sd(DIR_transp, na.rm = T),
+                 HOR_att_N     = sum(!is.na(HOR_att)),
+                 GLB_att_N     = sum(!is.na(GLB_att)),
+                 DIR_att_N     = sum(!is.na(DIR_att)),
+                 preNoon       = "Daily"),
+             by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                    Year    = year(Date),
+                    Month   = month(Date) ) ]
 
 ALL_monthly_mean <- data.table(rbind( data.frame(ALL_monthly_meanB),
                                       data.frame(ALL_monthly_meanA) ))
@@ -381,21 +212,21 @@ CLEAR_monthly_mean[, DIR_transp_EM := qt(conf_param,df=DIR_att_N -1) * DIR_trans
 })
 
 
-#' #### Exclude means with less than `r SZA_THRES` data points
+#' #### Exclude means with less than `r SZA_aggregation_N_lim` data points
 #+ echo=F, include=T
 
-ALL_monthly_mean[   DIR_att_N <= SZA_THRES, DIR_att       := NA ]
-ALL_monthly_mean[   GLB_att_N <= SZA_THRES, GLB_att       := NA ]
-ALL_monthly_mean[   DIR_att_N <= SZA_THRES, DIR_transp    := NA ]
-ALL_monthly_mean[   DIR_att_N <= SZA_THRES, DIR_att_EM    := NA ]
-ALL_monthly_mean[   GLB_att_N <= SZA_THRES, GLB_att_EM    := NA ]
-ALL_monthly_mean[   DIR_att_N <= SZA_THRES, DIR_transp_EM := NA ]
-CLEAR_monthly_mean[ DIR_att_N <= SZA_THRES, DIR_att       := NA ]
-CLEAR_monthly_mean[ GLB_att_N <= SZA_THRES, GLB_att       := NA ]
-CLEAR_monthly_mean[ DIR_att_N <= SZA_THRES, DIR_transp    := NA ]
-CLEAR_monthly_mean[ DIR_att_N <= SZA_THRES, DIR_att_EM    := NA ]
-CLEAR_monthly_mean[ GLB_att_N <= SZA_THRES, GLB_att_EM    := NA ]
-CLEAR_monthly_mean[ DIR_att_N <= SZA_THRES, DIR_transp_EM := NA ]
+ALL_monthly_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_att       := NA ]
+ALL_monthly_mean[   GLB_att_N <= SZA_aggregation_N_lim, GLB_att       := NA ]
+ALL_monthly_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_transp    := NA ]
+ALL_monthly_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_att_EM    := NA ]
+ALL_monthly_mean[   GLB_att_N <= SZA_aggregation_N_lim, GLB_att_EM    := NA ]
+ALL_monthly_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
+CLEAR_monthly_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att       := NA ]
+CLEAR_monthly_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att       := NA ]
+CLEAR_monthly_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp    := NA ]
+CLEAR_monthly_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att_EM    := NA ]
+CLEAR_monthly_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att_EM    := NA ]
+CLEAR_monthly_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
 
 
 #' #### Calculate monthly seasonal values ####
@@ -473,14 +304,14 @@ suppressWarnings({
 
 
 
-#' #### Exclude means with less than `r SUM_THRES` data points
+#' #### Exclude means with less than `r Daily_aggregation_N_lim` data points
 #+ echo=F, include=T
-ALL_daily_mean[  DIR_att_N <= SUM_THRES, DIR_att    := NA ]
-ALL_daily_mean[  GLB_att_N <= SUM_THRES, GLB_att    := NA ]
-ALL_daily_mean[  DIR_att_N <= SUM_THRES, DIR_transp := NA ]
-CLEAR_daily_mean[DIR_att_N <= SUM_THRES, DIR_att    := NA ]
-CLEAR_daily_mean[GLB_att_N <= SUM_THRES, GLB_att    := NA ]
-CLEAR_daily_mean[DIR_att_N <= SUM_THRES, DIR_transp := NA ]
+ALL_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
+ALL_daily_mean[  GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
+ALL_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
+CLEAR_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
+CLEAR_daily_mean[GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
+CLEAR_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
 
 
 

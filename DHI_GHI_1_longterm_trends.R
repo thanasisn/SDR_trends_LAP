@@ -169,7 +169,7 @@ data_names <- c(
 )
 by_var     <- c("doy")
 wecare     <- unique(unlist(lapply(data_list, names)))
-wecare     <- grep(paste0(by_var,collapse = "|"), wecare, invert = T, value = T)
+wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
 for(i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (xvar in by_var){
