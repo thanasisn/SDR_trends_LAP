@@ -34,11 +34,13 @@ RMD    = $(TARGET).R
 PDF    = $(TARGET).pdf
 SLIDY  = $(TARGET).html
 RUNT   = ./runtime/$(TARGET).pdf
+FIGDIR = $(TARGET)_files/figure-latex/
 p1: $(PDF)
 $(PDF): $(RMD)
-	Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')jjkkkkk"
-    rsync-av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./$(TARGET)_files/figure-latex/ ./images
+	@echo ""
 	@echo "Building: $@"
+	Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	@rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
 #	setsid evince    $@ &
 h1: $(SLIDY)
@@ -60,8 +62,10 @@ SLIDY  = $(TARGET).html
 RUNT   = ./runtime/$(TARGET).pdf
 p2: $(PDF)
 $(PDF): $(RMD)
-	Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	@echo ""
 	@echo "Building: $@"
+	Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	@rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
 #	setsid evince    $@ &
 h2: $(SLIDY)
@@ -85,8 +89,10 @@ SLIDY  = $(TARGET).html
 RUNT   = ./runtime/$(TARGET).pdf
 p3: $(PDF)
 $(PDF): $(RMD)
-	Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	@echo ""
 	@echo "Building: $@"
+	Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	@rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
 #	setsid evince    $@ &
 h3: $(SLIDY)

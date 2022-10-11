@@ -197,6 +197,7 @@ rm(data_list)
 
 
 
+
 #' #### Calculate seasonal anomaly ####
 #+ echo=F, include=F
 

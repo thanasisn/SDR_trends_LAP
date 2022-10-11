@@ -112,104 +112,6 @@ options(error = function() {
 #' ## 2. Long term by SZA
 
 
-#' #### Calculate daily SZA means ####
-#+ echo=F, include=T
-
-ALL_2_daily_mean <- DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
-                                 HOR_att       = mean(HOR_att,    na.rm = T),
-                                 GLB_att       = mean(GLB_att,    na.rm = T),
-                                 DIR_transp    = mean(DIR_transp, na.rm = T),
-                                 DIR_att_sd    = sd(  DIR_att,    na.rm = T),
-                                 HOR_att_sd    = sd(  HOR_att,    na.rm = T),
-                                 GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                                 DIR_transp_sd = sd(  DIR_transp, na.rm = T),
-                                 doy           = yday(Date),
-                                 GLB_att_N     = sum(!is.na(GLB_att)),
-                                 HOR_att_N     = sum(!is.na(HOR_att)),
-                                 DIR_att_N     = sum(!is.na(DIR_att))  ),
-                           by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
-                                  Date    = Day,
-                                  preNoon = preNoon  ) ]
-
-
-CLEAR_2_daily_mean <- DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
-                                     HOR_att       = mean(HOR_att,    na.rm = T),
-                                     GLB_att       = mean(GLB_att,    na.rm = T),
-                                     DIR_transp    = mean(DIR_transp, na.rm = T),
-                                     DIR_att_sd    = sd(  DIR_att,    na.rm = T),
-                                     HOR_att_sd    = sd(  HOR_att,    na.rm = T),
-                                     GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                                     DIR_transp_sd = sd(  DIR_transp, na.rm = T),
-                                     doy           = yday(Date),
-                                     GLB_att_N     = sum(!is.na(GLB_att)),
-                                     HOR_att_N     = sum(!is.na(HOR_att)),
-                                     DIR_att_N     = sum(!is.na(DIR_att))  ),
-                               by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
-                                      Date    = Day,
-                                      preNoon = preNoon ) ]
-
-
-
-#' #### Margin of error calculation for `r SZA_confidence_limit` confidence interval ####
-#+ echo=T, include=T
-
-conf_param  <- 1-(1-SZA_confidence_limit)/2
-suppressWarnings({
-ALL_2_daily_mean[,   DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
-ALL_2_daily_mean[,   HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
-ALL_2_daily_mean[,   GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
-ALL_2_daily_mean[,   DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
-CLEAR_2_daily_mean[, DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
-CLEAR_2_daily_mean[, HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
-CLEAR_2_daily_mean[, GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
-CLEAR_2_daily_mean[, DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
-})
-#+ echo=F, include=F
-
-
-#' #### Exclude means with less than `r SZA_aggregation_N_lim` data points
-#+ echo=F, include=T
-ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_att    := NA ]
-ALL_2_daily_mean[   HOR_att_N <= SZA_aggregation_N_lim, HOR_att    := NA ]
-ALL_2_daily_mean[   GLB_att_N <= SZA_aggregation_N_lim, GLB_att    := NA ]
-ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_transp := NA ]
-CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att    := NA ]
-CLEAR_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att    := NA ]
-CLEAR_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att    := NA ]
-CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp := NA ]
-
-
-
-#' #### Calculate daily seasonal values by SZA ####
-#+ echo=F, include=T
-
-ALL_2_daily_seas <-
-    ALL_2_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
-                         HOR_att_seas    = mean(HOR_att,    na.rm = T),
-                         GLB_att_seas    = mean(GLB_att,    na.rm = T),
-                         DIR_transp_seas = mean(DIR_transp, na.rm = T),
-                         DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
-                         HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
-                         GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
-                         GLB_att_N_seas  = sum(!is.na(GLB_att)),
-                         HOR_att_N_seas  = sum(!is.na(HOR_att)),
-                         DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
-                     by = .( doy, SZA, preNoon ) ]
-
-CLEAR_2_daily_seas <-
-    CLEAR_2_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
-                           HOR_att_seas    = mean(HOR_att,    na.rm = T),
-                           GLB_att_seas    = mean(GLB_att,    na.rm = T),
-                           DIR_transp_seas = mean(DIR_transp, na.rm = T),
-                           DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
-                           HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
-                           GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
-                           GLB_att_N_seas  = sum(!is.na(GLB_att)),
-                           HOR_att_N_seas  = sum(!is.na(HOR_att)),
-                           DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
-                     by = .( doy, SZA, preNoon ) ]
-
-
 
 #+ echo=F, include=F
 ## ~ Plots longterm  ####
@@ -649,3 +551,4 @@ for (ase in season) {
 #+ include=T, echo=F
 tac <- Sys.time()
 cat(sprintf("%s %s@%s %s %f mins\n\n",Sys.time(),Sys.info()["login"],Sys.info()["nodename"],Script.Name,difftime(tac,tic,units="mins")))
+
