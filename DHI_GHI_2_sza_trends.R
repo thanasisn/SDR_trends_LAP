@@ -110,8 +110,8 @@ options(error = function() {
 #'
 #'
 #' ## 2. Long term by SZA
-#' 
-#' 
+#'
+#'
 
 
 #+ echo=F, include=F
@@ -333,7 +333,7 @@ abline(h=300)
 
 ## stats vars to plot
 wecare <- grep( "^slope|^N",names(szatrends),ignore.case = T, value = T)
-
+wecare <- grep("^slope\\.t",wecare,ignore.case = T,value = T, invert = T)
 
 
 #+ szatrends, echo=F, include=T, results = "asis"
@@ -487,6 +487,7 @@ abline(h=300/4)
 
 ## stats vars to plot
 wecare <- grep( "^slope|^N",names(szatrends_seas),ignore.case = T, value = T)
+wecare <- grep("^slope\\.t",wecare,ignore.case = T,value = T, invert = T)
 
 
 #+ szatrendsseas, echo=F, include=T, results = "asis"
