@@ -228,11 +228,11 @@ setorder(CLEAR_daily_DEseas,Date)
 #' #### Use the % difference from seasonal values
 #+ echo=F, include=T
 ALL_daily_DEseas[  , DIR_att   := 100 * ( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-ALL_daily_DEseas[  , HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+ALL_daily_DEseas[  , HOR_att   := 100 * ( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
 ALL_daily_DEseas[  , GLB_att   := 100 * ( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
 ALL_daily_DEseas[  , DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
 CLEAR_daily_DEseas[, DIR_att   := 100 * ( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLEAR_daily_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+CLEAR_daily_DEseas[, HOR_att   := 100 * ( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
 CLEAR_daily_DEseas[, GLB_att   := 100 * ( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
 CLEAR_daily_DEseas[, DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
 #+ echo=F, include=F
@@ -271,12 +271,6 @@ for (DBn in dbs) {
                                     N         = sum(!is.na(dataset[[avar]]))
                                 ))
 
-                # plot(dataset$Date, dataset[[avar]], pch  = "." )
-                # abline(lm1)
-                # fit <- lm1[[1]]
-                # legend('top', lty = 1, bty = "n",
-                #        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/timefactor*365),3),'* year'))
-                # title(paste(DBn, asza, anoon))
             }
         }
     }
@@ -287,8 +281,19 @@ hist(gather$N[gather$N>50], breaks = 100)
 
 szatrends <- gather
 
+
 szatrends <- data.table(szatrends)
 setorder(szatrends,SZA)
+
+
+
+## covert to trend per year
+Days_of_year
+
+pprint[, slope    := slope    * Days_of_year ]
+pprint[, slope.sd := slope.sd * Days_of_year ]
+
+stop()
 
 szatrends[ var == "DIR_att",    col := col_DIR_att    ]
 szatrends[ var == "GLB_att",    col := col_GLB_att    ]
@@ -326,6 +331,7 @@ abline(h=300)
 
 ## stats vars to plot
 wecare <- grep( "^slope|^N",names(szatrends),ignore.case = T, value = T)
+
 
 
 #+ szatrends, echo=F, include=T, results = "asis"
@@ -369,8 +375,6 @@ for (type in unique(szatrends$DATA)) {
 
             cat("\n\n")
         }
-
-
     }
 }
 

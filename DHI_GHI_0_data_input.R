@@ -616,14 +616,11 @@ if ( havetorun ) {
 
 
 
-
+    ## remove unwanted data frames from memory
     rm(DATA_all)
     rm(DATA_Clear)
 
-
-    ## remove unwanted data frames from memory
-
-    ## save work space
+    ## save the whole work space
     save(list = ls(all = TRUE),file = common_data)
 } else {
     cat(paste("\n\nLoad environment and data from: ", common_data,"\n\n"))
