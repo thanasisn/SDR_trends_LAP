@@ -120,9 +120,6 @@ options(error = function() {
 
 
 
-#' #### Calculate monthly SZA means ####
-#+ echo=F, include=T
-
 
 
 #+ echo=F, include=F
