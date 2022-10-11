@@ -32,5 +32,5 @@ SZA_confidence_limit     <-  0.99
 Monthly_confidence_limit <-  0.99
 
 Daily_aggregation_N_lim  <- 50         ## was SUM_THRES
-Monthly_aggegation_N_lim <- 10
+Monthly_aggegation_N_lim <- 20
 SZA_aggregation_N_lim    <-  4         ## was SZA_THRES
