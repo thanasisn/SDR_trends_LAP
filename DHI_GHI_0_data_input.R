@@ -580,29 +580,29 @@ if ( havetorun ) {
 
     ## ~ seasonal monthly daily values ####
     ALL_3_monthly_daily_seas <-
-        ALL_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
-                            GLB_att    = mean(GLB_att,    na.rm = T),
-                            HOR_att    = mean(HOR_att,    na.rm = T),
-                            DIR_transp = mean(DIR_transp, na.rm = T),
-                            DIR_att_sd = sd(  DIR_att,    na.rm = T),
-                            HOR_att_sd = sd(  HOR_att,    na.rm = T),
-                            GLB_att_sd = sd(  GLB_att,    na.rm = T),
-                            GLB_att_N  = sum(!is.na(GLB_att)),
-                            HOR_att_N  = sum(!is.na(HOR_att)),
-                            DIR_att_N  = sum(!is.na(DIR_att))  ),
+        ALL_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+                            GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                            HOR_att_seas    = mean(HOR_att,    na.rm = T),
+                            DIR_transp_seas = mean(DIR_transp, na.rm = T),
+                            DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                            HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
+                            GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
+                            GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                            HOR_att_N_seas  = sum(!is.na(HOR_att)),
+                            DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                          by = .( Month = month(Date) ) ]
 
     CLEAR_3_monthly_daily_seas <-
-        CLEAR_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
-                              GLB_att    = mean(GLB_att,    na.rm = T),
-                              HOR_att    = mean(HOR_att,    na.rm = T),
-                              DIR_transp = mean(DIR_transp, na.rm = T),
-                              DIR_att_sd = sd(  DIR_att,    na.rm = T),
-                              HOR_att_sd = sd(  HOR_att,    na.rm = T),
-                              GLB_att_sd = sd(  GLB_att,    na.rm = T),
-                              GLB_att_N  = sum(!is.na(GLB_att)),
-                              HOR_att_N  = sum(!is.na(HOR_att)),
-                              DIR_att_N  = sum(!is.na(DIR_att))  ),
+        CLEAR_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+                              GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                              HOR_att_seas    = mean(HOR_att,    na.rm = T),
+                              DIR_transp_seas = mean(DIR_transp, na.rm = T),
+                              DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                              HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
+                              GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
+                              GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                              HOR_att_N_seas  = sum(!is.na(HOR_att)),
+                              DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                            by = .( Month = month(Date) ) ]
 
 
@@ -617,7 +617,8 @@ if ( havetorun ) {
 
 
 
-
+    rm(DATA_all)
+    rm(DATA_Clear)
 
 
     ## remove unwanted data frames from memory

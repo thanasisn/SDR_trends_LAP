@@ -115,7 +115,9 @@ clean:
 	rm -f -r ./DHI_GHI_2_sza_trends_files
 	rm -f -r ./DHI_GHI_3_trends_consistency_cache
 	rm -f -r ./DHI_GHI_3_trends_consistency_files
-	rm -f    ./data/common_data.Rds
+	rm -f    ./DHI_GHI_1_longterm_trends.pdf
+	rm -f    ./DHI_GHI_2_sza_trends.pdf
+	rm -f    ./DHI_GHI_3_trends_consistency.pdf
 
 	
 
