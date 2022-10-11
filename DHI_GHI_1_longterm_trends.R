@@ -107,8 +107,7 @@ options(error = function() {
 
 #+ echo=F, include=T
 #' ### Data range
-#' Time data span `r range(DATA_all$Date)`
-#'
+#' Time data span `r range(ALL_1_daily_mean$Date)`
 #'
 #'
 #' ## 1. Long term anomaly trends

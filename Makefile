@@ -2,10 +2,12 @@
 
 .DEFAULT_GOAL := pdf
 
-all:  pdf html rtim
-pdf:  p1 p2 p3 Ap
-html: h1 h2 h3 Ah
-rtim: r1 r2 r3
+all:   g   pdf html rtim
+pdf:       p1 p2 p3 Ap
+html:      h1 h2 h3 Ah
+rtim:      r1 r2 r3
+clean_all: clean_cache clean_data clean_pdfs
+
 
 
 ###      Article
@@ -106,19 +108,22 @@ $(RUNT): $(RMD)
 	-Rscript $?
 
 
-
-
-clean:
+clean_cache:
 	rm -f -r ./DHI_GHI_1_longterm_trends_cache
 	rm -f -r ./DHI_GHI_1_longterm_trends_files
 	rm -f -r ./DHI_GHI_2_sza_trends_cache
 	rm -f -r ./DHI_GHI_2_sza_trends_files
 	rm -f -r ./DHI_GHI_3_trends_consistency_cache
 	rm -f -r ./DHI_GHI_3_trends_consistency_files
+	rm -f -r ./Article_cache
+
+clean_pdfs:
 	rm -f    ./DHI_GHI_1_longterm_trends.pdf
 	rm -f    ./DHI_GHI_2_sza_trends.pdf
 	rm -f    ./DHI_GHI_3_trends_consistency.pdf
 
+clean_data:
+	rm -f    ./data/common_data.Rds
 	
 
 
