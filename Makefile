@@ -109,13 +109,13 @@ $(RUNT): $(RMD)
 
 
 clean:
-	rm -r ./DHI_GHI_1_longterm_trends_cache
-	rm -r ./DHI_GHI_1_longterm_trends_files
-	rm -r ./DHI_GHI_2_sza_trends_cache
-	rm -r ./DHI_GHI_2_sza_trends_files
-	rm -r ./DHI_GHI_3_trends_consistency_cache
-	rm -r ./DHI_GHI_3_trends_consistency_files
-	rm    ./data/common_data.Rds
+	rm -f -r ./DHI_GHI_1_longterm_trends_cache
+	rm -f -r ./DHI_GHI_1_longterm_trends_files
+	rm -f -r ./DHI_GHI_2_sza_trends_cache
+	rm -f -r ./DHI_GHI_2_sza_trends_files
+	rm -f -r ./DHI_GHI_3_trends_consistency_cache
+	rm -f -r ./DHI_GHI_3_trends_consistency_files
+	rm -f    ./data/common_data.Rds
 
 	
 
