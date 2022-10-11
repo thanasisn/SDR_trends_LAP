@@ -4,8 +4,17 @@
 
 # file.remove(common_data)
 
-if ( !file.exists(common_data) | file.mtime(CS_file) > file.mtime(common_data) ){
-    cat(paste("Create environment and data in: ", common_data))
+####  Run data construction ####################################################
+
+havetorun <- !file.exists(common_data) |
+    file.mtime(CS_file)          > file.mtime(common_data) |
+    file.mtime(variables_fl)     > file.mtime(common_data) |
+    file.mtime(variables_fl)     > file.mtime(common_data) |
+    file.mtime(data_procsess_fl) > file.mtime(common_data)
+
+
+if ( havetorun ) {
+    cat(paste("(Re)Create environment and data input: ", common_data))
 
     #### 0. Get data from Clear sky id data  ###################################
     input_files <- list.files( path    = CLEARdir,
@@ -40,6 +49,8 @@ if ( !file.exists(common_data) | file.mtime(CS_file) > file.mtime(common_data) )
         DATA <- readRDS(CS_file)
     }
 
+    #### 0. Process data for this project  #####################################
+
 
     #' ### Filter min elevation
     #' Keep data with Sun elevation above `r MIN_ELEVA`
@@ -52,8 +63,8 @@ if ( !file.exists(common_data) | file.mtime(CS_file) > file.mtime(common_data) )
 
     #' ### Keep only data characterized as 'good' by the Radiation Quality control procedure
     #+ echo=F, include=T
-    DATA[ QCF_DIR != "good", wattDIR := NA ]
-    DATA[ QCF_GLB != "good", wattGLB := NA ]
+    DATA[  QCF_DIR != "good", wattDIR := NA ]
+    DATA[  QCF_GLB != "good", wattGLB := NA ]
     DATA[, QCF_DIR := NULL ]
     DATA[, QCF_GLB := NULL ]
 
@@ -124,50 +135,52 @@ if ( !file.exists(common_data) | file.mtime(CS_file) > file.mtime(common_data) )
     DATA_Clear[, CS_ref_HOR := NULL ]
 
 
-    #### 1. long-term   #######################################################
+    #### 1. long-term   ########################################################
+
+
 
     ## ~ daily means of all data ####
-    ALL_1_daily_mean <- DATA_all[,.(DIR_att       = mean(DIR_att,    na.rm = T),
-                                    GLB_att       = mean(GLB_att,    na.rm = T),
-                                    HOR_att       = mean(HOR_att,    na.rm = T),
-                                    DIR_transp    = mean(DIR_transp, na.rm = T),
-                                    DIR_att_sd    = sd(  DIR_att,    na.rm = T),
-                                    GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                                    HOR_att_sd    = sd(  HOR_att,    na.rm = T),
-                                    DIR_transp_sd = sd(  DIR_transp, na.rm = T),
-                                    doy           = yday(Date),
-                                    GLB_att_N     = sum(!is.na(GLB_att)),
-                                    HOR_att_N     = sum(!is.na(HOR_att)),
-                                    DIR_att_N     = sum(!is.na(DIR_att))  ),
-                                 by = .( Date = Day ) ]
+    ALL_1_daily_mean <-DATA_all[,.(DIR_att      =mean(DIR_att,   na.rm = T),
+                                   GLB_att      =mean(GLB_att,   na.rm = T),
+                                   HOR_att      =mean(HOR_att,   na.rm = T),
+                                   DIR_transp   =mean(DIR_transp,na.rm = T),
+                                   DIR_att_sd   =sd(  DIR_att,   na.rm = T),
+                                   GLB_att_sd   =sd(  GLB_att,   na.rm = T),
+                                   HOR_att_sd   =sd(  HOR_att,   na.rm = T),
+                                   DIR_transp_sd=sd(  DIR_transp,na.rm = T),
+                                   doy          =yday(Date),
+                                   GLB_att_N    =sum(!is.na(GLB_att)),
+                                   HOR_att_N    =sum(!is.na(HOR_att)),
+                                   DIR_att_N    =sum(!is.na(DIR_att))  ),
+                                by = .( Date = Day ) ]
 
     ## ~ daily means of clear sky data ####
-    CLEAR_1_daily_mean <- DATA_Clear[,.(DIR_att       = mean(DIR_att,    na.rm = T),
-                                        GLB_att       = mean(GLB_att,    na.rm = T),
-                                        HOR_att       = mean(HOR_att,    na.rm = T),
-                                        DIR_transp    = mean(DIR_transp, na.rm = T),
-                                        DIR_att_sd    = sd(  DIR_att,    na.rm = T),
-                                        GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                                        HOR_att_sd    = sd(  HOR_att,    na.rm = T),
-                                        DIR_transp_sd = sd(  DIR_transp, na.rm = T),
-                                        doy           = yday(Date),
-                                        GLB_att_N     = sum(!is.na(GLB_att)),
-                                        HOR_att_N     = sum(!is.na(HOR_att)),
-                                        DIR_att_N     = sum(!is.na(DIR_att))  ),
-                                     by = .( Date = Day ) ]
+    CLEAR_1_daily_mean <-DATA_Clear[,.(DIR_att      =mean(DIR_att,   na.rm = T),
+                                       GLB_att      =mean(GLB_att,   na.rm = T),
+                                       HOR_att      =mean(HOR_att,   na.rm = T),
+                                       DIR_transp   =mean(DIR_transp,na.rm = T),
+                                       DIR_att_sd   =sd(  DIR_att,   na.rm = T),
+                                       GLB_att_sd   =sd(  GLB_att,   na.rm = T),
+                                       HOR_att_sd   =sd(  HOR_att,   na.rm = T),
+                                       DIR_transp_sd=sd(  DIR_transp,na.rm = T),
+                                       doy          =yday(Date),
+                                       GLB_att_N    =sum(!is.na(GLB_att)),
+                                       HOR_att_N    =sum(!is.na(HOR_att)),
+                                       DIR_att_N    =sum(!is.na(DIR_att))  ),
+                                    by = .( Date = Day ) ]
 
 
-    ## ~ compute confidence interval ####
+    ## ~ compute margin of error for confidence interval ####
     conf_param  <- 1-(1-Daily_confidence_limit)/2
     suppressWarnings({
-        ALL_1_daily_mean[,  DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
-        ALL_1_daily_mean[,  HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
-        ALL_1_daily_mean[,  GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
-        ALL_1_daily_mean[,  DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
-        CLEAR_1_daily_mean[,DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
-        CLEAR_1_daily_mean[,HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
-        CLEAR_1_daily_mean[,GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
-        CLEAR_1_daily_mean[,DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
+        ALL_1_daily_mean[,  DIR_att_EM   :=qt(conf_param,df=DIR_att_N -1)* DIR_att_sd    / sqrt(DIR_att_N)]
+        ALL_1_daily_mean[,  HOR_att_EM   :=qt(conf_param,df=HOR_att_N -1)* HOR_att_sd    / sqrt(HOR_att_N)]
+        ALL_1_daily_mean[,  GLB_att_EM   :=qt(conf_param,df=GLB_att_N -1)* GLB_att_sd    / sqrt(GLB_att_N)]
+        ALL_1_daily_mean[,  DIR_transp_EM:=qt(conf_param,df=DIR_att_N -1)* DIR_transp_sd / sqrt(DIR_att_N)]
+        CLEAR_1_daily_mean[,DIR_att_EM   :=qt(conf_param,df=DIR_att_N -1)* DIR_att_sd    / sqrt(DIR_att_N)]
+        CLEAR_1_daily_mean[,HOR_att_EM   :=qt(conf_param,df=HOR_att_N -1)* HOR_att_sd    / sqrt(HOR_att_N)]
+        CLEAR_1_daily_mean[,GLB_att_EM   :=qt(conf_param,df=GLB_att_N -1)* GLB_att_sd    / sqrt(GLB_att_N)]
+        CLEAR_1_daily_mean[,DIR_transp_EM:=qt(conf_param,df=DIR_att_N -1)* DIR_transp_sd / sqrt(DIR_att_N)]
     })
 
     ## ~ Exclude means with less than `r Daily_aggregation_N_lim` data points ####
