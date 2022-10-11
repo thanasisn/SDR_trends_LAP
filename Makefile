@@ -36,7 +36,8 @@ SLIDY  = $(TARGET).html
 RUNT   = ./runtime/$(TARGET).pdf
 p1: $(PDF)
 $(PDF): $(RMD)
-	Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')jjkkkkk"
+    rsync-av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./$(TARGET)_files/figure-latex/ ./images
 	@echo "Building: $@"
 	@echo "Changed:  $?"
 #	setsid evince    $@ &
