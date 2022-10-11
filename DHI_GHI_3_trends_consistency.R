@@ -255,7 +255,7 @@ CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_EM := NA
 #' #### Calculate monthly seasonal values ####
 #+ echo=F, include=T
 
-ALL_monthly_seas <-
+ALL_3_monthly_seas <-
     ALL_3_monthly_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
                            GLB_att_seas    = mean(GLB_att,    na.rm = T),
                            HOR_att_seas    = mean(HOR_att,    na.rm = T),
@@ -268,7 +268,7 @@ ALL_monthly_seas <-
                            DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                        by = .( Month, SZA, preNoon ) ]
 
-CLEAR_monthly_seas <-
+CLEAR_3_monthly_seas <-
     CLEAR_3_monthly_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
                              GLB_att_seas    = mean(GLB_att,    na.rm = T),
                              HOR_att_seas    = mean(HOR_att,    na.rm = T),
@@ -292,7 +292,7 @@ CLEAR_monthly_seas <-
 
 ## ! For daily monthly values ####
 
-ALL_daily_mean <- DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+ALL_3_daily_mean <- DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                                GLB_att       = mean(GLB_att,    na.rm = T),
                                DIR_transp    = mean(DIR_transp, na.rm = T),
                                DIR_att_sd    = sd(  DIR_att,    na.rm = T),
@@ -304,7 +304,7 @@ ALL_daily_mean <- DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                            by = .( Date = Day ) ]
 
 
-CLEAR_daily_mean <- DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+CLEAR_3_daily_mean <- DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                                    GLB_att       = mean(GLB_att,    na.rm = T),
                                    DIR_transp    = mean(DIR_transp, na.rm = T),
                                    DIR_att_sd    = sd(  DIR_att,    na.rm = T),
@@ -321,12 +321,12 @@ rm(DATA_all, DATA_Clear)
 #+ echo=T, include=T
 conf_param  <- 1 - ( 1 - Monthly_confidence_limit ) / 2
 suppressWarnings({
-    ALL_daily_mean[,  DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
-    ALL_daily_mean[,  GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
-    ALL_daily_mean[,  DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
-    CLEAR_daily_mean[,DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
-    CLEAR_daily_mean[,GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
-    CLEAR_daily_mean[,DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
+    ALL_3_daily_mean[,  DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
+    ALL_3_daily_mean[,  GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
+    ALL_3_daily_mean[,  DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
+    CLEAR_3_daily_mean[,DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
+    CLEAR_3_daily_mean[,GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
+    CLEAR_3_daily_mean[,DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
 })
 #+ echo=F, include=F
 
@@ -334,20 +334,20 @@ suppressWarnings({
 
 #' #### Exclude means with less than `r Daily_aggregation_N_lim` data points
 #+ echo=F, include=T
-ALL_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
-ALL_daily_mean[  GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
-ALL_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
-CLEAR_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
-CLEAR_daily_mean[GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
-CLEAR_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
+ALL_3_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
+ALL_3_daily_mean[  GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
+ALL_3_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
+CLEAR_3_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
+CLEAR_3_daily_mean[GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
+CLEAR_3_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
 
 
 
 #' #### Calculate monthly daily values ####
 #+ echo=F, include=T
 
-ALL_monthly_daily_mean <-
-    ALL_daily_mean[, .(DIR_att    = mean(DIR_att,    na.rm = T),
+ALL_3_monthly_daily_mean <-
+    ALL_3_daily_mean[, .(DIR_att    = mean(DIR_att,    na.rm = T),
                        GLB_att    = mean(GLB_att,    na.rm = T),
                        DIR_transp = mean(DIR_transp, na.rm = T),
                        DIR_att_sd = sd(  DIR_att,    na.rm = T),
@@ -356,8 +356,8 @@ ALL_monthly_daily_mean <-
                        DIR_att_N  = sum(!is.na(DIR_att))  ),
                    by = .( Year = year(Date), Month = month(Date) ) ]
 
-CLEAR_monthly_daily_mean <-
-    CLEAR_daily_mean[, .(DIR_att    = mean(DIR_att,    na.rm = T),
+CLEAR_3_monthly_daily_mean <-
+    CLEAR_3_daily_mean[, .(DIR_att    = mean(DIR_att,    na.rm = T),
                          GLB_att    = mean(GLB_att,    na.rm = T),
                          DIR_transp = mean(DIR_transp, na.rm = T),
                          DIR_att_sd = sd(  DIR_att,    na.rm = T),
@@ -366,8 +366,8 @@ CLEAR_monthly_daily_mean <-
                          DIR_att_N  = sum(!is.na(DIR_att))  ),
                      by = .( Year = year(Date), Month = month(Date) ) ]
 
-ALL_monthly_daily_seas <-
-    ALL_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+ALL_3_monthly_daily_seas <-
+    ALL_3_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
                        GLB_att_seas    = mean(GLB_att,    na.rm = T),
                        DIR_transp_seas = mean(DIR_transp, na.rm = T),
                        DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
@@ -376,8 +376,8 @@ ALL_monthly_daily_seas <-
                        DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                    by = .( Month = month(Date) ) ]
 
-CLEAR_monthly_daily_seas <-
-    CLEAR_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+CLEAR_3_monthly_daily_seas <-
+    CLEAR_3_daily_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
                          GLB_att_seas    = mean(GLB_att,    na.rm = T),
                          DIR_transp_seas = mean(DIR_transp, na.rm = T),
                          DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
@@ -452,18 +452,18 @@ hist(CLEAR_3_monthly_mean$DIR_transp_EM)
 
 # # ## ~ Plots seasonal ####
 # #
-# # plot( ALL_monthly_seas$doy, ALL_monthly_seas$DIR_att_seas )
-# # plot( ALL_monthly_seas$doy, ALL_monthly_seas$GLB_att_seas )
-# # plot( ALL_monthly_seas$doy, ALL_monthly_seas$DIR_transp_seas )
-# # plot( ALL_monthly_seas$doy, ALL_monthly_seas$GLB_att_N_seas)
-# # plot( ALL_monthly_seas$doy, ALL_monthly_seas$DIR_att_N_seas)
+# # plot( ALL_3_monthly_seas$doy, ALL_3_monthly_seas$DIR_att_seas )
+# # plot( ALL_3_monthly_seas$doy, ALL_3_monthly_seas$GLB_att_seas )
+# # plot( ALL_3_monthly_seas$doy, ALL_3_monthly_seas$DIR_transp_seas )
+# # plot( ALL_3_monthly_seas$doy, ALL_3_monthly_seas$GLB_att_N_seas)
+# # plot( ALL_3_monthly_seas$doy, ALL_3_monthly_seas$DIR_att_N_seas)
 # #
 # #
-# # plot( CLEAR_monthly_seas$doy, CLEAR_monthly_seas$DIR_att_seas )
-# # plot( CLEAR_monthly_seas$doy, CLEAR_monthly_seas$GLB_att_seas )
-# # plot( CLEAR_monthly_seas$doy, CLEAR_monthly_seas$DIR_transp_seas )
-# # plot( CLEAR_monthly_seas$doy, CLEAR_monthly_seas$GLB_att_N_seas)
-# # plot( CLEAR_monthly_seas$doy, CLEAR_monthly_seas$DIR_att_N_seas)
+# # plot( CLEAR_3_monthly_seas$doy, CLEAR_3_monthly_seas$DIR_att_seas )
+# # plot( CLEAR_3_monthly_seas$doy, CLEAR_3_monthly_seas$GLB_att_seas )
+# # plot( CLEAR_3_monthly_seas$doy, CLEAR_3_monthly_seas$DIR_transp_seas )
+# # plot( CLEAR_3_monthly_seas$doy, CLEAR_3_monthly_seas$GLB_att_N_seas)
+# # plot( CLEAR_3_monthly_seas$doy, CLEAR_3_monthly_seas$DIR_att_N_seas)
 
 
 
@@ -473,71 +473,71 @@ hist(CLEAR_3_monthly_mean$DIR_transp_EM)
 ## ~ remove seasonality ####
 
 ## by sza
-ALL_3_monthly_seas   <- merge(  ALL_3_monthly_mean, ALL_monthly_seas,   by = c("Month", "SZA", "preNoon"), all = T)
-CLEAR_3_monthly_seas <- merge(CLEAR_3_monthly_mean, CLEAR_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
+ALL_3_monthly_DEseas   <- merge(  ALL_3_monthly_mean, ALL_3_monthly_seas,   by = c("Month", "SZA", "preNoon"), all = T)
+CLEAR_3_monthly_DEseas <- merge(CLEAR_3_monthly_mean, CLEAR_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
 ## by whole day monthly
-ALL_monthly_daily_seas   <- merge(ALL_monthly_daily_mean,   ALL_monthly_daily_seas,   by = "Month", all = T)
-CLEAR_monthly_daily_seas <- merge(CLEAR_monthly_daily_mean, CLEAR_monthly_daily_seas, by = "Month", all = T)
+ALL_3_monthly_daily_DEseas   <- merge(ALL_3_monthly_daily_mean,   ALL_3_monthly_daily_seas,   by = "Month", all = T)
+CLEAR_3_monthly_daily_DEseas <- merge(CLEAR_3_monthly_daily_mean, CLEAR_3_monthly_daily_seas, by = "Month", all = T)
 
 
 # #+ echo=F, include=T
 # ## anomaly
-# ALL_3_monthly_seas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
-# ALL_3_monthly_seas[   , GLB_att    := GLB_att    - GLB_att_seas    ]
-# ALL_3_monthly_seas[   , DIR_transp := DIR_transp - DIR_transp_seas ]
-# CLEAR_3_monthly_seas[ , DIR_att    := DIR_att    - DIR_att_seas    ]
-# CLEAR_3_monthly_seas[ , GLB_att    := GLB_att    - GLB_att_seas    ]
-# CLEAR_3_monthly_seas[ , DIR_transp := DIR_transp - DIR_transp_seas ]
+# ALL_3_monthly_DEseas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
+# ALL_3_monthly_DEseas[   , GLB_att    := GLB_att    - GLB_att_seas    ]
+# ALL_3_monthly_DEseas[   , DIR_transp := DIR_transp - DIR_transp_seas ]
+# CLEAR_3_monthly_DEseas[ , DIR_att    := DIR_att    - DIR_att_seas    ]
+# CLEAR_3_monthly_DEseas[ , GLB_att    := GLB_att    - GLB_att_seas    ]
+# CLEAR_3_monthly_DEseas[ , DIR_transp := DIR_transp - DIR_transp_seas ]
 # #+ echo=F, include=F
 
 
 #+ echo=F, include=T
 ## relative anomaly
-ALL_3_monthly_seas[  ,    DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-ALL_3_monthly_seas[  ,    GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-ALL_3_monthly_seas[  ,    DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-CLEAR_3_monthly_seas[,    DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-CLEAR_3_monthly_seas[,    GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-CLEAR_3_monthly_seas[,    DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-ALL_monthly_daily_seas[  ,DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-ALL_monthly_daily_seas[  ,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-ALL_monthly_daily_seas[  ,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-CLEAR_monthly_daily_seas[,DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-CLEAR_monthly_daily_seas[,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-CLEAR_monthly_daily_seas[,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+ALL_3_monthly_DEseas[  ,    DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+ALL_3_monthly_DEseas[  ,    GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+ALL_3_monthly_DEseas[  ,    DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+CLEAR_3_monthly_DEseas[,    DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+CLEAR_3_monthly_DEseas[,    GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+CLEAR_3_monthly_DEseas[,    DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+ALL_3_monthly_daily_DEseas[  ,DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+ALL_3_monthly_daily_DEseas[  ,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+ALL_3_monthly_daily_DEseas[  ,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+CLEAR_3_monthly_daily_DEseas[,DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+CLEAR_3_monthly_daily_DEseas[,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+CLEAR_3_monthly_daily_DEseas[,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
 #+ echo=F, include=F
 
-ALL_3_monthly_seas[   preNoon == TRUE,    preNoon := "am"    ]
-ALL_3_monthly_seas[   preNoon == FALSE,   preNoon := "pm"    ]
-ALL_3_monthly_seas[   preNoon == "Daily", preNoon := "am+pm" ]
-CLEAR_3_monthly_seas[ preNoon == FALSE,   preNoon := "pm"    ]
-CLEAR_3_monthly_seas[ preNoon == "Daily", preNoon := "am+pm" ]
-CLEAR_3_monthly_seas[ preNoon == TRUE,    preNoon := "am"    ]
+ALL_3_monthly_DEseas[   preNoon == TRUE,    preNoon := "am"    ]
+ALL_3_monthly_DEseas[   preNoon == FALSE,   preNoon := "pm"    ]
+ALL_3_monthly_DEseas[   preNoon == "Daily", preNoon := "am+pm" ]
+CLEAR_3_monthly_DEseas[ preNoon == FALSE,   preNoon := "pm"    ]
+CLEAR_3_monthly_DEseas[ preNoon == "Daily", preNoon := "am+pm" ]
+CLEAR_3_monthly_DEseas[ preNoon == TRUE,    preNoon := "am"    ]
 
 
-setorder(ALL_3_monthly_seas,  Year,Month,preNoon,SZA)
-setorder(CLEAR_3_monthly_seas,Year,Month,preNoon,SZA)
-setorder(ALL_monthly_daily_seas,Year,Month)
-setorder(CLEAR_monthly_daily_seas,Year,Month)
+setorder(ALL_3_monthly_DEseas,  Year,Month,preNoon,SZA)
+setorder(CLEAR_3_monthly_DEseas,Year,Month,preNoon,SZA)
+setorder(ALL_3_monthly_daily_DEseas,Year,Month)
+setorder(CLEAR_3_monthly_daily_DEseas,Year,Month)
 
 
-ALL_monthly_daily_seas[   is.na(GLB_att),    GLB_att    := 0 ]
-ALL_monthly_daily_seas[   is.na(DIR_att),    DIR_att    := 0 ]
-ALL_monthly_daily_seas[   is.na(DIR_transp), DIR_transp := 0 ]
-CLEAR_monthly_daily_seas[ is.na(GLB_att),    GLB_att    := 0 ]
-CLEAR_monthly_daily_seas[ is.na(DIR_att),    DIR_att    := 0 ]
-CLEAR_monthly_daily_seas[ is.na(DIR_transp), DIR_transp := 0 ]
+ALL_3_monthly_daily_DEseas[   is.na(GLB_att),    GLB_att    := 0 ]
+ALL_3_monthly_daily_DEseas[   is.na(DIR_att),    DIR_att    := 0 ]
+ALL_3_monthly_daily_DEseas[   is.na(DIR_transp), DIR_transp := 0 ]
+CLEAR_3_monthly_daily_DEseas[ is.na(GLB_att),    GLB_att    := 0 ]
+CLEAR_3_monthly_daily_DEseas[ is.na(DIR_att),    DIR_att    := 0 ]
+CLEAR_3_monthly_daily_DEseas[ is.na(DIR_transp), DIR_transp := 0 ]
 
-ALL_monthly_daily_cumsum   <- ALL_monthly_daily_seas
-CLEAR_monthly_daily_cumsum <- CLEAR_monthly_daily_seas
+ALL_3_monthly_daily_cumsum   <- ALL_3_monthly_daily_DEseas
+CLEAR_3_monthly_daily_cumsum <- CLEAR_3_monthly_daily_DEseas
 
 
-ALL_monthly_daily_cumsum[,   GLB_att    := cumsum(GLB_att)]
-ALL_monthly_daily_cumsum[,   DIR_att    := cumsum(DIR_att)]
-ALL_monthly_daily_cumsum[,   DIR_transp := cumsum(DIR_transp)]
-CLEAR_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)]
-CLEAR_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)]
-CLEAR_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
+ALL_3_monthly_daily_cumsum[,   GLB_att    := cumsum(GLB_att)]
+ALL_3_monthly_daily_cumsum[,   DIR_att    := cumsum(DIR_att)]
+ALL_3_monthly_daily_cumsum[,   DIR_transp := cumsum(DIR_transp)]
+CLEAR_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)]
+CLEAR_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)]
+CLEAR_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
 
 
 
@@ -549,9 +549,8 @@ CLEAR_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
 
 timefactor <- 1
 vars    <- c("GLB_att", "DIR_att", "DIR_transp")
-dbs     <- c("ALL_3_monthly_seas", "CLEAR_3_monthly_seas")
+dbs     <- c("ALL_3_monthly_DEseas", "CLEAR_3_monthly_DEseas")
 basevar <- c("Year","Month","SZA","preNoon")
-
 
 
 ## compute cumsums for each category and sza
@@ -575,26 +574,27 @@ for (DBn in dbs) {
         }
     }
     ttt <- c(basevar,vars)
-    assign(sub("seas","cumsum", DBn), DB[, ..ttt]   )
+    assign(sub("DEseas","cumsum", DBn), DB[, ..ttt]   )
 }
 
 
 
-## create a usefull date
-ALL_monthly_cumsum[,        FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
-CLEAR_monthly_cumsum[,      FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
-ALL_monthly_daily_cumsum[,  FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
-CLEAR_monthly_daily_cumsum[,FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
+## create a useful date
+ALL_3_monthly_cumsum[,        FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
+CLEAR_3_monthly_cumsum[,      FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
+ALL_3_monthly_daily_cumsum[,  FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
+CLEAR_3_monthly_daily_cumsum[,FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
 
 
 
 
 
-plotsza <- c( 63 )
-plotpreNoon <- c("am","pm","am+pm", "daily")
+plotsza     <- c( 63 )
+# plotpreNoon <- c("am","pm","am+pm", "daily")
+plotpreNoon <- c("am","pm","daily")
 plotpNcol   <- c(2,4,6,7)
 vars        <- c("GLB_att", "DIR_att", "DIR_transp")
-database    <- c("ALL_monthly_cumsum","CLEAR_monthly_cumsum")
+database    <- c("ALL_3_monthly_cumsum","CLEAR_3_monthly_cumsum")
 
 #+ echo=F, include=T
 for (adb in database) {
