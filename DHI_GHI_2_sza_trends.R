@@ -106,11 +106,12 @@ options(error = function() {
 
 #+ echo=F, include=T
 #' ### Data range
-#' Time data span `r range(DATA_all$Date)`
+#' Time data span `r range(ALL_1_daily_mean$Date)`
 #'
 #'
 #' ## 2. Long term by SZA
-
+#' 
+#' 
 
 
 #+ echo=F, include=F
@@ -222,7 +223,12 @@ setorder(CLEAR_daily_DEseas,Date)
 # CLEAR_daily_DEseas[ , GLB_att    := GLB_att    - GLB_att_seas    ]
 # CLEAR_daily_DEseas[ , DIR_transp := DIR_transp - DIR_transp_seas ]
 
+
+
 ##TODO margin of error for anomaly!!!!
+
+
+
 
 ## relative anomaly
 #' #### Use the % difference from seasonal values
@@ -270,7 +276,6 @@ for (DBn in dbs) {
                                     var       = avar,
                                     N         = sum(!is.na(dataset[[avar]]))
                                 ))
-
             }
         }
     }
@@ -288,13 +293,10 @@ setorder(szatrends,SZA)
 
 
 ## covert to trend per year
-Days_of_year
+szatrends[, slope    := slope    * Days_of_year ]
+szatrends[, slope.sd := slope.sd * Days_of_year ]
 
-pprint[, slope    := slope    * Days_of_year ]
-pprint[, slope.sd := slope.sd * Days_of_year ]
-
-stop()
-
+## set some plot option for data
 szatrends[ var == "DIR_att",    col := col_DIR_att    ]
 szatrends[ var == "GLB_att",    col := col_GLB_att    ]
 szatrends[ var == "DIR_transp", col := col_DIR_transp ]
@@ -426,12 +428,6 @@ for (DBn in dbs) {
                                         N         = sum(!is.na(dataset[[avar]]))
                                     ))
 
-                    # plot(dataset$Date, dataset[[avar]], pch  = "." )
-                    # abline(lm1)
-                    # fit <- lm1[[1]]
-                    # legend('top', lty = 1, bty = "n",
-                    #        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]/timefactor*365),3),'* year'))
-                    # title(paste(DBn, asza, anoon))
                 }
             }
         }
@@ -444,6 +440,10 @@ hist(gather_seas$N[gather_seas$N>50], breaks = 100)
 szatrends_seas <- data.table(gather_seas)
 setorder(szatrends_seas,SZA)
 
+
+## covert to trend per year
+szatrends_seas[, slope    := slope    * Days_of_year ]
+szatrends_seas[, slope.sd := slope.sd * Days_of_year ]
 
 ## define plot colors
 szatrends_seas[ var == "DIR_att",    col := col_DIR_att    ]
@@ -550,15 +550,7 @@ for (ase in season) {
 
 
 
-
-
-
-
-
-
-
 #' **END**
 #+ include=T, echo=F
 tac <- Sys.time()
 cat(sprintf("%s %s@%s %s %f mins\n\n",Sys.time(),Sys.info()["login"],Sys.info()["nodename"],Script.Name,difftime(tac,tic,units="mins")))
-
