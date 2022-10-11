@@ -15,13 +15,13 @@ PDF    = $(TARGET).pdf
 SLIDY  = $(TARGET).html
 Ap: $(PDF)
 $(PDF): $(RMD)
-	Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	@echo "Building: $@"
 	@echo "Changed:  $?"
 #	setsid evince    $@ &
 Ah: $(SLIDY)
 $(SLIDY): $(RMD)
-	Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
+	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Building: $@"
 	@echo "Changed:  $?"
 	# setsid mimeopen  $@ &
@@ -39,19 +39,19 @@ p1: $(PDF)
 $(PDF): $(RMD)
 	@echo ""
 	@echo "Building: $@"
-	Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
-	@rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
+	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
 #	setsid evince    $@ &
 h1: $(SLIDY)
 $(SLIDY): $(RMD)
-	Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
+	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Building: $@"
 	@echo "Changed:  $?"
 	# setsid mimeopen  $@ &
 r1: $(RUNT)
 $(RUNT): $(RMD)
-	Rscript $?
+	-Rscript $?
 
 
 ###   2. DHI_GHI_sza_trends
@@ -64,19 +64,19 @@ p2: $(PDF)
 $(PDF): $(RMD)
 	@echo ""
 	@echo "Building: $@"
-	Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
-	@rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
+	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
 #	setsid evince    $@ &
 h2: $(SLIDY)
 $(SLIDY): $(RMD)
-	Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
+	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Building: $@"
 	@echo "Changed:  $?"
 	# setsid mimeopen  $@ &
 r2: $(RUNT)
 $(RUNT): $(RMD)
-	Rscript $?
+	-Rscript $?
 
 
 
@@ -91,19 +91,19 @@ p3: $(PDF)
 $(PDF): $(RMD)
 	@echo ""
 	@echo "Building: $@"
-	Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
-	@rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
+	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
 #	setsid evince    $@ &
 h3: $(SLIDY)
 $(SLIDY): $(RMD)
-	Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
+	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Building: $@"
 	@echo "Changed:  $?"
 	# setsid mimeopen  $@ &
 r3: $(RUNT)
 $(RUNT): $(RMD)
-	Rscript $?
+	-Rscript $?
 
 
 

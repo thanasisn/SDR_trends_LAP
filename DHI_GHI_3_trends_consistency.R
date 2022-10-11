@@ -110,7 +110,7 @@ options(error = function() {
 
 #+ echo=F, include=T
 #' ### Data range
-#' Time data span `r range(DATA$Date)`
+#' Time data span `r range(DATA_all$Date)`
 #'
 
 
@@ -166,38 +166,40 @@ rm(ALL_3_monthly_meanA, ALL_3_monthly_meanB)
 ALL_3_monthly_mean[, Date := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
 
 
-CLEAR_3_monthly_meanA <- DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
-                                        HOR_att       = mean(HOR_att,    na.rm = T),
-                                        GLB_att       = mean(GLB_att,    na.rm = T),
-                                        DIR_transp    = mean(DIR_transp, na.rm = T),
-                                        DIR_att_sd    = sd(  DIR_att,    na.rm = T),
-                                        HOR_att_sd    = sd(  HOR_att,    na.rm = T),
-                                        GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                                        DIR_transp_sd = sd(DIR_transp, na.rm = T),
-                                        GLB_att_N     = sum(!is.na(GLB_att)),
-                                        HOR_att_N     = sum(!is.na(HOR_att)),
-                                        DIR_att_N     = sum(!is.na(DIR_att))),
-                                    by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
-                                           Year    = year(Date),
-                                           Month   = month(Date),
-                                           preNoon = preNoon  ) ]
+CLEAR_3_monthly_meanA <-
+    DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                   HOR_att       = mean(HOR_att,    na.rm = T),
+                   GLB_att       = mean(GLB_att,    na.rm = T),
+                   DIR_transp    = mean(DIR_transp, na.rm = T),
+                   DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                   HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                   GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                   DIR_transp_sd = sd(DIR_transp, na.rm = T),
+                   GLB_att_N     = sum(!is.na(GLB_att)),
+                   HOR_att_N     = sum(!is.na(HOR_att)),
+                   DIR_att_N     = sum(!is.na(DIR_att))),
+               by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                      Year    = year(Date),
+                      Month   = month(Date),
+                      preNoon = preNoon  ) ]
 
 
-CLEAR_3_monthly_meanB <- DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
-                                        HOR_att       = mean(HOR_att,    na.rm = T),
-                                        GLB_att       = mean(GLB_att,    na.rm = T),
-                                        DIR_transp    = mean(DIR_transp, na.rm = T),
-                                        DIR_att_sd    = sd(  DIR_att,    na.rm = T),
-                                        HOR_att_sd    = sd(  HOR_att,    na.rm = T),
-                                        GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                                        DIR_transp_sd = sd(DIR_transp, na.rm = T),
-                                        GLB_att_N     = sum(!is.na(GLB_att)),
-                                        HOR_att_N     = sum(!is.na(HOR_att)),
-                                        DIR_att_N     = sum(!is.na(DIR_att)),
-                                      preNoon       = "Daily"),
-                                  by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
-                                         Year    = year(Date),
-                                         Month   = month(Date) ) ]
+CLEAR_3_monthly_meanB <-
+    DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                   HOR_att       = mean(HOR_att,    na.rm = T),
+                   GLB_att       = mean(GLB_att,    na.rm = T),
+                   DIR_transp    = mean(DIR_transp, na.rm = T),
+                   DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                   HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                   GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                   DIR_transp_sd = sd(DIR_transp, na.rm = T),
+                   GLB_att_N     = sum(!is.na(GLB_att)),
+                   HOR_att_N     = sum(!is.na(HOR_att)),
+                   DIR_att_N     = sum(!is.na(DIR_att)),
+                   preNoon       = "Daily"),
+               by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                      Year    = year(Date),
+                      Month   = month(Date) ) ]
 
 CLEAR_3_monthly_mean <- data.table(rbind(data.frame(CLEAR_3_monthly_meanB),
                                          data.frame(CLEAR_3_monthly_meanA) ))
@@ -210,14 +212,14 @@ CLEAR_3_monthly_mean[, Date := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
 
 conf_param  <- 1 - ( 1 - Monthly_confidence_limit ) / 2
 suppressWarnings({
-ALL_3_monthly_mean[,  DIR_att_EM    := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd   /sqrt(DIR_att_N)]
-ALL_3_monthly_mean[,  HOR_att_EM    := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd   /sqrt(HOR_att_N)]
-ALL_3_monthly_mean[,  GLB_att_EM    := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd   /sqrt(GLB_att_N)]
-ALL_3_monthly_mean[,  DIR_transp_EM := qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd/sqrt(DIR_att_N)]
-CLEAR_3_monthly_mean[,DIR_att_EM    := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd   /sqrt(DIR_att_N)]
-CLEAR_3_monthly_mean[,HOR_att_EM    := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd   /sqrt(HOR_att_N)]
-CLEAR_3_monthly_mean[,GLB_att_EM    := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd   /sqrt(GLB_att_N)]
-CLEAR_3_monthly_mean[,DIR_transp_EM := qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd/sqrt(DIR_att_N)]
+    ALL_3_monthly_mean[,  DIR_att_EM   :=qt(conf_param,df=DIR_att_N -1)* DIR_att_sd   /sqrt(DIR_att_N)]
+    ALL_3_monthly_mean[,  HOR_att_EM   :=qt(conf_param,df=HOR_att_N -1)* HOR_att_sd   /sqrt(HOR_att_N)]
+    ALL_3_monthly_mean[,  GLB_att_EM   :=qt(conf_param,df=GLB_att_N -1)* GLB_att_sd   /sqrt(GLB_att_N)]
+    ALL_3_monthly_mean[,  DIR_transp_EM:=qt(conf_param,df=DIR_att_N -1)* DIR_transp_sd/sqrt(DIR_att_N)]
+    CLEAR_3_monthly_mean[,DIR_att_EM   :=qt(conf_param,df=DIR_att_N -1)* DIR_att_sd   /sqrt(DIR_att_N)]
+    CLEAR_3_monthly_mean[,HOR_att_EM   :=qt(conf_param,df=HOR_att_N -1)* HOR_att_sd   /sqrt(HOR_att_N)]
+    CLEAR_3_monthly_mean[,GLB_att_EM   :=qt(conf_param,df=GLB_att_N -1)* GLB_att_sd   /sqrt(GLB_att_N)]
+    CLEAR_3_monthly_mean[,DIR_transp_EM:=qt(conf_param,df=DIR_att_N -1)* DIR_transp_sd/sqrt(DIR_att_N)]
 })
 
 
@@ -225,14 +227,26 @@ CLEAR_3_monthly_mean[,DIR_transp_EM := qt(conf_param,df=DIR_att_N -1) * DIR_tran
 #+ echo=F, include=T
 
 ALL_3_monthly_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_att       := NA ]
+ALL_3_monthly_mean[   HOR_att_N <= Monthly_aggegation_N_lim, HOR_att       := NA ]
 ALL_3_monthly_mean[   GLB_att_N <= Monthly_aggegation_N_lim, GLB_att       := NA ]
 ALL_3_monthly_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp    := NA ]
+ALL_3_monthly_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_att_sd    := NA ]
+ALL_3_monthly_mean[   HOR_att_N <= Monthly_aggegation_N_lim, HOR_att_sd    := NA ]
+ALL_3_monthly_mean[   GLB_att_N <= Monthly_aggegation_N_lim, GLB_att_sd    := NA ]
+ALL_3_monthly_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_sd := NA ]
+ALL_3_monthly_mean[   HOR_att_N <= Monthly_aggegation_N_lim, HOR_att_EM    := NA ]
 ALL_3_monthly_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_att_EM    := NA ]
 ALL_3_monthly_mean[   GLB_att_N <= Monthly_aggegation_N_lim, GLB_att_EM    := NA ]
 ALL_3_monthly_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_EM := NA ]
 CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_att       := NA ]
+CLEAR_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim, HOR_att       := NA ]
 CLEAR_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim, GLB_att       := NA ]
 CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp    := NA ]
+CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_att_sd    := NA ]
+CLEAR_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim, HOR_att_sd    := NA ]
+CLEAR_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim, GLB_att_sd    := NA ]
+CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_sd := NA ]
+CLEAR_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim, HOR_att_EM    := NA ]
 CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_att_EM    := NA ]
 CLEAR_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim, GLB_att_EM    := NA ]
 CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_EM := NA ]
@@ -243,22 +257,28 @@ CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_EM := NA
 
 ALL_monthly_seas <-
     ALL_3_monthly_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
-                         GLB_att_seas    = mean(GLB_att,    na.rm = T),
-                         DIR_transp_seas = mean(DIR_transp, na.rm = T),
-                         DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
-                         GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
-                         GLB_att_N_seas  = sum(!is.na(GLB_att)),
-                         DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
-                     by = .( Month, SZA, preNoon ) ]
+                           GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                           HOR_att_seas    = mean(HOR_att,    na.rm = T),
+                           DIR_transp_seas = mean(DIR_transp, na.rm = T),
+                           DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                           HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
+                           GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
+                           GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                           HOR_att_N_seas  = sum(!is.na(HOR_att)),
+                           DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
+                       by = .( Month, SZA, preNoon ) ]
 
 CLEAR_monthly_seas <-
     CLEAR_3_monthly_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
-                           GLB_att_seas    = mean(GLB_att,    na.rm = T),
-                           DIR_transp_seas = mean(DIR_transp, na.rm = T),
-                           DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
-                           GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
-                           GLB_att_N_seas  = sum(!is.na(GLB_att)),
-                           DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
+                             GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                             HOR_att_seas    = mean(HOR_att,    na.rm = T),
+                             DIR_transp_seas = mean(DIR_transp, na.rm = T),
+                             DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                             HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
+                             GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
+                             GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                             HOR_att_N_seas  = sum(!is.na(HOR_att)),
+                             DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                        by = .( Month, SZA, preNoon ) ]
 
 
@@ -299,8 +319,7 @@ rm(DATA_all, DATA_Clear)
 
 #' #### Margin of error calculation for 0.95 confidence interval ####
 #+ echo=T, include=T
-CONF_INTERV <- .95
-conf_param  <- 1-(1-CONF_INTERV)/2
+conf_param  <- 1 - ( 1 - Monthly_confidence_limit ) / 2
 suppressWarnings({
     ALL_daily_mean[,  DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
     ALL_daily_mean[,  GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
@@ -380,12 +399,12 @@ CLEAR_monthly_daily_seas <-
 
 #+ echo=F, include=F
 ## ~ Plots longterm  ####
-plot( ALL_3_monthly_mean$Month, ALL_3_monthly_mean$DIR_att )
-plot( ALL_3_monthly_mean$Month, ALL_3_monthly_mean$DIR_att_EM )
-plot( ALL_3_monthly_mean$Month, ALL_3_monthly_mean$GLB_att )
-plot( ALL_3_monthly_mean$Month, ALL_3_monthly_mean$GLB_att_EM )
-plot( ALL_3_monthly_mean$Month, ALL_3_monthly_mean$DIR_transp )
-plot( ALL_3_monthly_mean$Month, ALL_3_monthly_mean$DIR_transp_EM )
+plot( ALL_3_monthly_mean$Date, ALL_3_monthly_mean$DIR_att )
+plot( ALL_3_monthly_mean$Date, ALL_3_monthly_mean$DIR_att_EM )
+plot( ALL_3_monthly_mean$Date, ALL_3_monthly_mean$GLB_att )
+plot( ALL_3_monthly_mean$Date, ALL_3_monthly_mean$GLB_att_EM )
+plot( ALL_3_monthly_mean$Date, ALL_3_monthly_mean$DIR_transp )
+plot( ALL_3_monthly_mean$Date, ALL_3_monthly_mean$DIR_transp_EM )
 
 plot( ALL_3_monthly_mean$SZA, ALL_3_monthly_mean$DIR_att )
 plot( ALL_3_monthly_mean$SZA, ALL_3_monthly_mean$DIR_att_EM )
@@ -397,7 +416,10 @@ plot( ALL_3_monthly_mean$SZA, ALL_3_monthly_mean$DIR_transp_EM )
 hist(ALL_3_monthly_mean$DIR_att_N)
 hist(ALL_3_monthly_mean$GLB_att_N)
 
-plot(ALL_3_monthly_mean$DIR_att_N)
+plot(ALL_3_monthly_mean$Date, ALL_3_monthly_mean$DIR_att_N)
+plot(ALL_3_monthly_mean$Date, ALL_3_monthly_mean$HOR_att_N)
+plot(ALL_3_monthly_mean$Date, ALL_3_monthly_mean$GLB_att_N)
+
 
 
 hist(ALL_3_monthly_mean$DIR_att_EM)

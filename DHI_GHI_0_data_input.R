@@ -187,15 +187,33 @@ if ( havetorun ) {
         CLEAR_1_daily_mean[,DIR_transp_EM:=qt(conf_param,df=DIR_att_N -1)* DIR_transp_sd/sqrt(DIR_att_N)]
     })
 
+
     ## ~ Exclude means with less than `r Daily_aggregation_N_lim` data points ####
-    ALL_1_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
-    ALL_1_daily_mean[  GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
-    ALL_1_daily_mean[  HOR_att_N <= Daily_aggregation_N_lim, HOR_att    := NA ]
-    ALL_1_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
-    CLEAR_1_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
-    CLEAR_1_daily_mean[HOR_att_N <= Daily_aggregation_N_lim, HOR_att    := NA ]
-    CLEAR_1_daily_mean[GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
-    CLEAR_1_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
+    ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_att       := NA ]
+    ALL_1_daily_mean[   GLB_att_N <= Daily_aggregation_N_lim, GLB_att       := NA ]
+    ALL_1_daily_mean[   HOR_att_N <= Daily_aggregation_N_lim, HOR_att       := NA ]
+    ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_transp    := NA ]
+    ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_att_sd    := NA ]
+    ALL_1_daily_mean[   GLB_att_N <= Daily_aggregation_N_lim, GLB_att_sd    := NA ]
+    ALL_1_daily_mean[   HOR_att_N <= Daily_aggregation_N_lim, HOR_att_sd    := NA ]
+    ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_sd := NA ]
+    ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_att_EM    := NA ]
+    ALL_1_daily_mean[   GLB_att_N <= Daily_aggregation_N_lim, GLB_att_EM    := NA ]
+    ALL_1_daily_mean[   HOR_att_N <= Daily_aggregation_N_lim, HOR_att_EM    := NA ]
+    ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_EM := NA ]
+    CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att       := NA ]
+    CLEAR_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att       := NA ]
+    CLEAR_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att       := NA ]
+    CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp    := NA ]
+    CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att_sd    := NA ]
+    CLEAR_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att_sd    := NA ]
+    CLEAR_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att_sd    := NA ]
+    CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_sd := NA ]
+    CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att_EM    := NA ]
+    CLEAR_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att_EM    := NA ]
+    CLEAR_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att_EM    := NA ]
+    CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_EM := NA ]
+
 
 
     ## ~ Calculate daily seasonal values for all data ####
@@ -300,14 +318,31 @@ if ( havetorun ) {
 
 
     ## ~ Exclude means with less than `r SZA_aggregation_N_lim` data points ####
-    ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_att    := NA ]
-    ALL_2_daily_mean[   HOR_att_N <= SZA_aggregation_N_lim, HOR_att    := NA ]
-    ALL_2_daily_mean[   GLB_att_N <= SZA_aggregation_N_lim, GLB_att    := NA ]
-    ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_transp := NA ]
-    CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att    := NA ]
-    CLEAR_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att    := NA ]
-    CLEAR_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att    := NA ]
-    CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp := NA ]
+    ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_att       := NA ]
+    ALL_2_daily_mean[   HOR_att_N <= SZA_aggregation_N_lim, HOR_att       := NA ]
+    ALL_2_daily_mean[   GLB_att_N <= SZA_aggregation_N_lim, GLB_att       := NA ]
+    ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_transp    := NA ]
+    ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_att_sd    := NA ]
+    ALL_2_daily_mean[   HOR_att_N <= SZA_aggregation_N_lim, HOR_att_sd    := NA ]
+    ALL_2_daily_mean[   GLB_att_N <= SZA_aggregation_N_lim, GLB_att_sd    := NA ]
+    ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_sd := NA ]
+    ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_att_EM    := NA ]
+    ALL_2_daily_mean[   HOR_att_N <= SZA_aggregation_N_lim, HOR_att_EM    := NA ]
+    ALL_2_daily_mean[   GLB_att_N <= SZA_aggregation_N_lim, GLB_att_EM    := NA ]
+    ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
+    CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att       := NA ]
+    CLEAR_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att       := NA ]
+    CLEAR_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att       := NA ]
+    CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp    := NA ]
+    CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att_sd    := NA ]
+    CLEAR_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att_sd    := NA ]
+    CLEAR_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att_sd    := NA ]
+    CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_sd := NA ]
+    CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att_EM    := NA ]
+    CLEAR_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att_EM    := NA ]
+    CLEAR_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att_EM    := NA ]
+    CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
+
 
 
     ## ~ Calculate daily seasonal values by SZA  ####
@@ -357,6 +392,18 @@ if ( havetorun ) {
 
 
     ####  3.   #################################################
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
