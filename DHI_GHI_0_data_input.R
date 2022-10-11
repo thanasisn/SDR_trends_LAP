@@ -15,7 +15,7 @@ havetorun <- !file.exists(common_data) |
 
 
 if ( havetorun ) {
-    cat(paste("(Re)Create environment and data input: ", common_data))
+    cat(paste("\n !! (Re)Create environment and data input ->", common_data))
 
     #### 0. Get data from Clear sky id data  ###################################
     input_files <- list.files( path       = CLEARdir,
