@@ -200,6 +200,8 @@ rm(data_list)
 #' #### Calculate seasonal anomaly ####
 #+ echo=F, include=F
 
+##TODO margin of error for anomaly!!!!
+
 ALL_daily_DEseas   <- merge(  ALL_1_daily_mean,   ALL_1_daily_seas, by = "doy", all = T)
 CLEAR_daily_DEseas <- merge(CLEAR_1_daily_mean, CLEAR_1_daily_seas, by = "doy", all = T)
 
@@ -217,6 +219,7 @@ setorder(CLEAR_daily_DEseas,Date)
 # CLEAR_daily_DEseas[ , DIR_transp := DIR_transp - DIR_transp_seas ]
 
 
+##TODO margin of error for anomaly!!!!
 
 ## relative anomaly
 #' #### Use the % difference from seasonal values
