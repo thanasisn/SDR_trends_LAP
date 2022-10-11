@@ -2,6 +2,7 @@
 
 ## Data input
 
+## to force a rebuild
 # file.remove(common_data)
 
 ####  Run data construction ####################################################
@@ -17,8 +18,8 @@ if ( havetorun ) {
     cat(paste("(Re)Create environment and data input: ", common_data))
 
     #### 0. Get data from Clear sky id data  ###################################
-    input_files <- list.files( path    = CLEARdir,
-                               pattern = "Clear_Sky_[0-9]{4}.Rds",
+    input_files <- list.files( path       = CLEARdir,
+                               pattern    = "Clear_Sky_[0-9]{4}.Rds",
                                full.names = T )
 
     if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
@@ -64,6 +65,7 @@ if ( havetorun ) {
     #' ### Keep only data characterized as 'good' by the Radiation Quality control procedure
     #+ echo=F, include=T
     DATA[  QCF_DIR != "good", wattDIR := NA ]
+    DATA[  QCF_DIR != "good", wattHOR := NA ]
     DATA[  QCF_GLB != "good", wattGLB := NA ]
     DATA[, QCF_DIR := NULL ]
     DATA[, QCF_GLB := NULL ]
@@ -191,7 +193,7 @@ if ( havetorun ) {
     ALL_1_daily_mean[  HOR_att_N <= Daily_aggregation_N_lim, HOR_att    := NA ]
     ALL_1_daily_mean[  DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
     CLEAR_1_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_att    := NA ]
-    CLEAR_1_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, HOR_att    := NA ]
+    CLEAR_1_daily_mean[HOR_att_N <= Daily_aggregation_N_lim, HOR_att    := NA ]
     CLEAR_1_daily_mean[GLB_att_N <= Daily_aggregation_N_lim, GLB_att    := NA ]
     CLEAR_1_daily_mean[DIR_att_N <= Daily_aggregation_N_lim, DIR_transp := NA ]
 
