@@ -82,7 +82,7 @@ panderOptions('table.split.table',        120   )
 
 ## Functions from `https://github.com/thanasisn/IStillBreakStuff/tree/main/FUNCTIONS/R`
 source("~/CODE/FUNCTIONS/R/sumNA.R")
-source("~/CODE/FUNCTIONS/R/linear_regrassion_capture.R")
+source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 
@@ -251,7 +251,7 @@ gather <- rbind(gather,
                 data.table(
                     var  = "DIR_att",
                     data = "ALL",
-                    linear_regression_capture(lm1)
+                    linear_fit_stats(lm1)
                 )
 )
 abline(lm1)
@@ -267,7 +267,7 @@ gather <- rbind(gather,
                 data.table(
                     var  = "HOR_att",
                     data = "ALL",
-                    linear_regression_capture(lm1)
+                    linear_fit_stats(lm1)
                 )
 )
 abline(lm1)
@@ -284,7 +284,7 @@ gather <- rbind(gather,
                 data.table(
                     var  = "DIR_transp",
                     data = "ALL",
-                    linear_regression_capture(lm1)
+                    linear_fit_stats(lm1)
                 )
 )
 abline(lm1)
@@ -302,7 +302,7 @@ gather <- rbind(gather,
                 data.table(
                     var  = "GLB_att",
                     data = "ALL",
-                    linear_regression_capture(lm1)
+                    linear_fit_stats(lm1)
                 )
 )
 abline(lm1)
@@ -324,7 +324,7 @@ gather <- rbind(gather,
                 data.table(
                     var  = "DIR_att",
                     data = "CLEAR",
-                    linear_regression_capture(lm1)
+                    linear_fit_stats(lm1)
                 )
 )
 abline(lm1)
@@ -341,7 +341,7 @@ gather <- rbind(gather,
                 data.table(
                     var  = "HOR_att",
                     data = "CLEAR",
-                    linear_regression_capture(lm1)
+                    linear_fit_stats(lm1)
                 )
 )
 abline(lm1)
@@ -357,7 +357,7 @@ gather <- rbind(gather,
                 data.table(
                     var  = "DIR_transp",
                     data = "CLEAR",
-                    linear_regression_capture(lm1)
+                    linear_fit_stats(lm1)
                 )
 )
 abline(lm1)
@@ -375,7 +375,7 @@ gather <- rbind(gather,
                 data.table(
                     var  = "GBL_att",
                     data = "CLEAR",
-                    linear_regression_capture(lm1)
+                    linear_fit_stats(lm1)
                 )
 )
 abline(lm1)
@@ -425,100 +425,131 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 
 
 
-## break by season !!
+## break by season !! ###########################
 
 
 
 
 ####  Plot of SZA trends for each season of year ####
 #' \newpage
-#' ## Plot of SZA trends for each season of year
+#' ## Trends for each season of the year
 #+ echo=F, include=F
-timefactor  <- 1  ## to display % per year
+
+
+
+
+
+
+
+## ~ plot for each season
+
+
 vars        <- c("DIR_att", "GLB_att")
 dbs         <- c("ALL_1_daily_DEseas", "CLEAR_1_daily_DEseas")
-Seasons      <- c("Winter", "Spring", "Summer", "Automn")
-gather_seas <- data.frame()
-
+Seasons     <- c("Winter", "Spring", "Summer", "Automn")
 for (DBn in dbs) {
     DB <- get(DBn)
-
     ## set seasons in each data base
     DB[ month(Date) %in% c(12, 1, 2), Season := "Winter"]
     DB[ month(Date) %in% c( 3, 4, 5), Season := "Spring"]
     DB[ month(Date) %in% c( 6, 7, 8), Season := "Summer"]
     DB[ month(Date) %in% c( 9,10,11), Season := "Automn"]
-
+    ## sanity check
     stopifnot( !any(is.na(DB$Season)) )
-
     for (ase in Seasons) {
         for (avar in vars) {
-
             dataset <- DB[ Season == ase, ]
 
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
-
-            lm1 <- lm( dataset[[avar]] ~ dataset$Date )
-
-            gather_seas <- rbind(gather_seas,
-                                 data.frame(
-                                     linear_regression_capture(lm1),
-                                     preNoon   = anoon,
-                                     DATA      = DBn,
-                                     var       = avar,
-                                     N         = sum(!is.na(dataset[[avar]]))
-                                 ))
+            ## linear model
+            lm1        <- lm( dataset[[avar]] ~ dataset$Date )
+            ## plot
 
 
-            plot(dataset$Date, dataset[[avar]], pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]")
-
+            plot(dataset$Date, dataset[[avar]],
+                 pch  = ".", col = get(paste0("col_",avar)),
+                 xlab = "", ylab = "Deseasonalized anomaly [%]")
             abline(lm1)
+
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n",
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-            title(paste("Clear Sky Global"), cex=0.8)
-
-            confint(lm1) / fit[2]
+            title(paste(ase, sub("_.*","",DBn),avar), cex=0.8)
 
 
+            stop()
         }
     }
 }
 
 
-linear_regression_capture <- function(lm) {
-    aa         <- summary(lm)
 
-    data.frame(
-        intercept    = lm$coefficients[1]   ,
-        slope        = lm$coefficients[2]   ,
-        slope.sd     = aa$coefficients[2,2] ,
-        slope.t      = aa$coefficients[2,3] ,
-        slope.p      = aa$coefficients[2,4] ,
-        intercept.sd = aa$coefficients[1,2] ,
-        intercept.t  = aa$coefficients[1,3] ,
-        intercept.p  = aa$coefficients[1,4] ,
-        Rsqrd        = aa$r.squared         ,
-        RsqrdAdj     = aa$adj.r.squared
-    )
+
+
+
+
+
+
+
+## ~ calculate trends for each season  ####
+vars        <- c("DIR_att", "GLB_att")
+dbs         <- c("ALL_1_daily_DEseas", "CLEAR_1_daily_DEseas")
+Seasons     <- c("Winter", "Spring", "Summer", "Automn")
+gather_seas <- data.frame()
+
+for (DBn in dbs) {
+    DB <- get(DBn)
+    ## set seasons in each data base
+    DB[ month(Date) %in% c(12, 1, 2), Season := "Winter"]
+    DB[ month(Date) %in% c( 3, 4, 5), Season := "Spring"]
+    DB[ month(Date) %in% c( 6, 7, 8), Season := "Summer"]
+    DB[ month(Date) %in% c( 9,10,11), Season := "Automn"]
+    ## sanity check
+    stopifnot( !any(is.na(DB$Season)) )
+    for (ase in Seasons) {
+        for (avar in vars) {
+            dataset <- DB[ Season == ase, ]
+
+            if (sum(!is.na(dataset[[avar]])) <= 1) next()
+            ## linear model
+            lm1        <- lm( dataset[[avar]] ~ dataset$Date )
+            ## gather stats
+            gather_seas <- rbind(gather_seas,
+                                 data.frame(
+                                     linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
+                                     DATA      = DBn,
+                                     Season    = ase,
+                                     var       = avar,
+                                     N         = sum(!is.na(dataset[[avar]]))
+                                 ))
+        }
+    }
 }
 
+wecare      <- grep("intercept", names(gather_seas), value = T, invert = T)
+gather_seas <- data.table(gather_seas)
+gather_seas$DATA <- sub("_.*","",gather_seas$DATA)
+
+pprint <- gather_seas[ , ..wecare]
+
+pprint[, slope.t  := NULL]
+pprint[, Rsqrd    := NULL]
+pprint[, RsqrdAdj := NULL]
 
 
+## convert slope / year
+pprint[, slope              := slope    * Days_of_year ]
+pprint[, slope.sd           := slope.sd * Days_of_year ]
+pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year ]
+pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year ]
 
-rr <- data.frame(confint(lm1))
+setorder(pprint,DATA,var)
 
-rr[2,1]
-
-rr[2,1] + (rr[2,2]-rr[2,1])/2
-
-summary( lm1 )
-
-
-rbind(
-t(confint(lm1 , level = Daily_confidence_limit)),
-t(confint( lm1 ))
-)
+#+ echo=F, include=T
+pander(pprint,
+       cap = "Slope is in %/year")
+#+ echo=F, include=F
+myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_season.dat")
 
 
 
