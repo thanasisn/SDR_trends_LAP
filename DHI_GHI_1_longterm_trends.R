@@ -437,7 +437,7 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 timefactor  <- 1  ## to display % per year
 vars        <- c("DIR_att", "GLB_att")
 dbs         <- c("ALL_1_daily_DEseas", "CLEAR_1_daily_DEseas")
-season      <- c("Winter", "Spring", "Summer", "Automn")
+Seasons      <- c("Winter", "Spring", "Summer", "Automn")
 gather_seas <- data.frame()
 
 for (DBn in dbs) {
@@ -449,14 +449,12 @@ for (DBn in dbs) {
     DB[ month(Date) %in% c( 6, 7, 8), Season := "Summer"]
     DB[ month(Date) %in% c( 9,10,11), Season := "Automn"]
 
-
-
     stopifnot( !any(is.na(DB$Season)) )
 
-    for (ase in season) {
+    for (ase in Seasons) {
         for (avar in vars) {
 
-            dataset <- DB[ season == ase ]
+            dataset <- DB[ Season == ase, ]
 
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
 
@@ -471,19 +469,56 @@ for (DBn in dbs) {
                                      N         = sum(!is.na(dataset[[avar]]))
                                  ))
 
+
+            plot(dataset$Date, dataset[[avar]], pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]")
+
+            abline(lm1)
+            fit <- lm1[[1]]
+            legend('top', lty = 1, bty = "n",
+                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
+            title(paste("Clear Sky Global"), cex=0.8)
+
+            confint(lm1) / fit[2]
+
+
         }
     }
+}
 
+
+linear_regression_capture <- function(lm) {
+    aa         <- summary(lm)
+
+    data.frame(
+        intercept    = lm$coefficients[1]   ,
+        slope        = lm$coefficients[2]   ,
+        slope.sd     = aa$coefficients[2,2] ,
+        slope.t      = aa$coefficients[2,3] ,
+        slope.p      = aa$coefficients[2,4] ,
+        intercept.sd = aa$coefficients[1,2] ,
+        intercept.t  = aa$coefficients[1,3] ,
+        intercept.p  = aa$coefficients[1,4] ,
+        Rsqrd        = aa$r.squared         ,
+        RsqrdAdj     = aa$adj.r.squared
+    )
 }
 
 
 
 
+rr <- data.frame(confint(lm1))
+
+rr[2,1]
+
+rr[2,1] + (rr[2,2]-rr[2,1])/2
+
+summary( lm1 )
 
 
-
-
-
+rbind(
+t(confint(lm1 , level = Daily_confidence_limit)),
+t(confint( lm1 ))
+)
 
 
 
