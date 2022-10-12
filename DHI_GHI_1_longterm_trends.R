@@ -116,7 +116,7 @@ options(error = function() {
 
 
 #+ echo=F, include=F
-## ~ Plots longterm  ####
+## ~ Plots all data  ####
 
 data_list  <- list(ALL   = ALL_1_daily_mean,
                    CLEAR = CLEAR_1_daily_mean)
@@ -155,7 +155,7 @@ for(i in 1:length(data_list)) {
     }
 }
 
-## ~ Plots seasonal ####
+## ~ Plots seasonal data ####
 data_list  <- list(ALL_Seas   = ALL_1_daily_seas,
                    CLEAR_Seas = CLEAR_1_daily_seas)
 data_names <- c(
@@ -197,6 +197,7 @@ rm(data_list)
 
 
 
+#### Calculate seasonal anomaly ####
 #' #### Calculate seasonal anomaly ####
 #+ echo=F, include=F
 
@@ -236,161 +237,17 @@ CLEAR_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_t
 
 
 
-#### ~ Plot of trends  ####
+
+#### TOTAL TRENDS  #############################################################
+
+
+## ~ plot all sky trends ####
 
 #' \newpage
 #' ## Trends on all sky conditions data
-#+ longtermtrendsALLold, echo=F, include=T
-
-gather <- data.frame()
-
-
-plot(ALL_1_daily_DEseas$Date, ALL_1_daily_DEseas$DIR_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_DIR_att )
-lm1 <- lm( DIR_att ~ Date , data = ALL_1_daily_DEseas)
-gather <- rbind(gather,
-                data.table(
-                    var  = "DIR_att",
-                    data = "ALL",
-                    linear_fit_stats(lm1)
-                )
-)
-abline(lm1)
-fit <- lm1[[1]]
-legend('top', lty = 1, bty = "n",
-       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-title(paste("All day Direct"),cex=0.8)
-
-
-plot(ALL_1_daily_DEseas$Date, ALL_1_daily_DEseas$HOR_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_HOR_att )
-lm1 <- lm( HOR_att ~ Date , data = ALL_1_daily_DEseas)
-gather <- rbind(gather,
-                data.table(
-                    var  = "HOR_att",
-                    data = "ALL",
-                    linear_fit_stats(lm1)
-                )
-)
-abline(lm1)
-fit <- lm1[[1]]
-legend('top', lty = 1, bty = "n",
-       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-title(paste("All day Direct HOR"),cex=0.8)
-
-
-
-plot(ALL_1_daily_DEseas$Date, ALL_1_daily_DEseas$DIR_transp, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_DIR_transp )
-lm1 <- lm( DIR_transp ~ Date , data = ALL_1_daily_DEseas)
-gather <- rbind(gather,
-                data.table(
-                    var  = "DIR_transp",
-                    data = "ALL",
-                    linear_fit_stats(lm1)
-                )
-)
-abline(lm1)
-fit <- lm1[[1]]
-legend('top', lty = 1, bty = "n",
-       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-title(paste("All sky Direct transparency"),cex=0.8)
-
-
-
-
-plot(ALL_1_daily_DEseas$Date, ALL_1_daily_DEseas$GLB_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_GLB_att )
-lm1 <- lm( GLB_att ~ Date , data = ALL_1_daily_DEseas)
-gather <- rbind(gather,
-                data.table(
-                    var  = "GLB_att",
-                    data = "ALL",
-                    linear_fit_stats(lm1)
-                )
-)
-abline(lm1)
-fit <- lm1[[1]]
-legend('top', lty = 1, bty = "n",
-       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-title(paste("All sky Global"),cex=0.8)
-
-
-
-
-#' \newpage
-#' ## Trends on clear sky data
-#+ longtermtrendsCS, echo=F, include=T
-
-plot(CLEAR_1_daily_DEseas$Date, CLEAR_1_daily_DEseas$DIR_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_DIR_att )
-lm1 <- lm( DIR_att ~ Date , data = CLEAR_1_daily_DEseas)
-gather <- rbind(gather,
-                data.table(
-                    var  = "DIR_att",
-                    data = "CLEAR",
-                    linear_fit_stats(lm1)
-                )
-)
-abline(lm1)
-fit <- lm1[[1]]
-legend('top', lty = 1, bty = "n",
-       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-title(paste("Clear Sky Direct"),cex=0.8)
-
-
-
-plot(CLEAR_1_daily_DEseas$Date, CLEAR_1_daily_DEseas$HOR_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_HOR_att )
-lm1 <- lm( HOR_att ~ Date , data = CLEAR_1_daily_DEseas)
-gather <- rbind(gather,
-                data.table(
-                    var  = "HOR_att",
-                    data = "CLEAR",
-                    linear_fit_stats(lm1)
-                )
-)
-abline(lm1)
-fit <- lm1[[1]]
-legend('top', lty = 1, bty = "n",
-       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-title(paste("Clear Sky Direct HOR"),cex=0.8)
-
-
-plot(CLEAR_1_daily_DEseas$Date, CLEAR_1_daily_DEseas$DIR_transp, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_DIR_transp )
-lm1 <- lm( DIR_transp ~ Date , data = CLEAR_1_daily_mean)
-gather <- rbind(gather,
-                data.table(
-                    var  = "DIR_transp",
-                    data = "CLEAR",
-                    linear_fit_stats(lm1)
-                )
-)
-abline(lm1)
-fit <- lm1[[1]]
-legend('top', lty = 1, bty = "n",
-       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-title(paste("Clear Sky Direct transparency"), cex=0.8)
-
-
-
-
-plot(CLEAR_1_daily_DEseas$Date, CLEAR_1_daily_DEseas$GLB_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_GLB_att )
-lm1 <- lm( GLB_att ~ Date , data = CLEAR_1_daily_DEseas)
-gather <- rbind(gather,
-                data.table(
-                    var  = "GBL_att",
-                    data = "CLEAR",
-                    linear_fit_stats(lm1)
-                )
-)
-abline(lm1)
-fit <- lm1[[1]]
-legend('top', lty = 1, bty = "n",
-       paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-title(paste("Clear Sky Global"), cex=0.8)
-
-
-
-
-
 #+ longtermtrendsALL, echo=F, include=T, results="asis"
-vars        <- c("DIR_att","HOR_att","DIR_transp", "GLB_att")
-dbs         <- c("ALL_1_daily_DEseas", "CLEAR_1_daily_DEseas")
+vars        <- c("HOR_att","DIR_transp","DIR_att","GLB_att")
+dbs         <- c("ALL_1_daily_DEseas")
 for (DBn in dbs) {
     DB <- get(DBn)
         for (avar in vars) {
@@ -410,7 +267,39 @@ for (DBn in dbs) {
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n",
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-            title(paste(transalate(sub("_.*","",DBn)),transalate(avar)), cex=0.7)
+            title(paste(translate(sub("_.*","",DBn)),translate(avar)), cex=0.7)
+    }
+}
+#+ echo=F, include=F
+
+
+## ~ plot clearsky trends ####
+
+#' \newpage
+#' ## Trends on Clear sky conditions data
+#+ longtermtrendsCS, echo=F, include=T, results="asis"
+vars        <- c("HOR_att","DIR_transp","DIR_att","GLB_att")
+dbs         <- c("CLEAR_1_daily_DEseas")
+for (DBn in dbs) {
+    DB <- get(DBn)
+    for (avar in vars) {
+        dataset <- DB
+
+        ## linear model
+        lm1        <- lm( dataset[[avar]] ~ dataset$Date )
+
+        ## plot
+        plot(dataset$Date, dataset[[avar]],
+             pch  = ".", col = get(paste0("col_",avar)),
+             xlab = "",
+             ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
+        abline(lm1)
+
+        ## decorations
+        fit <- lm1[[1]]
+        legend('top', lty = 1, bty = "n",
+               paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
+        title(paste(translate(sub("_.*","",DBn)),translate(avar)), cex=0.7)
     }
 }
 #+ echo=F, include=F
@@ -418,39 +307,63 @@ for (DBn in dbs) {
 
 
 
+## ~ calculate trends  ####
+vars   <- c("HOR_att","DIR_transp","DIR_att","GLB_att")
+dbs    <- c("ALL_1_daily_DEseas", "CLEAR_1_daily_DEseas")
+gather <- data.frame()
+
+for (DBn in dbs) {
+    DB <- get(DBn)
+    for (avar in vars) {
+        dataset <- DB
+        ## linear model
+        lm1        <- lm( dataset[[avar]] ~ dataset$Date )
+        ## gather stats
+        gather <- rbind(gather,
+                        data.frame(
+                            linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
+                            DATA      = DBn,
+                            var       = avar,
+                            N         = sum(!is.na(dataset[[avar]]))
+                        ))
+    }
+}
 
 
 
+## ~ display table ####
 
-
-
-
-
-
-#' ## Table of trends
+#' ## Table of total trends.
 #+ echo=F, include=T
 
 wecare <- grep("intercept", names(gather), value = T, invert = T)
 gather <- data.table(gather)
-pprint <- gather[ , ..wecare]
-## convert slope / year
-pprint[, slope    := slope    * Days_of_year ]
-pprint[, slope.sd := slope.sd * Days_of_year ]
-setorder(pprint,data,var)
+gather$DATA <- sub("_.*","",gather$DATA)
 
+pprint <- gather[ , ..wecare]
+
+pprint[, slope.t  := NULL]
+pprint[, Rsqrd    := NULL]
+pprint[, RsqrdAdj := NULL]
+
+## convert slope / year
+pprint[,slope              := slope              * Days_of_year ]
+pprint[,slope.sd           := slope.sd           * Days_of_year ]
+pprint[,slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year ]
+pprint[,slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year ]
+setorder(pprint,var)
+
+#+ echo=F, include=T
 pander(pprint,
        cap = "Slope is in %/year")
-myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat")
 #+ echo=F, include=F
+myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat")
 
 
 
 
 
-
-## break by season !! ###########################
-
-
+#### SEASONAL TRENDS  ##########################################################
 
 
 ####  Plot of SZA trends for each season of year ####
@@ -459,15 +372,12 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 #+ echo=F, include=F
 
 
-
-
-
 ## ~ plot trends for each season #####
 
-#+ {{varrrr}}, echo=F, include=T, results="asis"
+#+ seasonaltrends, echo=F, include=T, results="asis"
 vars        <- c("DIR_att", "GLB_att")
-dbs         <- c("ALL_1_daily_DEseas", "CLEAR_1_daily_DEseas")
-Seasons     <- c("Winter", "Spring", "Summer", "Automn")
+dbs         <- c("ALL_1_daily_DEseas","CLEAR_1_daily_DEseas")
+Seasons     <- c("Winter", "Spring","Summer","Automn")
 for (DBn in dbs) {
     DB <- get(DBn)
     ## set seasons in each data base
@@ -485,24 +395,20 @@ for (DBn in dbs) {
             ## linear model
             lm1        <- lm( dataset[[avar]] ~ dataset$Date )
             ## plot
-
             plot(dataset$Date, dataset[[avar]],
                  pch  = ".", col = get(paste0("col_",avar)),
-                 xlab = "", ylab = "Deseasonalized anomaly [%]")
+                 xlab = "",
+                 ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
             abline(lm1)
-
+            ## decorations
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n",
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-            title(paste(ase, sub("_.*","",DBn),avar), cex=0.8)
+            title(paste(ase,translate(sub("_.*","",DBn)),translate(avar)), cex=0.7)
         }
     }
 }
 #+ echo=F, include=F
-
-
-
-
 
 
 ## ~ calculate trends for each season  ####
@@ -540,16 +446,21 @@ for (DBn in dbs) {
     }
 }
 
-wecare      <- grep("intercept", names(gather_seas), value = T, invert = T)
-gather_seas <- data.table(gather_seas)
+## ~ display table ####
+
+#' ## Table of trends by season.
+#+ echo=F, include=T
+
+
+wecare           <- grep("intercept", names(gather_seas), value = T, invert = T)
+gather_seas      <- data.table(gather_seas)
 gather_seas$DATA <- sub("_.*","",gather_seas$DATA)
 
-pprint <- gather_seas[ , ..wecare]
+pprint           <- gather_seas[ , ..wecare]
 
 pprint[, slope.t  := NULL]
 pprint[, Rsqrd    := NULL]
 pprint[, RsqrdAdj := NULL]
-
 
 ## convert slope / year
 pprint[, slope              := slope    * Days_of_year ]
@@ -564,9 +475,6 @@ pander(pprint,
        cap = "Slope is in %/year")
 #+ echo=F, include=F
 myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_season.dat")
-
-
-
 
 
 
