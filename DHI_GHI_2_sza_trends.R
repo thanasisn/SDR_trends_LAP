@@ -402,7 +402,7 @@ for (DBn in dbs) {
 
     ## set seasons in each data base
     DB[ month(Date) %in% c(12, 1, 2), Season := "Winter"]
-    DB[ month(Date) %in% c( 2, 4, 5), Season := "Spring"]
+    DB[ month(Date) %in% c( 3, 4, 5), Season := "Spring"]
     DB[ month(Date) %in% c( 6, 7, 8), Season := "Summer"]
     DB[ month(Date) %in% c( 9,10,11), Season := "Automn"]
 
