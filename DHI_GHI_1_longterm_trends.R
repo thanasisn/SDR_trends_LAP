@@ -437,13 +437,13 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 
 
 
-
+varrrr<-"AAname"
 
 
 
 ## ~ plot for each season
 
-
+#+ {{varrrr}}, echo=F, include=T, results="asis"
 vars        <- c("DIR_att", "GLB_att")
 dbs         <- c("ALL_1_daily_DEseas", "CLEAR_1_daily_DEseas")
 Seasons     <- c("Winter", "Spring", "Summer", "Automn")
@@ -477,11 +477,13 @@ for (DBn in dbs) {
         }
     }
 }
+#'
+#'
+#+ echo=F, include=F
 
 
 
-
-
+#
 
 
 
