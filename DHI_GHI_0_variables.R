@@ -3,12 +3,12 @@
 
 
 #### dictionary ####
-dict <- list(DIR_att    = 'Direct Beam Irradiance',
-             HOR_att    = 'Direct Irradiance on horizontal plane',
-             DIR_transp = 'Tranparency for Direct Irradiance',
-             GLB_att    = "Global Irradiance",
-             ALL        = "All sky conditions",
-             CLEAR      = "Clear sky conditions")
+dict <- list(DIR_att    = 'Dir. Beam Irrad.',
+             HOR_att    = 'Dir. Irrad. horizontal plane',
+             DIR_transp = 'Transp. for Dir. Irrad.',
+             GLB_att    = "Global Irrad.",
+             ALL        = "All sky cond.",
+             CLEAR      = "Clear sky cond.")
 ## function to translate objects names
 translate <- function(...) as.vector(unlist(dict[c(...) == names(dict)]))
 
