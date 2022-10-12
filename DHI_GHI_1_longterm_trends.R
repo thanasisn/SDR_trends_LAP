@@ -202,21 +202,21 @@ rm(data_list)
 
 ##TODO margin of error for anomaly!!!!
 
-ALL_daily_DEseas   <- merge(  ALL_1_daily_mean,   ALL_1_daily_seas, by = "doy", all = T)
-CLEAR_daily_DEseas <- merge(CLEAR_1_daily_mean, CLEAR_1_daily_seas, by = "doy", all = T)
+ALL_1_daily_DEseas   <- merge(  ALL_1_daily_mean,   ALL_1_daily_seas, by = "doy", all = T)
+CLEAR_1_daily_DEseas <- merge(CLEAR_1_daily_mean, CLEAR_1_daily_seas, by = "doy", all = T)
 
-setorder(ALL_daily_DEseas,Date)
-setorder(CLEAR_daily_DEseas,Date)
+setorder(ALL_1_daily_DEseas,Date)
+setorder(CLEAR_1_daily_DEseas,Date)
 
 
 ## anomaly
 # #' #### Use the actuar difference from seasonal
-# ALL_daily_DEseas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
-# ALL_daily_DEseas[   , GLB_att    := GLB_att    - GLB_att_seas    ]
-# ALL_daily_DEseas[   , DIR_transp := DIR_transp - DIR_transp_seas ]
-# CLEAR_daily_DEseas[ , DIR_att    := DIR_att    - DIR_att_seas    ]
-# CLEAR_daily_DEseas[ , GLB_att    := GLB_att    - GLB_att_seas    ]
-# CLEAR_daily_DEseas[ , DIR_transp := DIR_transp - DIR_transp_seas ]
+# ALL_1_daily_DEseas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
+# ALL_1_daily_DEseas[   , GLB_att    := GLB_att    - GLB_att_seas    ]
+# ALL_1_daily_DEseas[   , DIR_transp := DIR_transp - DIR_transp_seas ]
+# CLEAR_1_daily_DEseas[ , DIR_att    := DIR_att    - DIR_att_seas    ]
+# CLEAR_1_daily_DEseas[ , GLB_att    := GLB_att    - GLB_att_seas    ]
+# CLEAR_1_daily_DEseas[ , DIR_transp := DIR_transp - DIR_transp_seas ]
 
 
 ##TODO margin of error for anomaly!!!!
@@ -224,14 +224,14 @@ setorder(CLEAR_daily_DEseas,Date)
 ## relative anomaly
 #' #### Use the % difference from seasonal values
 #+ echo=F, include=T
-ALL_daily_DEseas[  , DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-ALL_daily_DEseas[  , HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-ALL_daily_DEseas[  , GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-ALL_daily_DEseas[  , DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-CLEAR_daily_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLEAR_daily_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-CLEAR_daily_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-CLEAR_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+ALL_1_daily_DEseas[  , DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+ALL_1_daily_DEseas[  , HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+ALL_1_daily_DEseas[  , GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+ALL_1_daily_DEseas[  , DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+CLEAR_1_daily_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+CLEAR_1_daily_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+CLEAR_1_daily_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+CLEAR_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
 #+ echo=F, include=F
 
 
@@ -245,8 +245,8 @@ CLEAR_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_tra
 gather <- data.frame()
 
 
-plot(ALL_daily_DEseas$Date, ALL_daily_DEseas$DIR_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_DIR_att )
-lm1 <- lm( DIR_att ~ Date , data = ALL_daily_DEseas)
+plot(ALL_1_daily_DEseas$Date, ALL_1_daily_DEseas$DIR_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_DIR_att )
+lm1 <- lm( DIR_att ~ Date , data = ALL_1_daily_DEseas)
 gather <- rbind(gather,
                 data.table(
                     var  = "DIR_att",
@@ -261,8 +261,8 @@ legend('top', lty = 1, bty = "n",
 title(paste("All day Direct"),cex=0.8)
 
 
-plot(ALL_daily_DEseas$Date, ALL_daily_DEseas$HOR_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_HOR_att )
-lm1 <- lm( HOR_att ~ Date , data = ALL_daily_DEseas)
+plot(ALL_1_daily_DEseas$Date, ALL_1_daily_DEseas$HOR_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_HOR_att )
+lm1 <- lm( HOR_att ~ Date , data = ALL_1_daily_DEseas)
 gather <- rbind(gather,
                 data.table(
                     var  = "HOR_att",
@@ -278,8 +278,8 @@ title(paste("All day Direct HOR"),cex=0.8)
 
 
 
-plot(ALL_daily_DEseas$Date, ALL_daily_DEseas$DIR_transp, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_DIR_transp )
-lm1 <- lm( DIR_transp ~ Date , data = ALL_daily_DEseas)
+plot(ALL_1_daily_DEseas$Date, ALL_1_daily_DEseas$DIR_transp, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_DIR_transp )
+lm1 <- lm( DIR_transp ~ Date , data = ALL_1_daily_DEseas)
 gather <- rbind(gather,
                 data.table(
                     var  = "DIR_transp",
@@ -296,8 +296,8 @@ title(paste("All sky Direct transparency"),cex=0.8)
 
 
 
-plot(ALL_daily_DEseas$Date, ALL_daily_DEseas$GLB_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_GLB_att )
-lm1 <- lm( GLB_att ~ Date , data = ALL_daily_DEseas)
+plot(ALL_1_daily_DEseas$Date, ALL_1_daily_DEseas$GLB_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_GLB_att )
+lm1 <- lm( GLB_att ~ Date , data = ALL_1_daily_DEseas)
 gather <- rbind(gather,
                 data.table(
                     var  = "GLB_att",
@@ -318,8 +318,8 @@ title(paste("All sky Global"),cex=0.8)
 #' ## Trends on clear sky data
 #+ longtermtrendsCS, echo=F, include=T
 
-plot(CLEAR_daily_DEseas$Date, CLEAR_daily_DEseas$DIR_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_DIR_att )
-lm1 <- lm( DIR_att ~ Date , data = CLEAR_daily_DEseas)
+plot(CLEAR_1_daily_DEseas$Date, CLEAR_1_daily_DEseas$DIR_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_DIR_att )
+lm1 <- lm( DIR_att ~ Date , data = CLEAR_1_daily_DEseas)
 gather <- rbind(gather,
                 data.table(
                     var  = "DIR_att",
@@ -335,8 +335,8 @@ title(paste("Clear Sky Direct"),cex=0.8)
 
 
 
-plot(CLEAR_daily_DEseas$Date, CLEAR_daily_DEseas$HOR_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_HOR_att )
-lm1 <- lm( HOR_att ~ Date , data = CLEAR_daily_DEseas)
+plot(CLEAR_1_daily_DEseas$Date, CLEAR_1_daily_DEseas$HOR_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_HOR_att )
+lm1 <- lm( HOR_att ~ Date , data = CLEAR_1_daily_DEseas)
 gather <- rbind(gather,
                 data.table(
                     var  = "HOR_att",
@@ -351,7 +351,7 @@ legend('top', lty = 1, bty = "n",
 title(paste("Clear Sky Direct HOR"),cex=0.8)
 
 
-plot(CLEAR_daily_DEseas$Date, CLEAR_daily_DEseas$DIR_transp, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_DIR_transp )
+plot(CLEAR_1_daily_DEseas$Date, CLEAR_1_daily_DEseas$DIR_transp, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_DIR_transp )
 lm1 <- lm( DIR_transp ~ Date , data = CLEAR_1_daily_mean)
 gather <- rbind(gather,
                 data.table(
@@ -369,8 +369,8 @@ title(paste("Clear Sky Direct transparency"), cex=0.8)
 
 
 
-plot(CLEAR_daily_DEseas$Date, CLEAR_daily_DEseas$GLB_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_GLB_att )
-lm1 <- lm( GLB_att ~ Date , data = CLEAR_daily_DEseas)
+plot(CLEAR_1_daily_DEseas$Date, CLEAR_1_daily_DEseas$GLB_att, pch  = ".", xlab = "", ylab = "Deseasonalized anomaly [%]", col = col_GLB_att )
+lm1 <- lm( GLB_att ~ Date , data = CLEAR_1_daily_DEseas)
 gather <- rbind(gather,
                 data.table(
                     var  = "GBL_att",
@@ -419,6 +419,70 @@ pander(pprint,
        cap = "Slope is in %/year")
 myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat")
 #+ echo=F, include=F
+
+
+
+
+
+
+## break by season !!
+
+
+
+
+####  Plot of SZA trends for each season of year ####
+#' \newpage
+#' ## Plot of SZA trends for each season of year
+#+ echo=F, include=F
+timefactor  <- 1  ## to display % per year
+vars        <- c("DIR_att", "GLB_att")
+dbs         <- c("ALL_1_daily_DEseas", "CLEAR_1_daily_DEseas")
+season      <- c("Winter", "Spring", "Summer", "Automn")
+gather_seas <- data.frame()
+
+for (DBn in dbs) {
+    DB <- get(DBn)
+
+    ## set seasons in each data base
+    DB[ month(Date) %in% c(12, 1, 2), Season := "Winter"]
+    DB[ month(Date) %in% c( 2, 4, 5), Season := "Spring"]
+    DB[ month(Date) %in% c( 6, 7, 8), Season := "Summer"]
+    DB[ month(Date) %in% c( 9,10,11), Season := "Automn"]
+
+    stopifnot( !any(is.na(DB$Season)) )
+
+    for (ase in season) {
+        for (avar in vars) {
+
+            dataset <- DB[ season == ase ]
+
+            if (sum(!is.na(dataset[[avar]])) <= 1) next()
+
+            lm1 <- lm( dataset[[avar]] ~ dataset$Date )
+
+            gather_seas <- rbind(gather_seas,
+                                 data.frame(
+                                     linear_regression_capture(lm1),
+                                     preNoon   = anoon,
+                                     DATA      = DBn,
+                                     var       = avar,
+                                     N         = sum(!is.na(dataset[[avar]]))
+                                 ))
+
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

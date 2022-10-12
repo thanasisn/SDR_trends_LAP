@@ -5,12 +5,12 @@
 ---------------
 
 Object name:    object      
-Date written:   2022-10-11 16:17:38.3 UTC  
+Date written:   2022-10-12 07:54:24.0 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat      
 Data file size: 971.0 B (971) 
 Size in memory: 3384 bytes      
 Info file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.inf.md      
-Script name:    Script name could not be resolved      
+Script name:    /home/athan/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_1_longterm_trends.R      
 User@Host:      athan@sagan   
 Contact:        <lapauththanasis@gmail.com>      
 Notes:          NA      
@@ -20,7 +20,7 @@ Notes:          NA
 -----------------
 
 ```
-Classes 'data.table' and 'data.frame':	8 obs. of  8 variables:
+Classes ‘data.table’ and 'data.frame':	8 obs. of  8 variables:
  $ var     : chr  "DIR_att" "DIR_transp" "GLB_att" "HOR_att" ...
  $ data    : chr  "ALL" "ALL" "ALL" "ALL" ...
  $ slope   : num  0.0477 0.3662 0.4425 0.1959 0.2564 ...
@@ -35,9 +35,96 @@ Classes 'data.table' and 'data.frame':	8 obs. of  8 variables:
 
  Data quality.
 ---------------
+
+| &nbsp; | var | data | slope | slope.sd | slope.t | slope.p | Rsqrd | RsqrdAdj |
+|:------:|----:|-----:|------:|---------:|--------:|--------:|------:|---------:|
+| Values |   0 |    0 |     8 |        8 |       8 |       8 |     8 |        8 |
+|  INFs  |   0 |    0 |     0 |        0 |       0 |       0 |     0 |        0 |
+|  NAs   |   0 |    0 |     0 |        0 |       0 |       0 |     0 |        0 |
+
+
  Data Summary.
----------------[1] "\n\n  * **var**:\n\n\n    | Length |     Class |      Mode |\n    |-------:|----------:|----------:|\n    |      8 | character | character |\n\n  * **data**:\n\n\n    | Length |     Class |      Mode |\n    |-------:|----------:|----------:|\n    |      8 | character | character |\n\n  * **slope**:\n\n\n    |    Min. | 1st Qu. | Median |   Mean | 3rd Qu. |   Max. |\n    |--------:|--------:|-------:|-------:|--------:|-------:|\n    | -0.1103 | 0.03451 | 0.2262 | 0.1971 |  0.3705 | 0.4425 |\n\n  * **slope.sd**:\n\n\n    |     Min. | 1st Qu. | Median |   Mean | 3rd Qu. |  Max. |\n    |---------:|--------:|-------:|-------:|--------:|------:|\n    | 0.001882 | 0.03976 | 0.2483 | 0.4126 |  0.8807 | 0.968 |\n\n  * **slope.t**:\n\n\n    |   Min. |  1st Qu. | Median |  Mean | 3rd Qu. | Max. |\n    |-------:|---------:|-------:|------:|--------:|-----:|\n    | -2.669 | -0.04681 | 0.3002 | 2.839 |   3.601 | 13.5 |\n\n  * **slope.p**:\n\n\n    |      Min. |  1st Qu. | Median |   Mean | 3rd Qu. |   Max. |\n    |----------:|---------:|-------:|-------:|--------:|-------:|\n    | 5.639e-41 | 0.005771 | 0.4314 | 0.4223 |   0.751 | 0.9568 |\n\n  * **Rsqrd**:\n\n\n    |      Min. |   1st Qu. |    Median |     Mean |  3rd Qu. |    Max. |\n    |----------:|----------:|----------:|---------:|---------:|--------:|\n    | 1.406e-06 | 5.731e-05 | 0.0007754 | 0.005498 | 0.006446 | 0.02693 |\n\n  * **RsqrdAdj**:\n\n\n    |       Min. |    1st Qu. |    Median |     Mean |  3rd Qu. |    Max. |\n    |-----------:|-----------:|----------:|---------:|---------:|--------:|\n    | -0.0006424 | -0.0004608 | 0.0001599 | 0.005013 | 0.005875 | 0.02678 |\n\n\n<!-- end of list -->\n\n\n"
-attr(,"class")
-[1] "knit_asis"
-attr(,"knit_cacheable")
-[1] NA
+---------------
+
+|              var |             data |            slope |         slope.sd |          slope.t |          slope.p |
+|-----------------:|-----------------:|-----------------:|-----------------:|-----------------:|-----------------:|
+|         Length:8 |         Length:8 | Min.   :-0.11028 | Min.   :0.001882 | Min.   :-2.66912 | Min.   :0.000000 |
+| Class :character | Class :character | 1st Qu.: 0.03451 | 1st Qu.:0.039761 | 1st Qu.:-0.04681 | 1st Qu.:0.005771 |
+| Mode  :character | Mode  :character | Median : 0.22619 | Median :0.248339 | Median : 0.30021 | Median :0.431438 |
+|               NA |               NA | Mean   : 0.19713 | Mean   :0.412611 | Mean   : 2.83876 | Mean   :0.422275 |
+|               NA |               NA | 3rd Qu.: 0.37053 | 3rd Qu.:0.880688 | 3rd Qu.: 3.60108 | 3rd Qu.:0.750992 |
+|               NA |               NA | Max.   : 0.44252 | Max.   :0.967957 | Max.   :13.49769 | Max.   :0.956802 |
+
+ 
+
+|             Rsqrd |           RsqrdAdj |
+|------------------:|-------------------:|
+| Min.   :1.406e-06 | Min.   :-0.0006424 |
+| 1st Qu.:5.731e-05 | 1st Qu.:-0.0004609 |
+| Median :7.754e-04 | Median : 0.0001599 |
+| Mean   :5.498e-03 | Mean   : 0.0050132 |
+| 3rd Qu.:6.446e-03 | 3rd Qu.: 0.0058747 |
+| Max.   :2.693e-02 | Max.   : 0.0267824 |
+
+
+
+  * **var**:
+
+
+    | Length |     Class |      Mode |
+    |-------:|----------:|----------:|
+    |      8 | character | character |
+
+  * **data**:
+
+
+    | Length |     Class |      Mode |
+    |-------:|----------:|----------:|
+    |      8 | character | character |
+
+  * **slope**:
+
+
+    |    Min. | 1st Qu. | Median |   Mean | 3rd Qu. |   Max. |
+    |--------:|--------:|-------:|-------:|--------:|-------:|
+    | -0.1103 | 0.03451 | 0.2262 | 0.1971 |  0.3705 | 0.4425 |
+
+  * **slope.sd**:
+
+
+    |     Min. | 1st Qu. | Median |   Mean | 3rd Qu. |  Max. |
+    |---------:|--------:|-------:|-------:|--------:|------:|
+    | 0.001882 | 0.03976 | 0.2483 | 0.4126 |  0.8807 | 0.968 |
+
+  * **slope.t**:
+
+
+    |   Min. |  1st Qu. | Median |  Mean | 3rd Qu. | Max. |
+    |-------:|---------:|-------:|------:|--------:|-----:|
+    | -2.669 | -0.04681 | 0.3002 | 2.839 |   3.601 | 13.5 |
+
+  * **slope.p**:
+
+
+    |      Min. |  1st Qu. | Median |   Mean | 3rd Qu. |   Max. |
+    |----------:|---------:|-------:|-------:|--------:|-------:|
+    | 5.639e-41 | 0.005771 | 0.4314 | 0.4223 |   0.751 | 0.9568 |
+
+  * **Rsqrd**:
+
+
+    |      Min. |   1st Qu. |    Median |     Mean |  3rd Qu. |    Max. |
+    |----------:|----------:|----------:|---------:|---------:|--------:|
+    | 1.406e-06 | 5.731e-05 | 0.0007754 | 0.005498 | 0.006446 | 0.02693 |
+
+  * **RsqrdAdj**:
+
+
+    |       Min. |    1st Qu. |    Median |     Mean |  3rd Qu. |    Max. |
+    |-----------:|-----------:|----------:|---------:|---------:|--------:|
+    | -0.0006424 | -0.0004608 | 0.0001599 | 0.005013 | 0.005875 | 0.02678 |
+
+
+<!-- end of list -->
+
+

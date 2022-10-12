@@ -207,7 +207,7 @@ rm(data_list)
 #' #### Calculate seasonal anomaly ####
 #+ echo=F, include=F
 
-ALL_daily_DEseas   <- merge(  ALL_2_daily_mean, ALL_2_daily_seas,   by = c("doy", "SZA", "preNoon"),  all = T)
+ALL_daily_DEseas   <- merge(  ALL_2_daily_mean, ALL_2_daily_seas,   by = c("doy", "SZA", "preNoon"), all = T)
 CLEAR_daily_DEseas <- merge(CLEAR_2_daily_mean, CLEAR_2_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
 
 setorder(ALL_daily_DEseas,Date)
@@ -405,6 +405,9 @@ for (DBn in dbs) {
     DB[ month(Date) %in% c( 2, 4, 5), Season := "Spring"]
     DB[ month(Date) %in% c( 6, 7, 8), Season := "Summer"]
     DB[ month(Date) %in% c( 9,10,11), Season := "Automn"]
+
+    stopifnot( !any(is.na(DB$Season)) )
+
 
     for (ase in season) {
         for (avar in vars) {
