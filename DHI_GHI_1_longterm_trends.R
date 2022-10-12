@@ -465,7 +465,6 @@ for (DBn in dbs) {
             lm1        <- lm( dataset[[avar]] ~ dataset$Date )
             ## plot
 
-
             plot(dataset$Date, dataset[[avar]],
                  pch  = ".", col = get(paste0("col_",avar)),
                  xlab = "", ylab = "Deseasonalized anomaly [%]")
@@ -475,9 +474,6 @@ for (DBn in dbs) {
             legend('top', lty = 1, bty = "n",
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
             title(paste(ase, sub("_.*","",DBn),avar), cex=0.8)
-
-
-            stop()
         }
     }
 }
