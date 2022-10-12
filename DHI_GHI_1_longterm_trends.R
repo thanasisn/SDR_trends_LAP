@@ -103,6 +103,12 @@ options(error = function() {
     }
 })
 
+capwords <- function(s, strict = FALSE) {
+    cap <- function(s) paste(toupper(substring(s, 1, 1)),
+                             {s <- substring(s, 2); if(strict) tolower(s) else s},
+                             sep = "", collapse = " " )
+    sapply(strsplit(s, split = " "), cap, USE.NAMES = !is.null(names(s)))
+}
 
 
 #+ echo=F, include=T
@@ -388,6 +394,38 @@ title(paste("Clear Sky Global"), cex=0.8)
 
 
 
+#+ {{varrrr}}, echo=F, include=T, results="asis"
+vars        <- c("DIR_att","HOR_att","DIR_transp", "GLB_att")
+dbs         <- c("ALL_1_daily_DEseas", "CLEAR_1_daily_DEseas")
+for (DBn in dbs) {
+    DB <- get(DBn)
+        for (avar in vars) {
+            dataset <- DB
+
+
+
+            if (sum(!is.na(dataset[[avar]])) <= 1) next()
+            ## linear model
+            lm1        <- lm( dataset[[avar]] ~ dataset$Date )
+            ## plot
+
+            plot(dataset$Date, dataset[[avar]],
+                 pch  = ".", col = get(paste0("col_",avar)),
+                 xlab = "",  ylab = "Deseasonalized anomaly [%]")
+            abline(lm1)
+
+            fit <- lm1[[1]]
+            legend('top', lty = 1, bty = "n",
+                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
+            title(paste(capwords(sub("_.*","",DBn),strict = T),avar), cex=0.8)
+    }
+}
+#+ echo=F, include=F
+
+
+
+
+capwords("ttHis is A STRING",strict = T)
 
 
 
@@ -395,11 +433,6 @@ title(paste("Clear Sky Global"), cex=0.8)
 
 
 
-
-
-
-wecare <- grep("intercept", names(gather), value = T, invert = T)
-gather <- data.table(gather)
 
 
 
@@ -407,12 +440,13 @@ gather <- data.table(gather)
 
 #' ## Table of trends
 #+ echo=F, include=T
-pprint <- gather[ , ..wecare]
 
+wecare <- grep("intercept", names(gather), value = T, invert = T)
+gather <- data.table(gather)
+pprint <- gather[ , ..wecare]
 ## convert slope / year
 pprint[, slope    := slope    * Days_of_year ]
 pprint[, slope.sd := slope.sd * Days_of_year ]
-
 setorder(pprint,data,var)
 
 pander(pprint,
@@ -437,11 +471,9 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 
 
 
-varrrr<-"AAname"
 
 
-
-## ~ plot for each season
+## ~ plot trends for each season #####
 
 #+ {{varrrr}}, echo=F, include=T, results="asis"
 vars        <- c("DIR_att", "GLB_att")
@@ -477,13 +509,8 @@ for (DBn in dbs) {
         }
     }
 }
-#'
-#'
 #+ echo=F, include=F
 
-
-
-#
 
 
 
