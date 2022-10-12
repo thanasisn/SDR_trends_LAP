@@ -81,7 +81,7 @@ panderOptions('table.split.table',        120   )
 
 ## Functions from `https://github.com/thanasisn/IStillBreakStuff/tree/main/FUNCTIONS/R`
 source("~/CODE/FUNCTIONS/R/sumNA.R")
-source("~/CODE/FUNCTIONS/R/linear_regrassion_capture.R")
+source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 
@@ -269,7 +269,7 @@ for (DBn in dbs) {
 
                 gather <- rbind(gather,
                                 data.frame(
-                                    linear_regression_capture(lm1),
+                                    linear_fit_stats(lm1),
                                     preNoon   = anoon,
                                     SZA       = asza,
                                     DATA      = DBn,
@@ -422,7 +422,7 @@ for (DBn in dbs) {
 
                     gather_seas <- rbind(gather_seas,
                                     data.frame(
-                                        linear_regression_capture(lm1),
+                                        linear_fit_stats(lm1),
                                         preNoon   = anoon,
                                         SZA       = asza,
                                         DATA      = DBn,
