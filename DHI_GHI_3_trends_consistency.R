@@ -81,7 +81,7 @@ panderOptions('table.split.table',        120   )
 
 ## Functions from `https://github.com/thanasisn/IStillBreakStuff/tree/main/FUNCTIONS/R`
 source("~/CODE/FUNCTIONS/R/sumNA.R")
-source("~/CODE/FUNCTIONS/R/linear_regrassion_capture.R")
+source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 
@@ -112,10 +112,10 @@ options(error = function() {
 #' ### Data range
 #' Time data span `r range(ALL_1_daily_mean$Date)`
 #'
-#' 
+#'
 #' ## 3. Consistency of trends
-#' 
-#' 
+#'
+#'
 
 
 #+ echo=F, include=F
@@ -214,12 +214,12 @@ CLEAR_3_monthly_daily_DEseas <- merge(CLEAR_3_monthly_daily_mean, CLEAR_3_monthl
 
 #+ echo=F, include=T
 ## relative anomaly
-ALL_3_monthly_DEseas[  ,    DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-ALL_3_monthly_DEseas[  ,    GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-ALL_3_monthly_DEseas[  ,    DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-CLEAR_3_monthly_DEseas[,    DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-CLEAR_3_monthly_DEseas[,    GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-CLEAR_3_monthly_DEseas[,    DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+ALL_3_monthly_DEseas[  ,      DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+ALL_3_monthly_DEseas[  ,      GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+ALL_3_monthly_DEseas[  ,      DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+CLEAR_3_monthly_DEseas[,      DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+CLEAR_3_monthly_DEseas[,      GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+CLEAR_3_monthly_DEseas[,      DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
 ALL_3_monthly_daily_DEseas[  ,DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
 ALL_3_monthly_daily_DEseas[  ,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
 ALL_3_monthly_daily_DEseas[  ,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
