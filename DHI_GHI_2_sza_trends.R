@@ -394,7 +394,7 @@ for (type in unique(szatrends$DATA)) {
 timefactor  <- 1  ## to display % per year
 vars        <- c("DIR_att", "GLB_att", "DIR_transp")
 dbs         <- c("ALL_daily_DEseas", "CLEAR_daily_DEseas")
-season      <- c("Winter", "Spring", "Summer", "Automn")
+seasons     <- c("Winter", "Spring", "Summer", "Automn")
 gather_seas <- data.frame()
 
 for (DBn in dbs) {
@@ -409,12 +409,12 @@ for (DBn in dbs) {
     stopifnot( !any(is.na(DB$Season)) )
 
 
-    for (ase in season) {
+    for (ase in seasons) {
         for (avar in vars) {
             for (anoon in unique( DB$preNoon)) {
                 for (asza in unique( DB$SZA )) {
 
-                    dataset <- DB[ SZA == asza & preNoon == anoon & season == ase ]
+                    dataset <- DB[ SZA == asza & preNoon == anoon & Season == ase ]
 
                     if (sum(!is.na(dataset[[avar]])) <= 1) next()
 
@@ -495,7 +495,7 @@ wecare <- grep("^slope\\.t",wecare,ignore.case = T,value = T, invert = T)
 
 #+ szatrendsseas, echo=F, include=T, results = "asis"
 ## Winter - Summer ....
-for (ase in season) {
+for (ase in seasons) {
     ## ALL - Clear sky
     for (type in unique(szatrends_seas$DATA)) {
         ## DIR - GLB - transp
