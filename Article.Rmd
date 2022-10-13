@@ -27,7 +27,7 @@ output:
   bookdown::pdf_document2:
     number_sections:  no
     fig_caption:      yes
-    keep_tex:         no
+    keep_tex:         yes
     latex_engine:     xelatex
     toc:              yes
     toc_depth:        4
@@ -86,10 +86,10 @@ The conversion to irradiance was done using the available calibrations factors. 
 <!-- Dark signal -->
 We have adjusted the measurements for the dark signal offset, by a daily value, using the nights before and after each day.
 <!-- Quality assurance -->
-A radiation data quality assurance procedure was applied, adjusted for the site, based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006]. Only data characterized as good quality were used in this stud.
-<!-- Data preparation -->
+A radiation data quality assurance procedure was applied, adjusted for the site, based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006]. Only data characterized as good quality were used in this study.
+<!-- Data selection -->
 Due to larger measurement uncertainty near the horizon, we exclude
-all measurements with SZA greater than $85^\circ$. 
+all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$. 
 Moreover, due to some obstructions around the site (hills and buildings), we remove data with Azimuth angle between 
 $35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$. At 
 those cases the Sun, were not visible by the instruments.
@@ -104,12 +104,10 @@ We adjusted all 1-minute values to the mean Sun and Earth distance.
 <!-- And, we made all measurements relative to the TSI at 1au, in order to compensate for the the Suns intensity variability, using an homogenized timeseries of satellite TSI observations. As a result, we processed all radiation data as a fraction of Suns TSI. -->
 
 
-<!-- data selection -->
-We select all data with $\text{SZA} < `r 90-MIN_ELEVA`^\circ$, in order to avoid measurements near the horizon. Where the signal is very low and the disturbances more frequent.
-<!-- avoid obstacles -->
-Similar, we exclude values data with Azimuth angle between 
-$35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$. Where, due to some obstructions around the site (hills and buildings) the Sun, were not visible by the instruments. . At 
-those cases.
+
+
+
+
 
 
 
