@@ -99,9 +99,19 @@ those cases the Sun, were not visible by the instruments.
 
 To make the measurements comparable throughout the dataset. 
 <!-- 1au -->
-We adjusted all values to the mean Sun and Earth distance.
+We adjusted all 1-minute values to the mean Sun and Earth distance.
 <!-- TSI -->
 <!-- And, we made all measurements relative to the TSI at 1au, in order to compensate for the the Suns intensity variability, using an homogenized timeseries of satellite TSI observations. As a result, we processed all radiation data as a fraction of Suns TSI. -->
+
+
+<!-- data selection -->
+We select all data with $\text{SZA} < `r 90-MIN_ELEVA`^\circ$, in order to avoid measurements near the horizon. Where the signal is very low and the disturbances more frequent.
+<!-- avoid obstacles -->
+Similar, we exclude values data with Azimuth angle between 
+$35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$. Where, due to some obstructions around the site (hills and buildings) the Sun, were not visible by the instruments. . At 
+those cases.
+
+
 
 <!-- Clear Sky -->
 In this analysis, we need .............
