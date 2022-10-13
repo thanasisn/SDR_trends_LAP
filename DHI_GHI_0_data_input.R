@@ -140,7 +140,7 @@ if ( havetorun ) {
     #### 1. long-term   ########################################################
 
 
-
+stop()
     ## ~ daily means of all data ####
     ALL_1_daily_mean <-
         DATA_all[,.(DIR_att       = mean(DIR_att,   na.rm = T),
