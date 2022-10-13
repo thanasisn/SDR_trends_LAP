@@ -26,6 +26,7 @@ col_DIR_att              <- "#2166ac"
 col_HOR_att              <- "#4244ac"
 col_DIR_transp           <- "#9970ab"
 col_GLB_att              <- "#1a9850"
+col_tsi1au_att           <- "#e3e300"
 
 
 #### parameters ####
