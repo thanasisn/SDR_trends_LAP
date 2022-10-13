@@ -149,8 +149,7 @@ if ( havetorun ) {
                     doy           = yday(Date),
                     GLB_att_N     = sum(!is.na(GLB_att)),
                     HOR_att_N     = sum(!is.na(HOR_att)),
-                    DIR_att_N     = sum(!is.na(DIR_att)),
-                    tsi1au_att_N  = sum(!is.na(tsi_1au_comb)) ),
+                    DIR_att_N     = sum(!is.na(DIR_att))       ),
                  by = .( Date = Day ) ]
 
     ## ~ daily means of clear sky data ####
@@ -176,7 +175,6 @@ if ( havetorun ) {
         ALL_1_daily_mean[,  HOR_att_EM   :=qt(conf_param,df=HOR_att_N    -1)* HOR_att_sd   /sqrt(HOR_att_N   )]
         ALL_1_daily_mean[,  GLB_att_EM   :=qt(conf_param,df=GLB_att_N    -1)* GLB_att_sd   /sqrt(GLB_att_N   )]
         ALL_1_daily_mean[,  DIR_transp_EM:=qt(conf_param,df=DIR_att_N    -1)* DIR_transp_sd/sqrt(DIR_att_N   )]
-        ALL_1_daily_mean[,  tsi1au_att_EM:=qt(conf_param,df=tsi1au_att_N -1)* tsi1au_att_sd/sqrt(tsi1au_att_N)]
         CLEAR_1_daily_mean[,DIR_att_EM   :=qt(conf_param,df=DIR_att_N    -1)* DIR_att_sd   /sqrt(DIR_att_N   )]
         CLEAR_1_daily_mean[,HOR_att_EM   :=qt(conf_param,df=HOR_att_N    -1)* HOR_att_sd   /sqrt(HOR_att_N   )]
         CLEAR_1_daily_mean[,GLB_att_EM   :=qt(conf_param,df=GLB_att_N    -1)* GLB_att_sd   /sqrt(GLB_att_N   )]
