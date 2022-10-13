@@ -260,7 +260,8 @@ for (DBn in dbs) {
             plot(dataset$Date, dataset[[avar]],
                  pch  = ".", col = get(paste0("col_",avar)),
                  xlab = "",
-                 ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
+                 ylab = bquote("Seasonal Anomaly [%]" ) )
+            # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
             abline(lm1)
 
             ## decorations
@@ -292,7 +293,8 @@ for (DBn in dbs) {
         plot(dataset$Date, dataset[[avar]],
              pch  = ".", col = get(paste0("col_",avar)),
              xlab = "",
-             ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
+             ylab = bquote("Seasonal Anomaly [%]" ) )
+             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
         abline(lm1)
 
         ## decorations
@@ -398,7 +400,8 @@ for (DBn in dbs) {
             plot(dataset$Date, dataset[[avar]],
                  pch  = ".", col = get(paste0("col_",avar)),
                  xlab = "",
-                 ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
+                 ylab = bquote("Seasonal Anomaly [%]" ) )
+                 # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
             abline(lm1)
             ## decorations
             fit <- lm1[[1]]
