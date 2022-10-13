@@ -115,7 +115,6 @@ options(error = function() {
 #'
 
 
-
 #+ echo=F, include=F
 ## ~ Plots all data  ####
 
@@ -136,6 +135,7 @@ for(i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (xvar in by_var){
         for (yvar in wecare) {
+            if (! yvar %in% names(Dplot)) next()
             col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
             vect <- Dplot[[yvar]]
             plot(Dplot[[xvar]], vect,
@@ -149,6 +149,7 @@ for(i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
       # intersect(names(Dplot),wecare)
         for (yvar in wecare) {
+            if (! yvar %in% names(Dplot)) next()
             col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
             vect <- Dplot[[yvar]]
             hist(vect,
@@ -231,6 +232,11 @@ ALL_1_daily_DEseas[  , DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_a
 ALL_1_daily_DEseas[  , HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
 ALL_1_daily_DEseas[  , GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
 ALL_1_daily_DEseas[  , DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+## add tsi data to data
+ALL_1_daily_mean[ , tsi1au_att := 100*(tsi1au_att - mean(tsi1au_att)) / mean(tsi1au_att)  ]
+ALL_1_daily_mean <-
+    merge( ALL_1_daily_DEseas,
+           ALL_1_daily_mean[, .(Date, tsi1au_att)], by = "Date", all = T )
 CLEAR_1_daily_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
 CLEAR_1_daily_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
 CLEAR_1_daily_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
@@ -248,7 +254,7 @@ CLEAR_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_t
 #' \newpage
 #' ## Trends on all sky conditions data
 #+ longtermtrendsALL, echo=F, include=T, results="asis"
-vars        <- c("HOR_att","DIR_transp","DIR_att","GLB_att")
+vars        <- c("HOR_att","DIR_transp","DIR_att","GLB_att","tsi1au_att")
 dbs         <- c("ALL_1_daily_DEseas")
 for (DBn in dbs) {
     DB <- get(DBn)
@@ -276,7 +282,7 @@ for (DBn in dbs) {
 #+ echo=F, include=F
 
 
-## ~ plot clearsky trends ####
+## ~ plot clear sky trends ####
 
 #' \newpage
 #' ## Trends on Clear sky conditions data
@@ -312,7 +318,7 @@ for (DBn in dbs) {
 
 
 ## ~ calculate trends  ####
-vars   <- c("HOR_att","DIR_transp","DIR_att","GLB_att")
+vars   <- c("HOR_att","DIR_transp","DIR_att","GLB_att","tsi1au_att")
 dbs    <- c("ALL_1_daily_DEseas", "CLEAR_1_daily_DEseas")
 gather <- data.frame()
 
@@ -320,6 +326,7 @@ for (DBn in dbs) {
     DB <- get(DBn)
     for (avar in vars) {
         dataset <- DB
+        if (! avar %in% names(dataset)) next()
         ## linear model
         lm1        <- lm( dataset[[avar]] ~ dataset$Date )
         ## gather stats
