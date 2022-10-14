@@ -177,7 +177,6 @@ for(i in 1:length(data_list)) {
 }
 for(i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
-    # intersect(names(Dplot),wecare)
     for (yvar in wecare) {
         if (! yvar %in% names(Dplot)) next()
         col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
@@ -187,6 +186,7 @@ for(i in 1:length(data_list)) {
              breaks = 100, col = col)
     }
 }
+rm(data_list)
 
 
 
@@ -202,10 +202,9 @@ for(i in 1:length(data_list)) {
 
 
 
+#### Calculate seasonal anomaly ####
 #' #### Calculate seasonal anomaly ####
 #+ echo=F, include=F
-
-## ~ remove seasonality ####
 
 ## by sza
 ALL_3_monthly_DEseas   <- merge(  ALL_3_monthly_mean, ALL_3_monthly_seas,   by = c("Month", "SZA", "preNoon"), all = T)
@@ -215,7 +214,6 @@ ALL_3_monthly_daily_DEseas   <- merge(ALL_3_monthly_daily_mean,   ALL_3_monthly_
 CLEAR_3_monthly_daily_DEseas <- merge(CLEAR_3_monthly_daily_mean, CLEAR_3_monthly_daily_seas, by = "Month", all = T)
 
 
-# #+ echo=F, include=T
 # ## anomaly
 # ALL_3_monthly_DEseas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
 # ALL_3_monthly_DEseas[   , GLB_att    := GLB_att    - GLB_att_seas    ]

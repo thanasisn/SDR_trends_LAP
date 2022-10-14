@@ -91,6 +91,7 @@ source("~/CODE/FUNCTIONS/R/data.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
 
+
 ## move to data_input for all three
 # rm(DATA_Clear)
 # rm(DATA_all)
@@ -150,6 +151,7 @@ for(i in 1:length(data_list)) {
     }
 }
 
+#+ echo=F, include=F
 ## ~ Plots seasonal data ####
 data_list  <- list(ALL_Seas   =   ALL_1_daily_seas,
                    CLEAR_Seas = CLEAR_1_daily_seas)
@@ -160,6 +162,7 @@ for(i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (xvar in by_var){
         for (yvar in wecare) {
+            if (! yvar %in% names(Dplot)) next()
             col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
             vect <- Dplot[[yvar]]
             plot(Dplot[[xvar]], vect,
@@ -172,6 +175,7 @@ for(i in 1:length(data_list)) {
 for(i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (yvar in wecare) {
+        if (! yvar %in% names(Dplot)) next()
         col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
         vect <- Dplot[[yvar]]
         hist(vect,
@@ -337,11 +341,11 @@ gather$DATA <- sub("_.*","",gather$DATA)
 
 pprint <- gather[ , ..wecare]
 
-pprint[ , 1-slop    ]
-stop()
-pprint[, slope.t  := NULL]
-pprint[, Rsqrd    := NULL]
-pprint[, RsqrdAdj := NULL]
+pprint[, slope.stat_sig := 100*(1-slope.p) ]
+pprint[, slope.t        := NULL]
+pprint[, Rsqrd          := NULL]
+pprint[, RsqrdAdj       := NULL]
+pprint[, N              := NULL]
 
 ## convert slope / year
 pprint[,slope              := slope              * Days_of_year ]
@@ -456,13 +460,16 @@ gather_seas$DATA <- sub("_.*","",gather_seas$DATA)
 
 pprint           <- gather_seas[ , ..wecare]
 
-pprint[, slope.t  := NULL]
-pprint[, Rsqrd    := NULL]
-pprint[, RsqrdAdj := NULL]
+pprint[, slope.stat_sig := 100*(1-slope.p) ]
+pprint[, slope.t        := NULL]
+pprint[, Rsqrd          := NULL]
+pprint[, RsqrdAdj       := NULL]
+pprint[, N              := NULL]
+
 
 ## convert slope / year
-pprint[, slope              := slope    * Days_of_year ]
-pprint[, slope.sd           := slope.sd * Days_of_year ]
+pprint[, slope              := slope              * Days_of_year ]
+pprint[, slope.sd           := slope.sd           * Days_of_year ]
 pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year ]
 pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year ]
 
