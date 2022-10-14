@@ -5,13 +5,13 @@
 ---------------
 
 Object name:    object      
-Date written:   2022-10-14 07:54:37.7 UTC  
+Date written:   2022-10-14 15:47:29.2 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_season.dat      
-Data file size: 1.8 KiB (1816) 
-Size in memory: 4440.0 B      
+Data file size: 1.9 KiB (1909) 
+Size in memory: 4520.0 B      
 Info file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_season.inf.md      
 Script name:    /home/athan/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_1_longterm_trends.R      
-User@Host:      athan@sagan   
+User@Host:      athan@tyler   
 Contact:        <lapauththanasis@gmail.com>      
 Notes:          NA      
 
@@ -29,7 +29,7 @@ Classes ‘data.table’ and 'data.frame':	16 obs. of  9 variables:
  $ DATA              : chr  "ALL" "ALL" "ALL" "ALL" ...
  $ Season            : chr  "Winter" "Spring" "Summer" "Automn" ...
  $ var               : chr  "DIR_att" "DIR_att" "DIR_att" "DIR_att" ...
- $ N                 : int  510 524 521 535 2395 2537 2529 2546 267 312 ...
+ $ slope.stat_sig    : num  79.8 92.4 73.1 33.7 100 ...
  - attr(*, ".internal.selfref")=<externalptr> 
 ```
 
@@ -37,11 +37,11 @@ Classes ‘data.table’ and 'data.frame':	16 obs. of  9 variables:
  Data quality.
 ---------------
 
-| &nbsp; | slope | slope.sd | slope.p | slope.ConfInt_0.95 | slope.ConfInt_0.99 | DATA | Season | var |  N |
-|:------:|------:|---------:|--------:|-------------------:|-------------------:|-----:|-------:|----:|---:|
-| Values |    16 |       16 |      16 |                 16 |                 16 |    0 |      0 |   0 | 16 |
-|  INFs  |     0 |        0 |       0 |                  0 |                  0 |    0 |      0 |   0 |  0 |
-|  NAs   |     0 |        0 |       0 |                  0 |                  0 |    0 |      0 |   0 |  0 |
+| &nbsp; | slope | slope.sd | slope.p | slope.ConfInt_0.95 | slope.ConfInt_0.99 | DATA | Season | var | slope.stat_sig |
+|:------:|------:|---------:|--------:|-------------------:|-------------------:|-----:|-------:|----:|---------------:|
+| Values |    16 |       16 |      16 |                 16 |                 16 |    0 |      0 |   0 |             16 |
+|  INFs  |     0 |        0 |       0 |                  0 |                  0 |    0 |      0 |   0 |              0 |
+|  NAs   |     0 |        0 |       0 |                  0 |                  0 |    0 |      0 |   0 |              0 |
 
 
  Data Summary.
@@ -58,14 +58,14 @@ Classes ‘data.table’ and 'data.frame':	16 obs. of  9 variables:
 
  
 
-|             DATA |           Season |              var |              N |
+|             DATA |           Season |              var | slope.stat_sig |
 |-----------------:|-----------------:|-----------------:|---------------:|
-|        Length:16 |        Length:16 |        Length:16 | Min.   : 267.0 |
-| Class :character | Class :character | Class :character | 1st Qu.: 495.8 |
-| Mode  :character | Mode  :character | Mode  :character | Median : 848.5 |
-|               NA |               NA |               NA | Mean   :1253.1 |
-|               NA |               NA |               NA | 3rd Qu.:2287.8 |
-|               NA |               NA |               NA | Max.   :2546.0 |
+|        Length:16 |        Length:16 |        Length:16 | Min.   : 15.94 |
+| Class :character | Class :character | Class :character | 1st Qu.: 66.91 |
+| Mode  :character | Mode  :character | Mode  :character | Median : 99.94 |
+|               NA |               NA |               NA | Mean   : 79.64 |
+|               NA |               NA |               NA | 3rd Qu.:100.00 |
+|               NA |               NA |               NA | Max.   :100.00 |
 
 
 
@@ -125,12 +125,12 @@ Classes ‘data.table’ and 'data.frame':	16 obs. of  9 variables:
     |-------:|----------:|----------:|
     |     16 | character | character |
 
-  * **N**:
+  * **slope.stat_sig**:
 
 
-    | Min. | 1st Qu. | Median | Mean | 3rd Qu. | Max. |
-    |-----:|--------:|-------:|-----:|--------:|-----:|
-    |  267 |   495.8 |  848.5 | 1253 |    2288 | 2546 |
+    |  Min. | 1st Qu. | Median |  Mean | 3rd Qu. | Max. |
+    |------:|--------:|-------:|------:|--------:|-----:|
+    | 15.94 |   66.91 |  99.94 | 79.64 |     100 |  100 |
 
 
 <!-- end of list -->

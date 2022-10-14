@@ -5,13 +5,13 @@
 ---------------
 
 Object name:    object      
-Date written:   2022-10-14 07:54:37.4 UTC  
+Date written:   2022-10-14 15:47:28.4 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat      
-Data file size: 1.0 KiB (1038) 
-Size in memory: 3904 bytes      
+Data file size: 1.1 KiB (1096) 
+Size in memory: 4000 bytes      
 Info file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.inf.md      
 Script name:    /home/athan/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_1_longterm_trends.R      
-User@Host:      athan@sagan   
+User@Host:      athan@tyler   
 Contact:        <lapauththanasis@gmail.com>      
 Notes:          NA      
 
@@ -28,7 +28,7 @@ Classes ‘data.table’ and 'data.frame':	9 obs. of  8 variables:
  $ slope.ConfInt_0.99: num  2.269 0.468 2.496 1.168 0.112 ...
  $ DATA              : chr  "ALL" "CLEAR" "ALL" "CLEAR" ...
  $ var               : chr  "DIR_att" "DIR_att" "DIR_transp" "DIR_transp" ...
- $ N                 : int  2090 1368 2090 1368 10007 6585 2090 1368 10049
+ $ slope.stat_sig    : num  4.32 84.24 29.48 5.33 100 ...
  - attr(*, ".internal.selfref")=<externalptr> 
 ```
 
@@ -36,11 +36,11 @@ Classes ‘data.table’ and 'data.frame':	9 obs. of  8 variables:
  Data quality.
 ---------------
 
-| &nbsp; | slope | slope.sd | slope.p | slope.ConfInt_0.95 | slope.ConfInt_0.99 | DATA | var | N |
-|:------:|------:|---------:|--------:|-------------------:|-------------------:|-----:|----:|--:|
-| Values |     9 |        9 |       9 |                  9 |                  9 |    0 |   0 | 9 |
-|  INFs  |     0 |        0 |       0 |                  0 |                  0 |    0 |   0 | 0 |
-|  NAs   |     0 |        0 |       0 |                  0 |                  0 |    0 |   0 | 0 |
+| &nbsp; | slope | slope.sd | slope.p | slope.ConfInt_0.95 | slope.ConfInt_0.99 | DATA | var | slope.stat_sig |
+|:------:|------:|---------:|--------:|-------------------:|-------------------:|-----:|----:|---------------:|
+| Values |     9 |        9 |       9 |                  9 |                  9 |    0 |   0 |              9 |
+|  INFs  |     0 |        0 |       0 |                  0 |                  0 |    0 |   0 |              0 |
+|  NAs   |     0 |        0 |       0 |                  0 |                  0 |    0 |   0 |              0 |
 
 
  Data Summary.
@@ -57,14 +57,14 @@ Classes ‘data.table’ and 'data.frame':	9 obs. of  8 variables:
 
  
 
-|             DATA |              var |             N |
-|-----------------:|-----------------:|--------------:|
-|         Length:9 |         Length:9 | Min.   : 1368 |
-| Class :character | Class :character | 1st Qu.: 1368 |
-| Mode  :character | Mode  :character | Median : 2090 |
-|               NA |               NA | Mean   : 4113 |
-|               NA |               NA | 3rd Qu.: 6585 |
-|               NA |               NA | Max.   :10049 |
+|             DATA |              var | slope.stat_sig |
+|-----------------:|-----------------:|---------------:|
+|         Length:9 |         Length:9 | Min.   :  4.32 |
+| Class :character | Class :character | 1st Qu.: 17.57 |
+| Mode  :character | Mode  :character | Median : 29.48 |
+|               NA |               NA | Mean   : 52.03 |
+|               NA |               NA | 3rd Qu.:100.00 |
+|               NA |               NA | Max.   :100.00 |
 
 
 
@@ -117,12 +117,12 @@ Classes ‘data.table’ and 'data.frame':	9 obs. of  8 variables:
     |-------:|----------:|----------:|
     |      9 | character | character |
 
-  * **N**:
+  * **slope.stat_sig**:
 
 
-    | Min. | 1st Qu. | Median | Mean | 3rd Qu. |  Max. |
-    |-----:|--------:|-------:|-----:|--------:|------:|
-    | 1368 |    1368 |   2090 | 4113 |    6585 | 10049 |
+    | Min. | 1st Qu. | Median |  Mean | 3rd Qu. | Max. |
+    |-----:|--------:|-------:|------:|--------:|-----:|
+    | 4.32 |   17.57 |  29.48 | 52.03 |     100 |  100 |
 
 
 <!-- end of list -->

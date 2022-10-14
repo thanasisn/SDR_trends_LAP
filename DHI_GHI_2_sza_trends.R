@@ -149,6 +149,7 @@ for(i in 1:length(data_list)) {
     }
 }
 
+#+ echo=F, include=F
 ## ~ Plots seasonal data ####
 data_list  <- list(ALL_Seas   =   ALL_2_daily_seas,
                    CLEAR_Seas = CLEAR_2_daily_seas)
@@ -159,6 +160,7 @@ for(i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (xvar in by_var){
         for (yvar in wecare) {
+            if (! yvar %in% names(Dplot)) next()
             col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
             vect <- Dplot[[yvar]]
             plot(Dplot[[xvar]], vect,
@@ -171,6 +173,7 @@ for(i in 1:length(data_list)) {
 for(i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (yvar in wecare) {
+        if (! yvar %in% names(Dplot)) next()
         col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
         vect <- Dplot[[yvar]]
         hist(vect,
