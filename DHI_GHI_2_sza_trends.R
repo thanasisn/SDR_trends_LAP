@@ -119,14 +119,6 @@ options(error = function() {
 
 data_list  <- list(ALL   = ALL_2_daily_mean,
                    CLEAR = CLEAR_2_daily_mean)
-data_names <- c(
-    "GLB_att",
-    "DIR_att",
-    "DIR_transp",
-    "HOR_att",
-    "GLB_att_N",
-    "DIR_att_N"
-)
 by_var     <- c("doy","SZA")
 wecare     <- unique(unlist(lapply(data_list, names)))
 wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
@@ -134,6 +126,7 @@ for(i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (xvar in by_var){
         for (yvar in wecare) {
+            if (! yvar %in% names(Dplot)) next()
             col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
             vect <- Dplot[[yvar]]
             plot(Dplot[[xvar]], vect,
@@ -145,7 +138,9 @@ for(i in 1:length(data_list)) {
 }
 for(i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
+      # intersect(names(Dplot),wecare)
         for (yvar in wecare) {
+            if (! yvar %in% names(Dplot)) next()
             col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
             vect <- Dplot[[yvar]]
             hist(vect,
@@ -154,17 +149,9 @@ for(i in 1:length(data_list)) {
     }
 }
 
-## ~ Plots seasonal ####
-data_list  <- list(ALL_Seas   = ALL_2_daily_seas,
+## ~ Plots seasonal data ####
+data_list  <- list(ALL_Seas   =   ALL_2_daily_seas,
                    CLEAR_Seas = CLEAR_2_daily_seas)
-data_names <- c(
-    "GLB_att",
-    "DIR_att",
-    "DIR_transp",
-    "HOR_att",
-    "GLB_att_N",
-    "DIR_att_N"
-)
 by_var     <- c("doy")
 wecare     <- unique(unlist(lapply(data_list, names)))
 wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
@@ -204,6 +191,7 @@ rm(data_list)
 
 
 
+#### Calculate seasonal anomaly ####
 #' #### Calculate seasonal anomaly ####
 #+ echo=F, include=F
 
