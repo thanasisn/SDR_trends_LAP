@@ -337,6 +337,8 @@ gather$DATA <- sub("_.*","",gather$DATA)
 
 pprint <- gather[ , ..wecare]
 
+pprint[ , 1-slop    ]
+stop()
 pprint[, slope.t  := NULL]
 pprint[, Rsqrd    := NULL]
 pprint[, RsqrdAdj := NULL]
