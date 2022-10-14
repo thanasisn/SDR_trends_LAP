@@ -1,6 +1,19 @@
 
 # SDR trends 1993-2021 Thessaloniki
 
+[]()
+
+## This is...
+
 Source files of a paper
 
-Towards reproducible results in research
+## Abstruct
+
+## Citation
+
+## Licence
+
+## Why?
+
+Towards reproducible results in research.
+
