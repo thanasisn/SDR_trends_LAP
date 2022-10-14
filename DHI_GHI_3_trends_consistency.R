@@ -120,71 +120,85 @@ options(error = function() {
 
 #+ echo=F, include=F
 ## ~ Plots longterm  ####
-plot( ALL_3_monthly_mean$Date, ALL_3_monthly_mean$DIR_att )
-plot( ALL_3_monthly_mean$Date, ALL_3_monthly_mean$DIR_att_EM )
-plot( ALL_3_monthly_mean$Date, ALL_3_monthly_mean$GLB_att )
-plot( ALL_3_monthly_mean$Date, ALL_3_monthly_mean$GLB_att_EM )
-plot( ALL_3_monthly_mean$Date, ALL_3_monthly_mean$DIR_transp )
-plot( ALL_3_monthly_mean$Date, ALL_3_monthly_mean$DIR_transp_EM )
 
-plot( ALL_3_monthly_mean$SZA, ALL_3_monthly_mean$DIR_att )
-plot( ALL_3_monthly_mean$SZA, ALL_3_monthly_mean$DIR_att_EM )
-plot( ALL_3_monthly_mean$SZA, ALL_3_monthly_mean$GLB_att )
-plot( ALL_3_monthly_mean$SZA, ALL_3_monthly_mean$GLB_att_EM )
-plot( ALL_3_monthly_mean$SZA, ALL_3_monthly_mean$DIR_transp )
-plot( ALL_3_monthly_mean$SZA, ALL_3_monthly_mean$DIR_transp_EM )
+data_list  <- list(ALL   =   ALL_3_monthly_mean,
+                   CLEAR = CLEAR_3_monthly_mean)
+by_var     <- c("Date","Month","SZA")
+wecare     <- unique(unlist(lapply(data_list, names)))
+wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
+for(i in 1:length(data_list)) {
+    Dplot <- data_list[[i]]
+    for (xvar in by_var){
+        for (yvar in wecare) {
+            if (! yvar %in% names(Dplot)) next()
+            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            vect <- Dplot[[yvar]]
+            plot(Dplot[[xvar]], vect,
+                 pch = ".", col = col,
+                 main = paste(names(data_list[i]), yvar),
+                 xlab = xvar, ylab = yvar)
+        }
+    }
+}
+for(i in 1:length(data_list)) {
+    Dplot <- data_list[[i]]
+    # intersect(names(Dplot),wecare)
+    for (yvar in wecare) {
+        if (! yvar %in% names(Dplot)) next()
+        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+        vect <- Dplot[[yvar]]
+        hist(vect,
+             main = paste(names(data_list[i]), yvar),
+             breaks = 100, col = col)
+    }
+}
 
-hist(ALL_3_monthly_mean$DIR_att_N)
-hist(ALL_3_monthly_mean$GLB_att_N)
+#+ echo=F, include=F
+## ~ Plots seasonal data ####
 
-plot(ALL_3_monthly_mean$Date, ALL_3_monthly_mean$DIR_att_N)
-plot(ALL_3_monthly_mean$Date, ALL_3_monthly_mean$HOR_att_N)
-plot(ALL_3_monthly_mean$Date, ALL_3_monthly_mean$GLB_att_N)
+data_list  <- list(ALL   =   ALL_3_monthly_seas,
+                   CLEAR = CLEAR_3_monthly_seas)
+by_var     <- c("Month","SZA")
+wecare     <- unique(unlist(lapply(data_list, names)))
+wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
+for(i in 1:length(data_list)) {
+    Dplot <- data_list[[i]]
+    for (xvar in by_var){
+        for (yvar in wecare) {
+            if (! yvar %in% names(Dplot)) next()
+            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            vect <- Dplot[[yvar]]
+            plot(Dplot[[xvar]], vect,
+                 pch = ".", col = col,
+                 main = paste(names(data_list[i]), yvar),
+                 xlab = xvar, ylab = yvar)
+        }
+    }
+}
+for(i in 1:length(data_list)) {
+    Dplot <- data_list[[i]]
+    # intersect(names(Dplot),wecare)
+    for (yvar in wecare) {
+        if (! yvar %in% names(Dplot)) next()
+        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+        vect <- Dplot[[yvar]]
+        hist(vect,
+             main = paste(names(data_list[i]), yvar),
+             breaks = 100, col = col)
+    }
+}
 
 
 
-hist(ALL_3_monthly_mean$DIR_att_EM)
-hist(ALL_3_monthly_mean$GLB_att_EM)
-hist(ALL_3_monthly_mean$DIR_transp_EM)
 
 
 
-plot( CLEAR_3_monthly_mean$Month, CLEAR_3_monthly_mean$DIR_att )
-plot( CLEAR_3_monthly_mean$Month, CLEAR_3_monthly_mean$DIR_att_EM )
-plot( CLEAR_3_monthly_mean$Month, CLEAR_3_monthly_mean$GLB_att )
-plot( CLEAR_3_monthly_mean$Month, CLEAR_3_monthly_mean$GLB_att_EM )
-plot( CLEAR_3_monthly_mean$Month, CLEAR_3_monthly_mean$DIR_transp )
-plot( CLEAR_3_monthly_mean$Month, CLEAR_3_monthly_mean$DIR_transp_EM )
-
-plot( CLEAR_3_monthly_mean$SZA, CLEAR_3_monthly_mean$DIR_att )
-plot( CLEAR_3_monthly_mean$SZA, CLEAR_3_monthly_mean$DIR_att_EM )
-plot( CLEAR_3_monthly_mean$SZA, CLEAR_3_monthly_mean$GLB_att )
-plot( CLEAR_3_monthly_mean$SZA, CLEAR_3_monthly_mean$GLB_att_EM )
-plot( CLEAR_3_monthly_mean$SZA, CLEAR_3_monthly_mean$DIR_transp )
-plot( CLEAR_3_monthly_mean$SZA, CLEAR_3_monthly_mean$DIR_transp_EM )
-
-hist(CLEAR_3_monthly_mean$DIR_att_N)
-hist(CLEAR_3_monthly_mean$GLB_att_N)
-hist(CLEAR_3_monthly_mean$DIR_att_EM)
-hist(CLEAR_3_monthly_mean$GLB_att_EM)
-hist(CLEAR_3_monthly_mean$DIR_transp_EM)
 
 
 
-# # ## ~ Plots seasonal ####
-# #
-# # plot( ALL_3_monthly_seas$doy, ALL_3_monthly_seas$DIR_att_seas )
-# # plot( ALL_3_monthly_seas$doy, ALL_3_monthly_seas$GLB_att_seas )
-# # plot( ALL_3_monthly_seas$doy, ALL_3_monthly_seas$DIR_transp_seas )
-# # plot( ALL_3_monthly_seas$doy, ALL_3_monthly_seas$GLB_att_N_seas)
-# # plot( ALL_3_monthly_seas$doy, ALL_3_monthly_seas$DIR_att_N_seas)
-# #
-# #
-# # plot( CLEAR_3_monthly_seas$doy, CLEAR_3_monthly_seas$DIR_att_seas )
-# # plot( CLEAR_3_monthly_seas$doy, CLEAR_3_monthly_seas$GLB_att_seas )
-# # plot( CLEAR_3_monthly_seas$doy, CLEAR_3_monthly_seas$DIR_transp_seas )
-# # plot( CLEAR_3_monthly_seas$doy, CLEAR_3_monthly_seas$GLB_att_N_seas)
-# # plot( CLEAR_3_monthly_seas$doy, CLEAR_3_monthly_seas$DIR_att_N_seas)
+
+
+
 
 
 
@@ -270,7 +284,7 @@ CLEAR_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
 
 timefactor <- 1
 vars    <- c("GLB_att", "DIR_att", "DIR_transp")
-dbs     <- c("ALL_3_monthly_DEseas", "CLEAR_3_monthly_DEseas")
+dbs     <- c("ALL_3_monthly_DEseas","CLEAR_3_monthly_DEseas")
 basevar <- c("Year","Month","SZA","preNoon")
 
 
