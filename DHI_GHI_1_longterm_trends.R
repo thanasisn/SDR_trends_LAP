@@ -473,6 +473,9 @@ pprint[, slope.sd           := slope.sd           * Days_of_year ]
 pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year ]
 pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year ]
 
+pprint[, slope.ConfInt_0.99 := NULL ]
+pprint[, slope.ConfInt_0.95 := NULL ]
+
 setorder(pprint,DATA,var)
 
 #+ echo=F, include=T
@@ -563,7 +566,7 @@ for (DBn in dbs) {
 
 ## ~ display data table ####
 
-#' ## Table of trends by season.
+#' ## Table of trends by month.
 #+ echo=F, include=T
 
 
@@ -585,6 +588,9 @@ pprint[, slope.sd           := slope.sd           * Days_of_year ]
 pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year ]
 pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year ]
 
+pprint[, slope.ConfInt_0.99 := NULL ]
+pprint[, slope.ConfInt_0.95 := NULL ]
+
 setorder(pprint,DATA,var,Month)
 
 #+ echo=F, include=T
@@ -592,6 +598,12 @@ pander(pprint,
        cap = "Slope is in %/year")
 #+ echo=F, include=F
 myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_monthly.dat")
+
+
+
+
+## reshape table
+pprint
 
 
 
