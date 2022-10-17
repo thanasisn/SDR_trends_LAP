@@ -367,7 +367,7 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 #### SEASONAL TRENDS  ##########################################################
 
 
-####  Plot of SZA trends for each season of year ####
+####  Plot of trends for each season of year ####
 #' \newpage
 #' ## Trends for each season of the year
 #+ echo=F, include=F
@@ -448,7 +448,7 @@ for (DBn in dbs) {
     }
 }
 
-## ~ display table ####
+## ~ display data table ####
 
 #' ## Table of trends by season.
 #+ echo=F, include=T
@@ -480,6 +480,162 @@ pander(pprint,
        cap = "Slope is in %/year")
 #+ echo=F, include=F
 myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_season.dat")
+
+
+
+
+
+
+#### MONTHLY TRENDS  ##########################################################
+
+
+####  Plot of trends for each month of year ####
+#' \newpage
+#' ## Trends for each month of the year
+#+ echo=F, include=F
+
+
+## ~ plot trends for each month #####
+stop()
+#+ seasonaltrends, echo=F, include=T, results="asis"
+vars        <- c("DIR_att", "GLB_att")
+dbs         <- c("ALL_1_daily_DEseas","CLEAR_1_daily_DEseas")
+for (DBn in dbs) {
+    DB <- get(DBn)
+    ## set seasons in each data base
+    DB[, Month := month(Date) ]
+    ## sanity check
+    stopifnot( !any(is.na(DB$Month)) )
+    for (ase in 1:12) {
+        for (avar in vars) {
+            dataset <- DB[ Month == ase, ]
+
+            if (sum(!is.na(dataset[[avar]])) <= 1) next()
+            ## linear model
+            lm1        <- lm( dataset[[avar]] ~ dataset$Date )
+            ## plot
+            plot(dataset$Date, dataset[[avar]],
+                 pch  = ".", col = get(paste0("col_",avar)),
+                 xlab = "",
+                 ylab = bquote("Seasonal Anomaly [%]" ) )
+            # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
+            abline(lm1)
+            ## decorations
+            fit <- lm1[[1]]
+            legend('top', lty = 1, bty = "n",
+                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
+            title(paste(month.name[ase],translate(sub("_.*","",DBn)),translate(avar)), cex=0.7)
+        }
+    }
+}
+#+ echo=F, include=F
+
+
+## ~ calculate trends for each month  ####
+vars        <- c("DIR_att", "GLB_att")
+dbs         <- c("ALL_1_daily_DEseas", "CLEAR_1_daily_DEseas")
+gather_seas <- data.frame()
+for (DBn in dbs) {
+    DB <- get(DBn)
+    ## set seasons in each data base
+    DB[, Month := month(Date) ]
+    ## sanity check
+    stopifnot( !any(is.na(DB$Month)) )
+    for (ase in 1:12) {
+        for (avar in vars) {
+            dataset <- DB[ Month == ase, ]
+
+            if (sum(!is.na(dataset[[avar]])) <= 1) next()
+            ## linear model
+            lm1        <- lm( dataset[[avar]] ~ dataset$Date )
+            ## gather stats
+            gather_seas <- rbind(gather_seas,
+                                 data.frame(
+                                     linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
+                                     DATA      = DBn,
+                                     Month     = ase,
+                                     var       = avar,
+                                     N         = sum(!is.na(dataset[[avar]]))
+                                 ))
+        }
+    }
+}
+
+## ~ display data table ####
+
+#' ## Table of trends by season.
+#+ echo=F, include=T
+
+
+wecare           <- grep("intercept", names(gather_seas), value = T, invert = T)
+gather_seas      <- data.table(gather_seas)
+gather_seas$DATA <- sub("_.*","",gather_seas$DATA)
+
+pprint           <- gather_seas[ , ..wecare]
+
+pprint[, slope.stat_sig := 100*(1-slope.p) ]
+pprint[, slope.t        := NULL]
+pprint[, Rsqrd          := NULL]
+pprint[, RsqrdAdj       := NULL]
+pprint[, N              := NULL]
+
+
+## convert slope / year
+pprint[, slope              := slope              * Days_of_year ]
+pprint[, slope.sd           := slope.sd           * Days_of_year ]
+pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year ]
+pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year ]
+
+setorder(pprint,DATA,var)
+
+#+ echo=F, include=T
+pander(pprint,
+       cap = "Slope is in %/year")
+#+ echo=F, include=F
+myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_monthly.dat")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
