@@ -486,7 +486,7 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 
 
 
-#### MONTHLY TRENDS  ##########################################################
+#### MONTHLY TRENDS  ###########################################################
 
 
 ####  Plot of trends for each month of year ####
@@ -496,8 +496,8 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 
 
 ## ~ plot trends for each month #####
-stop()
-#+ seasonaltrends, echo=F, include=T, results="asis"
+
+#+ monthlytrends, echo=F, include=T, results="asis"
 vars        <- c("DIR_att", "GLB_att")
 dbs         <- c("ALL_1_daily_DEseas","CLEAR_1_daily_DEseas")
 for (DBn in dbs) {
@@ -577,7 +577,6 @@ pprint[, slope.stat_sig := 100*(1-slope.p) ]
 pprint[, slope.t        := NULL]
 pprint[, Rsqrd          := NULL]
 pprint[, RsqrdAdj       := NULL]
-pprint[, N              := NULL]
 
 
 ## convert slope / year
@@ -586,55 +585,13 @@ pprint[, slope.sd           := slope.sd           * Days_of_year ]
 pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year ]
 pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year ]
 
-setorder(pprint,DATA,var)
+setorder(pprint,DATA,var,Month)
 
 #+ echo=F, include=T
 pander(pprint,
        cap = "Slope is in %/year")
 #+ echo=F, include=F
 myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_monthly.dat")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
