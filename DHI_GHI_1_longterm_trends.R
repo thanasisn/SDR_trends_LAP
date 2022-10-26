@@ -378,14 +378,14 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 #+ seasonaltrends, echo=F, include=T, results="asis"
 vars        <- c("DIR_att", "GLB_att")
 dbs         <- c("ALL_1_daily_DEseas","CLEAR_1_daily_DEseas")
-Seasons     <- c("Winter", "Spring","Summer","Automn")
+Seasons     <- c("Winter", "Spring","Summer","Autumn")
 for (DBn in dbs) {
     DB <- get(DBn)
     ## set seasons in each data base
     DB[ month(Date) %in% c(12, 1, 2), Season := "Winter"]
     DB[ month(Date) %in% c( 3, 4, 5), Season := "Spring"]
     DB[ month(Date) %in% c( 6, 7, 8), Season := "Summer"]
-    DB[ month(Date) %in% c( 9,10,11), Season := "Automn"]
+    DB[ month(Date) %in% c( 9,10,11), Season := "Autumn"]
     ## sanity check
     stopifnot( !any(is.na(DB$Season)) )
     for (ase in Seasons) {
@@ -416,7 +416,7 @@ for (DBn in dbs) {
 ## ~ calculate trends for each season  ####
 vars        <- c("DIR_att", "GLB_att")
 dbs         <- c("ALL_1_daily_DEseas", "CLEAR_1_daily_DEseas")
-Seasons     <- c("Winter", "Spring", "Summer", "Automn")
+Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 gather_seas <- data.frame()
 
 for (DBn in dbs) {
@@ -425,7 +425,7 @@ for (DBn in dbs) {
     DB[ month(Date) %in% c(12, 1, 2), Season := "Winter"]
     DB[ month(Date) %in% c( 3, 4, 5), Season := "Spring"]
     DB[ month(Date) %in% c( 6, 7, 8), Season := "Summer"]
-    DB[ month(Date) %in% c( 9,10,11), Season := "Automn"]
+    DB[ month(Date) %in% c( 9,10,11), Season := "Autumn"]
     ## sanity check
     stopifnot( !any(is.na(DB$Season)) )
     for (ase in Seasons) {
