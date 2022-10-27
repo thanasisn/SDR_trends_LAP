@@ -5,6 +5,8 @@
 ## to force a rebuild
 # file.remove(common_data)
 
+require(data.table)
+
 ####  Run data construction ####################################################
 
 ## check if we need to run data production
@@ -58,17 +60,20 @@ if ( havetorun ) {
     #' Keep data with Sun elevation above `r MIN_ELEVA`
     DATA <- DATA[ Elevat >= MIN_ELEVA, ]
 
-    #' ### Bais paper obstacle filter
+    #' ### Bais paper obstacle filterli
     DATA <- DATA[ ! (Azimuth > 35 & Azimuth < 120 & Elevat < 10) ]
     #+ echo=F, include=T
 
+    keepQF <- c("good","Possible Direct Obstruction (23)","Biology Building (22)")
     #' ### Keep only data characterized as 'good' by the Radiation Quality control procedure
+    #' Keep data marked as `r cat(paste(keepQF,collapse = ", "))`.
     #+ echo=F, include=T
-    DATA[  QCF_DIR != "good", wattDIR := NA ]
-    DATA[  QCF_DIR != "good", wattHOR := NA ]
-    DATA[  QCF_GLB != "good", wattGLB := NA ]
-    DATA[, QCF_DIR := NULL ]
-    DATA[, QCF_GLB := NULL ]
+    DATA[ ! QCF_DIR %in% keepQF, wattDIR := NA ]
+    DATA[ ! QCF_DIR %in% keepQF, wattHOR := NA ]
+    DATA[ ! QCF_DIR %in% keepQF, wattGLB := NA ]
+    # DATA[, QCF_DIR := NULL ]
+    # DATA[, QCF_GLB := NULL ]
+
 
     DATA <- DATA[ ! (is.na(wattDIR) & is.na(wattGLB))  ]
 
