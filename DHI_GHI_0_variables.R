@@ -49,8 +49,8 @@ Daily_confidence_limit   <-  0.99
 SZA_confidence_limit     <-  0.99
 Monthly_confidence_limit <-  0.99
 
-Daily_aggregation_N_lim  <- 50         ## was SUM_THRES
+Daily_aggregation_N_lim  <- 60 * 3 # minutes in a day
 Monthly_aggegation_N_lim <- 20
-SZA_aggregation_N_lim    <-  4         ## was SZA_THRES
+SZA_aggregation_N_lim    <-  4
 
 
