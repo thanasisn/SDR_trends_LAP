@@ -54,6 +54,17 @@ if ( havetorun ) {
         DATA <- readRDS(CS_file)
     }
 
+    hist(DATA[ Elevat < 5, Elevat ])
+    which(diff(sign(DATA$Elevat))!=0)
+
+    vec1      <- data.frame(Sign = sign(DATA$Elevat))
+    vec1$Diff <- c(NA,diff(vec1$Sign))
+
+    vec1[which(vec1$Diff != 0), ]
+
+    unique((sign(DATA$Elevat)))
+
+    DATA[which(diff(sign(Elevat))==-1), ]
 
 
     #### 0. Process data for this project  #####################################
@@ -267,20 +278,23 @@ if ( havetorun ) {
 
     DATA_ALLQ <- merge( DATA_all, alldates, all = T )
 
-    Q_all <- DATA_ALLQ[,.(DIR_att_seas       = mean(DIR_att,    na.rm = TRUE),
-                          GLB_att_seas       = mean(GLB_att,    na.rm = TRUE),
-                          HOR_att_seas       = mean(HOR_att,    na.rm = TRUE),
-                          DIR_transp_seas    = mean(DIR_transp, na.rm = TRUE),
-                          DIR_att_sd_seas    = sd(  DIR_att,    na.rm = TRUE),
-                          HOR_att_sd_seas    = sd(  HOR_att,    na.rm = TRUE),
-                          GLB_att_sd_seas    = sd(  GLB_att,    na.rm = TRUE),
-                          DIR_transp_sd_seas = sd(  DIR_transp, na.rm = TRUE),
-                          GLB_att_N_seas     = sum(!is.na(GLB_att)),
-                          HOR_att_N_seas     = sum(!is.na(HOR_att)),
-                          DIR_att_N_seas     = sum(!is.na(DIR_att)),
-                          Elevat             = mean(Elevat,  na.rm = TRUE),
-                          Azimuth            = mean(Azimuth, na.rm = TRUE),
-                          SZA                = mean(SZA,     na.rm = TRUE)),
+
+    Q_all <- DATA_ALLQ[,.(DIR_att       = mean(DIR_att,     na.rm = T),
+                          GLB_att       = mean(GLB_att,     na.rm = T),
+                          HOR_att       = mean(HOR_att,     na.rm = T),
+                          DIR_transp    = mean(DIR_transp,  na.rm = T),
+                          tsi1au_att    = mean(tsi_1au_comb,na.rm = T),
+                          DIR_att_sd    = sd(  DIR_att,     na.rm = T),
+                          GLB_att_sd    = sd(  GLB_att,     na.rm = T),
+                          HOR_att_sd    = sd(  HOR_att,     na.rm = T),
+                          DIR_transp_sd = sd(  DIR_transp,  na.rm = T),
+                          tsi1au_att_sd = sd(  tsi_1au_comb,na.rm = T),
+                          GLB_att_N     = sum(!is.na(GLB_att)),
+                          HOR_att_N     = sum(!is.na(HOR_att)),
+                          DIR_att_N     = sum(!is.na(DIR_att)),
+                          Elevat        = mean(Elevat,  na.rm = TRUE),
+                          Azimuth       = mean(Azimuth, na.rm = TRUE),
+                          SZA           = mean(SZA,     na.rm = TRUE)),
                        by = .(Date = as.POSIXct(as.numeric(Date)%/%(3600/4)*(3600/4),
                                                 origin = "1970-01-01" ))
     ]
@@ -288,38 +302,95 @@ if ( havetorun ) {
 
     DATA_CLEARQ <- merge( DATA_Clear, alldates, all = T )
 
-    Q_clear <- DATA_CLEARQ[,.(DIR_att_seas       = mean(DIR_att,    na.rm = TRUE),
-                              GLB_att_seas       = mean(GLB_att,    na.rm = TRUE),
-                              HOR_att_seas       = mean(HOR_att,    na.rm = TRUE),
-                              DIR_transp_seas    = mean(DIR_transp, na.rm = TRUE),
-                              DIR_att_sd_seas    = sd(  DIR_att,    na.rm = TRUE),
-                              HOR_att_sd_seas    = sd(  HOR_att,    na.rm = TRUE),
-                              GLB_att_sd_seas    = sd(  GLB_att,    na.rm = TRUE),
-                              DIR_transp_sd_seas = sd(  DIR_transp, na.rm = TRUE),
-                              GLB_att_N_seas     = sum(!is.na(GLB_att)),
-                              HOR_att_N_seas     = sum(!is.na(HOR_att)),
-                              DIR_att_N_seas     = sum(!is.na(DIR_att)),
-                              Elevat             = mean(Elevat,  na.rm = TRUE),
-                              Azimuth            = mean(Azimuth, na.rm = TRUE),
-                              SZA                = mean(SZA,     na.rm = TRUE)),
+    Q_clear <- DATA_CLEARQ[,.(DIR_att       = mean(DIR_att,     na.rm = T),
+                              GLB_att       = mean(GLB_att,     na.rm = T),
+                              HOR_att       = mean(HOR_att,     na.rm = T),
+                              DIR_transp    = mean(DIR_transp,  na.rm = T),
+                              tsi1au_att    = mean(tsi_1au_comb,na.rm = T),
+                              DIR_att_sd    = sd(  DIR_att,     na.rm = T),
+                              GLB_att_sd    = sd(  GLB_att,     na.rm = T),
+                              HOR_att_sd    = sd(  HOR_att,     na.rm = T),
+                              DIR_transp_sd = sd(  DIR_transp,  na.rm = T),
+                              tsi1au_att_sd = sd(  tsi_1au_comb,na.rm = T),
+                              GLB_att_N     = sum(!is.na(GLB_att)),
+                              HOR_att_N     = sum(!is.na(HOR_att)),
+                              DIR_att_N     = sum(!is.na(DIR_att)),
+                              Elevat        = mean(Elevat,  na.rm = TRUE),
+                              Azimuth       = mean(Azimuth, na.rm = TRUE),
+                              SZA           = mean(SZA,     na.rm = TRUE)),
                            by = .(Date = as.POSIXct(as.numeric(Date)%/%(3600/4)*(3600/4),
                                                     origin = "1970-01-01" ))
     ]
     rm(DATA_CLEARQ)
 
 
+    QH_all <- Q_all[,.(DIR_att       = mean(DIR_att,     na.rm = T),
+                       GLB_att       = mean(GLB_att,     na.rm = T),
+                       HOR_att       = mean(HOR_att,     na.rm = T),
+                       DIR_transp    = mean(DIR_transp,  na.rm = T),
+                       tsi1au_att    = mean(tsi1au_att,  na.rm = T),
+                       DIR_att_sd    = sd(  DIR_att,     na.rm = T),
+                       GLB_att_sd    = sd(  GLB_att,     na.rm = T),
+                       HOR_att_sd    = sd(  HOR_att,     na.rm = T),
+                       DIR_transp_sd = sd(  DIR_transp,  na.rm = T),
+                       tsi1au_att_sd = sd(  tsi1au_att,  na.rm = T),
+                       GLB_att_N     = sum(!is.na(GLB_att)),
+                       HOR_att_N     = sum(!is.na(HOR_att)),
+                       DIR_att_N     = sum(!is.na(DIR_att)),
+                       Elevat        = mean(Elevat,  na.rm = TRUE),
+                       Azimuth       = mean(Azimuth, na.rm = TRUE),
+                       SZA           = mean(SZA,     na.rm = TRUE)),
+                    by = .(Date = as.POSIXct(as.numeric(Date)%/%(3600)*(3600),
+                                             origin = "1970-01-01" ))]
+
+    QH_clear <- Q_clear[,.(DIR_att       = mean(DIR_att,     na.rm = T),
+                           GLB_att       = mean(GLB_att,     na.rm = T),
+                           HOR_att       = mean(HOR_att,     na.rm = T),
+                           DIR_transp    = mean(DIR_transp,  na.rm = T),
+                           tsi1au_att    = mean(tsi1au_att,  na.rm = T),
+                           DIR_att_sd    = sd(  DIR_att,     na.rm = T),
+                           GLB_att_sd    = sd(  GLB_att,     na.rm = T),
+                           HOR_att_sd    = sd(  HOR_att,     na.rm = T),
+                           DIR_transp_sd = sd(  DIR_transp,  na.rm = T),
+                           tsi1au_att_sd = sd(  tsi1au_att,  na.rm = T),
+                           GLB_att_N     = sum(!is.na(GLB_att)),
+                           HOR_att_N     = sum(!is.na(HOR_att)),
+                           DIR_att_N     = sum(!is.na(DIR_att)),
+                           Elevat        = mean(Elevat,  na.rm = TRUE),
+                           Azimuth       = mean(Azimuth, na.rm = TRUE),
+                           SZA           = mean(SZA,     na.rm = TRUE)),
+                        by = .(Date = as.POSIXct(as.numeric(Date)%/%(3600)*(3600),
+                                                 origin = "1970-01-01" ))]
+
+    hist(QH_all[ Elevat < 20, Elevat ] )
+
+    ## keep only whole hours
+    QH_all <- QH_all[ !is.na(SZA) ]
+    QH_all[ GLB_att_N < 4 , GLB_att := NA ]
+    QH_all[ DIR_att_N < 4 , DIR_att := NA ]
+    QH_all[ HOR_att_N < 4 , HOR_att := NA ]
+
+    QH_clear <- QH_clear[ !is.na(SZA) ]
+    QH_clear[ GLB_att_N < 4 , GLB_att := NA ]
+    QH_clear[ DIR_att_N < 4 , DIR_att := NA ]
+    QH_clear[ HOR_att_N < 4 , HOR_att := NA ]
 
 
+    QHD_all <- QH_all[,.(DIR_att       = mean(DIR_att   ),
+                         GLB_att       = mean(GLB_att   ),
+                         HOR_att       = mean(HOR_att   ),
+                         DIR_transp    = mean(DIR_transp)),
+                      by = .(Date = as.Date(Date))]
+
+    QHD_clear <- QH_clear[,.(DIR_att       = mean(DIR_att   ),
+                             GLB_att       = mean(GLB_att   ),
+                             HOR_att       = mean(HOR_att   ),
+                             DIR_transp    = mean(DIR_transp)),
+                          by = .(Date = as.Date(Date))]
 
 
-
-
-
-
-    stop()
-
-
-
+    QHD_all[   !is.na(GLB_att), .N ]
+    QHD_clear[ !is.na(GLB_att), .N ]
 
 
 
