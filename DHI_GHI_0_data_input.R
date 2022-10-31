@@ -49,23 +49,22 @@ if ( havetorun ) {
             rm(temp)
         }
         ## this is used by old scripts
+        setorder(DATA,Date)
         myRtools::write_RDS(object = DATA, file = CS_file)
     } else {
         DATA <- readRDS(CS_file)
     }
 
-    hist(DATA[ Elevat < 5, Elevat ])
-    which(diff(sign(DATA$Elevat))!=0)
-
-    vec1      <- data.frame(Sign = sign(DATA$Elevat))
-    vec1$Diff <- c(NA,diff(vec1$Sign))
-
-    vec1[which(vec1$Diff != 0), ]
-
-    unique((sign(DATA$Elevat)))
-
-    DATA[which(diff(sign(Elevat))==-1), ]
-
+    # ## Sunset and sunrise
+    # hist(DATA[ Elevat < 5, Elevat ])
+    # which(diff(sign(DATA$Elevat))!=0)
+    #
+    # vec1      <- data.frame(Sign = sign(DATA$Elevat),
+    #                         Date = DATA$Date,
+    #                         Elev = DATA$Elevat)
+    # vec1$Diff <- c(0,diff(vec1$Sign))
+    #
+    # vec1[which(vec1$Diff != 0), ]
 
     #### 0. Process data for this project  #####################################
 
@@ -388,7 +387,7 @@ if ( havetorun ) {
                              DIR_transp    = mean(DIR_transp)),
                           by = .(Date = as.Date(Date))]
 
-
+    ## Too few days remain
     QHD_all[   !is.na(GLB_att), .N ]
     QHD_clear[ !is.na(GLB_att), .N ]
 

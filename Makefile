@@ -2,7 +2,7 @@
 
 .DEFAULT_GOAL := pdf
 
-all:       pdf html rtim
+all:       clean_all pdf rtim
 pdf:       p1 p2 p3 Ap
 html:      h1 h2 h3 Ah
 rtim:      r1 r2 r3
