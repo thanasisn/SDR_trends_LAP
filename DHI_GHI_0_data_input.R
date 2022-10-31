@@ -60,7 +60,7 @@ if ( havetorun ) {
     #' Keep data with Sun elevation above `r MIN_ELEVA`
     DATA <- DATA[ Elevat >= MIN_ELEVA, ]
 
-    #' ### Bais paper obstacle filterli
+    #' ### Bais paper obstacle filtere
     DATA <- DATA[ ! (Azimuth > 35 & Azimuth < 120 & Elevat < 10) ]
     #+ echo=F, include=T
 
@@ -598,3 +598,51 @@ if ( havetorun ) {
     cat(paste("\n\nLoad environment and data from: ", common_data,"\n\n"))
     load( file = common_data)
 }
+
+
+
+
+
+# #### run on all quarter of the hour #####################################
+# ayear$quarter <- ((as.numeric( ayear$Date ) %/% (3600/4) ) )
+# qposic        <- as.POSIXct(   ayear$quarter * (3600/4), origin = "1970-01-01" )
+#
+# # qDates     = aggregate(ayear$Date30, by = list(qposic), FUN = min)
+#
+# selectqua  <- list(ayear$quarter)
+#
+# qDates     <- aggregate(ayear$Date,       by = selectqua, FUN = min)
+#
+# qGlobal    <- aggregate(ayear$wattGLB,    by = selectqua, FUN = mean, na.rm = TRUE )
+# qGlobalCNT <- aggregate(ayear$wattGLB,    by = selectqua, FUN = function(x) sum(!is.na(x)) )
+# qGlobalSTD <- aggregate(ayear$wattGLB,    by = selectqua, FUN = sd,   na.rm = TRUE )
+#
+# qElevaMEAN <- aggregate(ayear$Eleva,      by = selectqua, FUN = mean, na.rm = TRUE )
+#
+# qGLstd     <- aggregate(ayear$wattGLB_SD, by = selectqua, FUN = mean, na.rm = TRUE )
+# qGLstdCNT  <- aggregate(ayear$wattGLB_SD, by = selectqua, FUN = function(x) sum(!is.na(x)) )
+# qGLstdSTD  <- aggregate(ayear$wattGLB_SD, by = selectqua, FUN = sd,   na.rm = TRUE )
+#
+# #### output of quarterly data #######################################
+# ayearquarter <- data.frame( Dates      = qDates$x,
+#                             qGlobal    = qGlobal$x,
+#                             qGlobalCNT = qGlobalCNT$x,
+#                             qGlobalSTD = qGlobalSTD$x,
+#                             qElevaMEAN = qElevaMEAN$x,
+#                             qGLstd     = qGLstd$x,
+#                             qGLstdCNT  = qGLstdCNT$x,
+#                             qGLstdSTD  = qGLstdSTD$x)
+#
+#
+# #### run on 4 quarters of every hour ################################
+# ayearquarter$hourly <- as.numeric( ayearquarter$Dates ) %/% 3600
+# hposic              <- as.POSIXct( ayearquarter$hourly * 3600, origin = "1970-01-01" )
+#
+# selecthour <- list(ayearquarter$hourly)
+#
+# hDates     <- aggregate( ayearquarter$Dates,   by = selecthour, FUN = min )
+#
+# hGlobal    <- aggregate( ayearquarter$qGlobal, by = selecthour, FUN = mean, na.rm = FALSE )  ## na.rm must be FALSE!
+# hGlobalCNT <- aggregate( ayearquarter$qGlobal, by = selecthour, FUN = function(x) sum(!is.na(x)))
+#
+#
