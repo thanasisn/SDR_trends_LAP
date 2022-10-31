@@ -6,6 +6,8 @@
 # file.remove(common_data)
 
 require(data.table)
+source("~/CODE/FUNCTIONS/R/trig_deg.R")
+source("~/CODE/FUNCTIONS/R/data.R")
 
 ####  Run data construction ####################################################
 
@@ -60,7 +62,7 @@ if ( havetorun ) {
     #' Keep data with Sun elevation above `r MIN_ELEVA`
     DATA <- DATA[ Elevat >= MIN_ELEVA, ]
 
-    #' ### Bais paper obstacle filtere
+    #' ### Bais paper obstacle filter
     DATA <- DATA[ ! (Azimuth > 35 & Azimuth < 120 & Elevat < 10) ]
     #+ echo=F, include=T
 
@@ -110,6 +112,7 @@ if ( havetorun ) {
     ## fix noon just in case
     DATA[ Azimuth <= 180 , preNoon := TRUE  ]
     DATA[ Azimuth >  180 , preNoon := FALSE ]
+
 
     #' ### Split data to Clear Sky and non Clear sky
     #' Method based and adapted to site from: Identification of Periods of Clear Sky
@@ -254,6 +257,69 @@ if ( havetorun ) {
         CLEAR_1_daily_seas[,GLB_att_EM_seas   :=qt(conf_param,df=GLB_att_N_seas -1)*GLB_att_sd_seas   /sqrt(GLB_att_N_seas)]
         CLEAR_1_daily_seas[,DIR_transp_EM_seas:=qt(conf_param,df=DIR_att_N_seas -1)*DIR_transp_sd_seas/sqrt(DIR_att_N_seas)]
     })
+
+
+    #### WRDC ? ####
+
+    ## add all minutes of the days
+    xlim      <- range(DATA_all$Date)
+    alldates  <- data.frame(Date = seq(xlim[1], xlim[2], by = "min"))
+
+    DATA_ALLQ <- merge( DATA_all, alldates, all = T )
+
+    Q_all <- DATA_ALLQ[,.(DIR_att_seas       = mean(DIR_att,    na.rm = TRUE),
+                          GLB_att_seas       = mean(GLB_att,    na.rm = TRUE),
+                          HOR_att_seas       = mean(HOR_att,    na.rm = TRUE),
+                          DIR_transp_seas    = mean(DIR_transp, na.rm = TRUE),
+                          DIR_att_sd_seas    = sd(  DIR_att,    na.rm = TRUE),
+                          HOR_att_sd_seas    = sd(  HOR_att,    na.rm = TRUE),
+                          GLB_att_sd_seas    = sd(  GLB_att,    na.rm = TRUE),
+                          DIR_transp_sd_seas = sd(  DIR_transp, na.rm = TRUE),
+                          GLB_att_N_seas     = sum(!is.na(GLB_att)),
+                          HOR_att_N_seas     = sum(!is.na(HOR_att)),
+                          DIR_att_N_seas     = sum(!is.na(DIR_att)),
+                          Elevat             = mean(Elevat,  na.rm = TRUE),
+                          Azimuth            = mean(Azimuth, na.rm = TRUE),
+                          SZA                = mean(SZA,     na.rm = TRUE)),
+                       by = .(Date = as.POSIXct(as.numeric(Date)%/%(3600/4)*(3600/4),
+                                                origin = "1970-01-01" ))
+    ]
+    rm(DATA_ALLQ)
+
+    DATA_CLEARQ <- merge( DATA_Clear, alldates, all = T )
+
+    Q_clear <- DATA_CLEARQ[,.(DIR_att_seas       = mean(DIR_att,    na.rm = TRUE),
+                              GLB_att_seas       = mean(GLB_att,    na.rm = TRUE),
+                              HOR_att_seas       = mean(HOR_att,    na.rm = TRUE),
+                              DIR_transp_seas    = mean(DIR_transp, na.rm = TRUE),
+                              DIR_att_sd_seas    = sd(  DIR_att,    na.rm = TRUE),
+                              HOR_att_sd_seas    = sd(  HOR_att,    na.rm = TRUE),
+                              GLB_att_sd_seas    = sd(  GLB_att,    na.rm = TRUE),
+                              DIR_transp_sd_seas = sd(  DIR_transp, na.rm = TRUE),
+                              GLB_att_N_seas     = sum(!is.na(GLB_att)),
+                              HOR_att_N_seas     = sum(!is.na(HOR_att)),
+                              DIR_att_N_seas     = sum(!is.na(DIR_att)),
+                              Elevat             = mean(Elevat,  na.rm = TRUE),
+                              Azimuth            = mean(Azimuth, na.rm = TRUE),
+                              SZA                = mean(SZA,     na.rm = TRUE)),
+                           by = .(Date = as.POSIXct(as.numeric(Date)%/%(3600/4)*(3600/4),
+                                                    origin = "1970-01-01" ))
+    ]
+    rm(DATA_CLEARQ)
+
+
+
+
+
+
+
+
+
+
+    stop()
+
+
+
 
 
 
@@ -605,9 +671,6 @@ if ( havetorun ) {
 
 # #### run on all quarter of the hour #####################################
 # ayear$quarter <- ((as.numeric( ayear$Date ) %/% (3600/4) ) )
-# qposic        <- as.POSIXct(   ayear$quarter * (3600/4), origin = "1970-01-01" )
-#
-# # qDates     = aggregate(ayear$Date30, by = list(qposic), FUN = min)
 #
 # selectqua  <- list(ayear$quarter)
 #
@@ -644,5 +707,5 @@ if ( havetorun ) {
 #
 # hGlobal    <- aggregate( ayearquarter$qGlobal, by = selecthour, FUN = mean, na.rm = FALSE )  ## na.rm must be FALSE!
 # hGlobalCNT <- aggregate( ayearquarter$qGlobal, by = selecthour, FUN = function(x) sum(!is.na(x)))
-#
-#
+
+
