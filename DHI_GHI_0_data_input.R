@@ -11,6 +11,28 @@ source("~/CODE/FUNCTIONS/R/data.R")
 
 ####  Run data construction ####################################################
 
+D_14 <- FALSE
+D_13 <- FALSE
+
+
+D_14 <- TRUE
+# D_13 <- TRUE
+
+
+## new implementation with corrected limits
+if (D_14) {
+    common_data <- common_data_14
+    inpatern    <- "Clear_sky_id_Reno-Hansen_apply_v14_[0-9]{4}.Rds"
+}
+
+## old implementation with corrected limits
+if (D_13) {
+    common_data <- common_data_13
+    inpatern    <- "Clear_Sky_[0-9]{4}.Rds"
+}
+
+
+
 ## check if we need to run data production
 havetorun <- !file.exists(common_data) |
     file.mtime(CS_file)          > file.mtime(common_data) |
@@ -19,17 +41,18 @@ havetorun <- !file.exists(common_data) |
     file.mtime(data_procsess_fl) > file.mtime(common_data)
 
 if ( havetorun ) {
-    cat(paste("\n !! (Re)Create environment and data input ->", common_data))
+    cat(paste("\n !! (Re)Create environment and data input ->", common_data),"\n")
 
     #### 0. Get data from Clear sky id data  ###################################
     input_files <- list.files( path       = CLEARdir,
-                               pattern    = "Clear_Sky_[0-9]{4}.Rds",
+                               pattern    = inpatern,
                                full.names = T )
 
     if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
         cat(paste("Load data from Clear Sky proccess from original\n"))
         DATA <- data.table()
         for (af in input_files) {
+            cat("READING:", af, "\n")
             temp <- readRDS(af)
             ## drop some data
             temp$CHP1temp        <- NULL
@@ -48,6 +71,11 @@ if ( havetorun ) {
             DATA <- rbind(temp, DATA, fill = TRUE)
             rm(temp)
         }
+
+
+
+
+        stop()
         ## this is used by old scripts
         setorder(DATA,Date)
         myRtools::write_RDS(object = DATA, file = CS_file)
