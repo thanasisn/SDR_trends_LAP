@@ -47,6 +47,7 @@ if ( havetorun ) {
     input_files <- list.files( path       = CLEARdir,
                                pattern    = inpatern,
                                full.names = T )
+    input_files <- grep("_stats_", input_files, value = TRUE, invert = TRUE)
 
     if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
         cat(paste("Load data from Clear Sky proccess from original\n"))
@@ -72,10 +73,6 @@ if ( havetorun ) {
             rm(temp)
         }
 
-
-
-
-        stop()
         ## this is used by old scripts
         setorder(DATA,Date)
         myRtools::write_RDS(object = DATA, file = CS_file)
@@ -101,7 +98,7 @@ if ( havetorun ) {
     DATA <- DATA[ Elevat >= MIN_ELEVA, ]
 
     #' ### Bais paper obstacle filter
-    DATA <- DATA[ ! (Azimuth > 35 & Azimuth < 120 & Elevat < 10) ]
+    DATA <- DATA[ !(Azimuth > 35 & Azimuth < 120 & Elevat < 10) ]
     #+ echo=F, include=T
 
     keepQF <- c("good","Possible Direct Obstruction (23)","Biology Building (22)")
@@ -115,7 +112,7 @@ if ( havetorun ) {
     # DATA[, QCF_GLB := NULL ]
 
 
-    DATA <- DATA[ ! (is.na(wattDIR) & is.na(wattGLB))  ]
+    DATA <- DATA[ !(is.na(wattDIR) & is.na(wattGLB)) ]
 
     #' ## Data preparation
     #' ### Move measurements to mean earth distance
