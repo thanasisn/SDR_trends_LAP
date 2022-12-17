@@ -5,9 +5,9 @@
 ---------------
 
 Object name:    object      
-Date written:   2022-12-17 00:12:59.9 UTC  
+Date written:   2022-12-17 06:49:34.8 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat      
-Data file size: 1.1 KiB (1087) 
+Data file size: 1.1 KiB (1078) 
 Size in memory: 4000 bytes      
 Info file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.inf.md      
 Script name:    /home/athan/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_1_longterm_trends.R      
@@ -21,14 +21,14 @@ Notes:          NA
 
 ```
 Classes ‘data.table’ and 'data.frame':	9 obs. of  8 variables:
- $ slope             : num  0.454 0.548 0.762 0.88 0.412 ...
- $ slope.sd          : num  0.737 0.137 0.805 0.266 0.042 ...
- $ slope.p           : num  5.38e-01 6.77e-05 3.44e-01 9.54e-04 1.28e-22 ...
- $ slope.ConfInt_0.95: num  1.4444 0.269 1.5795 0.5212 0.0823 ...
- $ slope.ConfInt_0.99: num  1.899 0.354 2.076 0.685 0.108 ...
+ $ slope             : num  0.555 0.542 0.888 0.865 0.421 ...
+ $ slope.sd          : num  0.737 0.138 0.808 0.268 0.042 ...
+ $ slope.p           : num  4.51e-01 8.99e-05 2.72e-01 1.29e-03 1.48e-23 ...
+ $ slope.ConfInt_0.95: num  1.4448 0.2706 1.5841 0.5261 0.0823 ...
+ $ slope.ConfInt_0.99: num  1.899 0.356 2.082 0.692 0.108 ...
  $ DATA              : chr  "ALL" "CLEAR" "ALL" "CLEAR" ...
  $ var               : chr  "DIR_att" "DIR_att" "DIR_transp" "DIR_transp" ...
- $ slope.stat_sig    : num  46.2 100 65.6 99.9 100 ...
+ $ slope.stat_sig    : num  54.9 100 72.8 99.9 100 ...
  - attr(*, ".internal.selfref")=<externalptr> 
 ```
 
@@ -46,23 +46,23 @@ Classes ‘data.table’ and 'data.frame':	9 obs. of  8 variables:
  Data Summary.
 ---------------
 
-|             slope |          slope.sd |           slope.p | slope.ConfInt_0.95 | slope.ConfInt_0.99 |
-|------------------:|------------------:|------------------:|-------------------:|-------------------:|
-| Min.   :-0.003042 | Min.   :0.0005336 | Min.   :0.0000000 |   Min.   :0.001046 |   Min.   :0.001375 |
-| 1st Qu.: 0.411779 | 1st Qu.:0.0419725 | 1st Qu.:0.0000000 |   1st Qu.:0.082274 |   1st Qu.:0.108134 |
-| Median : 0.548246 | Median :0.1905356 | Median :0.0009545 |   Median :0.373811 |   Median :0.491551 |
-| Mean   : 0.498589 | Mean   :0.3259327 | Mean   :0.1472724 |   Mean   :0.639208 |   Mean   :0.840359 |
-| 3rd Qu.: 0.616885 | 3rd Qu.:0.7363323 | 3rd Qu.:0.3444087 |   3rd Qu.:1.443947 |   3rd Qu.:1.898246 |
-| Max.   : 0.879750 | Max.   :0.8054378 | Max.   :0.5379018 |   Max.   :1.579463 |   Max.   :2.076399 |
+|             slope |          slope.sd |          slope.p | slope.ConfInt_0.95 | slope.ConfInt_0.99 |
+|------------------:|------------------:|-----------------:|-------------------:|-------------------:|
+| Min.   :-0.003042 | Min.   :0.0005336 | Min.   :0.000000 |   Min.   :0.001046 |   Min.   :0.001375 |
+| 1st Qu.: 0.421143 | 1st Qu.:0.0419956 | 1st Qu.:0.000000 |   1st Qu.:0.082320 |   1st Qu.:0.108194 |
+| Median : 0.555130 | Median :0.1916877 | Median :0.001287 |   Median :0.376071 |   Median :0.494523 |
+| Mean   : 0.534895 | Mean   :0.3268303 | Mean   :0.119880 |   Mean   :0.640969 |   Mean   :0.842673 |
+| 3rd Qu.: 0.684830 | 3rd Qu.:0.7367829 | 3rd Qu.:0.271569 |   3rd Qu.:1.444831 |   3rd Qu.:1.899408 |
+| Max.   : 0.888340 | Max.   :0.8077876 | Max.   :0.451257 |   Max.   :1.584071 |   Max.   :2.082456 |
 
  
 
 |             DATA |              var | slope.stat_sig |
 |-----------------:|-----------------:|---------------:|
-|         Length:9 |         Length:9 | Min.   : 46.21 |
-| Class :character | Class :character | 1st Qu.: 65.56 |
-| Mode  :character | Mode  :character | Median : 99.90 |
-|               NA |               NA | Mean   : 85.27 |
+|         Length:9 |         Length:9 | Min.   : 54.87 |
+| Class :character | Class :character | 1st Qu.: 72.84 |
+| Mode  :character | Mode  :character | Median : 99.87 |
+|               NA |               NA | Mean   : 88.01 |
 |               NA |               NA | 3rd Qu.:100.00 |
 |               NA |               NA | Max.   :100.00 |
 
@@ -73,35 +73,35 @@ Classes ‘data.table’ and 'data.frame':	9 obs. of  8 variables:
 
     |      Min. | 1st Qu. | Median |   Mean | 3rd Qu. |   Max. |
     |----------:|--------:|-------:|-------:|--------:|-------:|
-    | -0.003042 |  0.4118 | 0.5482 | 0.4986 |  0.6169 | 0.8797 |
+    | -0.003042 |  0.4211 | 0.5551 | 0.5349 |  0.6848 | 0.8883 |
 
   * **slope.sd**:
 
 
     |      Min. | 1st Qu. | Median |   Mean | 3rd Qu. |   Max. |
     |----------:|--------:|-------:|-------:|--------:|-------:|
-    | 0.0005336 | 0.04197 | 0.1905 | 0.3259 |  0.7363 | 0.8054 |
+    | 0.0005336 |   0.042 | 0.1917 | 0.3268 |  0.7368 | 0.8078 |
 
   * **slope.p**:
 
 
-    |      Min. |   1st Qu. |    Median |   Mean | 3rd Qu. |   Max. |
-    |----------:|----------:|----------:|-------:|--------:|-------:|
-    | 2.884e-38 | 1.234e-08 | 0.0009545 | 0.1473 |  0.3444 | 0.5379 |
+    |     Min. |   1st Qu. |   Median |   Mean | 3rd Qu. |   Max. |
+    |---------:|----------:|---------:|-------:|--------:|-------:|
+    | 2.98e-39 | 1.233e-08 | 0.001287 | 0.1199 |  0.2716 | 0.4513 |
 
   * **slope.ConfInt_0.95**:
 
 
-    |     Min. | 1st Qu. | Median |   Mean | 3rd Qu. |  Max. |
-    |---------:|--------:|-------:|-------:|--------:|------:|
-    | 0.001046 | 0.08227 | 0.3738 | 0.6392 |   1.444 | 1.579 |
+    |     Min. | 1st Qu. | Median |  Mean | 3rd Qu. |  Max. |
+    |---------:|--------:|-------:|------:|--------:|------:|
+    | 0.001046 | 0.08232 | 0.3761 | 0.641 |   1.445 | 1.584 |
 
   * **slope.ConfInt_0.99**:
 
 
     |     Min. | 1st Qu. | Median |   Mean | 3rd Qu. |  Max. |
     |---------:|--------:|-------:|-------:|--------:|------:|
-    | 0.001375 |  0.1081 | 0.4916 | 0.8404 |   1.898 | 2.076 |
+    | 0.001375 |  0.1082 | 0.4945 | 0.8427 |   1.899 | 2.082 |
 
   * **DATA**:
 
@@ -122,7 +122,7 @@ Classes ‘data.table’ and 'data.frame':	9 obs. of  8 variables:
 
     |  Min. | 1st Qu. | Median |  Mean | 3rd Qu. | Max. |
     |------:|--------:|-------:|------:|--------:|-----:|
-    | 46.21 |   65.56 |   99.9 | 85.27 |     100 |  100 |
+    | 54.87 |   72.84 |  99.87 | 88.01 |     100 |  100 |
 
 
 <!-- end of list -->
