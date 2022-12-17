@@ -127,6 +127,8 @@ clean_pdfs:
 
 clean_data:
 	rm -f    ./data/common_data.Rds
+	rm -f    ./data/common_data_13.Rds
+	rm -f    ./data/common_data_14.Rds
 	
 
 
