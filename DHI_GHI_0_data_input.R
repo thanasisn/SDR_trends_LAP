@@ -22,12 +22,14 @@ D_14 <- TRUE
 ## new implementation with corrected limits
 if (D_14) {
     common_data <- common_data_14
+    CS_file     <- CS_file_14
     inpatern    <- "Clear_sky_id_Reno-Hansen_apply_v14_[0-9]{4}.Rds"
 }
 
 ## old implementation with corrected limits
 if (D_13) {
     common_data <- common_data_13
+    CS_file     <- CS_file_13
     inpatern    <- "Clear_Sky_[0-9]{4}.Rds"
 }
 
@@ -101,16 +103,23 @@ if ( havetorun ) {
     DATA <- DATA[ !(Azimuth > 35 & Azimuth < 120 & Elevat < 10) ]
     #+ echo=F, include=T
 
-    keepQF <- c("good","Possible Direct Obstruction (23)","Biology Building (22)")
-    #' ### Keep only data characterized as 'good' by the Radiation Quality control procedure
-    #' Keep data marked as `r cat(paste(keepQF,collapse = ", "))`.
-    #+ echo=F, include=T
-    DATA[ ! QCF_DIR %in% keepQF, wattDIR := NA ]
-    DATA[ ! QCF_DIR %in% keepQF, wattHOR := NA ]
-    DATA[ ! QCF_DIR %in% keepQF, wattGLB := NA ]
-    # DATA[, QCF_DIR := NULL ]
-    # DATA[, QCF_GLB := NULL ]
+    if (D_13) {
+        keepQF <- c("good","Possible Direct Obstruction (23)","Biology Building (22)")
+        #' ### Keep only data characterized as 'good' by the Radiation Quality control procedure v13
+        #' Keep data marked as `r cat(paste(keepQF,collapse = ", "))`.
+        #+ echo=F, include=T
+        DATA[ ! QCF_DIR %in% keepQF, wattDIR := NA ]
+        DATA[ ! QCF_DIR %in% keepQF, wattHOR := NA ]
+        DATA[ ! QCF_GLB %in% keepQF, wattGLB := NA ]
+    }
 
+    if (D_14) {
+        #' ### Keep only data characterized as 'TRUE' by the Radiation Quality control procedure v14
+        #+ echo=F, include=T
+        DATA[ QCF_DIR == FALSE, wattDIR := NA ]
+        DATA[ QCF_DIR == FALSE, wattHOR := NA ]
+        DATA[ QCF_GLB == FALSE, wattGLB := NA ]
+    }
 
     DATA <- DATA[ !(is.na(wattDIR) & is.na(wattGLB)) ]
 
@@ -745,21 +754,16 @@ if ( havetorun ) {
 
 
 
-
-
-
-
     ## remove unwanted data frames from memory
     rm(DATA_all)
     rm(DATA_Clear)
 
-    ## save the whole work space
+    ####  save the whole work space  ####
     save(list = ls(all = TRUE),file = common_data)
 } else {
     cat(paste("\n\nLoad environment and data from: ", common_data,"\n\n"))
     load( file = common_data)
 }
-
 
 
 
@@ -802,5 +806,4 @@ if ( havetorun ) {
 #
 # hGlobal    <- aggregate( ayearquarter$qGlobal, by = selecthour, FUN = mean, na.rm = FALSE )  ## na.rm must be FALSE!
 # hGlobalCNT <- aggregate( ayearquarter$qGlobal, by = selecthour, FUN = function(x) sum(!is.na(x)))
-
 

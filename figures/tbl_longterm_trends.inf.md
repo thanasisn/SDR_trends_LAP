@@ -5,10 +5,10 @@
 ---------------
 
 Object name:    object      
-Date written:   2022-10-31 18:36:19.1 UTC  
+Date written:   2022-12-16 23:58:03.5 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat      
-Data file size: 1.1 KiB (1096) 
-Size in memory: 4000 bytes      
+Data file size: 1.1 KiB (1087) 
+Size in memory: 4000.0 B      
 Info file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.inf.md      
 Script name:    /home/athan/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_1_longterm_trends.R      
 User@Host:      athan@sagan   
@@ -21,14 +21,14 @@ Notes:          NA
 
 ```
 Classes ‘data.table’ and 'data.frame':	9 obs. of  8 variables:
- $ slope             : num  0.0348 0.0936 0.3572 -0.4573 0.4291 ...
- $ slope.sd          : num  0.8812 0.1704 0.9672 0.3427 0.0433 ...
- $ slope.p           : num  9.69e-01 5.83e-01 7.12e-01 1.82e-01 4.61e-23 ...
- $ slope.ConfInt_0.95: num  1.7282 0.3343 1.8967 0.6724 0.0848 ...
- $ slope.ConfInt_0.99: num  2.272 0.44 2.494 0.884 0.111 ...
+ $ slope             : num  0.454 0.548 0.762 0.88 0.412 ...
+ $ slope.sd          : num  0.737 0.137 0.805 0.266 0.042 ...
+ $ slope.p           : num  5.38e-01 6.77e-05 3.44e-01 9.54e-04 1.28e-22 ...
+ $ slope.ConfInt_0.95: num  1.4444 0.269 1.5795 0.5212 0.0823 ...
+ $ slope.ConfInt_0.99: num  1.899 0.354 2.076 0.685 0.108 ...
  $ DATA              : chr  "ALL" "CLEAR" "ALL" "CLEAR" ...
  $ var               : chr  "DIR_att" "DIR_att" "DIR_transp" "DIR_transp" ...
- $ slope.stat_sig    : num  3.15 41.72 28.81 81.77 100 ...
+ $ slope.stat_sig    : num  46.2 100 65.6 99.9 100 ...
  - attr(*, ".internal.selfref")=<externalptr> 
 ```
 
@@ -46,62 +46,62 @@ Classes ‘data.table’ and 'data.frame':	9 obs. of  8 variables:
  Data Summary.
 ---------------
 
-|             slope |          slope.sd |        slope.p | slope.ConfInt_0.95 | slope.ConfInt_0.99 |
-|------------------:|------------------:|---------------:|-------------------:|-------------------:|
-| Min.   :-0.457304 | Min.   :0.0005455 | Min.   :0.0000 |   Min.   :0.001069 |   Min.   :0.001405 |
-| 1st Qu.:-0.005667 | 1st Qu.:0.0432770 | 1st Qu.:0.0000 |   1st Qu.:0.084832 |   1st Qu.:0.111495 |
-| Median : 0.093608 | Median :0.2507956 | Median :0.1823 |   Median :0.492110 |   Median :0.647168 |
-| Mean   : 0.054320 | Mean   :0.3956332 | Mean   :0.3782 |   Mean   :0.775964 |   Mean   :1.020198 |
-| 3rd Qu.: 0.243554 | 3rd Qu.:0.8812428 | 3rd Qu.:0.7119 |   3rd Qu.:1.728208 |   3rd Qu.:2.272013 |
-| Max.   : 0.429060 | Max.   :0.9671739 | Max.   :0.9685 |   Max.   :1.896728 |   Max.   :2.493560 |
+|             slope |          slope.sd |           slope.p | slope.ConfInt_0.95 | slope.ConfInt_0.99 |
+|------------------:|------------------:|------------------:|-------------------:|-------------------:|
+| Min.   :-0.003042 | Min.   :0.0005336 | Min.   :0.0000000 |   Min.   :0.001046 |   Min.   :0.001375 |
+| 1st Qu.: 0.411779 | 1st Qu.:0.0419725 | 1st Qu.:0.0000000 |   1st Qu.:0.082274 |   1st Qu.:0.108134 |
+| Median : 0.548246 | Median :0.1905356 | Median :0.0009545 |   Median :0.373811 |   Median :0.491551 |
+| Mean   : 0.498589 | Mean   :0.3259327 | Mean   :0.1472724 |   Mean   :0.639208 |   Mean   :0.840359 |
+| 3rd Qu.: 0.616885 | 3rd Qu.:0.7363323 | 3rd Qu.:0.3444087 |   3rd Qu.:1.443947 |   3rd Qu.:1.898246 |
+| Max.   : 0.879750 | Max.   :0.8054378 | Max.   :0.5379018 |   Max.   :1.579463 |   Max.   :2.076399 |
 
  
 
-|             DATA |              var |  slope.stat_sig |
-|-----------------:|-----------------:|----------------:|
-|         Length:9 |         Length:9 | Min.   :  3.145 |
-| Class :character | Class :character | 1st Qu.: 28.811 |
-| Mode  :character | Mode  :character | Median : 81.770 |
-|               NA |               NA | Mean   : 62.177 |
-|               NA |               NA | 3rd Qu.:100.000 |
-|               NA |               NA | Max.   :100.000 |
+|             DATA |              var | slope.stat_sig |
+|-----------------:|-----------------:|---------------:|
+|         Length:9 |         Length:9 | Min.   : 46.21 |
+| Class :character | Class :character | 1st Qu.: 65.56 |
+| Mode  :character | Mode  :character | Median : 99.90 |
+|               NA |               NA | Mean   : 85.27 |
+|               NA |               NA | 3rd Qu.:100.00 |
+|               NA |               NA | Max.   :100.00 |
 
 
 
   * **slope**:
 
 
-    |    Min. |   1st Qu. |  Median |    Mean | 3rd Qu. |   Max. |
-    |--------:|----------:|--------:|--------:|--------:|-------:|
-    | -0.4573 | -0.005667 | 0.09361 | 0.05432 |  0.2436 | 0.4291 |
+    |      Min. | 1st Qu. | Median |   Mean | 3rd Qu. |   Max. |
+    |----------:|--------:|-------:|-------:|--------:|-------:|
+    | -0.003042 |  0.4118 | 0.5482 | 0.4986 |  0.6169 | 0.8797 |
 
   * **slope.sd**:
 
 
     |      Min. | 1st Qu. | Median |   Mean | 3rd Qu. |   Max. |
     |----------:|--------:|-------:|-------:|--------:|-------:|
-    | 0.0005455 | 0.04328 | 0.2508 | 0.3956 |  0.8812 | 0.9672 |
+    | 0.0005336 | 0.04197 | 0.1905 | 0.3259 |  0.7363 | 0.8054 |
 
   * **slope.p**:
 
 
-    |     Min. |   1st Qu. | Median |   Mean | 3rd Qu. |   Max. |
-    |---------:|----------:|-------:|-------:|--------:|-------:|
-    | 9.25e-28 | 4.614e-23 | 0.1823 | 0.3782 |  0.7119 | 0.9685 |
+    |      Min. |   1st Qu. |    Median |   Mean | 3rd Qu. |   Max. |
+    |----------:|----------:|----------:|-------:|--------:|-------:|
+    | 2.884e-38 | 1.234e-08 | 0.0009545 | 0.1473 |  0.3444 | 0.5379 |
 
   * **slope.ConfInt_0.95**:
 
 
-    |     Min. | 1st Qu. | Median |  Mean | 3rd Qu. |  Max. |
-    |---------:|--------:|-------:|------:|--------:|------:|
-    | 0.001069 | 0.08483 | 0.4921 | 0.776 |   1.728 | 1.897 |
+    |     Min. | 1st Qu. | Median |   Mean | 3rd Qu. |  Max. |
+    |---------:|--------:|-------:|-------:|--------:|------:|
+    | 0.001046 | 0.08227 | 0.3738 | 0.6392 |   1.444 | 1.579 |
 
   * **slope.ConfInt_0.99**:
 
 
-    |     Min. | 1st Qu. | Median | Mean | 3rd Qu. |  Max. |
-    |---------:|--------:|-------:|-----:|--------:|------:|
-    | 0.001405 |  0.1115 | 0.6472 | 1.02 |   2.272 | 2.494 |
+    |     Min. | 1st Qu. | Median |   Mean | 3rd Qu. |  Max. |
+    |---------:|--------:|-------:|-------:|--------:|------:|
+    | 0.001375 |  0.1081 | 0.4916 | 0.8404 |   1.898 | 2.076 |
 
   * **DATA**:
 
@@ -122,7 +122,7 @@ Classes ‘data.table’ and 'data.frame':	9 obs. of  8 variables:
 
     |  Min. | 1st Qu. | Median |  Mean | 3rd Qu. | Max. |
     |------:|--------:|-------:|------:|--------:|-----:|
-    | 3.145 |   28.81 |  81.77 | 62.18 |     100 |  100 |
+    | 46.21 |   65.56 |   99.9 | 85.27 |     100 |  100 |
 
 
 <!-- end of list -->

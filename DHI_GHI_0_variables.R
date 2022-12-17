@@ -17,7 +17,8 @@ translate <- function(...) as.vector(unlist(dict[c(...) == names(dict)]))
 #### paths ####
 CLEARdir                 <- "~/DATA/Broad_Band/CS_id"
 tag                      <- paste0("Natsis Athanasios LAP AUTH ", strftime(Sys.time(), format = "%b %Y" ))
-CS_file                  <- "~/DATA/Common_application/Clear_Sky.Rds"
+CS_file_13               <- "~/DATA/Common_application/Clear_Sky_13.Rds"
+CS_file_14               <- "~/DATA/Common_application/Clear_Sky_14.Rds"
 common_data_13           <- "~/MANUSCRIPTS/2022_sdr_trends/data/common_data_13.Rds"
 common_data_14           <- "~/MANUSCRIPTS/2022_sdr_trends/data/common_data_14.Rds"
 variables_fl             <- "~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R"
