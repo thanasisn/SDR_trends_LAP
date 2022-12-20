@@ -95,6 +95,12 @@ if ( havetorun ) {
 
     #### 0. Process data for this project  #####################################
 
+    #' ### Set data range to use
+    #' We set the last day of the data the ***`r print(LAST_DAY)`**
+    #+ echo=F, include=T
+    DATA <- DATA[ as.Date(Date) < LAST_DAY  ]
+    DATA <- DATA[ as.Date(Date) > FIRST_DAY ]
+
     #' ### Filter min elevation
     #' Keep data with Sun elevation above `r MIN_ELEVA`
     DATA <- DATA[ Elevat >= MIN_ELEVA, ]
@@ -105,7 +111,7 @@ if ( havetorun ) {
 
     if (D_13) {
         keepQF <- c("good","Possible Direct Obstruction (23)","Biology Building (22)")
-        #' ### Keep only data characterized as 'good' by the Radiation Quality control procedure v13
+        #' ### Keep only data characterized as 'good' by the Radiation Quality control procedure **v13**
         #' Keep data marked as `r cat(paste(keepQF,collapse = ", "))`.
         #+ echo=F, include=T
         DATA[ ! QCF_DIR %in% keepQF, wattDIR := NA ]
@@ -114,7 +120,7 @@ if ( havetorun ) {
     }
 
     if (D_14) {
-        #' ### Keep only data characterized as 'TRUE' by the Radiation Quality control procedure v14
+        #' ### Keep only data characterized as 'TRUE' by the Radiation Quality control procedure **v14**
         #+ echo=F, include=T
         DATA[ QCF_DIR == FALSE, wattDIR := NA ]
         DATA[ QCF_DIR == FALSE, wattHOR := NA ]

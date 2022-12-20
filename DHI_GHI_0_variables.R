@@ -13,8 +13,12 @@ dict <- list(DIR_att    = 'Dir. Beam Irrad.',
 ## function to translate objects names
 translate <- function(...) as.vector(unlist(dict[c(...) == names(dict)]))
 
+#### Data range ####
+## will not include the last/first day
+LAST_DAY                 <- as.Date("2022-07-01")
+FIRST_DAY                <- as.Date("1900-07-01")
 
-#### paths ####
+#### Paths ####
 CLEARdir                 <- "~/DATA/Broad_Band/CS_id"
 tag                      <- paste0("Natsis Athanasios LAP AUTH ", strftime(Sys.time(), format = "%b %Y" ))
 CS_file_13               <- "~/DATA/Common_application/Clear_Sky_13.Rds"
