@@ -45,9 +45,9 @@
 
 #+ echo=F, include=F
 knitr::opts_chunk$set(comment    = ""      )
-knitr::opts_chunk$set(dev        = "pdf"   )
-# knitr::opts_chunk$set(dev        = "png"    )
-knitr::opts_chunk$set(out.width  = "85%"   )
+# knitr::opts_chunk$set(dev        = "pdf"   )
+knitr::opts_chunk$set(dev        = "png"    )
+knitr::opts_chunk$set(out.width  = "100%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
 knitr::opts_chunk$set(cache      =  T       )
 # knitr::opts_chunk$set(fig.pos    = '!h'    )
@@ -118,6 +118,7 @@ options(error = function() {
 
 #+ echo=F, include=F
 ## ~ Plots all data  ####
+par("mar" = c(4,4,3,3))
 
 data_list  <- list(ALL   = ALL_1_daily_mean,
                    CLEAR = CLEAR_1_daily_mean)
@@ -134,7 +135,7 @@ for(i in 1:length(data_list)) {
             plot(Dplot[[xvar]], vect,
                  pch = ".", col = col,
                  main = paste(names(data_list[i]), yvar),
-                 xlab = xvar, ylab = yvar)
+                 xlab = xvar, ylab = yvar )
         }
     }
 }
