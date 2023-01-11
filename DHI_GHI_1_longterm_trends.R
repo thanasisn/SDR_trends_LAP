@@ -118,13 +118,14 @@ options(error = function() {
 
 #+ echo=F, include=F
 ## ~ Plots all data  ####
-par("mar" = c(4,4,3,3))
+
 
 data_list  <- list(ALL   = ALL_1_daily_mean,
                    CLEAR = CLEAR_1_daily_mean)
 by_var     <- c("Date","doy")
 wecare     <- unique(unlist(lapply(data_list, names)))
 wecare     <- grep(paste0(by_var,collapse = "|"), wecare, invert = T, value = T)
+## plot data
 for(i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (xvar in by_var){
@@ -139,16 +140,17 @@ for(i in 1:length(data_list)) {
         }
     }
 }
+#### plot histograms ####
 for(i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
-      # intersect(names(Dplot),wecare)
-        for (yvar in wecare) {
-            if (! yvar %in% names(Dplot)) next()
-            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-            vect <- Dplot[[yvar]]
-            hist(vect,
-                 main = paste(names(data_list[i]), yvar),
-                 breaks = 100, col = col)
+    # intersect(names(Dplot),wecare)
+    for (yvar in wecare) {
+        if (! yvar %in% names(Dplot)) next()
+        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+        vect <- Dplot[[yvar]]
+        hist(vect,
+             main = paste(names(data_list[i]), yvar),
+             breaks = 100, col = col)
     }
 }
 
@@ -254,18 +256,21 @@ for (DBn in dbs) {
             lm1        <- lm( dataset[[avar]] ~ dataset$Date )
 
             ## plot
+            par("mar" = c(3,4,2,1))
+
             plot(dataset$Date, dataset[[avar]],
                  pch  = ".", col = get(paste0("col_",avar)),
+                 cex  = 2,
                  xlab = "",
                  ylab = bquote("Seasonal Anomaly [%]" ) )
             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
-            abline(lm1)
+            abline(lm1, lwd = 2)
 
             ## decorations
             fit <- lm1[[1]]
-            legend('top', lty = 1, bty = "n",
+            legend('top', lty = 1, bty = "n", lwd = 2, cex = 2,
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-            title(paste(translate(sub("_.*","",DBn)),translate(avar)), cex=0.7)
+            title(paste(translate(sub("_.*","",DBn)),translate(avar)), main.cex = 0.7)
     }
 }
 #+ echo=F, include=F
@@ -287,18 +292,21 @@ for (DBn in dbs) {
         lm1        <- lm( dataset[[avar]] ~ dataset$Date )
 
         ## plot
+        par("mar" = c(3,4,2,1))
+
         plot(dataset$Date, dataset[[avar]],
              pch  = ".", col = get(paste0("col_",avar)),
+             cex  = 2,
              xlab = "",
              ylab = bquote("Seasonal Anomaly [%]" ) )
              # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
-        abline(lm1)
+        abline(lm1, lwd = 2)
 
         ## decorations
         fit <- lm1[[1]]
-        legend('top', lty = 1, bty = "n",
+        legend('top', lty = 1, bty = "n", lwd = 2, cex = 2,
                paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-        title(paste(translate(sub("_.*","",DBn)),translate(avar)), cex=0.7)
+        title(paste(translate(sub("_.*","",DBn)),translate(avar)), main.cex = 0.7)
     }
 }
 #+ echo=F, include=F
