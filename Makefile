@@ -36,21 +36,25 @@ RMD    = $(TARGET).R
 PDF    = $(TARGET).pdf
 SLIDY  = $(TARGET).html
 RUNT   = ./runtime/$(TARGET).pdf
-FIGDIR = $(TARGET)_files/figure-latex/
-p1: $(PDF)
+
+p1: $(PDF) 
 $(PDF): $(RMD)
 	@echo ""
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
+	cp -r ${TARGET}_files "../presentations/LAP_GHI/images"
 #	setsid evince    $@ &
+
 h1: $(SLIDY)
 $(SLIDY): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Building: $@"
 	@echo "Changed:  $?"
+	cp -r ${TARGET}_files "../presentations/LAP_GHI/images"
 	# setsid mimeopen  $@ &
+
 r1: $(RUNT)
 $(RUNT): $(RMD)
 	-Rscript $?
@@ -62,6 +66,7 @@ RMD    = $(TARGET).R
 PDF    = $(TARGET).pdf
 SLIDY  = $(TARGET).html
 RUNT   = ./runtime/$(TARGET).pdf
+
 p2: $(PDF)
 $(PDF): $(RMD)
 	@echo ""
@@ -70,12 +75,14 @@ $(PDF): $(RMD)
 	-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
 #	setsid evince    $@ &
+
 h2: $(SLIDY)
 $(SLIDY): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Building: $@"
 	@echo "Changed:  $?"
 	# setsid mimeopen  $@ &
+
 r2: $(RUNT)
 $(RUNT): $(RMD)
 	-Rscript $?
@@ -89,6 +96,7 @@ RMD    = $(TARGET).R
 PDF    = $(TARGET).pdf
 SLIDY  = $(TARGET).html
 RUNT   = ./runtime/$(TARGET).pdf
+
 p3: $(PDF)
 $(PDF): $(RMD)
 	@echo ""
@@ -97,12 +105,14 @@ $(PDF): $(RMD)
 	-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
 #	setsid evince    $@ &
+
 h3: $(SLIDY)
 $(SLIDY): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Building: $@"
 	@echo "Changed:  $?"
 	# setsid mimeopen  $@ &
+
 r3: $(RUNT)
 $(RUNT): $(RMD)
 	-Rscript $?
