@@ -31,11 +31,11 @@ $(SLIDY): $(RMD)
 
 
 ###   1. DHI_GHI_longterm_trends
-TARGET = DHI_GHI_1_longterm_trends
-RMD    = $(TARGET).R
-PDF    = $(TARGET).pdf
-SLIDY  = $(TARGET).html
-RUNT   = ./runtime/$(TARGET).pdf
+TARGET := DHI_GHI_1_longterm_trends
+RMD    := $(TARGET).R
+PDF    := $(TARGET).pdf
+SLIDY  := $(TARGET).html
+RUNT   := ./runtime/$(TARGET).pdf
 
 p1: $(PDF) 
 $(PDF): $(RMD)
@@ -44,7 +44,7 @@ $(PDF): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
-	cp -r ${TARGET}_files "../presentations/LAP_GHI/images"
+	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
 #	setsid evince    $@ &
 
 h1: $(SLIDY)
@@ -52,7 +52,7 @@ $(SLIDY): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Building: $@"
 	@echo "Changed:  $?"
-	cp -r ${TARGET}_files "../presentations/LAP_GHI/images"
+	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
 	# setsid mimeopen  $@ &
 
 r1: $(RUNT)
@@ -61,11 +61,11 @@ $(RUNT): $(RMD)
 
 
 ###   2. DHI_GHI_sza_trends
-TARGET = DHI_GHI_2_sza_trends
-RMD    = $(TARGET).R
-PDF    = $(TARGET).pdf
-SLIDY  = $(TARGET).html
-RUNT   = ./runtime/$(TARGET).pdf
+TARGET := DHI_GHI_2_sza_trends
+RMD    := $(TARGET).R
+PDF    := $(TARGET).pdf
+SLIDY  := $(TARGET).html
+RUNT   := ./runtime/$(TARGET).pdf
 
 p2: $(PDF)
 $(PDF): $(RMD)
@@ -74,6 +74,7 @@ $(PDF): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
+	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
 #	setsid evince    $@ &
 
 h2: $(SLIDY)
@@ -81,6 +82,7 @@ $(SLIDY): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Building: $@"
 	@echo "Changed:  $?"
+	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
 	# setsid mimeopen  $@ &
 
 r2: $(RUNT)
@@ -91,11 +93,11 @@ $(RUNT): $(RMD)
 
 
 ###   3. DHI_GHI_trends_consistency
-TARGET = DHI_GHI_3_trends_consistency
-RMD    = $(TARGET).R
-PDF    = $(TARGET).pdf
-SLIDY  = $(TARGET).html
-RUNT   = ./runtime/$(TARGET).pdf
+TARGET := DHI_GHI_3_trends_consistency
+RMD    := $(TARGET).R
+PDF    := $(TARGET).pdf
+SLIDY  := $(TARGET).html
+RUNT   := ./runtime/$(TARGET).pdf
 
 p3: $(PDF)
 $(PDF): $(RMD)
@@ -104,6 +106,7 @@ $(PDF): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
+	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
 #	setsid evince    $@ &
 
 h3: $(SLIDY)
@@ -111,6 +114,7 @@ $(SLIDY): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Building: $@"
 	@echo "Changed:  $?"
+	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
 	# setsid mimeopen  $@ &
 
 r3: $(RUNT)
