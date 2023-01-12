@@ -8,7 +8,7 @@ html:      h1 h2 h3 Ah
 rtim:      r1 r2 r3
 clean_all: clean_cache clean_data clean_pdfs
 
-
+presentation = "../presentations/2023-01-18_LAP_GHI_trends/"
 
 ###      Article
 TARGET = Article
@@ -44,9 +44,9 @@ $(PDF): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
-	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
-	@mkdir -p "../presentations/LAP_GHI/figures/"
-	@cp -u "./figures/"*".dat" "../presentations/LAP_GHI/figures/"
+	@cp -r -u "$(basename $?)_files" "$(presentation)/images"
+	@mkdir -p                        "$(presentation)/figures/"
+	@cp -u "./figures/"*".dat"       "$(presentation)/figures/"
 #	setsid evince    $@ &
 
 h1: $(SLIDY)
@@ -54,17 +54,17 @@ $(SLIDY): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Building: $@"
 	@echo "Changed:  $?"
-	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
-	@mkdir -p "../presentations/LAP_GHI/figures/"
-	@cp -u "./figures/"*".dat" "../presentations/LAP_GHI/figures/"
+	@cp -r -u "$(basename $?)_files" "$(presentation)/images"
+	@mkdir -p                        "$(presentation)/figures/"
+	@cp -u "./figures/"*".dat"       "$(presentation)/figures/"
 	# setsid mimeopen  $@ &
 
 r1: $(RUNT)
 $(RUNT): $(RMD)
 	-Rscript $?
-	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
-	@mkdir -p "../presentations/LAP_GHI/figures/"
-	@cp -u "./figures/"*".dat" "../presentations/LAP_GHI/figures/"
+	@cp -r -u "$(basename $?)_files" "$(presentation)/images"
+	@mkdir -p                        "$(presentation)/figures/"
+	@cp -u "./figures/"*".dat"       "$(presentation)/figures/"
 
 
 ###   2. DHI_GHI_sza_trends
@@ -81,7 +81,6 @@ $(PDF): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
-	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
 #	setsid evince    $@ &
 
 h2: $(SLIDY)
@@ -89,7 +88,6 @@ $(SLIDY): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Building: $@"
 	@echo "Changed:  $?"
-	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
 	# setsid mimeopen  $@ &
 
 r2: $(RUNT)
@@ -113,7 +111,6 @@ $(PDF): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
-	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
 #	setsid evince    $@ &
 
 h3: $(SLIDY)
@@ -121,7 +118,6 @@ $(SLIDY): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Building: $@"
 	@echo "Changed:  $?"
-	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
 	# setsid mimeopen  $@ &
 
 r3: $(RUNT)
@@ -129,9 +125,6 @@ $(RUNT): $(RMD)
 	-Rscript $?
 
 
-data_copy: p1 h1 r1
-	mkdir -p "../presentations/LAP_GHI/figures/"
-	cp -u "./figures/"*".dat" "../presentations/LAP_GHI/figures/"
 
 
 clean_cache:
