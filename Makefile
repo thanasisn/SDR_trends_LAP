@@ -45,6 +45,8 @@ $(PDF): $(RMD)
 	-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
 	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
+	@mkdir -p "../presentations/LAP_GHI/figures/"
+	@cp -u "./figures/"*".dat" "../presentations/LAP_GHI/figures/"
 #	setsid evince    $@ &
 
 h1: $(SLIDY)
@@ -53,11 +55,16 @@ $(SLIDY): $(RMD)
 	@echo "Building: $@"
 	@echo "Changed:  $?"
 	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
+	@mkdir -p "../presentations/LAP_GHI/figures/"
+	@cp -u "./figures/"*".dat" "../presentations/LAP_GHI/figures/"
 	# setsid mimeopen  $@ &
 
 r1: $(RUNT)
 $(RUNT): $(RMD)
 	-Rscript $?
+	@cp -r -u "$(basename $?)_files" "../presentations/LAP_GHI/images"
+	@mkdir -p "../presentations/LAP_GHI/figures/"
+	@cp -u "./figures/"*".dat" "../presentations/LAP_GHI/figures/"
 
 
 ###   2. DHI_GHI_sza_trends
@@ -120,6 +127,11 @@ $(SLIDY): $(RMD)
 r3: $(RUNT)
 $(RUNT): $(RMD)
 	-Rscript $?
+
+
+data_copy: p1 h1 r1
+	mkdir -p "../presentations/LAP_GHI/figures/"
+	cp -u "./figures/"*".dat" "../presentations/LAP_GHI/figures/"
 
 
 clean_cache:
