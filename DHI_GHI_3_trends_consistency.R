@@ -240,6 +240,7 @@ CLEAR_3_monthly_daily_DEseas[,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) 
 CLEAR_3_monthly_daily_DEseas[,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
 #+ echo=F, include=F
 
+## change flag names
 ALL_3_monthly_DEseas[   preNoon == TRUE,    preNoon := "am"    ]
 ALL_3_monthly_DEseas[   preNoon == FALSE,   preNoon := "pm"    ]
 ALL_3_monthly_DEseas[   preNoon == "Daily", preNoon := "am+pm" ]
@@ -248,9 +249,9 @@ CLEAR_3_monthly_DEseas[ preNoon == "Daily", preNoon := "am+pm" ]
 CLEAR_3_monthly_DEseas[ preNoon == TRUE,    preNoon := "am"    ]
 
 
-setorder(ALL_3_monthly_DEseas,  Year,Month,preNoon,SZA)
-setorder(CLEAR_3_monthly_DEseas,Year,Month,preNoon,SZA)
-setorder(ALL_3_monthly_daily_DEseas,Year,Month)
+setorder(ALL_3_monthly_DEseas,        Year,Month,preNoon,SZA)
+setorder(CLEAR_3_monthly_DEseas,      Year,Month,preNoon,SZA)
+setorder(ALL_3_monthly_daily_DEseas,  Year,Month)
 setorder(CLEAR_3_monthly_daily_DEseas,Year,Month)
 
 
@@ -263,6 +264,8 @@ CLEAR_3_monthly_daily_DEseas[ is.na(DIR_transp), DIR_transp := 0 ]
 
 ALL_3_monthly_daily_cumsum   <- ALL_3_monthly_daily_DEseas
 CLEAR_3_monthly_daily_cumsum <- CLEAR_3_monthly_daily_DEseas
+
+## plot before cumulativ sum
 
 
 ALL_3_monthly_daily_cumsum[,   GLB_att    := cumsum(GLB_att)]
@@ -325,9 +328,9 @@ CLEAR_3_monthly_daily_cumsum[,FDate := as.Date(paste(Year, Month, 1), "%Y %m %d"
 plotsza     <- c( 63 )
 # plotpreNoon <- c("am","pm","am+pm", "daily")
 plotpreNoon <- c("am","pm","daily")
-plotpNcol   <- c(2,4,6,7)
+plotpNcol   <- c(2,3,4,5)
 vars        <- c("GLB_att", "DIR_att", "DIR_transp")
-database    <- c("ALL_3_monthly_cumsum","CLEAR_3_monthly_cumsum")
+database    <- c("ALL_3_monthly_cumsum", "CLEAR_3_monthly_cumsum")
 
 #+ cumulativesums, echo=F, include=T
 for (adb in database) {
@@ -335,28 +338,31 @@ for (adb in database) {
     DB2 <- get(paste0(sub("_.*","",adb),"_3_monthly_daily_cumsum"))
     for (asza in plotsza) {
         for (avar in vars) {
-            wcare <- c("FDate","preNoon",avar)
+            wcare <- c("FDate", "preNoon", avar)
             pdb   <- DB[ SZA == asza ]
             pdb   <- pdb[, ..wcare]
             # pdb   <- pdb[!is.na(pdb[[avar]])]
             xlim  <- range(pdb$FDate,DB2$FDate)
             ylim  <- range(pdb[[avar]],DB2[[avar]],na.rm = T)
 
+            par("mar" = c(3,4,2,1))
+
             plot(1, type="n", xlab="", ylab="", xlim=xlim, ylim=ylim, xaxt = "n")
             axis.Date(1, pdb$FDate)
             abline(h=0, lty = 2, lwd=0.8)
 
+            ## for a sza
             for (i in 1:length(plotpreNoon) ) {
                 pp <- pdb[preNoon==plotpreNoon[i]]
                 lines(pp$FDate, pp[[avar]], col = plotpNcol[i])
             }
-
-            lines(DB2$FDate, DB2[[avar]], col = plotpNcol[4])
+            ## daily from other DT
+            lines(DB2$FDate, DB2[[avar]], col = plotpNcol[3])
 
             legend("top", legend = plotpreNoon, col = plotpNcol,
                    lty = 1, bty = "n", ncol = 3,cex = 0.8)
 
-            title(paste(sub("_.*","",adb), "cumulative sum", asza, avar))
+            title(paste(sub("_.*","",adb), "monthly cumulative sum ", translate(avar), "for",asza,"deg."), cex.main = 0.7)
         }
     }
 }
@@ -367,7 +373,7 @@ for (adb in database) {
 plotsza <- c( 63 )
 # plotpreNoon <- c("am","pm","am+pm", "daily")
 plotpreNoon <- c("am","pm","daily")
-plotpNcol   <- c(2,4,6,7)
+plotpNcol   <- c(2,3,4,5)
 vars        <- c("DIR_att", "DIR_transp")
 database    <- c("ALL_3_monthly_cumsum","CLEAR_3_monthly_cumsum")
 
@@ -387,22 +393,25 @@ for (adb in database) {
             xlim  <- range(pdb$FDate)
             ylim  <- range(pdb[[avar]],DB2[[avar]],na.rm = T)
 
+            par("mar" = c(3,4,2,1))
+
             plot(1, type="n", xlab="", ylab="", xlim=xlim, ylim=ylim, xaxt = "n")
             axis.Date(1, pdb$FDate)
             abline(h=0, lty = 2, lwd=0.8)
 
-
+            ## for zsa
             for ( i in 1:length(plotpreNoon) ) {
                 pp <- pdb[preNoon==plotpreNoon[i]]
                 lines(pp$FDate, pp[[avar]], col = plotpNcol[i])
             }
 
-            lines(DB2$FDate,DB2[[avar]], col = plotpNcol[4])
+            ## for whole day
+            lines(DB2$FDate,DB2[[avar]], col = plotpNcol[3])
 
             legend("top", legend = plotpreNoon, col = plotpNcol,
                    lty = 1, bty = "n", ncol = 3,cex = 0.8)
 
-            title(paste(sub("_.*","",adb), "cumulative sum", asza, avar))
+            title(paste(sub("_.*","",adb), "monthly cumulative sum ", translate(avar), "for",asza,"deg."), cex.main = 0.7)
         }
     }
 }

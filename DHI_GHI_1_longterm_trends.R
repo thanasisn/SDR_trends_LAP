@@ -270,7 +270,7 @@ for (DBn in dbs) {
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n", lwd = 2, cex = 2,
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-            title(paste(translate(sub("_.*","",DBn)),translate(avar)), main.cex = 0.7)
+            title(paste(translate(sub("_.*","",DBn)), translate(avar)), main.cex = 0.7)
     }
 }
 #+ echo=F, include=F

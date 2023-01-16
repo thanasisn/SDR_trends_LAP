@@ -42,11 +42,11 @@ $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	## article files
-	@-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@echo "Changed:  $?"
 	## presentation files
 	#@cp -r -u "$(basename $?)_files" "$(presentation)/images"
-	@-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
 	@mkdir -p                        "$(presentation)/figures/"
 	@cp -u "./figures/"*".dat"       "$(presentation)/figures/"
 #	setsid evince    $@ &
@@ -57,7 +57,7 @@ $(SLIDY): $(RMD)
 	@echo "Building: $@"
 	@echo "Changed:  $?"
 	#@cp -r -u "$(basename $?)_files" "$(presentation)/images"
-	@-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
 	@mkdir -p                        "$(presentation)/figures/"
 	@cp -u "./figures/"*".dat"       "$(presentation)/figures/"
 	# setsid mimeopen  $@ &
@@ -81,8 +81,8 @@ $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	@echo "Changed:  $?"
-	@-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
-	@-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.*'   "$(basename $?)_files" "$(presentation)/images"
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*'   "$(basename $?)_files" "$(presentation)/images"
 #	setsid evince    $@ &
 
 h2: $(SLIDY)
@@ -90,7 +90,7 @@ $(SLIDY): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Changed:  $?"
-	@-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
 	# setsid mimeopen  $@ &
 
 r2: $(RUNT)
@@ -112,8 +112,8 @@ $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	@echo "Changed:  $?"
-	@-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
-	@-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.*'   "$(basename $?)_files" "$(presentation)/images"
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*'   "$(basename $?)_files" "$(presentation)/images"
 #	setsid evince    $@ &
 
 h3: $(SLIDY)
@@ -121,7 +121,7 @@ $(SLIDY): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Changed:  $?"
-	@-rsync -av --prune-empty-dirs --exclude 'unnamed-chunk*.*'   "$(basename $?)_files" "$(presentation)/images"
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*'   "$(basename $?)_files" "$(presentation)/images"
 	# setsid mimeopen  $@ &
 
 r3: $(RUNT)
