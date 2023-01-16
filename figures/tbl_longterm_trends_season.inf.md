@@ -5,7 +5,7 @@
 ---------------
 
 Object name:    object      
-Date written:   2023-01-16 16:30:35.4 UTC  
+Date written:   2023-01-16 18:36:03.8 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_season.dat      
 Data file size: 1.4 KiB (1417) 
 Size in memory: 3656.0 B      

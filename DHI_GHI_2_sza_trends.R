@@ -336,6 +336,8 @@ for (type in unique(szatrends$DATA)) {
         cat("\n\\newpage\n\n")
         cat(paste("\n###", type, avar,"\n\n"))
 
+        par("mar" = c(3,4,2,1))
+
         ## statistic variable
         for (awe in wecare) {
             awename <- gsub("(\\D)(\\D+)", "\\U\\1\\L\\2", sub("\\."," ", awe), perl = TRUE)
@@ -350,9 +352,12 @@ for (type in unique(szatrends$DATA)) {
             pam  <- subdata[ preNoon == T ]
             ppm  <- subdata[ preNoon == F ]
 
-            plot(1, type="n", xlab="SZA", ylab=awename, xlim=xlim, ylim=ylim )
+            plot(1, type = "n",
+                 xlab = "SZA", ylab = awename,
+                 xlim = xlim, ylim = ylim )
             abline(h=0)
-            title(paste(awename,type, avar),cex=0.9)
+
+            title(paste(awename, type, translate(avar) ), cex.main = 1)
 
             # lines(pam$SZA, pam[[awe]], pch =  pch_am, col = pam$col, type = "b")
             # lines(pam$SZA, ppm[[awe]], pch =  pch_pm, col = pam$col, type = "b")
@@ -427,7 +432,7 @@ for (DBn in dbs) {
 }
 
 #+ echo=F, include=F
-hist(gather_seas$N[gather_seas$N>50], breaks = 100)
+hist(gather_seas$N[gather_seas$N > 50], breaks = 100)
 
 szatrends_seas <- data.table(gather_seas)
 setorder(szatrends_seas, SZA)
@@ -497,6 +502,8 @@ for (ase in seasons) {
             for (awe in wecare) {
                 awename <- gsub("(\\D)(\\D+)", "\\U\\1\\L\\2", sub("\\."," ", awe), perl = TRUE)
 
+                par("mar" = c(3,4,2,1))
+
                 ## select All/CS  DIR/GLB/trans winter/summer
                 subdata <- szatrends_seas[ DATA   == type &
                                            var    == avar &
@@ -510,7 +517,8 @@ for (ase in seasons) {
 
                 plot(1, type="n", xlab="SZA", ylab=awename, xlim=xlim, ylim=ylim )
                 abline(h=0)
-                title(paste(ase,awename,type, avar),cex=0.9)
+
+                title(paste(ase, awename, type, translate(avar)),cex.main=0.9)
 
                 # lines(pam$SZA, pam[[awe]], pch =  pch_am, col = pam$col, type = "b")
                 # lines(pam$SZA, ppm[[awe]], pch =  pch_pm, col = pam$col, type = "b")
@@ -527,8 +535,6 @@ for (ase in seasons) {
         }
     }
 }
-
-
 
 
 
