@@ -420,7 +420,6 @@ for (DBn in dbs) {
                                         Season    = ase,
                                         N         = sum(!is.na(dataset[[avar]]))
                                     ))
-
                 }
             }
         }
@@ -431,7 +430,7 @@ for (DBn in dbs) {
 hist(gather_seas$N[gather_seas$N>50], breaks = 100)
 
 szatrends_seas <- data.table(gather_seas)
-setorder(szatrends_seas,SZA)
+setorder(szatrends_seas, SZA)
 
 
 ## covert to trend per year
@@ -525,10 +524,8 @@ for (ase in seasons) {
                        col    = c(2, 3),
                        pch    = c(unique(pam$pch), unique(ppm$pch)), ncol = 2, bty = "n")
             }
-
         }
     }
-
 }
 
 
