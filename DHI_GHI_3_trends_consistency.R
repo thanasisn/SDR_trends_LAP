@@ -265,7 +265,10 @@ CLEAR_3_monthly_daily_DEseas[ is.na(DIR_transp), DIR_transp := 0 ]
 ALL_3_monthly_daily_cumsum   <- ALL_3_monthly_daily_DEseas
 CLEAR_3_monthly_daily_cumsum <- CLEAR_3_monthly_daily_DEseas
 
-## plot before cumulativ sum
+## create a nice data
+ALL_3_monthly_daily_cumsum[ , Date := as.POSIXct( paste(Year, Month, 1),format="%Y %m %d") ]
+CLEAR_3_monthly_daily_cumsum[ , Date := as.POSIXct( paste(Year, Month, 1),format="%Y %m %d") ]
+
 
 
 ALL_3_monthly_daily_cumsum[,   GLB_att    := cumsum(GLB_att)]
@@ -280,16 +283,17 @@ CLEAR_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
 ####  Cumulative sums ####
 #' \newpage
 #' ## Cumulative sums
+#'
+#' Use deseasonalized monthly values to calculate cumulative sums
+#'
 #+ echo=F, include=F
-
 
 timefactor <- 1
 vars    <- c("GLB_att", "DIR_att", "DIR_transp")
 dbs     <- c("ALL_3_monthly_DEseas","CLEAR_3_monthly_DEseas")
 basevar <- c("Year","Month","SZA","preNoon")
 
-
-## compute cumsums for each category and sza
+## compute cumulative sums for each category and sza
 for (DBn in dbs) {
     DB <- get(DBn)
     for (avar in vars) {
@@ -347,22 +351,24 @@ for (adb in database) {
 
             par("mar" = c(3,4,2,1))
 
-            plot(1, type="n", xlab="", ylab="", xlim=xlim, ylim=ylim, xaxt = "n")
+            plot(1, type="n",
+                 xlab="", xlim = xlim, ylim = ylim, xaxt = "n",
+                 ylab = bquote("Cumulative Seasonal Anomaly [%]" ) )
             axis.Date(1, pdb$FDate)
             abline(h=0, lty = 2, lwd=0.8)
 
             ## for a sza
             for (i in 1:length(plotpreNoon) ) {
                 pp <- pdb[preNoon==plotpreNoon[i]]
-                lines(pp$FDate, pp[[avar]], col = plotpNcol[i])
+                lines(pp$FDate, pp[[avar]], col = plotpNcol[i], lwd = 2)
             }
             ## daily from other DT
-            lines(DB2$FDate, DB2[[avar]], col = plotpNcol[3])
+            lines(DB2$FDate, DB2[[avar]], col = plotpNcol[3], lwd = 2)
 
             legend("top", legend = plotpreNoon, col = plotpNcol,
                    lty = 1, bty = "n", ncol = 3,cex = 0.8)
 
-            title(paste(sub("_.*","",adb), "monthly cumulative sum ", translate(avar), "for",asza,"deg."), cex.main = 0.7)
+            title(paste(sub("_.*","",adb), "monthly cumulative sum ", translate(avar), "for",asza,"deg."), cex.main = 1)
         }
     }
 }
@@ -375,12 +381,12 @@ plotsza <- c( 63 )
 plotpreNoon <- c("am","pm","daily")
 plotpNcol   <- c(2,3,4,5)
 vars        <- c("DIR_att", "DIR_transp")
-database    <- c("ALL_3_monthly_cumsum","CLEAR_3_monthly_cumsum")
+database    <- c("ALL_3_monthly_cumsum", "CLEAR_3_monthly_cumsum")
 
 #+  cumulativesumsdir, echo=F, include=T
 for (adb in database) {
     DB  <- get(adb)
-    DB2 <- get(paste0(sub("_.*","",adb),"_3_monthly_daily_cumsum"))
+    DB2 <- get(paste0(sub("_.*","",adb), "_3_monthly_daily_cumsum"))
     for (asza in plotsza) {
         for (avar in vars) {
             wcare <- c("FDate","preNoon",avar)
@@ -395,26 +401,32 @@ for (adb in database) {
 
             par("mar" = c(3,4,2,1))
 
-            plot(1, type="n", xlab="", ylab="", xlim=xlim, ylim=ylim, xaxt = "n")
+            plot(1, type="n",
+                 xlab="",
+                 xlim=xlim, ylim=ylim, xaxt = "n",
+                 ylab = bquote("Cumulative Seasonal Anomaly [%]" ) )
             axis.Date(1, pdb$FDate)
             abline(h=0, lty = 2, lwd=0.8)
 
             ## for zsa
             for ( i in 1:length(plotpreNoon) ) {
                 pp <- pdb[preNoon==plotpreNoon[i]]
-                lines(pp$FDate, pp[[avar]], col = plotpNcol[i])
+                lines(pp$FDate, pp[[avar]], col = plotpNcol[i], lwd = 2)
             }
 
             ## for whole day
-            lines(DB2$FDate,DB2[[avar]], col = plotpNcol[3])
+            lines(DB2$FDate,DB2[[avar]], col = plotpNcol[3], lwd = 2)
 
             legend("top", legend = plotpreNoon, col = plotpNcol,
-                   lty = 1, bty = "n", ncol = 3,cex = 0.8)
+                   lty = 1, bty = "n", ncol = 3, cex = 0.9)
 
-            title(paste(sub("_.*","",adb), "monthly cumulative sum ", translate(avar), "for",asza,"deg."), cex.main = 0.7)
+            title(paste(sub("_.*","",adb), "monthly cumulative sum ", translate(avar),"for", asza, "deg."), cex.main = 1)
         }
     }
 }
+
+
+
 
 
 
