@@ -45,8 +45,8 @@
 
 #+ echo=F, include=F
 knitr::opts_chunk$set(comment    = ""      )
-knitr::opts_chunk$set(dev        = "pdf"   )
-# knitr::opts_chunk$set(dev        = "png"    )
+# knitr::opts_chunk$set(dev        = "pdf"   )
+knitr::opts_chunk$set(dev        = "png"    )
 knitr::opts_chunk$set(out.width  = "80%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
 knitr::opts_chunk$set(cache      =  T       )
@@ -126,12 +126,12 @@ data_list  <- list(ALL   =   ALL_3_monthly_mean,
 by_var     <- c("Date","Month","SZA")
 wecare     <- unique(unlist(lapply(data_list, names)))
 wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
-for(i in 1:length(data_list)) {
+for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (xvar in by_var){
         for (yvar in wecare) {
             if (! yvar %in% names(Dplot)) next()
-            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            col  <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
             vect <- Dplot[[yvar]]
             plot(Dplot[[xvar]], vect,
                  pch = ".", col = col,
@@ -140,7 +140,7 @@ for(i in 1:length(data_list)) {
         }
     }
 }
-for(i in 1:length(data_list)) {
+for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     # intersect(names(Dplot),wecare)
     for (yvar in wecare) {
@@ -329,7 +329,7 @@ plotpNcol   <- c(2,4,6,7)
 vars        <- c("GLB_att", "DIR_att", "DIR_transp")
 database    <- c("ALL_3_monthly_cumsum","CLEAR_3_monthly_cumsum")
 
-#+ echo=F, include=T
+#+ cumulativesums, echo=F, include=T
 for (adb in database) {
     DB  <- get(adb)
     DB2 <- get(paste0(sub("_.*","",adb),"_3_monthly_daily_cumsum"))
@@ -346,18 +346,17 @@ for (adb in database) {
             axis.Date(1, pdb$FDate)
             abline(h=0, lty = 2, lwd=0.8)
 
-
-            for ( i in 1:length(plotpreNoon) ) {
+            for (i in 1:length(plotpreNoon) ) {
                 pp <- pdb[preNoon==plotpreNoon[i]]
                 lines(pp$FDate, pp[[avar]], col = plotpNcol[i])
             }
 
-            lines(DB2$FDate,DB2[[avar]], col = plotpNcol[4])
+            lines(DB2$FDate, DB2[[avar]], col = plotpNcol[4])
 
             legend("top", legend = plotpreNoon, col = plotpNcol,
                    lty = 1, bty = "n", ncol = 3,cex = 0.8)
 
-            title(paste(sub("_.*","",adb), "cumsum", asza, avar))
+            title(paste(sub("_.*","",adb), "cumulative sum", asza, avar))
         }
     }
 }
@@ -372,7 +371,7 @@ plotpNcol   <- c(2,4,6,7)
 vars        <- c("DIR_att", "DIR_transp")
 database    <- c("ALL_3_monthly_cumsum","CLEAR_3_monthly_cumsum")
 
-#+ echo=F, include=T
+#+  cumulativesumsdir, echo=F, include=T
 for (adb in database) {
     DB  <- get(adb)
     DB2 <- get(paste0(sub("_.*","",adb),"_3_monthly_daily_cumsum"))
@@ -403,7 +402,7 @@ for (adb in database) {
             legend("top", legend = plotpreNoon, col = plotpNcol,
                    lty = 1, bty = "n", ncol = 3,cex = 0.8)
 
-            title(paste(sub("_.*","",adb), "cumsum", asza, avar))
+            title(paste(sub("_.*","",adb), "cumulative sum", asza, avar))
         }
     }
 }
