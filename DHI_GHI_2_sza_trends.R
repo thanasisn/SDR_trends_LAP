@@ -115,14 +115,13 @@ options(error = function() {
 
 
 #+ echo=F, include=F
-## ~ Plots longterm  ####
-
+## ~ Plot longterm scatter plots  ####
 data_list  <- list(ALL   = ALL_2_daily_mean,
                    CLEAR = CLEAR_2_daily_mean)
 by_var     <- c("doy","SZA")
 wecare     <- unique(unlist(lapply(data_list, names)))
 wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
-for(i in 1:length(data_list)) {
+for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (xvar in by_var){
         for (yvar in wecare) {
@@ -136,7 +135,8 @@ for(i in 1:length(data_list)) {
         }
     }
 }
-for(i in 1:length(data_list)) {
+## ~ Plot longterm histograms  ####
+for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
       # intersect(names(Dplot),wecare)
         for (yvar in wecare) {
@@ -150,18 +150,18 @@ for(i in 1:length(data_list)) {
 }
 
 #+ echo=F, include=F
-## ~ Plots seasonal data ####
+## ~ Plots seasonal data scatter plots ####
 data_list  <- list(ALL_Seas   =   ALL_2_daily_seas,
                    CLEAR_Seas = CLEAR_2_daily_seas)
 by_var     <- c("doy")
 wecare     <- unique(unlist(lapply(data_list, names)))
 wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
-for(i in 1:length(data_list)) {
+for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (xvar in by_var){
         for (yvar in wecare) {
-            if (! yvar %in% names(Dplot)) next()
-            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            if (!yvar %in% names(Dplot)) next()
+            col  <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
             vect <- Dplot[[yvar]]
             plot(Dplot[[xvar]], vect,
                  pch = ".", col = col,
@@ -170,11 +170,12 @@ for(i in 1:length(data_list)) {
         }
     }
 }
-for(i in 1:length(data_list)) {
+## ~ Plots seasonal data histograms ####
+for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (yvar in wecare) {
-        if (! yvar %in% names(Dplot)) next()
-        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+        if (!yvar %in% names(Dplot)) next()
+        col  <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
         vect <- Dplot[[yvar]]
         hist(vect,
              main = paste(names(data_list[i]), yvar),
@@ -257,7 +258,6 @@ for (DBn in dbs) {
                 if (sum(!is.na(dataset[[avar]])) <= 1) next()
 
                 lm1 <- lm( dataset[[avar]] ~ dataset$Date )
-
                 gather <- rbind(gather,
                                 data.frame(
                                     linear_fit_stats(lm1),
@@ -273,7 +273,7 @@ for (DBn in dbs) {
 }
 
 #+ echo=F, include=F
-hist(gather$N[gather$N>50], breaks = 100)
+hist( gather$N[gather$N > 50], breaks = 100)
 
 szatrends <- gather
 
@@ -309,9 +309,9 @@ plot(szatrends$SZA,szatrends$N)
 
 test1 <- szatrends[ DATA == "CLEAR_daily_DEseas" & var == "DIR_att" ]
 test2 <- szatrends[ DATA == "CLEAR_daily_DEseas" & var == "GLB_att" ]
-plot(test1$SZA, test1$N, pch =19)
+plot(test1$SZA, test1$N, pch = 19)
 abline(h=50)
-plot(test2$SZA, test2$N, pch =19)
+plot(test2$SZA, test2$N, pch = 19)
 abline(h=300)
 
 # szatrends[ var == "GLB_att"    & N <= 300, slope := NA ]
@@ -399,7 +399,6 @@ for (DBn in dbs) {
 
     stopifnot( !any(is.na(DB$Season)) )
 
-
     for (ase in seasons) {
         for (avar in vars) {
             for (anoon in unique( DB$preNoon)) {
@@ -450,10 +449,10 @@ szatrends_seas[ preNoon == F, pch := pch_pm ]
 
 
 
-hist(szatrends_seas[DATA==dbs[1],N], breaks = 100)
-hist(szatrends_seas[DATA==dbs[2],N], breaks = 100)
-hist(szatrends_seas[var==vars[1],N], breaks = 100)
-hist(szatrends_seas[var==vars[2],N], breaks = 100)
+hist(szatrends_seas[DATA == dbs[1],N], breaks = 100)
+hist(szatrends_seas[DATA == dbs[2],N], breaks = 100)
+hist(szatrends_seas[var  == vars[1],N], breaks = 100)
+hist(szatrends_seas[var  == vars[2],N], breaks = 100)
 
 # szatrends_seas <- szatrends_seas[ N > 50]
 
@@ -531,10 +530,6 @@ for (ase in seasons) {
     }
 
 }
-
-
-
-
 
 
 
