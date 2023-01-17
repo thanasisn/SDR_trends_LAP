@@ -411,11 +411,11 @@ for (adb in database) {
             ## for zsa
             for ( i in 1:length(plotpreNoon) ) {
                 pp <- pdb[preNoon==plotpreNoon[i]]
-                lines(pp$FDate, pp[[avar]], col = plotpNcol[i], lwd = 2)
+                lines(pp$FDate, pp[[avar]], col = plotpNcol[i], lwd = 3)
             }
 
             ## for whole day
-            lines(DB2$FDate,DB2[[avar]], col = plotpNcol[3], lwd = 2)
+            lines(DB2$FDate,DB2[[avar]], col = plotpNcol[3], lwd = 3)
 
             legend("top", legend = plotpreNoon, col = plotpNcol,
                    lty = 1, bty = "n", ncol = 3, cex = 0.9)
