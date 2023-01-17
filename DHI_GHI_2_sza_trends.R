@@ -97,7 +97,7 @@ source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
 options(error = function() {
     if (interactive()) {
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
-        system("notify-send -u normal -t 30000 'R session' 'An error occured!'")
+        system("notify-send -u normal -t 30000 'R session' 'An error occurred!'")
     }
 })
 
@@ -391,7 +391,7 @@ for (type in unique(szatrends$DATA)) {
 timefactor  <- 1  ## to display % per year
 vars        <- c("DIR_att", "GLB_att", "DIR_transp")
 dbs         <- c("ALL_daily_DEseas", "CLEAR_daily_DEseas")
-seasons     <- c("Winter", "Spring", "Summer", "Automn")
+seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 gather_seas <- data.frame()
 
 for (DBn in dbs) {
@@ -401,7 +401,7 @@ for (DBn in dbs) {
     DB[ month(Date) %in% c(12, 1, 2), Season := "Winter"]
     DB[ month(Date) %in% c( 3, 4, 5), Season := "Spring"]
     DB[ month(Date) %in% c( 6, 7, 8), Season := "Summer"]
-    DB[ month(Date) %in% c( 9,10,11), Season := "Automn"]
+    DB[ month(Date) %in% c( 9,10,11), Season := "Autumn"]
 
     stopifnot( !any(is.na(DB$Season)) )
 
@@ -454,8 +454,8 @@ szatrends_seas[ preNoon == F, pch := pch_pm ]
 
 
 
-hist(szatrends_seas[DATA == dbs[1],N], breaks = 100)
-hist(szatrends_seas[DATA == dbs[2],N], breaks = 100)
+hist(szatrends_seas[DATA == dbs[1],N],  breaks = 100)
+hist(szatrends_seas[DATA == dbs[2],N],  breaks = 100)
 hist(szatrends_seas[var  == vars[1],N], breaks = 100)
 hist(szatrends_seas[var  == vars[2],N], breaks = 100)
 
