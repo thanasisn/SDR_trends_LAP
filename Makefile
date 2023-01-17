@@ -43,30 +43,28 @@ $(PDF): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	## article files
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
-	@echo "Changed:  $?"
 	## presentation files
 	#@cp -r -u "$(basename $?)_files" "$(presentation)/images"
-	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
-	@mkdir -p                        "$(presentation)/figures/"
-	@cp -u "./figures/"*".dat"       "$(presentation)/figures/"
+	#@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
+	#@mkdir -p                        "$(presentation)/figures/"
+	#@cp -u "./figures/"*".dat"       "$(presentation)/figures/"
 #	setsid evince    $@ &
 
 h1: $(SLIDY)
 $(SLIDY): $(RMD)
-	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Building: $@"
-	@echo "Changed:  $?"
-	#@cp -r -u "$(basename $?)_files" "$(presentation)/images"
-	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
-	@mkdir -p                        "$(presentation)/figures/"
-	@cp -u "./figures/"*".dat"       "$(presentation)/figures/"
+	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
+	## presentation files
+	#@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
+	#@mkdir -p                        "$(presentation)/figures/"
+	#@cp -u "./figures/"*".dat"       "$(presentation)/figures/"
 	# setsid mimeopen  $@ &
 
 r1: $(RUNT)
 $(RUNT): $(RMD)
 	-Rscript $?
-	@mkdir -p                        "$(presentation)/figures/"
-	@cp -u "./figures/"*".dat"       "$(presentation)/figures/"
+	#@mkdir -p                        "$(presentation)/figures/"
+	#@cp -u "./figures/"*".dat"       "$(presentation)/figures/"
 
 
 ###   2. DHI_GHI_sza_trends
@@ -80,17 +78,18 @@ p2: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
-	@echo "Changed:  $?"
+	## article files
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
-	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*'   "$(basename $?)_files" "$(presentation)/images"
+	## presentation files
+	#@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*'   "$(basename $?)_files" "$(presentation)/images"
 #	setsid evince    $@ &
 
 h2: $(SLIDY)
 $(SLIDY): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
-	@echo "Changed:  $?"
-	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
+	## presentation files
+	#@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
 	# setsid mimeopen  $@ &
 
 r2: $(RUNT)
@@ -111,17 +110,18 @@ p3: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
-	@echo "Changed:  $?"
+	## article files
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
-	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*'   "$(basename $?)_files" "$(presentation)/images"
+	## presentation files
+	#@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*'   "$(basename $?)_files" "$(presentation)/images"
 #	setsid evince    $@ &
 
 h3: $(SLIDY)
 $(SLIDY): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
-	@echo "Changed:  $?"
-	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*'   "$(basename $?)_files" "$(presentation)/images"
+	## presentation files
+	#@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*'   "$(basename $?)_files" "$(presentation)/images"
 	# setsid mimeopen  $@ &
 
 r3: $(RUNT)
