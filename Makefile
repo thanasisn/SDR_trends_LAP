@@ -81,7 +81,7 @@ $(PDF): $(RMD)
 	## article files
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	## presentation files
-	#@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*'   "$(basename $?)_files" "$(presentation)/images"
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*'   "$(basename $?)_files" "$(presentation)/images"
 #	setsid evince    $@ &
 
 h2: $(SLIDY)
@@ -89,7 +89,7 @@ $(SLIDY): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	## presentation files
-	#@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
 	# setsid mimeopen  $@ &
 
 r2: $(RUNT)

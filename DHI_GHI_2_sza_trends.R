@@ -510,7 +510,11 @@ for (ase in seasons) {
                                            var    == avar &
                                            Season == ase    , ]
 
-                xlim <- range( subdata$SZA,    na.rm = T )
+                # xlim <- range( subdata$SZA,        na.rm = T )
+                ## use same axis for all
+                xlim <- range( szatrends_seas$SZA, na.rm = T )
+
+
                 ylim <- range( subdata[[awe]], na.rm = T )
 
                 ## test always show zero on plots
@@ -529,7 +533,7 @@ for (ase in seasons) {
 
                 ## test for some plots
                 if (grepl("CLEAR",type, ignore.case = T) ) typeP <- "Clear Sky (Deseas.)"
-                if (grepl("ALL",  type, ignore.case = T) ) typeP <- "Clear Sky (Deseas.)"
+                if (grepl("ALL",  type, ignore.case = T) ) typeP <- "All Sky (Deseas.)"
 
                 title(paste(ase, awename, typeP, translate(avar)), cex.main = 1 )
 
