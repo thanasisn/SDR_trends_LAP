@@ -355,15 +355,16 @@ for (type in unique(szatrends$DATA)) {
             plot(1, type = "n",
                  xlab = "SZA", ylab = awename,
                  xlim = xlim, ylim = ylim )
-            abline(h=0)
+
+            abline(h = 0, lty = 3 )
 
             title(paste(awename, type, translate(avar) ), cex.main = 1)
 
             # lines(pam$SZA, pam[[awe]], pch =  pch_am, col = pam$col, type = "b")
             # lines(pam$SZA, ppm[[awe]], pch =  pch_pm, col = pam$col, type = "b")
 
-            lines(pam$SZA, pam[[awe]], pch =  pch_am, col = 2, type = "b")
-            lines(ppm$SZA, ppm[[awe]], pch =  pch_pm, col = 3, type = "b")
+            lines(pam$SZA, pam[[awe]], pch =  pch_am, col = 2, type = "b", lwd = 2)
+            lines(ppm$SZA, ppm[[awe]], pch =  pch_pm, col = 3, type = "b", lwd = 2)
 
             legend("top",
                    legend = c("Morning",       "Evening"),
@@ -463,7 +464,7 @@ hist(szatrends_seas[var  == vars[2],N], breaks = 100)
 plot(szatrends_seas$SZA,szatrends_seas$N)
 
 test <- szatrends_seas[ DATA == "CLEAR_daily_DEseas" & var == "DIR_att" ]
-plot(test$SZA, test$N, pch =19)
+plot(test$SZA, test$N, pch = 19)
 abline(h=50/4)
 
 szatrends[ N <= 30, slope := NA]
@@ -471,9 +472,9 @@ szatrends[ N <= 30, slope := NA]
 
 test1 <- szatrends_seas[ DATA == "CLEAR_daily_DEseas" & var == "DIR_att" ]
 test2 <- szatrends_seas[ DATA == "CLEAR_daily_DEseas" & var == "GLB_att" ]
-plot(test1$SZA, test1$N, pch =19)
+plot(test1$SZA, test1$N, pch = 19)
 abline(h=50/4)
-plot(test2$SZA, test2$N, pch =19)
+plot(test2$SZA, test2$N, pch = 19)
 abline(h=300/4)
 
 # szatrends[ var == "GLB_att"    & N <= 300, slope := NA ]
@@ -502,7 +503,7 @@ for (ase in seasons) {
             for (awe in wecare) {
                 awename <- gsub("(\\D)(\\D+)", "\\U\\1\\L\\2", sub("\\."," ", awe), perl = TRUE)
 
-                par("mar" = c(3,4,2,1))
+                par("mar" = c(4,4,1,0))
 
                 ## select All/CS  DIR/GLB/trans winter/summer
                 subdata <- szatrends_seas[ DATA   == type &
@@ -512,21 +513,33 @@ for (ase in seasons) {
                 xlim <- range( subdata$SZA,    na.rm = T )
                 ylim <- range( subdata[[awe]], na.rm = T )
 
+                ## test always show zero on plots
+                ylim <- range(0, subdata[[awe]], na.rm = T )
+
+
                 pam  <- subdata[ preNoon == T ]
                 ppm  <- subdata[ preNoon == F ]
 
-                plot(1, type="n", xlab="SZA", ylab=awename, xlim=xlim, ylim=ylim )
-                abline(h=0)
 
-                title(paste(ase, awename, type, translate(avar)),cex.main=0.9)
+                plot(1, type = "n",
+                     xlab = "SZA", ylab = awename,
+                     xlim = xlim, ylim = ylim )
+
+                abline(h = 0, lty = 3 )
+
+                ## test for some plots
+                if (grepl("CLEAR",type, ignore.case = T) ) typeP <- "Clear Sky (Deseas.)"
+                if (grepl("ALL",  type, ignore.case = T) ) typeP <- "Clear Sky (Deseas.)"
+
+                title(paste(ase, awename, typeP, translate(avar)), cex.main = 1 )
 
                 # lines(pam$SZA, pam[[awe]], pch =  pch_am, col = pam$col, type = "b")
                 # lines(pam$SZA, ppm[[awe]], pch =  pch_pm, col = pam$col, type = "b")
 
-                lines(pam$SZA, pam[[awe]], pch =  pch_am, col = 2, type = "b")
-                lines(ppm$SZA, ppm[[awe]], pch =  pch_pm, col = 3, type = "b")
+                lines(pam$SZA, pam[[awe]], pch =  pch_am, col = 2, type = "b", lwd = 2)
+                lines(ppm$SZA, ppm[[awe]], pch =  pch_pm, col = 3, type = "b", lwd = 2)
 
-                legend("top",
+                legend("bottom",
                        legend = c("Morning",       "Evening"),
                        # col    = c(unique(pam$col), unique(ppm$col)),
                        col    = c(2, 3),
