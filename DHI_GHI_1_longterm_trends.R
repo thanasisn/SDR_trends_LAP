@@ -234,7 +234,9 @@ CLEAR_1_daily_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_a
 CLEAR_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
 #+ echo=F, include=F
 
-
+## create a float year value
+  ALL_1_daily_DEseas$DYear <- as.numeric(  ALL_1_daily_DEseas$Date) / Days_of_year
+CLEAR_1_daily_DEseas$DYear <- as.numeric(CLEAR_1_daily_DEseas$Date) / Days_of_year
 
 
 #### TOTAL TRENDS  #############################################################
@@ -253,7 +255,8 @@ for (DBn in dbs) {
             dataset <- DB
 
             ## linear model
-            lm1        <- lm( dataset[[avar]] ~ dataset$Date )
+            # lm1 <- lm( dataset[[avar]] ~ dataset$Date )
+            lm1 <- lm( dataset[[avar]] ~ dataset$DYear )
 
             ## plot
             par("mar" = c(3,4,2,1))
@@ -269,7 +272,7 @@ for (DBn in dbs) {
             ## decorations
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n", lwd = 2, cex = 2,
-                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
+                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
             title(paste(translate(sub("_.*","",DBn)), translate(avar)), main.cex = 0.7)
     }
 }
@@ -307,7 +310,7 @@ for (DBn in dbs) {
         legend('top', lty = 1, bty = "n", lwd = 2, cex = 2,
                paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
         title(paste(translate(sub("_.*","",DBn)),translate(avar)), main.cex = 0.7)
-        stop()
+
     }
 }
 #+ echo=F, include=F
