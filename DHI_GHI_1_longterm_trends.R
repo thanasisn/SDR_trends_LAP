@@ -307,6 +307,7 @@ for (DBn in dbs) {
         legend('top', lty = 1, bty = "n", lwd = 2, cex = 2,
                paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
         title(paste(translate(sub("_.*","",DBn)),translate(avar)), main.cex = 0.7)
+        stop()
     }
 }
 #+ echo=F, include=F
