@@ -117,9 +117,7 @@ options(error = function() {
 
 
 #+ echo=F, include=F
-## ~ Plots all data  ####
-
-
+## ~ Plot all data  ####
 data_list  <- list(ALL   = ALL_1_daily_mean,
                    CLEAR = CLEAR_1_daily_mean)
 by_var     <- c("Date","doy")
@@ -200,12 +198,12 @@ rm(data_list)
 ALL_1_daily_DEseas   <- merge(  ALL_1_daily_mean,   ALL_1_daily_seas, by = "doy", all = T)
 CLEAR_1_daily_DEseas <- merge(CLEAR_1_daily_mean, CLEAR_1_daily_seas, by = "doy", all = T)
 
-setorder(ALL_1_daily_DEseas,Date)
-setorder(CLEAR_1_daily_DEseas,Date)
+setorder(ALL_1_daily_DEseas,   Date)
+setorder(CLEAR_1_daily_DEseas, Date)
 
 
 ## anomaly
-# #' #### Use the actuar difference from seasonal
+# #' #### Use the actual difference from seasonal
 # ALL_1_daily_DEseas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
 # ALL_1_daily_DEseas[   , GLB_att    := GLB_att    - GLB_att_seas    ]
 # ALL_1_daily_DEseas[   , DIR_transp := DIR_transp - DIR_transp_seas ]
@@ -255,20 +253,30 @@ for (DBn in dbs) {
             dataset <- DB
 
             ## linear model
-            # lm1 <- lm( dataset[[avar]] ~ dataset$Date )
-            lm1 <- lm( dataset[[avar]] ~ dataset$DYear )
+            lm1 <- lm( dataset[[avar]] ~ dataset$Date )
+            # lm1 <- lm( dataset[[avar]] ~ dataset$DYear )
 
-            ## plot
             par("mar" = c(3,4,2,1))
 
+            ## plot data
             plot(dataset$Date, dataset[[avar]],
                  pch  = ".", col = get(paste0("col_",avar)),
                  cex  = 2,
                  xlab = "",
                  ylab = bquote("Seasonal Anomaly [%]" ) )
             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
+
+            ## plot fit line
             abline(lm1, lwd = 2)
 
+            rm <- zoo::rollmean(dataset[[avar]], round(Days_of_year * 5), fill = NA )
+
+            points(dataset$Date, rm)
+
+            round(Days_of_year * 5)
+            frollmean()
+
+            stop()
             ## decorations
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n", lwd = 2, cex = 2,
