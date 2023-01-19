@@ -49,10 +49,11 @@ knitr::opts_chunk$set(comment    = ""      )
 knitr::opts_chunk$set(dev        = "png"    )
 knitr::opts_chunk$set(out.width  = "100%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
-knitr::opts_chunk$set(cache      =  T       )
+knitr::opts_chunk$set(cache      =  F       ) ## !!!!
 # knitr::opts_chunk$set(fig.pos    = '!h'    )
 
 
+warning("Don't use cache it breaks computations")
 
 #+ include=F, echo=F
 ####  Set environment  ####
@@ -269,14 +270,21 @@ for (DBn in dbs) {
             ## plot fit line
             abline(lm1, lwd = 2)
 
-            rm <- zoo::rollmean(dataset[[avar]], round(Days_of_year * 5), fill = NA )
 
-            points(dataset$Date, rm)
 
-            round(Days_of_year * 5)
-            frollmean()
+            # partial window using adaptive rolling function
+            # an = function(n, len) c(seq.int(n), rep(n, len-n))
+            # n = an(round(Days_of_year * 5), nrow(dataset))
+            # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
+            #           na.rm = TRUE, algo = "exact")
 
-            stop()
+
+            rm <- frollmean(dataset[[avar]], round(Days_of_year * 4),
+                            na.rm = TRUE, algo = "exact", align = "center")
+
+
+            points(dataset$Date, rm, col = "red")
+
             ## decorations
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n", lwd = 2, cex = 2,
