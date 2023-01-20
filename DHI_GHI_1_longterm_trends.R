@@ -240,14 +240,15 @@ CLEAR_1_daily_DEseas$DYear <- as.numeric(CLEAR_1_daily_DEseas$Date) / Days_of_ye
 
 #### TOTAL TRENDS  #############################################################
 
+## gather trends
+gather <- data.frame()
 
 ## ~ plot all sky trends ####
-
 #' \newpage
 #' ## Trends on all sky conditions data
 #+ longtermtrendsALL, echo=F, include=T, results="asis"
-vars        <- c("HOR_att","DIR_transp","DIR_att","GLB_att","tsi1au_att")
-dbs         <- c("ALL_1_daily_DEseas")
+vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
+dbs  <- c("ALL_1_daily_DEseas")
 for (DBn in dbs) {
     DB <- get(DBn)
         for (avar in vars) {
@@ -256,6 +257,19 @@ for (DBn in dbs) {
             ## linear model
             lm1 <- lm( dataset[[avar]] ~ dataset$Date )
             # lm1 <- lm( dataset[[avar]] ~ dataset$DYear )
+
+            ## catpture lm
+            gather <- rbind(gather,
+                            data.frame(
+                                linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
+                                DATA      = DBn,
+                                var       = avar,
+                                N         = sum(!is.na(dataset[[avar]]))
+                            ))
+
+
+
+
 
             par("mar" = c(3,4,2,1))
 
@@ -270,33 +284,30 @@ for (DBn in dbs) {
             ## plot fit line
             abline(lm1, lwd = 2)
 
-
-
+            ## plot running mean
             # partial window using adaptive rolling function
             # an = function(n, len) c(seq.int(n), rep(n, len-n))
             # n = an(round(Days_of_year * 5), nrow(dataset))
             # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
             #           na.rm = TRUE, algo = "exact")
 
-
             rm <- frollmean(dataset[[avar]], round(Days_of_year * 4),
                             na.rm = TRUE, algo = "exact", align = "center")
-
 
             points(dataset$Date, rm, col = "red")
 
             ## decorations
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n", lwd = 2, cex = 2,
-                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
+                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2])*Days_of_year,3),'* year'))
             title(paste(translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
     }
 }
 #+ echo=F, include=F
 
 
-## ~ plot clear sky trends ####
 
+## ~ plot clear sky trends ####
 #' \newpage
 #' ## Trends on Clear sky conditions data
 #+ longtermtrendsCS, echo=F, include=T, results="asis"
@@ -310,6 +321,17 @@ for (DBn in dbs) {
         ## linear model
         lm1        <- lm( dataset[[avar]] ~ dataset$Date )
 
+        ## catpture lm
+        gather <- rbind(gather,
+                        data.frame(
+                            linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
+                            DATA      = DBn,
+                            var       = avar,
+                            N         = sum(!is.na(dataset[[avar]]))
+                        ))
+
+
+
         ## plot
         par("mar" = c(3,4,2,1))
 
@@ -320,6 +342,19 @@ for (DBn in dbs) {
              ylab = bquote("Seasonal Anomaly [%]" ) )
              # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
         abline(lm1, lwd = 2)
+
+        ## plot running mean
+        # partial window using adaptive rolling function
+        # an = function(n, len) c(seq.int(n), rep(n, len-n))
+        # n = an(round(Days_of_year * 5), nrow(dataset))
+        # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
+        #           na.rm = TRUE, algo = "exact")
+
+        rm <- frollmean(dataset[[avar]], round(Days_of_year * 4),
+                        na.rm = TRUE, algo = "exact", align = "center")
+
+        points(dataset$Date, rm, col = "red")
+
 
         ## decorations
         fit <- lm1[[1]]
@@ -334,28 +369,28 @@ for (DBn in dbs) {
 
 
 
-## ~ calculate trends  ####
-vars   <- c("HOR_att","DIR_transp","DIR_att","GLB_att","tsi1au_att")
-dbs    <- c("ALL_1_daily_DEseas", "CLEAR_1_daily_DEseas")
-gather <- data.frame()
-
-for (DBn in dbs) {
-    DB <- get(DBn)
-    for (avar in vars) {
-        dataset <- DB
-        if (! avar %in% names(dataset)) next()
-        ## linear model
-        lm1        <- lm( dataset[[avar]] ~ dataset$Date )
-        ## gather stats
-        gather <- rbind(gather,
-                        data.frame(
-                            linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
-                            DATA      = DBn,
-                            var       = avar,
-                            N         = sum(!is.na(dataset[[avar]]))
-                        ))
-    }
-}
+# ## ~ calculate trends  ####
+# vars   <- c("HOR_att","DIR_transp","DIR_att","GLB_att","tsi1au_att")
+# dbs    <- c("ALL_1_daily_DEseas",  "CLEAR_1_daily_DEseas")
+# gather <- data.frame()
+#
+# for (DBn in dbs) {
+#     DB <- get(DBn)
+#     for (avar in vars) {
+#         dataset <- DB
+#         if (! avar %in% names(dataset)) next()
+#         ## linear model
+#         lm1        <- lm( dataset[[avar]] ~ dataset$Date )
+#         ## gather stats
+#         gather <- rbind(gather,
+#                         data.frame(
+#                             linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
+#                             DATA      = DBn,
+#                             var       = avar,
+#                             N         = sum(!is.na(dataset[[avar]]))
+#                         ))
+#     }
+# }
 
 
 
