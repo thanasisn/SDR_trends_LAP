@@ -164,7 +164,9 @@ if ( havetorun ) {
     DATA[ Azimuth >  180 , preNoon := FALSE ]
 
 
-    #' ### Split data to Clear Sky and non Clear sky
+    ## Split data to Clear Sky, non Clear sky and cloud sky data ---------------
+
+    #' ### Split data to Clear Sky, non Clear sky and cloud sky data
     #' Method based and adapted to site from: Identification of Periods of Clear Sky
     #' Irradiance in Time Series of GHI Measurements
     #' _Matthew J. Reno and Clifford W. Hansen_.
@@ -175,6 +177,7 @@ if ( havetorun ) {
     ## use only cm21 flags
     wecare     <- grep("_11", wecare, invert = T, value = T)
     DATA_Clear <- DATA[ rowSums( DATA[, ..wecare ], na.rm = T ) == 0, ]
+    DATA_Cloud <- DATA[ rowSums( DATA[, ..wecare ], na.rm = T ) != 0, ]
     #+ echo=F, include=T
 
     ## old flags usage
@@ -184,11 +187,12 @@ if ( havetorun ) {
     ## remove unused columns
     rm.cols.DT(DATA_all,   "CSflag_*")
     rm.cols.DT(DATA_Clear, "CSflag_*")
+    rm.cols.DT(DATA_Cloud, "CSflag_*")
     DATA_all[  , CS_ref_HOR := NULL ]
     DATA_Clear[, CS_ref_HOR := NULL ]
+    DATA_Cloud[, CS_ref_HOR := NULL ]
 
 
-    mean(DATA_all$tsi_1au_comb)
 
     #### 1. long-term   ########################################################
 
@@ -226,7 +230,23 @@ if ( havetorun ) {
                       DIR_att_N     = sum(!is.na(DIR_att))  ),
                    by = .( Date = Day ) ]
 
-    ## ~ compute margin of error for confidence interval ####
+    ## ~ daily means of cloud sky data ####
+    CLOUD_1_daily_mean <-
+        DATA_Cloud[,.(DIR_att       = mean(DIR_att,   na.rm = T),
+                      GLB_att       = mean(GLB_att,   na.rm = T),
+                      HOR_att       = mean(HOR_att,   na.rm = T),
+                      DIR_transp    = mean(DIR_transp,na.rm = T),
+                      DIR_att_sd    = sd(  DIR_att,   na.rm = T),
+                      GLB_att_sd    = sd(  GLB_att,   na.rm = T),
+                      HOR_att_sd    = sd(  HOR_att,   na.rm = T),
+                      DIR_transp_sd = sd(  DIR_transp,na.rm = T),
+                      doy           = yday(Date),
+                      GLB_att_N     = sum(!is.na(GLB_att)),
+                      HOR_att_N     = sum(!is.na(HOR_att)),
+                      DIR_att_N     = sum(!is.na(DIR_att))  ),
+                   by = .( Date = Day ) ]
+
+        ## ~ compute margin of error for confidence interval ####
     conf_param  <- 1 - ( 1 - Daily_confidence_limit ) / 2
     suppressWarnings({
         ALL_1_daily_mean[,  DIR_att_EM   :=qt(conf_param,df=DIR_att_N    -1)* DIR_att_sd   /sqrt(DIR_att_N   )]
@@ -237,6 +257,10 @@ if ( havetorun ) {
         CLEAR_1_daily_mean[,HOR_att_EM   :=qt(conf_param,df=HOR_att_N    -1)* HOR_att_sd   /sqrt(HOR_att_N   )]
         CLEAR_1_daily_mean[,GLB_att_EM   :=qt(conf_param,df=GLB_att_N    -1)* GLB_att_sd   /sqrt(GLB_att_N   )]
         CLEAR_1_daily_mean[,DIR_transp_EM:=qt(conf_param,df=DIR_att_N    -1)* DIR_transp_sd/sqrt(DIR_att_N   )]
+        CLOUD_1_daily_mean[,DIR_att_EM   :=qt(conf_param,df=DIR_att_N    -1)* DIR_att_sd   /sqrt(DIR_att_N   )]
+        CLOUD_1_daily_mean[,HOR_att_EM   :=qt(conf_param,df=HOR_att_N    -1)* HOR_att_sd   /sqrt(HOR_att_N   )]
+        CLOUD_1_daily_mean[,GLB_att_EM   :=qt(conf_param,df=GLB_att_N    -1)* GLB_att_sd   /sqrt(GLB_att_N   )]
+        CLOUD_1_daily_mean[,DIR_transp_EM:=qt(conf_param,df=DIR_att_N    -1)* DIR_transp_sd/sqrt(DIR_att_N   )]
     })
 
     ## ~ Exclude means with less than `r Daily_aggregation_N_lim` data points ####
@@ -252,6 +276,7 @@ if ( havetorun ) {
     ALL_1_daily_mean[   GLB_att_N <= Daily_aggregation_N_lim, GLB_att_EM    := NA ]
     ALL_1_daily_mean[   HOR_att_N <= Daily_aggregation_N_lim, HOR_att_EM    := NA ]
     ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_EM := NA ]
+
     CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att       := NA ]
     CLEAR_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att       := NA ]
     CLEAR_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att       := NA ]
@@ -265,7 +290,21 @@ if ( havetorun ) {
     CLEAR_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att_EM    := NA ]
     CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_EM := NA ]
 
-    ## ~ Calculate daily seasonal values for all data ####
+    CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att       := NA ]
+    CLOUD_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att       := NA ]
+    CLOUD_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att       := NA ]
+    CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp    := NA ]
+    CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att_sd    := NA ]
+    CLOUD_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att_sd    := NA ]
+    CLOUD_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att_sd    := NA ]
+    CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_sd := NA ]
+    CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att_EM    := NA ]
+    CLOUD_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att_EM    := NA ]
+    CLOUD_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att_EM    := NA ]
+    CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_EM := NA ]
+
+
+    ## ~ Calculate daily seasonal values for all data --------------------------
     ALL_1_daily_seas <-
         ALL_1_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
                             GLB_att_seas       = mean(GLB_att,    na.rm = T),
@@ -280,7 +319,7 @@ if ( havetorun ) {
                             DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
                          by = .( doy ) ]
 
-    ## ~ Calculate daily seasonal values for clear sky data ####
+    ## ~ Calculate daily seasonal values for clear sky data --------------------
     CLEAR_1_daily_seas <-
         CLEAR_1_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
                               GLB_att_seas       = mean(GLB_att,    na.rm = T),
@@ -295,6 +334,23 @@ if ( havetorun ) {
                               DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
                            by = .( doy ) ]
 
+    ## ~ Calculate daily seasonal values for cloud sky data --------------------
+    CLOUD_1_daily_seas <-
+        CLOUD_1_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
+                              GLB_att_seas       = mean(GLB_att,    na.rm = T),
+                              HOR_att_seas       = mean(HOR_att,    na.rm = T),
+                              DIR_transp_seas    = mean(DIR_transp, na.rm = T),
+                              DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
+                              HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
+                              GLB_att_sd_seas    = sd(  GLB_att,    na.rm = T),
+                              DIR_transp_sd_seas = sd(  DIR_transp, na.rm = T),
+                              GLB_att_N_seas     = sum(!is.na(GLB_att)),
+                              HOR_att_N_seas     = sum(!is.na(HOR_att)),
+                              DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
+                           by = .( doy ) ]
+
+
+
     ## ~ compute margin of error for confidence interval ####
     conf_param  <- 1 - ( 1 - Daily_confidence_limit ) / 2
     suppressWarnings({
@@ -302,11 +358,18 @@ if ( havetorun ) {
         ALL_1_daily_seas[,  HOR_att_EM_seas   :=qt(conf_param,df=HOR_att_N_seas -1)*HOR_att_sd_seas   /sqrt(HOR_att_N_seas)]
         ALL_1_daily_seas[,  GLB_att_EM_seas   :=qt(conf_param,df=GLB_att_N_seas -1)*GLB_att_sd_seas   /sqrt(GLB_att_N_seas)]
         ALL_1_daily_seas[,  DIR_transp_EM_seas:=qt(conf_param,df=DIR_att_N_seas -1)*DIR_transp_sd_seas/sqrt(DIR_att_N_seas)]
+
         CLEAR_1_daily_seas[,DIR_att_EM_seas   :=qt(conf_param,df=DIR_att_N_seas -1)*DIR_att_sd_seas   /sqrt(DIR_att_N_seas)]
         CLEAR_1_daily_seas[,HOR_att_EM_seas   :=qt(conf_param,df=HOR_att_N_seas -1)*HOR_att_sd_seas   /sqrt(HOR_att_N_seas)]
         CLEAR_1_daily_seas[,GLB_att_EM_seas   :=qt(conf_param,df=GLB_att_N_seas -1)*GLB_att_sd_seas   /sqrt(GLB_att_N_seas)]
         CLEAR_1_daily_seas[,DIR_transp_EM_seas:=qt(conf_param,df=DIR_att_N_seas -1)*DIR_transp_sd_seas/sqrt(DIR_att_N_seas)]
+
+        CLOUD_1_daily_seas[,DIR_att_EM_seas   :=qt(conf_param,df=DIR_att_N_seas -1)*DIR_att_sd_seas   /sqrt(DIR_att_N_seas)]
+        CLOUD_1_daily_seas[,HOR_att_EM_seas   :=qt(conf_param,df=HOR_att_N_seas -1)*HOR_att_sd_seas   /sqrt(HOR_att_N_seas)]
+        CLOUD_1_daily_seas[,GLB_att_EM_seas   :=qt(conf_param,df=GLB_att_N_seas -1)*GLB_att_sd_seas   /sqrt(GLB_att_N_seas)]
+        CLOUD_1_daily_seas[,DIR_transp_EM_seas:=qt(conf_param,df=DIR_att_N_seas -1)*DIR_transp_sd_seas/sqrt(DIR_att_N_seas)]
     })
+
 
 
     #### WRDC ? ####
@@ -315,9 +378,8 @@ if ( havetorun ) {
     xlim      <- range(DATA_all$Date)
     alldates  <- data.frame(Date = seq(xlim[1], xlim[2], by = "min"))
 
+
     DATA_ALLQ <- merge( DATA_all, alldates, all = T )
-
-
     Q_all <- DATA_ALLQ[,.(DIR_att       = mean(DIR_att,     na.rm = T),
                           GLB_att       = mean(GLB_att,     na.rm = T),
                           HOR_att       = mean(HOR_att,     na.rm = T),
@@ -339,8 +401,8 @@ if ( havetorun ) {
     ]
     rm(DATA_ALLQ)
 
-    DATA_CLEARQ <- merge( DATA_Clear, alldates, all = T )
 
+    DATA_CLEARQ <- merge( DATA_Clear, alldates, all = T )
     Q_clear <- DATA_CLEARQ[,.(DIR_att       = mean(DIR_att,     na.rm = T),
                               GLB_att       = mean(GLB_att,     na.rm = T),
                               HOR_att       = mean(HOR_att,     na.rm = T),
@@ -361,6 +423,32 @@ if ( havetorun ) {
                                                     origin = "1970-01-01" ))
     ]
     rm(DATA_CLEARQ)
+
+
+
+    DATA_CLOUDQ <- merge( DATA_Cloud, alldates, all = T )
+    Q_cloud <- DATA_CLOUDQ[,.(DIR_att       = mean(DIR_att,     na.rm = T),
+                              GLB_att       = mean(GLB_att,     na.rm = T),
+                              HOR_att       = mean(HOR_att,     na.rm = T),
+                              DIR_transp    = mean(DIR_transp,  na.rm = T),
+                              tsi1au_att    = mean(tsi_1au_comb,na.rm = T),
+                              DIR_att_sd    = sd(  DIR_att,     na.rm = T),
+                              GLB_att_sd    = sd(  GLB_att,     na.rm = T),
+                              HOR_att_sd    = sd(  HOR_att,     na.rm = T),
+                              DIR_transp_sd = sd(  DIR_transp,  na.rm = T),
+                              tsi1au_att_sd = sd(  tsi_1au_comb,na.rm = T),
+                              GLB_att_N     = sum(!is.na(GLB_att)),
+                              HOR_att_N     = sum(!is.na(HOR_att)),
+                              DIR_att_N     = sum(!is.na(DIR_att)),
+                              Elevat        = mean(Elevat,  na.rm = TRUE),
+                              Azimuth       = mean(Azimuth, na.rm = TRUE),
+                              SZA           = mean(SZA,     na.rm = TRUE)),
+                           by = .(Date = as.POSIXct(as.numeric(Date)%/%(3600/4)*(3600/4),
+                                                    origin = "1970-01-01" ))
+    ]
+    rm(DATA_CLOUDQ)
+
+
 
 
     QH_all <- Q_all[,.(DIR_att       = mean(DIR_att,     na.rm = T),
@@ -401,6 +489,26 @@ if ( havetorun ) {
                         by = .(Date = as.POSIXct(as.numeric(Date)%/%(3600)*(3600),
                                                  origin = "1970-01-01" ))]
 
+    QH_cloud <- Q_cloud[,.(DIR_att       = mean(DIR_att,     na.rm = T),
+                           GLB_att       = mean(GLB_att,     na.rm = T),
+                           HOR_att       = mean(HOR_att,     na.rm = T),
+                           DIR_transp    = mean(DIR_transp,  na.rm = T),
+                           tsi1au_att    = mean(tsi1au_att,  na.rm = T),
+                           DIR_att_sd    = sd(  DIR_att,     na.rm = T),
+                           GLB_att_sd    = sd(  GLB_att,     na.rm = T),
+                           HOR_att_sd    = sd(  HOR_att,     na.rm = T),
+                           DIR_transp_sd = sd(  DIR_transp,  na.rm = T),
+                           tsi1au_att_sd = sd(  tsi1au_att,  na.rm = T),
+                           GLB_att_N     = sum(!is.na(GLB_att)),
+                           HOR_att_N     = sum(!is.na(HOR_att)),
+                           DIR_att_N     = sum(!is.na(DIR_att)),
+                           Elevat        = mean(Elevat,  na.rm = TRUE),
+                           Azimuth       = mean(Azimuth, na.rm = TRUE),
+                           SZA           = mean(SZA,     na.rm = TRUE)),
+                        by = .(Date = as.POSIXct(as.numeric(Date)%/%(3600)*(3600),
+                                                 origin = "1970-01-01" ))]
+
+
     hist(QH_all[ Elevat < 20, Elevat ] )
 
     ## keep only whole hours
@@ -413,6 +521,11 @@ if ( havetorun ) {
     QH_clear[ GLB_att_N < 4 , GLB_att := NA ]
     QH_clear[ DIR_att_N < 4 , DIR_att := NA ]
     QH_clear[ HOR_att_N < 4 , HOR_att := NA ]
+
+    QH_cloud <- QH_cloud[ !is.na(SZA) ]
+    QH_cloud[ GLB_att_N < 4 , GLB_att := NA ]
+    QH_cloud[ DIR_att_N < 4 , DIR_att := NA ]
+    QH_cloud[ HOR_att_N < 4 , HOR_att := NA ]
 
 
     QHD_all <- QH_all[,.(DIR_att       = mean(DIR_att   ),
@@ -427,10 +540,16 @@ if ( havetorun ) {
                              DIR_transp    = mean(DIR_transp)),
                           by = .(Date = as.Date(Date))]
 
+    QHD_cloud <- QH_cloud[,.(DIR_att       = mean(DIR_att   ),
+                             GLB_att       = mean(GLB_att   ),
+                             HOR_att       = mean(HOR_att   ),
+                             DIR_transp    = mean(DIR_transp)),
+                          by = .(Date = as.Date(Date))]
+
     ## Too few days remain
     QHD_all[   !is.na(GLB_att), .N ]
     QHD_clear[ !is.na(GLB_att), .N ]
-
+    QHD_cloud[ !is.na(GLB_att), .N ]
 
 
 
@@ -471,6 +590,23 @@ if ( havetorun ) {
                           Date    = Day,
                           preNoon = preNoon ) ]
 
+    CLOUD_2_daily_mean <-
+        DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                       HOR_att       = mean(HOR_att,    na.rm = T),
+                       GLB_att       = mean(GLB_att,    na.rm = T),
+                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                       HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                       GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       doy           = yday(Date),
+                       GLB_att_N     = sum(!is.na(GLB_att)),
+                       HOR_att_N     = sum(!is.na(HOR_att)),
+                       DIR_att_N     = sum(!is.na(DIR_att))  ),
+                   by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                          Date    = Day,
+                          preNoon = preNoon ) ]
+
     ## ~ margin of error calculation for `r SZA_confidence_limit` confidence interval ####
     conf_param  <- 1 - ( 1 - SZA_confidence_limit ) / 2
     suppressWarnings({
@@ -482,6 +618,10 @@ if ( havetorun ) {
         CLEAR_2_daily_mean[, HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
         CLEAR_2_daily_mean[, GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
         CLEAR_2_daily_mean[, DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
+        CLOUD_2_daily_mean[, DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
+        CLOUD_2_daily_mean[, HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
+        CLOUD_2_daily_mean[, GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
+        CLOUD_2_daily_mean[, DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
     })
 
     ## ~ Exclude means with less than `r SZA_aggregation_N_lim` data points ####
@@ -497,6 +637,7 @@ if ( havetorun ) {
     ALL_2_daily_mean[   HOR_att_N <= SZA_aggregation_N_lim, HOR_att_EM    := NA ]
     ALL_2_daily_mean[   GLB_att_N <= SZA_aggregation_N_lim, GLB_att_EM    := NA ]
     ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
+
     CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att       := NA ]
     CLEAR_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att       := NA ]
     CLEAR_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att       := NA ]
@@ -509,6 +650,19 @@ if ( havetorun ) {
     CLEAR_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att_EM    := NA ]
     CLEAR_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att_EM    := NA ]
     CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
+
+    CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att       := NA ]
+    CLOUD_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att       := NA ]
+    CLOUD_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att       := NA ]
+    CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp    := NA ]
+    CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att_sd    := NA ]
+    CLOUD_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att_sd    := NA ]
+    CLOUD_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att_sd    := NA ]
+    CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_sd := NA ]
+    CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att_EM    := NA ]
+    CLOUD_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att_EM    := NA ]
+    CLOUD_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att_EM    := NA ]
+    CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
 
     ## ~ Calculate daily seasonal values by SZA  ####
     ALL_2_daily_seas <-
@@ -539,6 +693,20 @@ if ( havetorun ) {
                               DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
                            by = .( doy, SZA, preNoon ) ]
 
+    CLOUD_2_daily_seas <-
+        CLOUD_2_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
+                              HOR_att_seas       = mean(HOR_att,    na.rm = T),
+                              GLB_att_seas       = mean(GLB_att,    na.rm = T),
+                              DIR_transp_seas    = mean(DIR_transp, na.rm = T),
+                              DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
+                              HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
+                              GLB_att_sd_seas    = sd(  GLB_att,    na.rm = T),
+                              DIR_transp_sd_seas = sd(DIR_transp, na.rm = T),
+                              GLB_att_N_seas     = sum(!is.na(GLB_att)),
+                              HOR_att_N_seas     = sum(!is.na(HOR_att)),
+                              DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
+                           by = .( doy, SZA, preNoon ) ]
+
 
     ## ~ compute margin of error for confidence interval ####
     conf_param  <- 1 - ( 1 - Daily_confidence_limit ) / 2
@@ -551,6 +719,10 @@ if ( havetorun ) {
         CLEAR_2_daily_seas[,HOR_att_EM_seas   :=qt(conf_param,df=HOR_att_N_seas -1)* HOR_att_sd_seas   /sqrt(HOR_att_N_seas)]
         CLEAR_2_daily_seas[,GLB_att_EM_seas   :=qt(conf_param,df=GLB_att_N_seas -1)* GLB_att_sd_seas   /sqrt(GLB_att_N_seas)]
         CLEAR_2_daily_seas[,DIR_transp_EM_seas:=qt(conf_param,df=DIR_att_N_seas -1)* DIR_transp_sd_seas/sqrt(DIR_att_N_seas)]
+        CLOUD_2_daily_seas[,DIR_att_EM_seas   :=qt(conf_param,df=DIR_att_N_seas -1)* DIR_att_sd_seas   /sqrt(DIR_att_N_seas)]
+        CLOUD_2_daily_seas[,HOR_att_EM_seas   :=qt(conf_param,df=HOR_att_N_seas -1)* HOR_att_sd_seas   /sqrt(HOR_att_N_seas)]
+        CLOUD_2_daily_seas[,GLB_att_EM_seas   :=qt(conf_param,df=GLB_att_N_seas -1)* GLB_att_sd_seas   /sqrt(GLB_att_N_seas)]
+        CLOUD_2_daily_seas[,DIR_transp_EM_seas:=qt(conf_param,df=DIR_att_N_seas -1)* DIR_transp_sd_seas/sqrt(DIR_att_N_seas)]
     })
 
 
@@ -638,6 +810,49 @@ if ( havetorun ) {
     CLEAR_3_monthly_mean[, Date := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
 
 
+    CLOUD_3_monthly_meanA <-
+        DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+
+
+                       HOR_att       = mean(HOR_att,    na.rm = T),
+                       GLB_att       = mean(GLB_att,    na.rm = T),
+                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                       HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                       GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                       DIR_transp_sd = sd(DIR_transp, na.rm = T),
+                       GLB_att_N     = sum(!is.na(GLB_att)),
+                       HOR_att_N     = sum(!is.na(HOR_att)),
+                       DIR_att_N     = sum(!is.na(DIR_att))),
+                   by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                          Year    = year(Date),
+                          Month   = month(Date),
+                          preNoon = preNoon  ) ]
+
+    CLOUD_3_monthly_meanB <-
+        DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+
+
+                       HOR_att       = mean(HOR_att,    na.rm = T),
+                       GLB_att       = mean(GLB_att,    na.rm = T),
+                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                       HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                       GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                       DIR_transp_sd = sd(DIR_transp, na.rm = T),
+                       GLB_att_N     = sum(!is.na(GLB_att)),
+                       HOR_att_N     = sum(!is.na(HOR_att)),
+                       DIR_att_N     = sum(!is.na(DIR_att)),
+                       preNoon       = "Daily"),
+                   by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                          Year    = year(Date),
+                          Month   = month(Date) ) ]
+
+    CLOUD_3_monthly_mean <- data.table(rbind(data.frame(CLOUD_3_monthly_meanB),
+                                             data.frame(CLOUD_3_monthly_meanA) ))
+    rm(CLOUD_3_monthly_meanA, CLOUD_3_monthly_meanB)
+    CLOUD_3_monthly_mean[, Date := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
+
     ## ~ margin of error calculation ####
     conf_param  <- 1 - ( 1 - Monthly_confidence_limit ) / 2
     suppressWarnings({
@@ -649,6 +864,10 @@ if ( havetorun ) {
         CLEAR_3_monthly_mean[,HOR_att_EM   :=qt(conf_param,df=HOR_att_N -1)* HOR_att_sd   /sqrt(HOR_att_N)]
         CLEAR_3_monthly_mean[,GLB_att_EM   :=qt(conf_param,df=GLB_att_N -1)* GLB_att_sd   /sqrt(GLB_att_N)]
         CLEAR_3_monthly_mean[,DIR_transp_EM:=qt(conf_param,df=DIR_att_N -1)* DIR_transp_sd/sqrt(DIR_att_N)]
+        CLOUD_3_monthly_mean[,DIR_att_EM   :=qt(conf_param,df=DIR_att_N -1)* DIR_att_sd   /sqrt(DIR_att_N)]
+        CLOUD_3_monthly_mean[,HOR_att_EM   :=qt(conf_param,df=HOR_att_N -1)* HOR_att_sd   /sqrt(HOR_att_N)]
+        CLOUD_3_monthly_mean[,GLB_att_EM   :=qt(conf_param,df=GLB_att_N -1)* GLB_att_sd   /sqrt(GLB_att_N)]
+        CLOUD_3_monthly_mean[,DIR_transp_EM:=qt(conf_param,df=DIR_att_N -1)* DIR_transp_sd/sqrt(DIR_att_N)]
     })
 
     ## ~ Exclude means with less than `r Monthly_aggegation_N_lim` data points ####
@@ -664,6 +883,7 @@ if ( havetorun ) {
     ALL_3_monthly_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_att_EM    := NA ]
     ALL_3_monthly_mean[   GLB_att_N <= Monthly_aggegation_N_lim, GLB_att_EM    := NA ]
     ALL_3_monthly_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_EM := NA ]
+
     CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_att       := NA ]
     CLEAR_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim, HOR_att       := NA ]
     CLEAR_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim, GLB_att       := NA ]
@@ -676,6 +896,19 @@ if ( havetorun ) {
     CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_att_EM    := NA ]
     CLEAR_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim, GLB_att_EM    := NA ]
     CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_EM := NA ]
+
+    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_att       := NA ]
+    CLOUD_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim, HOR_att       := NA ]
+    CLOUD_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim, GLB_att       := NA ]
+    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp    := NA ]
+    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_att_sd    := NA ]
+    CLOUD_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim, HOR_att_sd    := NA ]
+    CLOUD_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim, GLB_att_sd    := NA ]
+    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_sd := NA ]
+    CLOUD_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim, HOR_att_EM    := NA ]
+    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_att_EM    := NA ]
+    CLOUD_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim, GLB_att_EM    := NA ]
+    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_EM := NA ]
 
     ## ~  Calculate monthly seasonal values ####
     ALL_3_monthly_seas <-
@@ -704,6 +937,20 @@ if ( havetorun ) {
                                  DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                              by = .( Month, SZA, preNoon ) ]
 
+    CLOUD_3_monthly_seas <-
+        CLOUD_3_monthly_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+                                 GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                                 HOR_att_seas    = mean(HOR_att,    na.rm = T),
+                                 DIR_transp_seas = mean(DIR_transp, na.rm = T),
+                                 DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                                 HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
+                                 GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
+                                 GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                                 HOR_att_N_seas  = sum(!is.na(HOR_att)),
+                                 DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
+                             by = .( Month, SZA, preNoon ) ]
+
+
     ## ~ monthly daily values ####
     ALL_3_monthly_daily_mean <-
         ALL_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
@@ -730,6 +977,20 @@ if ( havetorun ) {
                               HOR_att_N  = sum(!is.na(HOR_att)),
                               DIR_att_N  = sum(!is.na(DIR_att))  ),
                            by = .( Year = year(Date), Month = month(Date) ) ]
+
+    CLOUD_3_monthly_daily_mean <-
+        CLOUD_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
+                              GLB_att    = mean(GLB_att,    na.rm = T),
+                              HOR_att    = mean(HOR_att,    na.rm = T),
+                              DIR_transp = mean(DIR_transp, na.rm = T),
+                              DIR_att_sd = sd(  DIR_att,    na.rm = T),
+                              HOR_att_sd = sd(  HOR_att,    na.rm = T),
+                              GLB_att_sd = sd(  GLB_att,    na.rm = T),
+                              GLB_att_N  = sum(!is.na(GLB_att)),
+                              HOR_att_N  = sum(!is.na(HOR_att)),
+                              DIR_att_N  = sum(!is.na(DIR_att))  ),
+                           by = .( Year = year(Date), Month = month(Date) ) ]
+
 
     ## ~ seasonal monthly daily values ####
     ALL_3_monthly_daily_seas <-
@@ -758,11 +1019,23 @@ if ( havetorun ) {
                               DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                            by = .( Month = month(Date) ) ]
 
-
+    CLOUD_3_monthly_daily_seas <-
+        CLOUD_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+                              GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                              HOR_att_seas    = mean(HOR_att,    na.rm = T),
+                              DIR_transp_seas = mean(DIR_transp, na.rm = T),
+                              DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                              HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
+                              GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
+                              GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                              HOR_att_N_seas  = sum(!is.na(HOR_att)),
+                              DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
+                           by = .( Month = month(Date) ) ]
 
     ## remove unwanted data frames from memory
     rm(DATA_all)
     rm(DATA_Clear)
+    rm(DATA_Cloud)
 
     ####  save the whole work space  ####
     save(list = ls(all = TRUE),file = common_data)
@@ -800,7 +1073,6 @@ if ( havetorun ) {
 #                             qGLstd     = qGLstd$x,
 #                             qGLstdCNT  = qGLstdCNT$x,
 #                             qGLstdSTD  = qGLstdSTD$x)
-#
 #
 # #### run on 4 quarters of every hour ################################
 # ayearquarter$hourly <- as.numeric( ayearquarter$Dates ) %/% 3600
