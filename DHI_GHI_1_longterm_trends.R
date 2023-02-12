@@ -518,7 +518,7 @@ myRtools::write_dat(pprint,
 vars        <- c("DIR_att", "GLB_att")
 dbs         <- c("ALL_1_daily_DEseas",
                  "CLEAR_1_daily_DEseas",
-                 "CLOUD")
+                 "CLOUD_1_daily_DEseas")
 Seasons     <- c("Winter", "Spring","Summer","Autumn")
 for (DBn in dbs) {
     DB <- get(DBn)
@@ -556,7 +556,9 @@ for (DBn in dbs) {
 
 ## ~ calculate trends for each season  ####
 vars        <- c("DIR_att", "GLB_att")
-dbs         <- c("ALL_1_daily_DEseas", "CLEAR_1_daily_DEseas")
+dbs         <- c("ALL_1_daily_DEseas",
+                 "CLEAR_1_daily_DEseas",
+                 "CLOUD_1_daily_DEseas")
 Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 gather_seas <- data.frame()
 
@@ -643,7 +645,9 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 
 #+ monthlytrends, echo=F, include=T, results="asis"
 vars        <- c("DIR_att", "GLB_att")
-dbs         <- c("ALL_1_daily_DEseas","CLEAR_1_daily_DEseas")
+dbs         <- c("ALL_1_daily_DEseas",
+                 "CLEAR_1_daily_DEseas",
+                 "CLOUD_1_daily_DEseas")
 for (DBn in dbs) {
     DB <- get(DBn)
     ## set seasons in each data base
@@ -677,7 +681,9 @@ for (DBn in dbs) {
 
 ## ~ calculate trends for each month  ####
 vars        <- c("DIR_att", "GLB_att")
-dbs         <- c("ALL_1_daily_DEseas", "CLEAR_1_daily_DEseas")
+dbs         <- c("ALL_1_daily_DEseas",
+                 "CLEAR_1_daily_DEseas",
+                 "CLOUD_1_daily_DEseas")
 gather_seas <- data.frame()
 for (DBn in dbs) {
     DB <- get(DBn)
@@ -743,8 +749,6 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 
 
 
-## reshape table
-pprint
 
 
 
