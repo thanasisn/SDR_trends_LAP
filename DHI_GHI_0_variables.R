@@ -9,7 +9,8 @@ dict <- list(DIR_att    = 'Dir. Beam Irrad.',
              GLB_att    = "Global Irrad.",
              tsi1au_att = "TSI at 1au",
              ALL        = "All sky cond.",
-             CLEAR      = "Clear sky cond.")
+             CLEAR      = "Clear sky cond.",
+             CLOUD      = "Cloudy cond.")
 ## function to translate objects names
 translate <- function(...) as.vector(unlist(dict[c(...) == names(dict)]))
 
