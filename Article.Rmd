@@ -1,10 +1,10 @@
 ---
-title:         "Trends of SDR in Thessaloniki "
+title:         "Trends of downward SDR in Thessaloniki "
 author:
-  - Natsis Athanasios^[Laboratory of Atmospheric Physics,AUTH, natsisthanasis@gmail.com]
-  - Jane Doe^[Institution Two, jane@example.org]
+  - Natsis Athanasios^[Laboratory of Atmospheric Physics, AUTH, natsisthanasis@gmail.com]
+  - Alkiviadis Bais^[Laboratory of Atmospheric Physics, AUTH]
 abstract:
-  "Study of GHI and DNI radiation for 'clear sky' and all sly conditions."
+  "Study of GHI and DNI radiation for 'clear-sky' and all-sky conditions."
 
 documentclass:  article
 classoption:    a4paper,oneside
@@ -12,10 +12,10 @@ fontsize:       12pt
 geometry:       "left=0.5in,right=0.5in,top=0.5in,bottom=0.5in"
 link-citations: yes
 colorlinks:     yes
-urlcolor:        blue
+urlcolor:       blue
 
-bibliography:    [references.bib]
-biblio-style:    apalike
+bibliography:   [references.bib]
+biblio-style:   apalike
 
     
 header-includes:
@@ -25,18 +25,18 @@ header-includes:
 
 output:
   bookdown::pdf_document2:
-    number_sections:  no
-    fig_caption:      yes
-    keep_tex:         yes
-    latex_engine:     xelatex
-    toc:              yes
-    toc_depth:        4
-    fig_width:        7
-    fig_height:       4.5
+    number_sections: no
+    fig_caption:     yes
+    keep_tex:        yes
+    latex_engine:    xelatex
+    toc:             yes
+    toc_depth:       4
+    fig_width:       7
+    fig_height:      4.5
   html_document:
-    toc:        true
-    fig_width:  7.5
-    fig_height: 5
+    toc:             true
+    fig_width:       7.5
+    fig_height:      5
 date: "`r format(Sys.time(), '%F')`"
 
 ---
@@ -69,7 +69,7 @@ Time span for CM21 is 1993-2022 and 2016-2022 for CHP1.
 
 goal
 
-basic consepts
+basic conceptions
 
 
 

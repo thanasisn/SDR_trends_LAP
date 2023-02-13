@@ -1,8 +1,9 @@
 ## Build a single Rmd file
 
-.DEFAULT_GOAL := pdf
+.DEFAULT_GOAL := render
 
-all:       clean_all pdf rtim
+all:       clean_all pdf html rtim
+render:    pdf html rtim
 pdf:       p1 p2 p3 Ap
 html:      h1 h2 h3 Ah
 rtim:      r1 r2 r3
@@ -17,20 +18,20 @@ PDF    = $(TARGET).pdf
 SLIDY  = $(TARGET).html
 Ap: $(PDF)
 $(PDF): $(RMD)
-	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	@echo "Building: $@"
-	@echo "Changed:  $?"
-#	setsid evince    $@ &
+	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	@# echo "Changed:  $?"
+	@#setsid evince    $@ &
 Ah: $(SLIDY)
 $(SLIDY): $(RMD)
-	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@echo "Building: $@"
-	@echo "Changed:  $?"
-	# setsid mimeopen  $@ &
+	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
+	@#echo "Changed:  $?"
+	@# setsid mimeopen  $@ &
 
 
 
-###   1. DHI_GHI_longterm_trends
+###   1. DHI_GHI_longterm_trends  ####################################
 
 TARGET := DHI_GHI_1_longterm_trends
 RMD    := $(TARGET).R
@@ -70,7 +71,7 @@ $(RUNT): $(RMD)
 
 
 
-###   2. DHI_GHI_sza_trends
+###   2. DHI_GHI_sza_trends  #########################################
 
 TARGET := DHI_GHI_2_sza_trends
 RMD    := $(TARGET).R
@@ -83,7 +84,7 @@ $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	## Sync article files
-	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	## Sync presentation files
 	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
 #	setsid evince    $@ &
@@ -102,7 +103,7 @@ $(RUNT): $(RMD)
 
 
 
-###   3. DHI_GHI_trends_consistency
+###   3. DHI_GHI_trends_consistency  #################################
 
 TARGET := DHI_GHI_3_trends_consistency
 RMD    := $(TARGET).R
@@ -115,7 +116,7 @@ $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	## Sync article files
-	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	## Sync presentation files
 	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
 #	setsid evince    $@ &
@@ -133,16 +134,14 @@ $(RUNT): $(RMD)
 	-Rscript $?
 
 
-
-
 clean_cache:
 	rm -f -r ./Article_cache
 	rm -f -r ./DHI_GHI_1_longterm_trends_cache
-	rm -f -r ./DHI_GHI_1_longterm_trends_files
+	@#rm -f -r ./DHI_GHI_1_longterm_trends_files
 	rm -f -r ./DHI_GHI_2_sza_trends_cache
-	rm -f -r ./DHI_GHI_2_sza_trends_files
+	@#rm -f -r ./DHI_GHI_2_sza_trends_files
 	rm -f -r ./DHI_GHI_3_trends_consistency_cache
-	rm -f -r ./DHI_GHI_3_trends_consistency_files
+	@#rm -f -r ./DHI_GHI_3_trends_consistency_files
 	rm -f -r ./runtime/DHI_GHI_1_longterm_trends.pdf
 	rm -f -r ./runtime/DHI_GHI_2_sza_trends.pdf
 	rm -f -r ./runtime/DHI_GHI_3_trends_consistency.pdf
