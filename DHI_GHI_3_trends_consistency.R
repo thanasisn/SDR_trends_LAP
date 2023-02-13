@@ -21,19 +21,21 @@
 #' - \captionsetup{font=small}
 #'
 #' output:
+#'   html_document:
+#'     toc:        true
+#'     keep_md:    yes
+#'     fig_width:  7.5
+#'     fig_height: 5
 #'   bookdown::pdf_document2:
 #'     number_sections:  no
 #'     fig_caption:      no
-#'     keep_tex:         no
+#'     keep_tex:         yes
 #'     latex_engine:     xelatex
 #'     toc:              yes
 #'     toc_depth:        4
 #'     fig_width:        7
 #'     fig_height:       4.5
-#'   html_document:
-#'     toc:        true
-#'     fig_width:  7.5
-#'     fig_height: 5
+#'
 #' date: "`r format(Sys.time(), '%F')`"
 #'
 #' ---
@@ -363,7 +365,7 @@ for (adb in database) {
         }
     }
 }
-
+#'
 
 
 
@@ -415,12 +417,7 @@ for (adb in database) {
         }
     }
 }
-
-
-
-
-
-
+#'
 
 
 
