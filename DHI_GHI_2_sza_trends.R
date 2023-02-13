@@ -47,12 +47,11 @@
 knitr::opts_chunk$set(comment    = ""      )
 # knitr::opts_chunk$set(dev        = "pdf"   )
 knitr::opts_chunk$set(dev        = "png"    )
-knitr::opts_chunk$set(out.width  = "80%"   )
+knitr::opts_chunk$set(out.width  = "100%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
 knitr::opts_chunk$set(cache      =  F       )  ## !! breaks calculations
 # knitr::opts_chunk$set(fig.pos    = '!h'    )
-
-
+warning("Don't use cache it breaks computations")
 
 #+ include=F, echo=F
 ####  Set environment  ####
@@ -63,7 +62,7 @@ Script.Name <- tryCatch({ funr::sys.script() },
                             return("Climatological_") })
 if(!interactive()) {
     pdf(  file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
-    sink( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".out", Script.Name))),split=TRUE)
+    sink( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".out", Script.Name))), split=TRUE)
     filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",basename(sub("\\.R$",".lock",Script.Name))),timeout = 0)
 }
 
@@ -90,10 +89,7 @@ source("~/CODE/FUNCTIONS/R/data.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
 
-## move to data_input for all three
-# rm(DATA_Clear)
-# rm(DATA_all)
-
+## notification
 options(error = function() {
     if (interactive()) {
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
@@ -105,15 +101,16 @@ options(error = function() {
 
 
 #+ echo=F, include=T
-#' ### Data range
+#'
+#' ### Data info
+#'
 #' Time data span `r range(ALL_1_daily_mean$Date)`
 #'
+#' Where is a **running mean the window is `r running_mean_window_days` days** or
+#' `r running_mean_window_days / Days_of_year` years.
 #'
 #' ## 2. Long term by SZA
 #'
-#'
-
-
 #+ echo=F, include=F
 ## ~ Plot longterm scatter plots  ####
 data_list  <- list(ALL   = ALL_2_daily_mean,
@@ -138,14 +135,14 @@ for (i in 1:length(data_list)) {
 ## ~ Plot longterm histograms  ####
 for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
-      # intersect(names(Dplot),wecare)
-        for (yvar in wecare) {
-            if (! yvar %in% names(Dplot)) next()
-            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-            vect <- Dplot[[yvar]]
-            hist(vect,
-                 main = paste(names(data_list[i]), yvar),
-                 breaks = 100, col = col)
+    # intersect(names(Dplot),wecare)
+    for (yvar in wecare) {
+        if (! yvar %in% names(Dplot)) next()
+        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+        vect <- Dplot[[yvar]]
+        hist(vect,
+             main = paste(names(data_list[i]), yvar),
+             breaks = 100, col = col)
     }
 }
 
@@ -175,7 +172,7 @@ for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (yvar in wecare) {
         if (!yvar %in% names(Dplot)) next()
-        col  <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
         vect <- Dplot[[yvar]]
         hist(vect,
              main = paste(names(data_list[i]), yvar),
