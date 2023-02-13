@@ -106,8 +106,6 @@ options(error = function() {
 #'
 #' Time data span `r range(ALL_1_daily_mean$Date)`
 #'
-#' Where is a **running mean the window is `r running_mean_window_days` days** or
-#' `r running_mean_window_days / Days_of_year` years.
 #'
 #' ## 2. Long term by SZA
 #'
@@ -289,7 +287,6 @@ szatrends <- data.table(szatrends)
 setorder(szatrends,SZA)
 
 
-
 ## covert to trend per year
 szatrends[, slope    := slope    * Days_of_year ]
 szatrends[, slope.sd := slope.sd * Days_of_year ]
@@ -330,8 +327,8 @@ abline(h=300)
 
 
 ## stats vars to plot
-wecare <- grep( "^slope|^N",names(szatrends),ignore.case = T, value = T)
-wecare <- grep("^slope\\.t",wecare,ignore.case = T,value = T, invert = T)
+wecare <- grep("^slope|^N", names(szatrends), ignore.case = T, value = T)
+wecare <- grep("^slope\\.t", wecare, ignore.case = T, value = T, invert = T)
 
 
 #+ szatrends, echo=F, include=T, results = "asis"
@@ -343,7 +340,7 @@ for (type in unique(szatrends$DATA)) {
         cat("\n\\newpage\n\n")
         cat(paste("\n###", type, avar,"\n\n"))
 
-        par("mar" = c(3,4,2,1))
+        par("mar" = c(4,4,2,1))
 
         ## statistic variable
         for (awe in wecare) {
@@ -465,6 +462,7 @@ szatrends_seas[ preNoon == F, pch := pch_pm ]
 
 hist(szatrends_seas[DATA == dbs[1],N],  breaks = 100)
 hist(szatrends_seas[DATA == dbs[2],N],  breaks = 100)
+hist(szatrends_seas[DATA == dbs[3],N],  breaks = 100)
 hist(szatrends_seas[var  == vars[1],N], breaks = 100)
 hist(szatrends_seas[var  == vars[2],N], breaks = 100)
 
@@ -541,16 +539,16 @@ for (ase in seasons) {
                 abline(h = 0, lty = 3 )
 
                 ## test for some plots
-                if (grepl("CLEAR",type, ignore.case = T) ) typeP <- "Clear Sky (Deseas.)"
-                if (grepl("ALL",  type, ignore.case = T) ) typeP <- "All Sky (Deseas.)"
+                if (grepl("CLEAR", type, ignore.case = T)) typeP <- "Clear Sky (Deseas.)"
+                if (grepl("ALL",   type, ignore.case = T)) typeP <- "All Sky (Deseas.)"
 
-                title(paste(ase, awename, typeP, translate(avar)), cex.main = 1 )
+                title(paste(ase, awename, typeP, translate(avar)), cex.main = 1)
 
                 # lines(pam$SZA, pam[[awe]], pch =  pch_am, col = pam$col, type = "b")
                 # lines(pam$SZA, ppm[[awe]], pch =  pch_pm, col = pam$col, type = "b")
 
-                lines(pam$SZA, pam[[awe]], pch =  pch_am, col = 2, type = "b", lwd = 2)
-                lines(ppm$SZA, ppm[[awe]], pch =  pch_pm, col = 3, type = "b", lwd = 2)
+                lines(pam$SZA, pam[[awe]], pch = pch_am, col = 2, type = "b", lwd = 2)
+                lines(ppm$SZA, ppm[[awe]], pch = pch_pm, col = 3, type = "b", lwd = 2)
 
                 legend("bottom",
                        legend = c("Morning",       "Evening"),
