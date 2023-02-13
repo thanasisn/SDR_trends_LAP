@@ -49,10 +49,8 @@ knitr::opts_chunk$set(comment    = ""      )
 knitr::opts_chunk$set(dev        = "png"    )
 knitr::opts_chunk$set(out.width  = "100%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
-knitr::opts_chunk$set(cache      =  F       ) ## !!!!
+knitr::opts_chunk$set(cache      =  F       )  ## !! breaks calculations
 # knitr::opts_chunk$set(fig.pos    = '!h'    )
-
-
 warning("Don't use cache it breaks computations")
 
 #+ include=F, echo=F
@@ -92,13 +90,14 @@ source("~/CODE/FUNCTIONS/R/data.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
 
-## norification
+## notification
 options(error = function() {
     if (interactive()) {
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
-        system("notify-send -u normal -t 30000 'R session' 'An error occured!'")
+        system("notify-send -u normal -t 30000 'R session' 'An error occurred!'")
     }
 })
+
 
 
 
@@ -132,11 +131,11 @@ for (i in 1:length(data_list)) {
             plot(Dplot[[xvar]], vect,
                  pch = ".", col = col,
                  main = paste(names(data_list[i]), yvar),
-                 xlab = xvar, ylab = yvar )
+                 xlab = xvar, ylab = yvar)
         }
     }
 }
-#### plot histograms ####
+## ~ Plot longterm histograms  ####
 for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     # intersect(names(Dplot),wecare)

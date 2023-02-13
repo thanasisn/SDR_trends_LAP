@@ -47,12 +47,11 @@
 knitr::opts_chunk$set(comment    = ""      )
 # knitr::opts_chunk$set(dev        = "pdf"   )
 knitr::opts_chunk$set(dev        = "png"    )
-knitr::opts_chunk$set(out.width  = "80%"   )
+knitr::opts_chunk$set(out.width  = "100%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
 knitr::opts_chunk$set(cache      =  F       )  ## !! breaks calculations
 # knitr::opts_chunk$set(fig.pos    = '!h'    )
-
-
+warning("Don't use cache it breaks computations")
 
 #+ include=F, echo=F
 ####  Set environment  ####
@@ -90,34 +89,28 @@ source("~/CODE/FUNCTIONS/R/data.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
 
-## move to data_input for all three
-# rm(DATA_Clear)
-# rm(DATA_all)
-
+## notification
 options(error = function() {
     if (interactive()) {
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
-        system("notify-send -u normal -t 30000 'R session' 'An error occured!'")
+        system("notify-send -u normal -t 30000 'R session' 'An error occurred!'")
     }
 })
 
 
 
 
-
-
-
-
 #+ echo=F, include=T
-#' ### Data range
+#'
+#' ### Data info
+#'
 #' Time data span `r range(ALL_1_daily_mean$Date)`
 #'
+#' Where is a **running mean the window is `r running_mean_window_days` days** or
+#' `r running_mean_window_days / Days_of_year` years.
 #'
 #' ## 3. Consistency of trends
 #'
-#'
-
-
 #+ echo=F, include=F
 ## ~ Plots longterm  ####
 
@@ -131,7 +124,7 @@ for (i in 1:length(data_list)) {
     for (xvar in by_var){
         for (yvar in wecare) {
             if (! yvar %in% names(Dplot)) next()
-            col  <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
             vect <- Dplot[[yvar]]
             plot(Dplot[[xvar]], vect,
                  pch = ".", col = col,
@@ -140,6 +133,7 @@ for (i in 1:length(data_list)) {
         }
     }
 }
+## ~ Plot longterm histograms  ####
 for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     # intersect(names(Dplot),wecare)
@@ -187,9 +181,6 @@ for(i in 1:length(data_list)) {
     }
 }
 rm(data_list)
-
-
-
 
 
 
