@@ -114,7 +114,8 @@ options(error = function() {
 #+ echo=F, include=F
 ## ~ Plot longterm scatter plots  ####
 data_list  <- list(ALL   = ALL_2_daily_mean,
-                   CLEAR = CLEAR_2_daily_mean)
+                   CLEAR = CLEAR_2_daily_mean,
+                   CLOUD = CLOUD_2_daily_mean)
 by_var     <- c("doy","SZA")
 wecare     <- unique(unlist(lapply(data_list, names)))
 wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
@@ -149,7 +150,8 @@ for (i in 1:length(data_list)) {
 #+ echo=F, include=F
 ## ~ Plots seasonal data scatter plots ####
 data_list  <- list(ALL_Seas   =   ALL_2_daily_seas,
-                   CLEAR_Seas = CLEAR_2_daily_seas)
+                   CLEAR_Seas = CLEAR_2_daily_seas,
+                   CLOUD_Seas = CLOUD_2_daily_seas)
 by_var     <- c("doy")
 wecare     <- unique(unlist(lapply(data_list, names)))
 wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
@@ -198,9 +200,11 @@ rm(data_list)
 
 ALL_daily_DEseas   <- merge(  ALL_2_daily_mean, ALL_2_daily_seas,   by = c("doy", "SZA", "preNoon"), all = T)
 CLEAR_daily_DEseas <- merge(CLEAR_2_daily_mean, CLEAR_2_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
+CLOUD_daily_DEseas <- merge(CLOUD_2_daily_mean, CLOUD_2_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
 
 setorder(ALL_daily_DEseas,Date)
 setorder(CLEAR_daily_DEseas,Date)
+setorder(CLOUD_daily_DEseas,Date)
 
 
 ## anomaly
@@ -230,6 +234,10 @@ CLEAR_daily_DEseas[, DIR_att   := 100 * ( DIR_att    - DIR_att_seas    ) / DIR_a
 CLEAR_daily_DEseas[, HOR_att   := 100 * ( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
 CLEAR_daily_DEseas[, GLB_att   := 100 * ( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
 CLEAR_daily_DEseas[, DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+CLOUD_daily_DEseas[, DIR_att   := 100 * ( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+CLOUD_daily_DEseas[, HOR_att   := 100 * ( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+CLOUD_daily_DEseas[, GLB_att   := 100 * ( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+CLOUD_daily_DEseas[, DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
 #+ echo=F, include=F
 
 
@@ -240,7 +248,9 @@ CLEAR_daily_DEseas[, DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_t
 #+ echo=F, include=F
 timefactor <- 1
 vars <- c("DIR_att", "GLB_att", "DIR_transp")
-dbs  <- c("ALL_daily_DEseas", "CLEAR_daily_DEseas")
+dbs  <- c("ALL_daily_DEseas",
+          "CLEAR_daily_DEseas",
+          "CLOUD_daily_DEseas")
 
 gather <- data.frame()
 
@@ -293,11 +303,11 @@ szatrends[ preNoon == F, pch := pch_pm ]
 
 
 
-hist(szatrends[DATA==dbs[1],N], breaks = 100)
-hist(szatrends[DATA==dbs[2],N], breaks = 100)
+hist(szatrends[DATA == dbs[1], N], breaks = 100)
+hist(szatrends[DATA == dbs[2], N], breaks = 100)
 
-hist(szatrends[var==vars[1],N], breaks = 100)
-hist(szatrends[var==vars[2],N], breaks = 100)
+hist(szatrends[var == vars[1], N], breaks = 100)
+hist(szatrends[var == vars[2], N], breaks = 100)
 
 # szatrends <- szatrends[ N > 50]
 
@@ -387,7 +397,9 @@ for (type in unique(szatrends$DATA)) {
 #+ echo=F, include=F
 timefactor  <- 1  ## to display % per year
 vars        <- c("DIR_att", "GLB_att", "DIR_transp")
-dbs         <- c("ALL_daily_DEseas", "CLEAR_daily_DEseas")
+dbs         <- c("ALL_daily_DEseas",
+                 "CLEAR_daily_DEseas",
+                 "CLOUD_daily_DEseas")
 seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 gather_seas <- data.frame()
 
