@@ -200,9 +200,9 @@ ALL_daily_DEseas   <- merge(  ALL_2_daily_mean, ALL_2_daily_seas,   by = c("doy"
 CLEAR_daily_DEseas <- merge(CLEAR_2_daily_mean, CLEAR_2_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
 CLOUD_daily_DEseas <- merge(CLOUD_2_daily_mean, CLOUD_2_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
 
-setorder(ALL_daily_DEseas,Date)
-setorder(CLEAR_daily_DEseas,Date)
-setorder(CLOUD_daily_DEseas,Date)
+setorder(ALL_daily_DEseas,   Date)
+setorder(CLEAR_daily_DEseas, Date)
+setorder(CLOUD_daily_DEseas, Date)
 
 
 ## anomaly
@@ -329,6 +329,7 @@ abline(h=300)
 ## stats vars to plot
 wecare <- grep("^slope|^N", names(szatrends), ignore.case = T, value = T)
 wecare <- grep("^slope\\.t", wecare, ignore.case = T, value = T, invert = T)
+wecare <- grep("slope\\.sd", wecare, ignore.case = T, value = T, invert = T)
 
 
 #+ szatrends, echo=F, include=T, results = "asis"
@@ -420,7 +421,7 @@ for (DBn in dbs) {
 
                     if (sum(!is.na(dataset[[avar]])) <= 1) next()
 
-                    lm1 <- lm( dataset[[avar]] ~ dataset$Date )
+                    lm1 <- lm(dataset[[avar]] ~ dataset$Date)
 
                     gather_seas <- rbind(gather_seas,
                                     data.frame(
@@ -491,8 +492,9 @@ abline(h=300/4)
 
 
 ## stats vars to plot
-wecare <- grep( "^slope|^N",names(szatrends_seas),ignore.case = T, value = T)
-wecare <- grep("^slope\\.t",wecare,ignore.case = T,value = T, invert = T)
+wecare <- grep( "^slope|^N", names(szatrends_seas), ignore.case = T, value = T)
+wecare <- grep("^slope\\.t", wecare, ignore.case = T, value = T, invert = T)
+wecare <- grep("slope\\.sd", wecare, ignore.case = T, value = T, invert = T)
 
 
 #+ szatrendsseas, echo=F, include=T, results = "asis"
