@@ -459,7 +459,7 @@ for (DBn in dbs) {
 
 
 ## ~ display trends table ####
-#'
+#' \\newpage
 #' ## Table of total trends.
 #'
 #+ echo=F, include=T
