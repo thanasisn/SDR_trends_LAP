@@ -302,7 +302,7 @@ for (DBn in dbs) {
             rm <- frollmean(dataset[[avar]], round(Days_of_year * 4),
                             na.rm = TRUE, algo = "exact", align = "center")
 
-            points(dataset$Date, rm, col = "red", pch = 0.5)
+            points(dataset$Date, rm, col = "red", cex = 0.5)
 
             ## decorations
             fit <- lm1[[1]]
@@ -359,7 +359,7 @@ for (DBn in dbs) {
         rm <- frollmean(dataset[[avar]], round(Days_of_year * 4),
                         na.rm = TRUE, algo = "exact", align = "center")
 
-        points(dataset$Date, rm, col = "red", pch = 0.5)
+        points(dataset$Date, rm, col = "red", cex = 0.5)
 
 
         ## decorations
@@ -418,7 +418,7 @@ for (DBn in dbs) {
         rm <- frollmean(dataset[[avar]], round(Days_of_year * 4),
                         na.rm = TRUE, algo = "exact", align = "center")
 
-        points(dataset$Date, rm, col = "red", pch = 0.5)
+        points(dataset$Date, rm, col = "red", cex = 0.5)
 
 
         ## decorations
