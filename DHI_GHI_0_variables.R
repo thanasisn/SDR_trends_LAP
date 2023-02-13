@@ -46,6 +46,7 @@ pch_am                   <-   1
 pch_pm                   <-   4
 pch_ampm                 <-  13 ## try 10
 pch_daily                <-  19
+running_mean_window_days <- 3 * Days_of_year
 
 MIN_ELEVA                <-   5  ##  global low elevation limit
 SZA_BIN                  <-   1

@@ -92,12 +92,7 @@ source("~/CODE/FUNCTIONS/R/data.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
 
-
-## move to data_input for all three
-# rm(DATA_Clear)
-# rm(DATA_all)
-
-
+## norification
 options(error = function() {
     if (interactive()) {
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
@@ -108,21 +103,22 @@ options(error = function() {
 
 
 #+ echo=F, include=T
-#' ### Data range
+#'
+#' ### Data info
+#'
 #' Time data span `r range(ALL_1_daily_mean$Date)`
 #'
+#' Where is a **running mean the window is `r running_mean_window_days` days** or
+#' `r running_mean_window_days / Days_of_year` years.
 #'
 #' ## 1. Long term anomaly trends
 #'
-#'
-
-
 #+ echo=F, include=F
 ## ~ Plot all data  ####
 data_list  <- list(ALL   = ALL_1_daily_mean,
                    CLEAR = CLEAR_1_daily_mean,
                    CLOUD = CLOUD_1_daily_mean)
-by_var     <- c("Date","doy")
+by_var     <- c("Date", "doy")
 wecare     <- unique(unlist(lapply(data_list, names)))
 wecare     <- grep(paste0(by_var,collapse = "|"), wecare, invert = T, value = T)
 ## plot data
@@ -168,7 +164,7 @@ for(i in 1:length(data_list)) {
     for (xvar in by_var){
         for (yvar in wecare) {
             if (! yvar %in% names(Dplot)) next()
-            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
             vect <- Dplot[[yvar]]
             plot(Dplot[[xvar]], vect,
                  pch = ".", col = col,
@@ -181,7 +177,7 @@ for(i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (yvar in wecare) {
         if (! yvar %in% names(Dplot)) next()
-        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+        col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
         vect <- Dplot[[yvar]]
         hist(vect,
              main = paste(names(data_list[i]), yvar),
@@ -267,7 +263,7 @@ for (DBn in dbs) {
             dataset <- DB
 
             ## linear model
-            lm1 <- lm( dataset[[avar]] ~ dataset$Date )
+            lm1 <- lm(dataset[[avar]] ~ dataset$Date)
             # lm1 <- lm( dataset[[avar]] ~ dataset$DYear )
 
             ## catpture lm
@@ -299,7 +295,7 @@ for (DBn in dbs) {
             # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
             #           na.rm = TRUE, algo = "exact")
 
-            rm <- frollmean(dataset[[avar]], round(Days_of_year * 4),
+            rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
                             na.rm = TRUE, algo = "exact", align = "center")
 
             points(dataset$Date, rm, col = "red", cex = 0.5)
@@ -327,9 +323,9 @@ for (DBn in dbs) {
         dataset <- DB
 
         ## linear model
-        lm1        <- lm( dataset[[avar]] ~ dataset$Date )
+        lm1        <- lm(dataset[[avar]] ~ dataset$Date)
 
-        ## catpture lm
+        ## capture lm
         gather <- rbind(gather,
                         data.frame(
                             linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
@@ -356,7 +352,7 @@ for (DBn in dbs) {
         # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
         #           na.rm = TRUE, algo = "exact")
 
-        rm <- frollmean(dataset[[avar]], round(Days_of_year * 4),
+        rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
                         na.rm = TRUE, algo = "exact", align = "center")
 
         points(dataset$Date, rm, col = "red", cex = 0.5)
@@ -388,7 +384,7 @@ for (DBn in dbs) {
         ## linear model
         lm1        <- lm( dataset[[avar]] ~ dataset$Date )
 
-        ## catpture lm
+        ## capture lm
         gather <- rbind(gather,
                         data.frame(
                             linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
@@ -415,7 +411,7 @@ for (DBn in dbs) {
         # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
         #           na.rm = TRUE, algo = "exact")
 
-        rm <- frollmean(dataset[[avar]], round(Days_of_year * 4),
+        rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
                         na.rm = TRUE, algo = "exact", align = "center")
 
         points(dataset$Date, rm, col = "red", cex = 0.5)
@@ -425,7 +421,7 @@ for (DBn in dbs) {
         fit <- lm1[[1]]
         legend('top', lty = 1, bty = "n", lwd = 2, cex = 2,
                paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-        title(paste(translate(sub("_.*","",DBn)),translate(avar)), cex.main = 0.7)
+        title(paste(translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
 
     }
 }
@@ -539,11 +535,19 @@ for (DBn in dbs) {
                  ylab = bquote("Seasonal Anomaly [%]" ) )
                  # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
             abline(lm1)
+
+            ## plot running mean
+            rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
+                            na.rm = TRUE, algo = "exact", align = "center")
+
+            points(dataset$Date, rm, col = "red", cex = 0.5)
+
+
             ## decorations
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n",
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-            title(paste(ase,translate(sub("_.*","",DBn)),translate(avar)), cex=0.7)
+            title(paste(ase, translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
         }
     }
 }
@@ -595,7 +599,7 @@ for (DBn in dbs) {
 
 wecare           <- grep("intercept", names(gather_seas), value = T, invert = T)
 gather_seas      <- data.table(gather_seas)
-gather_seas$DATA <- sub("_.*","",gather_seas$DATA)
+gather_seas$DATA <- sub("_.*", "", gather_seas$DATA)
 
 pprint           <- gather_seas[ , ..wecare]
 
@@ -664,11 +668,18 @@ for (DBn in dbs) {
                  ylab = bquote("Seasonal Anomaly [%]" ) )
             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
             abline(lm1)
+
+            ## plot running mean
+            rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
+                            na.rm = TRUE, algo = "exact", align = "center")
+
+            points(dataset$Date, rm, col = "red", cex = 0.5)
+
             ## decorations
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n",
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-            title(paste(month.name[ase],translate(sub("_.*","",DBn)),translate(avar)), cex=0.7)
+            title(paste(month.name[ase], translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
         }
     }
 }
@@ -734,7 +745,7 @@ pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year ]
 pprint[, slope.ConfInt_0.99 := NULL ]
 pprint[, slope.ConfInt_0.95 := NULL ]
 
-setorder(pprint,DATA,var,Month)
+setorder(pprint, DATA, var, Month)
 
 #+ echo=F, include=T
 pander(pprint,
