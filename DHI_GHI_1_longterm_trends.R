@@ -61,9 +61,9 @@ Script.Name <- tryCatch({ funr::sys.script() },
                         error = function(e) { cat(paste("\nUnresolved script name: ", e),"\n\n")
                             return("Climatological_") })
 if(!interactive()) {
-    pdf(  file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
-    sink( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".out", Script.Name))), split=TRUE)
-    filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",basename(sub("\\.R$",".lock",Script.Name))),timeout = 0)
+    pdf( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
+    sink(file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
+    filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
 par(pch = ".")
@@ -194,14 +194,16 @@ rm(data_list)
 
 ##TODO margin of error for anomaly!!!!
 
-ALL_1_daily_DEseas   <- merge(  ALL_1_daily_mean,   ALL_1_daily_seas, by = "doy", all = T)
+
+#### ~ Daily de seasonal anomaly -----------------------------------------------
+
+  ALL_1_daily_DEseas <- merge(  ALL_1_daily_mean,   ALL_1_daily_seas, by = "doy", all = T)
 CLEAR_1_daily_DEseas <- merge(CLEAR_1_daily_mean, CLEAR_1_daily_seas, by = "doy", all = T)
 CLOUD_1_daily_DEseas <- merge(CLOUD_1_daily_mean, CLOUD_1_daily_seas, by = "doy", all = T)
 
 setorder(ALL_1_daily_DEseas,   Date)
 setorder(CLEAR_1_daily_DEseas, Date)
 setorder(CLOUD_1_daily_DEseas, Date)
-
 
 ## anomaly
 # #' #### Use the actual difference from seasonal
@@ -242,6 +244,55 @@ CLOUD_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_t
   ALL_1_daily_DEseas$DYear <- as.numeric(  ALL_1_daily_DEseas$Date) / Days_of_year
 CLEAR_1_daily_DEseas$DYear <- as.numeric(CLEAR_1_daily_DEseas$Date) / Days_of_year
 CLOUD_1_daily_DEseas$DYear <- as.numeric(CLOUD_1_daily_DEseas$Date) / Days_of_year
+
+
+
+
+#### ~ Monthly de seasonal anomaly -----------------------------------------------
+
+  ALL_3_monthly_DEseas <- merge(  ALL_3_monthly_daily_mean,   ALL_3_monthly_daily_seas, by = "Month", all = T)
+CLEAR_3_monthly_DEseas <- merge(CLEAR_3_monthly_daily_mean, CLEAR_3_monthly_daily_seas, by = "Month", all = T)
+CLOUD_3_monthly_DEseas <- merge(CLOUD_3_monthly_daily_mean, CLOUD_3_monthly_daily_seas, by = "Month", all = T)
+
+  ALL_3_monthly_DEseas[, Date := as.POSIXct(paste(Year, Month,"1"), format = "%Y %m %d")]
+CLEAR_3_monthly_DEseas[, Date := as.POSIXct(paste(Year, Month,"1"), format = "%Y %m %d")]
+CLOUD_3_monthly_DEseas[, Date := as.POSIXct(paste(Year, Month,"1"), format = "%Y %m %d")]
+
+setorder(  ALL_3_monthly_DEseas, Date)
+setorder(CLEAR_3_monthly_DEseas, Date)
+setorder(CLOUD_3_monthly_DEseas, Date)
+
+
+
+##TODO margin of error for anomaly!!!!
+
+## relative anomaly
+#' #### Use the % difference from seasonal values
+#+ echo=F, include=T
+ALL_3_monthly_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+ALL_3_monthly_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+ALL_3_monthly_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+ALL_3_monthly_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+
+CLEAR_3_monthly_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+CLEAR_3_monthly_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+CLEAR_3_monthly_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+CLEAR_3_monthly_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+
+CLOUD_3_monthly_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+CLOUD_3_monthly_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+CLOUD_3_monthly_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+CLOUD_3_monthly_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+#+ echo=F, include=F
+
+## create a float year value
+  ALL_3_monthly_DEseas$DYear <- as.numeric(  ALL_3_monthly_DEseas$Date) / Days_of_year
+CLEAR_3_monthly_DEseas$DYear <- as.numeric(CLEAR_3_monthly_DEseas$Date) / Days_of_year
+CLOUD_3_monthly_DEseas$DYear <- as.numeric(CLOUD_3_monthly_DEseas$Date) / Days_of_year
+
+
+
+
 
 
 
@@ -507,9 +558,17 @@ myRtools::write_dat(pprint,
 
 #+ seasonaltrends, echo=F, include=T, results="asis"
 vars        <- c("DIR_att", "GLB_att")
-dbs         <- c("ALL_1_daily_DEseas",
-                 "CLEAR_1_daily_DEseas",
-                 "CLOUD_1_daily_DEseas")
+
+## Daily aggregation
+# dbs         <- c(  "ALL_1_daily_DEseas",
+#                  "CLEAR_1_daily_DEseas",
+#                  "CLOUD_1_daily_DEseas")
+
+## Monthly aggregation
+dbs         <- c(  "ALL_3_monthly_DEseas",
+                 "CLEAR_3_monthly_DEseas",
+                 "CLOUD_3_monthly_DEseas")
+
 Seasons     <- c("Winter", "Spring","Summer","Autumn")
 for (DBn in dbs) {
     DB <- get(DBn)
@@ -530,6 +589,7 @@ for (DBn in dbs) {
             ## plot
             plot(dataset$Date, dataset[[avar]],
                  pch  = ".", col = get(paste0("col_",avar)),
+                 cex  = 3,
                  xlab = "",
                  ylab = bquote("Seasonal Anomaly [%]" ) )
                  # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
@@ -644,9 +704,17 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 
 #+ monthlytrends, echo=F, include=T, results="asis"
 vars        <- c("DIR_att", "GLB_att")
-dbs         <- c("ALL_1_daily_DEseas",
-                 "CLEAR_1_daily_DEseas",
-                 "CLOUD_1_daily_DEseas")
+
+## Daily aggregation
+# dbs         <- c(  "ALL_1_daily_DEseas",
+#                  "CLEAR_1_daily_DEseas",
+#                  "CLOUD_1_daily_DEseas")
+
+## Monthly aggregation
+dbs         <- c(  "ALL_3_monthly_DEseas",
+                   "CLEAR_3_monthly_DEseas",
+                   "CLOUD_3_monthly_DEseas")
+
 for (DBn in dbs) {
     DB <- get(DBn)
     ## set seasons in each data base
@@ -663,6 +731,7 @@ for (DBn in dbs) {
             ## plot
             plot(dataset$Date, dataset[[avar]],
                  pch  = ".", col = get(paste0("col_",avar)),
+                 cex  = 3,
                  xlab = "",
                  ylab = bquote("Seasonal Anomaly [%]" ) )
             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
