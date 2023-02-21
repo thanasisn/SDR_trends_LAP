@@ -190,7 +190,9 @@ rm(data_list)
 
 
 #### Calculate seasonal anomaly ####
-#' #### Calculate seasonal anomaly ####
+#'
+#' ### Calculate seasonal anomaly
+#'
 #+ echo=F, include=F
 
 ##TODO margin of error for anomaly!!!!
@@ -241,10 +243,10 @@ CLOUD_1_daily_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_a
 CLOUD_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
 #+ echo=F, include=F
 
-## create a float year value
-  ALL_1_daily_DEseas$DYear <- as.numeric(  ALL_1_daily_DEseas$Date) / Days_of_year
-CLEAR_1_daily_DEseas$DYear <- as.numeric(CLEAR_1_daily_DEseas$Date) / Days_of_year
-CLOUD_1_daily_DEseas$DYear <- as.numeric(CLOUD_1_daily_DEseas$Date) / Days_of_year
+# ## create a float year value
+#   ALL_1_daily_DEseas$DYear <- as.numeric(  ALL_1_daily_DEseas$Date) / Days_of_year
+# CLEAR_1_daily_DEseas$DYear <- as.numeric(CLEAR_1_daily_DEseas$Date) / Days_of_year
+# CLOUD_1_daily_DEseas$DYear <- as.numeric(CLOUD_1_daily_DEseas$Date) / Days_of_year
 
 
 
@@ -255,9 +257,11 @@ CLOUD_1_daily_DEseas$DYear <- as.numeric(CLOUD_1_daily_DEseas$Date) / Days_of_ye
 CLEAR_3_monthly_DEseas <- merge(CLEAR_3_monthly_daily_mean, CLEAR_3_monthly_daily_seas, by = "Month", all = T)
 CLOUD_3_monthly_DEseas <- merge(CLOUD_3_monthly_daily_mean, CLOUD_3_monthly_daily_seas, by = "Month", all = T)
 
-  ALL_3_monthly_DEseas[, Date := as.POSIXct(paste(Year, Month,"1"), format = "%Y %m %d")]
-CLEAR_3_monthly_DEseas[, Date := as.POSIXct(paste(Year, Month,"1"), format = "%Y %m %d")]
-CLOUD_3_monthly_DEseas[, Date := as.POSIXct(paste(Year, Month,"1"), format = "%Y %m %d")]
+  ALL_3_monthly_DEseas[, Date := as.Date(paste(Year, Month,"1"), format = "%Y %m %d")]
+CLEAR_3_monthly_DEseas[, Date := as.Date(paste(Year, Month,"1"), format = "%Y %m %d")]
+CLOUD_3_monthly_DEseas[, Date := as.Date(paste(Year, Month,"1"), format = "%Y %m %d")]
+
+
 
 setorder(  ALL_3_monthly_DEseas, Date)
 setorder(CLEAR_3_monthly_DEseas, Date)
@@ -268,7 +272,9 @@ setorder(CLOUD_3_monthly_DEseas, Date)
 ##TODO margin of error for anomaly!!!!
 
 ## relative anomaly
-#' #### Use the % difference from seasonal values
+##
+#' ### Using the % difference from seasonal values
+#'
 #+ echo=F, include=T
 ALL_3_monthly_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
 ALL_3_monthly_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
@@ -286,10 +292,10 @@ CLOUD_3_monthly_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB
 CLOUD_3_monthly_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
 #+ echo=F, include=F
 
-## create a float year value
-  ALL_3_monthly_DEseas$DYear <- as.numeric(  ALL_3_monthly_DEseas$Date) / Days_of_year
-CLEAR_3_monthly_DEseas$DYear <- as.numeric(CLEAR_3_monthly_DEseas$Date) / Days_of_year
-CLOUD_3_monthly_DEseas$DYear <- as.numeric(CLOUD_3_monthly_DEseas$Date) / Days_of_year
+# ## create a float year value
+#   ALL_3_monthly_DEseas$DYear <- as.numeric(  ALL_3_monthly_DEseas$Date) / Days_of_year
+# CLEAR_3_monthly_DEseas$DYear <- as.numeric(CLEAR_3_monthly_DEseas$Date) / Days_of_year
+# CLOUD_3_monthly_DEseas$DYear <- as.numeric(CLOUD_3_monthly_DEseas$Date) / Days_of_year
 
 
 
@@ -304,7 +310,9 @@ gather <- data.frame()
 
 ## ~ plot all sky trends ####
 #' \newpage
+#'
 #' ## Trends on all sky conditions data
+#'
 #+ longtermtrendsALL, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
 vars <- c("DIR_att", "GLB_att")
@@ -354,7 +362,7 @@ for (DBn in dbs) {
 
             ## decorations
             fit <- lm1[[1]]
-            legend('top', lty = 1, bty = "n", lwd = 2, cex = 2,
+            legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2])*Days_of_year,3),'* year'))
             title(paste(translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
     }
@@ -414,7 +422,7 @@ for (DBn in dbs) {
 
         ## decorations
         fit <- lm1[[1]]
-        legend('top', lty = 1, bty = "n", lwd = 2, cex = 2,
+        legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
                paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
         title(paste(translate(sub("_.*","",DBn)),translate(avar)), cex.main = 0.7)
 
@@ -474,7 +482,7 @@ for (DBn in dbs) {
 
         ## decorations
         fit <- lm1[[1]]
-        legend('top', lty = 1, bty = "n", lwd = 2, cex = 2,
+        legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
                paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
         title(paste(translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
 
@@ -516,7 +524,8 @@ for (DBn in dbs) {
 
 ## ~ display trends table ####
 #' \\newpage
-#' ## Table of total trends.
+#'
+#' ### Table of total trends.
 #'
 #+ echo=F, include=T
 
@@ -555,7 +564,11 @@ myRtools::write_dat(pprint,
 
 ####  Plot of trends for each season of year ####
 #' \newpage
+#'
 #' ## Trends for each season of the year
+#'
+#' We calculated monthly means from the daily means
+#'
 #+ echo=F, include=F
 
 
@@ -585,6 +598,10 @@ for (DBn in dbs) {
     DB[ month(Date) %in% c( 9,10,11), Season := "Autumn"]
     ## sanity check
     stopifnot( !any(is.na(DB$Season)) )
+
+    cat("\newpage")
+    cat("\n### ", translate(sub("_.*","",DBn)), "\n\n" )
+
     for (ase in Seasons) {
         for (avar in vars) {
             dataset <- DB[ Season == ase, ]
@@ -611,7 +628,7 @@ for (DBn in dbs) {
             ## decorations
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n",
-                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*(Days_of_year*4) ),3),'* year'))
+                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*(Days_of_year/4) ),3),'* year'))
             title(paste(ase, translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
         }
     }
@@ -621,9 +638,12 @@ for (DBn in dbs) {
 
 ## ~ calculate trends for each season  ####
 vars        <- c("DIR_att", "GLB_att")
-dbs         <- c("ALL_1_daily_DEseas",
-                 "CLEAR_1_daily_DEseas",
-                 "CLOUD_1_daily_DEseas")
+
+## is set above
+# dbs         <- c("ALL_1_daily_DEseas",
+#                  "CLEAR_1_daily_DEseas",
+#                  "CLOUD_1_daily_DEseas")
+
 Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 gather_seas <- data.frame()
 
@@ -676,10 +696,10 @@ pprint[, N              := NULL]
 
 
 ## convert slope / year
-pprint[, slope              := slope              * Days_of_year ]
-pprint[, slope.sd           := slope.sd           * Days_of_year ]
-pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year ]
-pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year ]
+pprint[, slope              := slope              * Days_of_year/4 ]
+pprint[, slope.sd           := slope.sd           * Days_of_year/4 ]
+pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year/4 ]
+pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year/4 ]
 
 pprint[, slope.ConfInt_0.99 := NULL ]
 pprint[, slope.ConfInt_0.95 := NULL ]
@@ -703,6 +723,9 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 ####  Plot of trends for each month of year ####
 #' \newpage
 #' ## Trends for each month of the year
+#'
+#' We calculated monthly means from the daily means
+#'
 #+ echo=F, include=F
 
 
@@ -753,7 +776,7 @@ for (DBn in dbs) {
             ## decorations
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n",
-                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*(Days_of_year*12) ),3),'* year'))
+                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*(Days_of_year/12) ),3),'* year'))
             title(paste(month.name[ase], translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
         }
     }
@@ -763,9 +786,10 @@ for (DBn in dbs) {
 
 ## ~ calculate trends for each month  ####
 vars        <- c("DIR_att", "GLB_att")
-dbs         <- c("ALL_1_daily_DEseas",
-                 "CLEAR_1_daily_DEseas",
-                 "CLOUD_1_daily_DEseas")
+## is set above
+# dbs         <- c("ALL_1_daily_DEseas",
+#                  "CLEAR_1_daily_DEseas",
+#                  "CLOUD_1_daily_DEseas")
 gather_seas <- data.frame()
 for (DBn in dbs) {
     DB <- get(DBn)
@@ -812,10 +836,10 @@ pprint[, RsqrdAdj       := NULL]
 
 
 ## convert slope / year
-pprint[, slope              := slope              * Days_of_year ]
-pprint[, slope.sd           := slope.sd           * Days_of_year ]
-pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year ]
-pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year ]
+pprint[, slope              := slope              * Days_of_year / 12 ]
+pprint[, slope.sd           := slope.sd           * Days_of_year / 12 ]
+pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year / 12 ]
+pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year / 12 ]
 
 pprint[, slope.ConfInt_0.99 := NULL ]
 pprint[, slope.ConfInt_0.95 := NULL ]
