@@ -22,18 +22,20 @@
 #'
 #' output:
 #'   bookdown::pdf_document2:
-#'     number_sections:  no
-#'     fig_caption:      no
-#'     keep_tex:         no
-#'     latex_engine:     xelatex
-#'     toc:              yes
-#'     toc_depth:        4
-#'     fig_width:        7
-#'     fig_height:       4.5
+#'     number_sections: no
+#'     fig_caption:     no
+#'     keep_tex:        no
+#'     latex_engine:    xelatex
+#'     toc:             yes
+#'     toc_depth:       4
+#'     fig_width:       7
+#'     fig_height:      4.5
 #'   html_document:
-#'     toc:        true
-#'     fig_width:  7.5
-#'     fig_height: 5
+#'     toc:             true
+#'     keep_md:         no
+#'     fig_width:       7.5
+#'     fig_height:      5
+#'
 #' date: "`r format(Sys.time(), '%F')`"
 #'
 #' ---
@@ -61,9 +63,9 @@ Script.Name <- tryCatch({ funr::sys.script() },
                         error = function(e) { cat(paste("\nUnresolved script name: ", e),"\n\n")
                             return("Climatological_") })
 if(!interactive()) {
-    pdf(  file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
-    sink( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".out", Script.Name))), split=TRUE)
-    filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",basename(sub("\\.R$",".lock",Script.Name))),timeout = 0)
+    pdf( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
+    sink(file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
+    filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
 par(pch = ".")
