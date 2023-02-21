@@ -4,7 +4,7 @@
 #' title:         "Trends of SDR in Thessaloniki "
 #' author:
 #'   - Natsis Athanasios^[Laboratory of Atmospheric Physics,AUTH, natsisthanasis@gmail.com]
-#'   - Jane Doe^[Institution Two, jane@example.org]
+#'   - Alkiviadis Bais^[Laboratory of Atmospheric Physics, AUTH]
 #' abstract:
 #'   "Study of GHI and DNI radiation for 'clear sky' and all sly conditions."
 #'
@@ -620,20 +620,23 @@ for (DBn in dbs) {
             lm2        <- lm( dataset[[avar]] ~ dataset$Year )
 
             ## plot
-            plot(dataset$Date, dataset[[avar]],
+            plot(dataset$Year, dataset[[avar]],
                  pch  = dataset$Month,
                  col = get(paste0("col_",avar)),
                  cex  = .6,
                  xlab = "",
                  ylab = bquote("Seasonal Anomaly [%]" ) )
                  # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
-            abline(lm1)
+
+            # abline(lm1)
+            abline(lm2)
 
             ## plot running mean
-            rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
+            rm <- frollmean(dataset[[avar]], 3*running_mean_window_years,
                             na.rm = TRUE, algo = "exact", align = "center")
 
-            points(dataset$Date, rm, col = "red", cex = 0.5)
+            # points(dataset$Date, rm, col = "red", cex = 0.5)
+            lines(dataset$Year, rm, col = "red", cex = 0.5)
 
 
             ## decorations
@@ -644,7 +647,7 @@ for (DBn in dbs) {
             legend('top', lty = 1, bty = "n",
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
             title(paste(ase, translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
-            # stop()
+            stop()
         }
     }
 }
@@ -780,19 +783,21 @@ for (DBn in dbs) {
 
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
             ## linear model counting days
-            lm1        <- lm( dataset[[avar]] ~ dataset$Date )
+            # lm1        <- lm( dataset[[avar]] ~ dataset$Date )
 
             ## linear model counting years
             lm2        <- lm( dataset[[avar]] ~ dataset$Year )
 
             ## plot
-            plot(dataset$Date, dataset[[avar]],
+            plot(dataset$Year, dataset[[avar]],
                  pch  = ".", col = get(paste0("col_",avar)),
-                 cex  = 3,
+                 cex  = 4,
                  xlab = "",
                  ylab = bquote("Seasonal Anomaly [%]" ) )
             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
-            abline(lm1)
+
+            # abline(lm1)
+            abline(lm2)
 
             ## plot running mean
             rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
@@ -804,10 +809,13 @@ for (DBn in dbs) {
             # fit <- lm1[[1]]
             # legend('top', lty = 1, bty = "n",
             #        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*(Days_of_year/12) ),3),'* year'))
-            fit <- lm1[[1]]
+            fit <- lm2[[1]]
+
             legend('top', lty = 1, bty = "n",
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
+
             title(paste(month.name[ase], translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
+
         }
     }
 }
@@ -835,7 +843,7 @@ for (DBn in dbs) {
             ## linear model countint days
             lm1        <- lm( dataset[[avar]] ~ dataset$Date )
             ## linear model counting years
-            lm1        <- lm( dataset[[avar]] ~ dataset$Year )
+            lm2        <- lm( dataset[[avar]] ~ dataset$Year )
 
 
             ## gather stats

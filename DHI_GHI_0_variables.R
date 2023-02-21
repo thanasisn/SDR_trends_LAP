@@ -41,24 +41,25 @@ col_tsi1au_att           <- "#e3e300"
 
 ## https://www.rapidtables.com/calc/time/days-in-year.html
 # Days_of_year             <- 365.25   ## Mean Julian year
-Days_of_year             <- 365.2425 ## Mean Gregorian calendar year
-pch_am                   <-   1
-pch_pm                   <-   4
-pch_ampm                 <-  13 ## try 10
-pch_daily                <-  19
-running_mean_window_days <- 3 * Days_of_year
+Days_of_year              <- 365.2425 ## Mean Gregorian calendar year
+pch_am                    <-   1
+pch_pm                    <-   4
+pch_ampm                  <-  13 ## try 10
+pch_daily                 <-  19
+running_mean_window_years <- 4
+running_mean_window_days  <- running_mean_window_years * Days_of_year
 
-MIN_ELEVA                <-   5  ##  global low elevation limit
-SZA_BIN                  <-   1
-MIN_N                    <-   4
-SEAS_MIN_N               <-   3
+MIN_ELEVA                 <-   5  ##  global low elevation limit
+SZA_BIN                   <-   1
+MIN_N                     <-   4
+SEAS_MIN_N                <-   3
 
-Daily_confidence_limit   <-   0.99
-SZA_confidence_limit     <-   0.99
-Monthly_confidence_limit <-   0.99
+Daily_confidence_limit    <-   0.99
+SZA_confidence_limit      <-   0.99
+Monthly_confidence_limit  <-   0.99
 
-Daily_aggregation_N_lim  <-  60 * 3 # minutes in a day
-Monthly_aggegation_N_lim <-  20
-SZA_aggregation_N_lim    <-   4
+Daily_aggregation_N_lim   <-  60 * 3 # minutes in a day
+Monthly_aggegation_N_lim  <-  20
+SZA_aggregation_N_lim     <-   4
 
 
