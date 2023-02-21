@@ -16,7 +16,7 @@ translate <- function(...) as.vector(unlist(dict[c(...) == names(dict)]))
 
 #### Data range ####
 ## will not include the last/first day
-LAST_DAY                 <- as.Date("2022-07-01")
+LAST_DAY                 <- as.Date("2023-01-01")
 FIRST_DAY                <- as.Date("1900-07-01")
 
 #### Paths ####
@@ -46,7 +46,7 @@ pch_am                    <-   1
 pch_pm                    <-   4
 pch_ampm                  <-  13 ## try 10
 pch_daily                 <-  19
-running_mean_window_years <- 4
+running_mean_window_years <- 5
 running_mean_window_days  <- running_mean_window_years * Days_of_year
 
 MIN_ELEVA                 <-   5  ##  global low elevation limit

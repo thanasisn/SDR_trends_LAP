@@ -46,9 +46,9 @@
 ####_  Document options _####
 
 #+ echo=F, include=F
-knitr::opts_chunk$set(comment    = ""      )
-# knitr::opts_chunk$set(dev        = "pdf"   )
-knitr::opts_chunk$set(dev        = "png"    )
+knitr::opts_chunk$set(comment    = ""       )
+knitr::opts_chunk$set(dev        = "pdf"    )
+# knitr::opts_chunk$set(dev        = "png"    )
 knitr::opts_chunk$set(out.width  = "100%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
 knitr::opts_chunk$set(cache      =  F       )  ## !! breaks calculations
@@ -209,7 +209,7 @@ setorder(CLEAR_1_daily_DEseas, Date)
 setorder(CLOUD_1_daily_DEseas, Date)
 
 ## anomaly
-# #' #### Use the actual difference from seasonal
+# #### Use the actual difference from seasonal
 # ALL_1_daily_DEseas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
 # ALL_1_daily_DEseas[   , GLB_att    := GLB_att    - GLB_att_seas    ]
 # ALL_1_daily_DEseas[   , DIR_transp := DIR_transp - DIR_transp_seas ]
@@ -221,7 +221,7 @@ setorder(CLOUD_1_daily_DEseas, Date)
 ##TODO margin of error for anomaly!!!!
 
 ## relative anomaly
-#' #### Use the % difference from seasonal values
+#' ### Using the % difference from seasonal values
 #+ echo=F, include=T
 ALL_1_daily_DEseas[  , DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
 ALL_1_daily_DEseas[  , HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
@@ -272,7 +272,7 @@ setorder(CLOUD_3_monthly_DEseas, Date)
 ##TODO margin of error for anomaly!!!!
 
 ## relative anomaly
-##
+#'
 #' ### Using the % difference from seasonal values
 #'
 #+ echo=F, include=T
@@ -312,14 +312,22 @@ gather <- data.frame()
 #' \newpage
 #' \FloatBarrier
 #'
-#' ## Trends on all sky conditions data
+#' ### Trends from daily means
 #'
-#+ longtermtrendsALL, echo=F, include=T, results="asis"
+#+ longtermtrends, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
 vars <- c("DIR_att", "GLB_att")
-dbs  <- c("ALL_1_daily_DEseas")
+# dbs  <- c("ALL_1_daily_DEseas")
+
+dbs         <- c(  "ALL_1_daily_DEseas",
+                 "CLEAR_1_daily_DEseas",
+                 "CLOUD_1_daily_DEseas")
+
 for (DBn in dbs) {
     DB <- get(DBn)
+    cat("\n\\newpage\n")
+    cat("\n#### Trends on", translate(sub("_.*","",DBn)), "data\n\n" )
+
         for (avar in vars) {
             dataset <- DB
 
@@ -327,7 +335,7 @@ for (DBn in dbs) {
             lm1 <- lm(dataset[[avar]] ~ dataset$Date)
             # lm1 <- lm( dataset[[avar]] ~ dataset$DYear )
 
-            ## catpture lm
+            ## capture lm for table
             gather <- rbind(gather,
                             data.frame(
                                 linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
@@ -365,157 +373,33 @@ for (DBn in dbs) {
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2])*Days_of_year,3),'* year'))
-            title(paste(translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
+            title(paste(translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.8)
     }
 }
 #+ echo=F, include=F
 
 
 
-## ~ plot clear sky trends ####
-#' \newpage
-#' \FloatBarrier
-#'
-#' ## Trends on Clear sky conditions data
-#'
-#+ longtermtrendsCS, echo=F, include=T, results="asis"
-# vars        <- c("HOR_att","DIR_transp","DIR_att","GLB_att")
-vars        <- c("DIR_att", "GLB_att")
-
-dbs         <- c("CLEAR_1_daily_DEseas")
-for (DBn in dbs) {
-    DB <- get(DBn)
-    for (avar in vars) {
-        dataset <- DB
-
-        ## linear model
-        lm1        <- lm(dataset[[avar]] ~ dataset$Date)
-
-        ## capture lm
-        gather <- rbind(gather,
-                        data.frame(
-                            linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
-                            DATA      = DBn,
-                            var       = avar,
-                            N         = sum(!is.na(dataset[[avar]]))
-                        ))
-
-        ## plot
-        par("mar" = c(3,4,2,1))
-
-        plot(dataset$Date, dataset[[avar]],
-             pch  = ".", col = get(paste0("col_",avar)),
-             cex  = 2,
-             xlab = "",
-             ylab = bquote("Seasonal Anomaly [%]" ) )
-             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
-        abline(lm1, lwd = 2)
-
-        ## plot running mean
-        # partial window using adaptive rolling function
-        # an = function(n, len) c(seq.int(n), rep(n, len-n))
-        # n = an(round(Days_of_year * 5), nrow(dataset))
-        # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
-        #           na.rm = TRUE, algo = "exact")
-
-        rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
-                        na.rm = TRUE, algo = "exact", align = "center")
-
-        points(dataset$Date, rm, col = "red", cex = 0.5)
-
-
-        ## decorations
-        fit <- lm1[[1]]
-        legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
-               paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-        title(paste(translate(sub("_.*","",DBn)),translate(avar)), cex.main = 0.7)
-
-    }
-}
-#+ echo=F, include=F
-
-
-
-## ~ plot cloud sky trends ####
-#'
-#' \newpage
-#' ## Trends on Cloud sky conditions data
-#'
-#+ longtermtrendsCL, echo=F, include=T, results="asis"
-# vars        <- c("HOR_att", "DIR_transp", "DIR_att", "GLB_att")
-vars        <- c("DIR_att", "GLB_att")
-dbs         <- c("CLOUD_1_daily_DEseas")
-for (DBn in dbs) {
-    DB <- get(DBn)
-    for (avar in vars) {
-        dataset <- DB
-
-        ## linear model
-        lm1        <- lm( dataset[[avar]] ~ dataset$Date )
-
-        ## capture lm
-        gather <- rbind(gather,
-                        data.frame(
-                            linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
-                            DATA      = DBn,
-                            var       = avar,
-                            N         = sum(!is.na(dataset[[avar]]))
-                        ))
-
-        ## plot
-        par("mar" = c(3,4,2,1))
-
-        plot(dataset$Date, dataset[[avar]],
-             pch  = ".", col = get(paste0("col_", avar)),
-             cex  = 2,
-             xlab = "",
-             ylab = bquote("Seasonal Anomaly [%]" ) )
-        # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
-        abline(lm1, lwd = 2)
-
-        ## plot running mean
-        # partial window using adaptive rolling function
-        # an = function(n, len) c(seq.int(n), rep(n, len-n))
-        # n = an(round(Days_of_year * 5), nrow(dataset))
-        # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
-        #           na.rm = TRUE, algo = "exact")
-
-        rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
-                        na.rm = TRUE, algo = "exact", align = "center")
-
-        points(dataset$Date, rm, col = "red", cex = 0.5)
-
-
-        ## decorations
-        fit <- lm1[[1]]
-        legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
-               paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-        title(paste(translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
-
-    }
-}
-#+ echo=F, include=F
-
-
-
-
-
-
-
-
-# ## ~ calculate trends  ####
-# vars   <- c("HOR_att","DIR_transp","DIR_att","GLB_att","tsi1au_att")
-# dbs    <- c("ALL_1_daily_DEseas",  "CLEAR_1_daily_DEseas")
-# gather <- data.frame()
+# ## ~ plot clear sky trends ####
+# #' \newpage
+# #' \FloatBarrier
+# #'
+# #' ## Trends on Clear sky conditions data
+# #'
+# #+ longtermtrendsCS, echo=F, include=T, results="asis"
+# # vars        <- c("HOR_att","DIR_transp","DIR_att","GLB_att")
+# vars        <- c("DIR_att", "GLB_att")
 #
+# dbs         <- c("CLEAR_1_daily_DEseas")
 # for (DBn in dbs) {
 #     DB <- get(DBn)
 #     for (avar in vars) {
 #         dataset <- DB
-#         if (! avar %in% names(dataset)) next()
+#
 #         ## linear model
-#         lm1        <- lm( dataset[[avar]] ~ dataset$Date )
-#         ## gather stats
+#         lm1        <- lm(dataset[[avar]] ~ dataset$Date)
+#
+#         ## capture lm
 #         gather <- rbind(gather,
 #                         data.frame(
 #                             linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
@@ -523,19 +407,116 @@ for (DBn in dbs) {
 #                             var       = avar,
 #                             N         = sum(!is.na(dataset[[avar]]))
 #                         ))
+#
+#         ## plot
+#         par("mar" = c(3,4,2,1))
+#
+#         plot(dataset$Date, dataset[[avar]],
+#              pch  = ".", col = get(paste0("col_",avar)),
+#              cex  = 2,
+#              xlab = "",
+#              ylab = bquote("Seasonal Anomaly [%]" ) )
+#              # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
+#         abline(lm1, lwd = 2)
+#
+#         ## plot running mean
+#         # partial window using adaptive rolling function
+#         # an = function(n, len) c(seq.int(n), rep(n, len-n))
+#         # n = an(round(Days_of_year * 5), nrow(dataset))
+#         # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
+#         #           na.rm = TRUE, algo = "exact")
+#
+#         rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
+#                         na.rm = TRUE, algo = "exact", align = "center")
+#
+#         points(dataset$Date, rm, col = "red", cex = 0.5)
+#
+#
+#         ## decorations
+#         fit <- lm1[[1]]
+#         legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
+#                paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
+#         title(paste(translate(sub("_.*","",DBn)),translate(avar)), cex.main = 0.7)
+#
 #     }
 # }
+# #+ echo=F, include=F
+#
+#
+#
+# ## ~ plot cloud sky trends ####
+# #'
+# #' \newpage
+# #' ## Trends on Cloud sky conditions data
+# #'
+# #+ longtermtrendsCL, echo=F, include=T, results="asis"
+# # vars        <- c("HOR_att", "DIR_transp", "DIR_att", "GLB_att")
+# vars        <- c("DIR_att", "GLB_att")
+# dbs         <- c("CLOUD_1_daily_DEseas")
+# for (DBn in dbs) {
+#     DB <- get(DBn)
+#     for (avar in vars) {
+#         dataset <- DB
+#
+#         ## linear model
+#         lm1        <- lm( dataset[[avar]] ~ dataset$Date )
+#
+#         ## capture lm
+#         gather <- rbind(gather,
+#                         data.frame(
+#                             linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
+#                             DATA      = DBn,
+#                             var       = avar,
+#                             N         = sum(!is.na(dataset[[avar]]))
+#                         ))
+#
+#         ## plot
+#         par("mar" = c(3,4,2,1))
+#
+#         plot(dataset$Date, dataset[[avar]],
+#              pch  = ".", col = get(paste0("col_", avar)),
+#              cex  = 2,
+#              xlab = "",
+#              ylab = bquote("Seasonal Anomaly [%]" ) )
+#         # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
+#         abline(lm1, lwd = 2)
+#
+#         ## plot running mean
+#         # partial window using adaptive rolling function
+#         # an = function(n, len) c(seq.int(n), rep(n, len-n))
+#         # n = an(round(Days_of_year * 5), nrow(dataset))
+#         # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
+#         #           na.rm = TRUE, algo = "exact")
+#
+#         rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
+#                         na.rm = TRUE, algo = "exact", align = "center")
+#
+#         points(dataset$Date, rm, col = "red", cex = 0.5)
+#
+#
+#         ## decorations
+#         fit <- lm1[[1]]
+#         legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
+#                paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
+#         title(paste(translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
+#
+#     }
+# }
+# #+ echo=F, include=F
+
+
+
 
 
 
 ## ~ display trends table ####
 #' \newpage
 #'
-#' ## Table of total trends.
+#' #### Table of total trends.
 #'
 #+ echo=F, include=T
 
-wecare     <- grep("intercept", names(gather), value = T, invert = T)
+wecare      <- grep("intercept", names(gather), value = T, invert = T)
 gather      <- data.table(gather)
 gather$DATA <- sub("_.*","",gather$DATA)
 
@@ -568,11 +549,10 @@ myRtools::write_dat(pprint,
 #### SEASONAL TRENDS  ##########################################################
 
 
-####  Plot of trends for each season of year ####
 #' \newpage
 #' \FloatBarrier
 #'
-#' ## Trends for each season of the year
+#' ### Trends for each season of the year
 #'
 #' We calculated monthly means from the daily means
 #'
@@ -607,7 +587,7 @@ for (DBn in dbs) {
     stopifnot( !any(is.na(DB$Season)) )
 
     cat("\n\\newpage\n")
-    cat("\n### ", translate(sub("_.*","",DBn)), "\n\n" )
+    cat("\n#### ", translate(sub("_.*","",DBn)), "\n\n" )
 
     for (ase in Seasons) {
         for (avar in vars) {
@@ -620,6 +600,7 @@ for (DBn in dbs) {
             lm2        <- lm( dataset[[avar]] ~ dataset$Year )
 
             ## plot
+            par("mar" = c(3, 4, 2, 1))
             plot(dataset$Year, dataset[[avar]],
                  pch  = dataset$Month,
                  col = get(paste0("col_",avar)),
@@ -632,7 +613,7 @@ for (DBn in dbs) {
             abline(lm2)
 
             ## plot running mean
-            rm <- frollmean(dataset[[avar]], 3*running_mean_window_years,
+            rm <- frollmean(dataset[[avar]], 3 * running_mean_window_years,
                             na.rm = TRUE, algo = "exact", align = "center")
 
             # points(dataset$Date, rm, col = "red", cex = 0.5)
@@ -646,8 +627,8 @@ for (DBn in dbs) {
             fit <- lm2[[1]]
             legend('top', lty = 1, bty = "n",
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
-            title(paste(ase, translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
-            stop()
+            title(paste(ase, translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.8)
+
         }
     }
 }
@@ -702,7 +683,7 @@ for (DBn in dbs) {
 #' \newpage
 #' \FloatBarrier
 #'
-#' ## Table of trends by season.
+#' #### Table of trends by season.
 #+ echo=F, include=T
 
 
@@ -744,11 +725,10 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 #### MONTHLY TRENDS  ###########################################################
 
 
-####  Plot of trends for each month of year ####
 #' \newpage
 #' \FloatBarrier
 #'
-#' ## Trends for each month of the year
+#' ### Trends for each month of the year
 #'
 #' We calculated monthly means from the daily means
 #'
@@ -777,6 +757,11 @@ for (DBn in dbs) {
     DB[, Month := month(Date) ]
     ## sanity check
     stopifnot( !any(is.na(DB$Month)) )
+
+    cat("\n\\newpage\n")
+    cat("\n#### ", translate(sub("_.*","",DBn)), "\n\n" )
+
+
     for (ase in 1:12) {
         for (avar in vars) {
             dataset <- DB[ Month == ase, ]
@@ -789,6 +774,7 @@ for (DBn in dbs) {
             lm2        <- lm( dataset[[avar]] ~ dataset$Year )
 
             ## plot
+            par("mar" = c(3, 4, 2, 1))
             plot(dataset$Year, dataset[[avar]],
                  pch  = ".", col = get(paste0("col_",avar)),
                  cex  = 4,
@@ -814,7 +800,7 @@ for (DBn in dbs) {
             legend('top', lty = 1, bty = "n",
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
 
-            title(paste(month.name[ase], translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
+            title(paste(month.name[ase], translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.8)
 
         }
     }
@@ -861,13 +847,16 @@ for (DBn in dbs) {
 
 ## ~ display data table ####
 
-#' ## Table of trends by month.
+#'
+#' \FloatBarrier
+#'
+#' #### Table of trends by month.
 #+ echo=F, include=T
 
 
 wecare           <- grep("intercept", names(gather_seas), value = T, invert = T)
 gather_seas      <- data.table(gather_seas)
-gather_seas$DATA <- sub("_.*","",gather_seas$DATA)
+gather_seas$DATA <- sub("_.*", "", gather_seas$DATA)
 
 pprint           <- gather_seas[ , ..wecare]
 
