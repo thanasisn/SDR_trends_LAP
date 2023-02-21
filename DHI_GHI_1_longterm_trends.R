@@ -22,18 +22,20 @@
 #'
 #' output:
 #'   bookdown::pdf_document2:
-#'     number_sections:  no
-#'     fig_caption:      no
-#'     keep_tex:         no
-#'     latex_engine:     xelatex
-#'     toc:              yes
-#'     toc_depth:        4
-#'     fig_width:        7
-#'     fig_height:       4.5
+#'     number_sections: no
+#'     fig_caption:     no
+#'     keep_tex:        no
+#'     latex_engine:    xelatex
+#'     toc:             yes
+#'     toc_depth:       4
+#'     fig_width:       7
+#'     fig_height:      4.5
 #'   html_document:
-#'     toc:        true
-#'     fig_width:  7.5
-#'     fig_height: 5
+#'     toc:             true
+#'     keep_md:         no
+#'     fig_width:       7.5
+#'     fig_height:      5
+#'
 #' date: "`r format(Sys.time(), '%F')`"
 #'
 #' ---
@@ -77,7 +79,6 @@ library(pander,     quietly = T, warn.conflicts = F)
 
 panderOptions('table.alignment.default', 'right')
 panderOptions('table.split.table',        120   )
-
 
 ## Functions from `https://github.com/thanasisn/IStillBreakStuff/tree/main/FUNCTIONS/R`
 source("~/CODE/FUNCTIONS/R/sumNA.R")
@@ -305,7 +306,8 @@ gather <- data.frame()
 #' \newpage
 #' ## Trends on all sky conditions data
 #+ longtermtrendsALL, echo=F, include=T, results="asis"
-vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
+# vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
+vars <- c("DIR_att", "GLB_att")
 dbs  <- c("ALL_1_daily_DEseas")
 for (DBn in dbs) {
     DB <- get(DBn)
@@ -365,7 +367,9 @@ for (DBn in dbs) {
 #' \newpage
 #' ## Trends on Clear sky conditions data
 #+ longtermtrendsCS, echo=F, include=T, results="asis"
-vars        <- c("HOR_att","DIR_transp","DIR_att","GLB_att")
+# vars        <- c("HOR_att","DIR_transp","DIR_att","GLB_att")
+vars        <- c("DIR_att", "GLB_att")
+
 dbs         <- c("CLEAR_1_daily_DEseas")
 for (DBn in dbs) {
     DB <- get(DBn)
@@ -424,7 +428,8 @@ for (DBn in dbs) {
 #' \newpage
 #' ## Trends on Cloud sky conditions data
 #+ longtermtrendsCL, echo=F, include=T, results="asis"
-vars        <- c("HOR_att", "DIR_transp", "DIR_att", "GLB_att")
+# vars        <- c("HOR_att", "DIR_transp", "DIR_att", "GLB_att")
+vars        <- c("DIR_att", "GLB_att")
 dbs         <- c("CLOUD_1_daily_DEseas")
 for (DBn in dbs) {
     DB <- get(DBn)
@@ -557,7 +562,8 @@ myRtools::write_dat(pprint,
 ## ~ plot trends for each season #####
 
 #+ seasonaltrends, echo=F, include=T, results="asis"
-vars        <- c("DIR_att", "GLB_att")
+# vars        <- c("DIR_att", "GLB_att")
+vars        <- c("GLB_att")
 
 ## Daily aggregation
 # dbs         <- c(  "ALL_1_daily_DEseas",
@@ -605,7 +611,7 @@ for (DBn in dbs) {
             ## decorations
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n",
-                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
+                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*(Days_of_year*4) ),3),'* year'))
             title(paste(ase, translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
         }
     }
@@ -703,7 +709,8 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 ## ~ plot trends for each month #####
 
 #+ monthlytrends, echo=F, include=T, results="asis"
-vars        <- c("DIR_att", "GLB_att")
+# vars        <- c("DIR_att", "GLB_att")
+vars        <- c("GLB_att")
 
 ## Daily aggregation
 # dbs         <- c(  "ALL_1_daily_DEseas",
@@ -746,7 +753,7 @@ for (DBn in dbs) {
             ## decorations
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n",
-                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
+                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*(Days_of_year*12) ),3),'* year'))
             title(paste(month.name[ase], translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
         }
     }
