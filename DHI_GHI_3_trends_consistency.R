@@ -63,8 +63,8 @@ Script.Name <- tryCatch({ funr::sys.script() },
                         error = function(e) { cat(paste("\nUnresolved script name: ", e),"\n\n")
                             return("Climatological_") })
 if(!interactive()) {
-    pdf( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
-    sink(file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
+    pdf( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",    basename(sub("\\.R$",".pdf", Script.Name))))
+    sink(file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",    basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
     filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
@@ -114,8 +114,8 @@ options(error = function() {
 #' ## 3. Consistency of trends
 #'
 #+ echo=F, include=F
-## ~ Plots longterm  ####
 
+## ~ Plots longterm with SZA ####
 data_list  <- list(ALL   =   ALL_3_monthly_mean,
                    CLEAR = CLEAR_3_monthly_mean,
                    CLOUD = CLOUD_3_monthly_mean)
@@ -149,10 +149,10 @@ for (i in 1:length(data_list)) {
              breaks = 100, col = col)
     }
 }
-
 #+ echo=F, include=F
-## ~ Plots seasonal data ####
 
+
+## ~ Plots seasonal data ####
 data_list  <- list(ALL   =   ALL_3_monthly_seas,
                    CLEAR = CLEAR_3_monthly_seas,
                    CLOUD = CLOUD_3_monthly_seas)
@@ -173,6 +173,7 @@ for(i in 1:length(data_list)) {
         }
     }
 }
+
 ## ~ Plots seasonal data histograms ####
 for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
@@ -199,34 +200,28 @@ rm(data_list)
 
 
 #### Calculate seasonal anomaly ####
-#' #### Calculate seasonal anomaly ####
+#'
+#' ### Calculate seasonal anomaly
+#'
 #+ echo=F, include=F
 
-## by sza
-ALL_3_monthly_DEseas   <- merge(  ALL_3_monthly_mean, ALL_3_monthly_seas,   by = c("Month", "SZA", "preNoon"), all = T)
+## by sza bin and day period
+  ALL_3_monthly_DEseas <- merge(  ALL_3_monthly_mean,   ALL_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
 CLEAR_3_monthly_DEseas <- merge(CLEAR_3_monthly_mean, CLEAR_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
 CLOUD_3_monthly_DEseas <- merge(CLOUD_3_monthly_mean, CLOUD_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
 ## by whole day monthly
-ALL_3_monthly_daily_DEseas   <- merge(ALL_3_monthly_daily_mean,   ALL_3_monthly_daily_seas,   by = "Month", all = T)
+  ALL_3_monthly_daily_DEseas <- merge(  ALL_3_monthly_daily_mean,   ALL_3_monthly_daily_seas, by = "Month", all = T)
 CLEAR_3_monthly_daily_DEseas <- merge(CLEAR_3_monthly_daily_mean, CLEAR_3_monthly_daily_seas, by = "Month", all = T)
 CLOUD_3_monthly_daily_DEseas <- merge(CLOUD_3_monthly_daily_mean, CLOUD_3_monthly_daily_seas, by = "Month", all = T)
 
 
-# ## anomaly
-# ALL_3_monthly_DEseas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
-# ALL_3_monthly_DEseas[   , GLB_att    := GLB_att    - GLB_att_seas    ]
-# ALL_3_monthly_DEseas[   , DIR_transp := DIR_transp - DIR_transp_seas ]
-# CLEAR_3_monthly_DEseas[ , DIR_att    := DIR_att    - DIR_att_seas    ]
-# CLEAR_3_monthly_DEseas[ , GLB_att    := GLB_att    - GLB_att_seas    ]
-# CLEAR_3_monthly_DEseas[ , DIR_transp := DIR_transp - DIR_transp_seas ]
-# #+ echo=F, include=F
 
 
 #+ echo=F, include=T
 ## relative anomaly
-ALL_3_monthly_DEseas[  ,      DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-ALL_3_monthly_DEseas[  ,      GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-ALL_3_monthly_DEseas[  ,      DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+  ALL_3_monthly_DEseas[,      DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+  ALL_3_monthly_DEseas[,      GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+  ALL_3_monthly_DEseas[,      DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
 CLEAR_3_monthly_DEseas[,      DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
 CLEAR_3_monthly_DEseas[,      GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
 CLEAR_3_monthly_DEseas[,      DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
@@ -234,9 +229,9 @@ CLOUD_3_monthly_DEseas[,      DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) 
 CLOUD_3_monthly_DEseas[,      GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
 CLOUD_3_monthly_DEseas[,      DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
 
-ALL_3_monthly_daily_DEseas[  ,DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-ALL_3_monthly_daily_DEseas[  ,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-ALL_3_monthly_daily_DEseas[  ,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+  ALL_3_monthly_daily_DEseas[,DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+  ALL_3_monthly_daily_DEseas[,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+  ALL_3_monthly_daily_DEseas[,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
 CLEAR_3_monthly_daily_DEseas[,DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
 CLEAR_3_monthly_daily_DEseas[,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
 CLEAR_3_monthly_daily_DEseas[,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
@@ -246,35 +241,35 @@ CLOUD_3_monthly_daily_DEseas[,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) 
 #+ echo=F, include=F
 
 ## change flag names
-ALL_3_monthly_DEseas[   preNoon == TRUE,    preNoon := "am"    ]
-ALL_3_monthly_DEseas[   preNoon == FALSE,   preNoon := "pm"    ]
-ALL_3_monthly_DEseas[   preNoon == "Daily", preNoon := "am+pm" ]
-CLEAR_3_monthly_DEseas[ preNoon == FALSE,   preNoon := "pm"    ]
-CLEAR_3_monthly_DEseas[ preNoon == "Daily", preNoon := "am+pm" ]
-CLEAR_3_monthly_DEseas[ preNoon == TRUE,    preNoon := "am"    ]
-CLOUD_3_monthly_DEseas[ preNoon == FALSE,   preNoon := "pm"    ]
-CLOUD_3_monthly_DEseas[ preNoon == "Daily", preNoon := "am+pm" ]
-CLOUD_3_monthly_DEseas[ preNoon == TRUE,    preNoon := "am"    ]
+  ALL_3_monthly_DEseas[preNoon == TRUE,    preNoon := "am"    ]
+  ALL_3_monthly_DEseas[preNoon == FALSE,   preNoon := "pm"    ]
+  ALL_3_monthly_DEseas[preNoon == "Daily", preNoon := "am+pm" ]
+CLEAR_3_monthly_DEseas[preNoon == FALSE,   preNoon := "pm"    ]
+CLEAR_3_monthly_DEseas[preNoon == "Daily", preNoon := "am+pm" ]
+CLEAR_3_monthly_DEseas[preNoon == TRUE,    preNoon := "am"    ]
+CLOUD_3_monthly_DEseas[preNoon == FALSE,   preNoon := "pm"    ]
+CLOUD_3_monthly_DEseas[preNoon == "Daily", preNoon := "am+pm" ]
+CLOUD_3_monthly_DEseas[preNoon == TRUE,    preNoon := "am"    ]
 
-setorder(ALL_3_monthly_DEseas,        Year,Month,preNoon,SZA)
-setorder(CLEAR_3_monthly_DEseas,      Year,Month,preNoon,SZA)
-setorder(CLOUD_3_monthly_DEseas,      Year,Month,preNoon,SZA)
-setorder(ALL_3_monthly_daily_DEseas,  Year,Month)
-setorder(CLEAR_3_monthly_daily_DEseas,Year,Month)
-setorder(CLOUD_3_monthly_daily_DEseas,Year,Month)
+setorder(ALL_3_monthly_DEseas,         Year, Month, preNoon, SZA)
+setorder(CLEAR_3_monthly_DEseas,       Year, Month, preNoon, SZA)
+setorder(CLOUD_3_monthly_DEseas,       Year, Month, preNoon, SZA)
+setorder(ALL_3_monthly_daily_DEseas,   Year, Month)
+setorder(CLEAR_3_monthly_daily_DEseas, Year, Month)
+setorder(CLOUD_3_monthly_daily_DEseas, Year, Month)
 
+## make NA to zero to preserve sums
+  ALL_3_monthly_daily_DEseas[is.na(GLB_att),    GLB_att    := 0 ]
+  ALL_3_monthly_daily_DEseas[is.na(DIR_att),    DIR_att    := 0 ]
+  ALL_3_monthly_daily_DEseas[is.na(DIR_transp), DIR_transp := 0 ]
+CLEAR_3_monthly_daily_DEseas[is.na(GLB_att),    GLB_att    := 0 ]
+CLEAR_3_monthly_daily_DEseas[is.na(DIR_att),    DIR_att    := 0 ]
+CLEAR_3_monthly_daily_DEseas[is.na(DIR_transp), DIR_transp := 0 ]
+CLOUD_3_monthly_daily_DEseas[is.na(GLB_att),    GLB_att    := 0 ]
+CLOUD_3_monthly_daily_DEseas[is.na(DIR_att),    DIR_att    := 0 ]
+CLOUD_3_monthly_daily_DEseas[is.na(DIR_transp), DIR_transp := 0 ]
 
-ALL_3_monthly_daily_DEseas[   is.na(GLB_att),    GLB_att    := 0 ]
-ALL_3_monthly_daily_DEseas[   is.na(DIR_att),    DIR_att    := 0 ]
-ALL_3_monthly_daily_DEseas[   is.na(DIR_transp), DIR_transp := 0 ]
-CLEAR_3_monthly_daily_DEseas[ is.na(GLB_att),    GLB_att    := 0 ]
-CLEAR_3_monthly_daily_DEseas[ is.na(DIR_att),    DIR_att    := 0 ]
-CLEAR_3_monthly_daily_DEseas[ is.na(DIR_transp), DIR_transp := 0 ]
-CLOUD_3_monthly_daily_DEseas[ is.na(GLB_att),    GLB_att    := 0 ]
-CLOUD_3_monthly_daily_DEseas[ is.na(DIR_att),    DIR_att    := 0 ]
-CLOUD_3_monthly_daily_DEseas[ is.na(DIR_transp), DIR_transp := 0 ]
-
-ALL_3_monthly_daily_cumsum   <- ALL_3_monthly_daily_DEseas
+  ALL_3_monthly_daily_cumsum <- ALL_3_monthly_daily_DEseas
 CLEAR_3_monthly_daily_cumsum <- CLEAR_3_monthly_daily_DEseas
 CLOUD_3_monthly_daily_cumsum <- CLOUD_3_monthly_daily_DEseas
 
