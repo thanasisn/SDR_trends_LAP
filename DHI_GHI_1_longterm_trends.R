@@ -209,20 +209,11 @@ setorder(ALL_1_daily_DEseas,   Date)
 setorder(CLEAR_1_daily_DEseas, Date)
 setorder(CLOUD_1_daily_DEseas, Date)
 
-## anomaly
-# #### Use the actual difference from seasonal
-# ALL_1_daily_DEseas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
-# ALL_1_daily_DEseas[   , GLB_att    := GLB_att    - GLB_att_seas    ]
-# ALL_1_daily_DEseas[   , DIR_transp := DIR_transp - DIR_transp_seas ]
-# CLEAR_1_daily_DEseas[ , DIR_att    := DIR_att    - DIR_att_seas    ]
-# CLEAR_1_daily_DEseas[ , GLB_att    := GLB_att    - GLB_att_seas    ]
-# CLEAR_1_daily_DEseas[ , DIR_transp := DIR_transp - DIR_transp_seas ]
 
-
-##TODO margin of error for anomaly!!!!
-
-## relative anomaly
+## ~ Calculate relative anomaly --------------------------------------------------
+#'
 #' ### Using the % difference from seasonal values
+#'
 #+ echo=F, include=T
 ALL_1_daily_DEseas[  , DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
 ALL_1_daily_DEseas[  , HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
@@ -243,11 +234,6 @@ CLOUD_1_daily_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_a
 CLOUD_1_daily_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
 CLOUD_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
 #+ echo=F, include=F
-
-# ## create a float year value
-#   ALL_1_daily_DEseas$DYear <- as.numeric(  ALL_1_daily_DEseas$Date) / Days_of_year
-# CLEAR_1_daily_DEseas$DYear <- as.numeric(CLEAR_1_daily_DEseas$Date) / Days_of_year
-# CLOUD_1_daily_DEseas$DYear <- as.numeric(CLOUD_1_daily_DEseas$Date) / Days_of_year
 
 
 
