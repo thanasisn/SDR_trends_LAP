@@ -63,8 +63,8 @@ Script.Name <- tryCatch({ funr::sys.script() },
                         error = function(e) { cat(paste("\nUnresolved script name: ", e),"\n\n")
                             return("Climatological_") })
 if(!interactive()) {
-    pdf( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",    basename(sub("\\.R$",".pdf", Script.Name))))
-    sink(file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",    basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
+    pdf( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
+    sink(file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
     filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
@@ -198,8 +198,71 @@ rm(data_list)
 
 
 
+## ~ Calculate relative daily anomaly ------------------------------------------
 
-#### Calculate seasonal anomaly ####
+  ALL_1_daily_DEseas <- merge(  ALL_1_daily_mean,   ALL_1_daily_seas, by = "doy", all = T)
+CLEAR_1_daily_DEseas <- merge(CLEAR_1_daily_mean, CLEAR_1_daily_seas, by = "doy", all = T)
+CLOUD_1_daily_DEseas <- merge(CLOUD_1_daily_mean, CLOUD_1_daily_seas, by = "doy", all = T)
+
+#'
+#' ### Using the % difference from seasonal values
+#'
+#+ echo=F, include=T
+ALL_1_daily_DEseas[  , DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+ALL_1_daily_DEseas[  , HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+ALL_1_daily_DEseas[  , GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+ALL_1_daily_DEseas[  , DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+
+CLEAR_1_daily_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+CLEAR_1_daily_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+CLEAR_1_daily_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+CLEAR_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+
+CLOUD_1_daily_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+CLOUD_1_daily_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+CLOUD_1_daily_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+CLOUD_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+#+ echo=F, include=F
+
+
+## ~ Calculate daily cum sum ---------------------------------------------------
+
+## make NA to zero to preserve sums
+  ALL_1_daily_DEseas[is.na(GLB_att),    GLB_att    := 0]
+  ALL_1_daily_DEseas[is.na(DIR_att),    DIR_att    := 0]
+  ALL_1_daily_DEseas[is.na(DIR_transp), DIR_transp := 0]
+CLEAR_1_daily_DEseas[is.na(GLB_att),    GLB_att    := 0]
+CLEAR_1_daily_DEseas[is.na(DIR_att),    DIR_att    := 0]
+CLEAR_1_daily_DEseas[is.na(DIR_transp), DIR_transp := 0]
+CLOUD_1_daily_DEseas[is.na(GLB_att),    GLB_att    := 0]
+CLOUD_1_daily_DEseas[is.na(DIR_att),    DIR_att    := 0]
+CLOUD_1_daily_DEseas[is.na(DIR_transp), DIR_transp := 0]
+
+  ALL_1_daily_Cumsum <-   ALL_1_daily_DEseas
+CLEAR_1_daily_Cumsum <- CLEAR_1_daily_DEseas
+CLOUD_1_daily_Cumsum <- CLOUD_1_daily_DEseas
+
+setorder(  ALL_1_daily_Cumsum, Date)
+setorder(CLEAR_1_daily_Cumsum, Date)
+setorder(CLOUD_1_daily_Cumsum, Date)
+
+  ALL_1_daily_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
+  ALL_1_daily_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
+  ALL_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
+CLEAR_1_daily_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
+CLEAR_1_daily_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
+CLEAR_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
+CLOUD_1_daily_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
+CLOUD_1_daily_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
+CLOUD_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
+
+
+
+
+
+
+## ~ Calculate seasonal anomaly by SZA -----------------------------------------
+
 #'
 #' ### Calculate seasonal anomaly
 #'
@@ -240,6 +303,31 @@ CLOUD_3_monthly_daily_DEseas[,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) 
 CLOUD_3_monthly_daily_DEseas[,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
 #+ echo=F, include=F
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## change flag names
   ALL_3_monthly_DEseas[preNoon == TRUE,    preNoon := "am"    ]
   ALL_3_monthly_DEseas[preNoon == FALSE,   preNoon := "pm"    ]
@@ -269,25 +357,24 @@ CLOUD_3_monthly_daily_DEseas[is.na(GLB_att),    GLB_att    := 0 ]
 CLOUD_3_monthly_daily_DEseas[is.na(DIR_att),    DIR_att    := 0 ]
 CLOUD_3_monthly_daily_DEseas[is.na(DIR_transp), DIR_transp := 0 ]
 
-  ALL_3_monthly_daily_cumsum <- ALL_3_monthly_daily_DEseas
+  ALL_3_monthly_daily_cumsum <-   ALL_3_monthly_daily_DEseas
 CLEAR_3_monthly_daily_cumsum <- CLEAR_3_monthly_daily_DEseas
 CLOUD_3_monthly_daily_cumsum <- CLOUD_3_monthly_daily_DEseas
 
 ## create a nice data
-ALL_3_monthly_daily_cumsum[   , Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
-CLEAR_3_monthly_daily_cumsum[ , Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
-CLOUD_3_monthly_daily_cumsum[ , Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
+ALL_3_monthly_daily_cumsum[  , Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
+CLEAR_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
+CLOUD_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
 
 
-
-ALL_3_monthly_daily_cumsum[,   GLB_att    := cumsum(GLB_att)]
-ALL_3_monthly_daily_cumsum[,   DIR_att    := cumsum(DIR_att)]
+ALL_3_monthly_daily_cumsum[,   GLB_att    := cumsum(GLB_att)   ]
+ALL_3_monthly_daily_cumsum[,   DIR_att    := cumsum(DIR_att)   ]
 ALL_3_monthly_daily_cumsum[,   DIR_transp := cumsum(DIR_transp)]
-CLEAR_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)]
-CLEAR_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)]
+CLEAR_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)   ]
+CLEAR_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)   ]
 CLEAR_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
-CLOUD_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)]
-CLOUD_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)]
+CLOUD_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)   ]
+CLOUD_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)   ]
 CLOUD_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
 
 
