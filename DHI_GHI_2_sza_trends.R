@@ -4,7 +4,7 @@
 #' title:         "Trends of SDR in Thessaloniki "
 #' author:
 #'   - Natsis Athanasios^[Laboratory of Atmospheric Physics,AUTH, natsisthanasis@gmail.com]
-#'   - Jane Doe^[Institution Two, jane@example.org]
+#'   - Alkiviadis Bais^[Laboratory of Atmospheric Physics, AUTH]
 #' abstract:
 #'   "Study of GHI and DNI radiation for 'clear sky' and all sly conditions."
 #'
@@ -46,9 +46,9 @@
 ####_  Document options _####
 
 #+ echo=F, include=F
-knitr::opts_chunk$set(comment    = ""      )
-# knitr::opts_chunk$set(dev        = "pdf"   )
-knitr::opts_chunk$set(dev        = "png"    )
+knitr::opts_chunk$set(comment    = ""       )
+knitr::opts_chunk$set(dev        = "pdf"    )
+# knitr::opts_chunk$set(dev        = "png"    )
 knitr::opts_chunk$set(out.width  = "100%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
 knitr::opts_chunk$set(cache      =  F       )  ## !! breaks calculations
@@ -159,8 +159,8 @@ for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (xvar in by_var){
         for (yvar in wecare) {
-            if (!yvar %in% names(Dplot)) next()
-            col  <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            if (! yvar %in% names(Dplot)) next()
+            col  <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
             vect <- Dplot[[yvar]]
             plot(Dplot[[xvar]], vect,
                  pch = ".", col = col,
@@ -173,8 +173,8 @@ for (i in 1:length(data_list)) {
 for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (yvar in wecare) {
-        if (!yvar %in% names(Dplot)) next()
-        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+        if (! yvar %in% names(Dplot)) next()
+        col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
         vect <- Dplot[[yvar]]
         hist(vect,
              main = paste(names(data_list[i]), yvar),

@@ -159,7 +159,7 @@ data_list  <- list(ALL_Seas   =   ALL_1_daily_seas,
 by_var     <- c("doy")
 wecare     <- unique(unlist(lapply(data_list, names)))
 wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
-for(i in 1:length(data_list)) {
+for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (xvar in by_var){
         for (yvar in wecare) {
@@ -173,7 +173,8 @@ for(i in 1:length(data_list)) {
         }
     }
 }
-for(i in 1:length(data_list)) {
+## ~ Plots seasonal data histograms ####
+for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (yvar in wecare) {
         if (! yvar %in% names(Dplot)) next()
