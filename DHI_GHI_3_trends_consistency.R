@@ -261,7 +261,7 @@ setorder(CLOUD_1_daily_Cumsum, Date)
 
 
 ###TODO by sza!!?
-## calculate cumsum By 
+## calculate cumsum By
   ALL_1_daily_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
   ALL_1_daily_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
   ALL_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
@@ -391,7 +391,7 @@ CLOUD_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
 
 
 
-####  Cumulative sums  ---------------------------------------------------------
+#### Plot Cumulative sums  -----------------------------------------------------
 
 #' \newpage
 #' ## Cumulative sums
@@ -416,7 +416,9 @@ for (DBn in dbs) {
 
                 ## set na to zero
                 DB[ SZA == asza & preNoon == anoon, ][[avar]][is.na(DB[ SZA == asza & preNoon == anoon, ][[avar]])] <- 0
+                ## get cum sum
                 DB[ SZA == asza & preNoon == anoon, ][[avar]] <- unlist(cumsum( DB[ SZA == asza & preNoon == anoon, ..avar ] ))
+                ## set zeros to NA
                 DB[ SZA == asza & preNoon == anoon, ][[avar]][ DB[ SZA == asza & preNoon == anoon, ][[avar]] == 0 ] <- NA
 
                 # dataset <- DB[ SZA == asza & preNoon == anoon, ..ttt ]
