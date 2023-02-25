@@ -227,25 +227,41 @@ CLOUD_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_t
 
 ## ~ Calculate daily cum sum ---------------------------------------------------
 
-## make NA to zero to preserve sums
-  ALL_1_daily_DEseas[is.na(GLB_att),    GLB_att    := 0]
-  ALL_1_daily_DEseas[is.na(DIR_att),    DIR_att    := 0]
-  ALL_1_daily_DEseas[is.na(DIR_transp), DIR_transp := 0]
-CLEAR_1_daily_DEseas[is.na(GLB_att),    GLB_att    := 0]
-CLEAR_1_daily_DEseas[is.na(DIR_att),    DIR_att    := 0]
-CLEAR_1_daily_DEseas[is.na(DIR_transp), DIR_transp := 0]
-CLOUD_1_daily_DEseas[is.na(GLB_att),    GLB_att    := 0]
-CLOUD_1_daily_DEseas[is.na(DIR_att),    DIR_att    := 0]
-CLOUD_1_daily_DEseas[is.na(DIR_transp), DIR_transp := 0]
-
+## use a copy
   ALL_1_daily_Cumsum <-   ALL_1_daily_DEseas
 CLEAR_1_daily_Cumsum <- CLEAR_1_daily_DEseas
 CLOUD_1_daily_Cumsum <- CLOUD_1_daily_DEseas
 
+### keep raw for easy plot
+  ALL_1_daily_Cumsum[, GLB_att_orig    := GLB_att   ]
+  ALL_1_daily_Cumsum[, DIR_att_orig    := DIR_att   ]
+  ALL_1_daily_Cumsum[, DIR_transp_orig := DIR_transp]
+CLEAR_1_daily_Cumsum[, GLB_att_orig    := GLB_att   ]
+CLEAR_1_daily_Cumsum[, DIR_att_orig    := DIR_att   ]
+CLEAR_1_daily_Cumsum[, DIR_transp_orig := DIR_transp]
+CLOUD_1_daily_Cumsum[, GLB_att_orig    := GLB_att   ]
+CLOUD_1_daily_Cumsum[, DIR_att_orig    := DIR_att   ]
+CLOUD_1_daily_Cumsum[, DIR_transp_orig := DIR_transp]
+
+## make NA to zero to preserve sums
+  ALL_1_daily_Cumsum[is.na(GLB_att),    GLB_att    := 0]
+  ALL_1_daily_Cumsum[is.na(DIR_att),    DIR_att    := 0]
+  ALL_1_daily_Cumsum[is.na(DIR_transp), DIR_transp := 0]
+CLEAR_1_daily_Cumsum[is.na(GLB_att),    GLB_att    := 0]
+CLEAR_1_daily_Cumsum[is.na(DIR_att),    DIR_att    := 0]
+CLEAR_1_daily_Cumsum[is.na(DIR_transp), DIR_transp := 0]
+CLOUD_1_daily_Cumsum[is.na(GLB_att),    GLB_att    := 0]
+CLOUD_1_daily_Cumsum[is.na(DIR_att),    DIR_att    := 0]
+CLOUD_1_daily_Cumsum[is.na(DIR_transp), DIR_transp := 0]
+
+## order before cumsum
 setorder(  ALL_1_daily_Cumsum, Date)
 setorder(CLEAR_1_daily_Cumsum, Date)
 setorder(CLOUD_1_daily_Cumsum, Date)
 
+
+###TODO by sza!!?
+## calculate cumsum By 
   ALL_1_daily_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
   ALL_1_daily_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
   ALL_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
@@ -311,23 +327,6 @@ CLOUD_3_monthly_daily_DEseas[,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## change flag names
   ALL_3_monthly_DEseas[preNoon == TRUE,    preNoon := "am"    ]
   ALL_3_monthly_DEseas[preNoon == FALSE,   preNoon := "pm"    ]
@@ -346,27 +345,39 @@ setorder(ALL_3_monthly_daily_DEseas,   Year, Month)
 setorder(CLEAR_3_monthly_daily_DEseas, Year, Month)
 setorder(CLOUD_3_monthly_daily_DEseas, Year, Month)
 
-## make NA to zero to preserve sums
-  ALL_3_monthly_daily_DEseas[is.na(GLB_att),    GLB_att    := 0 ]
-  ALL_3_monthly_daily_DEseas[is.na(DIR_att),    DIR_att    := 0 ]
-  ALL_3_monthly_daily_DEseas[is.na(DIR_transp), DIR_transp := 0 ]
-CLEAR_3_monthly_daily_DEseas[is.na(GLB_att),    GLB_att    := 0 ]
-CLEAR_3_monthly_daily_DEseas[is.na(DIR_att),    DIR_att    := 0 ]
-CLEAR_3_monthly_daily_DEseas[is.na(DIR_transp), DIR_transp := 0 ]
-CLOUD_3_monthly_daily_DEseas[is.na(GLB_att),    GLB_att    := 0 ]
-CLOUD_3_monthly_daily_DEseas[is.na(DIR_att),    DIR_att    := 0 ]
-CLOUD_3_monthly_daily_DEseas[is.na(DIR_transp), DIR_transp := 0 ]
-
+## use a copy
   ALL_3_monthly_daily_cumsum <-   ALL_3_monthly_daily_DEseas
 CLEAR_3_monthly_daily_cumsum <- CLEAR_3_monthly_daily_DEseas
 CLOUD_3_monthly_daily_cumsum <- CLOUD_3_monthly_daily_DEseas
 
+## keep raw for easy plot
+  ALL_3_monthly_daily_cumsum[, GLB_att_orig    := GLB_att   ]
+  ALL_3_monthly_daily_cumsum[, DIR_att_orig    := DIR_att   ]
+  ALL_3_monthly_daily_cumsum[, DIR_transp_orig := DIR_transp]
+CLEAR_3_monthly_daily_cumsum[, GLB_att_orig    := GLB_att   ]
+CLEAR_3_monthly_daily_cumsum[, DIR_att_orig    := DIR_att   ]
+CLEAR_3_monthly_daily_cumsum[, DIR_transp_orig := DIR_transp]
+CLOUD_3_monthly_daily_cumsum[, GLB_att_orig    := GLB_att   ]
+CLOUD_3_monthly_daily_cumsum[, DIR_att_orig    := DIR_att   ]
+CLOUD_3_monthly_daily_cumsum[, DIR_transp_orig := DIR_transp]
+
+## make NA to zero to preserve sums
+  ALL_3_monthly_daily_cumsum[is.na(GLB_att),    GLB_att    := 0 ]
+  ALL_3_monthly_daily_cumsum[is.na(DIR_att),    DIR_att    := 0 ]
+  ALL_3_monthly_daily_cumsum[is.na(DIR_transp), DIR_transp := 0 ]
+CLEAR_3_monthly_daily_cumsum[is.na(GLB_att),    GLB_att    := 0 ]
+CLEAR_3_monthly_daily_cumsum[is.na(DIR_att),    DIR_att    := 0 ]
+CLEAR_3_monthly_daily_cumsum[is.na(DIR_transp), DIR_transp := 0 ]
+CLOUD_3_monthly_daily_cumsum[is.na(GLB_att),    GLB_att    := 0 ]
+CLOUD_3_monthly_daily_cumsum[is.na(DIR_att),    DIR_att    := 0 ]
+CLOUD_3_monthly_daily_cumsum[is.na(DIR_transp), DIR_transp := 0 ]
+
 ## create a nice data
-ALL_3_monthly_daily_cumsum[  , Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
+  ALL_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
 CLEAR_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
 CLOUD_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
 
-
+### TODO!!!!! by sza??????
 ALL_3_monthly_daily_cumsum[,   GLB_att    := cumsum(GLB_att)   ]
 ALL_3_monthly_daily_cumsum[,   DIR_att    := cumsum(DIR_att)   ]
 ALL_3_monthly_daily_cumsum[,   DIR_transp := cumsum(DIR_transp)]
@@ -380,7 +391,8 @@ CLOUD_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
 
 
 
-####  Cumulative sums ####
+####  Cumulative sums  ---------------------------------------------------------
+
 #' \newpage
 #' ## Cumulative sums
 #'
@@ -395,7 +407,7 @@ dbs     <- c("ALL_3_monthly_DEseas",
              "CLOUD_3_monthly_DEseas")
 basevar <- c("Year", "Month", "SZA", "preNoon")
 
-## compute cumulative sums for each category and sza
+## compute cumulative sums for each category and sza ---------------------------
 for (DBn in dbs) {
     DB <- get(DBn)
     for (avar in vars) {
@@ -446,6 +458,8 @@ database    <- c("ALL_3_monthly_cumsum",
 for (adb in database) {
     DB  <- get(adb)
     DB2 <- get(paste0(sub("_.*", "", adb), "_3_monthly_daily_cumsum"))
+    DBn <- get(sub("cumsum", "DEseas", adb))
+
     for (asza in plotsza) {
         for (avar in vars) {
             wcare <- c("FDate", "preNoon", avar)
@@ -476,7 +490,15 @@ for (adb in database) {
             legend("top", legend = plotpreNoon, col = plotpNcol,
                    lty = 1, bty = "n", ncol = 3,cex = 0.8)
 
-            title(paste(sub("_.*","",adb), "monthly cumulative sum ", translate(avar), "for",asza,"deg."), cex.main = 1)
+            title(paste(sub("_.*","",adb), "monthly cumulative sum ",
+                        translate(avar), "for",asza,"deg."), cex.main = 1)
+
+
+            ## test plot for reference
+            plot(DB$FDate, DBn[[avar]],col = plotpNcol[3])
+
+
+            stop()
         }
     }
 }
