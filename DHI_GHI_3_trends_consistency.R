@@ -569,9 +569,9 @@ CLOUD_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
 #### Plot Cumulative sums  -----------------------------------------------------
 
 #' \newpage
-#' ## Cumulative sums
+#' ## Cumulative sums by SZA and part of day
 #'
-#' Use deseasonalized monthly values to calculate cumulative sums by SZA and part of day
+#' Use deseasonalized monthly values to calculate cumulative sums
 #'
 #+ echo=F, include=F
 
@@ -648,6 +648,7 @@ for (adb in database) {
             ylim  <- range(pdb[[avar]],DB2[[avar]],na.rm = T)
 
             par("mar" = c(3,4,2,1))
+            par(pch = 19)
 
             plot(1, type = "n",
                  xlab = "",
@@ -674,13 +675,14 @@ for (adb in database) {
 
 
             ## test plot for reference
-            plot(DB$FDate, DBn[[avar]], col = plotpNcol[3])
+            plot(DB$FDate, DBn[[avar]], col = plotpNcol[3],
+                 ylab = bquote("Seasonal Anomaly [%]"),
+                 cex = 0.5)
             for (i in 1:length(plotpreNoon) ) {
                 pp <- DBn[preNoon == plotpreNoon[i] & SZA == asza]
-                points(pp$FDate, pp[[avar]], col = plotpNcol[i], lwd = 2)
-                stop()
+                points(as.Date(pp$Date), pp[[avar]], col = plotpNcol[i], lwd = 2, cex = 0.5)
+
             }
-stop()
         }
     }
 }
