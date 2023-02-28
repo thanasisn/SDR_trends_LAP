@@ -286,7 +286,7 @@ for (adb in database) {
     DB  <- get(adb)
 
     cat("\n\\newpage\n")
-    cat("\n#### Monthly cum sums for", translate(sub("_.*", "", adv)), "\n\n")
+    cat("\n#### Daily cum sums for", translate(sub("_.*", "", adb)), "\n\n")
 
     for (avar in vars) {
         wcare <- c("Date", avar, grep(paste0(avar,"_orig"), names(DB),value = T))
@@ -319,6 +319,7 @@ for (adb in database) {
         plot(DB$Date, DB[[grep(paste0(avar,"_orig"), names(DB),value = T)]],
              ylab = bquote("Seasonal Anomaly [%]"),
              col = col)
+        abline(h = 0, lty = 2, lwd = 0.8)
         title(paste(sub("_.*","",adb), "mean daily values ",
                     translate(avar) ), cex.main = 1)
     }
@@ -328,7 +329,7 @@ for (adb in database) {
 
 
 
-## ~ Calculate monthly from daily cum sum -------------------------------------------------
+## ~ Calculate monthly from daily cum sum --------------------------------------
 
 ## use a copy
   ALL_4_daily_monthly_Cumsum <- copy(  ALL_1_daily_DEseas)
@@ -390,7 +391,7 @@ CLOUD_4_daily_monthly_Cumsum[, DIR_transp := cumsum(DIR_transp)]
 #'
 #' ### Whole day monthly cumulative sum
 #'
-#+ echo=F, include=T, results="asis"
+#+ echo=F, include=T
 
 # vars        <- c("GLB_att", "DIR_att", "DIR_transp")
 vars        <- c("GLB_att")
@@ -398,7 +399,7 @@ database    <- c(  "ALL_4_daily_monthly_Cumsum",
                  "CLEAR_4_daily_monthly_Cumsum",
                  "CLOUD_4_daily_monthly_Cumsum")
 
-#+ cumulativemonthlysums, echo=F, include=T
+#+ cumulativemonthlysums, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
 
@@ -431,16 +432,18 @@ for (adb in database) {
         title(paste(sub("_.*","",adb), "mean monthly cumulative sum ",
                     translate(avar) ), cex.main = 1)
 
-
         ## test plot for reference
         plot(DB$Date, DB[[grep(paste0(avar,"_orig"), names(DB),value = T)]],
              ylab = bquote("Seasonal Anomaly [%]"),
              col = col)
+        abline(h = 0, lty = 2, lwd = 0.8)
         title(paste(sub("_.*","",adb), "mean monthly values ",
                     translate(avar) ), cex.main = 1)
     }
 }
 #'
+
+
 
 
 
@@ -550,15 +553,15 @@ CLEAR_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format
 CLOUD_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
 
 # ### TODO!!!!! by sza??????
-# ALL_3_monthly_daily_cumsum[,   GLB_att    := cumsum(GLB_att)   ]
-# ALL_3_monthly_daily_cumsum[,   DIR_att    := cumsum(DIR_att)   ]
-# ALL_3_monthly_daily_cumsum[,   DIR_transp := cumsum(DIR_transp)]
-# CLEAR_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)   ]
-# CLEAR_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)   ]
-# CLEAR_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
-# CLOUD_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)   ]
-# CLOUD_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)   ]
-# CLOUD_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
+ALL_3_monthly_daily_cumsum[,   GLB_att    := cumsum(GLB_att)   ]
+ALL_3_monthly_daily_cumsum[,   DIR_att    := cumsum(DIR_att)   ]
+ALL_3_monthly_daily_cumsum[,   DIR_transp := cumsum(DIR_transp)]
+CLEAR_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)   ]
+CLEAR_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)   ]
+CLEAR_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
+CLOUD_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)   ]
+CLOUD_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)   ]
+CLOUD_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
 
 
 
@@ -568,7 +571,7 @@ CLOUD_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format
 #' \newpage
 #' ## Cumulative sums
 #'
-#' Use deseasonalized monthly values to calculate cumulative sums
+#' Use deseasonalized monthly values to calculate cumulative sums by SZA and part of day
 #'
 #+ echo=F, include=F
 
@@ -579,7 +582,7 @@ dbs     <- c("ALL_3_monthly_DEseas",
              "CLOUD_3_monthly_DEseas")
 basevar <- c("Year", "Month", "SZA", "preNoon")
 
-## ~ compute cumulative sums for each category and sza ---------------------------
+## ~ compute cumulative sums for each category and sza -------------------------
 for (DBn in dbs) {
     DB <- get(DBn)
     for (avar in vars) {
@@ -628,7 +631,7 @@ database    <- c("ALL_3_monthly_cumsum",
                  "CLEAR_3_monthly_cumsum",
                  "CLOUD_3_monthly_cumsum")
 
-#+ cumulativesums, echo=F, include=T
+#+ cumulativeSZAsums, echo=F, include=T
 for (adb in database) {
     DB  <- get(adb)
     DB2 <- get(paste0(sub("_.*", "", adb), "_3_monthly_daily_cumsum"))
@@ -637,6 +640,7 @@ for (adb in database) {
     for (asza in plotsza) {
         for (avar in vars) {
             wcare <- c("FDate", "preNoon", avar)
+
             pdb   <- DB[ SZA == asza ]
             pdb   <- pdb[, ..wcare]
             # pdb   <- pdb[!is.na(pdb[[avar]])]
@@ -659,24 +663,35 @@ for (adb in database) {
                 lines(pp$FDate, pp[[avar]], col = plotpNcol[i], lwd = 2)
             }
             ## daily from other DT
+            ## FIXME
             lines(DB2$FDate, DB2[[avar]], col = plotpNcol[3], lwd = 2)
 
             legend("top", legend = plotpreNoon, col = plotpNcol,
-                   lty = 1, bty = "n", ncol = 3,cex = 0.8)
+                   lty = 1, bty = "n", ncol = 3, cex = 0.8)
 
             title(paste(sub("_.*","",adb), "monthly cumulative sum ",
                         translate(avar), "for",asza,"deg."), cex.main = 1)
 
 
             ## test plot for reference
-            plot(DB$FDate, DBn[[avar]],col = plotpNcol[3])
-
+            plot(DB$FDate, DBn[[avar]], col = plotpNcol[3])
+            for (i in 1:length(plotpreNoon) ) {
+                pp <- DBn[preNoon == plotpreNoon[i] & SZA == asza]
+                points(pp$FDate, pp[[avar]], col = plotpNcol[i], lwd = 2)
+                stop()
+            }
+stop()
         }
     }
 }
 #'
 
 
+
+
+
+
+## Plot direct only time scale -------------------------------------------------
 
 plotsza     <- c( 63 )
 # plotpreNoon <- c("am","pm","am+pm", "daily")
@@ -687,7 +702,7 @@ database    <- c("ALL_3_monthly_cumsum",
                  "CLEAR_3_monthly_cumsum",
                  "CLOUD_3_monthly_cumsum")
 
-#+  cumulativesumsdir, echo=F, include=T
+#+  cumulativeSZAsumsdir, echo=F, include=T
 for (adb in database) {
     DB  <- get(adb)
     DB2 <- get(paste0(sub("_.*","",adb), "_3_monthly_daily_cumsum"))
