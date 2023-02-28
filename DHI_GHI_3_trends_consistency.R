@@ -68,12 +68,13 @@ if (!interactive()) {
     filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
-## overide plot options
+## override plot options
 par(pch = ".")
 
 #+ echo=F, include=T
 library(data.table, quietly = T, warn.conflicts = F)
 library(pander,     quietly = T, warn.conflicts = F)
+library(lubridate,  quietly = T, warn.conflicts = F)
 
 panderOptions('table.alignment.default', 'right')
 panderOptions('table.split.table',        120   )
@@ -223,9 +224,9 @@ CLOUD_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_t
 ## ~ Calculate daily cum sum ---------------------------------------------------
 
 ## use a copy
-  ALL_1_daily_Cumsum <-   ALL_1_daily_DEseas
-CLEAR_1_daily_Cumsum <- CLEAR_1_daily_DEseas
-CLOUD_1_daily_Cumsum <- CLOUD_1_daily_DEseas
+  ALL_1_daily_Cumsum <- copy(  ALL_1_daily_DEseas)
+CLEAR_1_daily_Cumsum <- copy(CLEAR_1_daily_DEseas)
+CLOUD_1_daily_Cumsum <- copy(CLOUD_1_daily_DEseas)
 
 ### keep raw for easy plot
   ALL_1_daily_Cumsum[, GLB_att_orig    := GLB_att   ]
@@ -268,26 +269,24 @@ CLOUD_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
 
 
 
-## TODO plot whole day cumsum ....
 
 #'
 #' ### Whole day daily cumulative sum
 #'
 #+ echo=F, include=T
 
-
-plotpreNoon <- c("daily")
-plotpNcol   <- c(2, 3, 4, 5)
-vars        <- c("GLB_att", "DIR_att", "DIR_transp")
+# vars        <- c("GLB_att", "DIR_att", "DIR_transp")
+vars        <- c("GLB_att")
 database    <- c(  "ALL_1_daily_Cumsum",
                  "CLEAR_1_daily_Cumsum",
                  "CLOUD_1_daily_Cumsum")
 
-#+ cumulativedailysums, echo=F, include=T
+#+ cumulativedailysums, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
-    # DB2 <- get(paste0(sub("_.*", "", adb), "_3_monthly_daily_cumsum"))
-    # DBn <- get(sub("cumsum", "DEseas", adb))
+
+    cat("\n\\newpage\n")
+    cat("\n#### Monthly cum sums for", translate(sub("_.*", "", adv)), "\n\n")
 
     for (avar in vars) {
         wcare <- c("Date", avar, grep(paste0(avar,"_orig"), names(DB),value = T))
@@ -299,6 +298,7 @@ for (adb in database) {
                             collapse = "_"))
 
         par("mar" = c(3,4,2,1))
+        par(pch = ".")
 
         plot(1, type = "n",
              xlab = "",
@@ -311,23 +311,136 @@ for (adb in database) {
         ## daily from other DT
         lines(DB$Date, DB[[avar]], col = col, lwd = 2)
 
-        legend("top", legend = plotpreNoon, col = plotpNcol,
-               lty = 1, bty = "n", ncol = 3,cex = 0.8)
-
         title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
                     translate(avar) ), cex.main = 1)
 
 
         ## test plot for reference
-        plot(DB$Date, DB[[grep(paste0(avar,"_orig"), names(DB),value = T)]],col = plotpNcol[3])
-
+        plot(DB$Date, DB[[grep(paste0(avar,"_orig"), names(DB),value = T)]],
+             ylab = bquote("Seasonal Anomaly [%]"),
+             col = col)
+        title(paste(sub("_.*","",adb), "mean daily values ",
+                    translate(avar) ), cex.main = 1)
     }
 }
 #'
+#+ echo=F, include=T
+
+
+
+## ~ Calculate monthly from daily cum sum -------------------------------------------------
+
+## use a copy
+  ALL_4_daily_monthly_Cumsum <- copy(  ALL_1_daily_DEseas)
+CLEAR_4_daily_monthly_Cumsum <- copy(CLEAR_1_daily_DEseas)
+CLOUD_4_daily_monthly_Cumsum <- copy(CLOUD_1_daily_DEseas)
+
+## create monthly means
+  ALL_4_daily_monthly_Cumsum[, GLB_att    := mean(GLB_att   , na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
+  ALL_4_daily_monthly_Cumsum[, DIR_att    := mean(DIR_att   , na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
+  ALL_4_daily_monthly_Cumsum[, DIR_transp := mean(DIR_transp, na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
+CLEAR_4_daily_monthly_Cumsum[, GLB_att    := mean(GLB_att   , na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
+CLEAR_4_daily_monthly_Cumsum[, DIR_att    := mean(DIR_att   , na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
+CLEAR_4_daily_monthly_Cumsum[, DIR_transp := mean(DIR_transp, na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
+CLOUD_4_daily_monthly_Cumsum[, GLB_att    := mean(GLB_att   , na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
+CLOUD_4_daily_monthly_Cumsum[, DIR_att    := mean(DIR_att   , na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
+CLOUD_4_daily_monthly_Cumsum[, DIR_transp := mean(DIR_transp, na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
+
+### keep raw for easy plot
+  ALL_4_daily_monthly_Cumsum[, GLB_att_orig    := GLB_att   ]
+  ALL_4_daily_monthly_Cumsum[, DIR_att_orig    := DIR_att   ]
+  ALL_4_daily_monthly_Cumsum[, DIR_transp_orig := DIR_transp]
+CLEAR_4_daily_monthly_Cumsum[, GLB_att_orig    := GLB_att   ]
+CLEAR_4_daily_monthly_Cumsum[, DIR_att_orig    := DIR_att   ]
+CLEAR_4_daily_monthly_Cumsum[, DIR_transp_orig := DIR_transp]
+CLOUD_4_daily_monthly_Cumsum[, GLB_att_orig    := GLB_att   ]
+CLOUD_4_daily_monthly_Cumsum[, DIR_att_orig    := DIR_att   ]
+CLOUD_4_daily_monthly_Cumsum[, DIR_transp_orig := DIR_transp]
+
+## make NA to zero to preserve sums
+  ALL_4_daily_monthly_Cumsum[is.na(GLB_att),    GLB_att    := 0]
+  ALL_4_daily_monthly_Cumsum[is.na(DIR_att),    DIR_att    := 0]
+  ALL_4_daily_monthly_Cumsum[is.na(DIR_transp), DIR_transp := 0]
+CLEAR_4_daily_monthly_Cumsum[is.na(GLB_att),    GLB_att    := 0]
+CLEAR_4_daily_monthly_Cumsum[is.na(DIR_att),    DIR_att    := 0]
+CLEAR_4_daily_monthly_Cumsum[is.na(DIR_transp), DIR_transp := 0]
+CLOUD_4_daily_monthly_Cumsum[is.na(GLB_att),    GLB_att    := 0]
+CLOUD_4_daily_monthly_Cumsum[is.na(DIR_att),    DIR_att    := 0]
+CLOUD_4_daily_monthly_Cumsum[is.na(DIR_transp), DIR_transp := 0]
+
+## order before cumsum
+setorder(  ALL_4_daily_monthly_Cumsum, Date)
+setorder(CLEAR_4_daily_monthly_Cumsum, Date)
+setorder(CLOUD_4_daily_monthly_Cumsum, Date)
+
+## calculate cumsum as a monthly
+  ALL_4_daily_monthly_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
+  ALL_4_daily_monthly_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
+  ALL_4_daily_monthly_Cumsum[, DIR_transp := cumsum(DIR_transp)]
+CLEAR_4_daily_monthly_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
+CLEAR_4_daily_monthly_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
+CLEAR_4_daily_monthly_Cumsum[, DIR_transp := cumsum(DIR_transp)]
+CLOUD_4_daily_monthly_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
+CLOUD_4_daily_monthly_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
+CLOUD_4_daily_monthly_Cumsum[, DIR_transp := cumsum(DIR_transp)]
 
 
 
 
+#'
+#' ### Whole day monthly cumulative sum
+#'
+#+ echo=F, include=T, results="asis"
+
+# vars        <- c("GLB_att", "DIR_att", "DIR_transp")
+vars        <- c("GLB_att")
+database    <- c(  "ALL_4_daily_monthly_Cumsum",
+                 "CLEAR_4_daily_monthly_Cumsum",
+                 "CLOUD_4_daily_monthly_Cumsum")
+
+#+ cumulativemonthlysums, echo=F, include=T
+for (adb in database) {
+    DB  <- get(adb)
+
+    cat("\n\\newpage\n")
+    cat("\n#### Monthly cum sums for", translate(sub("_.*", "", adb)), "\n\n")
+
+    for (avar in vars) {
+        wcare <- c("Date", avar, grep(paste0(avar,"_orig"), names(DB),value = T))
+        pdb   <- DB[, ..wcare]
+        xlim  <- range(pdb$Date)
+        ylim  <- range(pdb[[avar]],na.rm = T)
+        col   <- get(paste0(c("col",
+                              unlist(strsplit(avar, split = "_" ))[1:2]),
+                            collapse = "_"))
+
+        par("mar" = c(3,4,2,1))
+        par(pch = ".")
+
+        plot(1, type = "n",
+             xlab = "",
+             xlim = xlim, ylim = ylim,
+             xaxt = "n",
+             ylab = bquote("Cumulative Seasonal Anomaly [%]" ) )
+        axis.Date(1, pdb$Date)
+        abline(h = 0, lty = 2, lwd = 0.8)
+
+        ## daily from other DT
+        lines(DB$Date, DB[[avar]], col = col, lwd = 2)
+
+        title(paste(sub("_.*","",adb), "mean monthly cumulative sum ",
+                    translate(avar) ), cex.main = 1)
+
+
+        ## test plot for reference
+        plot(DB$Date, DB[[grep(paste0(avar,"_orig"), names(DB),value = T)]],
+             ylab = bquote("Seasonal Anomaly [%]"),
+             col = col)
+        title(paste(sub("_.*","",adb), "mean monthly values ",
+                    translate(avar) ), cex.main = 1)
+    }
+}
+#'
 
 
 
@@ -336,16 +449,10 @@ for (adb in database) {
 
 
 
-
-
-
-
-
-
 ## ~ Calculate seasonal anomaly by SZA -----------------------------------------
 
 #'
-#' ### Calculate seasonal anomaly
+#' ### Calculate seasonal anomaly by SZA and period of day
 #'
 #+ echo=F, include=F
 
