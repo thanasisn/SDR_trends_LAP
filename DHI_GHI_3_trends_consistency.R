@@ -62,24 +62,23 @@ tic <- Sys.time()
 Script.Name <- tryCatch({ funr::sys.script() },
                         error = function(e) { cat(paste("\nUnresolved script name: ", e),"\n\n")
                             return("Climatological_") })
-if(!interactive()) {
+if (!interactive()) {
     pdf( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
     sink(file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
     filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
+## overide plot options
 par(pch = ".")
 
-
-
 #+ echo=F, include=T
-####  External code  ####
 library(data.table, quietly = T, warn.conflicts = F)
 library(pander,     quietly = T, warn.conflicts = F)
 
 panderOptions('table.alignment.default', 'right')
 panderOptions('table.split.table',        120   )
 
+## Load external functions -----------------------------------------------------
 ## Functions from `https://github.com/thanasisn/IStillBreakStuff/tree/main/FUNCTIONS/R`
 source("~/CODE/FUNCTIONS/R/sumNA.R")
 source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
@@ -87,11 +86,11 @@ source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 
 
-## For this project
+## Source initial scripts ------------------------------------------------------
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
 
-## notification
+## notification function
 options(error = function() {
     if (interactive()) {
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
@@ -115,84 +114,79 @@ options(error = function() {
 #'
 #+ echo=F, include=F
 
-## ~ Plots longterm with SZA ####
-data_list  <- list(ALL   =   ALL_3_monthly_mean,
-                   CLEAR = CLEAR_3_monthly_mean,
-                   CLOUD = CLOUD_3_monthly_mean)
-by_var     <- c("Date", "Month", "SZA")
-wecare     <- unique(unlist(lapply(data_list, names)))
-wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
-for (i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    for (xvar in by_var){
-        for (yvar in wecare) {
-            if (! yvar %in% names(Dplot)) next()
-            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-            vect <- Dplot[[yvar]]
-            plot(Dplot[[xvar]], vect,
-                 pch = ".", col = col,
-                 main = paste(names(data_list[i]), yvar),
-                 xlab = xvar, ylab = yvar)
-        }
-    }
-}
-## ~ Plot longterm histograms  ####
-for (i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    # intersect(names(Dplot),wecare)
-    for (yvar in wecare) {
-        if (! yvar %in% names(Dplot)) next()
-        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-        vect <- Dplot[[yvar]]
-        hist(vect,
-             main = paste(names(data_list[i]), yvar),
-             breaks = 100, col = col)
-    }
-}
-#+ echo=F, include=F
 
-
-## ~ Plots seasonal data ####
-data_list  <- list(ALL   =   ALL_3_monthly_seas,
-                   CLEAR = CLEAR_3_monthly_seas,
-                   CLOUD = CLOUD_3_monthly_seas)
-by_var     <- c("Month", "SZA")
-wecare     <- unique(unlist(lapply(data_list, names)))
-wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
-for(i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    for (xvar in by_var){
-        for (yvar in wecare) {
-            if (! yvar %in% names(Dplot)) next()
-            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-            vect <- Dplot[[yvar]]
-            plot(Dplot[[xvar]], vect,
-                 pch = ".", col = col,
-                 main = paste(names(data_list[i]), yvar),
-                 xlab = xvar, ylab = yvar)
-        }
-    }
-}
-
-## ~ Plots seasonal data histograms ####
-for (i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    for (yvar in wecare) {
-        if (! yvar %in% names(Dplot)) next()
-        col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-        vect <- Dplot[[yvar]]
-        hist(vect,
-             main = paste(names(data_list[i]), yvar),
-             breaks = 100, col = col)
-    }
-}
-rm(data_list)
-
-
-
-
-
-
+# ## ___ Scatter plots with SZA all data -----------------------------------------
+# data_list  <- list(ALL   =   ALL_3_monthly_mean,
+#                    CLEAR = CLEAR_3_monthly_mean,
+#                    CLOUD = CLOUD_3_monthly_mean)
+# by_var     <- c("Date", "Month", "SZA")
+# wecare     <- unique(unlist(lapply(data_list, names)))
+# wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
+# for (i in 1:length(data_list)) {
+#     Dplot <- data_list[[i]]
+#     for (xvar in by_var){
+#         for (yvar in wecare) {
+#             if (! yvar %in% names(Dplot)) next()
+#             col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+#             vect <- Dplot[[yvar]]
+#             plot(Dplot[[xvar]], vect,
+#                  pch = ".", col = col,
+#                  main = paste(names(data_list[i]), yvar),
+#                  xlab = xvar, ylab = yvar)
+#         }
+#     }
+# }
+# ## ___ Histograms Plots all data -----------------------------------------------
+# for (i in 1:length(data_list)) {
+#     Dplot <- data_list[[i]]
+#     # intersect(names(Dplot),wecare)
+#     for (yvar in wecare) {
+#         if (! yvar %in% names(Dplot)) next()
+#         col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+#         vect <- Dplot[[yvar]]
+#         hist(vect,
+#              main = paste(names(data_list[i]), yvar),
+#              breaks = 100, col = col)
+#     }
+# }
+# #+ echo=F, include=F
+#
+#
+# ## ___ Scatter Plot seasonal data ----------------------------------------------
+# data_list  <- list(ALL   =   ALL_3_monthly_seas,
+#                    CLEAR = CLEAR_3_monthly_seas,
+#                    CLOUD = CLOUD_3_monthly_seas)
+# by_var     <- c("Month", "SZA")
+# wecare     <- unique(unlist(lapply(data_list, names)))
+# wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
+# for(i in 1:length(data_list)) {
+#     Dplot <- data_list[[i]]
+#     for (xvar in by_var){
+#         for (yvar in wecare) {
+#             if (! yvar %in% names(Dplot)) next()
+#             col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+#             vect <- Dplot[[yvar]]
+#             plot(Dplot[[xvar]], vect,
+#                  pch = ".", col = col,
+#                  main = paste(names(data_list[i]), yvar),
+#                  xlab = xvar, ylab = yvar)
+#         }
+#     }
+# }
+#
+# ## ___ Histograms Plot seasonal data -------------------------------------------
+# for (i in 1:length(data_list)) {
+#     Dplot <- data_list[[i]]
+#     for (yvar in wecare) {
+#         if (! yvar %in% names(Dplot)) next()
+#         col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+#         vect <- Dplot[[yvar]]
+#         hist(vect,
+#              main = paste(names(data_list[i]), yvar),
+#              breaks = 100, col = col)
+#     }
+# }
+# rm(data_list)
 
 
 
@@ -200,6 +194,7 @@ rm(data_list)
 
 ## ~ Calculate relative daily anomaly ------------------------------------------
 
+## merge data with seasonal data
   ALL_1_daily_DEseas <- merge(  ALL_1_daily_mean,   ALL_1_daily_seas, by = "doy", all = T)
 CLEAR_1_daily_DEseas <- merge(CLEAR_1_daily_mean, CLEAR_1_daily_seas, by = "doy", all = T)
 CLOUD_1_daily_DEseas <- merge(CLOUD_1_daily_mean, CLOUD_1_daily_seas, by = "doy", all = T)
@@ -259,9 +254,7 @@ setorder(  ALL_1_daily_Cumsum, Date)
 setorder(CLEAR_1_daily_Cumsum, Date)
 setorder(CLOUD_1_daily_Cumsum, Date)
 
-
-###TODO by sza!!?
-## calculate cumsum By
+## calculate cumsum as a daily value
   ALL_1_daily_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
   ALL_1_daily_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
   ALL_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
@@ -271,6 +264,78 @@ CLEAR_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
 CLOUD_1_daily_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
 CLOUD_1_daily_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
 CLOUD_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
+
+
+
+
+## TODO plot whole day cumsum ....
+
+#'
+#' ### Whole day daily cumulative sum
+#'
+#+ echo=F, include=T
+
+
+plotpreNoon <- c("daily")
+plotpNcol   <- c(2, 3, 4, 5)
+vars        <- c("GLB_att", "DIR_att", "DIR_transp")
+database    <- c(  "ALL_1_daily_Cumsum",
+                 "CLEAR_1_daily_Cumsum",
+                 "CLOUD_1_daily_Cumsum")
+
+#+ cumulativedailysums, echo=F, include=T
+for (adb in database) {
+    DB  <- get(adb)
+    # DB2 <- get(paste0(sub("_.*", "", adb), "_3_monthly_daily_cumsum"))
+    # DBn <- get(sub("cumsum", "DEseas", adb))
+
+    for (avar in vars) {
+        wcare <- c("Date", avar, grep(paste0(avar,"_orig"), names(DB),value = T))
+        pdb   <- DB[, ..wcare]
+        xlim  <- range(pdb$Date)
+        ylim  <- range(pdb[[avar]],na.rm = T)
+        col   <- get(paste0(c("col",
+                              unlist(strsplit(avar, split = "_" ))[1:2]),
+                            collapse = "_"))
+
+        par("mar" = c(3,4,2,1))
+
+        plot(1, type = "n",
+             xlab = "",
+             xlim = xlim, ylim = ylim,
+             xaxt = "n",
+             ylab = bquote("Cumulative Seasonal Anomaly [%]" ) )
+        axis.Date(1, pdb$Date)
+        abline(h = 0, lty = 2, lwd = 0.8)
+
+        ## daily from other DT
+        lines(DB$Date, DB[[avar]], col = col, lwd = 2)
+
+        legend("top", legend = plotpreNoon, col = plotpNcol,
+               lty = 1, bty = "n", ncol = 3,cex = 0.8)
+
+        title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
+                    translate(avar) ), cex.main = 1)
+
+
+        ## test plot for reference
+        plot(DB$Date, DB[[grep(paste0(avar,"_orig"), names(DB),value = T)]],col = plotpNcol[3])
+
+    }
+}
+#'
+
+
+
+
+
+
+
+
+### TODO check the rest
+
+
+
 
 
 
@@ -377,16 +442,16 @@ CLOUD_3_monthly_daily_cumsum[is.na(DIR_transp), DIR_transp := 0 ]
 CLEAR_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
 CLOUD_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
 
-### TODO!!!!! by sza??????
-ALL_3_monthly_daily_cumsum[,   GLB_att    := cumsum(GLB_att)   ]
-ALL_3_monthly_daily_cumsum[,   DIR_att    := cumsum(DIR_att)   ]
-ALL_3_monthly_daily_cumsum[,   DIR_transp := cumsum(DIR_transp)]
-CLEAR_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)   ]
-CLEAR_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)   ]
-CLEAR_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
-CLOUD_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)   ]
-CLOUD_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)   ]
-CLOUD_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
+# ### TODO!!!!! by sza??????
+# ALL_3_monthly_daily_cumsum[,   GLB_att    := cumsum(GLB_att)   ]
+# ALL_3_monthly_daily_cumsum[,   DIR_att    := cumsum(DIR_att)   ]
+# ALL_3_monthly_daily_cumsum[,   DIR_transp := cumsum(DIR_transp)]
+# CLEAR_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)   ]
+# CLEAR_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)   ]
+# CLEAR_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
+# CLOUD_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)   ]
+# CLOUD_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)   ]
+# CLOUD_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
 
 
 
@@ -407,7 +472,7 @@ dbs     <- c("ALL_3_monthly_DEseas",
              "CLOUD_3_monthly_DEseas")
 basevar <- c("Year", "Month", "SZA", "preNoon")
 
-## compute cumulative sums for each category and sza ---------------------------
+## ~ compute cumulative sums for each category and sza ---------------------------
 for (DBn in dbs) {
     DB <- get(DBn)
     for (avar in vars) {
@@ -499,8 +564,6 @@ for (adb in database) {
             ## test plot for reference
             plot(DB$FDate, DBn[[avar]],col = plotpNcol[3])
 
-
-            stop()
         }
     }
 }
@@ -508,7 +571,7 @@ for (adb in database) {
 
 
 
-plotsza <- c( 63 )
+plotsza     <- c( 63 )
 # plotpreNoon <- c("am","pm","am+pm", "daily")
 plotpreNoon <- c("am","pm","daily")
 plotpNcol   <- c(2,3,4,5)

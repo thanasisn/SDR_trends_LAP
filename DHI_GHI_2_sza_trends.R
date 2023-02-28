@@ -62,24 +62,23 @@ tic <- Sys.time()
 Script.Name <- tryCatch({ funr::sys.script() },
                         error = function(e) { cat(paste("\nUnresolved script name: ", e),"\n\n")
                             return("Climatological_") })
-if(!interactive()) {
+if (!interactive()) {
     pdf( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
     sink(file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
     filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
+## overide plot options
 par(pch = ".")
 
-
-
 #+ echo=F, include=T
-####  External code  ####
 library(data.table, quietly = T, warn.conflicts = F)
 library(pander,     quietly = T, warn.conflicts = F)
 
 panderOptions('table.alignment.default', 'right')
 panderOptions('table.split.table',        120   )
 
+## Load external functions -----------------------------------------------------
 ## Functions from `https://github.com/thanasisn/IStillBreakStuff/tree/main/FUNCTIONS/R`
 source("~/CODE/FUNCTIONS/R/sumNA.R")
 source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
@@ -87,11 +86,11 @@ source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 
 
-## For this project
+## Source initial scripts ------------------------------------------------------
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
 
-## notification
+## notification function
 options(error = function() {
     if (interactive()) {
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
@@ -112,7 +111,7 @@ options(error = function() {
 #' ## 2. Long term by SZA
 #'
 #+ echo=F, include=F
-## ~ Plot longterm scatter plots  ####
+## ___ Scatter longterm scatter plots  ####
 data_list  <- list(ALL   = ALL_2_daily_mean,
                    CLEAR = CLEAR_2_daily_mean,
                    CLOUD = CLOUD_2_daily_mean)
@@ -133,7 +132,7 @@ for (i in 1:length(data_list)) {
         }
     }
 }
-## ~ Plot longterm histograms  ####
+## ___ Histograms Plots all data -----------------------------------------------
 for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     # intersect(names(Dplot),wecare)
@@ -146,9 +145,10 @@ for (i in 1:length(data_list)) {
              breaks = 100, col = col)
     }
 }
-
 #+ echo=F, include=F
-## ~ Plots seasonal data scatter plots ####
+
+
+## ___ Scatter Plot seasonal data ----------------------------------------------
 data_list  <- list(ALL_Seas   =   ALL_2_daily_seas,
                    CLEAR_Seas = CLEAR_2_daily_seas,
                    CLOUD_Seas = CLOUD_2_daily_seas)
@@ -169,7 +169,8 @@ for (i in 1:length(data_list)) {
         }
     }
 }
-## ~ Plots seasonal data histograms ####
+
+## ___ Histograms Plot seasonal data -------------------------------------------
 for (i in 1:length(data_list)) {
     Dplot <- data_list[[i]]
     for (yvar in wecare) {
