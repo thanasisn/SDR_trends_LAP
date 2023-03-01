@@ -41,3 +41,10 @@
 - seasonal data by month SZA preNoon
 
 
+
+
+## `*_3_monthly_daily_mean`
+
+- created from `*_1_daily_mean`
+
+
