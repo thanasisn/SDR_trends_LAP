@@ -75,6 +75,7 @@ par(pch = ".")
 library(data.table, quietly = T, warn.conflicts = F)
 library(pander,     quietly = T, warn.conflicts = F)
 library(lubridate,  quietly = T, warn.conflicts = F)
+library(ggplot2)
 
 panderOptions('table.alignment.default', 'right')
 panderOptions('table.split.table',        120   )
@@ -370,10 +371,23 @@ for (adb in database) {
                col    = c("blue", "red")
         )
 
-        ylim <- c(-max(abs(testdb$Sum), na.rm = T), max(abs(testdb$Sum), na.rm = T))
-        plot( testdb$year,  testdb$Sum, type = "l", col = "black", ylim = ylim)
-        abline(h = 0, lty = 2, lwd = 0.8)
-        title("Sum of all yearly values")
+        # ylim <- c(-max(abs(testdb$Sum), na.rm = T), max(abs(testdb$Sum), na.rm = T))
+        # plot( testdb$year,  testdb$Sum, type = "l", col = "black", ylim = ylim)
+        # abline(h = 0, lty = 2, lwd = 0.8)
+        # title("Sum of all yearly values")
+
+
+        gp <- ggplot(data = testdb, aes(x = year, y = Sum)) +
+              geom_col(data = testdb[Sum <= 0], fill = "red") +
+              geom_col(data = testdb[Sum >= 0], fill = "blue") +
+              ggtitle("Sum of all year values") +
+              xlab("Year")     +
+              ylab("Year Sum") +
+              theme_bw()       +
+              theme(plot.title = element_text(hjust = 0.5))
+
+        print(gp)
+
     }
 }
 #'
@@ -492,16 +506,28 @@ for (adb in database) {
                )
 
 
-        ylim <- c(-max(abs(testdb$Sum), na.rm = T), max(abs(testdb$Sum), na.rm = T))
-        plot( testdb$year,  testdb$Sum, type = "l", col = "black", ylim = ylim)
-        abline(h = 0, lty = 2, lwd = 0.8)
-        title("Sum of all yearly values")
+        # ylim <- c(-max(abs(testdb$Sum), na.rm = T), max(abs(testdb$Sum), na.rm = T))
+        # plot( testdb$year,  testdb$Sum, type = "l", col = "black", ylim = ylim)
+        # abline(h = 0, lty = 2, lwd = 0.8)
+        # title("Sum of all yearly values")
 
         # polygon(
         #     c(min(testdb$year), testdb$year , max(testdb$year)) ,
         #     c(min(testdb$Sum) , testdb$Sum , min(testdb$Sum)) ,
         #     col=rgb(0.2,0.1,0.5,0.2) , border=F
         # )
+
+
+        gp <- ggplot(data = testdb, aes(x = year, y = Sum)) +
+            geom_col(data = testdb[Sum <= 0], fill = "red") +
+            geom_col(data = testdb[Sum >= 0], fill = "blue") +
+            ggtitle("Sum of all year values") +
+            xlab("Year")     +
+            ylab("Year Sum") +
+            theme_bw()       +
+            theme(plot.title = element_text(hjust = 0.5))
+
+        print(gp)
 
         # hist(pdb$GLB_att_cusum)
         # hist(pdb$GLB_att_des)
