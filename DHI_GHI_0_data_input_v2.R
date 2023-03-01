@@ -21,7 +21,7 @@ D_14 <- TRUE
 
 ## new implementation with corrected limits
 if (D_14) {
-    common_data <- common_data_14
+    common_data <- common_data_14_v2
     CS_file     <- CS_file_14
     inpatern    <- "Clear_sky_id_Reno-Hansen_apply_v14_[0-9]{4}.Rds"
 }
@@ -382,6 +382,10 @@ if ( havetorun ) {
     setorder(  ALL_1_daily_DESEAS, Date)
     setorder(CLEAR_1_daily_DESEAS, Date)
     setorder(CLOUD_1_daily_DESEAS, Date)
+
+    #   ALL_1_daily_DESEAS[, doy := NULL ]
+    # CLEAR_1_daily_DESEAS[, doy := NULL ]
+    # CLOUD_1_daily_DESEAS[, doy := NULL ]
 
 
     ## ~ Calculate relative anomaly --------------------------------------------
@@ -1069,26 +1073,27 @@ if ( havetorun ) {
 
 
 
-    ## forget duplicate data ----
+    ## forget daily duplicate data ----
     rm(ALL_1_daily_mean,   ALL_1_daily_seas,
        CLEAR_1_daily_mean, CLEAR_1_daily_seas,
        CLOUD_1_daily_mean, CLOUD_1_daily_seas)
 
 
-
-
-stop()
-
-
-    #### ~ Monthly de seasonal anomaly -----------------------------------------------
+    #### ~ Monthly de seasonal anomaly -----------------------------------------
 
       ALL_3_D_monthly_DESEAS <- merge(  ALL_3_monthly_daily_mean,   ALL_3_monthly_daily_seas, by = "Month", all = T)
     CLEAR_3_D_monthly_DESEAS <- merge(CLEAR_3_monthly_daily_mean, CLEAR_3_monthly_daily_seas, by = "Month", all = T)
     CLOUD_3_D_monthly_DESEAS <- merge(CLOUD_3_monthly_daily_mean, CLOUD_3_monthly_daily_seas, by = "Month", all = T)
 
-      ALL_3_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month,"1"), format = "%Y %m %d")]
-    CLEAR_3_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month,"1"), format = "%Y %m %d")]
-    CLOUD_3_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month,"1"), format = "%Y %m %d")]
+    ## forget monthly duplicate data ----
+    rm(  ALL_3_monthly_daily_mean,   ALL_3_monthly_daily_seas,
+       CLEAR_3_monthly_daily_mean, CLEAR_3_monthly_daily_seas,
+       CLOUD_3_monthly_daily_mean, CLOUD_3_monthly_daily_seas)
+
+
+      ALL_3_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month, "1"), format = "%Y %m %d")]
+    CLEAR_3_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month, "1"), format = "%Y %m %d")]
+    CLOUD_3_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month, "1"), format = "%Y %m %d")]
 
     setorder(  ALL_3_D_monthly_DESEAS, Date)
     setorder(CLEAR_3_D_monthly_DESEAS, Date)
@@ -1101,30 +1106,25 @@ stop()
     #' ### Using the % difference from seasonal values
     #'
     #+ echo=F, include=T
-      ALL_3_monthly_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-      ALL_3_monthly_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
-      ALL_3_monthly_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-      ALL_3_monthly_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-    CLEAR_3_monthly_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-    CLEAR_3_monthly_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
-    CLEAR_3_monthly_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-    CLEAR_3_monthly_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-    CLOUD_3_monthly_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-    CLOUD_3_monthly_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
-    CLOUD_3_monthly_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-    CLOUD_3_monthly_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+      ALL_3_D_monthly_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+      ALL_3_D_monthly_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+      ALL_3_D_monthly_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+      ALL_3_D_monthly_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+    CLEAR_3_D_monthly_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+    CLEAR_3_D_monthly_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+    CLEAR_3_D_monthly_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+    CLEAR_3_D_monthly_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+    CLOUD_3_D_monthly_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+    CLOUD_3_D_monthly_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+    CLOUD_3_D_monthly_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+    CLOUD_3_D_monthly_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
     #+ echo=F, include=F
 
 
-
-
-
-
-
-
-
-
-
+    ## forget daily duplicate data ----
+    rm(ALL_1_daily_mean,   ALL_1_daily_seas,
+       CLEAR_1_daily_mean, CLEAR_1_daily_seas,
+       CLOUD_1_daily_mean, CLOUD_1_daily_seas)
 
     ## remove unwanted data frames from memory
     rm(DATA_all)
