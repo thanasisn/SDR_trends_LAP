@@ -193,78 +193,29 @@ options(error = function() {
 
 
 
-## ~ Calculate relative daily anomaly ------------------------------------------
-
-## merge data with seasonal data
-  ALL_1_daily_DEseas <- merge(  ALL_1_daily_mean,   ALL_1_daily_seas, by = "doy", all = T)
-CLEAR_1_daily_DEseas <- merge(CLEAR_1_daily_mean, CLEAR_1_daily_seas, by = "doy", all = T)
-CLOUD_1_daily_DEseas <- merge(CLOUD_1_daily_mean, CLOUD_1_daily_seas, by = "doy", all = T)
-
-#'
-#' ### Using the % difference from seasonal values
-#'
-#+ echo=F, include=T
-ALL_1_daily_DEseas[  , DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-ALL_1_daily_DEseas[  , HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-ALL_1_daily_DEseas[  , GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-ALL_1_daily_DEseas[  , DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-
-CLEAR_1_daily_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLEAR_1_daily_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-CLEAR_1_daily_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-CLEAR_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-
-CLOUD_1_daily_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLOUD_1_daily_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-CLOUD_1_daily_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-CLOUD_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-#+ echo=F, include=F
 
 
 ## ~ Calculate daily cum sum ---------------------------------------------------
 
-## use a copy
-  ALL_1_daily_Cumsum <- copy(  ALL_1_daily_DEseas)
-CLEAR_1_daily_Cumsum <- copy(CLEAR_1_daily_DEseas)
-CLOUD_1_daily_Cumsum <- copy(CLOUD_1_daily_DEseas)
+setorder(  ALL_1_daily_DESEAS, Date)
+setorder(CLEAR_1_daily_DESEAS, Date)
+setorder(CLOUD_1_daily_DESEAS, Date)
 
-### keep raw for easy plot
-  ALL_1_daily_Cumsum[, GLB_att_orig    := GLB_att   ]
-  ALL_1_daily_Cumsum[, DIR_att_orig    := DIR_att   ]
-  ALL_1_daily_Cumsum[, DIR_transp_orig := DIR_transp]
-CLEAR_1_daily_Cumsum[, GLB_att_orig    := GLB_att   ]
-CLEAR_1_daily_Cumsum[, DIR_att_orig    := DIR_att   ]
-CLEAR_1_daily_Cumsum[, DIR_transp_orig := DIR_transp]
-CLOUD_1_daily_Cumsum[, GLB_att_orig    := GLB_att   ]
-CLOUD_1_daily_Cumsum[, DIR_att_orig    := DIR_att   ]
-CLOUD_1_daily_Cumsum[, DIR_transp_orig := DIR_transp]
+## with NAs in place
+# ALL_1_daily_DESEAS[, GLB_att_cusum := cumsum(ifelse(is.na(GLB_att_des), 0, GLB_att_des)) + GLB_att_des*0 ]
 
-## make NA to zero to preserve sums
-  ALL_1_daily_Cumsum[is.na(GLB_att),    GLB_att    := 0]
-  ALL_1_daily_Cumsum[is.na(DIR_att),    DIR_att    := 0]
-  ALL_1_daily_Cumsum[is.na(DIR_transp), DIR_transp := 0]
-CLEAR_1_daily_Cumsum[is.na(GLB_att),    GLB_att    := 0]
-CLEAR_1_daily_Cumsum[is.na(DIR_att),    DIR_att    := 0]
-CLEAR_1_daily_Cumsum[is.na(DIR_transp), DIR_transp := 0]
-CLOUD_1_daily_Cumsum[is.na(GLB_att),    GLB_att    := 0]
-CLOUD_1_daily_Cumsum[is.na(DIR_att),    DIR_att    := 0]
-CLOUD_1_daily_Cumsum[is.na(DIR_transp), DIR_transp := 0]
+## Calculate cumsum with zeroing NA
+  ALL_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+  ALL_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+  ALL_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+CLEAR_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+CLEAR_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+CLEAR_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+CLOUD_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+CLOUD_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+CLOUD_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
 
-## order before cumsum
-setorder(  ALL_1_daily_Cumsum, Date)
-setorder(CLEAR_1_daily_Cumsum, Date)
-setorder(CLOUD_1_daily_Cumsum, Date)
 
-## calculate cumsum as a daily value
-  ALL_1_daily_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
-  ALL_1_daily_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
-  ALL_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
-CLEAR_1_daily_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
-CLEAR_1_daily_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
-CLEAR_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
-CLOUD_1_daily_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
-CLOUD_1_daily_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
-CLOUD_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
 
 
 
@@ -277,9 +228,9 @@ CLOUD_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
 
 # vars        <- c("GLB_att", "DIR_att", "DIR_transp")
 vars        <- c("GLB_att")
-database    <- c(  "ALL_1_daily_Cumsum",
-                 "CLEAR_1_daily_Cumsum",
-                 "CLOUD_1_daily_Cumsum")
+database    <- c(  "ALL_1_daily_DESEAS",
+                 "CLEAR_1_daily_DESEAS",
+                 "CLOUD_1_daily_DESEAS")
 
 #+ cumulativedailysums, echo=F, include=T, results="asis"
 for (adb in database) {
@@ -289,10 +240,12 @@ for (adb in database) {
     cat("\n#### Daily cum sums for", translate(sub("_.*", "", adb)), "\n\n")
 
     for (avar in vars) {
-        wcare <- c("Date", avar, grep(paste0(avar,"_orig"), names(DB),value = T))
+        ## get only the vars we need
+        wcare <- c("Date", paste0(avar,"_des"), paste0(avar,"_cusum"))
         pdb   <- DB[, ..wcare]
+        rm(DB)
         xlim  <- range(pdb$Date)
-        ylim  <- range(pdb[[avar]],na.rm = T)
+        ylim  <- range(pdb[[paste0(avar,"_cusum")]],na.rm = T)
         col   <- get(paste0(c("col",
                               unlist(strsplit(avar, split = "_" ))[1:2]),
                             collapse = "_"))
@@ -309,19 +262,24 @@ for (adb in database) {
         abline(h = 0, lty = 2, lwd = 0.8)
 
         ## daily from other DT
-        lines(DB$Date, DB[[avar]], col = col, lwd = 2)
+        lines(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = col, lwd = 2)
 
         title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
                     translate(avar) ), cex.main = 1)
 
 
         ## test plot for reference
-        plot(DB$Date, DB[[grep(paste0(avar,"_orig"), names(DB),value = T)]],
+        plot(pdb$Date, pdb[[paste0(avar,"_des")]],
              ylab = bquote("Seasonal Anomaly [%]"),
              col = col)
         abline(h = 0, lty = 2, lwd = 0.8)
         title(paste(sub("_.*","",adb), "mean daily values ",
                     translate(avar) ), cex.main = 1)
+
+        hist(pdb$GLB_att_cusum)
+        hist(pdb$GLB_att_des)
+        pdb[ GLB_att_des > 0, sum(GLB_att_des) ]
+        pdb[ GLB_att_des < 0, sum(GLB_att_des) ]
     }
 }
 #'
