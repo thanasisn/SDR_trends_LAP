@@ -338,25 +338,42 @@ for (adb in database) {
         # tail(pdb[ , GLB_att_cusum ])
 
         cat("\n\\newpage\n")
-        # cat("\n\\footnotesize\n")
+        cat("\n\\footnotesize\n")
         # cat("\n\\small\n")
-        cat(
-         pander(
-          merge(
+
+        testdb <-
             merge(
-             merge(
-              merge(
-               pdb[get(paste0(avar,"_des")) > 0, .(PositiveSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)],
-               pdb[get(paste0(avar,"_des")) < 0, .(NegativeSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
-              pdb[get(paste0(avar,"_des")) > 0, .(PositiveMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
-             pdb[get(paste0(avar,"_des")) < 0, .(NegativeMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]
-            ),
-            pdb[ , .(Sum = sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date) ]
-          )
-         )
-        )
+                merge(
+                    merge(
+                        merge(
+                            pdb[get(paste0(avar,"_des")) > 0, .(PositiveSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)],
+                            pdb[get(paste0(avar,"_des")) < 0, .(NegativeSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+                        pdb[get(paste0(avar,"_des")) > 0, .(PositiveMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+                    pdb[get(paste0(avar,"_des")) < 0, .(NegativeMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]
+                ),
+                pdb[ , .(Sum = sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date) ]
+            )
+
+        cat(pander(testdb))
         cat("\n\\normalsize\n")
 
+
+        ylim <- range(testdb$PositiveSum, -testdb$NegativeSum)
+        plot( testdb$year,  testdb$PositiveSum, type = "l", col = "blue", ylim = ylim)
+        lines(testdb$year, -testdb$NegativeSum, type = "l", col = "red")
+        title("Sum of negative and positive values by year")
+
+        legend("top", ncol = 2, bty = "n",
+               lty = 1, pch = NA, cex = 0.7,
+               legend = c("Sum of positive anomaly",
+                          "Sum of negative anomaly"),
+               col    = c("blue", "red")
+        )
+
+        ylim <- c(-max(abs(testdb$Sum), na.rm = T), max(abs(testdb$Sum), na.rm = T))
+        plot( testdb$year,  testdb$Sum, type = "l", col = "black", ylim = ylim)
+        abline(h = 0, lty = 2, lwd = 0.8)
+        title("Sum of all yearly values")
     }
 }
 #'
@@ -465,10 +482,26 @@ for (adb in database) {
         ylim <- range(testdb$PositiveSum, -testdb$NegativeSum)
         plot( testdb$year,  testdb$PositiveSum, type = "l", col = "blue", ylim = ylim)
         lines(testdb$year, -testdb$NegativeSum, type = "l", col = "red")
-        title("Sum of negative and positive values")
+        title("Sum of negative and positive values by year")
 
-        plot( testdb$year,  testdb$Sum, type = "l", col = "black")
-        title("Sum of yearly values")
+        legend("top", ncol = 2, bty = "n",
+               lty = 1, pch = NA, cex = 0.7,
+               legend = c("Sum of positive anomaly",
+                          "Sum of negative anomaly"),
+               col    = c("blue", "red")
+               )
+
+
+        ylim <- c(-max(abs(testdb$Sum), na.rm = T), max(abs(testdb$Sum), na.rm = T))
+        plot( testdb$year,  testdb$Sum, type = "l", col = "black", ylim = ylim)
+        abline(h = 0, lty = 2, lwd = 0.8)
+        title("Sum of all yearly values")
+
+        # polygon(
+        #     c(min(testdb$year), testdb$year , max(testdb$year)) ,
+        #     c(min(testdb$Sum) , testdb$Sum , min(testdb$Sum)) ,
+        #     col=rgb(0.2,0.1,0.5,0.2) , border=F
+        # )
 
         # hist(pdb$GLB_att_cusum)
         # hist(pdb$GLB_att_des)
