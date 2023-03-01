@@ -371,6 +371,46 @@ if ( havetorun ) {
     })
 
 
+    ## ~ Create DESEASonal data ------------------------------------------------
+
+    #### ~ Daily de seasonal anomaly -------------------------------------------
+
+      ALL_1_daily_DESEAS <- merge(  ALL_1_daily_mean,   ALL_1_daily_seas, by = "doy", all = T)
+    CLEAR_1_daily_DESEAS <- merge(CLEAR_1_daily_mean, CLEAR_1_daily_seas, by = "doy", all = T)
+    CLOUD_1_daily_DESEAS <- merge(CLOUD_1_daily_mean, CLOUD_1_daily_seas, by = "doy", all = T)
+
+    setorder(  ALL_1_daily_DESEAS, Date)
+    setorder(CLEAR_1_daily_DESEAS, Date)
+    setorder(CLOUD_1_daily_DESEAS, Date)
+
+
+    ## ~ Calculate relative anomaly --------------------------------------------
+    #'
+    #' ### Using the % difference from seasonal values
+    #'
+    #+ echo=F, include=T
+    ALL_1_daily_DESEAS[  , DIR_att_des   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+    ALL_1_daily_DESEAS[  , HOR_att_des   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+    ALL_1_daily_DESEAS[  , GLB_att_des   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+    ALL_1_daily_DESEAS[  , DIR_transp_des:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+    ## add tsi data to data
+    ALL_1_daily_mean[ , tsi1au_att_des := 100*(tsi1au_att - mean(tsi1au_att)) / mean(tsi1au_att)  ]
+    ALL_1_daily_mean <-
+        merge( ALL_1_daily_DESEAS,
+               ALL_1_daily_mean[, .(Date, tsi1au_att)], by = "Date", all = T )
+    CLEAR_1_daily_DESEAS[, DIR_att_des   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+    CLEAR_1_daily_DESEAS[, HOR_att_des   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+    CLEAR_1_daily_DESEAS[, GLB_att_des   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+    CLEAR_1_daily_DESEAS[, DIR_transp_des:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+
+    CLOUD_1_daily_DESEAS[, DIR_att_des   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+    CLOUD_1_daily_DESEAS[, HOR_att_des   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+    CLOUD_1_daily_DESEAS[, GLB_att_des   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+    CLOUD_1_daily_DESEAS[, DIR_transp_des:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+    #+ echo=F, include=F
+
+
+
 
     #### WRDC ? ####
 
@@ -812,8 +852,6 @@ if ( havetorun ) {
 
     CLOUD_3_monthly_meanA <-
         DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
-
-
                        HOR_att       = mean(HOR_att,    na.rm = T),
                        GLB_att       = mean(GLB_att,    na.rm = T),
                        DIR_transp    = mean(DIR_transp, na.rm = T),
@@ -831,8 +869,6 @@ if ( havetorun ) {
 
     CLOUD_3_monthly_meanB <-
         DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
-
-
                        HOR_att       = mean(HOR_att,    na.rm = T),
                        GLB_att       = mean(GLB_att,    na.rm = T),
                        DIR_transp    = mean(DIR_transp, na.rm = T),
@@ -951,7 +987,8 @@ if ( havetorun ) {
                              by = .( Month, SZA, preNoon ) ]
 
 
-    ## ~ monthly daily values ####
+
+    ## ~ monthly values from daily ---------------------------------------------
     ALL_3_monthly_daily_mean <-
         ALL_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
                             GLB_att    = mean(GLB_att,    na.rm = T),
@@ -992,7 +1029,7 @@ if ( havetorun ) {
                            by = .( Year = year(Date), Month = month(Date) ) ]
 
 
-    ## ~ seasonal monthly daily values ####
+    ## ~ seasonal monthly daily values -----------------------------------------
     ALL_3_monthly_daily_seas <-
         ALL_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
                             GLB_att_seas    = mean(GLB_att,    na.rm = T),
@@ -1031,6 +1068,62 @@ if ( havetorun ) {
                               HOR_att_N_seas  = sum(!is.na(HOR_att)),
                               DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                            by = .( Month = month(Date) ) ]
+
+
+
+
+
+
+stop()
+
+
+    #### ~ Monthly de seasonal anomaly -----------------------------------------------
+
+      ALL_3_D_monthly_DESEAS <- merge(  ALL_3_monthly_daily_mean,   ALL_3_monthly_daily_seas, by = "Month", all = T)
+    CLEAR_3_D_monthly_DESEAS <- merge(CLEAR_3_monthly_daily_mean, CLEAR_3_monthly_daily_seas, by = "Month", all = T)
+    CLOUD_3_D_monthly_DESEAS <- merge(CLOUD_3_monthly_daily_mean, CLOUD_3_monthly_daily_seas, by = "Month", all = T)
+
+      ALL_3_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month,"1"), format = "%Y %m %d")]
+    CLEAR_3_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month,"1"), format = "%Y %m %d")]
+    CLOUD_3_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month,"1"), format = "%Y %m %d")]
+
+    setorder(  ALL_3_D_monthly_DESEAS, Date)
+    setorder(CLEAR_3_D_monthly_DESEAS, Date)
+    setorder(CLOUD_3_D_monthly_DESEAS, Date)
+
+    ##TODO margin of error for anomaly!!!!
+
+    ## relative anomaly
+    #'
+    #' ### Using the % difference from seasonal values
+    #'
+    #+ echo=F, include=T
+      ALL_3_monthly_DESEAS[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+      ALL_3_monthly_DESEAS[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+      ALL_3_monthly_DESEAS[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+      ALL_3_monthly_DESEAS[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+
+    CLEAR_3_monthly_DESEAS[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+    CLEAR_3_monthly_DESEAS[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+    CLEAR_3_monthly_DESEAS[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+    CLEAR_3_monthly_DESEAS[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+
+    CLOUD_3_monthly_DESEAS[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
+    CLOUD_3_monthly_DESEAS[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
+    CLOUD_3_monthly_DESEAS[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
+    CLOUD_3_monthly_DESEAS[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+    #+ echo=F, include=F
+
+
+
+
+
+
+
+
+
+
+
 
     ## remove unwanted data frames from memory
     rm(DATA_all)
