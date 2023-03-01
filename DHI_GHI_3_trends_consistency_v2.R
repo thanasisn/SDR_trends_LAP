@@ -292,7 +292,7 @@ for (adb in database) {
                             collapse = "_"))
 
         par("mar" = c(3,4,2,1))
-        par(pch = ".")
+        par(pch = 19)
 
         plot(1, type = "n",
              xlab = "",
@@ -314,6 +314,7 @@ for (adb in database) {
         lm1 <- lm(pdb[[paste0(avar,"_des")]] ~ pdb$Date)
         plot(pdb$Date, pdb[[paste0(avar,"_des")]],
              ylab = bquote("Seasonal Anomaly [%]"),
+             cex = 0.3,
              col = col)
         abline(h = 0, lty = 2, lwd = 0.8)
         title(paste(sub("_.*","",adb), "mean daily values ",
@@ -335,7 +336,27 @@ for (adb in database) {
         # sum(pdb[ GLB_att_des > 0, GLB_att_des ])
         # sum(pdb[ , GLB_att_des ], na.rm = T)
         # tail(pdb[ , GLB_att_cusum ])
-        # pdb[ , sum(get(paste0(avar,"_des")), na.rm = T), by = year(Date) ]
+
+        cat("\n\\newpage\n")
+        # cat("\n\\footnotesize\n")
+        # cat("\n\\small\n")
+        cat(
+         pander(
+          merge(
+            merge(
+             merge(
+              merge(
+               pdb[get(paste0(avar,"_des")) > 0, .(PositiveSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)],
+               pdb[get(paste0(avar,"_des")) < 0, .(NegativeSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+              pdb[get(paste0(avar,"_des")) > 0, .(PositiveMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+             pdb[get(paste0(avar,"_des")) < 0, .(NegativeMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]
+            ),
+            pdb[ , .(Sum = sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date) ]
+          )
+         )
+        )
+        cat("\n\\normalsize\n")
+
     }
 }
 #'
@@ -381,7 +402,7 @@ for (adb in database) {
                             collapse = "_"))
 
         par("mar" = c(3,4,2,1))
-        par(pch = ".")
+        par(pch = 19)
 
         plot(1, type = "n",
              xlab = "",
@@ -403,7 +424,7 @@ for (adb in database) {
         lm1 <- lm(pdb[[paste0(avar,"_des")]] ~ pdb$Date)
         plot(pdb$Date, pdb[[paste0(avar,"_des")]],
              ylab = bquote("Seasonal Anomaly [%]"),
-             cex = 2,
+             cex = 0.5,
              col = col)
         abline(h = 0, lty = 2, lwd = 0.8)
         title(paste(sub("_.*","",adb), "mean monthly values ",
@@ -419,6 +440,35 @@ for (adb in database) {
         legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
                paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2])*Days_of_year,3),'* year'))
 
+
+        cat("\n\\newpage\n")
+        cat("\n\\footnotesize\n")
+        # cat("\n\\small\n")
+
+        testdb <-
+            merge(
+                merge(
+                    merge(
+                        merge(
+                            pdb[get(paste0(avar,"_des")) > 0, .(PositiveSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)],
+                            pdb[get(paste0(avar,"_des")) < 0, .(NegativeSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+                        pdb[get(paste0(avar,"_des")) > 0, .(PositiveMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+                    pdb[get(paste0(avar,"_des")) < 0, .(NegativeMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]
+                ),
+                pdb[ , .(Sum = sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date) ]
+            )
+
+        cat(pander(testdb))
+        cat("\n\\normalsize\n")
+
+
+        ylim <- range(testdb$PositiveSum, -testdb$NegativeSum)
+        plot( testdb$year,  testdb$PositiveSum, type = "l", col = "blue", ylim = ylim)
+        lines(testdb$year, -testdb$NegativeSum, type = "l", col = "red")
+        title("Sum of negative and positive values")
+
+        plot( testdb$year,  testdb$Sum, type = "l", col = "black")
+        title("Sum of yearly values")
 
         # hist(pdb$GLB_att_cusum)
         # hist(pdb$GLB_att_des)
