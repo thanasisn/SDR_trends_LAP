@@ -1116,9 +1116,37 @@ if (havetorun) {
                                  DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                              by = .( Month, SZA, preNoon ) ]
 
-stop("TEST")
 
-    ## forge original data
+
+
+
+    ## ~ Seasonal anomaly by SZA and period of day -----------------------------
+
+      ALL_3_monthly_DESEAS <- merge(  ALL_3_monthly_mean,   ALL_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
+    CLEAR_3_monthly_DESEAS <- merge(CLEAR_3_monthly_mean, CLEAR_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
+    CLOUD_3_monthly_DESEAS <- merge(CLOUD_3_monthly_mean, CLOUD_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
+
+    ## ~ forget data
+    rm(  ALL_3_monthly_mean,   ALL_3_monthly_seas,
+       CLEAR_3_monthly_mean, CLEAR_3_monthly_seas,
+       CLOUD_3_monthly_mean, CLOUD_3_monthly_seas)
+
+    ## Using the % departure from seasonal values
+
+      ALL_3_monthly_DESEAS[, DIR_att    := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+      ALL_3_monthly_DESEAS[, GLB_att    := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+      ALL_3_monthly_DESEAS[, DIR_transp := 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+    CLEAR_3_monthly_DESEAS[, DIR_att    := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+    CLEAR_3_monthly_DESEAS[, GLB_att    := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+    CLEAR_3_monthly_DESEAS[, DIR_transp := 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+    CLOUD_3_monthly_DESEAS[, DIR_att    := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+    CLOUD_3_monthly_DESEAS[, GLB_att    := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+    CLOUD_3_monthly_DESEAS[, DIR_transp := 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+
+
+
+
+    ## forget original data
     rm(DATA_all)
     rm(DATA_Clear)
     rm(DATA_Cloud)
