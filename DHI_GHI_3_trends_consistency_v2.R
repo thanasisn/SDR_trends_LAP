@@ -203,26 +203,26 @@ setorder(CLEAR_1_daily_DESEAS, Date)
 setorder(CLOUD_1_daily_DESEAS, Date)
 
 ## with NAs in place
-  ALL_1_daily_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des), 0, GLB_att_des)) + GLB_att_des*0 ]
-  ALL_1_daily_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des), 0, DIR_att_des)) + DIR_att_des*0 ]
-  ALL_1_daily_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
-CLEAR_1_daily_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des), 0, GLB_att_des)) + GLB_att_des*0 ]
-CLEAR_1_daily_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des), 0, DIR_att_des)) + DIR_att_des*0 ]
-CLEAR_1_daily_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
-CLOUD_1_daily_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des), 0, GLB_att_des)) + GLB_att_des*0 ]
-CLOUD_1_daily_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des), 0, DIR_att_des)) + DIR_att_des*0 ]
-CLOUD_1_daily_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
+#   ALL_1_daily_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des),    0, GLB_att_des))    + GLB_att_des*0    ]
+#   ALL_1_daily_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
+#   ALL_1_daily_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
+# CLEAR_1_daily_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des),    0, GLB_att_des))    + GLB_att_des*0    ]
+# CLEAR_1_daily_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
+# CLEAR_1_daily_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
+# CLOUD_1_daily_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des),    0, GLB_att_des))    + GLB_att_des*0    ]
+# CLOUD_1_daily_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
+# CLOUD_1_daily_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
 
-# ## Calculate cumsum with zeroing NA
-#   ALL_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
-#   ALL_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
-#   ALL_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
-# CLEAR_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
-# CLEAR_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
-# CLEAR_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
-# CLOUD_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
-# CLOUD_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
-# CLOUD_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+## Calculate cumsum with zeroing NA
+  ALL_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+  ALL_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+  ALL_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+CLEAR_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+CLEAR_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+CLEAR_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+CLOUD_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+CLOUD_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+CLOUD_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
 
 
 
@@ -234,37 +234,40 @@ setorder(CLOUD_3_D_monthly_DESEAS, Date)
 
 
 
-## with NAs in place
-  ALL_3_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des), 0, GLB_att_des))       + GLB_att_des*0    ]
-  ALL_3_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des), 0, DIR_att_des))       + DIR_att_des*0    ]
-  ALL_3_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
-CLEAR_3_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des), 0, GLB_att_des))       + GLB_att_des*0    ]
-CLEAR_3_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des), 0, DIR_att_des))       + DIR_att_des*0    ]
-CLEAR_3_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
-CLOUD_3_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des), 0, GLB_att_des))       + GLB_att_des*0    ]
-CLOUD_3_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des), 0, DIR_att_des))       + DIR_att_des*0    ]
-CLOUD_3_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
+# ## with NAs in place
+#   ALL_1_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des),    0, GLB_att_des))    + GLB_att_des*0    ]
+#   ALL_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
+#   ALL_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
+# CLEAR_1_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des),    0, GLB_att_des))    + GLB_att_des*0    ]
+# CLEAR_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
+# CLEAR_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
+# CLOUD_1_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des),    0, GLB_att_des))    + GLB_att_des*0    ]
+# CLOUD_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
+# CLOUD_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
 
-# ## Calculate cumsum with zeroing NA
-#   ALL_3_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
-#   ALL_3_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
-#   ALL_3_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
-# CLEAR_3_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
-# CLEAR_3_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
-# CLEAR_3_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
-# CLOUD_3_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
-# CLOUD_3_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
-# CLOUD_3_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
-
-
+## Calculate cumsum with zeroing NA
+  ALL_1_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+  ALL_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+  ALL_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+CLEAR_1_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+CLEAR_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+CLEAR_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+CLOUD_1_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+CLOUD_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+CLOUD_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
 
 
+
+
+### Whole day daily cumulative sum ---------------------------------------------
 
 #'
 #' \newpage
 #' \FloatBarrier
 #'
 #' ### Whole day daily cumulative sum
+#'
+#' All data in this section are refered to daily means.
 #'
 #+ echo=F, include=T
 
@@ -299,7 +302,7 @@ for (adb in database) {
              xlab = "",
              xlim = xlim, ylim = ylim,
              xaxt = "n",
-             ylab = bquote("Cumulative Seasonal Anomaly [%]" ) )
+             ylab = bquote("Cumulative Seasonal Anomaly [%]"))
         axis.Date(1, pdb$Date)
         abline(h = 0, lty = 2, lwd = 0.8)
 
@@ -399,6 +402,7 @@ for (adb in database) {
 
 
 
+### Whole day monthly cumulative sum -------------------------------------------
 
 #'
 #' \newpage
@@ -406,13 +410,15 @@ for (adb in database) {
 #'
 #' ### Whole day monthly cumulative sum
 #'
+#' In this section the monthly values have been calculated from daily mean values.
+#'
 #+ echo=F, include=T
 
 # vars        <- c("GLB_att", "DIR_att", "DIR_transp")
 vars        <- c("GLB_att")
-database    <- c(  "ALL_3_D_monthly_DESEAS",
-                 "CLEAR_3_D_monthly_DESEAS",
-                 "CLOUD_3_D_monthly_DESEAS")
+database    <- c(  "ALL_1_D_monthly_DESEAS",
+                 "CLEAR_1_D_monthly_DESEAS",
+                 "CLOUD_1_D_monthly_DESEAS")
 
 #+ cumulativemonthlysums, echo=F, include=T, results="asis"
 for (adb in database) {
@@ -439,7 +445,7 @@ for (adb in database) {
              xlab = "",
              xlim = xlim, ylim = ylim,
              xaxt = "n",
-             ylab = bquote("Cumulative Seasonal Anomaly [%]" ) )
+             ylab = bquote("Cumulative Seasonal Anomaly [%]"))
         axis.Date(1, pdb$Date)
         abline(h = 0, lty = 2, lwd = 0.8)
 
@@ -545,17 +551,13 @@ for (adb in database) {
 
 
 
-# ### TODO check the rest
-#
-#
-#
-# ## ~ Calculate seasonal anomaly by SZA -----------------------------------------
-#
-# #'
-# #' ### Calculate seasonal anomaly by SZA and period of day
-# #'
-# #+ echo=F, include=F
-#
+## ~ Calculate seasonal anomaly by SZA -----------------------------------------
+
+#'
+#' ### Calculate seasonal anomaly by SZA and period of day
+#'
+#+ echo=F, include=F
+
 # ## by sza bin and day period
 #   ALL_3_monthly_DEseas <- merge(  ALL_3_monthly_mean,   ALL_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
 # CLEAR_3_monthly_DEseas <- merge(CLEAR_3_monthly_mean, CLEAR_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
