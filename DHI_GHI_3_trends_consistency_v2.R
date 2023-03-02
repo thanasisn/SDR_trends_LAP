@@ -52,7 +52,7 @@ knitr::opts_chunk$set(dev        = "pdf"    )
 knitr::opts_chunk$set(out.width  = "100%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
 knitr::opts_chunk$set(cache      =  F       )  ## !! breaks calculations
-# knitr::opts_chunk$set(fig.pos    = '!h'    )
+knitr::opts_chunk$set(fig.pos    = '!h'    )
 warning("Don't use cache it breaks computations")
 
 #+ include=F, echo=F
@@ -610,6 +610,10 @@ for (adb in database) {
     cat("\n\\FloatBarrier\n")
     cat("\n#### Monthly cum sums for", translate(sub("_.*", "", adb)), "by SZA\n\n")
 
+
+    cat("\n\n \\ \n\n")
+
+
     for (asza in plotsza) {
         for (avar in vars) {
             wcare <- c("Date", "preNoon", grep(avar, names(DB), value = T))
@@ -638,18 +642,13 @@ for (adb in database) {
                 lines(pp$Date, pp[[paste0(avar,"_cusum")]], col = plotpNcol[i], lwd = 2)
             }
 
-            # ## daily from other DT
-            # ## FIXME
-            # lines(DB2$FDate, DB2[[avar]], col = plotpNcol[3], lwd = 2)
-
             legend("top", legend = plotpreNoon, col = plotpNcol,
                    lty = 1, bty = "n", ncol = 3, cex = 0.8)
 
             title(paste(sub("_.*","",adb), "monthly cumulative sum ",
                         translate(avar), "for SZA", asza,""), cex.main = 1)
-            cat("\n\n")
 
-
+            # cat("\n \n \n")
 
 
             gpa <- ggplot(data = pdb,
@@ -675,8 +674,7 @@ for (adb in database) {
                       legend.text       = element_text(size = 10))
 
             suppressWarnings(suppressMessages(  print(gpa)  ))
-            cat("\n\n")
-
+            # cat("\n \n \n")
 
             gpb <- ggplot(data = pdb,
                          aes(x     = Date,
@@ -700,10 +698,8 @@ for (adb in database) {
                       legend.title      = element_text(size = 10),
                       legend.text       = element_text(size = 10))
 
+            plot.new()
             suppressWarnings(suppressMessages(  print(gpb)  ))
-            cat("\n\n")
-
-
 
             # ## test plot for reference
             # plot(DB$Date, DBn[avar]], col = plotpNcol[3],
@@ -713,7 +709,6 @@ for (adb in database) {
             #     pp <- DBn[preNoon == plotpreNoon[i] & SZA == asza]
             #     points(as.Date(pp$Date), pp[[avar]], col = plotpNcol[i], lwd = 2, cex = 0.5)
             # }
-
         }
     }
 }
@@ -722,9 +717,8 @@ for (adb in database) {
 
 
 
-#
-#
-#
+
+
 # ## Plot direct only time scale -------------------------------------------------
 #
 # plotsza     <- c( 63 )
