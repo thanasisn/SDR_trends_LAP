@@ -42,7 +42,7 @@ havetorun <- !file.exists(common_data) |
     file.mtime(variables_fl)     > file.mtime(common_data) |
     file.mtime(data_procsess_fl) > file.mtime(common_data)
 
-if ( havetorun ) {
+if (havetorun) {
     cat(paste("\n !! (Re)Create environment and data input ->", common_data),"\n")
 
     #### 0. Get data from Clear sky id data  ###################################
@@ -193,7 +193,7 @@ if ( havetorun ) {
     DATA_Cloud[, CS_ref_HOR := NULL]
 
 
-
+    ##.----
     #### 1. long-term  ---------------------------------------------------------
 
     ## ~ Daily means of data ---------------------------------------------------
@@ -408,15 +408,134 @@ if ( havetorun ) {
 
 
 
+    ## ~ Monthly means from daily ----------------------------------------------
+
+    ALL_1_monthly_daily_mean <-
+        ALL_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
+                            GLB_att    = mean(GLB_att,    na.rm = T),
+                            HOR_att    = mean(HOR_att,    na.rm = T),
+                            DIR_transp = mean(DIR_transp, na.rm = T),
+                            DIR_att_sd = sd(  DIR_att,    na.rm = T),
+                            HOR_att_sd = sd(  HOR_att,    na.rm = T),
+                            GLB_att_sd = sd(  GLB_att,    na.rm = T),
+                            GLB_att_N  = sum(!is.na(GLB_att)),
+                            HOR_att_N  = sum(!is.na(HOR_att)),
+                            DIR_att_N  = sum(!is.na(DIR_att))  ),
+                         by = .( Year = year(Date), Month = month(Date) ) ]
+
+    CLEAR_1_monthly_daily_mean <-
+        CLEAR_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
+                              GLB_att    = mean(GLB_att,    na.rm = T),
+                              HOR_att    = mean(HOR_att,    na.rm = T),
+                              DIR_transp = mean(DIR_transp, na.rm = T),
+                              DIR_att_sd = sd(  DIR_att,    na.rm = T),
+                              HOR_att_sd = sd(  HOR_att,    na.rm = T),
+                              GLB_att_sd = sd(  GLB_att,    na.rm = T),
+                              GLB_att_N  = sum(!is.na(GLB_att)),
+                              HOR_att_N  = sum(!is.na(HOR_att)),
+                              DIR_att_N  = sum(!is.na(DIR_att))  ),
+                           by = .( Year = year(Date), Month = month(Date) ) ]
+
+    CLOUD_1_monthly_daily_mean <-
+        CLOUD_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
+                              GLB_att    = mean(GLB_att,    na.rm = T),
+                              HOR_att    = mean(HOR_att,    na.rm = T),
+                              DIR_transp = mean(DIR_transp, na.rm = T),
+                              DIR_att_sd = sd(  DIR_att,    na.rm = T),
+                              HOR_att_sd = sd(  HOR_att,    na.rm = T),
+                              GLB_att_sd = sd(  GLB_att,    na.rm = T),
+                              GLB_att_N  = sum(!is.na(GLB_att)),
+                              HOR_att_N  = sum(!is.na(HOR_att)),
+                              DIR_att_N  = sum(!is.na(DIR_att))  ),
+                           by = .( Year = year(Date), Month = month(Date) ) ]
 
 
+    ## ~ Seasonal monthly daily values -----------------------------------------
+
+    ALL_1_monthly_daily_seas <-
+        ALL_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+                            GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                            HOR_att_seas    = mean(HOR_att,    na.rm = T),
+                            DIR_transp_seas = mean(DIR_transp, na.rm = T),
+                            DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                            HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
+                            GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
+                            GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                            HOR_att_N_seas  = sum(!is.na(HOR_att)),
+                            DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
+                         by = .( Month = month(Date) ) ]
+
+    CLEAR_1_monthly_daily_seas <-
+        CLEAR_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+                              GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                              HOR_att_seas    = mean(HOR_att,    na.rm = T),
+                              DIR_transp_seas = mean(DIR_transp, na.rm = T),
+                              DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                              HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
+                              GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
+                              GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                              HOR_att_N_seas  = sum(!is.na(HOR_att)),
+                              DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
+                           by = .( Month = month(Date) ) ]
+
+    CLOUD_1_monthly_daily_seas <-
+        CLOUD_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+                              GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                              HOR_att_seas    = mean(HOR_att,    na.rm = T),
+                              DIR_transp_seas = mean(DIR_transp, na.rm = T),
+                              DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                              HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
+                              GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
+                              GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                              HOR_att_N_seas  = sum(!is.na(HOR_att)),
+                              DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
+                           by = .( Month = month(Date) ) ]
 
 
+    ## ~ forget daily data -----------------------------------------------------
+    rm(  ALL_1_daily_mean,   ALL_1_daily_seas,
+       CLEAR_1_daily_mean, CLEAR_1_daily_seas,
+       CLOUD_1_daily_mean, CLOUD_1_daily_seas)
 
 
+    ## ~ Monthly daily de-seasonal anomaly -------------------------------------
 
+      ALL_1_D_monthly_DESEAS <- merge(  ALL_1_monthly_daily_mean,   ALL_1_monthly_daily_seas, by = "Month", all = T)
+    CLEAR_1_D_monthly_DESEAS <- merge(CLEAR_1_monthly_daily_mean, CLEAR_1_monthly_daily_seas, by = "Month", all = T)
+    CLOUD_1_D_monthly_DESEAS <- merge(CLOUD_1_monthly_daily_mean, CLOUD_1_monthly_daily_seas, by = "Month", all = T)
 
+    ## ~ forget monthly data ---------------------------------------------------
+    rm(  ALL_1_monthly_daily_mean,   ALL_1_monthly_daily_seas,
+       CLEAR_1_monthly_daily_mean, CLEAR_1_monthly_daily_seas,
+       CLOUD_1_monthly_daily_mean, CLOUD_1_monthly_daily_seas)
 
+    ## create date
+      ALL_1_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month, "1"), format = "%Y %m %d")]
+    CLEAR_1_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month, "1"), format = "%Y %m %d")]
+    CLOUD_1_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month, "1"), format = "%Y %m %d")]
+
+    setorder(  ALL_1_D_monthly_DESEAS, Date)
+    setorder(CLEAR_1_D_monthly_DESEAS, Date)
+    setorder(CLOUD_1_D_monthly_DESEAS, Date)
+
+    ##TODO margin of error for anomaly!!!!
+
+    ## ~ Monthly daily relative anomaly ------------------------------------------------
+
+    ## Using the % departure from seasonal values
+
+      ALL_1_D_monthly_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+      ALL_1_D_monthly_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+      ALL_1_D_monthly_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+      ALL_1_D_monthly_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+    CLEAR_1_D_monthly_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+    CLEAR_1_D_monthly_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+    CLEAR_1_D_monthly_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+    CLEAR_1_D_monthly_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+    CLOUD_1_D_monthly_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+    CLOUD_1_D_monthly_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+    CLOUD_1_D_monthly_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+    CLOUD_1_D_monthly_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
 
 
 
@@ -599,7 +718,7 @@ if ( havetorun ) {
     # QHD_cloud[ !is.na(GLB_att), .N ]
 
 
-
+    ##.----
     ####  2. Long term by SZA  #################################################
 
     ## ~ Calculate daily SZA means ####
@@ -773,7 +892,7 @@ if ( havetorun ) {
     })
 
 
-
+    ##.----
     ####  3. Consistency of trends  ############################################
 
     ## ~ Monthly means by SZA prenoon month ------------------------------------
@@ -997,150 +1116,15 @@ if ( havetorun ) {
                                  DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                              by = .( Month, SZA, preNoon ) ]
 
+stop("TEST")
 
-
-    ## ~ monthly values from daily ---------------------------------------------
-    ALL_1_monthly_daily_mean <-
-        ALL_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
-                            GLB_att    = mean(GLB_att,    na.rm = T),
-                            HOR_att    = mean(HOR_att,    na.rm = T),
-                            DIR_transp = mean(DIR_transp, na.rm = T),
-                            DIR_att_sd = sd(  DIR_att,    na.rm = T),
-                            HOR_att_sd = sd(  HOR_att,    na.rm = T),
-                            GLB_att_sd = sd(  GLB_att,    na.rm = T),
-                            GLB_att_N  = sum(!is.na(GLB_att)),
-                            HOR_att_N  = sum(!is.na(HOR_att)),
-                            DIR_att_N  = sum(!is.na(DIR_att))  ),
-                         by = .( Year = year(Date), Month = month(Date) ) ]
-
-    CLEAR_1_monthly_daily_mean <-
-        CLEAR_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
-                              GLB_att    = mean(GLB_att,    na.rm = T),
-                              HOR_att    = mean(HOR_att,    na.rm = T),
-                              DIR_transp = mean(DIR_transp, na.rm = T),
-                              DIR_att_sd = sd(  DIR_att,    na.rm = T),
-                              HOR_att_sd = sd(  HOR_att,    na.rm = T),
-                              GLB_att_sd = sd(  GLB_att,    na.rm = T),
-                              GLB_att_N  = sum(!is.na(GLB_att)),
-                              HOR_att_N  = sum(!is.na(HOR_att)),
-                              DIR_att_N  = sum(!is.na(DIR_att))  ),
-                           by = .( Year = year(Date), Month = month(Date) ) ]
-
-    CLOUD_1_monthly_daily_mean <-
-        CLOUD_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
-                              GLB_att    = mean(GLB_att,    na.rm = T),
-                              HOR_att    = mean(HOR_att,    na.rm = T),
-                              DIR_transp = mean(DIR_transp, na.rm = T),
-                              DIR_att_sd = sd(  DIR_att,    na.rm = T),
-                              HOR_att_sd = sd(  HOR_att,    na.rm = T),
-                              GLB_att_sd = sd(  GLB_att,    na.rm = T),
-                              GLB_att_N  = sum(!is.na(GLB_att)),
-                              HOR_att_N  = sum(!is.na(HOR_att)),
-                              DIR_att_N  = sum(!is.na(DIR_att))  ),
-                           by = .( Year = year(Date), Month = month(Date) ) ]
-
-
-    ## ~ seasonal monthly daily values -----------------------------------------
-    ALL_1_monthly_daily_seas <-
-        ALL_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
-                            GLB_att_seas    = mean(GLB_att,    na.rm = T),
-                            HOR_att_seas    = mean(HOR_att,    na.rm = T),
-                            DIR_transp_seas = mean(DIR_transp, na.rm = T),
-                            DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
-                            HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
-                            GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
-                            GLB_att_N_seas  = sum(!is.na(GLB_att)),
-                            HOR_att_N_seas  = sum(!is.na(HOR_att)),
-                            DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
-                         by = .( Month = month(Date) ) ]
-
-    CLEAR_1_monthly_daily_seas <-
-        CLEAR_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
-                              GLB_att_seas    = mean(GLB_att,    na.rm = T),
-                              HOR_att_seas    = mean(HOR_att,    na.rm = T),
-                              DIR_transp_seas = mean(DIR_transp, na.rm = T),
-                              DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
-                              HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
-                              GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
-                              GLB_att_N_seas  = sum(!is.na(GLB_att)),
-                              HOR_att_N_seas  = sum(!is.na(HOR_att)),
-                              DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
-                           by = .( Month = month(Date) ) ]
-
-    CLOUD_1_monthly_daily_seas <-
-        CLOUD_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
-                              GLB_att_seas    = mean(GLB_att,    na.rm = T),
-                              HOR_att_seas    = mean(HOR_att,    na.rm = T),
-                              DIR_transp_seas = mean(DIR_transp, na.rm = T),
-                              DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
-                              HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
-                              GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
-                              GLB_att_N_seas  = sum(!is.na(GLB_att)),
-                              HOR_att_N_seas  = sum(!is.na(HOR_att)),
-                              DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
-                           by = .( Month = month(Date) ) ]
-
-
-
-    ## forget daily duplicate data ----
-    rm(ALL_1_daily_mean,   ALL_1_daily_seas,
-       CLEAR_1_daily_mean, CLEAR_1_daily_seas,
-       CLOUD_1_daily_mean, CLOUD_1_daily_seas)
-
-
-    #### ~ Monthly de seasonal anomaly -----------------------------------------
-
-      ALL_1_D_monthly_DESEAS <- merge(  ALL_1_monthly_daily_mean,   ALL_1_monthly_daily_seas, by = "Month", all = T)
-    CLEAR_1_D_monthly_DESEAS <- merge(CLEAR_1_monthly_daily_mean, CLEAR_1_monthly_daily_seas, by = "Month", all = T)
-    CLOUD_1_D_monthly_DESEAS <- merge(CLOUD_1_monthly_daily_mean, CLOUD_1_monthly_daily_seas, by = "Month", all = T)
-
-    ## forget monthly duplicate data ----
-    rm(  ALL_1_monthly_daily_mean,   ALL_1_monthly_daily_seas,
-       CLEAR_1_monthly_daily_mean, CLEAR_1_monthly_daily_seas,
-       CLOUD_1_monthly_daily_mean, CLOUD_1_monthly_daily_seas)
-
-
-      ALL_1_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month, "1"), format = "%Y %m %d")]
-    CLEAR_1_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month, "1"), format = "%Y %m %d")]
-    CLOUD_1_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month, "1"), format = "%Y %m %d")]
-
-    setorder(  ALL_1_D_monthly_DESEAS, Date)
-    setorder(CLEAR_1_D_monthly_DESEAS, Date)
-    setorder(CLOUD_1_D_monthly_DESEAS, Date)
-
-    ##TODO margin of error for anomaly!!!!
-
-    ## relative anomaly
-    #'
-    #' ### Using the % difference from seasonal values
-    #'
-    #+ echo=F, include=T
-      ALL_1_D_monthly_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-      ALL_1_D_monthly_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
-      ALL_1_D_monthly_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-      ALL_1_D_monthly_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-    CLEAR_1_D_monthly_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-    CLEAR_1_D_monthly_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
-    CLEAR_1_D_monthly_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-    CLEAR_1_D_monthly_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-    CLOUD_1_D_monthly_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-    CLOUD_1_D_monthly_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
-    CLOUD_1_D_monthly_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-    CLOUD_1_D_monthly_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-    #+ echo=F, include=F
-
-
-    ## forget daily duplicate data ----
-    rm(ALL_1_daily_mean,   ALL_1_daily_seas,
-       CLEAR_1_daily_mean, CLEAR_1_daily_seas,
-       CLOUD_1_daily_mean, CLOUD_1_daily_seas)
-
-    ## remove unwanted data frames from memory
+    ## forge original data
     rm(DATA_all)
     rm(DATA_Clear)
     rm(DATA_Cloud)
 
-    ####  save the whole work space  ####
+    ##.----
+    #### 0.  Save the whole work space  ----------------------------------------
     save(list = ls(all = TRUE),file = common_data)
 } else {
     cat(paste("\n\nLoad environment and data from: ", common_data,"\n\n"))
@@ -1148,7 +1132,7 @@ if ( havetorun ) {
 }
 
 
-
+##_----
 
 # #### run on all quarter of the hour #####################################
 # ayear$quarter <- ((as.numeric( ayear$Date ) %/% (3600/4) ) )
