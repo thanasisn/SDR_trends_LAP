@@ -277,7 +277,7 @@ database    <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
                  "CLOUD_1_daily_DESEAS")
 
-#+ cumulativedailysums, echo=F, include=T, results="asis"
+#+ cumulativedailycumsums, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
 
@@ -420,7 +420,7 @@ database    <- c(  "ALL_1_D_monthly_DESEAS",
                  "CLEAR_1_D_monthly_DESEAS",
                  "CLOUD_1_D_monthly_DESEAS")
 
-#+ cumulativemonthlysums, echo=F, include=T, results="asis"
+#+ cumulativemonthlycumsums, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
 
@@ -576,80 +576,39 @@ CLOUD_3_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp
 
 
 
-#
-# # ### TODO!!!!! by sza??????
-# ALL_3_monthly_daily_cumsum[,   GLB_att    := cumsum(GLB_att)   ]
-# ALL_3_monthly_daily_cumsum[,   DIR_att    := cumsum(DIR_att)   ]
-# ALL_3_monthly_daily_cumsum[,   DIR_transp := cumsum(DIR_transp)]
-# CLEAR_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)   ]
-# CLEAR_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)   ]
-# CLEAR_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
-# CLOUD_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)   ]
-# CLOUD_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)   ]
-# CLOUD_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
-#
-#
-#
-#
-# #### Plot Cumulative sums  -----------------------------------------------------
-#
-# #' \newpage
-# #' ## Cumulative sums by SZA and part of day
-# #'
-# #' Use deseasonalized monthly values to calculate cumulative sums
-# #'
-# #+ echo=F, include=F
-#
-# timefactor <- 1
-# vars    <- c("GLB_att", "DIR_att", "DIR_transp")
-# dbs     <- c("ALL_3_monthly_DEseas",
-#              "CLEAR_3_monthly_DEseas",
-#              "CLOUD_3_monthly_DEseas")
-# basevar <- c("Year", "Month", "SZA", "preNoon")
-#
-# ## ~ compute cumulative sums for each category and sza -------------------------
-# for (DBn in dbs) {
-#     DB <- get(DBn)
-#     for (avar in vars) {
-#         for (anoon in unique( DB$preNoon)) {
-#             for (asza in unique( DB$SZA )) {
-#
-#                 ## set na to zero
-#                 DB[ SZA == asza & preNoon == anoon, ][[avar]][is.na(DB[ SZA == asza & preNoon == anoon, ][[avar]])] <- 0
-#                 ## get cum sum
-#                 DB[ SZA == asza & preNoon == anoon, ][[avar]] <- unlist(cumsum( DB[ SZA == asza & preNoon == anoon, ..avar ] ))
-#                 ## set zeros to NA
-#                 DB[ SZA == asza & preNoon == anoon, ][[avar]][ DB[ SZA == asza & preNoon == anoon, ][[avar]] == 0 ] <- NA
-#
-#                 # dataset <- DB[ SZA == asza & preNoon == anoon, ..ttt ]
-#                 # dataset[, Data := sub("_.*","", DBn) ]
-#                 # dataset[[avar]][is.na(dataset[[avar]])] <- 0
-#                 # dataset[[avar]] <- cumsum( dataset[[avar]] )
-#                 # gather <- merge(gather, dataset, all = T)
-#             }
-#         }
-#     }
-#     ttt <- c(basevar,vars)
-#     assign(sub("DEseas", "cumsum", DBn), DB[, ..ttt] )
-# }
-#
 
 
+
+#### Plot Cumulative sums  -----------------------------------------------------
+
+#'
+#' \newpage
+#' \FloatBarrier
+#'
+#' ### Cumulative sums by SZA and part of day
+#'
+#' Use deseasonalized monthly values to calculate cumulative sums
+#' by a SZA bin and a period of day.
+#'
+#+ echo=F, include=F
 
 plotsza     <- c( 63 )
 # plotpreNoon <- c("am","pm","am+pm", "daily")
 plotpreNoon <- c("am","pm","am+pm")
 plotpNcol   <- c(2, 3, 4, 5)
-vars        <- c("GLB_att", "DIR_att", "DIR_transp")
+# vars        <- c("GLB_att", "DIR_att", "DIR_transp")
+vars        <- c("GLB_att")
 database    <- c(  "ALL_3_monthly_DESEAS",
                  "CLEAR_3_monthly_DESEAS",
                  "CLOUD_3_monthly_DESEAS")
 
-#+ cumulativeSZAsums, echo=F, include=T
+#+ cumulativemonthlySZAcumsum, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
-    # DB2 <- get(paste0(sub("_.*", "", adb), "_3_monthly_daily_cumsum"))
-    # DBn <- get(sub("cumsum", "DEseas", adb))
+
+    cat("\n\\newpage\n")
+    cat("\n\\FloatBarrier\n")
+    cat("\n#### Monthly cum sums for", translate(sub("_.*", "", adb)), "by SZA\n\n")
 
     for (asza in plotsza) {
         for (avar in vars) {
@@ -687,32 +646,64 @@ for (adb in database) {
                    lty = 1, bty = "n", ncol = 3, cex = 0.8)
 
             title(paste(sub("_.*","",adb), "monthly cumulative sum ",
-                        translate(avar), "for",asza,"deg."), cex.main = 1)
+                        translate(avar), "for SZA", asza,""), cex.main = 1)
+            cat("\n\n")
 
 
-            pdb[[paste0(avar,"_des")]]
 
-            gp <- ggplot(data = pdb,
+
+            gpa <- ggplot(data = pdb,
                          aes(x     = Date,
                              y     = get(paste0(avar,"_des")),
                              color = preNoon))          +
-                geom_point()                            +
-                ggtitle("Anomaly % for one SZA bin ")   +
+                geom_point(size = .8)                   +
+                geom_smooth(method = "lm", se = FALSE)  +
+                ggtitle(paste0("Anomaly % for ", asza, " SZA bin "))   +
                 xlab("Year")                            +
                 ylab("Anomaly %")                       +
                 scale_color_manual(breaks = plotpreNoon,
                                    values = plotpNcol)  +
                 theme_bw()                              +
-                labs(color = 'Period of day') +
+                labs(color = "Period of day with `lm`") +
                 theme(plot.title = element_text(hjust = 0.5,
                                                 size  = 10,
                                                 face  = "bold" ),
                       legend.position   = "bottom",
+                      legend.margin     = margin( t = -5 ),
                       legend.background = element_rect(fill = alpha("white", 0.5)),
-                      legend.title      = element_text(size = 8),
-                      legend.text       = element_text(size = 8))
+                      legend.title      = element_text(size = 10),
+                      legend.text       = element_text(size = 10))
 
-            print(gp)
+            suppressWarnings(suppressMessages(  print(gpa)  ))
+            cat("\n\n")
+
+
+            gpb <- ggplot(data = pdb,
+                         aes(x     = Date,
+                             y     = get(paste0(avar,"_des")),
+                             color = preNoon))          +
+                geom_point(size = .8)                   +
+                geom_smooth(method = "loess", se = F)   +
+                ggtitle(paste0("Anomaly % for ", asza, " SZA bin "))   +
+                xlab("Year")                            +
+                ylab("Anomaly %")                       +
+                scale_color_manual(breaks = plotpreNoon,
+                                   values = plotpNcol)  +
+                theme_bw()                              +
+                labs(color = "Period of day with `loess`") +
+                theme(plot.title = element_text(hjust = 0.5,
+                                                size  = 10,
+                                                face  = "bold" ),
+                      legend.position   = "bottom",
+                      legend.margin     = margin( t = -5 ),
+                      legend.background = element_rect(fill = alpha("white", 0.5)),
+                      legend.title      = element_text(size = 10),
+                      legend.text       = element_text(size = 10))
+
+            suppressWarnings(suppressMessages(  print(gpb)  ))
+            cat("\n\n")
+
+
 
             # ## test plot for reference
             # plot(DB$Date, DBn[avar]], col = plotpNcol[3],
@@ -727,7 +718,7 @@ for (adb in database) {
     }
 }
 #'
-
+#+ echo=F, include=T
 
 
 
