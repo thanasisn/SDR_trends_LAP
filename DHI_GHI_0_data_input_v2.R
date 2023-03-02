@@ -928,7 +928,7 @@ if (havetorun) {
                      HOR_att_N     = sum(!is.na(HOR_att)),
                      GLB_att_N     = sum(!is.na(GLB_att)),
                      DIR_att_N     = sum(!is.na(DIR_att)),
-                     preNoon       = "Daily"),
+                     preNoon       = "am+pm"),
                  by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                         Year    = year(Date),
                         Month   = month(Date) ) ]
@@ -968,7 +968,7 @@ if (havetorun) {
                        GLB_att_N     = sum(!is.na(GLB_att)),
                        HOR_att_N     = sum(!is.na(HOR_att)),
                        DIR_att_N     = sum(!is.na(DIR_att)),
-                       preNoon       = "Daily"),
+                       preNoon       = "am+pm"),
                    by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                           Year    = year(Date),
                           Month   = month(Date) ) ]
@@ -1008,7 +1008,7 @@ if (havetorun) {
                        GLB_att_N     = sum(!is.na(GLB_att)),
                        HOR_att_N     = sum(!is.na(HOR_att)),
                        DIR_att_N     = sum(!is.na(DIR_att)),
-                       preNoon       = "Daily"),
+                       preNoon       = "am+pm"),
                    by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                           Year    = year(Date),
                           Month   = month(Date) ) ]
@@ -1133,16 +1133,28 @@ if (havetorun) {
 
     ## Using the % departure from seasonal values
 
-      ALL_3_monthly_DESEAS[, DIR_att    := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-      ALL_3_monthly_DESEAS[, GLB_att    := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-      ALL_3_monthly_DESEAS[, DIR_transp := 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-    CLEAR_3_monthly_DESEAS[, DIR_att    := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-    CLEAR_3_monthly_DESEAS[, GLB_att    := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-    CLEAR_3_monthly_DESEAS[, DIR_transp := 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-    CLOUD_3_monthly_DESEAS[, DIR_att    := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-    CLOUD_3_monthly_DESEAS[, GLB_att    := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-    CLOUD_3_monthly_DESEAS[, DIR_transp := 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+      ALL_3_monthly_DESEAS[, DIR_att_des    := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+      ALL_3_monthly_DESEAS[, GLB_att_des    := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+      ALL_3_monthly_DESEAS[, DIR_transp_des := 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+    CLEAR_3_monthly_DESEAS[, DIR_att_des    := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+    CLEAR_3_monthly_DESEAS[, GLB_att_des    := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+    CLEAR_3_monthly_DESEAS[, DIR_transp_des := 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+    CLOUD_3_monthly_DESEAS[, DIR_att_des    := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+    CLOUD_3_monthly_DESEAS[, GLB_att_des    := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+    CLOUD_3_monthly_DESEAS[, DIR_transp_des := 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
 
+    ## create a nice data
+      ALL_3_monthly_DESEAS[, Date := as.Date(paste(Year, Month, 1), format = "%Y %m %d")]
+    CLEAR_3_monthly_DESEAS[, Date := as.Date(paste(Year, Month, 1), format = "%Y %m %d")]
+    CLOUD_3_monthly_DESEAS[, Date := as.Date(paste(Year, Month, 1), format = "%Y %m %d")]
+
+    ## change rest of flags names
+      ALL_3_monthly_DESEAS[preNoon == TRUE,    preNoon := "am"]
+      ALL_3_monthly_DESEAS[preNoon == FALSE,   preNoon := "pm"]
+    CLEAR_3_monthly_DESEAS[preNoon == TRUE,    preNoon := "am"]
+    CLEAR_3_monthly_DESEAS[preNoon == FALSE,   preNoon := "pm"]
+    CLOUD_3_monthly_DESEAS[preNoon == TRUE,    preNoon := "am"]
+    CLOUD_3_monthly_DESEAS[preNoon == FALSE,   preNoon := "pm"]
 
 
 

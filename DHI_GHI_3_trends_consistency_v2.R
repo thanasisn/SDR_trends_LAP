@@ -551,32 +551,29 @@ for (adb in database) {
 
 
 
-## ~ Calculate seasonal anomaly by SZA -----------------------------------------
+## ~ Calculate monthly sum sum by SZA ------------------------------------------
+
+## set data order before cumsum
+setorder(  ALL_3_monthly_DESEAS, Date)
+setorder(CLEAR_3_monthly_DESEAS, Date)
+setorder(CLOUD_3_monthly_DESEAS, Date)
+
+
+## TODO set order and by
+
+
+   ALL_3_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0)), by = .(Date, SZA, preNoon)]
+   ALL_3_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+   ALL_3_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+# CLEAR_3_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+# CLEAR_3_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+# CLEAR_3_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+# CLOUD_3_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+# CLOUD_3_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+# CLOUD_3_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
 
 
 
-
-
-
-## change flag names
-#   ALL_3_monthly_DEseas[preNoon == TRUE,    preNoon := "am"    ]
-#   ALL_3_monthly_DEseas[preNoon == FALSE,   preNoon := "pm"    ]
-#   ALL_3_monthly_DEseas[preNoon == "Daily", preNoon := "am+pm" ]
-# CLEAR_3_monthly_DEseas[preNoon == FALSE,   preNoon := "pm"    ]
-# CLEAR_3_monthly_DEseas[preNoon == "Daily", preNoon := "am+pm" ]
-# CLEAR_3_monthly_DEseas[preNoon == TRUE,    preNoon := "am"    ]
-# CLOUD_3_monthly_DEseas[preNoon == FALSE,   preNoon := "pm"    ]
-# CLOUD_3_monthly_DEseas[preNoon == "Daily", preNoon := "am+pm" ]
-# CLOUD_3_monthly_DEseas[preNoon == TRUE,    preNoon := "am"    ]
-
-
-# setorder(ALL_3_monthly_DEseas,         Year, Month, preNoon, SZA)
-# setorder(CLEAR_3_monthly_DEseas,       Year, Month, preNoon, SZA)
-# setorder(CLOUD_3_monthly_DEseas,       Year, Month, preNoon, SZA)
-# setorder(ALL_3_monthly_daily_DEseas,   Year, Month)
-# setorder(CLEAR_3_monthly_daily_DEseas, Year, Month)
-# setorder(CLOUD_3_monthly_daily_DEseas, Year, Month)
-#
 # ## use a copy
 #   ALL_3_monthly_daily_cumsum <-   ALL_3_monthly_daily_DEseas
 # CLEAR_3_monthly_daily_cumsum <- CLEAR_3_monthly_daily_DEseas
@@ -604,10 +601,7 @@ for (adb in database) {
 # CLOUD_3_monthly_daily_cumsum[is.na(DIR_att),    DIR_att    := 0 ]
 # CLOUD_3_monthly_daily_cumsum[is.na(DIR_transp), DIR_transp := 0 ]
 #
-# ## create a nice data
-#   ALL_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
-# CLEAR_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
-# CLOUD_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
+
 #
 # # ### TODO!!!!! by sza??????
 # ALL_3_monthly_daily_cumsum[,   GLB_att    := cumsum(GLB_att)   ]
@@ -667,13 +661,6 @@ for (adb in database) {
 #
 #
 #
-# ## create a useful date
-# ALL_3_monthly_cumsum[,        FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
-# CLEAR_3_monthly_cumsum[,      FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
-# CLOUD_3_monthly_cumsum[,      FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
-# ALL_3_monthly_daily_cumsum[,  FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
-# CLEAR_3_monthly_daily_cumsum[,FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
-# CLOUD_3_monthly_daily_cumsum[,FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
 #
 #
 #
