@@ -228,9 +228,9 @@ CLOUD_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_d
 
 ## ~ Calculate monthly cum sum -------------------------------------------------
 
-setorder(  ALL_3_D_monthly_DESEAS, Date)
-setorder(CLEAR_3_D_monthly_DESEAS, Date)
-setorder(CLOUD_3_D_monthly_DESEAS, Date)
+setorder(  ALL_1_D_monthly_DESEAS, Date)
+setorder(CLEAR_1_D_monthly_DESEAS, Date)
+setorder(CLOUD_1_D_monthly_DESEAS, Date)
 
 
 
@@ -553,55 +553,12 @@ for (adb in database) {
 
 ## ~ Calculate seasonal anomaly by SZA -----------------------------------------
 
-#'
-#' ### Calculate seasonal anomaly by SZA and period of day
-#'
-#+ echo=F, include=F
 
-# ## by sza bin and day period
-#   ALL_3_monthly_DEseas <- merge(  ALL_3_monthly_mean,   ALL_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
-# CLEAR_3_monthly_DEseas <- merge(CLEAR_3_monthly_mean, CLEAR_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
-# CLOUD_3_monthly_DEseas <- merge(CLOUD_3_monthly_mean, CLOUD_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
-# ## by whole day monthly
-#   ALL_3_monthly_daily_DEseas <- merge(  ALL_3_monthly_daily_mean,   ALL_3_monthly_daily_seas, by = "Month", all = T)
-# CLEAR_3_monthly_daily_DEseas <- merge(CLEAR_3_monthly_daily_mean, CLEAR_3_monthly_daily_seas, by = "Month", all = T)
-# CLOUD_3_monthly_daily_DEseas <- merge(CLOUD_3_monthly_daily_mean, CLOUD_3_monthly_daily_seas, by = "Month", all = T)
-#
-#
-#
-#
-# #+ echo=F, include=T
-# ## relative anomaly
-#   ALL_3_monthly_DEseas[,      DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-#   ALL_3_monthly_DEseas[,      GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-#   ALL_3_monthly_DEseas[,      DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-# CLEAR_3_monthly_DEseas[,      DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-# CLEAR_3_monthly_DEseas[,      GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-# CLEAR_3_monthly_DEseas[,      DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-# CLOUD_3_monthly_DEseas[,      DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-# CLOUD_3_monthly_DEseas[,      GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-# CLOUD_3_monthly_DEseas[,      DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-#
-#   ALL_3_monthly_daily_DEseas[,DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-#   ALL_3_monthly_daily_DEseas[,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-#   ALL_3_monthly_daily_DEseas[,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-# CLEAR_3_monthly_daily_DEseas[,DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-# CLEAR_3_monthly_daily_DEseas[,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-# CLEAR_3_monthly_daily_DEseas[,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-# CLOUD_3_monthly_daily_DEseas[,DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-# CLOUD_3_monthly_daily_DEseas[,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-# CLOUD_3_monthly_daily_DEseas[,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-# #+ echo=F, include=F
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# ## change flag names
+
+
+
+
+## change flag names
 #   ALL_3_monthly_DEseas[preNoon == TRUE,    preNoon := "am"    ]
 #   ALL_3_monthly_DEseas[preNoon == FALSE,   preNoon := "pm"    ]
 #   ALL_3_monthly_DEseas[preNoon == "Daily", preNoon := "am+pm" ]
@@ -611,7 +568,8 @@ for (adb in database) {
 # CLOUD_3_monthly_DEseas[preNoon == FALSE,   preNoon := "pm"    ]
 # CLOUD_3_monthly_DEseas[preNoon == "Daily", preNoon := "am+pm" ]
 # CLOUD_3_monthly_DEseas[preNoon == TRUE,    preNoon := "am"    ]
-#
+
+
 # setorder(ALL_3_monthly_DEseas,         Year, Month, preNoon, SZA)
 # setorder(CLEAR_3_monthly_DEseas,       Year, Month, preNoon, SZA)
 # setorder(CLOUD_3_monthly_DEseas,       Year, Month, preNoon, SZA)
