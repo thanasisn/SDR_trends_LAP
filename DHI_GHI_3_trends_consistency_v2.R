@@ -658,15 +658,6 @@ for (adb in database) {
             pdb   <- DB[ SZA == asza ]
             pdb   <- pdb[, ..wcare]
 
-
-            # for (i in 1:length(plotpreNoon) ) {
-            #     pdb[preNoon == plotpreNoon[i]]
-            #
-            #     pdb[preNoon == plotpreNoon[i]]
-            #
-            # }
-
-stop()
             ## start empty plot
             xlim  <- range(pdb$Date)
             ylim  <- range(pdb[[paste0(avar,"_cusum")]], na.rm = T)
@@ -685,15 +676,12 @@ stop()
             ## for a sza
             for (i in 1:length(plotpreNoon) ) {
                 pp <- pdb[preNoon == plotpreNoon[i]]
-
-
-                pp[[paste0(avar,"_des")]]
-                lines(pp$Date, cumsum(pp[[paste0(avar,"_des")]]), col = plotpNcol[i], lwd = 2)
+                lines(pp$Date, pp[[paste0(avar,"_cusum")]], col = plotpNcol[i], lwd = 2)
             }
 
-            ## daily from other DT
-            ## FIXME
-            lines(DB2$FDate, DB2[[avar]], col = plotpNcol[3], lwd = 2)
+            # ## daily from other DT
+            # ## FIXME
+            # lines(DB2$FDate, DB2[[avar]], col = plotpNcol[3], lwd = 2)
 
             legend("top", legend = plotpreNoon, col = plotpNcol,
                    lty = 1, bty = "n", ncol = 3, cex = 0.8)
@@ -702,15 +690,39 @@ stop()
                         translate(avar), "for",asza,"deg."), cex.main = 1)
 
 
-            ## test plot for reference
-            plot(DB$FDate, DBn[[avar]], col = plotpNcol[3],
-                 ylab = bquote("Seasonal Anomaly [%]"),
-                 cex = 0.5)
-            for (i in 1:length(plotpreNoon) ) {
-                pp <- DBn[preNoon == plotpreNoon[i] & SZA == asza]
-                points(as.Date(pp$Date), pp[[avar]], col = plotpNcol[i], lwd = 2, cex = 0.5)
+            pdb[[paste0(avar,"_des")]]
 
-            }
+            gp <- ggplot(data = pdb,
+                         aes(x     = Date,
+                             y     = get(paste0(avar,"_des")),
+                             color = preNoon))          +
+                geom_point()                            +
+                ggtitle("Anomaly % for one SZA bin ")   +
+                xlab("Year")                            +
+                ylab("Anomaly %")                       +
+                scale_color_manual(breaks = plotpreNoon,
+                                   values = plotpNcol)  +
+                theme_bw()                              +
+                labs(color = 'Period of day') +
+                theme(plot.title = element_text(hjust = 0.5,
+                                                size  = 10,
+                                                face  = "bold" ),
+                      legend.position   = "bottom",
+                      legend.background = element_rect(fill = alpha("white", 0.5)),
+                      legend.title      = element_text(size = 8),
+                      legend.text       = element_text(size = 8))
+
+            print(gp)
+
+            # ## test plot for reference
+            # plot(DB$Date, DBn[avar]], col = plotpNcol[3],
+            #      ylab = bquote("Seasonal Anomaly [%]"),
+            #      cex = 0.5)
+            # for (i in 1:length(plotpreNoon) ) {
+            #     pp <- DBn[preNoon == plotpreNoon[i] & SZA == asza]
+            #     points(as.Date(pp$Date), pp[[avar]], col = plotpNcol[i], lwd = 2, cex = 0.5)
+            # }
+
         }
     }
 }
