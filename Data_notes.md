@@ -13,6 +13,12 @@
 - computed by doy
 - with margin of error
 
+## `*_1_daily_DESEAS'
+
+- Deprecates the previous two databases
+
+
+
 
 
 ## `*_2_daily_mean`
@@ -43,8 +49,16 @@
 
 
 
-## `*_3_monthly_daily_mean`
+## `*_1_monthly_daily_mean`
 
 - created from `*_1_daily_mean`
+
+## `*_1_monthly_daily_seas`
+
+- seasonal data for
+
+## `*_1_D_monthly_DESEAS`
+
+- de-seasonal values created by the previous two
 
 
