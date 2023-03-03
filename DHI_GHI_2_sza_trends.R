@@ -24,7 +24,7 @@
 #'   bookdown::pdf_document2:
 #'     number_sections: no
 #'     fig_caption:     no
-#'     keep_tex:        no
+#'     keep_tex:        yes
 #'     latex_engine:    xelatex
 #'     toc:             yes
 #'     toc_depth:       4
@@ -32,7 +32,7 @@
 #'     fig_height:      4.5
 #'   html_document:
 #'     toc:             true
-#'     keep_md:         no
+#'     keep_md:         yes
 #'     fig_width:       7.5
 #'     fig_height:      5
 #'
