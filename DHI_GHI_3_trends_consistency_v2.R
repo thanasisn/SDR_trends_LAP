@@ -116,79 +116,48 @@ options(error = function() {
 #'
 #+ echo=F, include=F
 
+## ___ Scatter plots with SZA all data -----------------------------------------
+data_list <- c(  "ALL_1_D_monthly_DESEAS",
+               "CLEAR_1_D_monthly_DESEAS",
+               "CLOUD_1_D_monthly_DESEAS",
+                     "ALL_1_daily_DESEAS",
+                   "CLEAR_1_daily_DESEAS",
+                   "CLEAR_1_daily_DESEAS")
 
-# ## ___ Scatter plots with SZA all data -----------------------------------------
-# data_list  <- list(ALL   =   ALL_3_monthly_mean,
-#                    CLEAR = CLEAR_3_monthly_mean,
-#                    CLOUD = CLOUD_3_monthly_mean)
-# by_var     <- c("Date", "Month", "SZA")
-# wecare     <- unique(unlist(lapply(data_list, names)))
-# wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
-# for (i in 1:length(data_list)) {
-#     Dplot <- data_list[[i]]
-#     for (xvar in by_var){
-#         for (yvar in wecare) {
-#             if (! yvar %in% names(Dplot)) next()
-#             col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-#             vect <- Dplot[[yvar]]
-#             plot(Dplot[[xvar]], vect,
-#                  pch = ".", col = col,
-#                  main = paste(names(data_list[i]), yvar),
-#                  xlab = xvar, ylab = yvar)
-#         }
-#     }
-# }
-# ## ___ Histograms Plots all data -----------------------------------------------
-# for (i in 1:length(data_list)) {
-#     Dplot <- data_list[[i]]
-#     # intersect(names(Dplot),wecare)
-#     for (yvar in wecare) {
-#         if (! yvar %in% names(Dplot)) next()
-#         col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-#         vect <- Dplot[[yvar]]
-#         hist(vect,
-#              main = paste(names(data_list[i]), yvar),
-#              breaks = 100, col = col)
-#     }
-# }
-# #+ echo=F, include=F
-#
-#
-# ## ___ Scatter Plot seasonal data ----------------------------------------------
-# data_list  <- list(ALL   =   ALL_3_monthly_seas,
-#                    CLEAR = CLEAR_3_monthly_seas,
-#                    CLOUD = CLOUD_3_monthly_seas)
-# by_var     <- c("Month", "SZA")
-# wecare     <- unique(unlist(lapply(data_list, names)))
-# wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
-# for(i in 1:length(data_list)) {
-#     Dplot <- data_list[[i]]
-#     for (xvar in by_var){
-#         for (yvar in wecare) {
-#             if (! yvar %in% names(Dplot)) next()
-#             col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-#             vect <- Dplot[[yvar]]
-#             plot(Dplot[[xvar]], vect,
-#                  pch = ".", col = col,
-#                  main = paste(names(data_list[i]), yvar),
-#                  xlab = xvar, ylab = yvar)
-#         }
-#     }
-# }
-#
-# ## ___ Histograms Plot seasonal data -------------------------------------------
-# for (i in 1:length(data_list)) {
-#     Dplot <- data_list[[i]]
-#     for (yvar in wecare) {
-#         if (! yvar %in% names(Dplot)) next()
-#         col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-#         vect <- Dplot[[yvar]]
-#         hist(vect,
-#              main = paste(names(data_list[i]), yvar),
-#              breaks = 100, col = col)
-#     }
-# }
-# rm(data_list)
+by_var     <- c("Date", "SZA")
+for (i in data_list) {
+    ## get data and y vars to plot
+    Dplot  <- get(i)
+    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = T)
+    ## loop existing x vars
+    for (xvar in names(Dplot)[names(Dplot) %in% by_var]){
+        for (yvar in wecare) {
+            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            vect <- Dplot[[yvar]]
+            plot(Dplot[[xvar]], vect,
+                 pch  = 19, cex = .3 , col = col,
+                 main = paste(i, yvar),
+                 xlab = xvar, ylab = yvar)
+        }
+    }
+}
+
+## ___ Histograms Plots all data -----------------------------------------------
+for (i in data_list) {
+    ## get data and y vars to plot
+    Dplot  <- get(i)
+    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = T)
+    for (yvar in wecare) {
+        if (! yvar %in% names(Dplot)) next()
+        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+        hist(Dplot[[yvar]],
+             main = paste(i, yvar),
+             xlab = yvar,
+             breaks = 100, col = col)
+    }
+}
+#+ echo=F, include=F
+rm(data_list)
 
 
 
@@ -457,7 +426,7 @@ for (adb in database) {
 
 
         ## test plot for reference
-        ## ## linear model
+        ## linear model
         lm1 <- lm(pdb[[paste0(avar,"_des")]] ~ pdb$Date)
         plot(pdb$Date, pdb[[paste0(avar,"_des")]],
              ylab = bquote("Seasonal Anomaly [%]"),
@@ -558,11 +527,6 @@ setorder(  ALL_3_monthly_DESEAS, Date)
 setorder(CLEAR_3_monthly_DESEAS, Date)
 setorder(CLOUD_3_monthly_DESEAS, Date)
 
-
-## TODO set order and by
-
-## have to test that!!
-
   ALL_3_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0)), by = .(SZA, preNoon)]
   ALL_3_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0)), by = .(SZA, preNoon)]
   ALL_3_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0)), by = .(SZA, preNoon)]
@@ -572,8 +536,6 @@ CLEAR_3_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp
 CLOUD_3_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0)), by = .(SZA, preNoon)]
 CLOUD_3_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0)), by = .(SZA, preNoon)]
 CLOUD_3_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0)), by = .(SZA, preNoon)]
-
-
 
 
 
