@@ -358,7 +358,9 @@ for (DBn in dbs) {
             par("mar" = c(3, 4, 2, 1))
             plot(dataset$Year, dataset[[avar]],
                  pch  = dataset$Month,
-                 col = get(paste0("col_",avar)),
+                 col  = get(paste0(c("col",
+                                     unlist(strsplit(avar, split = "_" ))[1:2]),
+                                   collapse = "_")),
                  cex  = .6,
                  xlab = "",
                  ylab = bquote("Seasonal Anomaly [%]" ) )
@@ -391,16 +393,10 @@ for (DBn in dbs) {
 
 
 ## ~ calculate trends for each season  ####
-vars        <- c("DIR_att", "GLB_att")
+vars        <- c("DIR_att_des", "GLB_att_des")
 
-## is set above
-# dbs         <- c("ALL_1_daily_DEseas",
-#                  "CLEAR_1_daily_DEseas",
-#                  "CLOUD_1_daily_DEseas")
-
-Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
+## vars are  set above
 gather_seas <- data.frame()
-
 for (DBn in dbs) {
     DB <- get(DBn)
     ## set seasons in each data base
@@ -494,7 +490,7 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 
 #+ monthlytrends, echo=F, include=T, results="asis"
 # vars        <- c("DIR_att", "GLB_att")
-vars        <- c("GLB_att")
+vars        <- c("GLB_att_des")
 
 ## Daily aggregation
 # dbs         <- c(  "ALL_1_daily_DEseas",
@@ -564,7 +560,7 @@ for (DBn in dbs) {
 
 
 ## ~ calculate trends for each month  ####
-vars        <- c("DIR_att", "GLB_att")
+vars        <- c("DIR_att_des", "GLB_att_des")
 ## is set above
 # dbs         <- c("ALL_1_daily_DEseas",
 #                  "CLEAR_1_daily_DEseas",
