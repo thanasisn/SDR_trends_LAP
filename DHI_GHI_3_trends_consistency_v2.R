@@ -116,6 +116,7 @@ options(error = function() {
 #'
 #+ echo=F, include=F
 
+
 ## ___ Scatter plots with SZA all data -----------------------------------------
 data_list <- c(  "ALL_1_D_monthly_DESEAS",
                "CLEAR_1_D_monthly_DESEAS",
@@ -158,8 +159,6 @@ for (i in data_list) {
 }
 #+ echo=F, include=F
 rm(data_list)
-
-
 
 
 
@@ -236,7 +235,7 @@ CLOUD_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_tran
 #'
 #' ### Whole day daily cumulative sum
 #'
-#' All data in this section are refered to daily means.
+#' All data in this section are referring to daily means.
 #'
 #+ echo=F, include=T
 
@@ -283,7 +282,7 @@ for (adb in database) {
 
 
         ## test plot for reference
-        ## ## linear model
+        ## linear model
         lm1 <- lm(pdb[[paste0(avar,"_des")]] ~ pdb$Date)
         plot(pdb$Date, pdb[[paste0(avar,"_des")]],
              ylab = bquote("Seasonal Anomaly [%]"),
@@ -557,6 +556,8 @@ CLOUD_3_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp
 plotsza     <- c( 63 )
 # plotpreNoon <- c("am","pm","am+pm", "daily")
 plotpreNoon <- c("am","pm","am+pm")
+plotpreNoon <- c("am","pm")
+
 plotpNcol   <- c(2, 3, 4, 5)
 # vars        <- c("GLB_att", "DIR_att", "DIR_transp")
 vars        <- c("GLB_att")
@@ -571,10 +572,6 @@ for (adb in database) {
     cat("\n\\newpage\n")
     cat("\n\\FloatBarrier\n")
     cat("\n#### Monthly cum sums for", translate(sub("_.*", "", adb)), "by SZA\n\n")
-
-
-    cat("\n\n \\ \n\n")
-
 
     for (asza in plotsza) {
         for (avar in vars) {
@@ -617,7 +614,7 @@ for (adb in database) {
                          aes(x     = Date,
                              y     = get(paste0(avar,"_des")),
                              color = preNoon))          +
-                geom_point(size = .8)                   +
+                geom_line(size = .8)                   +
                 geom_smooth(method = "lm", se = FALSE)  +
                 ggtitle(paste0("Anomaly % for ", asza, " SZA bin "))   +
                 xlab("Year")                            +
@@ -637,6 +634,8 @@ for (adb in database) {
 
             suppressWarnings(suppressMessages(  print(gpa)  ))
             # cat("\n \n \n")
+
+            plotly::ggplotly(gpa)
 
             gpb <- ggplot(data = pdb,
                          aes(x     = Date,
