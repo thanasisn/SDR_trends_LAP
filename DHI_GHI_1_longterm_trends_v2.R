@@ -202,7 +202,7 @@ dbs         <- c(  "ALL_1_daily_DESEAS",
 for (DBn in dbs) {
     DB <- get(DBn)
     cat("\n\\newpage\n")
-    cat("\n#### Trends on", translate(sub("_.*","",DBn)), "data\n\n" )
+    cat("\n#### Trends on", translate(sub("_.*", "", DBn)), "data\n\n" )
 
         for (avar in vars) {
             dataset <- DB
@@ -498,9 +498,9 @@ vars        <- c("GLB_att_des")
 #                  "CLOUD_1_daily_DEseas")
 
 ## Monthly aggregation
-dbs         <- c(  "ALL_3_monthly_DEseas",
-                   "CLEAR_3_monthly_DEseas",
-                   "CLOUD_3_monthly_DEseas")
+dbs         <- c(  "ALL_3_monthly_DESEAS",
+                 "CLEAR_3_monthly_DESEAS",
+                 "CLOUD_3_monthly_DESEAS")
 
 for (DBn in dbs) {
     DB <- get(DBn)
@@ -527,7 +527,10 @@ for (DBn in dbs) {
             ## plot
             par("mar" = c(3, 4, 2, 1))
             plot(dataset$Year, dataset[[avar]],
-                 pch  = ".", col = get(paste0("col_",avar)),
+                 pch  = ".",
+                 col  = get(paste0(c("col",
+                                     unlist(strsplit(avar, split = "_" ))[1:2]),
+                                   collapse = "_")),
                  cex  = 4,
                  xlab = "",
                  ylab = bquote("Seasonal Anomaly [%]" ) )
@@ -609,9 +612,9 @@ wecare           <- grep("intercept", names(gather_seas), value = T, invert = T)
 gather_seas      <- data.table(gather_seas)
 gather_seas$DATA <- sub("_.*", "", gather_seas$DATA)
 
-pprint           <- gather_seas[ , ..wecare]
+pprint           <- gather_seas[, ..wecare]
 
-pprint[, slope.stat_sig := 100*(1-slope.p) ]
+pprint[, slope.stat_sig := 100*(1-slope.p)]
 pprint[, slope.t        := NULL]
 pprint[, Rsqrd          := NULL]
 pprint[, RsqrdAdj       := NULL]
