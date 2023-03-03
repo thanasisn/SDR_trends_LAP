@@ -75,6 +75,7 @@ par(pch = ".")
 library(data.table, quietly = T, warn.conflicts = F)
 library(pander,     quietly = T, warn.conflicts = F)
 library(lubridate,  quietly = T, warn.conflicts = F)
+library(ggplot2,    quietly = T, warn.conflicts = F)
 
 panderOptions('table.alignment.default', 'right')
 panderOptions('table.split.table',        120   )
@@ -106,7 +107,7 @@ options(error = function() {
 #'
 #' ### Data info
 #'
-#' Time data span `r range(ALL_1_daily_mean$Date)`
+#' Time data span `r range(ALL_1_daily_DESEAS$Date)`
 #'
 #' Where is a **running mean the window is `r running_mean_window_days` days** or
 #' `r running_mean_window_days / Days_of_year` years.
@@ -116,172 +117,135 @@ options(error = function() {
 #+ echo=F, include=F
 
 
-# ## ___ Scatter plots with SZA all data -----------------------------------------
-# data_list  <- list(ALL   =   ALL_3_monthly_mean,
-#                    CLEAR = CLEAR_3_monthly_mean,
-#                    CLOUD = CLOUD_3_monthly_mean)
-# by_var     <- c("Date", "Month", "SZA")
-# wecare     <- unique(unlist(lapply(data_list, names)))
-# wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
-# for (i in 1:length(data_list)) {
-#     Dplot <- data_list[[i]]
-#     for (xvar in by_var){
-#         for (yvar in wecare) {
-#             if (! yvar %in% names(Dplot)) next()
-#             col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-#             vect <- Dplot[[yvar]]
-#             plot(Dplot[[xvar]], vect,
-#                  pch = ".", col = col,
-#                  main = paste(names(data_list[i]), yvar),
-#                  xlab = xvar, ylab = yvar)
-#         }
-#     }
-# }
-# ## ___ Histograms Plots all data -----------------------------------------------
-# for (i in 1:length(data_list)) {
-#     Dplot <- data_list[[i]]
-#     # intersect(names(Dplot),wecare)
-#     for (yvar in wecare) {
-#         if (! yvar %in% names(Dplot)) next()
-#         col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-#         vect <- Dplot[[yvar]]
-#         hist(vect,
-#              main = paste(names(data_list[i]), yvar),
-#              breaks = 100, col = col)
-#     }
-# }
-# #+ echo=F, include=F
-#
-#
-# ## ___ Scatter Plot seasonal data ----------------------------------------------
-# data_list  <- list(ALL   =   ALL_3_monthly_seas,
-#                    CLEAR = CLEAR_3_monthly_seas,
-#                    CLOUD = CLOUD_3_monthly_seas)
-# by_var     <- c("Month", "SZA")
-# wecare     <- unique(unlist(lapply(data_list, names)))
-# wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
-# for(i in 1:length(data_list)) {
-#     Dplot <- data_list[[i]]
-#     for (xvar in by_var){
-#         for (yvar in wecare) {
-#             if (! yvar %in% names(Dplot)) next()
-#             col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-#             vect <- Dplot[[yvar]]
-#             plot(Dplot[[xvar]], vect,
-#                  pch = ".", col = col,
-#                  main = paste(names(data_list[i]), yvar),
-#                  xlab = xvar, ylab = yvar)
-#         }
-#     }
-# }
-#
-# ## ___ Histograms Plot seasonal data -------------------------------------------
-# for (i in 1:length(data_list)) {
-#     Dplot <- data_list[[i]]
-#     for (yvar in wecare) {
-#         if (! yvar %in% names(Dplot)) next()
-#         col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-#         vect <- Dplot[[yvar]]
-#         hist(vect,
-#              main = paste(names(data_list[i]), yvar),
-#              breaks = 100, col = col)
-#     }
-# }
-# rm(data_list)
+## ___ Scatter plots with SZA all data -----------------------------------------
+data_list <- c(  "ALL_1_D_monthly_DESEAS",
+               "CLEAR_1_D_monthly_DESEAS",
+               "CLOUD_1_D_monthly_DESEAS",
+                     "ALL_1_daily_DESEAS",
+                   "CLEAR_1_daily_DESEAS",
+                   "CLEAR_1_daily_DESEAS")
 
+by_var     <- c("Date", "SZA")
+for (i in data_list) {
+    ## get data and y vars to plot
+    Dplot  <- get(i)
+    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = T)
+    ## loop existing x vars
+    for (xvar in names(Dplot)[names(Dplot) %in% by_var]){
+        for (yvar in wecare) {
+            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            vect <- Dplot[[yvar]]
+            plot(Dplot[[xvar]], vect,
+                 pch  = 19, cex = .3 , col = col,
+                 main = paste(i, yvar),
+                 xlab = xvar, ylab = yvar)
+        }
+    }
+}
 
-
-
-
-## ~ Calculate relative daily anomaly ------------------------------------------
-
-## merge data with seasonal data
-  ALL_1_daily_DEseas <- merge(  ALL_1_daily_mean,   ALL_1_daily_seas, by = "doy", all = T)
-CLEAR_1_daily_DEseas <- merge(CLEAR_1_daily_mean, CLEAR_1_daily_seas, by = "doy", all = T)
-CLOUD_1_daily_DEseas <- merge(CLOUD_1_daily_mean, CLOUD_1_daily_seas, by = "doy", all = T)
-
-#'
-#' ### Using the % difference from seasonal values
-#'
-#+ echo=F, include=T
-ALL_1_daily_DEseas[  , DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-ALL_1_daily_DEseas[  , HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-ALL_1_daily_DEseas[  , GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-ALL_1_daily_DEseas[  , DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-
-CLEAR_1_daily_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLEAR_1_daily_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-CLEAR_1_daily_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-CLEAR_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-
-CLOUD_1_daily_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLOUD_1_daily_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-CLOUD_1_daily_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-CLOUD_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
+## ___ Histograms Plots all data -----------------------------------------------
+for (i in data_list) {
+    ## get data and y vars to plot
+    Dplot  <- get(i)
+    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = T)
+    for (yvar in wecare) {
+        if (! yvar %in% names(Dplot)) next()
+        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+        hist(Dplot[[yvar]],
+             main = paste(i, yvar),
+             xlab = yvar,
+             breaks = 100, col = col)
+    }
+}
 #+ echo=F, include=F
+rm(data_list)
+
+
+
 
 
 ## ~ Calculate daily cum sum ---------------------------------------------------
 
-## use a copy
-  ALL_1_daily_Cumsum <- copy(  ALL_1_daily_DEseas)
-CLEAR_1_daily_Cumsum <- copy(CLEAR_1_daily_DEseas)
-CLOUD_1_daily_Cumsum <- copy(CLOUD_1_daily_DEseas)
+setorder(  ALL_1_daily_DESEAS, Date)
+setorder(CLEAR_1_daily_DESEAS, Date)
+setorder(CLOUD_1_daily_DESEAS, Date)
 
-### keep raw for easy plot
-  ALL_1_daily_Cumsum[, GLB_att_orig    := GLB_att   ]
-  ALL_1_daily_Cumsum[, DIR_att_orig    := DIR_att   ]
-  ALL_1_daily_Cumsum[, DIR_transp_orig := DIR_transp]
-CLEAR_1_daily_Cumsum[, GLB_att_orig    := GLB_att   ]
-CLEAR_1_daily_Cumsum[, DIR_att_orig    := DIR_att   ]
-CLEAR_1_daily_Cumsum[, DIR_transp_orig := DIR_transp]
-CLOUD_1_daily_Cumsum[, GLB_att_orig    := GLB_att   ]
-CLOUD_1_daily_Cumsum[, DIR_att_orig    := DIR_att   ]
-CLOUD_1_daily_Cumsum[, DIR_transp_orig := DIR_transp]
+## with NAs in place
+#   ALL_1_daily_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des),    0, GLB_att_des))    + GLB_att_des*0    ]
+#   ALL_1_daily_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
+#   ALL_1_daily_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
+# CLEAR_1_daily_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des),    0, GLB_att_des))    + GLB_att_des*0    ]
+# CLEAR_1_daily_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
+# CLEAR_1_daily_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
+# CLOUD_1_daily_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des),    0, GLB_att_des))    + GLB_att_des*0    ]
+# CLOUD_1_daily_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
+# CLOUD_1_daily_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
 
-## make NA to zero to preserve sums
-  ALL_1_daily_Cumsum[is.na(GLB_att),    GLB_att    := 0]
-  ALL_1_daily_Cumsum[is.na(DIR_att),    DIR_att    := 0]
-  ALL_1_daily_Cumsum[is.na(DIR_transp), DIR_transp := 0]
-CLEAR_1_daily_Cumsum[is.na(GLB_att),    GLB_att    := 0]
-CLEAR_1_daily_Cumsum[is.na(DIR_att),    DIR_att    := 0]
-CLEAR_1_daily_Cumsum[is.na(DIR_transp), DIR_transp := 0]
-CLOUD_1_daily_Cumsum[is.na(GLB_att),    GLB_att    := 0]
-CLOUD_1_daily_Cumsum[is.na(DIR_att),    DIR_att    := 0]
-CLOUD_1_daily_Cumsum[is.na(DIR_transp), DIR_transp := 0]
-
-## order before cumsum
-setorder(  ALL_1_daily_Cumsum, Date)
-setorder(CLEAR_1_daily_Cumsum, Date)
-setorder(CLOUD_1_daily_Cumsum, Date)
-
-## calculate cumsum as a daily value
-  ALL_1_daily_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
-  ALL_1_daily_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
-  ALL_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
-CLEAR_1_daily_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
-CLEAR_1_daily_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
-CLEAR_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
-CLOUD_1_daily_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
-CLOUD_1_daily_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
-CLOUD_1_daily_Cumsum[, DIR_transp := cumsum(DIR_transp)]
+## Calculate cumsum with zeroing NA
+  ALL_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+  ALL_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+  ALL_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+CLEAR_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+CLEAR_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+CLEAR_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+CLOUD_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+CLOUD_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+CLOUD_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
 
 
 
+## ~ Calculate monthly cum sum -------------------------------------------------
 
+setorder(  ALL_1_D_monthly_DESEAS, Date)
+setorder(CLEAR_1_D_monthly_DESEAS, Date)
+setorder(CLOUD_1_D_monthly_DESEAS, Date)
+
+
+
+# ## with NAs in place
+#   ALL_1_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des),    0, GLB_att_des))    + GLB_att_des*0    ]
+#   ALL_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
+#   ALL_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
+# CLEAR_1_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des),    0, GLB_att_des))    + GLB_att_des*0    ]
+# CLEAR_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
+# CLEAR_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
+# CLOUD_1_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des),    0, GLB_att_des))    + GLB_att_des*0    ]
+# CLOUD_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
+# CLOUD_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
+
+## Calculate cumsum with zeroing NA
+  ALL_1_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+  ALL_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+  ALL_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+CLEAR_1_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+CLEAR_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+CLEAR_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+CLOUD_1_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+CLOUD_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+CLOUD_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+
+
+
+
+### Whole day daily cumulative sum ---------------------------------------------
 
 #'
+#' \newpage
+#' \FloatBarrier
+#'
 #' ### Whole day daily cumulative sum
+#'
+#' All data in this section are referring to daily means.
 #'
 #+ echo=F, include=T
 
 # vars        <- c("GLB_att", "DIR_att", "DIR_transp")
 vars        <- c("GLB_att")
-database    <- c(  "ALL_1_daily_Cumsum",
-                 "CLEAR_1_daily_Cumsum",
-                 "CLOUD_1_daily_Cumsum")
+database    <- c(  "ALL_1_daily_DESEAS",
+                 "CLEAR_1_daily_DESEAS",
+                 "CLOUD_1_daily_DESEAS")
 
-#+ cumulativedailysums, echo=F, include=T, results="asis"
+#+ cumulativedailycumsums, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
 
@@ -289,39 +253,112 @@ for (adb in database) {
     cat("\n#### Daily cum sums for", translate(sub("_.*", "", adb)), "\n\n")
 
     for (avar in vars) {
-        wcare <- c("Date", avar, grep(paste0(avar,"_orig"), names(DB),value = T))
+        ## get only the vars we need
+        wcare <- c("Date", paste0(avar,"_des"), paste0(avar,"_cusum"))
         pdb   <- DB[, ..wcare]
+        rm(DB)
         xlim  <- range(pdb$Date)
-        ylim  <- range(pdb[[avar]],na.rm = T)
+        ylim  <- range(pdb[[paste0(avar,"_cusum")]],na.rm = T)
         col   <- get(paste0(c("col",
                               unlist(strsplit(avar, split = "_" ))[1:2]),
                             collapse = "_"))
 
         par("mar" = c(3,4,2,1))
-        par(pch = ".")
+        par(pch = 19)
 
         plot(1, type = "n",
              xlab = "",
              xlim = xlim, ylim = ylim,
              xaxt = "n",
-             ylab = bquote("Cumulative Seasonal Anomaly [%]" ) )
+             ylab = bquote("Cumulative Seasonal Anomaly [%]"))
         axis.Date(1, pdb$Date)
         abline(h = 0, lty = 2, lwd = 0.8)
 
         ## daily from other DT
-        lines(DB$Date, DB[[avar]], col = col, lwd = 2)
+        lines(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = col, lwd = 2)
 
         title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
                     translate(avar) ), cex.main = 1)
 
 
         ## test plot for reference
-        plot(DB$Date, DB[[grep(paste0(avar,"_orig"), names(DB),value = T)]],
+        ## linear model
+        lm1 <- lm(pdb[[paste0(avar,"_des")]] ~ pdb$Date)
+        plot(pdb$Date, pdb[[paste0(avar,"_des")]],
              ylab = bquote("Seasonal Anomaly [%]"),
+             cex = 0.3,
              col = col)
         abline(h = 0, lty = 2, lwd = 0.8)
         title(paste(sub("_.*","",adb), "mean daily values ",
                     translate(avar) ), cex.main = 1)
+        abline(lm1, lwd = 2)
+
+        rm <- frollmean(pdb[[paste0(avar,"_des")]], round(running_mean_window_days),
+                        na.rm = TRUE, algo = "exact", align = "center")
+        points(pdb$Date, rm, col = "red", cex = 0.5)
+
+        ## decorations
+        fit <- lm1[[1]]
+        legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
+               paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2])*Days_of_year,3),'* year'))
+
+
+        # hist(pdb$GLB_att_cusum)
+        # hist(pdb$GLB_att_des)
+        # sum(pdb[ GLB_att_des > 0, GLB_att_des ])
+        # sum(pdb[ , GLB_att_des ], na.rm = T)
+        # tail(pdb[ , GLB_att_cusum ])
+
+        cat("\n\\newpage\n")
+        cat("\n\\footnotesize\n")
+        # cat("\n\\small\n")
+
+        testdb <-
+            merge(
+                merge(
+                    merge(
+                        merge(
+                            pdb[get(paste0(avar,"_des")) > 0, .(PositiveSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)],
+                            pdb[get(paste0(avar,"_des")) < 0, .(NegativeSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+                        pdb[get(paste0(avar,"_des")) > 0, .(PositiveMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+                    pdb[get(paste0(avar,"_des")) < 0, .(NegativeMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]
+                ),
+                pdb[ , .(Sum = sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date) ]
+            )
+
+        cat(pander(testdb))
+        cat("\n\\normalsize\n")
+
+
+        ylim <- range(testdb$PositiveSum, -testdb$NegativeSum)
+        plot( testdb$year,  testdb$PositiveSum, type = "l", col = "blue", ylim = ylim)
+        lines(testdb$year, -testdb$NegativeSum, type = "l", col = "red")
+        title("Sum of negative and positive values by year")
+
+        legend("top", ncol = 2, bty = "n",
+               lty = 1, pch = NA, cex = 0.7,
+               legend = c("Sum of positive anomaly",
+                          "Sum of negative anomaly"),
+               col    = c("blue", "red")
+        )
+
+        # ylim <- c(-max(abs(testdb$Sum), na.rm = T), max(abs(testdb$Sum), na.rm = T))
+        # plot( testdb$year,  testdb$Sum, type = "l", col = "black", ylim = ylim)
+        # abline(h = 0, lty = 2, lwd = 0.8)
+        # title("Sum of all yearly values")
+
+
+        gp <- ggplot(data = testdb, aes(x = year, y = Sum)) +
+              geom_col(data = testdb[Sum <= 0], fill = "red") +
+              geom_col(data = testdb[Sum >= 0], fill = "blue") +
+              ggtitle("Sum of all year values") +
+              xlab("Year")     +
+              ylab("Year Sum") +
+              theme_bw()       +
+              theme(plot.title = element_text(hjust = 0.5))
+
+        print(gp)
+
     }
 }
 #'
@@ -329,77 +366,29 @@ for (adb in database) {
 
 
 
-## ~ Calculate monthly from daily cum sum --------------------------------------
-
-## use a copy
-  ALL_4_daily_monthly_Cumsum <- copy(  ALL_1_daily_DEseas)
-CLEAR_4_daily_monthly_Cumsum <- copy(CLEAR_1_daily_DEseas)
-CLOUD_4_daily_monthly_Cumsum <- copy(CLOUD_1_daily_DEseas)
-
-## create monthly means
-  ALL_4_daily_monthly_Cumsum[, GLB_att    := mean(GLB_att   , na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
-  ALL_4_daily_monthly_Cumsum[, DIR_att    := mean(DIR_att   , na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
-  ALL_4_daily_monthly_Cumsum[, DIR_transp := mean(DIR_transp, na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
-CLEAR_4_daily_monthly_Cumsum[, GLB_att    := mean(GLB_att   , na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
-CLEAR_4_daily_monthly_Cumsum[, DIR_att    := mean(DIR_att   , na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
-CLEAR_4_daily_monthly_Cumsum[, DIR_transp := mean(DIR_transp, na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
-CLOUD_4_daily_monthly_Cumsum[, GLB_att    := mean(GLB_att   , na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
-CLOUD_4_daily_monthly_Cumsum[, DIR_att    := mean(DIR_att   , na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
-CLOUD_4_daily_monthly_Cumsum[, DIR_transp := mean(DIR_transp, na.rm = T), by = .(Date = round_date(Date, unit = "month"))]
-
-### keep raw for easy plot
-  ALL_4_daily_monthly_Cumsum[, GLB_att_orig    := GLB_att   ]
-  ALL_4_daily_monthly_Cumsum[, DIR_att_orig    := DIR_att   ]
-  ALL_4_daily_monthly_Cumsum[, DIR_transp_orig := DIR_transp]
-CLEAR_4_daily_monthly_Cumsum[, GLB_att_orig    := GLB_att   ]
-CLEAR_4_daily_monthly_Cumsum[, DIR_att_orig    := DIR_att   ]
-CLEAR_4_daily_monthly_Cumsum[, DIR_transp_orig := DIR_transp]
-CLOUD_4_daily_monthly_Cumsum[, GLB_att_orig    := GLB_att   ]
-CLOUD_4_daily_monthly_Cumsum[, DIR_att_orig    := DIR_att   ]
-CLOUD_4_daily_monthly_Cumsum[, DIR_transp_orig := DIR_transp]
-
-## make NA to zero to preserve sums
-  ALL_4_daily_monthly_Cumsum[is.na(GLB_att),    GLB_att    := 0]
-  ALL_4_daily_monthly_Cumsum[is.na(DIR_att),    DIR_att    := 0]
-  ALL_4_daily_monthly_Cumsum[is.na(DIR_transp), DIR_transp := 0]
-CLEAR_4_daily_monthly_Cumsum[is.na(GLB_att),    GLB_att    := 0]
-CLEAR_4_daily_monthly_Cumsum[is.na(DIR_att),    DIR_att    := 0]
-CLEAR_4_daily_monthly_Cumsum[is.na(DIR_transp), DIR_transp := 0]
-CLOUD_4_daily_monthly_Cumsum[is.na(GLB_att),    GLB_att    := 0]
-CLOUD_4_daily_monthly_Cumsum[is.na(DIR_att),    DIR_att    := 0]
-CLOUD_4_daily_monthly_Cumsum[is.na(DIR_transp), DIR_transp := 0]
-
-## order before cumsum
-setorder(  ALL_4_daily_monthly_Cumsum, Date)
-setorder(CLEAR_4_daily_monthly_Cumsum, Date)
-setorder(CLOUD_4_daily_monthly_Cumsum, Date)
-
-## calculate cumsum as a monthly
-  ALL_4_daily_monthly_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
-  ALL_4_daily_monthly_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
-  ALL_4_daily_monthly_Cumsum[, DIR_transp := cumsum(DIR_transp)]
-CLEAR_4_daily_monthly_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
-CLEAR_4_daily_monthly_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
-CLEAR_4_daily_monthly_Cumsum[, DIR_transp := cumsum(DIR_transp)]
-CLOUD_4_daily_monthly_Cumsum[, GLB_att    := cumsum(GLB_att)   ]
-CLOUD_4_daily_monthly_Cumsum[, DIR_att    := cumsum(DIR_att)   ]
-CLOUD_4_daily_monthly_Cumsum[, DIR_transp := cumsum(DIR_transp)]
 
 
 
+
+### Whole day monthly cumulative sum -------------------------------------------
 
 #'
+#' \newpage
+#' \FloatBarrier
+#'
 #' ### Whole day monthly cumulative sum
+#'
+#' In this section the monthly values have been calculated from daily mean values.
 #'
 #+ echo=F, include=T
 
 # vars        <- c("GLB_att", "DIR_att", "DIR_transp")
 vars        <- c("GLB_att")
-database    <- c(  "ALL_4_daily_monthly_Cumsum",
-                 "CLEAR_4_daily_monthly_Cumsum",
-                 "CLOUD_4_daily_monthly_Cumsum")
+database    <- c(  "ALL_1_D_monthly_DESEAS",
+                 "CLEAR_1_D_monthly_DESEAS",
+                 "CLOUD_1_D_monthly_DESEAS")
 
-#+ cumulativemonthlysums, echo=F, include=T, results="asis"
+#+ cumulativemonthlycumsums, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
 
@@ -407,245 +396,193 @@ for (adb in database) {
     cat("\n#### Monthly cum sums for", translate(sub("_.*", "", adb)), "\n\n")
 
     for (avar in vars) {
-        wcare <- c("Date", avar, grep(paste0(avar,"_orig"), names(DB),value = T))
+        ## get only the vars we need
+        wcare <- c("Date", paste0(avar,"_des"), paste0(avar,"_cusum"))
         pdb   <- DB[, ..wcare]
+        rm(DB)
         xlim  <- range(pdb$Date)
-        ylim  <- range(pdb[[avar]],na.rm = T)
+        ylim  <- range(pdb[[paste0(avar,"_cusum")]],na.rm = T)
         col   <- get(paste0(c("col",
                               unlist(strsplit(avar, split = "_" ))[1:2]),
                             collapse = "_"))
 
         par("mar" = c(3,4,2,1))
-        par(pch = ".")
+        par(pch = 19)
 
         plot(1, type = "n",
              xlab = "",
              xlim = xlim, ylim = ylim,
              xaxt = "n",
-             ylab = bquote("Cumulative Seasonal Anomaly [%]" ) )
+             ylab = bquote("Cumulative Seasonal Anomaly [%]"))
         axis.Date(1, pdb$Date)
         abline(h = 0, lty = 2, lwd = 0.8)
 
         ## daily from other DT
-        lines(DB$Date, DB[[avar]], col = col, lwd = 2)
+        lines(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = col, lwd = 2)
 
         title(paste(sub("_.*","",adb), "mean monthly cumulative sum ",
                     translate(avar) ), cex.main = 1)
 
+
         ## test plot for reference
-        plot(DB$Date, DB[[grep(paste0(avar,"_orig"), names(DB),value = T)]],
+        ## linear model
+        lm1 <- lm(pdb[[paste0(avar,"_des")]] ~ pdb$Date)
+        plot(pdb$Date, pdb[[paste0(avar,"_des")]],
              ylab = bquote("Seasonal Anomaly [%]"),
+             cex = 0.5,
              col = col)
         abline(h = 0, lty = 2, lwd = 0.8)
         title(paste(sub("_.*","",adb), "mean monthly values ",
                     translate(avar) ), cex.main = 1)
+        abline(lm1, lwd = 2)
+
+        rm <- frollmean(pdb[[paste0(avar,"_des")]], round(running_mean_window_days),
+                        na.rm = TRUE, algo = "exact", align = "center")
+        points(pdb$Date, rm, col = "red", cex = 0.5)
+
+        ## decorations
+        fit <- lm1[[1]]
+        legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
+               paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2])*Days_of_year,3),'* year'))
+
+
+        cat("\n\\newpage\n")
+        cat("\n\\footnotesize\n")
+        # cat("\n\\small\n")
+
+        testdb <-
+            merge(
+                merge(
+                    merge(
+                        merge(
+                            pdb[get(paste0(avar,"_des")) > 0, .(PositiveSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)],
+                            pdb[get(paste0(avar,"_des")) < 0, .(NegativeSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+                        pdb[get(paste0(avar,"_des")) > 0, .(PositiveMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+                    pdb[get(paste0(avar,"_des")) < 0, .(NegativeMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]
+                ),
+                pdb[ , .(Sum = sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date) ]
+            )
+
+        cat(pander(testdb))
+        cat("\n\\normalsize\n")
+
+
+        ylim <- range(testdb$PositiveSum, -testdb$NegativeSum)
+        plot( testdb$year,  testdb$PositiveSum, type = "l", col = "blue", ylim = ylim)
+        lines(testdb$year, -testdb$NegativeSum, type = "l", col = "red")
+        title("Sum of negative and positive values by year")
+
+        legend("top", ncol = 2, bty = "n",
+               lty = 1, pch = NA, cex = 0.7,
+               legend = c("Sum of positive anomaly",
+                          "Sum of negative anomaly"),
+               col    = c("blue", "red")
+               )
+
+
+        # ylim <- c(-max(abs(testdb$Sum), na.rm = T), max(abs(testdb$Sum), na.rm = T))
+        # plot( testdb$year,  testdb$Sum, type = "l", col = "black", ylim = ylim)
+        # abline(h = 0, lty = 2, lwd = 0.8)
+        # title("Sum of all yearly values")
+
+        # polygon(
+        #     c(min(testdb$year), testdb$year , max(testdb$year)) ,
+        #     c(min(testdb$Sum) , testdb$Sum , min(testdb$Sum)) ,
+        #     col=rgb(0.2,0.1,0.5,0.2) , border=F
+        # )
+
+
+        gp <- ggplot(data = testdb, aes(x = year, y = Sum)) +
+            geom_col(data = testdb[Sum <= 0], fill = "red") +
+            geom_col(data = testdb[Sum >= 0], fill = "blue") +
+            ggtitle("Sum of all year values") +
+            xlab("Year")     +
+            ylab("Year Sum") +
+            theme_bw()       +
+            theme(plot.title = element_text(hjust = 0.5))
+
+        print(gp)
+
+        # hist(pdb$GLB_att_cusum)
+        # hist(pdb$GLB_att_des)
+        # sum(pdb[ GLB_att_des > 0, GLB_att_des ])
+        # sum(pdb[ , GLB_att_des ], na.rm = T)
+        # tail(pdb[ , GLB_att_cusum ])
+        # pdb[ , sum(get(paste0(avar,"_des")), na.rm = T), by = year(Date) ]
     }
 }
 #'
-
-
-
-
-
-
-### TODO check the rest
-
-
-
-## ~ Calculate seasonal anomaly by SZA -----------------------------------------
-
-#'
-#' ### Calculate seasonal anomaly by SZA and period of day
-#'
-#+ echo=F, include=F
-
-## by sza bin and day period
-  ALL_3_monthly_DEseas <- merge(  ALL_3_monthly_mean,   ALL_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
-CLEAR_3_monthly_DEseas <- merge(CLEAR_3_monthly_mean, CLEAR_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
-CLOUD_3_monthly_DEseas <- merge(CLOUD_3_monthly_mean, CLOUD_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
-## by whole day monthly
-  ALL_3_monthly_daily_DEseas <- merge(  ALL_3_monthly_daily_mean,   ALL_3_monthly_daily_seas, by = "Month", all = T)
-CLEAR_3_monthly_daily_DEseas <- merge(CLEAR_3_monthly_daily_mean, CLEAR_3_monthly_daily_seas, by = "Month", all = T)
-CLOUD_3_monthly_daily_DEseas <- merge(CLOUD_3_monthly_daily_mean, CLOUD_3_monthly_daily_seas, by = "Month", all = T)
-
-
-
-
 #+ echo=F, include=T
-## relative anomaly
-  ALL_3_monthly_DEseas[,      DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-  ALL_3_monthly_DEseas[,      GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-  ALL_3_monthly_DEseas[,      DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-CLEAR_3_monthly_DEseas[,      DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-CLEAR_3_monthly_DEseas[,      GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-CLEAR_3_monthly_DEseas[,      DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-CLOUD_3_monthly_DEseas[,      DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-CLOUD_3_monthly_DEseas[,      GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-CLOUD_3_monthly_DEseas[,      DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-
-  ALL_3_monthly_daily_DEseas[,DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-  ALL_3_monthly_daily_DEseas[,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-  ALL_3_monthly_daily_DEseas[,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-CLEAR_3_monthly_daily_DEseas[,DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-CLEAR_3_monthly_daily_DEseas[,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-CLEAR_3_monthly_daily_DEseas[,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-CLOUD_3_monthly_daily_DEseas[,DIR_att   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-CLOUD_3_monthly_daily_DEseas[,GLB_att   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-CLOUD_3_monthly_daily_DEseas[,DIR_transp:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-#+ echo=F, include=F
 
 
 
 
 
 
+## ~ Calculate monthly sum sum by SZA ------------------------------------------
 
+## set data order before cumsum
+setorder(  ALL_3_monthly_DESEAS, Date)
+setorder(CLEAR_3_monthly_DESEAS, Date)
+setorder(CLOUD_3_monthly_DESEAS, Date)
 
+  ALL_3_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0)), by = .(SZA, preNoon)]
+  ALL_3_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0)), by = .(SZA, preNoon)]
+  ALL_3_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0)), by = .(SZA, preNoon)]
+CLEAR_3_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0)), by = .(SZA, preNoon)]
+CLEAR_3_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0)), by = .(SZA, preNoon)]
+CLEAR_3_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0)), by = .(SZA, preNoon)]
+CLOUD_3_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0)), by = .(SZA, preNoon)]
+CLOUD_3_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0)), by = .(SZA, preNoon)]
+CLOUD_3_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0)), by = .(SZA, preNoon)]
 
-## change flag names
-  ALL_3_monthly_DEseas[preNoon == TRUE,    preNoon := "am"    ]
-  ALL_3_monthly_DEseas[preNoon == FALSE,   preNoon := "pm"    ]
-  ALL_3_monthly_DEseas[preNoon == "Daily", preNoon := "am+pm" ]
-CLEAR_3_monthly_DEseas[preNoon == FALSE,   preNoon := "pm"    ]
-CLEAR_3_monthly_DEseas[preNoon == "Daily", preNoon := "am+pm" ]
-CLEAR_3_monthly_DEseas[preNoon == TRUE,    preNoon := "am"    ]
-CLOUD_3_monthly_DEseas[preNoon == FALSE,   preNoon := "pm"    ]
-CLOUD_3_monthly_DEseas[preNoon == "Daily", preNoon := "am+pm" ]
-CLOUD_3_monthly_DEseas[preNoon == TRUE,    preNoon := "am"    ]
-
-setorder(ALL_3_monthly_DEseas,         Year, Month, preNoon, SZA)
-setorder(CLEAR_3_monthly_DEseas,       Year, Month, preNoon, SZA)
-setorder(CLOUD_3_monthly_DEseas,       Year, Month, preNoon, SZA)
-setorder(ALL_3_monthly_daily_DEseas,   Year, Month)
-setorder(CLEAR_3_monthly_daily_DEseas, Year, Month)
-setorder(CLOUD_3_monthly_daily_DEseas, Year, Month)
-
-## use a copy
-  ALL_3_monthly_daily_cumsum <-   ALL_3_monthly_daily_DEseas
-CLEAR_3_monthly_daily_cumsum <- CLEAR_3_monthly_daily_DEseas
-CLOUD_3_monthly_daily_cumsum <- CLOUD_3_monthly_daily_DEseas
-
-## keep raw for easy plot
-  ALL_3_monthly_daily_cumsum[, GLB_att_orig    := GLB_att   ]
-  ALL_3_monthly_daily_cumsum[, DIR_att_orig    := DIR_att   ]
-  ALL_3_monthly_daily_cumsum[, DIR_transp_orig := DIR_transp]
-CLEAR_3_monthly_daily_cumsum[, GLB_att_orig    := GLB_att   ]
-CLEAR_3_monthly_daily_cumsum[, DIR_att_orig    := DIR_att   ]
-CLEAR_3_monthly_daily_cumsum[, DIR_transp_orig := DIR_transp]
-CLOUD_3_monthly_daily_cumsum[, GLB_att_orig    := GLB_att   ]
-CLOUD_3_monthly_daily_cumsum[, DIR_att_orig    := DIR_att   ]
-CLOUD_3_monthly_daily_cumsum[, DIR_transp_orig := DIR_transp]
-
-## make NA to zero to preserve sums
-  ALL_3_monthly_daily_cumsum[is.na(GLB_att),    GLB_att    := 0 ]
-  ALL_3_monthly_daily_cumsum[is.na(DIR_att),    DIR_att    := 0 ]
-  ALL_3_monthly_daily_cumsum[is.na(DIR_transp), DIR_transp := 0 ]
-CLEAR_3_monthly_daily_cumsum[is.na(GLB_att),    GLB_att    := 0 ]
-CLEAR_3_monthly_daily_cumsum[is.na(DIR_att),    DIR_att    := 0 ]
-CLEAR_3_monthly_daily_cumsum[is.na(DIR_transp), DIR_transp := 0 ]
-CLOUD_3_monthly_daily_cumsum[is.na(GLB_att),    GLB_att    := 0 ]
-CLOUD_3_monthly_daily_cumsum[is.na(DIR_att),    DIR_att    := 0 ]
-CLOUD_3_monthly_daily_cumsum[is.na(DIR_transp), DIR_transp := 0 ]
-
-## create a nice data
-  ALL_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
-CLEAR_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
-CLOUD_3_monthly_daily_cumsum[, Date := as.POSIXct( paste(Year, Month, 1), format = "%Y %m %d")]
-
-# ### TODO!!!!! by sza??????
-ALL_3_monthly_daily_cumsum[,   GLB_att    := cumsum(GLB_att)   ]
-ALL_3_monthly_daily_cumsum[,   DIR_att    := cumsum(DIR_att)   ]
-ALL_3_monthly_daily_cumsum[,   DIR_transp := cumsum(DIR_transp)]
-CLEAR_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)   ]
-CLEAR_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)   ]
-CLEAR_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
-CLOUD_3_monthly_daily_cumsum[, GLB_att    := cumsum(GLB_att)   ]
-CLOUD_3_monthly_daily_cumsum[, DIR_att    := cumsum(DIR_att)   ]
-CLOUD_3_monthly_daily_cumsum[, DIR_transp := cumsum(DIR_transp)]
 
 
 
 
 #### Plot Cumulative sums  -----------------------------------------------------
 
+#'
 #' \newpage
-#' ## Cumulative sums by SZA and part of day
+#' \FloatBarrier
+#'
+#' ### Cumulative sums by SZA and part of day
 #'
 #' Use deseasonalized monthly values to calculate cumulative sums
+#' by a SZA bin and a period of day.
 #'
 #+ echo=F, include=F
 
-timefactor <- 1
-vars    <- c("GLB_att", "DIR_att", "DIR_transp")
-dbs     <- c("ALL_3_monthly_DEseas",
-             "CLEAR_3_monthly_DEseas",
-             "CLOUD_3_monthly_DEseas")
-basevar <- c("Year", "Month", "SZA", "preNoon")
-
-## ~ compute cumulative sums for each category and sza -------------------------
-for (DBn in dbs) {
-    DB <- get(DBn)
-    for (avar in vars) {
-        for (anoon in unique( DB$preNoon)) {
-            for (asza in unique( DB$SZA )) {
-
-                ## set na to zero
-                DB[ SZA == asza & preNoon == anoon, ][[avar]][is.na(DB[ SZA == asza & preNoon == anoon, ][[avar]])] <- 0
-                ## get cum sum
-                DB[ SZA == asza & preNoon == anoon, ][[avar]] <- unlist(cumsum( DB[ SZA == asza & preNoon == anoon, ..avar ] ))
-                ## set zeros to NA
-                DB[ SZA == asza & preNoon == anoon, ][[avar]][ DB[ SZA == asza & preNoon == anoon, ][[avar]] == 0 ] <- NA
-
-                # dataset <- DB[ SZA == asza & preNoon == anoon, ..ttt ]
-                # dataset[, Data := sub("_.*","", DBn) ]
-                # dataset[[avar]][is.na(dataset[[avar]])] <- 0
-                # dataset[[avar]] <- cumsum( dataset[[avar]] )
-                # gather <- merge(gather, dataset, all = T)
-            }
-        }
-    }
-    ttt <- c(basevar,vars)
-    assign(sub("DEseas", "cumsum", DBn), DB[, ..ttt] )
-}
-
-
-
-## create a useful date
-ALL_3_monthly_cumsum[,        FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
-CLEAR_3_monthly_cumsum[,      FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
-CLOUD_3_monthly_cumsum[,      FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
-ALL_3_monthly_daily_cumsum[,  FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
-CLEAR_3_monthly_daily_cumsum[,FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
-CLOUD_3_monthly_daily_cumsum[,FDate := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
-
-
-
-
-
 plotsza     <- c( 63 )
 # plotpreNoon <- c("am","pm","am+pm", "daily")
-plotpreNoon <- c("am","pm","daily")
-plotpNcol   <- c(2, 3, 4, 5)
-vars        <- c("GLB_att", "DIR_att", "DIR_transp")
-database    <- c("ALL_3_monthly_cumsum",
-                 "CLEAR_3_monthly_cumsum",
-                 "CLOUD_3_monthly_cumsum")
+plotpreNoon <- c("am","pm","am+pm")
+# plotpreNoon <- c("am","pm")
 
-#+ cumulativeSZAsums, echo=F, include=T
+plotpNcol   <- c(2, 3, 4, 5)
+# vars        <- c("GLB_att", "DIR_att", "DIR_transp")
+vars        <- c("GLB_att")
+database    <- c(  "ALL_3_monthly_DESEAS",
+                 "CLEAR_3_monthly_DESEAS",
+                 "CLOUD_3_monthly_DESEAS")
+
+#+ cumulativemonthlySZAcumsum, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
-    DB2 <- get(paste0(sub("_.*", "", adb), "_3_monthly_daily_cumsum"))
-    DBn <- get(sub("cumsum", "DEseas", adb))
+
+    cat("\n\\newpage\n")
+    cat("\n\\FloatBarrier\n")
+    cat("\n#### Monthly cum sums for", translate(sub("_.*", "", adb)), "by SZA\n\n")
 
     for (asza in plotsza) {
         for (avar in vars) {
-            wcare <- c("FDate", "preNoon", avar)
+            wcare <- c("Date", "preNoon", grep(avar, names(DB), value = T))
 
             pdb   <- DB[ SZA == asza ]
             pdb   <- pdb[, ..wcare]
-            # pdb   <- pdb[!is.na(pdb[[avar]])]
-            xlim  <- range(pdb$FDate,DB2$FDate)
-            ylim  <- range(pdb[[avar]],DB2[[avar]],na.rm = T)
+
+            ## start empty plot
+            xlim  <- range(pdb$Date)
+            ylim  <- range(pdb[[paste0(avar,"_cusum")]], na.rm = T)
 
             par("mar" = c(3,4,2,1))
             par(pch = 19)
@@ -655,39 +592,92 @@ for (adb in database) {
                  xlim = xlim, ylim = ylim,
                  xaxt = "n",
                  ylab = bquote("Cumulative Seasonal Anomaly [%]" ) )
-            axis.Date(1, pdb$FDate)
+            axis.Date(1, pdb$Date)
             abline(h = 0, lty = 2, lwd = 0.8)
 
             ## for a sza
             for (i in 1:length(plotpreNoon) ) {
                 pp <- pdb[preNoon == plotpreNoon[i]]
-                lines(pp$FDate, pp[[avar]], col = plotpNcol[i], lwd = 2)
+                lines(pp$Date, pp[[paste0(avar,"_cusum")]], col = plotpNcol[i], lwd = 2)
             }
-            ## daily from other DT
-            ## FIXME
-            lines(DB2$FDate, DB2[[avar]], col = plotpNcol[3], lwd = 2)
 
             legend("top", legend = plotpreNoon, col = plotpNcol,
                    lty = 1, bty = "n", ncol = 3, cex = 0.8)
 
             title(paste(sub("_.*","",adb), "monthly cumulative sum ",
-                        translate(avar), "for",asza,"deg."), cex.main = 1)
+                        translate(avar), "for SZA", asza,""), cex.main = 1)
+
+            # cat("\n \n \n")
 
 
-            ## test plot for reference
-            plot(DB$FDate, DBn[[avar]], col = plotpNcol[3],
-                 ylab = bquote("Seasonal Anomaly [%]"),
-                 cex = 0.5)
-            for (i in 1:length(plotpreNoon) ) {
-                pp <- DBn[preNoon == plotpreNoon[i] & SZA == asza]
-                points(as.Date(pp$Date), pp[[avar]], col = plotpNcol[i], lwd = 2, cex = 0.5)
+            gpa <- ggplot(data = pdb,
+                         aes(x     = Date,
+                             y     = get(paste0(avar,"_des")),
+                             color = preNoon))          +
+                # geom_line(size = .8)                  +
+                geom_point(size = .8)                   +
+                geom_smooth(method = "lm", se = FALSE)  +
+                ggtitle(paste0("Anomaly % for ", asza, " SZA bin "))   +
+                xlab("Year")                            +
+                ylab("Anomaly %")                       +
+                scale_color_manual(breaks = plotpreNoon,
+                                   values = plotpNcol)  +
+                theme_bw()                              +
+                labs(color = "Period of day with `lm`") +
+                theme(plot.title = element_text(hjust = 0.5,
+                                                size  = 10,
+                                                face  = "bold" ),
+                      legend.position   = "bottom",
+                      legend.margin     = margin( t = -5 ),
+                      legend.background = element_rect(fill = alpha("white", 0.5)),
+                      legend.title      = element_text(size = 10),
+                      legend.text       = element_text(size = 10))
 
-            }
+            suppressWarnings(suppressMessages(  print(gpa)  ))
+
+            ## make it interactive
+            # plotly::ggplotly(gpa)
+
+
+
+            gpb <- ggplot(data = pdb,
+                         aes(x     = Date,
+                             y     = get(paste0(avar,"_des")),
+                             color = preNoon))          +
+                geom_point(size = .8)                   +
+                geom_smooth(method = "loess", se = F)   +
+                ggtitle(paste0("Anomaly % for ", asza, " SZA bin "))   +
+                xlab("Year")                            +
+                ylab("Anomaly %")                       +
+                scale_color_manual(breaks = plotpreNoon,
+                                   values = plotpNcol)  +
+                theme_bw()                              +
+                labs(color = "Period of day with `loess`") +
+                theme(plot.title = element_text(hjust = 0.5,
+                                                size  = 10,
+                                                face  = "bold" ),
+                      legend.position   = "bottom",
+                      legend.margin     = margin( t = -5 ),
+                      legend.background = element_rect(fill = alpha("white", 0.5)),
+                      legend.title      = element_text(size = 10),
+                      legend.text       = element_text(size = 10))
+
+            plot.new()
+            suppressWarnings(suppressMessages(  print(gpb)  ))
+
+            # ## test plot for reference
+            # plot(DB$Date, DBn[avar]], col = plotpNcol[3],
+            #      ylab = bquote("Seasonal Anomaly [%]"),
+            #      cex = 0.5)
+            # for (i in 1:length(plotpreNoon) ) {
+            #     pp <- DBn[preNoon == plotpreNoon[i] & SZA == asza]
+            #     points(as.Date(pp$Date), pp[[avar]], col = plotpNcol[i], lwd = 2, cex = 0.5)
+            # }
         }
     }
 }
 #'
-
+#+ echo=F, include=T
 
 
 
@@ -695,66 +685,133 @@ for (adb in database) {
 
 ## Plot direct only time scale -------------------------------------------------
 
-plotsza     <- c( 63 )
-# plotpreNoon <- c("am","pm","am+pm", "daily")
-plotpreNoon <- c("am","pm","daily")
-plotpNcol   <- c(2,3,4,5)
-vars        <- c("DIR_att", "DIR_transp")
-database    <- c("ALL_3_monthly_cumsum",
-                 "CLEAR_3_monthly_cumsum",
-                 "CLOUD_3_monthly_cumsum")
 
-#+  cumulativeSZAsumsdir, echo=F, include=T
+plotsza     <- c( 63 )
+plotpreNoon <- c("am", "pm", "am+pm")
+# plotpreNoon <- c("am", "pm")
+
+plotpNcol   <- c(2, 3, 4, 5)
+# vars        <- c("GLB_att", "DIR_att", "DIR_transp")
+vars        <- c("DIR_att", "DIR_transp")
+database    <- c(  "ALL_3_monthly_DESEAS",
+                 "CLEAR_3_monthly_DESEAS",
+                 "CLOUD_3_monthly_DESEAS")
+
+#+  cumulativeSZAsumsdir, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
-    DB2 <- get(paste0(sub("_.*","",adb), "_3_monthly_daily_cumsum"))
+
+    cat("\n\\newpage\n")
+    cat("\n\\FloatBarrier\n")
+    cat("\n#### Monthly cum sums for", translate(sub("_.*", "", adb)), "by SZA\n\n")
+
     for (asza in plotsza) {
         for (avar in vars) {
-            wcare <- c("FDate","preNoon",avar)
+            wcare <- c("Date", "preNoon", grep(avar, names(DB), value = T))
+
             pdb   <- DB[ SZA == asza ]
             pdb   <- pdb[, ..wcare]
 
             pdb   <- pdb[!is.na(pdb[[avar]])]
-            DB2   <- DB2[!is.na(DB2[[avar]])]
 
-            xlim  <- range(pdb$FDate)
-            ylim  <- range(pdb[[avar]],DB2[[avar]],na.rm = T)
+            ## start empty plot
+            xlim  <- range(pdb$Date)
+            ylim  <- range(pdb[[paste0(avar,"_cusum")]], na.rm = T)
 
             par("mar" = c(3,4,2,1))
+            par(pch = 19)
 
-            plot(1, type="n",
-                 xlab="",
-                 xlim=xlim, ylim=ylim, xaxt = "n",
+            plot(1, type = "n",
+                 xlab = "",
+                 xlim = xlim, ylim = ylim,
+                 xaxt = "n",
                  ylab = bquote("Cumulative Seasonal Anomaly [%]" ) )
-            axis.Date(1, pdb$FDate)
-            abline(h=0, lty = 2, lwd=0.8)
+            axis.Date(1, pdb$Date)
+            abline(h = 0, lty = 2, lwd = 0.8)
 
-            ## for zsa
-            for ( i in 1:length(plotpreNoon) ) {
-                pp <- pdb[preNoon==plotpreNoon[i]]
-                lines(pp$FDate, pp[[avar]], col = plotpNcol[i], lwd = 3)
+            ## for a sza
+            for (i in 1:length(plotpreNoon) ) {
+                pp <- pdb[preNoon == plotpreNoon[i]]
+                lines(pp$Date, pp[[paste0(avar,"_cusum")]], col = plotpNcol[i], lwd = 2)
             }
 
-            ## for whole day
-            lines(DB2$FDate,DB2[[avar]], col = plotpNcol[3], lwd = 3)
-
             legend("top", legend = plotpreNoon, col = plotpNcol,
-                   lty = 1, bty = "n", ncol = 3, cex = 0.9)
+                   lty = 1, bty = "n", ncol = 3, cex = 0.8)
 
-            title(paste(sub("_.*","",adb), "monthly cumulative sum ", translate(avar),"for", asza, "deg."), cex.main = 1)
+            title(paste(sub("_.*","",adb), "monthly cumulative sum ",
+                        translate(avar), "for SZA", asza,""), cex.main = 1)
+
+            # cat("\n \n \n")
+
+
+            gpa <- ggplot(data = pdb,
+                          aes(x     = Date,
+                              y     = get(paste0(avar,"_des")),
+                              color = preNoon))          +
+                # geom_line(size = .8)                  +
+                geom_point(size = .8)                   +
+                geom_smooth(method = "lm", se = FALSE)  +
+                ggtitle(paste0("Anomaly % for ", asza, " SZA bin "))   +
+                xlab("Year")                            +
+                ylab("Anomaly %")                       +
+                scale_color_manual(breaks = plotpreNoon,
+                                   values = plotpNcol)  +
+                theme_bw()                              +
+                labs(color = "Period of day with `lm`") +
+                theme(plot.title = element_text(hjust = 0.5,
+                                                size  = 10,
+                                                face  = "bold" ),
+                      legend.position   = "bottom",
+                      legend.margin     = margin( t = -5 ),
+                      legend.background = element_rect(fill = alpha("white", 0.5)),
+                      legend.title      = element_text(size = 10),
+                      legend.text       = element_text(size = 10))
+
+            suppressWarnings(suppressMessages(  print(gpa)  ))
+
+            ## make it interactive
+            # plotly::ggplotly(gpa)
+
+
+
+            gpb <- ggplot(data = pdb,
+                          aes(x     = Date,
+                              y     = get(paste0(avar,"_des")),
+                              color = preNoon))          +
+                geom_point(size = .8)                   +
+                geom_smooth(method = "loess", se = F)   +
+                ggtitle(paste0("Anomaly % for ", asza, " SZA bin "))   +
+                xlab("Year")                            +
+                ylab("Anomaly %")                       +
+                scale_color_manual(breaks = plotpreNoon,
+                                   values = plotpNcol)  +
+                theme_bw()                              +
+                labs(color = "Period of day with `loess`") +
+                theme(plot.title = element_text(hjust = 0.5,
+                                                size  = 10,
+                                                face  = "bold" ),
+                      legend.position   = "bottom",
+                      legend.margin     = margin( t = -5 ),
+                      legend.background = element_rect(fill = alpha("white", 0.5)),
+                      legend.title      = element_text(size = 10),
+                      legend.text       = element_text(size = 10))
+
+            plot.new()
+            suppressWarnings(suppressMessages(  print(gpb)  ))
+
+            # ## test plot for reference
+            # plot(DB$Date, DBn[avar]], col = plotpNcol[3],
+            #      ylab = bquote("Seasonal Anomaly [%]"),
+            #      cex = 0.5)
+            # for (i in 1:length(plotpreNoon) ) {
+            #     pp <- DBn[preNoon == plotpreNoon[i] & SZA == asza]
+            #     points(as.Date(pp$Date), pp[[avar]], col = plotpNcol[i], lwd = 2, cex = 0.5)
+            # }
         }
     }
 }
 #'
-
-
-
-
-
-
-
-
-
+#+ echo=F, include=T
 
 
 

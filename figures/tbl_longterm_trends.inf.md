@@ -5,12 +5,12 @@
 ---------------
 
 Object name:    object      
-Date written:   2023-02-28 20:51:20.1 UTC  
+Date written:   2023-03-03 11:53:17.5 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat      
-Data file size: 715.0 B (715) 
-Size in memory: 3232 bytes      
+Data file size: 739.0 B (739) 
+Size in memory: 3248 bytes      
 Info file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.inf.md      
-Script name:    /home/athan/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_1_longterm_trends.R      
+Script name:    /home/athan/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_1_longterm_trends_v2.R      
 User@Host:      athan@tyler   
 Contact:        <natsisphysicist@gmail.com>      
 Notes:          NA      
@@ -27,7 +27,7 @@ Classes ‘data.table’ and 'data.frame':	6 obs. of  8 variables:
  $ slope.ConfInt_0.95: num  1.4138 0.2655 1.9079 0.0818 0.0376 ...
  $ slope.ConfInt_0.99: num  1.8586 0.3492 2.5084 0.1076 0.0494 ...
  $ DATA              : chr  "ALL" "CLEAR" "CLOUD" "ALL" ...
- $ var               : chr  "DIR_att" "DIR_att" "DIR_att" "GLB_att" ...
+ $ var               : chr  "DIR_att_des" "DIR_att_des" "DIR_att_des" "GLB_att_des" ...
  $ slope.stat_sig    : num  23.6 100 100 100 100 ...
  - attr(*, ".internal.selfref")=<externalptr> 
 ```
