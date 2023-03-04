@@ -8,6 +8,7 @@
 require(data.table)
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
+source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 
 ####  Run data construction ####################################################
 

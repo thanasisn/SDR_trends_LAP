@@ -89,8 +89,8 @@ source("~/CODE/FUNCTIONS/R/data.R")
 
 
 ## Source initial scripts ------------------------------------------------------
-source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input_v2.R")
+source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 
 ## notification function
 options(error = function() {
@@ -353,12 +353,9 @@ for (DBn in dbs) {
     cat("\n\\newpage\n")
     cat("\n#### ", translate(sub("_.*","",DBn)), "\n\n" )
 
-
     for (avar in vars) {
-
-        if (FIGURESGRID) {
-            par(mfrow=c(2,2))
-        }
+        ## plot in a grid
+        if (FIGURESGRID) { par(mfrow = c(2, 2)) }
 
         for (ase in Seasons) {
 
@@ -368,16 +365,19 @@ for (DBn in dbs) {
 
             ## linear model counting years
             lm2 <- lm( dataset[[avar]] ~ dataset$Year )
-stop()
+
             ## plot
             par("mar" = c(2, 3.4, 2, 0.5))
+
             plot(dataset$Year, dataset[[avar]],
                  pch  = dataset$Month,
                  col  = get(paste0(c("col",
                                      unlist(strsplit(avar, split = "_" ))[1:2]),
                                    collapse = "_")),
                  cex  = .6,
-                 main = paste(ase, translate(sub("_.*","",DBn)), translate(avar)),
+                 main = paste(ase,
+                              translate(sub("_.*","",DBn)),
+                              translate(sub("_des","",avar))),
                  ylab = bquote("Seasonal Anomaly [%]"),
                  xlab = "",
                  cex.main = 0.9,
@@ -406,7 +406,7 @@ stop()
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
 
         }
-        par(mfrow=c(1,1)) ## just reset layout
+        par(mfrow = c(1, 1)) ## just reset layout
     }
 }
 #+ echo=F, include=F
@@ -508,7 +508,7 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 
 ## ~ plot trends for each month #####
 
-#+ monthlytrends, echo=F, include=T, results="asis"
+#+ monthlytrends, echo=F, include=T, results="asis", out.width="100%",out.heigth="99%"
 # vars        <- c("DIR_att", "GLB_att")
 vars        <- c("GLB_att_des")
 
@@ -527,8 +527,13 @@ for (DBn in dbs) {
     cat("\n\\newpage\n")
     cat("\n#### ", translate(sub("_.*", "", DBn)), "\n\n" )
 
-    for (ase in 1:12) {
-        for (avar in vars) {
+    for (avar in vars) {
+        ## plot in a grid
+        if (FIGURESGRID) { par(mfrow = c(6, 3)) }
+
+        for (ase in 1:12) {
+
+
             dataset <- DB[Month == ase, ]
 
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
@@ -537,25 +542,34 @@ for (DBn in dbs) {
             lm2 <- lm( dataset[[avar]] ~ dataset$Year )
 
             ## plot
-            par("mar" = c(3, 4, 2, 1))
+            par("mar" = c(2, 3.4, 2, 0.5))
+
             plot(dataset$Year, dataset[[avar]],
                  pch  = ".",
                  col  = get(paste0(c("col",
                                      unlist(strsplit(avar, split = "_" ))[1:2]),
                                    collapse = "_")),
-                 cex  = 4,
-                 xlab = "",
-                 ylab = bquote("Seasonal Anomaly [%]" ) )
+                 cex      = 4,
+                 main     = paste(month.name[ase],
+                                  translate(sub("_.*","",DBn)),
+                                  translate(sub("_des","",avar))),
+                 xlab     = "",
+                 ylab     = bquote("Seasonal Anomaly [%]"),
+                 cex.main = 0.9,
+                 cex.lab  = 0.8,
+                 cex.axis = 0.8,
+                 mgp      = c(2, 0.5, 0)
+            )
             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
 
-            # abline(lm1)
             abline(lm2)
 
             ## plot running mean
             rm <- frollmean(dataset[[avar]],
                             running_mean_window_years,
                             na.rm = TRUE,
-                            algo = "exact", align = "center")
+                            algo  = "exact",
+                            align = "center")
             lines(dataset$Year, rm, col = "red")
 
             ## decorations
@@ -563,8 +577,8 @@ for (DBn in dbs) {
             legend('top', lty = 1, bty = "n",
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
 
-            title(paste(month.name[ase], translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.8)
         }
+        par(mfrow = c(1, 1)) ## just reset layout
     }
 }
 #+ echo=F, include=F
