@@ -1,9 +1,9 @@
 # /* #!/usr/bin/env Rscript */
-# /* Copyright (C) 2022 Athanasios Natsis <natsisthanasis@gmail.com> */
+# /* Copyright (C) 2022 Athanasios Natsis <natsisphysicist@gmail.com> */
 #' ---
 #' title:         "Trends of SDR in Thessaloniki "
 #' author:
-#'   - Natsis Athanasios^[Laboratory of Atmospheric Physics,AUTH, natsisthanasis@gmail.com]
+#'   - Natsis Athanasios^[Laboratory of Atmospheric Physics,AUTH, natsisphysicist@gmail.com]
 #'   - Alkiviadis Bais^[Laboratory of Atmospheric Physics, AUTH]
 #' abstract:
 #'   "Study of GHI and DNI radiation for 'clear sky' and all sly conditions."
@@ -43,7 +43,7 @@
 #+ echo=F, include=T
 
 
-####_  Document options _####
+## __ Document options ---------------------------------------------------------
 
 #+ echo=F, include=F
 knitr::opts_chunk$set(comment    = ""       )
@@ -56,9 +56,8 @@ knitr::opts_chunk$set(cache      =  F       )  ## !! breaks calculations
 warning("Don't use cache it breaks computations")
 
 #+ include=F, echo=F
-####  Set environment  ####
+## __ Set environment ----------------------------------------------------------
 Sys.setenv(TZ = "UTC")
-tic <- Sys.time()
 Script.Name <- tryCatch({ funr::sys.script() },
                         error = function(e) { cat(paste("\nUnresolved script name: ", e),"\n\n")
                             return("Climatological_") })
@@ -68,8 +67,7 @@ if (!interactive()) {
     filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
-## override plot options
-par(pch = ".")
+
 
 #+ echo=F, include=T
 library(data.table, quietly = TRUE, warn.conflicts = FALSE)
@@ -80,7 +78,7 @@ library(ggplot2,    quietly = TRUE, warn.conflicts = FALSE)
 panderOptions("table.alignment.default", "right")
 panderOptions("table.split.table",        120   )
 
-## Load external functions -----------------------------------------------------
+## __ Load external functions --------------------------------------------------
 ## Functions from `https://github.com/thanasisn/IStillBreakStuff/tree/main/FUNCTIONS/R`
 source("~/CODE/FUNCTIONS/R/sumNA.R")
 source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
@@ -88,9 +86,10 @@ source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 
 
-## Source initial scripts ------------------------------------------------------
+## __ Source initial scripts ---------------------------------------------------
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input_v2.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
+tic <- Sys.time()
 
 ## notification function
 options(error = function() {
@@ -100,12 +99,18 @@ options(error = function() {
     }
 })
 
-## Flags ---------------------
+## __ Flags --------------------------------------------------------------------
+
+## override plot options
+par(pch = ".")
+
 FIGURESGRID <- TRUE
 # FIGURESGRID <- FALSE
 
 
 #+ echo=F, include=T
+#'
+#' ## 1. Long term anomaly trends
 #'
 #' ### Data info
 #'
@@ -114,12 +119,19 @@ FIGURESGRID <- TRUE
 #' Where is a **running mean the window is `r running_mean_window_days` days** or
 #' `r running_mean_window_days / Days_of_year` years.
 #'
-#' ## 1. Long term anomaly trends
+#' ### Process
+#'
+#' - Daily means are used to produce monthly means.
+#' - Some quality constrains have been applied
+#' - In each case the seasonal data have been created with the same process as
+#' the data that are de-seasonalised.
+#'
 #'
 #+ echo=F, include=F
 
 
-## ___ Scatter plots with SZA all data -----------------------------------------
+
+## ____ Scatter plots with SZA all data -----------------------------------------
 data_list <- c(  "ALL_1_D_monthly_DESEAS",
                "CLEAR_1_D_monthly_DESEAS",
                "CLOUD_1_D_monthly_DESEAS",
@@ -148,7 +160,7 @@ for (i in data_list) {
     }
 }
 
-## ___ Histograms Plots all data -----------------------------------------------
+## ____ Histograms Plots all data -----------------------------------------------
 for (i in data_list) {
     ## get data and y vars to plot
     Dplot  <- get(i)
@@ -169,34 +181,18 @@ rm(data_list)
 
 
 
-#### Calculate seasonal anomaly ####
+
+##  TOTAL TRENDS  ##############################################################
+
+
+## __ Plot data trends  --------------------------------------------------------
 #'
-#' ### Calculate seasonal anomaly
-#'
-#+ echo=F, include=F
-
-##TODO margin of error for anomaly!!!!
-
-
-
-
-
-
-
-
-
-#### TOTAL TRENDS  #############################################################
-
-## gather trends
-gather <- data.frame()
-
-## ~ plot all sky trends ####
 #' \newpage
 #' \FloatBarrier
 #'
 #' ### Trends from daily means
 #'
-#+ longtermtrends, echo=F, include=T, results="asis"
+#+ LongtermTrends, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
 vars <- c("DIR_att_des", "GLB_att_des")
 # dbs  <- c("ALL_1_daily_DEseas")
@@ -204,6 +200,8 @@ vars <- c("DIR_att_des", "GLB_att_des")
 dbs         <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
                  "CLOUD_1_daily_DESEAS")
+## gather trends
+gather <- data.frame()
 
 for (DBn in dbs) {
     DB <- get(DBn)
@@ -278,9 +276,8 @@ for (DBn in dbs) {
 
 
 
-
-
-## ~ display trends table ####
+## __ Trends table  ------------------------------------------------------------
+#'
 #' \newpage
 #'
 #' #### Table of total trends.
@@ -293,7 +290,7 @@ gather$DATA <- sub("_.*", "", gather$DATA)
 
 pprint <- gather[ , ..wecare]
 
-pprint[, slope.stat_sig := 100*(1-slope.p) ]
+pprint[, slope.stat_sig := 100 * (1 - slope.p)]
 pprint[, slope.t        := NULL]
 pprint[, Rsqrd          := NULL]
 pprint[, RsqrdAdj       := NULL]
@@ -320,8 +317,7 @@ myRtools::write_dat(pprint,
 
 
 
-#### SEASONAL TRENDS  ##########################################################
-
+##  SEASONAL TRENDS  ###########################################################
 
 #' \newpage
 #' \FloatBarrier
@@ -332,10 +328,9 @@ myRtools::write_dat(pprint,
 #'
 #+ echo=F, include=F
 
+## __ Plot trends for each season  ---------------------------------------------
 
-## ~ plot trends for each season #####
-
-#+ seasonaltrends, echo=F, include=T, results="asis"
+#+ SeasonaltTrends, echo=F, include=T, results="asis"
 # vars        <- c("DIR_att", "GLB_att")
 vars        <- c("GLB_att_des")
 
@@ -355,12 +350,18 @@ for (DBn in dbs) {
     ## sanity check
     stopifnot( !any(is.na(DB$Season)) )
 
-    cat("\n\\newpage\n")
-    cat("\n#### ", translate(sub("_.*","",DBn)), "\n\n" )
+    if (!FIGURESGRID) {
+        cat("\n\\newpage\n")
+        cat("\n#### ", translate(DBn), "\n\n")
+    }
 
     for (avar in vars) {
         ## plot in a grid
-        if (FIGURESGRID) { par(mfrow = c(2, 2)) }
+        if (FIGURESGRID) {
+            par(mfrow = c(2, 2))
+            cat("\n\\newpage\n")
+            cat("\n#### ", translate(DBn), translate(avar) , "\n\n")
+        }
 
         for (ase in Seasons) {
 
@@ -417,7 +418,7 @@ for (DBn in dbs) {
 #+ echo=F, include=F
 
 
-## ~ calculate trends for each season  ####
+## __ Calculate trends for each season  ----------------------------------------
 vars        <- c("DIR_att_des", "GLB_att_des")
 
 ## vars are  set above
@@ -454,19 +455,18 @@ for (DBn in dbs) {
     }
 }
 
-## ~ display data table ####
-
+## __ Display data table  ------------------------------------------------------
+#'
 #' \newpage
 #' \FloatBarrier
 #'
 #' #### Table of trends by season.
+#'
 #+ echo=F, include=T
-
 
 wecare           <- grep("intercept", names(gather_seas), value = T, invert = T)
 gather_seas      <- data.table(gather_seas)
 gather_seas$DATA <- sub("_.*", "", gather_seas$DATA)
-
 pprint           <- gather_seas[ , ..wecare]
 
 pprint[, slope.stat_sig     := 100 * (1 - slope.p)]
@@ -492,22 +492,23 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 
 
 
-#### MONTHLY TRENDS  ###########################################################
+##  MONTHLY TRENDS  ############################################################
 
-
+#'
 #' \newpage
 #' \FloatBarrier
 #'
-#' ### Trends for each month of the year
+#' ### Monthly trends
 #'
-#' We calculated monthly means from the daily means
+#' We calculated monthly means from the daily means and the we produce the
+#' seasonal data and the departure from the seasonal value in %.
 #'
 #+ echo=F, include=F
 
 
-## ~ plot trends for each month #####
+## __ Plot each month ----------------------------------------------------------
 
-#+ monthlytrends, echo=F, include=T, results="asis", fig.width=7, fig.height=14
+#+ TrendByMonth, echo=F, include=T, results="asis", fig.width=7, fig.height=11, out.height="97%"
 # vars   <- c("DIR_att", "GLB_att")
 vars   <- c("GLB_att_des")
 
@@ -582,7 +583,7 @@ for (DBn in dbs) {
 #+ echo=F, include=F
 
 
-## ~ calculate trends for each month  ####
+## __ Calculate trend by each month  -------------------------------------------
 vars        <- c("DIR_att_des", "GLB_att_des")
 gather_seas <- data.frame()
 for (DBn in dbs) {
@@ -614,8 +615,7 @@ for (DBn in dbs) {
     }
 }
 
-## ~ display data table ####
-
+## __ Display table with trends and stats  -------------------------------------
 #'
 #' \FloatBarrier
 #'
@@ -623,14 +623,13 @@ for (DBn in dbs) {
 #'
 #+ echo=F, include=T
 
-
 wecare        <- grep("intercept", names(gather_seas), value = T, invert = T)
 gather_seas   <- data.table(gather_seas)
 pprint        <- gather_seas[, ..wecare]
 pprint[, DATA := translate(DATA)]
 pprint[, var  := translate(var) ]
 
-pprint[, slope.stat_sig     := 99*(1-slope.p)]
+pprint[, slope.stat_sig     := 100 * (1 - slope.p)]
 pprint[, slope.t            := NULL]
 pprint[, Rsqrd              := NULL]
 pprint[, RsqrdAdj           := NULL]
@@ -639,15 +638,19 @@ pprint[, slope.ConfInt_0.95 := NULL]
 
 setorder(pprint, DATA, var, Month)
 
+# cat("\n\\scriptsize\n")
+
 #+ echo=F, include=T
+#  \scriptsize
+#' \footnotesize
+#  \small
+#'
 pander(pprint,
-       cap = "Slope is in %/year")
-#+ echo=F, include=F
+           cap = "Slope is in %/year")
+#+ echo=F, include=T
+#' \normalsize
+#+ echo=F, include=T
 myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_monthly.dat")
-
-
-
-
 
 
 
@@ -655,4 +658,5 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 #' **END**
 #+ include=T, echo=F
 tac <- Sys.time()
-cat(sprintf("%s %s@%s %s %f mins\n\n",Sys.time(),Sys.info()["login"],Sys.info()["nodename"],Script.Name,difftime(tac,tic,units="mins")))
+cat(sprintf("%s %s@%s %s %f mins\n\n", Sys.time(), Sys.info()["login"],
+            Sys.info()["nodename"], basename(Script.Name), difftime(tac,tic,units = "mins")))
