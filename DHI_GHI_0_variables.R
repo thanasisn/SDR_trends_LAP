@@ -12,9 +12,20 @@ dict <- list(DIR_att    = 'Dir. Beam Irrad.',
              CLEAR      = "Clear sky cond.",
              CLOUD      = "Cloudy cond.")
 ## function to translate objects names
-translate <- function(...) as.vector(unlist(dict[c(...) == names(dict)]))
+# translate <- function(...) as.vector(unlist(dict[c(...) == names(dict)]))
 
-# translate <- function(x) dict[agrep(x, names(dict), max.distance = 4, value = TRUE)]
+translate <- function(x) {
+    res <- c()
+    for (ax in x) {
+        res <- c(res,
+                 as.vector(unlist(
+                     dict[stringr::str_detect(ax, names(dict))]
+                 ))
+        )
+    }
+    return(res)
+}
+
 
 
 
