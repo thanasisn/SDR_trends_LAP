@@ -101,6 +101,8 @@ options(error = function() {
 })
 
 
+FIGURESGRID <- TRUE
+
 
 
 #+ echo=F, include=T
@@ -244,10 +246,12 @@ for (DBn in dbs) {
             # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
             #           na.rm = TRUE, algo = "exact")
 
-            rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
-                            na.rm = TRUE, algo = "exact", align = "center")
+            rm <- frollmean(dataset[[avar]],
+                            round(running_mean_window_days),
+                            na.rm = F, algo = "exact", align = "center")
 
-            points(dataset$Date, rm, col = "red", cex = 0.5)
+            # points(dataset$Date, rm, col = "red", cex = 0.5)
+            lines(dataset$Date, rm, col = "red", lwd = 1.5)
 
             ## decorations
             fit <- lm1[[1]]
@@ -320,11 +324,6 @@ myRtools::write_dat(pprint,
 # vars        <- c("DIR_att", "GLB_att")
 vars        <- c("GLB_att_des")
 
-## Daily aggregation
-# dbs         <- c(  "ALL_1_daily_DEseas",
-#                  "CLEAR_1_daily_DEseas",
-#                  "CLOUD_1_daily_DEseas")
-
 ## Monthly aggregation
 dbs         <- c(  "ALL_1_D_monthly_DESEAS",
                  "CLEAR_1_D_monthly_DESEAS",
@@ -343,48 +342,58 @@ for (DBn in dbs) {
 
     cat("\n\\newpage\n")
     cat("\n#### ", translate(sub("_.*","",DBn)), "\n\n" )
+stop()
 
-    for (ase in Seasons) {
-        for (avar in vars) {
+    for (avar in vars) {
+
+        if (FIGURESGRID) {
+            par(mfrow=c(2,2))
+        }
+
+        for (ase in Seasons) {
+
             dataset <- DB[ Season == ase, ]
 
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
-            ## linear model counting days
-            # lm1        <- lm( dataset[[avar]] ~ dataset$Date )
+
             ## linear model counting years
-            lm2        <- lm( dataset[[avar]] ~ dataset$Year )
+            lm2 <- lm( dataset[[avar]] ~ dataset$Year )
 
             ## plot
-            par("mar" = c(3, 4, 2, 1))
+            par("mar" = c(2, 3.9, 2, 1))
             plot(dataset$Year, dataset[[avar]],
                  pch  = dataset$Month,
                  col  = get(paste0(c("col",
                                      unlist(strsplit(avar, split = "_" ))[1:2]),
                                    collapse = "_")),
-                 cex  = .6,
-                 xlab = "",
-                 ylab = bquote("Seasonal Anomaly [%]" ) )
-                 # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
+                 xlab = "", ylab = "",
+                 cex  = .6 )
 
-            # abline(lm1)
+
+            title(main = paste(ase, translate(sub("_.*","",DBn)), translate(avar)),
+                  cex.main = 0.8,
+                  cex.lab  = 0.7,
+                  xlab = "",
+                  mgp  = c(1, 1, 0),
+                  ylab = bquote("Seasonal Anomaly [%]" ) )
+
+            # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]"))
+
             abline(lm2)
 
             ## plot running mean
-            rm <- frollmean(dataset[[avar]], 3 * running_mean_window_years,
+            rm <- frollmean(dataset[[avar]],
+                            running_mean_window_years,
                             na.rm = TRUE, algo = "exact", align = "center")
 
             # points(dataset$Date, rm, col = "red", cex = 0.5)
             lines(dataset$Year, rm, col = "red", cex = 0.5)
 
-
             ## decorations
-            # fit <- lm1[[1]]
-            # legend('top', lty = 1, bty = "n",
-            #        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*(Days_of_year/4) ),3),'* year'))
             fit <- lm2[[1]]
             legend('top', lty = 1, bty = "n",
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
-            title(paste(ase, translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.8)
+
 
         }
     }
@@ -411,19 +420,19 @@ for (DBn in dbs) {
             dataset <- DB[ Season == ase, ]
 
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
-            ## linear model counting days
-            # lm1        <- lm( dataset[[avar]] ~ dataset$Date )
+
             ## linear model counting years
-            lm2        <- lm( dataset[[avar]] ~ dataset$Year )
+            lm2 <- lm( dataset[[avar]] ~ dataset$Year )
 
             ## gather stats
             gather_seas <- rbind(gather_seas,
                                  data.frame(
-                                     linear_fit_stats(lm2, confidence_interval = Daily_confidence_limit),
-                                     DATA      = DBn,
-                                     Season    = ase,
-                                     var       = avar,
-                                     N         = sum(!is.na(dataset[[avar]]))
+                                     linear_fit_stats(lm2,
+                                                      confidence_interval = Daily_confidence_limit),
+                                     DATA   = DBn,
+                                     Season = ase,
+                                     var    = avar,
+                                     N      = sum(!is.na(dataset[[avar]]))
                                  ))
         }
     }
@@ -444,7 +453,7 @@ gather_seas$DATA <- sub("_.*", "", gather_seas$DATA)
 
 pprint           <- gather_seas[ , ..wecare]
 
-pprint[, slope.stat_sig := 100*(1-slope.p) ]
+pprint[, slope.stat_sig := 100 * (1 - slope.p) ]
 pprint[, slope.t        := NULL]
 pprint[, Rsqrd          := NULL]
 pprint[, RsqrdAdj       := NULL]
@@ -457,10 +466,10 @@ pprint[, N              := NULL]
 # pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year/4 ]
 # pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year/4 ]
 
-pprint[, slope.ConfInt_0.99 := NULL ]
-pprint[, slope.ConfInt_0.95 := NULL ]
+pprint[, slope.ConfInt_0.99 := NULL]
+pprint[, slope.ConfInt_0.95 := NULL]
 
-setorder(pprint,DATA,var)
+setorder(pprint, DATA, var)
 
 #+ echo=F, include=T
 pander(pprint,
@@ -492,11 +501,6 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 # vars        <- c("DIR_att", "GLB_att")
 vars        <- c("GLB_att_des")
 
-## Daily aggregation
-# dbs         <- c(  "ALL_1_daily_DEseas",
-#                  "CLEAR_1_daily_DEseas",
-#                  "CLOUD_1_daily_DEseas")
-
 ## Monthly aggregation
 dbs         <- c(  "ALL_1_D_monthly_DESEAS",
                  "CLEAR_1_D_monthly_DESEAS",
@@ -510,19 +514,16 @@ for (DBn in dbs) {
     stopifnot( !any(is.na(DB$Month)) )
 
     cat("\n\\newpage\n")
-    cat("\n#### ", translate(sub("_.*","",DBn)), "\n\n" )
-
+    cat("\n#### ", translate(sub("_.*", "", DBn)), "\n\n" )
 
     for (ase in 1:12) {
         for (avar in vars) {
             dataset <- DB[Month == ase, ]
 
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
-            ## linear model counting days
-            # lm1        <- lm( dataset[[avar]] ~ dataset$Date )
 
             ## linear model counting years
-            lm2        <- lm( dataset[[avar]] ~ dataset$Year )
+            lm2 <- lm( dataset[[avar]] ~ dataset$Year )
 
             ## plot
             par("mar" = c(3, 4, 2, 1))
@@ -540,25 +541,18 @@ for (DBn in dbs) {
             abline(lm2)
 
             ## plot running mean
-            dataset[[avar]][is.na(dataset[[avar]])] <- NA
             rm <- frollmean(dataset[[avar]],
-                            round(running_mean_window_days),
+                            running_mean_window_years,
                             na.rm = TRUE,
                             algo = "exact", align = "center")
-
-            points(dataset$Date, rm, col = "red", cex = 0.5)
+            lines(dataset$Year, rm, col = "red")
 
             ## decorations
-            # fit <- lm1[[1]]
-            # legend('top', lty = 1, bty = "n",
-            #        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*(Days_of_year/12) ),3),'* year'))
             fit <- lm2[[1]]
-
             legend('top', lty = 1, bty = "n",
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
 
             title(paste(month.name[ase], translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.8)
-
         }
     }
 }
@@ -567,10 +561,6 @@ for (DBn in dbs) {
 
 ## ~ calculate trends for each month  ####
 vars        <- c("DIR_att_des", "GLB_att_des")
-## is set above
-# dbs         <- c("ALL_1_daily_DEseas",
-#                  "CLEAR_1_daily_DEseas",
-#                  "CLOUD_1_daily_DEseas")
 gather_seas <- data.frame()
 for (DBn in dbs) {
     DB <- get(DBn)
@@ -583,16 +573,15 @@ for (DBn in dbs) {
             dataset <- DB[ Month == ase, ]
 
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
-            ## linear model countint days
-            lm1        <- lm( dataset[[avar]] ~ dataset$Date )
-            ## linear model counting years
-            lm2        <- lm( dataset[[avar]] ~ dataset$Year )
 
+            ## linear model counting years
+            lm2  <- lm( dataset[[avar]] ~ dataset$Year )
 
             ## gather stats
             gather_seas <- rbind(gather_seas,
                                  data.frame(
-                                     linear_fit_stats(lm2, confidence_interval = Daily_confidence_limit),
+                                     linear_fit_stats(lm2,
+                                                      confidence_interval = Daily_confidence_limit),
                                      DATA      = DBn,
                                      Month     = ase,
                                      var       = avar,
