@@ -33,8 +33,8 @@
 #'   html_document:
 #'     toc:             true
 #'     keep_md:         yes
-#'     fig_width:       7.5
-#'     fig_height:      5
+#'     fig_width:       7
+#'     fig_height:      4.5
 #'
 #' date: "`r format(Sys.time(), '%F')`"
 #'
@@ -208,14 +208,13 @@ dbs         <- c(  "ALL_1_daily_DESEAS",
 for (DBn in dbs) {
     DB <- get(DBn)
     cat("\n\\newpage\n")
-    cat("\n#### Trends on", translate(sub("_.*", "", DBn)), "data\n\n" )
+    cat("\n#### Trends on", translate(DBn), "data\n\n" )
 
         for (avar in vars) {
             dataset <- DB
 
-            ## linear model
+            ## linear model by day step
             lm1 <- lm(dataset[[avar]] ~ dataset$Date)
-            # lm1 <- lm( dataset[[avar]] ~ dataset$DYear )
 
             ## capture lm for table
             gather <- rbind(gather,
@@ -236,8 +235,11 @@ for (DBn in dbs) {
                                      unlist(strsplit(avar, split = "_"))[1:2]),
                                    collapse = "_")),
                  cex  = 2,
-                 xlab = "",
-                 ylab = bquote("Seasonal Anomaly [%]"))
+                 main     = paste(translate(DBn), translate(avar)),
+                 cex.main = 0.8,
+                 xlab     = "",
+                 ylab     = bquote("Seasonal Anomaly [%]")
+            )
             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
 
             ## plot fit line
@@ -267,7 +269,7 @@ for (DBn in dbs) {
                          if (fit[2] > 0) '+' else '-',
                          signif(abs(fit[2]) * Days_of_year, 3),
                          '* year'))
-            title(paste(translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.8)
+
     }
 }
 #+ echo=F, include=F
@@ -287,7 +289,7 @@ for (DBn in dbs) {
 
 wecare      <- grep("intercept", names(gather), value = T, invert = T)
 gather      <- data.table(gather)
-gather$DATA <- sub("_.*","",gather$DATA)
+gather$DATA <- sub("_.*", "", gather$DATA)
 
 pprint <- gather[ , ..wecare]
 
@@ -298,11 +300,14 @@ pprint[, RsqrdAdj       := NULL]
 pprint[, N              := NULL]
 
 ## convert slope / year
-pprint[,slope              := slope              * Days_of_year ]
-pprint[,slope.sd           := slope.sd           * Days_of_year ]
-pprint[,slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year ]
-pprint[,slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year ]
-setorder(pprint,var)
+pprint[, slope              := slope              * Days_of_year]
+pprint[, slope.sd           := slope.sd           * Days_of_year]
+pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year]
+pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year]
+pprint[, DATA               := translate(DATA)                  ]
+pprint[, var                := translate(var)                   ]
+translate(pprint$var)
+
 
 #+ echo=F, include=T
 pander(pprint,
@@ -464,21 +469,15 @@ gather_seas$DATA <- sub("_.*", "", gather_seas$DATA)
 
 pprint           <- gather_seas[ , ..wecare]
 
-pprint[, slope.stat_sig := 100 * (1 - slope.p) ]
-pprint[, slope.t        := NULL]
-pprint[, Rsqrd          := NULL]
-pprint[, RsqrdAdj       := NULL]
-pprint[, N              := NULL]
-
-
-## convert slope / year
-# print[, slope              := slope              * Days_of_year/4 ]
-# pprint[, slope.sd           := slope.sd           * Days_of_year/4 ]
-# pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year/4 ]
-# pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year/4 ]
-
-pprint[, slope.ConfInt_0.99 := NULL]
-pprint[, slope.ConfInt_0.95 := NULL]
+pprint[, slope.stat_sig     := 100 * (1 - slope.p)]
+pprint[, slope.t            := NULL               ]
+pprint[, Rsqrd              := NULL               ]
+pprint[, RsqrdAdj           := NULL               ]
+pprint[, N                  := NULL               ]
+pprint[, slope.ConfInt_0.99 := NULL               ]
+pprint[, slope.ConfInt_0.95 := NULL               ]
+pprint[, DATA               := translate(DATA)    ]
+pprint[, var                := translate(var)     ]
 
 setorder(pprint, DATA, var)
 
@@ -508,21 +507,21 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 
 ## ~ plot trends for each month #####
 
-#+ monthlytrends, echo=F, include=T, results="asis", out.width="100%",out.heigth="99%"
-# vars        <- c("DIR_att", "GLB_att")
-vars        <- c("GLB_att_des")
+#+ monthlytrends, echo=F, include=T, results="asis", fig.width=7, fig.height=14
+# vars   <- c("DIR_att", "GLB_att")
+vars   <- c("GLB_att_des")
 
 ## Monthly aggregation
-dbs         <- c(  "ALL_1_D_monthly_DESEAS",
-                 "CLEAR_1_D_monthly_DESEAS",
-                 "CLOUD_1_D_monthly_DESEAS")
+dbs <- c(  "ALL_1_D_monthly_DESEAS",
+         "CLEAR_1_D_monthly_DESEAS",
+         "CLOUD_1_D_monthly_DESEAS")
 
 for (DBn in dbs) {
     DB <- get(DBn)
     ## set seasons in each data base
     DB[, Month := month(Date) ]
     ## sanity check
-    stopifnot( !any(is.na(DB$Month)) )
+    stopifnot(!any(is.na(DB$Month)))
 
     cat("\n\\newpage\n")
     cat("\n#### ", translate(sub("_.*", "", DBn)), "\n\n" )
@@ -625,21 +624,11 @@ for (DBn in dbs) {
 #+ echo=F, include=T
 
 
-wecare           <- grep("intercept", names(gather_seas), value = T, invert = T)
-gather_seas      <- data.table(gather_seas)
-
-stop()
-
-translate(sub("_.*", "", gather_seas$DATA))
-
-gather_seas$DATA <- sub("_.*", "", gather_seas$DATA)
-
-translate(sub("_des", "", gather_seas$var))
-
-Vtranslate <- Vectorize(translate)
-Vtranslate(sub("_des", "", gather_seas$var))
-
-pprint           <- gather_seas[, ..wecare]
+wecare        <- grep("intercept", names(gather_seas), value = T, invert = T)
+gather_seas   <- data.table(gather_seas)
+pprint        <- gather_seas[, ..wecare]
+pprint[, DATA := translate(DATA)]
+pprint[, var  := translate(var) ]
 
 pprint[, slope.stat_sig     := 99*(1-slope.p)]
 pprint[, slope.t            := NULL]
