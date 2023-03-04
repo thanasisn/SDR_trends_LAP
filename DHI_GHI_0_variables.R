@@ -12,7 +12,11 @@ dict <- list(DIR_att    = 'Dir. Beam Irrad.',
              CLEAR      = "Clear sky cond.",
              CLOUD      = "Cloudy cond.")
 ## function to translate objects names
-translate <- function(...) as.vector(unlist(dict[c(...) == names(dict)]))
+# translate <- function(...) as.vector(unlist(dict[c(...) == names(dict)]))
+## function to translate objects names
+translate <- function(x) dict[agrep(x, names(dict), max.distance = 4, value = TRUE)]
+
+
 
 #### Data range ####
 ## will not include the last/first day

@@ -72,13 +72,13 @@ if (!interactive()) {
 par(pch = ".")
 
 #+ echo=F, include=T
-library(data.table, quietly = T, warn.conflicts = F)
-library(pander,     quietly = T, warn.conflicts = F)
-library(lubridate,  quietly = T, warn.conflicts = F)
-library(ggplot2,    quietly = T, warn.conflicts = F)
+library(data.table, quietly = TRUE, warn.conflicts = FALSE)
+library(pander,     quietly = TRUE, warn.conflicts = FALSE)
+library(lubridate,  quietly = TRUE, warn.conflicts = FALSE)
+library(ggplot2,    quietly = TRUE, warn.conflicts = FALSE)
 
-panderOptions('table.alignment.default', 'right')
-panderOptions('table.split.table',        120   )
+panderOptions("table.alignment.default", "right")
+panderOptions("table.split.table",        120   )
 
 ## Load external functions -----------------------------------------------------
 ## Functions from `https://github.com/thanasisn/IStillBreakStuff/tree/main/FUNCTIONS/R`
@@ -90,7 +90,7 @@ source("~/CODE/FUNCTIONS/R/data.R")
 
 ## Source initial scripts ------------------------------------------------------
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
-source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
+source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input_v2.R")
 
 ## notification function
 options(error = function() {
@@ -100,14 +100,16 @@ options(error = function() {
     }
 })
 
-
+## Flags ---------------------
+FIGURESGRID <- TRUE
+# FIGURESGRID <- FALSE
 
 
 #+ echo=F, include=T
 #'
 #' ### Data info
 #'
-#' Time data span `r range(ALL_1_daily_mean$Date)`
+#' Time data span `r range(ALL_1_daily_DESEAS$Date)`
 #'
 #' Where is a **running mean the window is `r running_mean_window_days` days** or
 #' `r running_mean_window_days / Days_of_year` years.
@@ -115,79 +117,53 @@ options(error = function() {
 #' ## 1. Long term anomaly trends
 #'
 #+ echo=F, include=F
-## ___ Scatter Plot all data ---------------------------------------------------
-data_list  <- list(ALL   = ALL_1_daily_mean,
-                   CLEAR = CLEAR_1_daily_mean,
-                   CLOUD = CLOUD_1_daily_mean)
-by_var     <- c("Date", "doy")
-wecare     <- unique(unlist(lapply(data_list, names)))
-wecare     <- grep(paste0(by_var,collapse = "|"), wecare, invert = T, value = T)
-## plot data
-for (i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    for (xvar in by_var){
+
+
+## ___ Scatter plots with SZA all data -----------------------------------------
+data_list <- c(  "ALL_1_D_monthly_DESEAS",
+               "CLEAR_1_D_monthly_DESEAS",
+               "CLOUD_1_D_monthly_DESEAS",
+                     "ALL_1_daily_DESEAS",
+                   "CLEAR_1_daily_DESEAS",
+                   "CLEAR_1_daily_DESEAS")
+
+by_var     <- c("doy")
+for (i in data_list) {
+    ## get data and y vars to plot
+    Dplot  <- get(i)
+    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = T)
+    ## loop existing x vars
+    for (xvar in names(Dplot)[names(Dplot) %in% by_var]) {
         for (yvar in wecare) {
-            if (! yvar %in% names(Dplot)) next()
-            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            col <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
+                              collapse = "_"))
             vect <- Dplot[[yvar]]
             plot(Dplot[[xvar]], vect,
-                 pch = ".", col = col,
-                 main = paste(names(data_list[i]), yvar),
+                 pch  = 19,
+                 cex  = .3,
+                 col  = col,
+                 main = paste(i, yvar),
                  xlab = xvar, ylab = yvar)
         }
     }
 }
+
 ## ___ Histograms Plots all data -----------------------------------------------
-for (i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    # intersect(names(Dplot),wecare)
+for (i in data_list) {
+    ## get data and y vars to plot
+    Dplot  <- get(i)
+    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = TRUE)
     for (yvar in wecare) {
-        if (! yvar %in% names(Dplot)) next()
-        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-        vect <- Dplot[[yvar]]
-        hist(vect,
-             main = paste(names(data_list[i]), yvar),
+        if (!yvar %in% names(Dplot)) next()
+        col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),
+                          collapse = "_"))
+        hist(Dplot[[yvar]],
+             main   = paste(i, yvar),
+             xlab   = yvar,
              breaks = 100, col = col)
     }
 }
 #+ echo=F, include=F
-
-
-## ___ Scatter Plot seasonal data ----------------------------------------------
-data_list  <- list(ALL_Seas   =   ALL_1_daily_seas,
-                   CLEAR_Seas = CLEAR_1_daily_seas,
-                   CLOUD_Seas = CLOUD_1_daily_seas)
-
-by_var     <- c("doy")
-wecare     <- unique(unlist(lapply(data_list, names)))
-wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
-for (i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    for (xvar in by_var){
-        for (yvar in wecare) {
-            if (! yvar %in% names(Dplot)) next()
-            col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-            vect <- Dplot[[yvar]]
-            plot(Dplot[[xvar]], vect,
-                 pch = ".", col = col,
-                 main = paste(names(data_list[i]), yvar),
-                 xlab = xvar, ylab = yvar)
-        }
-    }
-}
-
-## ___ Histograms Plot seasonal data -------------------------------------------
-for (i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    for (yvar in wecare) {
-        if (! yvar %in% names(Dplot)) next()
-        col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-        vect <- Dplot[[yvar]]
-        hist(vect,
-             main = paste(names(data_list[i]), yvar),
-             breaks = 100, col = col)
-    }
-}
 rm(data_list)
 
 
@@ -202,90 +178,6 @@ rm(data_list)
 ##TODO margin of error for anomaly!!!!
 
 
-#### ~ Daily de seasonal anomaly -----------------------------------------------
-
-  ALL_1_daily_DEseas <- merge(  ALL_1_daily_mean,   ALL_1_daily_seas, by = "doy", all = T)
-CLEAR_1_daily_DEseas <- merge(CLEAR_1_daily_mean, CLEAR_1_daily_seas, by = "doy", all = T)
-CLOUD_1_daily_DEseas <- merge(CLOUD_1_daily_mean, CLOUD_1_daily_seas, by = "doy", all = T)
-
-setorder(ALL_1_daily_DEseas,   Date)
-setorder(CLEAR_1_daily_DEseas, Date)
-setorder(CLOUD_1_daily_DEseas, Date)
-
-
-## ~ Calculate relative anomaly --------------------------------------------------
-#'
-#' ### Using the % difference from seasonal values
-#'
-#+ echo=F, include=T
-ALL_1_daily_DEseas[  , DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-ALL_1_daily_DEseas[  , HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-ALL_1_daily_DEseas[  , GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-ALL_1_daily_DEseas[  , DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-## add tsi data to data
-ALL_1_daily_mean[ , tsi1au_att := 100*(tsi1au_att - mean(tsi1au_att)) / mean(tsi1au_att)  ]
-ALL_1_daily_mean <-
-    merge( ALL_1_daily_DEseas,
-           ALL_1_daily_mean[, .(Date, tsi1au_att)], by = "Date", all = T )
-CLEAR_1_daily_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLEAR_1_daily_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-CLEAR_1_daily_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-CLEAR_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-
-CLOUD_1_daily_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLOUD_1_daily_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-CLOUD_1_daily_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-CLOUD_1_daily_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-#+ echo=F, include=F
-
-
-
-
-#### ~ Monthly de seasonal anomaly -----------------------------------------------
-
-  ALL_3_monthly_DEseas <- merge(  ALL_3_monthly_daily_mean,   ALL_3_monthly_daily_seas, by = "Month", all = T)
-CLEAR_3_monthly_DEseas <- merge(CLEAR_3_monthly_daily_mean, CLEAR_3_monthly_daily_seas, by = "Month", all = T)
-CLOUD_3_monthly_DEseas <- merge(CLOUD_3_monthly_daily_mean, CLOUD_3_monthly_daily_seas, by = "Month", all = T)
-
-  ALL_3_monthly_DEseas[, Date := as.Date(paste(Year, Month,"1"), format = "%Y %m %d")]
-CLEAR_3_monthly_DEseas[, Date := as.Date(paste(Year, Month,"1"), format = "%Y %m %d")]
-CLOUD_3_monthly_DEseas[, Date := as.Date(paste(Year, Month,"1"), format = "%Y %m %d")]
-
-
-
-setorder(  ALL_3_monthly_DEseas, Date)
-setorder(CLEAR_3_monthly_DEseas, Date)
-setorder(CLOUD_3_monthly_DEseas, Date)
-
-
-
-##TODO margin of error for anomaly!!!!
-
-## relative anomaly
-#'
-#' ### Using the % difference from seasonal values
-#'
-#+ echo=F, include=T
-ALL_3_monthly_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-ALL_3_monthly_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-ALL_3_monthly_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-ALL_3_monthly_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-
-CLEAR_3_monthly_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLEAR_3_monthly_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-CLEAR_3_monthly_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-CLEAR_3_monthly_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-
-CLOUD_3_monthly_DEseas[, DIR_att   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLOUD_3_monthly_DEseas[, HOR_att   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-CLOUD_3_monthly_DEseas[, GLB_att   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-CLOUD_3_monthly_DEseas[, DIR_transp:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-#+ echo=F, include=F
-
-# ## create a float year value
-#   ALL_3_monthly_DEseas$DYear <- as.numeric(  ALL_3_monthly_DEseas$Date) / Days_of_year
-# CLEAR_3_monthly_DEseas$DYear <- as.numeric(CLEAR_3_monthly_DEseas$Date) / Days_of_year
-# CLOUD_3_monthly_DEseas$DYear <- as.numeric(CLOUD_3_monthly_DEseas$Date) / Days_of_year
 
 
 
@@ -306,17 +198,17 @@ gather <- data.frame()
 #'
 #+ longtermtrends, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
-vars <- c("DIR_att", "GLB_att")
+vars <- c("DIR_att_des", "GLB_att_des")
 # dbs  <- c("ALL_1_daily_DEseas")
 
-dbs         <- c(  "ALL_1_daily_DEseas",
-                 "CLEAR_1_daily_DEseas",
-                 "CLOUD_1_daily_DEseas")
+dbs         <- c(  "ALL_1_daily_DESEAS",
+                 "CLEAR_1_daily_DESEAS",
+                 "CLOUD_1_daily_DESEAS")
 
 for (DBn in dbs) {
     DB <- get(DBn)
     cat("\n\\newpage\n")
-    cat("\n#### Trends on", translate(sub("_.*","",DBn)), "data\n\n" )
+    cat("\n#### Trends on", translate(sub("_.*", "", DBn)), "data\n\n" )
 
         for (avar in vars) {
             dataset <- DB
@@ -336,12 +228,16 @@ for (DBn in dbs) {
 
             par("mar" = c(3, 4, 2, 1))
 
+
             ## plot data
             plot(dataset$Date, dataset[[avar]],
-                 pch  = ".", col = get(paste0("col_",avar)),
+                 pch  = ".",
+                 col  = get(paste0(c("col",
+                                     unlist(strsplit(avar, split = "_"))[1:2]),
+                                   collapse = "_")),
                  cex  = 2,
                  xlab = "",
-                 ylab = bquote("Seasonal Anomaly [%]" ) )
+                 ylab = bquote("Seasonal Anomaly [%]"))
             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
 
             ## plot fit line
@@ -354,145 +250,28 @@ for (DBn in dbs) {
             # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
             #           na.rm = TRUE, algo = "exact")
 
-            rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
-                            na.rm = TRUE, algo = "exact", align = "center")
+            rm <- frollmean(dataset[[avar]],
+                            round(running_mean_window_days),
+                            na.rm = TRUE,
+                            algo  = "exact",
+                            align = "center")
 
-            points(dataset$Date, rm, col = "red", cex = 0.5)
+            # points(dataset$Date, rm, col = "red", cex = 0.5)
+            lines(dataset$Date, rm, col = "red", lwd = 1.5)
 
             ## decorations
             fit <- lm1[[1]]
             legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
-                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2])*Days_of_year,3),'* year'))
+                   paste('Y =',
+                         signif(fit[1],2),
+                         if (fit[2] > 0) '+' else '-',
+                         signif(abs(fit[2]) * Days_of_year, 3),
+                         '* year'))
             title(paste(translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.8)
     }
 }
 #+ echo=F, include=F
 
-
-
-# ## ~ plot clear sky trends ####
-# #' \newpage
-# #' \FloatBarrier
-# #'
-# #' ## Trends on Clear sky conditions data
-# #'
-# #+ longtermtrendsCS, echo=F, include=T, results="asis"
-# # vars        <- c("HOR_att","DIR_transp","DIR_att","GLB_att")
-# vars        <- c("DIR_att", "GLB_att")
-#
-# dbs         <- c("CLEAR_1_daily_DEseas")
-# for (DBn in dbs) {
-#     DB <- get(DBn)
-#     for (avar in vars) {
-#         dataset <- DB
-#
-#         ## linear model
-#         lm1        <- lm(dataset[[avar]] ~ dataset$Date)
-#
-#         ## capture lm
-#         gather <- rbind(gather,
-#                         data.frame(
-#                             linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
-#                             DATA      = DBn,
-#                             var       = avar,
-#                             N         = sum(!is.na(dataset[[avar]]))
-#                         ))
-#
-#         ## plot
-#         par("mar" = c(3,4,2,1))
-#
-#         plot(dataset$Date, dataset[[avar]],
-#              pch  = ".", col = get(paste0("col_",avar)),
-#              cex  = 2,
-#              xlab = "",
-#              ylab = bquote("Seasonal Anomaly [%]" ) )
-#              # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
-#         abline(lm1, lwd = 2)
-#
-#         ## plot running mean
-#         # partial window using adaptive rolling function
-#         # an = function(n, len) c(seq.int(n), rep(n, len-n))
-#         # n = an(round(Days_of_year * 5), nrow(dataset))
-#         # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
-#         #           na.rm = TRUE, algo = "exact")
-#
-#         rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
-#                         na.rm = TRUE, algo = "exact", align = "center")
-#
-#         points(dataset$Date, rm, col = "red", cex = 0.5)
-#
-#
-#         ## decorations
-#         fit <- lm1[[1]]
-#         legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
-#                paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-#         title(paste(translate(sub("_.*","",DBn)),translate(avar)), cex.main = 0.7)
-#
-#     }
-# }
-# #+ echo=F, include=F
-#
-#
-#
-# ## ~ plot cloud sky trends ####
-# #'
-# #' \newpage
-# #' ## Trends on Cloud sky conditions data
-# #'
-# #+ longtermtrendsCL, echo=F, include=T, results="asis"
-# # vars        <- c("HOR_att", "DIR_transp", "DIR_att", "GLB_att")
-# vars        <- c("DIR_att", "GLB_att")
-# dbs         <- c("CLOUD_1_daily_DEseas")
-# for (DBn in dbs) {
-#     DB <- get(DBn)
-#     for (avar in vars) {
-#         dataset <- DB
-#
-#         ## linear model
-#         lm1        <- lm( dataset[[avar]] ~ dataset$Date )
-#
-#         ## capture lm
-#         gather <- rbind(gather,
-#                         data.frame(
-#                             linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
-#                             DATA      = DBn,
-#                             var       = avar,
-#                             N         = sum(!is.na(dataset[[avar]]))
-#                         ))
-#
-#         ## plot
-#         par("mar" = c(3,4,2,1))
-#
-#         plot(dataset$Date, dataset[[avar]],
-#              pch  = ".", col = get(paste0("col_", avar)),
-#              cex  = 2,
-#              xlab = "",
-#              ylab = bquote("Seasonal Anomaly [%]" ) )
-#         # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
-#         abline(lm1, lwd = 2)
-#
-#         ## plot running mean
-#         # partial window using adaptive rolling function
-#         # an = function(n, len) c(seq.int(n), rep(n, len-n))
-#         # n = an(round(Days_of_year * 5), nrow(dataset))
-#         # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
-#         #           na.rm = TRUE, algo = "exact")
-#
-#         rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
-#                         na.rm = TRUE, algo = "exact", align = "center")
-#
-#         points(dataset$Date, rm, col = "red", cex = 0.5)
-#
-#
-#         ## decorations
-#         fit <- lm1[[1]]
-#         legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
-#                paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*Days_of_year),3),'* year'))
-#         title(paste(translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.7)
-#
-#     }
-# }
-# #+ echo=F, include=F
 
 
 
@@ -553,19 +332,14 @@ myRtools::write_dat(pprint,
 
 #+ seasonaltrends, echo=F, include=T, results="asis"
 # vars        <- c("DIR_att", "GLB_att")
-vars        <- c("GLB_att")
-
-## Daily aggregation
-# dbs         <- c(  "ALL_1_daily_DEseas",
-#                  "CLEAR_1_daily_DEseas",
-#                  "CLOUD_1_daily_DEseas")
+vars        <- c("GLB_att_des")
 
 ## Monthly aggregation
-dbs         <- c(  "ALL_3_monthly_DEseas",
-                 "CLEAR_3_monthly_DEseas",
-                 "CLOUD_3_monthly_DEseas")
+dbs         <- c(  "ALL_1_D_monthly_DESEAS",
+                 "CLEAR_1_D_monthly_DESEAS",
+                 "CLOUD_1_D_monthly_DESEAS")
 
-Seasons     <- c("Winter", "Spring","Summer","Autumn")
+Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 for (DBn in dbs) {
     DB <- get(DBn)
     ## set seasons in each data base
@@ -579,63 +353,70 @@ for (DBn in dbs) {
     cat("\n\\newpage\n")
     cat("\n#### ", translate(sub("_.*","",DBn)), "\n\n" )
 
-    for (ase in Seasons) {
-        for (avar in vars) {
+
+    for (avar in vars) {
+
+        if (FIGURESGRID) {
+            par(mfrow=c(2,2))
+        }
+
+        for (ase in Seasons) {
+
             dataset <- DB[ Season == ase, ]
 
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
-            ## linear model counting days
-            # lm1        <- lm( dataset[[avar]] ~ dataset$Date )
-            ## linear model counting years
-            lm2        <- lm( dataset[[avar]] ~ dataset$Year )
 
+            ## linear model counting years
+            lm2 <- lm( dataset[[avar]] ~ dataset$Year )
+stop()
             ## plot
-            par("mar" = c(3, 4, 2, 1))
+            par("mar" = c(2, 3.4, 2, 0.5))
             plot(dataset$Year, dataset[[avar]],
                  pch  = dataset$Month,
-                 col = get(paste0("col_",avar)),
+                 col  = get(paste0(c("col",
+                                     unlist(strsplit(avar, split = "_" ))[1:2]),
+                                   collapse = "_")),
                  cex  = .6,
+                 main = paste(ase, translate(sub("_.*","",DBn)), translate(avar)),
+                 ylab = bquote("Seasonal Anomaly [%]"),
                  xlab = "",
-                 ylab = bquote("Seasonal Anomaly [%]" ) )
-                 # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
+                 cex.main = 0.9,
+                 cex.lab  = 0.8,
+                 cex.axis = 0.8,
+                 mgp  = c(2, 0.5, 0)
+            )
+            # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]"))
 
-            # abline(lm1)
             abline(lm2)
 
-            ## plot running mean
-            rm <- frollmean(dataset[[avar]], 3 * running_mean_window_years,
-                            na.rm = TRUE, algo = "exact", align = "center")
+            ## plot running mean years * months in data set
+            # dataset[ , .(Year, Month, get(avar)) ]
+            rm <- frollmean(dataset[[avar]],
+                            running_mean_window_years * 3,
+                            na.rm = TRUE,
+                            algo  = "exact",
+                            align = "center")
 
             # points(dataset$Date, rm, col = "red", cex = 0.5)
             lines(dataset$Year, rm, col = "red", cex = 0.5)
 
-
             ## decorations
-            # fit <- lm1[[1]]
-            # legend('top', lty = 1, bty = "n",
-            #        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*(Days_of_year/4) ),3),'* year'))
             fit <- lm2[[1]]
-            legend('top', lty = 1, bty = "n",
+            legend('top', lty = 1, bty = "n", cex = 0.8,
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
-            title(paste(ase, translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.8)
 
         }
+        par(mfrow=c(1,1)) ## just reset layout
     }
 }
 #+ echo=F, include=F
 
 
 ## ~ calculate trends for each season  ####
-vars        <- c("DIR_att", "GLB_att")
+vars        <- c("DIR_att_des", "GLB_att_des")
 
-## is set above
-# dbs         <- c("ALL_1_daily_DEseas",
-#                  "CLEAR_1_daily_DEseas",
-#                  "CLOUD_1_daily_DEseas")
-
-Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
+## vars are  set above
 gather_seas <- data.frame()
-
 for (DBn in dbs) {
     DB <- get(DBn)
     ## set seasons in each data base
@@ -650,19 +431,19 @@ for (DBn in dbs) {
             dataset <- DB[ Season == ase, ]
 
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
-            ## linear model counting days
-            # lm1        <- lm( dataset[[avar]] ~ dataset$Date )
+
             ## linear model counting years
-            lm2        <- lm( dataset[[avar]] ~ dataset$Year )
+            lm2 <- lm( dataset[[avar]] ~ dataset$Year )
 
             ## gather stats
             gather_seas <- rbind(gather_seas,
                                  data.frame(
-                                     linear_fit_stats(lm2, confidence_interval = Daily_confidence_limit),
-                                     DATA      = DBn,
-                                     Season    = ase,
-                                     var       = avar,
-                                     N         = sum(!is.na(dataset[[avar]]))
+                                     linear_fit_stats(lm2,
+                                                      confidence_interval = Daily_confidence_limit),
+                                     DATA   = DBn,
+                                     Season = ase,
+                                     var    = avar,
+                                     N      = sum(!is.na(dataset[[avar]]))
                                  ))
         }
     }
@@ -683,7 +464,7 @@ gather_seas$DATA <- sub("_.*", "", gather_seas$DATA)
 
 pprint           <- gather_seas[ , ..wecare]
 
-pprint[, slope.stat_sig := 100*(1-slope.p) ]
+pprint[, slope.stat_sig := 100 * (1 - slope.p) ]
 pprint[, slope.t        := NULL]
 pprint[, Rsqrd          := NULL]
 pprint[, RsqrdAdj       := NULL]
@@ -696,10 +477,10 @@ pprint[, N              := NULL]
 # pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year/4 ]
 # pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year/4 ]
 
-pprint[, slope.ConfInt_0.99 := NULL ]
-pprint[, slope.ConfInt_0.95 := NULL ]
+pprint[, slope.ConfInt_0.99 := NULL]
+pprint[, slope.ConfInt_0.95 := NULL]
 
-setorder(pprint,DATA,var)
+setorder(pprint, DATA, var)
 
 #+ echo=F, include=T
 pander(pprint,
@@ -729,17 +510,12 @@ myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_
 
 #+ monthlytrends, echo=F, include=T, results="asis"
 # vars        <- c("DIR_att", "GLB_att")
-vars        <- c("GLB_att")
-
-## Daily aggregation
-# dbs         <- c(  "ALL_1_daily_DEseas",
-#                  "CLEAR_1_daily_DEseas",
-#                  "CLOUD_1_daily_DEseas")
+vars        <- c("GLB_att_des")
 
 ## Monthly aggregation
-dbs         <- c(  "ALL_3_monthly_DEseas",
-                   "CLEAR_3_monthly_DEseas",
-                   "CLOUD_3_monthly_DEseas")
+dbs         <- c(  "ALL_1_D_monthly_DESEAS",
+                 "CLEAR_1_D_monthly_DESEAS",
+                 "CLOUD_1_D_monthly_DESEAS")
 
 for (DBn in dbs) {
     DB <- get(DBn)
@@ -749,24 +525,24 @@ for (DBn in dbs) {
     stopifnot( !any(is.na(DB$Month)) )
 
     cat("\n\\newpage\n")
-    cat("\n#### ", translate(sub("_.*","",DBn)), "\n\n" )
-
+    cat("\n#### ", translate(sub("_.*", "", DBn)), "\n\n" )
 
     for (ase in 1:12) {
         for (avar in vars) {
-            dataset <- DB[ Month == ase, ]
+            dataset <- DB[Month == ase, ]
 
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
-            ## linear model counting days
-            # lm1        <- lm( dataset[[avar]] ~ dataset$Date )
 
             ## linear model counting years
-            lm2        <- lm( dataset[[avar]] ~ dataset$Year )
+            lm2 <- lm( dataset[[avar]] ~ dataset$Year )
 
             ## plot
             par("mar" = c(3, 4, 2, 1))
             plot(dataset$Year, dataset[[avar]],
-                 pch  = ".", col = get(paste0("col_",avar)),
+                 pch  = ".",
+                 col  = get(paste0(c("col",
+                                     unlist(strsplit(avar, split = "_" ))[1:2]),
+                                   collapse = "_")),
                  cex  = 4,
                  xlab = "",
                  ylab = bquote("Seasonal Anomaly [%]" ) )
@@ -776,22 +552,18 @@ for (DBn in dbs) {
             abline(lm2)
 
             ## plot running mean
-            rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
-                            na.rm = TRUE, algo = "exact", align = "center")
-
-            points(dataset$Date, rm, col = "red", cex = 0.5)
+            rm <- frollmean(dataset[[avar]],
+                            running_mean_window_years,
+                            na.rm = TRUE,
+                            algo = "exact", align = "center")
+            lines(dataset$Year, rm, col = "red")
 
             ## decorations
-            # fit <- lm1[[1]]
-            # legend('top', lty = 1, bty = "n",
-            #        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]*(Days_of_year/12) ),3),'* year'))
             fit <- lm2[[1]]
-
             legend('top', lty = 1, bty = "n",
                    paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
 
             title(paste(month.name[ase], translate(sub("_.*","",DBn)), translate(avar)), cex.main = 0.8)
-
         }
     }
 }
@@ -799,11 +571,7 @@ for (DBn in dbs) {
 
 
 ## ~ calculate trends for each month  ####
-vars        <- c("DIR_att", "GLB_att")
-## is set above
-# dbs         <- c("ALL_1_daily_DEseas",
-#                  "CLEAR_1_daily_DEseas",
-#                  "CLOUD_1_daily_DEseas")
+vars        <- c("DIR_att_des", "GLB_att_des")
 gather_seas <- data.frame()
 for (DBn in dbs) {
     DB <- get(DBn)
@@ -816,16 +584,15 @@ for (DBn in dbs) {
             dataset <- DB[ Month == ase, ]
 
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
-            ## linear model countint days
-            lm1        <- lm( dataset[[avar]] ~ dataset$Date )
-            ## linear model counting years
-            lm2        <- lm( dataset[[avar]] ~ dataset$Year )
 
+            ## linear model counting years
+            lm2  <- lm( dataset[[avar]] ~ dataset$Year )
 
             ## gather stats
             gather_seas <- rbind(gather_seas,
                                  data.frame(
-                                     linear_fit_stats(lm2, confidence_interval = Daily_confidence_limit),
+                                     linear_fit_stats(lm2,
+                                                      confidence_interval = Daily_confidence_limit),
                                      DATA      = DBn,
                                      Month     = ase,
                                      var       = avar,
@@ -848,9 +615,9 @@ wecare           <- grep("intercept", names(gather_seas), value = T, invert = T)
 gather_seas      <- data.table(gather_seas)
 gather_seas$DATA <- sub("_.*", "", gather_seas$DATA)
 
-pprint           <- gather_seas[ , ..wecare]
+pprint           <- gather_seas[, ..wecare]
 
-pprint[, slope.stat_sig := 100*(1-slope.p) ]
+pprint[, slope.stat_sig := 100*(1-slope.p)]
 pprint[, slope.t        := NULL]
 pprint[, Rsqrd          := NULL]
 pprint[, RsqrdAdj       := NULL]
