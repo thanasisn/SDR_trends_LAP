@@ -197,7 +197,7 @@ if (havetorun) {
     ##.----
     #### 1. long-term  ---------------------------------------------------------
 
-    ## ~ Daily means of data ---------------------------------------------------
+    ## _ Daily means of data ---------------------------------------------------
 
     ALL_1_daily_mean <-
         DATA_all[,.(DIR_att       = mean(DIR_att,     na.rm = T),
@@ -246,7 +246,7 @@ if (havetorun) {
                       DIR_att_N     = sum(!is.na(DIR_att))  ),
                    by = .( Date = Day ) ]
 
-    ## ~ Margin of error for confidence interval -------------------------------
+    ## _ Margin of error for confidence interval -------------------------------
     conf_param  <- 1 - ( 1 - Daily_confidence_limit ) / 2
     suppressWarnings({
         ALL_1_daily_mean[,   DIR_att_EM    := qt(conf_param,df=DIR_att_N - 1) * DIR_att_sd    / sqrt(DIR_att_N)]
@@ -263,7 +263,7 @@ if (havetorun) {
         CLOUD_1_daily_mean[, DIR_transp_EM := qt(conf_param,df=DIR_att_N - 1) * DIR_transp_sd / sqrt(DIR_att_N)]
     })
 
-    ## ~ Exclude means with less than Daily_aggregation_N_lim data points ------
+    ## _ Exclude means with less than Daily_aggregation_N_lim data points ------
     ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_att       := NA]
     ALL_1_daily_mean[   GLB_att_N <= Daily_aggregation_N_lim, GLB_att       := NA]
     ALL_1_daily_mean[   HOR_att_N <= Daily_aggregation_N_lim, HOR_att       := NA]
@@ -304,7 +304,7 @@ if (havetorun) {
     CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_EM := NA]
 
 
-    ## ~ Daily seasonal values for data ----------------------------------------
+    ## _ Daily seasonal values for data ----------------------------------------
 
     ALL_1_daily_seas <-
         ALL_1_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
@@ -350,7 +350,7 @@ if (havetorun) {
 
 
 
-    ## ~ Margin of error for confidence interval on seasonal data --------------
+    ## _ Margin of error for confidence interval on seasonal data --------------
     conf_param  <- 1 - ( 1 - Daily_confidence_limit ) / 2
     suppressWarnings({
         ALL_1_daily_seas[,  DIR_att_EM_seas   :=qt(conf_param,df=DIR_att_N_seas-1)*DIR_att_sd_seas   /sqrt(DIR_att_N_seas)]
@@ -368,7 +368,7 @@ if (havetorun) {
     })
 
 
-    ## ~ Daily de-seasonal anomaly ---------------------------------------------
+    ## _ Daily de-seasonal anomaly ---------------------------------------------
 
       ALL_1_daily_DESEAS <- merge(  ALL_1_daily_mean,   ALL_1_daily_seas, by = "doy", all = T)
     CLEAR_1_daily_DESEAS <- merge(CLEAR_1_daily_mean, CLEAR_1_daily_seas, by = "doy", all = T)
@@ -379,7 +379,7 @@ if (havetorun) {
     setorder(CLOUD_1_daily_DESEAS, Date)
 
 
-    ## ~ Daily relative anomaly ------------------------------------------------
+    ## _ Daily relative anomaly ------------------------------------------------
 
     ### Using the % departure from seasonal values
 
@@ -409,7 +409,7 @@ if (havetorun) {
 
 
 
-    ## ~ Monthly means from daily ----------------------------------------------
+    ## _ Monthly means from daily ----------------------------------------------
 
     ALL_1_monthly_daily_mean <-
         ALL_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
@@ -451,7 +451,7 @@ if (havetorun) {
                            by = .( Year = year(Date), Month = month(Date) ) ]
 
 
-    ## ~ Seasonal monthly daily values -----------------------------------------
+    ## _ Seasonal monthly daily values -----------------------------------------
 
     ALL_1_monthly_daily_seas <-
         ALL_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
@@ -493,19 +493,19 @@ if (havetorun) {
                            by = .( Month = month(Date) ) ]
 
 
-    ## ~ forget daily data -----------------------------------------------------
+    ## _ forget daily data -----------------------------------------------------
     rm(  ALL_1_daily_mean,   ALL_1_daily_seas,
        CLEAR_1_daily_mean, CLEAR_1_daily_seas,
        CLOUD_1_daily_mean, CLOUD_1_daily_seas)
 
 
-    ## ~ Monthly daily de-seasonal anomaly -------------------------------------
+    ## _ Monthly daily de-seasonal anomaly -------------------------------------
 
       ALL_1_D_monthly_DESEAS <- merge(  ALL_1_monthly_daily_mean,   ALL_1_monthly_daily_seas, by = "Month", all = T)
     CLEAR_1_D_monthly_DESEAS <- merge(CLEAR_1_monthly_daily_mean, CLEAR_1_monthly_daily_seas, by = "Month", all = T)
     CLOUD_1_D_monthly_DESEAS <- merge(CLOUD_1_monthly_daily_mean, CLOUD_1_monthly_daily_seas, by = "Month", all = T)
 
-    ## ~ forget monthly data ---------------------------------------------------
+    ## _ forget monthly data ---------------------------------------------------
     rm(  ALL_1_monthly_daily_mean,   ALL_1_monthly_daily_seas,
        CLEAR_1_monthly_daily_mean, CLEAR_1_monthly_daily_seas,
        CLOUD_1_monthly_daily_mean, CLOUD_1_monthly_daily_seas)
@@ -521,7 +521,7 @@ if (havetorun) {
 
     ##TODO margin of error for anomaly!!!!
 
-    ## ~ Monthly daily relative anomaly ------------------------------------------------
+    ## _ Monthly daily relative anomaly ------------------------------------------------
 
     ## Using the % departure from seasonal values
 
@@ -722,7 +722,7 @@ if (havetorun) {
     ##.----
     ####  2. Long term by SZA  #################################################
 
-    ## ~ Calculate daily SZA means ####
+    ## _ Calculate daily SZA means ####
     ALL_2_daily_mean <-
         DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                      HOR_att       = mean(HOR_att,    na.rm = T),
@@ -774,7 +774,7 @@ if (havetorun) {
                           Date    = Day,
                           preNoon = preNoon ) ]
 
-    ## ~ margin of error calculation for `r SZA_confidence_limit` confidence interval ####
+    ## _ Margin of error calculation for confidence interval -------------------
     conf_param  <- 1 - ( 1 - SZA_confidence_limit ) / 2
     suppressWarnings({
         ALL_2_daily_mean[,   DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
@@ -791,7 +791,7 @@ if (havetorun) {
         CLOUD_2_daily_mean[, DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
     })
 
-    ## ~ Exclude means with less than `r SZA_aggregation_N_lim` data points ####
+    ## _ Exclude means with less than SZA_aggregation_N_lim data points --------
     ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_att       := NA ]
     ALL_2_daily_mean[   HOR_att_N <= SZA_aggregation_N_lim, HOR_att       := NA ]
     ALL_2_daily_mean[   GLB_att_N <= SZA_aggregation_N_lim, GLB_att       := NA ]
@@ -831,7 +831,8 @@ if (havetorun) {
     CLOUD_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att_EM    := NA ]
     CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
 
-    ## ~ Calculate daily seasonal values by SZA  ####
+
+    ## _ Calculate daily seasonal values by SZA  -------------------------------
     ALL_2_daily_seas <-
         ALL_2_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
                             HOR_att_seas       = mean(HOR_att,    na.rm = T),
@@ -875,13 +876,13 @@ if (havetorun) {
                            by = .( doy, SZA, preNoon ) ]
 
 
-    ## ~ compute margin of error for confidence interval ####
-    conf_param  <- 1 - ( 1 - Daily_confidence_limit ) / 2
+    ## _ Margin of error for confidence interval  ------------------------------
+    conf_param  <- 1 - (1 - Daily_confidence_limit) / 2
     suppressWarnings({
-        ALL_2_daily_seas[,  DIR_att_EM_seas   :=qt(conf_param,df=DIR_att_N_seas -1)* DIR_att_sd_seas   /sqrt(DIR_att_N_seas)]
-        ALL_2_daily_seas[,  HOR_att_EM_seas   :=qt(conf_param,df=HOR_att_N_seas -1)* HOR_att_sd_seas   /sqrt(HOR_att_N_seas)]
-        ALL_2_daily_seas[,  GLB_att_EM_seas   :=qt(conf_param,df=GLB_att_N_seas -1)* GLB_att_sd_seas   /sqrt(GLB_att_N_seas)]
-        ALL_2_daily_seas[,  DIR_transp_EM_seas:=qt(conf_param,df=DIR_att_N_seas -1)* DIR_transp_sd_seas/sqrt(DIR_att_N_seas)]
+          ALL_2_daily_seas[,DIR_att_EM_seas   :=qt(conf_param,df=DIR_att_N_seas -1)* DIR_att_sd_seas   /sqrt(DIR_att_N_seas)]
+          ALL_2_daily_seas[,HOR_att_EM_seas   :=qt(conf_param,df=HOR_att_N_seas -1)* HOR_att_sd_seas   /sqrt(HOR_att_N_seas)]
+          ALL_2_daily_seas[,GLB_att_EM_seas   :=qt(conf_param,df=GLB_att_N_seas -1)* GLB_att_sd_seas   /sqrt(GLB_att_N_seas)]
+          ALL_2_daily_seas[,DIR_transp_EM_seas:=qt(conf_param,df=DIR_att_N_seas -1)* DIR_transp_sd_seas/sqrt(DIR_att_N_seas)]
         CLEAR_2_daily_seas[,DIR_att_EM_seas   :=qt(conf_param,df=DIR_att_N_seas -1)* DIR_att_sd_seas   /sqrt(DIR_att_N_seas)]
         CLEAR_2_daily_seas[,HOR_att_EM_seas   :=qt(conf_param,df=HOR_att_N_seas -1)* HOR_att_sd_seas   /sqrt(HOR_att_N_seas)]
         CLEAR_2_daily_seas[,GLB_att_EM_seas   :=qt(conf_param,df=GLB_att_N_seas -1)* GLB_att_sd_seas   /sqrt(GLB_att_N_seas)]
@@ -893,10 +894,46 @@ if (havetorun) {
     })
 
 
+
+
+    ## _ Daily de-seasonal anomaly ---------------------------------------------
+
+      ALL_2_daily_DESEAS <- merge(  ALL_2_daily_mean,   ALL_2_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
+    CLEAR_2_daily_DESEAS <- merge(CLEAR_2_daily_mean, CLEAR_2_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
+    CLOUD_2_daily_DESEAS <- merge(CLOUD_2_daily_mean, CLOUD_2_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
+
+    setorder(  ALL_daily_DESEAS, Date)
+    setorder(CLEAR_daily_DESEAS, Date)
+    setorder(CLOUD_daily_DESEAS, Date)
+
+    ## _ forget daily data -----------------------------------------------------
+    rm(  ALL_2_daily_mean,   ALL_2_daily_seas,
+       CLEAR_2_daily_mean, CLEAR_2_daily_seas,
+       CLOUD_2_daily_mean, CLOUD_2_daily_seas)
+
+    ## _ Daily relative anomaly ------------------------------------------------
+
+    ### Using the % departure from seasonal values
+
+      ALL_2_daily_DESEAS[, DIR_att_des   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+      ALL_2_daily_DESEAS[, HOR_att_des   := 100 * (HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+      ALL_2_daily_DESEAS[, GLB_att_des   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+      ALL_2_daily_DESEAS[, DIR_transp_des:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+    CLEAR_2_daily_DESEAS[, DIR_att_des   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+    CLEAR_2_daily_DESEAS[, HOR_att_des   := 100 * (HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+    CLEAR_2_daily_DESEAS[, GLB_att_des   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+    CLEAR_2_daily_DESEAS[, DIR_transp_des:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+    CLOUD_2_daily_DESEAS[, DIR_att_des   := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+    CLOUD_2_daily_DESEAS[, HOR_att_des   := 100 * (HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+    CLOUD_2_daily_DESEAS[, GLB_att_des   := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+    CLOUD_2_daily_DESEAS[, DIR_transp_des:= 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+
+
+
     ##.----
     ####  3. Consistency of trends  ############################################
 
-    ## ~ Monthly means by SZA prenoon month ------------------------------------
+    ## _ Monthly means by SZA prenoon month ------------------------------------
 
     ## Will create values for am, pm, and daily
 
@@ -1019,7 +1056,7 @@ if (havetorun) {
     rm(CLOUD_3_monthly_meanA, CLOUD_3_monthly_meanB)
     CLOUD_3_monthly_mean[, Date := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
 
-    ## ~ Margin of error calculation -------------------------------------------
+    ## _ Margin of error calculation -------------------------------------------
     conf_param  <- 1 - ( 1 - Monthly_confidence_limit ) / 2
     suppressWarnings({
         ALL_3_monthly_mean[,  DIR_att_EM   :=qt(conf_param,df=DIR_att_N -1)* DIR_att_sd   /sqrt(DIR_att_N)]
@@ -1036,7 +1073,7 @@ if (havetorun) {
         CLOUD_3_monthly_mean[,DIR_transp_EM:=qt(conf_param,df=DIR_att_N -1)* DIR_transp_sd/sqrt(DIR_att_N)]
     })
 
-    ## ~ Exclude means with less than Monthly_aggegation_N_lim data points -----
+    ## _ Exclude means with less than Monthly_aggegation_N_lim data points -----
     ALL_3_monthly_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_att       := NA]
     ALL_3_monthly_mean[   HOR_att_N <= Monthly_aggegation_N_lim, HOR_att       := NA]
     ALL_3_monthly_mean[   GLB_att_N <= Monthly_aggegation_N_lim, GLB_att       := NA]
@@ -1077,7 +1114,7 @@ if (havetorun) {
     CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_EM := NA]
 
 
-    ## ~  Monthly seasonal values ----------------------------------------------
+    ## _  Monthly seasonal values ----------------------------------------------
     ALL_3_monthly_seas <-
         ALL_3_monthly_mean[, .(DIR_att_seas    = mean(DIR_att,    na.rm = T),
                                GLB_att_seas    = mean(GLB_att,    na.rm = T),
@@ -1121,13 +1158,13 @@ if (havetorun) {
 
 
 
-    ## ~ Seasonal anomaly by SZA and period of day -----------------------------
+    ## _ Seasonal anomaly by SZA and period of day -----------------------------
 
       ALL_3_monthly_DESEAS <- merge(  ALL_3_monthly_mean,   ALL_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
     CLEAR_3_monthly_DESEAS <- merge(CLEAR_3_monthly_mean, CLEAR_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
     CLOUD_3_monthly_DESEAS <- merge(CLOUD_3_monthly_mean, CLOUD_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
 
-    ## ~ forget data
+    ## _ forget data
     rm(  ALL_3_monthly_mean,   ALL_3_monthly_seas,
        CLEAR_3_monthly_mean, CLEAR_3_monthly_seas,
        CLOUD_3_monthly_mean, CLOUD_3_monthly_seas)
