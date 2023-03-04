@@ -5,12 +5,12 @@
 ---------------
 
 Object name:    object      
-Date written:   2023-03-04 09:52:36.9 UTC  
+Date written:   2023-03-04 11:06:07.8 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_season.dat      
 Data file size: 2.2 KiB (2217) 
 Size in memory: 4176.0 B      
 Info file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_season.inf.md      
-Script name:    Script name could not be resolved      
+Script name:    /home/athan/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_1_longterm_trends.R      
 User@Host:      athan@tyler   
 Contact:        <natsisphysicist@gmail.com>      
 Notes:          NA      
@@ -20,7 +20,7 @@ Notes:          NA
 -----------------
 
 ```
-Classes 'data.table' and 'data.frame':	24 obs. of  7 variables:
+Classes ‘data.table’ and 'data.frame':	24 obs. of  7 variables:
  $ slope         : num  0.761 -1.173 1.024 1.129 0.752 ...
  $ slope.sd      : num  3.923 1.291 1.197 1.951 0.246 ...
  $ slope.p       : num  0.8486 0.37556 0.40288 0.56965 0.00293 ...
@@ -34,9 +34,89 @@ Classes 'data.table' and 'data.frame':	24 obs. of  7 variables:
 
  Data quality.
 ---------------
+
+| &nbsp; | slope | slope.sd | slope.p | DATA | Season | var | slope.stat_sig |
+|:------:|------:|---------:|--------:|-----:|-------:|----:|---------------:|
+| Values |    24 |       24 |      24 |    0 |      0 |   0 |             24 |
+|  INFs  |     0 |        0 |       0 |    0 |      0 |   0 |              0 |
+|  NAs   |     0 |        0 |       0 |    0 |      0 |   0 |              0 |
+
+
  Data Summary.
----------------[1] "\n\n  * **slope**:\n\n\n    |   Min. | 1st Qu. | Median |  Mean | 3rd Qu. | Max. |\n    |-------:|--------:|-------:|------:|--------:|-----:|\n    | -1.173 |  0.2448 | 0.4991 | 1.175 |  0.9943 | 6.11 |\n\n  * **slope.sd**:\n\n\n    |    Min. | 1st Qu. | Median |   Mean | 3rd Qu. |  Max. |\n    |--------:|--------:|-------:|-------:|--------:|------:|\n    | 0.05039 |  0.1149 | 0.3128 | 0.9641 |   1.322 | 5.172 |\n\n  * **slope.p**:\n\n\n    |      Min. |  1st Qu. | Median |   Mean | 3rd Qu. |   Max. |\n    |----------:|---------:|-------:|-------:|--------:|-------:|\n    | 3.779e-12 | 0.006787 | 0.0919 | 0.2206 |  0.3824 | 0.8486 |\n\n  * **DATA**:\n\n\n    | Length |     Class |      Mode |\n    |-------:|----------:|----------:|\n    |     24 | character | character |\n\n  * **Season**:\n\n\n    | Length |     Class |      Mode |\n    |-------:|----------:|----------:|\n    |     24 | character | character |\n\n  * **var**:\n\n\n    | Length |     Class |      Mode |\n    |-------:|----------:|----------:|\n    |     24 | character | character |\n\n  * **slope.stat_sig**:\n\n\n    |  Min. | 1st Qu. | Median |  Mean | 3rd Qu. | Max. |\n    |------:|--------:|-------:|------:|--------:|-----:|\n    | 15.14 |   61.76 |  90.81 | 77.94 |   99.32 |  100 |\n\n\n<!-- end of list -->\n\n\n"
-attr(,"class")
-[1] "knit_asis"
-attr(,"knit_cacheable")
-[1] NA
+---------------
+
+|           slope |        slope.sd |          slope.p |             DATA |           Season |              var |
+|----------------:|----------------:|-----------------:|-----------------:|-----------------:|-----------------:|
+| Min.   :-1.1729 | Min.   :0.05039 | Min.   :0.000000 |        Length:24 |        Length:24 |        Length:24 |
+| 1st Qu.: 0.2448 | 1st Qu.:0.11493 | 1st Qu.:0.006787 | Class :character | Class :character | Class :character |
+| Median : 0.4991 | Median :0.31281 | Median :0.091896 | Mode  :character | Mode  :character | Mode  :character |
+| Mean   : 1.1747 | Mean   :0.96410 | Mean   :0.220560 |               NA |               NA |               NA |
+| 3rd Qu.: 0.9943 | 3rd Qu.:1.32153 | 3rd Qu.:0.382389 |               NA |               NA |               NA |
+| Max.   : 6.1105 | Max.   :5.17179 | Max.   :0.848597 |               NA |               NA |               NA |
+
+ 
+
+| slope.stat_sig |
+|---------------:|
+| Min.   : 15.14 |
+| 1st Qu.: 61.76 |
+| Median : 90.81 |
+| Mean   : 77.94 |
+| 3rd Qu.: 99.32 |
+| Max.   :100.00 |
+
+
+
+  * **slope**:
+
+
+    |   Min. | 1st Qu. | Median |  Mean | 3rd Qu. | Max. |
+    |-------:|--------:|-------:|------:|--------:|-----:|
+    | -1.173 |  0.2448 | 0.4991 | 1.175 |  0.9943 | 6.11 |
+
+  * **slope.sd**:
+
+
+    |    Min. | 1st Qu. | Median |   Mean | 3rd Qu. |  Max. |
+    |--------:|--------:|-------:|-------:|--------:|------:|
+    | 0.05039 |  0.1149 | 0.3128 | 0.9641 |   1.322 | 5.172 |
+
+  * **slope.p**:
+
+
+    |      Min. |  1st Qu. | Median |   Mean | 3rd Qu. |   Max. |
+    |----------:|---------:|-------:|-------:|--------:|-------:|
+    | 3.779e-12 | 0.006787 | 0.0919 | 0.2206 |  0.3824 | 0.8486 |
+
+  * **DATA**:
+
+
+    | Length |     Class |      Mode |
+    |-------:|----------:|----------:|
+    |     24 | character | character |
+
+  * **Season**:
+
+
+    | Length |     Class |      Mode |
+    |-------:|----------:|----------:|
+    |     24 | character | character |
+
+  * **var**:
+
+
+    | Length |     Class |      Mode |
+    |-------:|----------:|----------:|
+    |     24 | character | character |
+
+  * **slope.stat_sig**:
+
+
+    |  Min. | 1st Qu. | Median |  Mean | 3rd Qu. | Max. |
+    |------:|--------:|-------:|------:|--------:|-----:|
+    | 15.14 |   61.76 |  90.81 | 77.94 |   99.32 |  100 |
+
+
+<!-- end of list -->
+
+
