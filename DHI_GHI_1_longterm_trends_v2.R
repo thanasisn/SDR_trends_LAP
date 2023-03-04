@@ -498,9 +498,9 @@ vars        <- c("GLB_att_des")
 #                  "CLOUD_1_daily_DEseas")
 
 ## Monthly aggregation
-dbs         <- c(  "ALL_3_monthly_DESEAS",
-                 "CLEAR_3_monthly_DESEAS",
-                 "CLOUD_3_monthly_DESEAS")
+dbs         <- c(  "ALL_1_D_monthly_DESEAS",
+                 "CLEAR_1_D_monthly_DESEAS",
+                 "CLOUD_1_D_monthly_DESEAS")
 
 for (DBn in dbs) {
     DB <- get(DBn)
@@ -515,7 +515,7 @@ for (DBn in dbs) {
 
     for (ase in 1:12) {
         for (avar in vars) {
-            dataset <- DB[ Month == ase, ]
+            dataset <- DB[Month == ase, ]
 
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
             ## linear model counting days
@@ -540,8 +540,11 @@ for (DBn in dbs) {
             abline(lm2)
 
             ## plot running mean
-            rm <- frollmean(dataset[[avar]], round(running_mean_window_days),
-                            na.rm = TRUE, algo = "exact", align = "center")
+            dataset[[avar]][is.na(dataset[[avar]])] <- NA
+            rm <- frollmean(dataset[[avar]],
+                            round(running_mean_window_days),
+                            na.rm = TRUE,
+                            algo = "exact", align = "center")
 
             points(dataset$Date, rm, col = "red", cex = 0.5)
 
