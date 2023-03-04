@@ -113,81 +113,55 @@ FIGURESGRID <- TRUE
 #'
 #' ### Data info
 #'
-#' Time data span `r range(ALL_1_daily_mean$Date)`
+#' Time data span `r range(ALL_1_daily_DESEAS$Date)`
+#'
+#' ### Process
 #'
 #+ echo=F, include=F
 
-## ___ Scatter longterm scatter plots  ####
-data_list  <- list(ALL   = ALL_2_daily_mean,
-                   CLEAR = CLEAR_2_daily_mean,
-                   CLOUD = CLOUD_2_daily_mean)
-by_var     <- c("doy","SZA")
-wecare     <- unique(unlist(lapply(data_list, names)))
-wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
-for (i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    for (xvar in by_var){
+
+## ____ Scatter plots with SZA all data ----------------------------------------
+data_list <- c(  "ALL_2_daily_DESEAS",
+               "CLEAR_2_daily_DESEAS",
+               "CLEAR_2_daily_DESEAS")
+## x variables
+by_var    <- c("doy","SZA")
+for (i in data_list) {
+    ## get data and y vars to plot
+    Dplot  <- get(i)
+    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = T)
+    ## loop existing x vars
+    for (xvar in names(Dplot)[names(Dplot) %in% by_var]) {
         for (yvar in wecare) {
-            if (! yvar %in% names(Dplot)) next()
-            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            col <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
+                              collapse = "_"))
             vect <- Dplot[[yvar]]
             plot(Dplot[[xvar]], vect,
-                 pch = ".", col = col,
-                 main = paste(names(data_list[i]), yvar),
+                 pch  = 19,
+                 cex  = .3,
+                 col  = col,
+                 main = paste(i, yvar),
                  xlab = xvar, ylab = yvar)
         }
     }
 }
-## ___ Histograms Plots all data -----------------------------------------------
-for (i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    # intersect(names(Dplot),wecare)
+
+## ____ Histograms Plots all data ----------------------------------------------
+for (i in data_list) {
+    ## get data and y vars to plot
+    Dplot  <- get(i)
+    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = TRUE)
     for (yvar in wecare) {
-        if (! yvar %in% names(Dplot)) next()
-        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-        vect <- Dplot[[yvar]]
-        hist(vect,
-             main = paste(names(data_list[i]), yvar),
+        if (!yvar %in% names(Dplot)) next()
+        col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),
+                          collapse = "_"))
+        hist(Dplot[[yvar]],
+             main   = paste(i, yvar),
+             xlab   = yvar,
              breaks = 100, col = col)
     }
 }
 #+ echo=F, include=F
-
-
-## ___ Scatter Plot seasonal data ----------------------------------------------
-data_list  <- list(ALL_Seas   =   ALL_2_daily_seas,
-                   CLEAR_Seas = CLEAR_2_daily_seas,
-                   CLOUD_Seas = CLOUD_2_daily_seas)
-by_var     <- c("doy")
-wecare     <- unique(unlist(lapply(data_list, names)))
-wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
-for (i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    for (xvar in by_var){
-        for (yvar in wecare) {
-            if (! yvar %in% names(Dplot)) next()
-            col  <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-            vect <- Dplot[[yvar]]
-            plot(Dplot[[xvar]], vect,
-                 pch = ".", col = col,
-                 main = paste(names(data_list[i]), yvar),
-                 xlab = xvar, ylab = yvar)
-        }
-    }
-}
-
-## ___ Histograms Plot seasonal data -------------------------------------------
-for (i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    for (yvar in wecare) {
-        if (! yvar %in% names(Dplot)) next()
-        col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-        vect <- Dplot[[yvar]]
-        hist(vect,
-             main = paste(names(data_list[i]), yvar),
-             breaks = 100, col = col)
-    }
-}
 rm(data_list)
 
 

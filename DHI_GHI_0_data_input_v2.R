@@ -902,9 +902,9 @@ if (havetorun) {
     CLEAR_2_daily_DESEAS <- merge(CLEAR_2_daily_mean, CLEAR_2_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
     CLOUD_2_daily_DESEAS <- merge(CLOUD_2_daily_mean, CLOUD_2_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
 
-    setorder(  ALL_daily_DESEAS, Date)
-    setorder(CLEAR_daily_DESEAS, Date)
-    setorder(CLOUD_daily_DESEAS, Date)
+    setorder(  ALL_2_daily_DESEAS, Date)
+    setorder(CLEAR_2_daily_DESEAS, Date)
+    setorder(CLOUD_2_daily_DESEAS, Date)
 
     ## _ forget daily data -----------------------------------------------------
     rm(  ALL_2_daily_mean,   ALL_2_daily_seas,
