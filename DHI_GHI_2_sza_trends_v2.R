@@ -86,7 +86,7 @@ source("~/CODE/FUNCTIONS/R/data.R")
 
 
 ## __ Source initial scripts ---------------------------------------------------
-source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
+source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input_v2.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 tic <- Sys.time()
 
@@ -109,14 +109,14 @@ FIGURESGRID <- TRUE
 
 #+ echo=F, include=T
 #'
+#' ## 2. Long term by SZA
+#'
 #' ### Data info
 #'
 #' Time data span `r range(ALL_1_daily_mean$Date)`
 #'
-#'
-#' ## 2. Long term by SZA
-#'
 #+ echo=F, include=F
+
 ## ___ Scatter longterm scatter plots  ####
 data_list  <- list(ALL   = ALL_2_daily_mean,
                    CLEAR = CLEAR_2_daily_mean,
@@ -200,52 +200,6 @@ rm(data_list)
 
 
 
-
-#### Calculate seasonal anomaly ####
-#' #### Calculate seasonal anomaly ####
-#+ echo=F, include=F
-
-ALL_daily_DEseas   <- merge(  ALL_2_daily_mean, ALL_2_daily_seas,   by = c("doy", "SZA", "preNoon"), all = T)
-CLEAR_daily_DEseas <- merge(CLEAR_2_daily_mean, CLEAR_2_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
-CLOUD_daily_DEseas <- merge(CLOUD_2_daily_mean, CLOUD_2_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
-
-setorder(ALL_daily_DEseas,   Date)
-setorder(CLEAR_daily_DEseas, Date)
-setorder(CLOUD_daily_DEseas, Date)
-
-
-## anomaly
-# #' #### Use the actuar difference from seasonal
-# ALL_daily_DEseas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
-# ALL_daily_DEseas[   , GLB_att    := GLB_att    - GLB_att_seas    ]
-# ALL_daily_DEseas[   , DIR_transp := DIR_transp - DIR_transp_seas ]
-# CLEAR_daily_DEseas[ , DIR_att    := DIR_att    - DIR_att_seas    ]
-# CLEAR_daily_DEseas[ , GLB_att    := GLB_att    - GLB_att_seas    ]
-# CLEAR_daily_DEseas[ , DIR_transp := DIR_transp - DIR_transp_seas ]
-
-
-
-##TODO margin of error for anomaly!!!!
-
-
-
-
-## relative anomaly
-#' #### Use the % difference from seasonal values
-#+ echo=F, include=T
-ALL_daily_DEseas[  , DIR_att   := 100 * ( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-ALL_daily_DEseas[  , HOR_att   := 100 * ( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-ALL_daily_DEseas[  , GLB_att   := 100 * ( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-ALL_daily_DEseas[  , DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-CLEAR_daily_DEseas[, DIR_att   := 100 * ( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLEAR_daily_DEseas[, HOR_att   := 100 * ( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-CLEAR_daily_DEseas[, GLB_att   := 100 * ( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-CLEAR_daily_DEseas[, DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-CLOUD_daily_DEseas[, DIR_att   := 100 * ( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLOUD_daily_DEseas[, HOR_att   := 100 * ( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-CLOUD_daily_DEseas[, GLB_att   := 100 * ( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-CLOUD_daily_DEseas[, DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-#+ echo=F, include=F
 
 
 
