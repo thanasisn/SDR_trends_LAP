@@ -68,7 +68,6 @@ if (!interactive()) {
 }
 
 
-
 #+ echo=F, include=T
 library(data.table, quietly = TRUE, warn.conflicts = FALSE)
 library(pander,     quietly = TRUE, warn.conflicts = FALSE)
@@ -303,13 +302,22 @@ pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year]
 pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year]
 pprint[, DATA               := translate(DATA)                  ]
 pprint[, var                := translate(var)                   ]
-translate(pprint$var)
 
 
+
+# \scriptsize
+# \footnotesize
+# \small
+
+#+ echo=F, include=T
+#' \scriptsize
 #+ echo=F, include=T
 pander(pprint,
        cap = "Slope is in %/year")
-#+ echo=F, include=F
+#'
+#' \normalsize
+#+ echo=F, include=T
+
 myRtools::write_dat(pprint,
                     "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat")
 
@@ -363,6 +371,8 @@ for (DBn in dbs) {
             cat("\n#### ", translate(DBn), translate(avar) , "\n\n")
         }
 
+        ylim <- range(DB[[avar]], na.rm = TRUE )
+
         for (ase in Seasons) {
 
             dataset <- DB[ Season == ase, ]
@@ -376,6 +386,7 @@ for (DBn in dbs) {
             par("mar" = c(2, 3.4, 2, 0.5))
 
             plot(dataset$Year, dataset[[avar]],
+                 # ylim = ylim,
                  pch  = dataset$Month,
                  col  = get(paste0(c("col",
                                      unlist(strsplit(avar, split = "_" ))[1:2]),
@@ -485,6 +496,7 @@ setorder(pprint, DATA, var)
 pander(pprint,
        cap = "Slope is in %/year")
 #+ echo=F, include=F
+
 myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_season.dat")
 
 
@@ -524,12 +536,22 @@ for (DBn in dbs) {
     ## sanity check
     stopifnot(!any(is.na(DB$Month)))
 
-    cat("\n\\newpage\n")
-    cat("\n#### ", translate(sub("_.*", "", DBn)), "\n\n" )
+    if (!FIGURESGRID) {
+        cat("\n\\newpage\n")
+        cat("\n#### ", translate(DBn), "\n\n")
+    }
 
     for (avar in vars) {
+
         ## plot in a grid
-        if (FIGURESGRID) { par(mfrow = c(6, 2)) }
+        if (FIGURESGRID) {
+            par(mfrow = c(6, 2))
+            cat("\n\\newpage\n")
+            cat("\n#### ", translate(DBn), translate(avar) , "\n\n")
+        }
+
+        ## common range
+        ylim <- range(DB[[avar]],na.rm = TRUE)
 
         for (ase in 1:12) {
 
@@ -544,6 +566,7 @@ for (DBn in dbs) {
             par("mar" = c(2, 3.4, 2, 0.5))
 
             plot(dataset$Year, dataset[[avar]],
+                 # ylim = ylim,
                  pch  = ".",
                  col  = get(paste0(c("col",
                                      unlist(strsplit(avar, split = "_" ))[1:2]),
@@ -638,18 +661,20 @@ pprint[, slope.ConfInt_0.95 := NULL]
 
 setorder(pprint, DATA, var, Month)
 
-# cat("\n\\scriptsize\n")
+
+# \scriptsize
+# \footnotesize
+# \small
 
 #+ echo=F, include=T
-#  \scriptsize
-#' \footnotesize
-#  \small
-#'
+#' \scriptsize
+#+ echo=F, include=T
 pander(pprint,
            cap = "Slope is in %/year")
-#+ echo=F, include=T
+#'
 #' \normalsize
 #+ echo=F, include=T
+
 myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_monthly.dat")
 
 

@@ -33,8 +33,8 @@
 #'   html_document:
 #'     toc:             true
 #'     keep_md:         yes
-#'     fig_width:       7.5
-#'     fig_height:      5
+#'     fig_width:       7
+#'     fig_height:      4.5
 #'
 #' date: "`r format(Sys.time(), '%F')`"
 #'
@@ -43,7 +43,7 @@
 #+ echo=F, include=T
 
 
-####_  Document options _####
+## __ Document options ---------------------------------------------------------
 
 #+ echo=F, include=F
 knitr::opts_chunk$set(comment    = ""       )
@@ -56,9 +56,8 @@ knitr::opts_chunk$set(cache      =  F       )  ## !! breaks calculations
 warning("Don't use cache it breaks computations")
 
 #+ include=F, echo=F
-####  Set environment  ####
+## __ Set environment ----------------------------------------------------------
 Sys.setenv(TZ = "UTC")
-tic <- Sys.time()
 Script.Name <- tryCatch({ funr::sys.script() },
                         error = function(e) { cat(paste("\nUnresolved script name: ", e),"\n\n")
                             return("Climatological_") })
@@ -68,17 +67,17 @@ if (!interactive()) {
     filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
-## overide plot options
-par(pch = ".")
 
 #+ echo=F, include=T
-library(data.table, quietly = T, warn.conflicts = F)
-library(pander,     quietly = T, warn.conflicts = F)
+library(data.table, quietly = TRUE, warn.conflicts = FALSE)
+library(pander,     quietly = TRUE, warn.conflicts = FALSE)
+library(lubridate,  quietly = TRUE, warn.conflicts = FALSE)
+library(ggplot2,    quietly = TRUE, warn.conflicts = FALSE)
 
-panderOptions('table.alignment.default', 'right')
-panderOptions('table.split.table',        120   )
+panderOptions("table.alignment.default", "right")
+panderOptions("table.split.table",        120   )
 
-## Load external functions -----------------------------------------------------
+## __ Load external functions --------------------------------------------------
 ## Functions from `https://github.com/thanasisn/IStillBreakStuff/tree/main/FUNCTIONS/R`
 source("~/CODE/FUNCTIONS/R/sumNA.R")
 source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
@@ -86,9 +85,10 @@ source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 
 
-## Source initial scripts ------------------------------------------------------
+## __ Source initial scripts ---------------------------------------------------
+source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input_v2.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
-source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
+tic <- Sys.time()
 
 ## notification function
 options(error = function() {
@@ -98,7 +98,13 @@ options(error = function() {
     }
 })
 
+## __ Flags --------------------------------------------------------------------
 
+## override plot options
+par(pch = ".")
+
+FIGURESGRID <- TRUE
+# FIGURESGRID <- FALSE
 
 
 #+ echo=F, include=T
@@ -575,4 +581,5 @@ for (ase in seasons) {
 #' **END**
 #+ include=T, echo=F
 tac <- Sys.time()
-cat(sprintf("%s %s@%s %s %f mins\n\n",Sys.time(),Sys.info()["login"],Sys.info()["nodename"],Script.Name,difftime(tac,tic,units="mins")))
+cat(sprintf("%s %s@%s %s %f mins\n\n", Sys.time(), Sys.info()["login"],
+            Sys.info()["nodename"], basename(Script.Name), difftime(tac,tic,units = "mins")))

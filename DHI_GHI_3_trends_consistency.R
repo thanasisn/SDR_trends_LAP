@@ -33,8 +33,8 @@
 #'   html_document:
 #'     toc:             true
 #'     keep_md:         yes
-#'     fig_width:       7.5
-#'     fig_height:      5
+#'     fig_width:       7
+#'     fig_height:      4.5
 #'
 #' date: "`r format(Sys.time(), '%F')`"
 #'
@@ -43,7 +43,7 @@
 #+ echo=F, include=T
 
 
-####_  Document options _####
+## __ Document options ---------------------------------------------------------
 
 #+ echo=F, include=F
 knitr::opts_chunk$set(comment    = ""       )
@@ -56,9 +56,8 @@ knitr::opts_chunk$set(cache      =  F       )  ## !! breaks calculations
 warning("Don't use cache it breaks computations")
 
 #+ include=F, echo=F
-####  Set environment  ####
+## __ Set environment ----------------------------------------------------------
 Sys.setenv(TZ = "UTC")
-tic <- Sys.time()
 Script.Name <- tryCatch({ funr::sys.script() },
                         error = function(e) { cat(paste("\nUnresolved script name: ", e),"\n\n")
                             return("Climatological_") })
@@ -68,19 +67,17 @@ if (!interactive()) {
     filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
-## override plot options
-par(pch = ".")
 
 #+ echo=F, include=T
-library(data.table, quietly = T, warn.conflicts = F)
-library(pander,     quietly = T, warn.conflicts = F)
-library(lubridate,  quietly = T, warn.conflicts = F)
-library(ggplot2,    quietly = T, warn.conflicts = F)
+library(data.table, quietly = TRUE, warn.conflicts = FALSE)
+library(pander,     quietly = TRUE, warn.conflicts = FALSE)
+library(lubridate,  quietly = TRUE, warn.conflicts = FALSE)
+library(ggplot2,    quietly = TRUE, warn.conflicts = FALSE)
 
-panderOptions('table.alignment.default', 'right')
-panderOptions('table.split.table',        120   )
+panderOptions("table.alignment.default", "right")
+panderOptions("table.split.table",        120   )
 
-## Load external functions -----------------------------------------------------
+## __ Load external functions --------------------------------------------------
 ## Functions from `https://github.com/thanasisn/IStillBreakStuff/tree/main/FUNCTIONS/R`
 source("~/CODE/FUNCTIONS/R/sumNA.R")
 source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
@@ -88,9 +85,10 @@ source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 
 
-## Source initial scripts ------------------------------------------------------
-source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
+## __ Source initial scripts ---------------------------------------------------
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input_v2.R")
+source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
+tic <- Sys.time()
 
 ## notification function
 options(error = function() {
@@ -100,10 +98,18 @@ options(error = function() {
     }
 })
 
+## __ Flags --------------------------------------------------------------------
 
+## override plot options
+par(pch = ".")
+
+FIGURESGRID <- TRUE
+# FIGURESGRID <- FALSE
 
 
 #+ echo=F, include=T
+#'
+#' ## 3. Consistency of trends
 #'
 #' ### Data info
 #'
@@ -112,12 +118,11 @@ options(error = function() {
 #' Where is a **running mean the window is `r running_mean_window_days` days** or
 #' `r running_mean_window_days / Days_of_year` years.
 #'
-#' ## 3. Consistency of trends
-#'
 #+ echo=F, include=F
 
 
-## ___ Scatter plots with SZA all data -----------------------------------------
+
+## ____ Scatter plots with SZA all data -----------------------------------------
 data_list <- c(  "ALL_1_D_monthly_DESEAS",
                "CLEAR_1_D_monthly_DESEAS",
                "CLOUD_1_D_monthly_DESEAS",
@@ -131,29 +136,32 @@ for (i in data_list) {
     Dplot  <- get(i)
     wecare <- grep("HOR|GLB|DIR", names(Dplot), value = T)
     ## loop existing x vars
-    for (xvar in names(Dplot)[names(Dplot) %in% by_var]){
+    for (xvar in names(Dplot)[names(Dplot) %in% by_var]) {
         for (yvar in wecare) {
             col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
             vect <- Dplot[[yvar]]
             plot(Dplot[[xvar]], vect,
-                 pch  = 19, cex = .3 , col = col,
+                 pch  = 19,
+                 cex  = .3,
+                 col  = col,
                  main = paste(i, yvar),
                  xlab = xvar, ylab = yvar)
         }
     }
 }
 
-## ___ Histograms Plots all data -----------------------------------------------
+## ____ Histograms Plots all data -----------------------------------------------
 for (i in data_list) {
     ## get data and y vars to plot
     Dplot  <- get(i)
     wecare <- grep("HOR|GLB|DIR", names(Dplot), value = T)
     for (yvar in wecare) {
-        if (! yvar %in% names(Dplot)) next()
-        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+        if (!yvar %in% names(Dplot)) next()
+        col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),
+                          collapse = "_"))
         hist(Dplot[[yvar]],
-             main = paste(i, yvar),
-             xlab = yvar,
+             main   = paste(i, yvar),
+             xlab   = yvar,
              breaks = 100, col = col)
     }
 }
@@ -819,4 +827,5 @@ for (adb in database) {
 #' **END**
 #+ include=T, echo=F
 tac <- Sys.time()
-cat(sprintf("%s %s@%s %s %f mins\n\n",Sys.time(),Sys.info()["login"],Sys.info()["nodename"],Script.Name,difftime(tac,tic,units="mins")))
+cat(sprintf("%s %s@%s %s %f mins\n\n", Sys.time(), Sys.info()["login"],
+            Sys.info()["nodename"], basename(Script.Name), difftime(tac,tic,units = "mins")))
