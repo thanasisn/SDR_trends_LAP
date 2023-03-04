@@ -529,10 +529,9 @@ for (DBn in dbs) {
 
     for (avar in vars) {
         ## plot in a grid
-        if (FIGURESGRID) { par(mfrow = c(6, 3)) }
+        if (FIGURESGRID) { par(mfrow = c(6, 2)) }
 
         for (ase in 1:12) {
-
 
             dataset <- DB[Month == ase, ]
 
@@ -622,29 +621,32 @@ for (DBn in dbs) {
 #' \FloatBarrier
 #'
 #' #### Table of trends by month.
+#'
 #+ echo=F, include=T
 
 
 wecare           <- grep("intercept", names(gather_seas), value = T, invert = T)
 gather_seas      <- data.table(gather_seas)
+
+stop()
+
+translate(sub("_.*", "", gather_seas$DATA))
+
 gather_seas$DATA <- sub("_.*", "", gather_seas$DATA)
+
+translate(sub("_des", "", gather_seas$var))
+
+Vtranslate <- Vectorize(translate)
+Vtranslate(sub("_des", "", gather_seas$var))
 
 pprint           <- gather_seas[, ..wecare]
 
-pprint[, slope.stat_sig := 100*(1-slope.p)]
-pprint[, slope.t        := NULL]
-pprint[, Rsqrd          := NULL]
-pprint[, RsqrdAdj       := NULL]
-
-
-## convert slope / year
-# pprint[, slope              := slope              * Days_of_year / 12 ]
-# pprint[, slope.sd           := slope.sd           * Days_of_year / 12 ]
-# pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year / 12 ]
-# pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year / 12 ]
-
-pprint[, slope.ConfInt_0.99 := NULL ]
-pprint[, slope.ConfInt_0.95 := NULL ]
+pprint[, slope.stat_sig     := 99*(1-slope.p)]
+pprint[, slope.t            := NULL]
+pprint[, Rsqrd              := NULL]
+pprint[, RsqrdAdj           := NULL]
+pprint[, slope.ConfInt_0.99 := NULL]
+pprint[, slope.ConfInt_0.95 := NULL]
 
 setorder(pprint, DATA, var, Month)
 
