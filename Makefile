@@ -45,23 +45,23 @@ $(PDF): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	## Sync article files
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
-	## Sync presentation files
+	@## Sync presentation files
 	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
-	## copy stat data
+	@## copy stat data
 	@#mkdir -p                   "$(presentation)/figures/"
 	@#-cp -u "./figures/"*".dat" "$(presentation)/figures/"
-#	setsid evince    $@ &
+	@#setsid evince    $@ &
 
 h1: $(SLIDY)
 $(SLIDY): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
-	## Sync presentation files
+	@## Sync presentation files
 	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
-	## copy stat data
+	@## copy stat data
 	@#mkdir -p                   "$(presentation)/figures/"
 	@#-cp -u "./figures/"*".dat" "$(presentation)/figures/"
-	# setsid mimeopen  $@ &
+	@# setsid mimeopen  $@ &
 
 r1: $(RUNT)
 $(RUNT): $(RMD)
@@ -85,9 +85,9 @@ $(PDF): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	## Sync article files
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
-	## Sync presentation files
+	@## Sync presentation files
 	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
-#	setsid evince    $@ &
+	@#setsid evince    $@ &
 
 h2: $(SLIDY)
 $(SLIDY): $(RMD)
@@ -95,7 +95,7 @@ $(SLIDY): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	## Sync presentation files
 	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
-	# setsid mimeopen  $@ &
+	@#setsid mimeopen  $@ &
 
 r2: $(RUNT)
 $(RUNT): $(RMD)
@@ -117,17 +117,17 @@ $(PDF): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	## Sync article files
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
-	## Sync presentation files
+	@## Sync presentation files
 	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
-#	setsid evince    $@ &
+	@#setsid evince    $@ &
 
 h3: $(SLIDY)
 $(SLIDY): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
-	## Sync presentation files
+	@## Sync presentation files
 	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
-	# setsid mimeopen  $@ &
+	@# setsid mimeopen  $@ &
 
 r3: $(RUNT)
 $(RUNT): $(RMD)
