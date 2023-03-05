@@ -86,7 +86,7 @@ source("~/CODE/FUNCTIONS/R/data.R")
 
 
 ## __ Source initial scripts ---------------------------------------------------
-source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
+source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input_v2.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 tic <- Sys.time()
 
@@ -109,85 +109,59 @@ FIGURESGRID <- TRUE
 
 #+ echo=F, include=T
 #'
-#' ### Data info
-#'
-#' Time data span `r range(ALL_1_daily_mean$Date)`
-#'
-#'
 #' ## 2. Long term by SZA
 #'
-#+ echo=F, include=F
-## ___ Scatter longterm scatter plots  ####
-data_list  <- list(ALL   = ALL_2_daily_mean,
-                   CLEAR = CLEAR_2_daily_mean,
-                   CLOUD = CLOUD_2_daily_mean)
-by_var     <- c("doy","SZA")
-wecare     <- unique(unlist(lapply(data_list, names)))
-wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
-for (i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    for (xvar in by_var){
-        for (yvar in wecare) {
-            if (! yvar %in% names(Dplot)) next()
-            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-            vect <- Dplot[[yvar]]
-            plot(Dplot[[xvar]], vect,
-                 pch = ".", col = col,
-                 main = paste(names(data_list[i]), yvar),
-                 xlab = xvar, ylab = yvar)
-        }
-    }
-}
-## ___ Histograms Plots all data -----------------------------------------------
-for (i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    # intersect(names(Dplot),wecare)
-    for (yvar in wecare) {
-        if (! yvar %in% names(Dplot)) next()
-        col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-        vect <- Dplot[[yvar]]
-        hist(vect,
-             main = paste(names(data_list[i]), yvar),
-             breaks = 100, col = col)
-    }
-}
+#' ### Data info
+#'
+#' Time data span `r range(ALL_1_daily_DESEAS$Date)`
+#'
+#' ### Process
+#'
 #+ echo=F, include=F
 
 
-## ___ Scatter Plot seasonal data ----------------------------------------------
-data_list  <- list(ALL_Seas   =   ALL_2_daily_seas,
-                   CLEAR_Seas = CLEAR_2_daily_seas,
-                   CLOUD_Seas = CLOUD_2_daily_seas)
-by_var     <- c("doy")
-wecare     <- unique(unlist(lapply(data_list, names)))
-wecare     <- grep("HOR|GLB|DIR", wecare, value = T)
-for (i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
-    for (xvar in by_var){
+## ____ Scatter plots with SZA all data ----------------------------------------
+data_list <- c(  "ALL_2_daily_DESEAS",
+               "CLEAR_2_daily_DESEAS",
+               "CLEAR_2_daily_DESEAS")
+## x variables
+by_var    <- c("doy","SZA")
+for (i in data_list) {
+    ## get data and y vars to plot
+    Dplot  <- get(i)
+    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = T)
+    ## loop existing x vars
+    for (xvar in names(Dplot)[names(Dplot) %in% by_var]) {
         for (yvar in wecare) {
-            if (! yvar %in% names(Dplot)) next()
-            col  <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            col <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
+                              collapse = "_"))
             vect <- Dplot[[yvar]]
             plot(Dplot[[xvar]], vect,
-                 pch = ".", col = col,
-                 main = paste(names(data_list[i]), yvar),
+                 pch  = 19,
+                 cex  = .3,
+                 col  = col,
+                 main = paste(i, yvar),
                  xlab = xvar, ylab = yvar)
         }
     }
 }
 
-## ___ Histograms Plot seasonal data -------------------------------------------
-for (i in 1:length(data_list)) {
-    Dplot <- data_list[[i]]
+## ____ Histograms Plots all data ----------------------------------------------
+for (i in data_list) {
+    ## get data and y vars to plot
+    Dplot  <- get(i)
+    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = TRUE)
     for (yvar in wecare) {
-        if (! yvar %in% names(Dplot)) next()
-        col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
-        vect <- Dplot[[yvar]]
-        hist(vect,
-             main = paste(names(data_list[i]), yvar),
+        if (!yvar %in% names(Dplot)) next()
+        col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),
+                          collapse = "_"))
+        hist(Dplot[[yvar]],
+             main   = paste(i, yvar),
+             xlab   = yvar,
              breaks = 100, col = col)
     }
 }
+#+ echo=F, include=F
 rm(data_list)
 
 
@@ -201,63 +175,24 @@ rm(data_list)
 
 
 
-#### Calculate seasonal anomaly ####
-#' #### Calculate seasonal anomaly ####
-#+ echo=F, include=F
-
-ALL_daily_DEseas   <- merge(  ALL_2_daily_mean, ALL_2_daily_seas,   by = c("doy", "SZA", "preNoon"), all = T)
-CLEAR_daily_DEseas <- merge(CLEAR_2_daily_mean, CLEAR_2_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
-CLOUD_daily_DEseas <- merge(CLOUD_2_daily_mean, CLOUD_2_daily_seas, by = c("doy", "SZA", "preNoon"), all = T)
-
-setorder(ALL_daily_DEseas,   Date)
-setorder(CLEAR_daily_DEseas, Date)
-setorder(CLOUD_daily_DEseas, Date)
 
 
-## anomaly
-# #' #### Use the actuar difference from seasonal
-# ALL_daily_DEseas[   , DIR_att    := DIR_att    - DIR_att_seas    ]
-# ALL_daily_DEseas[   , GLB_att    := GLB_att    - GLB_att_seas    ]
-# ALL_daily_DEseas[   , DIR_transp := DIR_transp - DIR_transp_seas ]
-# CLEAR_daily_DEseas[ , DIR_att    := DIR_att    - DIR_att_seas    ]
-# CLEAR_daily_DEseas[ , GLB_att    := GLB_att    - GLB_att_seas    ]
-# CLEAR_daily_DEseas[ , DIR_transp := DIR_transp - DIR_transp_seas ]
+##  SZA trends for all year  ---------------------------------------------------
 
-
-
-##TODO margin of error for anomaly!!!!
-
-
-
-
-## relative anomaly
-#' #### Use the % difference from seasonal values
-#+ echo=F, include=T
-ALL_daily_DEseas[  , DIR_att   := 100 * ( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-ALL_daily_DEseas[  , HOR_att   := 100 * ( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-ALL_daily_DEseas[  , GLB_att   := 100 * ( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-ALL_daily_DEseas[  , DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-CLEAR_daily_DEseas[, DIR_att   := 100 * ( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLEAR_daily_DEseas[, HOR_att   := 100 * ( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-CLEAR_daily_DEseas[, GLB_att   := 100 * ( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-CLEAR_daily_DEseas[, DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-CLOUD_daily_DEseas[, DIR_att   := 100 * ( DIR_att    - DIR_att_seas    ) / DIR_att_seas    ]
-CLOUD_daily_DEseas[, HOR_att   := 100 * ( HOR_att    - HOR_att_seas    ) / HOR_att_seas    ]
-CLOUD_daily_DEseas[, GLB_att   := 100 * ( GLB_att    - GLB_att_seas    ) / GLB_att_seas    ]
-CLOUD_daily_DEseas[, DIR_transp:= 100 * ( DIR_transp - DIR_transp_seas ) / DIR_transp_seas ]
-#+ echo=F, include=F
-
-
-
-####  Plot of SZA trends for all year ####
+#'
 #' \newpage
+#'
 #' ## Plot of SZA trends
+#'
 #+ echo=F, include=F
-timefactor <- 1
-vars <- c("DIR_att", "GLB_att", "DIR_transp")
-dbs  <- c("ALL_daily_DEseas",
-          "CLEAR_daily_DEseas",
-          "CLOUD_daily_DEseas")
+
+
+## __ Calculate SZA ~ Year -----------------------------------------------------
+
+vars <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
+dbs  <- c(  "ALL_2_daily_DESEAS",
+          "CLEAR_2_daily_DESEAS",
+          "CLOUD_2_daily_DESEAS")
 
 gather <- data.frame()
 
@@ -289,11 +224,8 @@ for (DBn in dbs) {
 #+ echo=F, include=F
 hist( gather$N[gather$N > 50], breaks = 100)
 
-szatrends <- gather
-
-
-szatrends <- data.table(szatrends)
-setorder(szatrends,SZA)
+szatrends <- data.table(gather)
+setorder(szatrends, SZA)
 
 
 ## covert to trend per year
@@ -301,9 +233,9 @@ szatrends[, slope    := slope    * Days_of_year ]
 szatrends[, slope.sd := slope.sd * Days_of_year ]
 
 ## set some plot option for data
-szatrends[ var == "DIR_att",    col := col_DIR_att    ]
-szatrends[ var == "GLB_att",    col := col_GLB_att    ]
-szatrends[ var == "DIR_transp", col := col_DIR_transp ]
+szatrends[ var == "DIR_att_des",    col := col_DIR_att    ]
+szatrends[ var == "GLB_att_des",    col := col_GLB_att    ]
+szatrends[ var == "DIR_transp_des", col := col_DIR_transp ]
 szatrends[ preNoon == T, pch := pch_am ]
 szatrends[ preNoon == F, pch := pch_pm ]
 
@@ -320,28 +252,28 @@ hist(szatrends[var == vars[2], N], breaks = 100)
 
 plot(szatrends$SZA,szatrends$N)
 
-test1 <- szatrends[ DATA == "CLEAR_daily_DEseas" & var == "DIR_att" ]
-test2 <- szatrends[ DATA == "CLEAR_daily_DEseas" & var == "GLB_att" ]
+test1 <- szatrends[ DATA == "CLEAR_2_daily_DESEAS" & var == "DIR_att_des" ]
+test2 <- szatrends[ DATA == "CLEAR_2_daily_DESEAS" & var == "GLB_att_des" ]
 plot(test1$SZA, test1$N, pch = 19)
 abline(h=50)
 plot(test2$SZA, test2$N, pch = 19)
 abline(h=300)
 
-# szatrends[ var == "GLB_att"    & N <= 300, slope := NA ]
-# szatrends[ var == "DIR_att"    & N <=  50, slope := NA ]
-# szatrends[ var == "DIR_transp" & N <=  50, slope := NA ]
+# szatrends[ var == "GLB_att_des"    & N <= 300, slope := NA ]
+# szatrends[ var == "DIR_att_des"    & N <=  50, slope := NA ]
+# szatrends[ var == "DIR_transp_des" & N <=  50, slope := NA ]
 
 
 
-
+## __ Plot SZA ~ Year stats ----------------------------------------------------
 
 ## stats vars to plot
-wecare <- grep("^slope|^N", names(szatrends), ignore.case = T, value = T)
+wecare <- grep("^slope|^N",  names(szatrends), ignore.case = T, value = T)
 wecare <- grep("^slope\\.t", wecare, ignore.case = T, value = T, invert = T)
 wecare <- grep("slope\\.sd", wecare, ignore.case = T, value = T, invert = T)
 
 
-#+ szatrends, echo=F, include=T, results = "asis"
+#+ SzaTrends, echo=F, include=T, results = "asis"
 ## ALL - CS
 for (type in unique(szatrends$DATA)) {
     ## DIR - GLB - transp
@@ -349,6 +281,8 @@ for (type in unique(szatrends$DATA)) {
 
         cat("\n\\newpage\n\n")
         cat(paste("\n###", type, avar,"\n\n"))
+
+        #TODO plot in grid
 
         par("mar" = c(4,4,2,1))
 
@@ -372,7 +306,7 @@ for (type in unique(szatrends$DATA)) {
 
             abline(h = 0, lty = 3 )
 
-            title(paste(awename, type, translate(avar) ), cex.main = 1)
+            title(paste(awename, translate(type), translate(avar) ), cex.main = 1)
 
             # lines(pam$SZA, pam[[awe]], pch =  pch_am, col = pam$col, type = "b")
             # lines(pam$SZA, ppm[[awe]], pch =  pch_pm, col = pam$col, type = "b")
@@ -398,15 +332,22 @@ for (type in unique(szatrends$DATA)) {
 
 
 
-####  Plot of SZA trends for each season of year ####
+##  SZA trends for season of year  ---------------------------------------------
+
+#'
 #' \newpage
+#'
 #' ## Plot of SZA trends for each season of year
+#'
 #+ echo=F, include=F
-timefactor  <- 1  ## to display % per year
-vars        <- c("DIR_att", "GLB_att", "DIR_transp")
-dbs         <- c("ALL_daily_DEseas",
-                 "CLEAR_daily_DEseas",
-                 "CLOUD_daily_DEseas")
+
+
+## __ Calculate SZA ~ Season stats  --------------------------------------------
+
+vars        <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
+dbs         <- c(  "ALL_2_daily_DESEAS",
+                 "CLEAR_2_daily_DESEAS",
+                 "CLOUD_2_daily_DESEAS")
 seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 gather_seas <- data.frame()
 
@@ -460,9 +401,9 @@ szatrends_seas[, slope    := slope    * Days_of_year ]
 szatrends_seas[, slope.sd := slope.sd * Days_of_year ]
 
 ## define plot colors
-szatrends_seas[ var == "DIR_att",    col := col_DIR_att    ]
-szatrends_seas[ var == "GLB_att",    col := col_GLB_att    ]
-szatrends_seas[ var == "DIR_transp", col := col_DIR_transp ]
+szatrends_seas[ var == "DIR_att_des",    col := col_DIR_att    ]
+szatrends_seas[ var == "GLB_att_des",    col := col_GLB_att    ]
+szatrends_seas[ var == "DIR_transp_des", col := col_DIR_transp ]
 szatrends_seas[ preNoon == T, pch := pch_am ]
 szatrends_seas[ preNoon == F, pch := pch_pm ]
 
@@ -480,24 +421,28 @@ hist(szatrends_seas[var  == vars[2],N], breaks = 100)
 
 plot(szatrends_seas$SZA,szatrends_seas$N)
 
-test <- szatrends_seas[ DATA == "CLEAR_daily_DEseas" & var == "DIR_att" ]
+test <- szatrends_seas[ DATA == "CLEAR_2_daily_DESEAS" & var == "DIR_att_des" ]
 plot(test$SZA, test$N, pch = 19)
 abline(h=50/4)
 
 szatrends[ N <= 30, slope := NA]
 
 
-test1 <- szatrends_seas[ DATA == "CLEAR_daily_DEseas" & var == "DIR_att" ]
-test2 <- szatrends_seas[ DATA == "CLEAR_daily_DEseas" & var == "GLB_att" ]
+test1 <- szatrends_seas[ DATA == "CLEAR_2_daily_DESEAS" & var == "DIR_att_des" ]
+test2 <- szatrends_seas[ DATA == "CLEAR_2_daily_DESEAS" & var == "GLB_att_des" ]
 plot(test1$SZA, test1$N, pch = 19)
 abline(h=50/4)
 plot(test2$SZA, test2$N, pch = 19)
 abline(h=300/4)
 
-# szatrends[ var == "GLB_att"    & N <= 300, slope := NA ]
-# szatrends[ var == "DIR_att"    & N <=  50, slope := NA ]
-# szatrends[ var == "DIR_transp" & N <=  50, slope := NA ]
+# szatrends[ var == "GLB_att_des"    & N <= 300, slope := NA ]
+# szatrends[ var == "DIR_att_des"    & N <=  50, slope := NA ]
+# szatrends[ var == "DIR_transp_des" & N <=  50, slope := NA ]
 
+
+
+
+## __ Plot SZA ~ Season stats  -------------------------------------------------
 
 
 ## stats vars to plot
@@ -506,7 +451,7 @@ wecare <- grep("^slope\\.t", wecare, ignore.case = T, value = T, invert = T)
 wecare <- grep("slope\\.sd", wecare, ignore.case = T, value = T, invert = T)
 
 
-#+ szatrendsseas, echo=F, include=T, results = "asis"
+#+ SzaTrendsSeas, echo=F, include=T, results = "asis"
 ## Winter - Summer ....
 for (ase in seasons) {
     ## ALL - Clear sky
@@ -515,7 +460,7 @@ for (ase in seasons) {
         for (avar in unique(szatrends_seas$var)) {
 
             cat("\n\\newpage\n\n")
-            cat(paste("###",ase, type, avar,"\n\n"))
+            cat(paste("###",ase, translate(type), translate(avar),"\n\n"))
 
             ## statistic variable
             for (awe in wecare) {
