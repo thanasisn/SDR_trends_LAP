@@ -3,7 +3,7 @@
 #' ---
 #' title:         "Trends of SDR in Thessaloniki "
 #' author:
-#'   - Natsis Athanasios^[Laboratory of Atmospheric Physics,AUTH, natsisphysicist@gmail.com]
+#'   - Natsis Athanasios^[Laboratory of Atmospheric Physics, AUTH, natsisphysicist@gmail.com]
 #'   - Alkiviadis Bais^[Laboratory of Atmospheric Physics, AUTH]
 #' abstract:
 #'   "Study of GHI and DNI radiation for 'clear sky' and all sly conditions."
@@ -86,7 +86,7 @@ source("~/CODE/FUNCTIONS/R/data.R")
 
 
 ## __ Source initial scripts ---------------------------------------------------
-source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input_v2.R")
+source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 tic <- Sys.time()
 

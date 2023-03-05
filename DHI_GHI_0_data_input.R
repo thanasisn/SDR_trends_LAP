@@ -22,7 +22,7 @@ D_14 <- TRUE
 
 ## new implementation with corrected limits
 if (D_14) {
-    common_data <- common_data_14_v2
+    common_data <- common_data_14
     CS_file     <- CS_file_14
     inpatern    <- "Clear_sky_id_Reno-Hansen_apply_v14_[0-9]{4}.Rds"
 }

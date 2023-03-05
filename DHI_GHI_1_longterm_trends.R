@@ -86,7 +86,7 @@ source("~/CODE/FUNCTIONS/R/data.R")
 
 
 ## __ Source initial scripts ---------------------------------------------------
-source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input_v2.R")
+source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 tic <- Sys.time()
 
@@ -159,7 +159,7 @@ for (i in data_list) {
     }
 }
 
-## ____ Histograms Plots all data -----------------------------------------------
+## ____ Histograms Plots all data ----------------------------------------------
 for (i in data_list) {
     ## get data and y vars to plot
     Dplot  <- get(i)
@@ -354,20 +354,13 @@ myRtools::write_dat(pprint,
 vars        <- c("GLB_att_des")
 
 ## Monthly aggregation
-dbs         <- c(  "ALL_1_D_monthly_DESEAS",
-                 "CLEAR_1_D_monthly_DESEAS",
-                 "CLOUD_1_D_monthly_DESEAS")
+dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
+                 "CLEAR_1_D_bySeason_DESEAS",
+                 "CLOUD_1_D_bySeason_DESEAS")
 
 Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 for (DBn in dbs) {
     DB <- get(DBn)
-    ## set seasons in each data base
-    DB[ month(Date) %in% c(12, 1, 2), Season := "Winter"]
-    DB[ month(Date) %in% c( 3, 4, 5), Season := "Spring"]
-    DB[ month(Date) %in% c( 6, 7, 8), Season := "Summer"]
-    DB[ month(Date) %in% c( 9,10,11), Season := "Autumn"]
-    ## sanity check
-    stopifnot( !any(is.na(DB$Season)) )
 
     if (!FIGURESGRID) {
         cat("\n\\newpage\n")
@@ -398,7 +391,7 @@ for (DBn in dbs) {
 
             plot(dataset$Year, dataset[[avar]],
                  # ylim = ylim,
-                 pch  = dataset$Month,
+                 pch  = 19,
                  col  = get(paste0(c("col",
                                      unlist(strsplit(avar, split = "_" ))[1:2]),
                                    collapse = "_")),
@@ -424,7 +417,7 @@ for (DBn in dbs) {
             last  <- tail(which(!is.na(dataset[[avar]])),1)
 
             rm <- frollmean(dataset[[avar]][first:last],
-                            running_mean_window_years * 3,
+                            running_mean_window_years,
                             na.rm = TRUE,
                             algo  = "exact",
                             align = "center")
@@ -440,7 +433,7 @@ for (DBn in dbs) {
             legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
                    paste("Trend: ",
                          if (fit[2] > 0) '+' else '-',
-                         signif(abs(fit[2]) * Days_of_year, 3),
+                         signif(abs(fit[2]), 3),
                          "% per year")
             )
 
@@ -459,13 +452,7 @@ vars        <- c("DIR_att_des", "GLB_att_des")
 gather_seas <- data.frame()
 for (DBn in dbs) {
     DB <- get(DBn)
-    ## set seasons in each data base
-    DB[ month(Date) %in% c(12, 1, 2), Season := "Winter"]
-    DB[ month(Date) %in% c( 3, 4, 5), Season := "Spring"]
-    DB[ month(Date) %in% c( 6, 7, 8), Season := "Summer"]
-    DB[ month(Date) %in% c( 9,10,11), Season := "Autumn"]
-    ## sanity check
-    stopifnot( !any(is.na(DB$Season)) )
+
     for (ase in Seasons) {
         for (avar in vars) {
             dataset <- DB[ Season == ase, ]

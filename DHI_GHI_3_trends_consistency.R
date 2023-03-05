@@ -3,7 +3,7 @@
 #' ---
 #' title:         "Trends of SDR in Thessaloniki "
 #' author:
-#'   - Natsis Athanasios^[Laboratory of Atmospheric Physics,AUTH, natsisphysicist@gmail.com]
+#'   - Natsis Athanasios^[Laboratory of Atmospheric Physics, AUTH, natsisphysicist@gmail.com]
 #'   - Alkiviadis Bais^[Laboratory of Atmospheric Physics, AUTH]
 #' abstract:
 #'   "Study of GHI and DNI radiation for 'clear sky' and all sly conditions."
@@ -86,7 +86,7 @@ source("~/CODE/FUNCTIONS/R/data.R")
 
 
 ## __ Source initial scripts ---------------------------------------------------
-source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input_v2.R")
+source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 tic <- Sys.time()
 
@@ -118,6 +118,8 @@ FIGURESGRID <- TRUE
 #' Where is a **running mean the window is `r running_mean_window_days` days** or
 #' `r running_mean_window_days / Days_of_year` years.
 #'
+#' ### Process
+#'
 #+ echo=F, include=F
 
 
@@ -138,7 +140,8 @@ for (i in data_list) {
     ## loop existing x vars
     for (xvar in names(Dplot)[names(Dplot) %in% by_var]) {
         for (yvar in wecare) {
-            col <- get(paste0(c("col",unlist(strsplit(yvar,split = "_" ))[1:2]),collapse = "_"))
+            col <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
+                              collapse = "_"))
             vect <- Dplot[[yvar]]
             plot(Dplot[[xvar]], vect,
                  pch  = 19,
@@ -150,11 +153,11 @@ for (i in data_list) {
     }
 }
 
-## ____ Histograms Plots all data -----------------------------------------------
+## ____ Histograms Plots all data ----------------------------------------------
 for (i in data_list) {
     ## get data and y vars to plot
     Dplot  <- get(i)
-    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = T)
+    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = TRUE)
     for (yvar in wecare) {
         if (!yvar %in% names(Dplot)) next()
         col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),
