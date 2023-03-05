@@ -446,7 +446,7 @@ if (havetorun) {
                               DIR_att_N  = sum(!is.na(DIR_att))  ),
                            by = .( Year = year(Date), Month = month(Date) ) ]
 
-    ## __ by season of year ---------------------------------------------------
+    ## ___ By season of year ---------------------------------------------------
     ## add season of year tag
       ALL_1_daily_mean[month(Date) %in% c(12, 1, 2), Season := "Winter"]
       ALL_1_daily_mean[month(Date) %in% c( 3, 4, 5), Season := "Spring"]
@@ -574,7 +574,7 @@ if (havetorun) {
                               DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                          by = .(Season)]
 
-    CLOUD_1_monthly_daily_seas <-
+    CLOUD_1_bySeason_monthly_seas <-
         CLOUD_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
                               GLB_att_seas    = mean(GLB_att,    na.rm = T),
                               HOR_att_seas    = mean(HOR_att,    na.rm = T),
@@ -603,11 +603,20 @@ if (havetorun) {
     CLEAR_1_D_monthly_DESEAS <- merge(CLEAR_1_monthly_daily_mean, CLEAR_1_monthly_daily_seas, by = "Month", all = T)
     CLOUD_1_D_monthly_DESEAS <- merge(CLOUD_1_monthly_daily_mean, CLOUD_1_monthly_daily_seas, by = "Month", all = T)
 
+      ALL_1_D_bySeason_DESEAS <- merge(  ALL_1_bySeason_monthly_mean,   ALL_1_bySeason_monthly_seas, by = "Season", all = T)
+    CLEAR_1_D_bySeason_DESEAS <- merge(CLEAR_1_bySeason_monthly_mean, CLEAR_1_bySeason_monthly_seas, by = "Season", all = T)
+    CLOUD_1_D_bySeason_DESEAS <- merge(CLOUD_1_bySeason_monthly_mean, CLOUD_1_bySeason_monthly_seas, by = "Season", all = T)
+
 
     ## _ forget monthly data ---------------------------------------------------
     rm(  ALL_1_monthly_daily_mean,   ALL_1_monthly_daily_seas,
        CLEAR_1_monthly_daily_mean, CLEAR_1_monthly_daily_seas,
        CLOUD_1_monthly_daily_mean, CLOUD_1_monthly_daily_seas)
+
+    rm(  ALL_1_bySeason_monthly_mean,   ALL_1_bySeason_monthly_seas,
+       CLEAR_1_bySeason_monthly_mean, CLEAR_1_bySeason_monthly_seas,
+       CLOUD_1_bySeason_monthly_mean, CLOUD_1_bySeason_monthly_seas)
+
 
     ## create date
       ALL_1_D_monthly_DESEAS[, Date := as.Date(paste(Year, Month, "1"), format = "%Y %m %d")]
@@ -617,6 +626,12 @@ if (havetorun) {
     setorder(  ALL_1_D_monthly_DESEAS, Date)
     setorder(CLEAR_1_D_monthly_DESEAS, Date)
     setorder(CLOUD_1_D_monthly_DESEAS, Date)
+
+    setorder(  ALL_1_D_bySeason_DESEAS, Year, Season)
+    setorder(CLEAR_1_D_bySeason_DESEAS, Year, Season)
+    setorder(CLOUD_1_D_bySeason_DESEAS, Year, Season)
+
+
 
     ##TODO margin of error for anomaly!!!!
 
@@ -636,6 +651,19 @@ if (havetorun) {
     CLOUD_1_D_monthly_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
     CLOUD_1_D_monthly_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
     CLOUD_1_D_monthly_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+
+      ALL_1_D_bySeason_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+      ALL_1_D_bySeason_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+      ALL_1_D_bySeason_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+      ALL_1_D_bySeason_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+    CLEAR_1_D_bySeason_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+    CLEAR_1_D_bySeason_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+    CLEAR_1_D_bySeason_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+    CLEAR_1_D_bySeason_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+    CLOUD_1_D_bySeason_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+    CLOUD_1_D_bySeason_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+    CLOUD_1_D_bySeason_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+    CLOUD_1_D_bySeason_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
 
 
 
@@ -1293,7 +1321,7 @@ if (havetorun) {
     CLOUD_3_monthly_DESEAS[preNoon == TRUE,    preNoon := "am"]
     CLOUD_3_monthly_DESEAS[preNoon == FALSE,   preNoon := "pm"]
 
-
+# stop()
 
     ## forget original data
     rm(DATA_all)
