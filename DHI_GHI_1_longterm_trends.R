@@ -249,14 +249,19 @@ for (DBn in dbs) {
             # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
             #           na.rm = TRUE, algo = "exact")
 
-            rm <- frollmean(dataset[[avar]],
+            first <- head(which(!is.na(dataset[[avar]])),1)
+            last  <- tail(which(!is.na(dataset[[avar]])),1)
+
+            rm <- frollmean(dataset[[avar]][first:last],
                             round(running_mean_window_days),
                             na.rm = TRUE,
                             algo  = "exact",
                             align = "center")
 
+            stopifnot(sum(!is.na(rm)) > 10)
+
             # points(dataset$Date, rm, col = "red", cex = 0.5)
-            lines(dataset$Date, rm, col = "red", lwd = 1.5)
+            lines(dataset$Date[first:last], rm, col = "red", lwd = 1.5)
 
             ## decorations
             fit <- lm1[[1]]
@@ -408,14 +413,18 @@ for (DBn in dbs) {
 
             ## plot running mean years * months in data set
             # dataset[ , .(Year, Month, get(avar)) ]
-            rm <- frollmean(dataset[[avar]],
+
+            first <- head(which(!is.na(dataset[[avar]])),1)
+            last  <- tail(which(!is.na(dataset[[avar]])),1)
+
+            rm <- frollmean(dataset[[avar]][first:last],
                             running_mean_window_years * 3,
                             na.rm = TRUE,
                             algo  = "exact",
                             align = "center")
 
             # points(dataset$Date, rm, col = "red", cex = 0.5)
-            lines(dataset$Year, rm, col = "red", cex = 0.5)
+            lines(dataset$Year[first:last], rm, col = "red", cex = 0.5)
 
             ## decorations
             fit <- lm2[[1]]
@@ -587,12 +596,16 @@ for (DBn in dbs) {
             abline(lm2)
 
             ## plot running mean
-            rm <- frollmean(dataset[[avar]],
+
+            first <- head(which(!is.na(dataset[[avar]])),1)
+            last  <- tail(which(!is.na(dataset[[avar]])),1)
+
+            rm <- frollmean(dataset[[avar]][first:last],
                             running_mean_window_years,
                             na.rm = TRUE,
                             algo  = "exact",
                             align = "center")
-            lines(dataset$Year, rm, col = "red")
+            lines(dataset$Year[first:last], rm, col = "red")
 
             ## decorations
             fit <- lm2[[1]]
