@@ -130,7 +130,7 @@ FIGURESGRID <- TRUE
 
 
 
-## ____ Scatter plots with SZA all data -----------------------------------------
+## ____ Scatter plots with SZA all data ----------------------------------------
 data_list <- c(  "ALL_1_D_monthly_DESEAS",
                "CLEAR_1_D_monthly_DESEAS",
                "CLOUD_1_D_monthly_DESEAS",
@@ -264,13 +264,7 @@ for (DBn in dbs) {
 
             ## decorations
             fit <- lm1[[1]]
-            # legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
-            #        paste('Y =',
-            #              signif(fit[1],2),
-            #              if (fit[2] > 0) '+' else '-',
-            #              signif(abs(fit[2]) * Days_of_year, 3),
-            #              '* year')
-            #        )
+
             legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
                    paste("Trend: ",
                          if (fit[2] > 0) '+' else '-',
@@ -395,10 +389,8 @@ for (DBn in dbs) {
                  col  = get(paste0(c("col",
                                      unlist(strsplit(avar, split = "_" ))[1:2]),
                                    collapse = "_")),
-                 cex  = .6,
-                 main = paste(ase,
-                              translate(sub("_.*","",DBn)),
-                              translate(sub("_des","",avar))),
+                 cex  = .5,
+                 main = paste(ase, translate(DBn), translate(avar)),
                  ylab = bquote("Seasonal Anomaly [%]"),
                  xlab = "",
                  cex.main = 0.9,
@@ -427,10 +419,8 @@ for (DBn in dbs) {
 
             ## decorations
             fit <- lm2[[1]]
-            # legend('top', lty = 1, bty = "n", cex = 0.8,
-            #        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
 
-            legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
+            legend("bottom", lty = 1, bty = "n", lwd = 2, cex = 1,
                    paste("Trend: ",
                          if (fit[2] > 0) '+' else '-',
                          signif(abs(fit[2]), 3),
@@ -577,14 +567,12 @@ for (DBn in dbs) {
 
             plot(dataset$Year, dataset[[avar]],
                  # ylim = ylim,
-                 pch  = ".",
+                 pch  = 19,
                  col  = get(paste0(c("col",
                                      unlist(strsplit(avar, split = "_" ))[1:2]),
                                    collapse = "_")),
-                 cex      = 4,
-                 main     = paste(month.name[ase],
-                                  translate(sub("_.*","",DBn)),
-                                  translate(sub("_des","",avar))),
+                 cex      = 0.5,
+                 main     = paste(month.name[ase], translate(DBn), translate(avar)),
                  xlab     = "",
                  ylab     = bquote("Seasonal Anomaly [%]"),
                  cex.main = 0.9,
@@ -610,12 +598,11 @@ for (DBn in dbs) {
 
             ## decorations
             fit <- lm2[[1]]
-            # legend('top', lty = 1, bty = "n",
-            #        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
-            legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
+
+            legend("bottom", lty = 1, bty = "n", lwd = 2, cex = 1,
                    paste("Trend: ",
-                         if (fit[2] > 0) '+' else '-',
-                         signif(abs(fit[2]) * Days_of_year, 3),
+                         if (fit[2] > 0) "+" else "-",
+                         signif(abs(fit[2]), 3),
                          "% per year")
             )
 
