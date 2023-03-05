@@ -3,7 +3,7 @@
 #' ---
 #' title:         "Trends of SDR in Thessaloniki "
 #' author:
-#'   - Natsis Athanasios^[Laboratory of Atmospheric Physics,AUTH, natsisphysicist@gmail.com]
+#'   - Natsis Athanasios^[Laboratory of Atmospheric Physics, AUTH, natsisphysicist@gmail.com]
 #'   - Alkiviadis Bais^[Laboratory of Atmospheric Physics, AUTH]
 #' abstract:
 #'   "Study of GHI and DNI radiation for 'clear sky' and all sly conditions."
@@ -251,6 +251,7 @@ for (DBn in dbs) {
 
             first <- head(which(!is.na(dataset[[avar]])),1)
             last  <- tail(which(!is.na(dataset[[avar]])),1)
+            # cat(length(first:last),"\n")
 
             rm <- frollmean(dataset[[avar]][first:last],
                             round(running_mean_window_days),
@@ -258,19 +259,24 @@ for (DBn in dbs) {
                             algo  = "exact",
                             align = "center")
 
-            stopifnot(sum(!is.na(rm)) > 10)
-
             # points(dataset$Date, rm, col = "red", cex = 0.5)
             lines(dataset$Date[first:last], rm, col = "red", lwd = 1.5)
 
             ## decorations
             fit <- lm1[[1]]
+            # legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
+            #        paste('Y =',
+            #              signif(fit[1],2),
+            #              if (fit[2] > 0) '+' else '-',
+            #              signif(abs(fit[2]) * Days_of_year, 3),
+            #              '* year')
+            #        )
             legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
-                   paste('Y =',
-                         signif(fit[1],2),
+                   paste("Trend: ",
                          if (fit[2] > 0) '+' else '-',
                          signif(abs(fit[2]) * Days_of_year, 3),
-                         '* year'))
+                         "% per year")
+            )
 
     }
 }
@@ -428,8 +434,16 @@ for (DBn in dbs) {
 
             ## decorations
             fit <- lm2[[1]]
-            legend('top', lty = 1, bty = "n", cex = 0.8,
-                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
+            # legend('top', lty = 1, bty = "n", cex = 0.8,
+            #        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
+
+            legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
+                   paste("Trend: ",
+                         if (fit[2] > 0) '+' else '-',
+                         signif(abs(fit[2]) * Days_of_year, 3),
+                         "% per year")
+            )
+
 
         }
         par(mfrow = c(1, 1)) ## just reset layout
@@ -609,8 +623,14 @@ for (DBn in dbs) {
 
             ## decorations
             fit <- lm2[[1]]
-            legend('top', lty = 1, bty = "n",
-                   paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
+            # legend('top', lty = 1, bty = "n",
+            #        paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2]),3),'* year'))
+            legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
+                   paste("Trend: ",
+                         if (fit[2] > 0) '+' else '-',
+                         signif(abs(fit[2]) * Days_of_year, 3),
+                         "% per year")
+            )
 
         }
         par(mfrow = c(1, 1)) ## just reset layout
