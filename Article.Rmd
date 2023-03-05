@@ -1,7 +1,7 @@
 ---
 title:         "Trends of downward SDR in Thessaloniki "
 author:
-  - Natsis Athanasios^[Laboratory of Atmospheric Physics, AUTH, natsisthanasis@gmail.com]
+  - Natsis Athanasios^[Laboratory of Atmospheric Physics, AUTH, natsisphysicist@gmail.com]
   - Alkiviadis Bais^[Laboratory of Atmospheric Physics, AUTH]
 abstract:
   "Study of GHI and DNI radiation for 'clear-sky' and all-sky conditions."
@@ -163,7 +163,7 @@ values for the corresponding time step, and subtracting them .........
 ## Long-term trends
 
 ```{r trackercomm, echo=F, fig.cap="tracker"}
-knitr::include_graphics("./images/longtermtrendsALL-2.pdf")
+knitr::include_graphics("./images/LongtermTrends-1.pdf")
 ```
 
 This is it \@ref(fig:trackercomm).
