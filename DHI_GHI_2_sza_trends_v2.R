@@ -182,10 +182,10 @@ rm(data_list)
 #' ## Plot of SZA trends
 #+ echo=F, include=F
 timefactor <- 1
-vars <- c("DIR_att", "GLB_att", "DIR_transp")
-dbs  <- c("ALL_daily_DEseas",
-          "CLEAR_daily_DEseas",
-          "CLOUD_daily_DEseas")
+vars <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
+dbs  <- c(  "ALL_2_daily_DESEAS",
+          "CLEAR_2_daily_DESEAS",
+          "CLOUD_2_daily_DESEAS")
 
 gather <- data.frame()
 
