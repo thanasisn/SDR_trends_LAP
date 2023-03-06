@@ -140,6 +140,8 @@ for (i in data_list) {
     ## loop existing x vars
     for (xvar in names(Dplot)[names(Dplot) %in% by_var]) {
         for (yvar in wecare) {
+            if (all(is.na(Dplot[[yvar]]))) next()
+
             col <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
                               collapse = "_"))
             vect <- Dplot[[yvar]]
@@ -160,6 +162,8 @@ for (i in data_list) {
     wecare <- grep("HOR|GLB|DIR", names(Dplot), value = TRUE)
     for (yvar in wecare) {
         if (!yvar %in% names(Dplot)) next()
+        if (all(is.na(Dplot[[yvar]]))) next()
+
         col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),
                           collapse = "_"))
         hist(Dplot[[yvar]],
@@ -256,7 +260,7 @@ database    <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
                  "CLOUD_1_daily_DESEAS")
 
-#+ cumulativedailycumsums, echo=F, include=T, results="asis"
+#+ CumulativeDailyCumSum, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
 
@@ -295,6 +299,7 @@ for (adb in database) {
         ## test plot for reference
         ## linear model
         lm1 <- lm(pdb[[paste0(avar,"_des")]] ~ pdb$Date)
+
         plot(pdb$Date, pdb[[paste0(avar,"_des")]],
              ylab = bquote("Seasonal Anomaly [%]"),
              cex = 0.3,
@@ -306,12 +311,16 @@ for (adb in database) {
 
         rm <- frollmean(pdb[[paste0(avar,"_des")]], round(running_mean_window_days),
                         na.rm = TRUE, algo = "exact", align = "center")
-        points(pdb$Date, rm, col = "red", cex = 0.5)
+        points(pdb$Date, rm, col = "red", cex = 0.4)
 
         ## decorations
         fit <- lm1[[1]]
-        legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
-               paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2])*Days_of_year,3),'* year'))
+        legend("top", lty = 1, bty = "n", lwd = 2, cex = 1,
+               paste("Trend: ",
+                     if (fit[2] > 0) "+" else "-",
+                     signif(abs(fit[2]) * Days_of_year, 3),
+                     "% per year")
+        )
 
 
         # hist(pdb$GLB_att_cusum)
@@ -399,7 +408,7 @@ database    <- c(  "ALL_1_D_monthly_DESEAS",
                  "CLEAR_1_D_monthly_DESEAS",
                  "CLOUD_1_D_monthly_DESEAS")
 
-#+ cumulativemonthlycumsums, echo=F, include=T, results="asis"
+#+ CumulativeMonthlyCumSum, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
 
@@ -438,6 +447,7 @@ for (adb in database) {
         ## test plot for reference
         ## linear model
         lm1 <- lm(pdb[[paste0(avar,"_des")]] ~ pdb$Date)
+
         plot(pdb$Date, pdb[[paste0(avar,"_des")]],
              ylab = bquote("Seasonal Anomaly [%]"),
              cex = 0.5,
@@ -454,7 +464,12 @@ for (adb in database) {
         ## decorations
         fit <- lm1[[1]]
         legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
-               paste('Y =', signif(fit[1],2),if(fit[2]>0)'+'else'-',signif(abs(fit[2])*Days_of_year,3),'* year'))
+               paste("Trend: ",
+                     if (fit[2] > 0) "+" else "-",
+                     signif(abs(fit[2]) * Days_of_year, 3),
+                     "% per year")
+
+        )
 
 
         cat("\n\\newpage\n")
@@ -576,7 +591,7 @@ database    <- c(  "ALL_3_monthly_DESEAS",
                  "CLEAR_3_monthly_DESEAS",
                  "CLOUD_3_monthly_DESEAS")
 
-#+ cumulativemonthlySZAcumsum, echo=F, include=T, results="asis"
+#+ CumulativeMonthlySZACumSum, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
 
@@ -708,7 +723,7 @@ database    <- c(  "ALL_3_monthly_DESEAS",
                  "CLEAR_3_monthly_DESEAS",
                  "CLOUD_3_monthly_DESEAS")
 
-#+  cumulativeSZAsumsdir, echo=F, include=T, results="asis"
+#+  CumulativeSZASumDir, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
 
