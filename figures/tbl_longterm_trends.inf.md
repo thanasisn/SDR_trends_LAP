@@ -5,13 +5,13 @@
 ---------------
 
 Object name:    object      
-Date written:   2023-03-05 21:39:01.0 UTC  
+Date written:   2023-03-06 01:09:06.7 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat      
 Data file size: 814.0 B (814) 
 Size in memory: 3288 bytes      
 Info file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.inf.md      
 Script name:    Script name could not be resolved      
-User@Host:      athan@tyler   
+User@Host:      athan@sagan   
 Contact:        <natsisphysicist@gmail.com>      
 Notes:          NA      
 
