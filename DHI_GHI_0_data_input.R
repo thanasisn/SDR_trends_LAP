@@ -670,7 +670,7 @@ if (havetorun) {
     CLOUD_1_D_bySeason_DESEAS <- merge(CLOUD_1_bySeason_monthly_mean, CLOUD_1_bySeason_monthly_seas, by = "Season", all = T)
 
 
-    ## _ forget monthly data ---------------------------------------------------
+    ## forget data
     rm(  ALL_1_monthly_daily_mean,   ALL_1_monthly_daily_seas,
        CLEAR_1_monthly_daily_mean, CLEAR_1_monthly_daily_seas,
        CLOUD_1_monthly_daily_mean, CLOUD_1_monthly_daily_seas)
@@ -1151,7 +1151,7 @@ if (havetorun) {
     CLEAR_2_bySeason_daily_DESEAS <- merge(CLEAR_2_bySeason_daily_mean, CLEAR_2_bySeason_daily_seas, by = c("SZA", "doy", "preNoon", "Season"), all = T)
     CLOUD_2_bySeason_daily_DESEAS <- merge(CLOUD_2_bySeason_daily_mean, CLOUD_2_bySeason_daily_seas, by = c("SZA", "doy", "preNoon", "Season"), all = T)
 
-    ## ____ Realative anomaly by season ----------------------------------------
+    ## ___ Relative anomaly by season ------------------------------------------
       ALL_2_bySeason_daily_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
       ALL_2_bySeason_daily_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
       ALL_2_bySeason_daily_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
@@ -1171,7 +1171,11 @@ if (havetorun) {
        CLOUD_2_bySeason_daily_mean, CLOUD_2_bySeason_daily_seas)
 
 
-stop()
+
+
+
+
+# stop()
 
 
 
@@ -1251,7 +1255,7 @@ stop()
     setorder(CLEAR_2_daily_DESEAS, Date)
     setorder(CLOUD_2_daily_DESEAS, Date)
 
-    ## _ forget daily data -----------------------------------------------------
+    ## forget daily data
     rm(  ALL_2_daily_mean,   ALL_2_daily_seas,
        CLEAR_2_daily_mean, CLEAR_2_daily_seas,
        CLOUD_2_daily_mean, CLOUD_2_daily_seas)
