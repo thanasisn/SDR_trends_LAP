@@ -76,6 +76,13 @@ if (havetorun) {
             rm(temp)
         }
 
+        ## TODO warn duplicate dates
+        duplicated(DATA$Date)
+
+        ## make sure data are ok
+        DATA <- unique(DATA)
+        stop()
+
         ## this is used by old scripts
         setorder(DATA,Date)
         myRtools::write_RDS(object = DATA, file = CS_file)
