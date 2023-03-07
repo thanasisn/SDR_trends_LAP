@@ -165,7 +165,9 @@ for (i in data_list) {
     Dplot  <- get(i)
     wecare <- grep("HOR|GLB|DIR", names(Dplot), value = TRUE)
     for (yvar in wecare) {
-        if (!yvar %in% names(Dplot)) next()
+        if (!yvar %in% names(Dplot))   next()
+        if (all(is.na(Dplot[[yvar]]))) next()
+
         col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),
                           collapse = "_"))
         hist(Dplot[[yvar]],
@@ -231,7 +233,7 @@ for (DBn in dbs) {
                  col  = get(paste0(c("col",
                                      unlist(strsplit(avar, split = "_"))[1:2]),
                                    collapse = "_")),
-                 cex  = 2,
+                 cex      = 2,
                  main     = paste(translate(DBn), translate(avar)),
                  cex.main = 0.8,
                  xlab     = "",
@@ -265,9 +267,9 @@ for (DBn in dbs) {
             ## decorations
             fit <- lm1[[1]]
 
-            legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
+            legend("top", lty = 1, bty = "n", lwd = 2, cex = 1,
                    paste("Trend: ",
-                         if (fit[2] > 0) '+' else '-',
+                         if (fit[2] > 0) "+" else "-",
                          signif(abs(fit[2]) * Days_of_year, 3),
                          "% per year")
             )
@@ -430,6 +432,18 @@ for (DBn in dbs) {
 
         }
         par(mfrow = c(1, 1)) ## just reset layout
+
+        ## __ Extreme values table ---------------------------------------------
+        wca <- c("Year", "Season", grep(paste0("^", strsplit(avar, "_")[[1]][1]), names(DB), value = T ))
+
+        cat("\n \n \\footnotesize \n ")
+        cat(
+            pander(
+                DB[ order(abs(DB[[avar]]), decreasing = T )[1:5] , ..wca ],
+                cap = "Extreme anomaly values"
+            )
+        )
+        cat("\n \n \\normalsize \n ")
     }
 }
 #+ echo=F, include=F
@@ -608,6 +622,20 @@ for (DBn in dbs) {
 
         }
         par(mfrow = c(1, 1)) ## just reset layout
+
+
+        ## __ Extreme values table ---------------------------------------------
+        wca <- c("Year", "Month", grep(paste0("^", strsplit(avar, "_")[[1]][1]), names(DB), value = T ))
+
+        cat("\n \n \\scriptsize \n ")
+        cat(
+            pander(
+                DB[ order(abs(DB[[avar]]), decreasing = T )[1:10] , ..wca ],
+                cap = "Extreme anomaly values"
+            )
+        )
+        cat("\n \n \\normalsize \n ")
+
     }
 }
 #+ echo=F, include=F

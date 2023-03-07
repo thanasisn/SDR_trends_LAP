@@ -446,6 +446,52 @@ if (havetorun) {
                               DIR_att_N  = sum(!is.na(DIR_att))  ),
                            by = .( Year = year(Date), Month = month(Date) ) ]
 
+
+    # ALL_1_monthly_daily_mean [,..www]
+    # www <- grep(".*_N$",names(ALL_1_monthly_daily_mean), value = T)
+
+    ## _ Exclude means with less than Monthly_aggegation_N_lim data points -----
+    ALL_1_monthly_daily_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_att       := NA]
+    ALL_1_monthly_daily_mean[   HOR_att_N <= Monthly_aggegation_N_lim, HOR_att       := NA]
+    ALL_1_monthly_daily_mean[   GLB_att_N <= Monthly_aggegation_N_lim, GLB_att       := NA]
+    ALL_1_monthly_daily_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp    := NA]
+    ALL_1_monthly_daily_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_att_sd    := NA]
+    ALL_1_monthly_daily_mean[   HOR_att_N <= Monthly_aggegation_N_lim, HOR_att_sd    := NA]
+    ALL_1_monthly_daily_mean[   GLB_att_N <= Monthly_aggegation_N_lim, GLB_att_sd    := NA]
+    ALL_1_monthly_daily_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_sd := NA]
+    ALL_1_monthly_daily_mean[   HOR_att_N <= Monthly_aggegation_N_lim, HOR_att_EM    := NA]
+    ALL_1_monthly_daily_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_att_EM    := NA]
+    ALL_1_monthly_daily_mean[   GLB_att_N <= Monthly_aggegation_N_lim, GLB_att_EM    := NA]
+    ALL_1_monthly_daily_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_EM := NA]
+
+    CLEAR_1_monthly_daily_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_att       := NA]
+    CLEAR_1_monthly_daily_mean[ HOR_att_N <= Monthly_aggegation_N_lim/2, HOR_att       := NA]
+    CLEAR_1_monthly_daily_mean[ GLB_att_N <= Monthly_aggegation_N_lim/2, GLB_att       := NA]
+    CLEAR_1_monthly_daily_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_transp    := NA]
+    CLEAR_1_monthly_daily_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_att_sd    := NA]
+    CLEAR_1_monthly_daily_mean[ HOR_att_N <= Monthly_aggegation_N_lim/2, HOR_att_sd    := NA]
+    CLEAR_1_monthly_daily_mean[ GLB_att_N <= Monthly_aggegation_N_lim/2, GLB_att_sd    := NA]
+    CLEAR_1_monthly_daily_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_transp_sd := NA]
+    CLEAR_1_monthly_daily_mean[ HOR_att_N <= Monthly_aggegation_N_lim/2, HOR_att_EM    := NA]
+    CLEAR_1_monthly_daily_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_att_EM    := NA]
+    CLEAR_1_monthly_daily_mean[ GLB_att_N <= Monthly_aggegation_N_lim/2, GLB_att_EM    := NA]
+    CLEAR_1_monthly_daily_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_transp_EM := NA]
+
+    CLOUD_1_monthly_daily_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_att       := NA]
+    CLOUD_1_monthly_daily_mean[ HOR_att_N <= Monthly_aggegation_N_lim/2, HOR_att       := NA]
+    CLOUD_1_monthly_daily_mean[ GLB_att_N <= Monthly_aggegation_N_lim/2, GLB_att       := NA]
+    CLOUD_1_monthly_daily_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_transp    := NA]
+    CLOUD_1_monthly_daily_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_att_sd    := NA]
+    CLOUD_1_monthly_daily_mean[ HOR_att_N <= Monthly_aggegation_N_lim/2, HOR_att_sd    := NA]
+    CLOUD_1_monthly_daily_mean[ GLB_att_N <= Monthly_aggegation_N_lim/2, GLB_att_sd    := NA]
+    CLOUD_1_monthly_daily_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_transp_sd := NA]
+    CLOUD_1_monthly_daily_mean[ HOR_att_N <= Monthly_aggegation_N_lim/2, HOR_att_EM    := NA]
+    CLOUD_1_monthly_daily_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_att_EM    := NA]
+    CLOUD_1_monthly_daily_mean[ GLB_att_N <= Monthly_aggegation_N_lim/2, GLB_att_EM    := NA]
+    CLOUD_1_monthly_daily_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_transp_EM := NA]
+
+
+
     ## ___ By season of year ---------------------------------------------------
     ## add season of year tag
       ALL_1_daily_mean[month(Date) %in% c(12, 1, 2), Season := "Winter"]
@@ -500,6 +546,22 @@ if (havetorun) {
                               HOR_att_N  = sum(!is.na(HOR_att)),
                               DIR_att_N  = sum(!is.na(DIR_att))  ),
                            by = .( Year = year(Date), Season)]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -959,6 +1021,162 @@ if (havetorun) {
     CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
 
 
+    ## ___ By season of year ---------------------------------------------------
+    ## add season of year tag
+    DATA_all[  month(Date) %in% c(12, 1, 2), Season := "Winter"]
+    DATA_all[  month(Date) %in% c( 3, 4, 5), Season := "Spring"]
+    DATA_all[  month(Date) %in% c( 6, 7, 8), Season := "Summer"]
+    DATA_all[  month(Date) %in% c( 9,10,11), Season := "Autumn"]
+    DATA_Clear[month(Date) %in% c(12, 1, 2), Season := "Winter"]
+    DATA_Clear[month(Date) %in% c( 3, 4, 5), Season := "Spring"]
+    DATA_Clear[month(Date) %in% c( 6, 7, 8), Season := "Summer"]
+    DATA_Clear[month(Date) %in% c( 9,10,11), Season := "Autumn"]
+    DATA_Cloud[month(Date) %in% c(12, 1, 2), Season := "Winter"]
+    DATA_Cloud[month(Date) %in% c( 3, 4, 5), Season := "Spring"]
+    DATA_Cloud[month(Date) %in% c( 6, 7, 8), Season := "Summer"]
+    DATA_Cloud[month(Date) %in% c( 9,10,11), Season := "Autumn"]
+
+
+    ALL_2_bySeason_daily_mean <-
+        DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                     HOR_att       = mean(HOR_att,    na.rm = T),
+                     GLB_att       = mean(GLB_att,    na.rm = T),
+                     DIR_transp    = mean(DIR_transp, na.rm = T),
+                     DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                     HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                     GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                     DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                     doy           = yday(Date),
+                     GLB_att_N     = sum(!is.na(GLB_att)),
+                     HOR_att_N     = sum(!is.na(HOR_att)),
+                     DIR_att_N     = sum(!is.na(DIR_att))  ),
+                 by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                        Date    = Day,
+                        preNoon = preNoon,
+                        Season  = Season) ]
+
+    CLEAR_2_bySeason_daily_mean <-
+        DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                       HOR_att       = mean(HOR_att,    na.rm = T),
+                       GLB_att       = mean(GLB_att,    na.rm = T),
+                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                       HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                       GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       doy           = yday(Date),
+                       GLB_att_N     = sum(!is.na(GLB_att)),
+                       HOR_att_N     = sum(!is.na(HOR_att)),
+                       DIR_att_N     = sum(!is.na(DIR_att))  ),
+                   by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                          Date    = Day,
+                          preNoon = preNoon,
+                          Season  = Season) ]
+
+    CLOUD_2_bySeason_daily_mean <-
+        DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                       HOR_att       = mean(HOR_att,    na.rm = T),
+                       GLB_att       = mean(GLB_att,    na.rm = T),
+                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                       HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                       GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       doy           = yday(Date),
+                       GLB_att_N     = sum(!is.na(GLB_att)),
+                       HOR_att_N     = sum(!is.na(HOR_att)),
+                       DIR_att_N     = sum(!is.na(DIR_att))  ),
+                   by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                          Date    = Day,
+                          preNoon = preNoon,
+                          Season  = Season) ]
+
+
+
+    ## ___ Seasonal by season --------------------------------------------------
+
+    ALL_2_bySeason_daily_seas <-
+        DATA_all[, .(DIR_att_seas       = mean(DIR_att,    na.rm = T),
+                     HOR_att_seas       = mean(HOR_att,    na.rm = T),
+                     GLB_att_seas       = mean(GLB_att,    na.rm = T),
+                     DIR_transp_seas    = mean(DIR_transp, na.rm = T),
+                     DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
+                     HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
+                     GLB_att_sd_seas    = sd(  GLB_att,    na.rm = T),
+                     DIR_transp_sd_seas = sd(  DIR_transp, na.rm = T),
+                     GLB_att_N_seas     = sum(!is.na(GLB_att)),
+                     HOR_att_N_seas     = sum(!is.na(HOR_att)),
+                     DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
+                 by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                        doy     = yday(Date),
+                        preNoon = preNoon,
+                        Season  = Season) ]
+
+    CLEAR_2_bySeason_daily_seas <-
+        DATA_Clear[, .(DIR_att_seas       = mean(DIR_att,    na.rm = T),
+                       HOR_att_seas       = mean(HOR_att,    na.rm = T),
+                       GLB_att_seas       = mean(GLB_att,    na.rm = T),
+                       DIR_transp_seas    = mean(DIR_transp, na.rm = T),
+                       DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
+                       HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
+                       GLB_att_sd_seas    = sd(  GLB_att,    na.rm = T),
+                       DIR_transp_sd_seas = sd(  DIR_transp, na.rm = T),
+                       GLB_att_N_seas     = sum(!is.na(GLB_att)),
+                       HOR_att_N_seas     = sum(!is.na(HOR_att)),
+                       DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
+                   by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                          doy     = yday(Date),
+                          preNoon = preNoon,
+                          Season  = Season) ]
+
+    CLOUD_2_bySeason_daily_seas <-
+        DATA_Cloud[, .(DIR_att_seas       = mean(DIR_att,    na.rm = T),
+                       HOR_att_seas       = mean(HOR_att,    na.rm = T),
+                       GLB_att_seas       = mean(GLB_att,    na.rm = T),
+                       DIR_transp_seas    = mean(DIR_transp, na.rm = T),
+                       DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
+                       HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
+                       GLB_att_sd_seas    = sd(  GLB_att,    na.rm = T),
+                       DIR_transp_sd_seas = sd(  DIR_transp, na.rm = T),
+                       GLB_att_N_seas     = sum(!is.na(GLB_att)),
+                       HOR_att_N_seas     = sum(!is.na(HOR_att)),
+                       DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
+                   by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                          doy     = yday(Date),
+                          preNoon = preNoon,
+                          Season  = Season) ]
+
+
+      ALL_2_bySeason_daily_DESEAS <- merge(  ALL_2_bySeason_daily_mean,   ALL_2_bySeason_daily_seas, by = c("SZA", "doy", "preNoon", "Season"), all = T)
+    CLEAR_2_bySeason_daily_DESEAS <- merge(CLEAR_2_bySeason_daily_mean, CLEAR_2_bySeason_daily_seas, by = c("SZA", "doy", "preNoon", "Season"), all = T)
+    CLOUD_2_bySeason_daily_DESEAS <- merge(CLOUD_2_bySeason_daily_mean, CLOUD_2_bySeason_daily_seas, by = c("SZA", "doy", "preNoon", "Season"), all = T)
+
+    ## ____ Realative anomaly by season ----------------------------------------
+      ALL_2_bySeason_daily_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+      ALL_2_bySeason_daily_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+      ALL_2_bySeason_daily_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+      ALL_2_bySeason_daily_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+    CLEAR_2_bySeason_daily_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+    CLEAR_2_bySeason_daily_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+    CLEAR_2_bySeason_daily_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+    CLEAR_2_bySeason_daily_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+    CLOUD_2_bySeason_daily_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+    CLOUD_2_bySeason_daily_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+    CLOUD_2_bySeason_daily_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+    CLOUD_2_bySeason_daily_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+
+
+    rm(  ALL_2_bySeason_daily_mean,   ALL_2_bySeason_daily_seas,
+       CLEAR_2_bySeason_daily_mean, CLEAR_2_bySeason_daily_seas,
+       CLOUD_2_bySeason_daily_mean, CLOUD_2_bySeason_daily_seas)
+
+
+stop()
+
+
+
+
+
     ## _ Calculate daily seasonal values by SZA  -------------------------------
     ALL_2_daily_seas <-
         ALL_2_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
@@ -1214,31 +1432,31 @@ if (havetorun) {
     ALL_3_monthly_mean[   GLB_att_N <= Monthly_aggegation_N_lim, GLB_att_EM    := NA]
     ALL_3_monthly_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_EM := NA]
 
-    CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_att       := NA]
-    CLEAR_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim, HOR_att       := NA]
-    CLEAR_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim, GLB_att       := NA]
-    CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp    := NA]
-    CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_att_sd    := NA]
-    CLEAR_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim, HOR_att_sd    := NA]
-    CLEAR_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim, GLB_att_sd    := NA]
-    CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_sd := NA]
-    CLEAR_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim, HOR_att_EM    := NA]
-    CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_att_EM    := NA]
-    CLEAR_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim, GLB_att_EM    := NA]
-    CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_EM := NA]
+    CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_att       := NA]
+    CLEAR_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim/2, HOR_att       := NA]
+    CLEAR_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim/2, GLB_att       := NA]
+    CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_transp    := NA]
+    CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_att_sd    := NA]
+    CLEAR_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim/2, HOR_att_sd    := NA]
+    CLEAR_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim/2, GLB_att_sd    := NA]
+    CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_transp_sd := NA]
+    CLEAR_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim/2, HOR_att_EM    := NA]
+    CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_att_EM    := NA]
+    CLEAR_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim/2, GLB_att_EM    := NA]
+    CLEAR_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_transp_EM := NA]
 
-    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_att       := NA]
-    CLOUD_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim, HOR_att       := NA]
-    CLOUD_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim, GLB_att       := NA]
-    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp    := NA]
-    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_att_sd    := NA]
-    CLOUD_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim, HOR_att_sd    := NA]
-    CLOUD_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim, GLB_att_sd    := NA]
-    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_sd := NA]
-    CLOUD_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim, HOR_att_EM    := NA]
-    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_att_EM    := NA]
-    CLOUD_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim, GLB_att_EM    := NA]
-    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim, DIR_transp_EM := NA]
+    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_att       := NA]
+    CLOUD_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim/2, HOR_att       := NA]
+    CLOUD_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim/2, GLB_att       := NA]
+    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_transp    := NA]
+    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_att_sd    := NA]
+    CLOUD_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim/2, HOR_att_sd    := NA]
+    CLOUD_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim/2, GLB_att_sd    := NA]
+    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_transp_sd := NA]
+    CLOUD_3_monthly_mean[ HOR_att_N <= Monthly_aggegation_N_lim/2, HOR_att_EM    := NA]
+    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_att_EM    := NA]
+    CLOUD_3_monthly_mean[ GLB_att_N <= Monthly_aggegation_N_lim/2, GLB_att_EM    := NA]
+    CLOUD_3_monthly_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_transp_EM := NA]
 
 
     ## _  Monthly seasonal values ----------------------------------------------
