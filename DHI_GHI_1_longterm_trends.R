@@ -73,6 +73,8 @@ library(data.table, quietly = TRUE, warn.conflicts = FALSE)
 library(pander,     quietly = TRUE, warn.conflicts = FALSE)
 library(lubridate,  quietly = TRUE, warn.conflicts = FALSE)
 library(ggplot2,    quietly = TRUE, warn.conflicts = FALSE)
+library(fANCOVA,    quietly = TRUE, warn.conflicts = FALSE)
+
 
 panderOptions("table.alignment.default", "right")
 panderOptions("table.split.table",        120   )
@@ -244,16 +246,9 @@ for (DBn in dbs) {
             ## plot fit line
             abline(lm1, lwd = 2)
 
-            ## plot running mean
-            # partial window using adaptive rolling function
-            # an = function(n, len) c(seq.int(n), rep(n, len-n))
-            # n = an(round(Days_of_year * 5), nrow(dataset))
-            # rm <- frollmean(dataset[[avar]], n, adaptive=TRUE,
-            #           na.rm = TRUE, algo = "exact")
-
+            ## Running mean
             first <- head(which(!is.na(dataset[[avar]])),1)
             last  <- tail(which(!is.na(dataset[[avar]])),1)
-            # cat(length(first:last),"\n")
 
             rm <- frollmean(dataset[[avar]][first:last],
                             round(running_mean_window_days),
@@ -263,6 +258,17 @@ for (DBn in dbs) {
 
             # points(dataset$Date, rm, col = "red", cex = 0.5)
             lines(dataset$Date[first:last], rm, col = "red", lwd = 1.5)
+
+
+            ## LOESS curve
+            vec <- !is.na(dataset[[avar]])
+            FTSE.lo3 <- loess.as(dataset$Date[vec], dataset[[avar]][vec],
+                                 degree = 1,
+                                 criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
+            FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Date)
+            lines(dataset$Date, FTSE.lo.predict3, col = "cyan", lwd = 1.5)
+
+
 
             ## decorations
             fit <- lm1[[1]]
@@ -404,9 +410,8 @@ for (DBn in dbs) {
 
             abline(lm2)
 
-            ## plot running mean years * months in data set
-            # dataset[ , .(Year, Month, get(avar)) ]
 
+            ## Running mean years * months in data set
             first <- head(which(!is.na(dataset[[avar]])),1)
             last  <- tail(which(!is.na(dataset[[avar]])),1)
 
@@ -419,6 +424,16 @@ for (DBn in dbs) {
             # points(dataset$Date, rm, col = "red", cex = 0.5)
             lines(dataset$Year[first:last], rm, col = "red", cex = 0.5)
 
+
+            ## LOESS curve
+            vec <- !is.na(dataset[[avar]])
+            FTSE.lo3 <- loess.as(dataset$Year[vec], dataset[[avar]][vec],
+                                 degree = 1,
+                                 criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
+            FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Year)
+            lines(dataset$Year, FTSE.lo.predict3, col = "cyan", lwd = 1.5)
+
+
             ## decorations
             fit <- lm2[[1]]
 
@@ -428,7 +443,6 @@ for (DBn in dbs) {
                          signif(abs(fit[2]), 3),
                          "% per year")
             )
-
 
         }
         par(mfrow = c(1, 1)) ## just reset layout
@@ -599,7 +613,6 @@ for (DBn in dbs) {
             abline(lm2)
 
             ## plot running mean
-
             first <- head(which(!is.na(dataset[[avar]])),1)
             last  <- tail(which(!is.na(dataset[[avar]])),1)
 
@@ -609,6 +622,17 @@ for (DBn in dbs) {
                             algo  = "exact",
                             align = "center")
             lines(dataset$Year[first:last], rm, col = "red")
+
+
+            ## LOESS curve
+            vec <- !is.na(dataset[[avar]])
+            FTSE.lo3 <- loess.as(dataset$Year[vec], dataset[[avar]][vec],
+                                 degree = 1,
+                                 criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
+            FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Year)
+            lines(dataset$Year, FTSE.lo.predict3, col = "cyan", lwd = 1.5)
+
+
 
             ## decorations
             fit <- lm2[[1]]

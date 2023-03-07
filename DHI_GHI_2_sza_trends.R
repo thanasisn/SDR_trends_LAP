@@ -338,7 +338,7 @@ for (type in unique(szatrends$DATA)) {
 
 
 
-
+stop()
 
 ##  SZA trends for season of year  ---------------------------------------------
 
@@ -356,20 +356,14 @@ for (type in unique(szatrends$DATA)) {
 # vars        <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
 vars        <- c("DIR_att_des", "GLB_att_des")
 
-dbs         <- c(  "ALL_2_daily_DESEAS",
-                 "CLEAR_2_daily_DESEAS",
-                 "CLOUD_2_daily_DESEAS")
+dbs         <- c(  "ALL_2_bySeason_daily_DESEAS",
+                 "CLEAR_2_bySeason_daily_DESEAS",
+                 "CLOUD_2_bySeason_daily_DESEAS")
 seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 gather_seas <- data.frame()
 
 for (DBn in dbs) {
     DB <- get(DBn)
-
-    ## set seasons in each data base
-    DB[ month(Date) %in% c(12, 1, 2), Season := "Winter"]
-    DB[ month(Date) %in% c( 3, 4, 5), Season := "Spring"]
-    DB[ month(Date) %in% c( 6, 7, 8), Season := "Summer"]
-    DB[ month(Date) %in% c( 9,10,11), Season := "Autumn"]
 
     stopifnot( !any(is.na(DB$Season)) )
 
@@ -399,7 +393,6 @@ for (DBn in dbs) {
         }
     }
 }
-
 #+ echo=F, include=F
 hist(gather_seas$N[gather_seas$N > 50], breaks = 100)
 

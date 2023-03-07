@@ -77,11 +77,10 @@ if (havetorun) {
         }
 
         ## TODO warn duplicate dates
-        duplicated(DATA$Date)
+        stopifnot(sum(duplicated(DATA$Date)) == 0)
 
         ## make sure data are ok
         DATA <- unique(DATA)
-        stop()
 
         ## this is used by old scripts
         setorder(DATA,Date)
@@ -122,17 +121,17 @@ if (havetorun) {
         #' ### Keep only data characterized as 'good' by the Radiation Quality control procedure **v13**
         #' Keep data marked as `r cat(paste(keepQF,collapse = ", "))`.
         #+ echo=F, include=T
-        DATA[ ! QCF_DIR %in% keepQF, wattDIR := NA ]
-        DATA[ ! QCF_DIR %in% keepQF, wattHOR := NA ]
-        DATA[ ! QCF_GLB %in% keepQF, wattGLB := NA ]
+        DATA[!QCF_DIR %in% keepQF, wattDIR := NA]
+        DATA[!QCF_DIR %in% keepQF, wattHOR := NA]
+        DATA[!QCF_GLB %in% keepQF, wattGLB := NA]
     }
 
     if (D_14) {
         #' ### Keep only data characterized as 'TRUE' by the Radiation Quality control procedure **v14**
         #+ echo=F, include=T
-        DATA[ QCF_DIR == FALSE, wattDIR := NA ]
-        DATA[ QCF_DIR == FALSE, wattHOR := NA ]
-        DATA[ QCF_GLB == FALSE, wattGLB := NA ]
+        DATA[ QCF_DIR == FALSE, wattDIR := NA]
+        DATA[ QCF_DIR == FALSE, wattHOR := NA]
+        DATA[ QCF_GLB == FALSE, wattGLB := NA]
     }
 
     DATA <- DATA[ !(is.na(wattDIR) & is.na(wattGLB)) ]
