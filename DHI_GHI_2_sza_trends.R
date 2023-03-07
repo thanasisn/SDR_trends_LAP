@@ -120,49 +120,49 @@ FIGURESGRID <- TRUE
 #+ echo=F, include=F
 
 
-## ____ Scatter plots with SZA all data ----------------------------------------
-data_list <- c(  "ALL_2_daily_DESEAS",
-               "CLEAR_2_daily_DESEAS",
-               "CLEAR_2_daily_DESEAS")
-## x variables
-by_var    <- c("doy","SZA")
-for (i in data_list) {
-    ## get data and y vars to plot
-    Dplot  <- get(i)
-    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = T)
-    ## loop existing x vars
-    for (xvar in names(Dplot)[names(Dplot) %in% by_var]) {
-        for (yvar in wecare) {
-            col <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
-                              collapse = "_"))
-            vect <- Dplot[[yvar]]
-            plot(Dplot[[xvar]], vect,
-                 pch  = 19,
-                 cex  = .3,
-                 col  = col,
-                 main = paste(i, yvar),
-                 xlab = xvar, ylab = yvar)
-        }
-    }
-}
-
-## ____ Histograms Plots all data ----------------------------------------------
-for (i in data_list) {
-    ## get data and y vars to plot
-    Dplot  <- get(i)
-    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = TRUE)
-    for (yvar in wecare) {
-        if (!yvar %in% names(Dplot)) next()
-        col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),
-                          collapse = "_"))
-        hist(Dplot[[yvar]],
-             main   = paste(i, yvar),
-             xlab   = yvar,
-             breaks = 100, col = col)
-    }
-}
-#+ echo=F, include=F
-rm(data_list)
+# ## ____ Scatter plots with SZA all data ----------------------------------------
+# data_list <- c(  "ALL_2_daily_DESEAS",
+#                "CLEAR_2_daily_DESEAS",
+#                "CLEAR_2_daily_DESEAS")
+# ## x variables
+# by_var    <- c("doy","SZA")
+# for (i in data_list) {
+#     ## get data and y vars to plot
+#     Dplot  <- get(i)
+#     wecare <- grep("HOR|GLB|DIR", names(Dplot), value = T)
+#     ## loop existing x vars
+#     for (xvar in names(Dplot)[names(Dplot) %in% by_var]) {
+#         for (yvar in wecare) {
+#             col <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
+#                               collapse = "_"))
+#             vect <- Dplot[[yvar]]
+#             plot(Dplot[[xvar]], vect,
+#                  pch  = 19,
+#                  cex  = .3,
+#                  col  = col,
+#                  main = paste(i, yvar),
+#                  xlab = xvar, ylab = yvar)
+#         }
+#     }
+# }
+#
+# ## ____ Histograms Plots all data ----------------------------------------------
+# for (i in data_list) {
+#     ## get data and y vars to plot
+#     Dplot  <- get(i)
+#     wecare <- grep("HOR|GLB|DIR", names(Dplot), value = TRUE)
+#     for (yvar in wecare) {
+#         if (!yvar %in% names(Dplot)) next()
+#         col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),
+#                           collapse = "_"))
+#         hist(Dplot[[yvar]],
+#              main   = paste(i, yvar),
+#              xlab   = yvar,
+#              breaks = 100, col = col)
+#     }
+# }
+# #+ echo=F, include=F
+# rm(data_list)
 
 
 
@@ -180,7 +180,7 @@ rm(data_list)
 ##  SZA trends for all year  ---------------------------------------------------
 
 #'
-#' \newpage
+#' \FloatBarrier
 #'
 #' ## Plot of SZA trends
 #'
@@ -189,7 +189,8 @@ rm(data_list)
 
 ## __ Calculate SZA ~ Year -----------------------------------------------------
 
-vars <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
+#  vars <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
+vars <- c("DIR_att_des", "GLB_att_des")
 dbs  <- c(  "ALL_2_daily_DESEAS",
           "CLEAR_2_daily_DESEAS",
           "CLOUD_2_daily_DESEAS")
@@ -207,6 +208,7 @@ for (DBn in dbs) {
                 if (sum(!is.na(dataset[[avar]])) <= 1) next()
 
                 lm1 <- lm( dataset[[avar]] ~ dataset$Date )
+
                 gather <- rbind(gather,
                                 data.frame(
                                     linear_fit_stats(lm1),
@@ -252,8 +254,8 @@ hist(szatrends[var == vars[2], N], breaks = 100)
 
 plot(szatrends$SZA,szatrends$N)
 
-test1 <- szatrends[ DATA == "CLEAR_2_daily_DESEAS" & var == "DIR_att_des" ]
-test2 <- szatrends[ DATA == "CLEAR_2_daily_DESEAS" & var == "GLB_att_des" ]
+test1 <- szatrends[DATA == "CLEAR_2_daily_DESEAS" & var == "DIR_att_des"]
+test2 <- szatrends[DATA == "CLEAR_2_daily_DESEAS" & var == "GLB_att_des"]
 plot(test1$SZA, test1$N, pch = 19)
 abline(h=50)
 plot(test2$SZA, test2$N, pch = 19)
@@ -273,6 +275,9 @@ wecare <- grep("^slope\\.t", wecare, ignore.case = T, value = T, invert = T)
 wecare <- grep("slope\\.sd", wecare, ignore.case = T, value = T, invert = T)
 
 
+
+
+
 #+ SzaTrends, echo=F, include=T, results = "asis"
 ## ALL - CS
 for (type in unique(szatrends$DATA)) {
@@ -280,9 +285,12 @@ for (type in unique(szatrends$DATA)) {
     for (avar in unique(szatrends$var)) {
 
         cat("\n\\newpage\n\n")
-        cat(paste("\n###", type, avar,"\n\n"))
+        cat("\n#### ", translate(type), translate(avar) , "\n\n")
 
-        #TODO plot in grid
+        ## plot in a grid
+        if (FIGURESGRID) {
+            par(mfrow = c(ceiling(length(wecare)/2), 2))
+        }
 
         par("mar" = c(4,4,2,1))
 
@@ -292,36 +300,36 @@ for (type in unique(szatrends$DATA)) {
 
             ## select All/CS and DIR/GLB/trans
             subdata <- szatrends[ szatrends$DATA == type &    ##
-                                  szatrends$var  == avar , ]
+                                      szatrends$var  == avar , ]
 
-            xlim <- range( subdata$SZA,    na.rm = T )
-            ylim <- range( subdata[[awe]], na.rm = T )
+            xlim <- range(subdata$SZA,    na.rm = T)
+            ylim <- range(subdata[[awe]], na.rm = T)
 
             pam  <- subdata[ preNoon == T ]
             ppm  <- subdata[ preNoon == F ]
 
             plot(1, type = "n",
-                 xlab = "SZA", ylab = awename,
-                 xlim = xlim, ylim = ylim )
+                 xlab = "SZA",
+                 ylab = awename,
+                 xlim = xlim,
+                 ylim = ylim )
 
             abline(h = 0, lty = 3 )
 
-            title(paste(awename, translate(type), translate(avar) ), cex.main = 1)
+            title(paste(awename, translate(type), translate(avar) ), cex.main = .8)
 
-            # lines(pam$SZA, pam[[awe]], pch =  pch_am, col = pam$col, type = "b")
-            # lines(pam$SZA, ppm[[awe]], pch =  pch_pm, col = pam$col, type = "b")
-
-            lines(pam$SZA, pam[[awe]], pch =  pch_am, col = 2, type = "b", lwd = 2)
-            lines(ppm$SZA, ppm[[awe]], pch =  pch_pm, col = 3, type = "b", lwd = 2)
+            lines(pam$SZA, pam[[awe]], pch =  pch_am, col = 2, type = "b", lwd = 1, cex = 0.5)
+            lines(ppm$SZA, ppm[[awe]], pch =  pch_pm, col = 3, type = "b", lwd = 1, cex = 0.5)
 
             legend("top",
-                   legend = c("Morning",       "Evening"),
+                   legend = c("Morning", "Evening"),
                    # col    = c(unique(pam$col), unique(ppm$col)),
                    col    = c(2, 3),
                    pch    = c(unique(pam$pch), unique(ppm$pch)), ncol = 2, bty = "n")
 
             cat("\n\n")
         }
+        par(mfrow = c(1, 1)) ## just reset layout
     }
 }
 
@@ -335,16 +343,19 @@ for (type in unique(szatrends$DATA)) {
 ##  SZA trends for season of year  ---------------------------------------------
 
 #'
-#' \newpage
-#'
 #' ## Plot of SZA trends for each season of year
+#'
+#' **This part is not ready yet**
+#' New data tables!!
 #'
 #+ echo=F, include=F
 
 
 ## __ Calculate SZA ~ Season stats  --------------------------------------------
 
-vars        <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
+# vars        <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
+vars        <- c("DIR_att_des", "GLB_att_des")
+
 dbs         <- c(  "ALL_2_daily_DESEAS",
                  "CLEAR_2_daily_DESEAS",
                  "CLOUD_2_daily_DESEAS")
@@ -489,8 +500,10 @@ for (ase in seasons) {
 
 
                 plot(1, type = "n",
-                     xlab = "SZA", ylab = awename,
-                     xlim = xlim, ylim = ylim )
+                     xlab = "SZA",
+                     ylab = awename,
+                     xlim = xlim,
+                     ylim = ylim )
 
                 abline(h = 0, lty = 3 )
 
@@ -498,13 +511,13 @@ for (ase in seasons) {
                 if (grepl("CLEAR", type, ignore.case = T)) typeP <- "Clear Sky (Deseas.)"
                 if (grepl("ALL",   type, ignore.case = T)) typeP <- "All Sky (Deseas.)"
 
-                title(paste(ase, awename, typeP, translate(avar)), cex.main = 1)
+                title(paste(ase, awename, typeP, translate(avar)), cex.main = 0.8,)
 
                 # lines(pam$SZA, pam[[awe]], pch =  pch_am, col = pam$col, type = "b")
                 # lines(pam$SZA, ppm[[awe]], pch =  pch_pm, col = pam$col, type = "b")
 
-                lines(pam$SZA, pam[[awe]], pch = pch_am, col = 2, type = "b", lwd = 2)
-                lines(ppm$SZA, ppm[[awe]], pch = pch_pm, col = 3, type = "b", lwd = 2)
+                lines(pam$SZA, pam[[awe]], pch = pch_am, col = 2, type = "b", lwd = 1, cex = .5)
+                lines(ppm$SZA, ppm[[awe]], pch = pch_pm, col = 3, type = "b", lwd = 1, cex = .5)
 
                 legend("bottom",
                        legend = c("Morning",       "Evening"),
