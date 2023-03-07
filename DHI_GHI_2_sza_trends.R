@@ -73,6 +73,8 @@ library(data.table, quietly = TRUE, warn.conflicts = FALSE)
 library(pander,     quietly = TRUE, warn.conflicts = FALSE)
 library(lubridate,  quietly = TRUE, warn.conflicts = FALSE)
 library(ggplot2,    quietly = TRUE, warn.conflicts = FALSE)
+library(fANCOVA,    quietly = TRUE, warn.conflicts = FALSE)
+
 
 panderOptions("table.alignment.default", "right")
 panderOptions("table.split.table",        120   )
@@ -103,8 +105,13 @@ options(error = function() {
 ## override plot options
 par(pch = ".")
 
+## choose to grid some plots
 FIGURESGRID <- TRUE
 # FIGURESGRID <- FALSE
+
+## choose loess criterion for span
+LOESS_CRITERIO <-  c("aicc", "gcv")[1]
+
 
 
 #+ echo=F, include=T
@@ -338,15 +345,10 @@ for (type in unique(szatrends$DATA)) {
 
 
 
-
-
 ##  SZA trends for season of year  ---------------------------------------------
 
 #'
 #' ## Plot of SZA trends for each season of year
-#'
-#' **This part is not ready yet**
-#' New data tables!!
 #'
 #+ echo=F, include=F
 
@@ -356,20 +358,14 @@ for (type in unique(szatrends$DATA)) {
 # vars        <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
 vars        <- c("DIR_att_des", "GLB_att_des")
 
-dbs         <- c(  "ALL_2_daily_DESEAS",
-                 "CLEAR_2_daily_DESEAS",
-                 "CLOUD_2_daily_DESEAS")
+dbs         <- c(  "ALL_2_bySeason_daily_DESEAS",
+                 "CLEAR_2_bySeason_daily_DESEAS",
+                 "CLOUD_2_bySeason_daily_DESEAS")
 seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 gather_seas <- data.frame()
 
 for (DBn in dbs) {
     DB <- get(DBn)
-
-    ## set seasons in each data base
-    DB[ month(Date) %in% c(12, 1, 2), Season := "Winter"]
-    DB[ month(Date) %in% c( 3, 4, 5), Season := "Spring"]
-    DB[ month(Date) %in% c( 6, 7, 8), Season := "Summer"]
-    DB[ month(Date) %in% c( 9,10,11), Season := "Autumn"]
 
     stopifnot( !any(is.na(DB$Season)) )
 
@@ -399,7 +395,6 @@ for (DBn in dbs) {
         }
     }
 }
-
 #+ echo=F, include=F
 hist(gather_seas$N[gather_seas$N > 50], breaks = 100)
 
@@ -432,19 +427,17 @@ hist(szatrends_seas[var  == vars[2],N], breaks = 100)
 
 plot(szatrends_seas$SZA,szatrends_seas$N)
 
-test <- szatrends_seas[ DATA == "CLEAR_2_daily_DESEAS" & var == "DIR_att_des" ]
+test <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "DIR_att_des" ]
 plot(test$SZA, test$N, pch = 19)
-abline(h=50/4)
+
 
 szatrends[ N <= 30, slope := NA]
 
 
-test1 <- szatrends_seas[ DATA == "CLEAR_2_daily_DESEAS" & var == "DIR_att_des" ]
-test2 <- szatrends_seas[ DATA == "CLEAR_2_daily_DESEAS" & var == "GLB_att_des" ]
+test1 <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "DIR_att_des" ]
+test2 <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "GLB_att_des" ]
 plot(test1$SZA, test1$N, pch = 19)
-abline(h=50/4)
 plot(test2$SZA, test2$N, pch = 19)
-abline(h=300/4)
 
 # szatrends[ var == "GLB_att_des"    & N <= 300, slope := NA ]
 # szatrends[ var == "DIR_att_des"    & N <=  50, slope := NA ]
@@ -472,6 +465,12 @@ for (ase in seasons) {
 
             cat("\n\\newpage\n\n")
             cat(paste("###",ase, translate(type), translate(avar),"\n\n"))
+
+            ## plot in a grid
+            if (FIGURESGRID) {
+                par(mfrow = c(ceiling(length(wecare)/2), 2))
+            }
+
 
             ## statistic variable
             for (awe in wecare) {
@@ -525,6 +524,7 @@ for (ase in seasons) {
                        col    = c(2, 3),
                        pch    = c(unique(pam$pch), unique(ppm$pch)), ncol = 2, bty = "n")
             }
+            par(mfrow = c(1, 1)) ## just reset layout
         }
     }
 }
