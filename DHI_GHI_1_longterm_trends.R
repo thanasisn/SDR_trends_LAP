@@ -266,7 +266,7 @@ for (DBn in dbs) {
                                  degree = 1,
                                  criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
             FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Date)
-            lines(dataset$Date, FTSE.lo.predict3, col = "cyan", lwd = 1.5)
+            lines(dataset$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
 
 
 
@@ -431,7 +431,7 @@ for (DBn in dbs) {
                                  degree = 1,
                                  criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
             FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Year)
-            lines(dataset$Year, FTSE.lo.predict3, col = "cyan", lwd = 1.5)
+            lines(dataset$Year, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
 
 
             ## decorations
@@ -630,7 +630,7 @@ for (DBn in dbs) {
                                  degree = 1,
                                  criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
             FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Year)
-            lines(dataset$Year, FTSE.lo.predict3, col = "cyan", lwd = 1.5)
+            lines(dataset$Year, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
 
 
 
