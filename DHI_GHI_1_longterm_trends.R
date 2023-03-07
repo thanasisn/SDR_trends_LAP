@@ -105,8 +105,13 @@ options(error = function() {
 ## override plot options
 par(pch = ".")
 
+## choose to grid some plots
 FIGURESGRID <- TRUE
 # FIGURESGRID <- FALSE
+
+## choose loess criterion for span
+LOESS_CRITERIO <-  c("aicc", "gcv")[1]
+
 
 
 #+ echo=F, include=T
@@ -264,7 +269,7 @@ for (DBn in dbs) {
             vec <- !is.na(dataset[[avar]])
             FTSE.lo3 <- loess.as(dataset$Date[vec], dataset[[avar]][vec],
                                  degree = 1,
-                                 criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
+                                 criterion = LOESS_CRITERIO, user.span = NULL, plot = F)
             FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Date)
             lines(dataset$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
 
@@ -429,7 +434,7 @@ for (DBn in dbs) {
             vec <- !is.na(dataset[[avar]])
             FTSE.lo3 <- loess.as(dataset$Year[vec], dataset[[avar]][vec],
                                  degree = 1,
-                                 criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
+                                 criterion = LOESS_CRITERIO, user.span = NULL, plot = F)
             FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Year)
             lines(dataset$Year, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
 
@@ -628,7 +633,7 @@ for (DBn in dbs) {
             vec <- !is.na(dataset[[avar]])
             FTSE.lo3 <- loess.as(dataset$Year[vec], dataset[[avar]][vec],
                                  degree = 1,
-                                 criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
+                                 criterion = LOESS_CRITERIO, user.span = NULL, plot = F)
             FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Year)
             lines(dataset$Year, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
 

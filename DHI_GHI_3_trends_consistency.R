@@ -73,6 +73,8 @@ library(data.table, quietly = TRUE, warn.conflicts = FALSE)
 library(pander,     quietly = TRUE, warn.conflicts = FALSE)
 library(lubridate,  quietly = TRUE, warn.conflicts = FALSE)
 library(ggplot2,    quietly = TRUE, warn.conflicts = FALSE)
+library(fANCOVA,    quietly = TRUE, warn.conflicts = FALSE)
+
 
 panderOptions("table.alignment.default", "right")
 panderOptions("table.split.table",        120   )
@@ -103,8 +105,13 @@ options(error = function() {
 ## override plot options
 par(pch = ".")
 
+## choose to grid some plots
 FIGURESGRID <- TRUE
 # FIGURESGRID <- FALSE
+
+## choose loess criterion for span
+LOESS_CRITERIO <-  c("aicc", "gcv")[1]
+
 
 
 #+ echo=F, include=T
@@ -309,9 +316,24 @@ for (adb in database) {
                     translate(avar) ), cex.main = 1)
         abline(lm1, lwd = 2)
 
+
+        ## running mean
         rm <- frollmean(pdb[[paste0(avar,"_des")]], round(running_mean_window_days),
                         na.rm = TRUE, algo = "exact", align = "center")
         points(pdb$Date, rm, col = "red", cex = 0.4)
+
+
+
+        ## LOESS curve
+        vec <- !is.na(pdb[[paste0(avar,"_des")]])
+        FTSE.lo3 <- loess.as(pdb$Date[vec], pdb[[paste0(avar,"_des")]][vec],
+                             degree = 1,
+                             criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
+        FTSE.lo.predict3 <- predict(FTSE.lo3, pdb$Date)
+        lines(pdb$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
+
+
+
 
         ## decorations
         fit <- lm1[[1]]
@@ -457,9 +479,21 @@ for (adb in database) {
                     translate(avar) ), cex.main = 1)
         abline(lm1, lwd = 2)
 
+        ## runing mean
         rm <- frollmean(pdb[[paste0(avar,"_des")]], round(running_mean_window_days),
                         na.rm = TRUE, algo = "exact", align = "center")
         points(pdb$Date, rm, col = "red", cex = 0.5)
+
+
+        ## LOESS curve
+        vec <- !is.na(pdb[[paste0(avar,"_des")]])
+        FTSE.lo3 <- loess.as(pdb$Date[vec], pdb[[paste0(avar,"_des")]][vec],
+                             degree = 1,
+                             criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
+        FTSE.lo.predict3 <- predict(FTSE.lo3, pdb$Date)
+        lines(pdb$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
+
+
 
         ## decorations
         fit <- lm1[[1]]
@@ -468,7 +502,6 @@ for (adb in database) {
                      if (fit[2] > 0) "+" else "-",
                      signif(abs(fit[2]) * Days_of_year, 3),
                      "% per year")
-
         )
 
 
