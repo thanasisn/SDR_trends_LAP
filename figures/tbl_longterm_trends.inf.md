@@ -5,13 +5,13 @@
 ---------------
 
 Object name:    object      
-Date written:   2023-03-22 14:35:52.4 UTC  
+Date written:   2023-03-24 11:33:26.8 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat      
 Data file size: 814.0 B (814) 
 Size in memory: 3288 bytes      
 Info file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.inf.md      
-Script name:    /home/athan/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_1_longterm_trends.R      
-User@Host:      athan@sagan   
+Script name:    Script name could not be resolved      
+User@Host:      athan@tyler   
 Contact:        <natsisphysicist@gmail.com>      
 Notes:          NA      
 
@@ -20,7 +20,7 @@ Notes:          NA
 -----------------
 
 ```
-Classes ‘data.table’ and 'data.frame':	6 obs. of  8 variables:
+Classes 'data.table' and 'data.frame':	6 obs. of  8 variables:
  $ slope             : num  0.721 0.404 0.373 0.234 4.022 ...
  $ slope.sd          : num  0.6929 0.0408 0.1271 0.0188 0.971 ...
  $ slope.p           : num  2.98e-01 4.77e-23 3.39e-03 2.26e-35 3.61e-05 ...
@@ -35,96 +35,9 @@ Classes ‘data.table’ and 'data.frame':	6 obs. of  8 variables:
 
  Data quality.
 ---------------
-
-| &nbsp; | slope | slope.sd | slope.p | slope.ConfInt_0.95 | slope.ConfInt_0.99 | DATA | var | slope.stat_sig |
-|:------:|------:|---------:|--------:|-------------------:|-------------------:|-----:|----:|---------------:|
-| Values |     6 |        6 |       6 |                  6 |                  6 |    0 |   0 |              6 |
-|  INFs  |     0 |        0 |       0 |                  0 |                  0 |    0 |   0 |              0 |
-|  NAs   |     0 |        0 |       0 |                  0 |                  0 |    0 |   0 |              0 |
-
-
  Data Summary.
----------------
-
-|          slope |        slope.sd |           slope.p | slope.ConfInt_0.95 | slope.ConfInt_0.99 |
-|---------------:|----------------:|------------------:|-------------------:|-------------------:|
-| Min.   :0.2344 | Min.   :0.01875 | Min.   :0.000e+00 |    Min.   :0.03676 |    Min.   :0.04832 |
-| 1st Qu.:0.3237 | 1st Qu.:0.04415 | 1st Qu.:0.000e+00 |    1st Qu.:0.08654 |    1st Qu.:0.11374 |
-| Median :0.3885 | Median :0.09069 | Median :1.805e-05 |    Median :0.17788 |    Median :0.23387 |
-| Mean   :1.0103 | Mean   :0.31747 | Mean   :5.024e-02 |    Mean   :0.62261 |    Mean   :0.81854 |
-| 3rd Qu.:0.6419 | 3rd Qu.:0.55144 | 3rd Qu.:2.552e-03 |    3rd Qu.:1.08136 |    3rd Qu.:1.42159 |
-| Max.   :4.0220 | Max.   :0.97104 | Max.   :2.980e-01 |    Max.   :1.90453 |    Max.   :2.50399 |
-
- 
-
-|             DATA |              var | slope.stat_sig |
-|-----------------:|-----------------:|---------------:|
-|         Length:6 |         Length:6 | Min.   : 70.20 |
-| Class :character | Class :character | 1st Qu.: 99.74 |
-| Mode  :character | Mode  :character | Median :100.00 |
-|               NA |               NA | Mean   : 94.98 |
-|               NA |               NA | 3rd Qu.:100.00 |
-|               NA |               NA | Max.   :100.00 |
-
-
-
-  * **slope**:
-
-
-    |   Min. | 1st Qu. | Median | Mean | 3rd Qu. |  Max. |
-    |-------:|--------:|-------:|-----:|--------:|------:|
-    | 0.2344 |  0.3237 | 0.3885 | 1.01 |  0.6419 | 4.022 |
-
-  * **slope.sd**:
-
-
-    |    Min. | 1st Qu. |  Median |   Mean | 3rd Qu. |  Max. |
-    |--------:|--------:|--------:|-------:|--------:|------:|
-    | 0.01875 | 0.04415 | 0.09069 | 0.3175 |  0.5514 | 0.971 |
-
-  * **slope.p**:
-
-
-    |      Min. |   1st Qu. |    Median |    Mean |  3rd Qu. |  Max. |
-    |----------:|----------:|----------:|--------:|---------:|------:|
-    | 2.256e-35 | 3.986e-09 | 1.805e-05 | 0.05024 | 0.002552 | 0.298 |
-
-  * **slope.ConfInt_0.95**:
-
-
-    |    Min. | 1st Qu. | Median |   Mean | 3rd Qu. |  Max. |
-    |--------:|--------:|-------:|-------:|--------:|------:|
-    | 0.03676 | 0.08654 | 0.1779 | 0.6226 |   1.081 | 1.905 |
-
-  * **slope.ConfInt_0.99**:
-
-
-    |    Min. | 1st Qu. | Median |   Mean | 3rd Qu. |  Max. |
-    |--------:|--------:|-------:|-------:|--------:|------:|
-    | 0.04832 |  0.1137 | 0.2339 | 0.8185 |   1.422 | 2.504 |
-
-  * **DATA**:
-
-
-    | Length |     Class |      Mode |
-    |-------:|----------:|----------:|
-    |      6 | character | character |
-
-  * **var**:
-
-
-    | Length |     Class |      Mode |
-    |-------:|----------:|----------:|
-    |      6 | character | character |
-
-  * **slope.stat_sig**:
-
-
-    | Min. | 1st Qu. | Median |  Mean | 3rd Qu. | Max. |
-    |-----:|--------:|-------:|------:|--------:|-----:|
-    | 70.2 |   99.74 |    100 | 94.98 |     100 |  100 |
-
-
-<!-- end of list -->
-
-
+---------------[1] "\n\n  * **slope**:\n\n\n    |   Min. | 1st Qu. | Median | Mean | 3rd Qu. |  Max. |\n    |-------:|--------:|-------:|-----:|--------:|------:|\n    | 0.2344 |  0.3237 | 0.3885 | 1.01 |  0.6419 | 4.022 |\n\n  * **slope.sd**:\n\n\n    |    Min. | 1st Qu. |  Median |   Mean | 3rd Qu. |  Max. |\n    |--------:|--------:|--------:|-------:|--------:|------:|\n    | 0.01875 | 0.04415 | 0.09069 | 0.3175 |  0.5514 | 0.971 |\n\n  * **slope.p**:\n\n\n    |      Min. |   1st Qu. |    Median |    Mean |  3rd Qu. |  Max. |\n    |----------:|----------:|----------:|--------:|---------:|------:|\n    | 2.256e-35 | 3.986e-09 | 1.805e-05 | 0.05024 | 0.002552 | 0.298 |\n\n  * **slope.ConfInt_0.95**:\n\n\n    |    Min. | 1st Qu. | Median |   Mean | 3rd Qu. |  Max. |\n    |--------:|--------:|-------:|-------:|--------:|------:|\n    | 0.03676 | 0.08654 | 0.1779 | 0.6226 |   1.081 | 1.905 |\n\n  * **slope.ConfInt_0.99**:\n\n\n    |    Min. | 1st Qu. | Median |   Mean | 3rd Qu. |  Max. |\n    |--------:|--------:|-------:|-------:|--------:|------:|\n    | 0.04832 |  0.1137 | 0.2339 | 0.8185 |   1.422 | 2.504 |\n\n  * **DATA**:\n\n\n    | Length |     Class |      Mode |\n    |-------:|----------:|----------:|\n    |      6 | character | character |\n\n  * **var**:\n\n\n    | Length |     Class |      Mode |\n    |-------:|----------:|----------:|\n    |      6 | character | character |\n\n  * **slope.stat_sig**:\n\n\n    | Min. | 1st Qu. | Median |  Mean | 3rd Qu. | Max. |\n    |-----:|--------:|-------:|------:|--------:|-----:|\n    | 70.2 |   99.74 |    100 | 94.98 |     100 |  100 |\n\n\n<!-- end of list -->\n\n\n"
+attr(,"class")
+[1] "knit_asis"
+attr(,"knit_cacheable")
+[1] NA

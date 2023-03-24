@@ -5,13 +5,13 @@
 ---------------
 
 Object name:    object      
-Date written:   2023-03-22 14:35:53.9 UTC  
+Date written:   2023-03-24 11:33:31.6 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_monthly.dat      
 Data file size: 7.5 KiB (7697) 
 Size in memory: 6840.0 B      
 Info file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_monthly.inf.md      
-Script name:    /home/athan/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_1_longterm_trends.R      
-User@Host:      athan@sagan   
+Script name:    Script name could not be resolved      
+User@Host:      athan@tyler   
 Contact:        <natsisphysicist@gmail.com>      
 Notes:          NA      
 
@@ -20,7 +20,7 @@ Notes:          NA
 -----------------
 
 ```
-Classes ‘data.table’ and 'data.frame':	72 obs. of  8 variables:
+Classes 'data.table' and 'data.frame':	72 obs. of  8 variables:
  $ slope         : num  6.79 11.29 -2.08 -4.13 2.87 ...
  $ slope.sd      : num  3.53 2.51 2.81 2.35 1.54 ...
  $ slope.p       : num  0.11191 0.00646 0.4992 0.13934 0.1225 ...
@@ -35,96 +35,9 @@ Classes ‘data.table’ and 'data.frame':	72 obs. of  8 variables:
 
  Data quality.
 ---------------
-
-| &nbsp; | slope | slope.sd | slope.p | DATA | Month | var |  N | slope.stat_sig |
-|:------:|------:|---------:|--------:|-----:|------:|----:|---:|---------------:|
-| Values |    72 |       72 |      72 |    0 |    72 |   0 | 72 |             72 |
-|  INFs  |     0 |        0 |       0 |    0 |     0 |   0 |  0 |              0 |
-|  NAs   |     0 |        0 |       0 |    0 |     0 |   0 |  0 |              0 |
-
-
  Data Summary.
----------------
-
-|            slope |        slope.sd |           slope.p |             DATA |         Month |              var |
-|-----------------:|----------------:|------------------:|-----------------:|--------------:|-----------------:|
-| Min.   :-11.0442 | Min.   :0.04298 | Min.   :0.0003233 |        Length:72 | Min.   : 1.00 |        Length:72 |
-| 1st Qu.:  0.1256 | 1st Qu.:0.15875 | 1st Qu.:0.0213556 | Class :character | 1st Qu.: 3.75 | Class :character |
-| Median :  0.3612 | Median :0.35569 | Median :0.1309213 | Mode  :character | Median : 6.50 | Mode  :character |
-| Mean   :  1.0018 | Mean   :1.38953 | Mean   :0.2656213 |               NA | Mean   : 6.50 |               NA |
-| 3rd Qu.:  0.9646 | 3rd Qu.:2.20384 | 3rd Qu.:0.4192455 |               NA | 3rd Qu.: 9.25 |               NA |
-| Max.   : 15.6988 | Max.   :9.45390 | Max.   :0.9847543 |               NA | Max.   :12.00 |               NA |
-
- 
-
-|             N | slope.stat_sig |
-|--------------:|---------------:|
-| Min.   : 4.00 | Min.   : 1.525 |
-| 1st Qu.: 7.00 | 1st Qu.:58.075 |
-| Median : 9.50 | Median :86.908 |
-| Mean   :16.67 | Mean   :73.438 |
-| 3rd Qu.:29.00 | 3rd Qu.:97.864 |
-| Max.   :30.00 | Max.   :99.968 |
-
-
-
-  * **slope**:
-
-
-    |   Min. | 1st Qu. | Median |  Mean | 3rd Qu. | Max. |
-    |-------:|--------:|-------:|------:|--------:|-----:|
-    | -11.04 |  0.1256 | 0.3612 | 1.002 |  0.9646 | 15.7 |
-
-  * **slope.sd**:
-
-
-    |    Min. | 1st Qu. | Median | Mean | 3rd Qu. |  Max. |
-    |--------:|--------:|-------:|-----:|--------:|------:|
-    | 0.04298 |  0.1587 | 0.3557 | 1.39 |   2.204 | 9.454 |
-
-  * **slope.p**:
-
-
-    |      Min. | 1st Qu. | Median |   Mean | 3rd Qu. |   Max. |
-    |----------:|--------:|-------:|-------:|--------:|-------:|
-    | 0.0003233 | 0.02136 | 0.1309 | 0.2656 |  0.4192 | 0.9848 |
-
-  * **DATA**:
-
-
-    | Length |     Class |      Mode |
-    |-------:|----------:|----------:|
-    |     72 | character | character |
-
-  * **Month**:
-
-
-    | Min. | 1st Qu. | Median | Mean | 3rd Qu. | Max. |
-    |-----:|--------:|-------:|-----:|--------:|-----:|
-    |    1 |    3.75 |    6.5 |  6.5 |    9.25 |   12 |
-
-  * **var**:
-
-
-    | Length |     Class |      Mode |
-    |-------:|----------:|----------:|
-    |     72 | character | character |
-
-  * **N**:
-
-
-    | Min. | 1st Qu. | Median |  Mean | 3rd Qu. | Max. |
-    |-----:|--------:|-------:|------:|--------:|-----:|
-    |    4 |       7 |    9.5 | 16.67 |      29 |   30 |
-
-  * **slope.stat_sig**:
-
-
-    |  Min. | 1st Qu. | Median |  Mean | 3rd Qu. |  Max. |
-    |------:|--------:|-------:|------:|--------:|------:|
-    | 1.525 |   58.08 |  86.91 | 73.44 |   97.86 | 99.97 |
-
-
-<!-- end of list -->
-
-
+---------------[1] "\n\n  * **slope**:\n\n\n    |   Min. | 1st Qu. | Median |  Mean | 3rd Qu. | Max. |\n    |-------:|--------:|-------:|------:|--------:|-----:|\n    | -11.04 |  0.1256 | 0.3612 | 1.002 |  0.9646 | 15.7 |\n\n  * **slope.sd**:\n\n\n    |    Min. | 1st Qu. | Median | Mean | 3rd Qu. |  Max. |\n    |--------:|--------:|-------:|-----:|--------:|------:|\n    | 0.04298 |  0.1587 | 0.3557 | 1.39 |   2.204 | 9.454 |\n\n  * **slope.p**:\n\n\n    |      Min. | 1st Qu. | Median |   Mean | 3rd Qu. |   Max. |\n    |----------:|--------:|-------:|-------:|--------:|-------:|\n    | 0.0003233 | 0.02136 | 0.1309 | 0.2656 |  0.4192 | 0.9848 |\n\n  * **DATA**:\n\n\n    | Length |     Class |      Mode |\n    |-------:|----------:|----------:|\n    |     72 | character | character |\n\n  * **Month**:\n\n\n    | Min. | 1st Qu. | Median | Mean | 3rd Qu. | Max. |\n    |-----:|--------:|-------:|-----:|--------:|-----:|\n    |    1 |    3.75 |    6.5 |  6.5 |    9.25 |   12 |\n\n  * **var**:\n\n\n    | Length |     Class |      Mode |\n    |-------:|----------:|----------:|\n    |     72 | character | character |\n\n  * **N**:\n\n\n    | Min. | 1st Qu. | Median |  Mean | 3rd Qu. | Max. |\n    |-----:|--------:|-------:|------:|--------:|-----:|\n    |    4 |       7 |    9.5 | 16.67 |      29 |   30 |\n\n  * **slope.stat_sig**:\n\n\n    |  Min. | 1st Qu. | Median |  Mean | 3rd Qu. |  Max. |\n    |------:|--------:|-------:|------:|--------:|------:|\n    | 1.525 |   58.08 |  86.91 | 73.44 |   97.86 | 99.97 |\n\n\n<!-- end of list -->\n\n\n"
+attr(,"class")
+[1] "knit_asis"
+attr(,"knit_cacheable")
+[1] NA
