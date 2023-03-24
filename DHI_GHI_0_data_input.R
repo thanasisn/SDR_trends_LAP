@@ -12,13 +12,20 @@ source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 
 ####  Run data construction ####################################################
 
-D_14 <- FALSE
-D_13 <- FALSE
+D_14_1 <- FALSE
+D_14   <- FALSE
+D_13   <- FALSE
 
+D_14_1 <- TRUE
+# D_14   <- TRUE
+# D_13   <- TRUE
 
-D_14 <- TRUE
-# D_13 <- TRUE
-
+## new new implementation with corrected limits
+if (D_14_1) {
+    common_data <- common_data_14_1
+    CS_file     <- CS_file_14_1
+    inpatern    <- "Clear_sky_id_Reno-Hansen_apply_v14_1_[0-9]{4}.Rds"
+}
 
 ## new implementation with corrected limits
 if (D_14) {
