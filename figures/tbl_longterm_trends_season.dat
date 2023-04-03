@@ -1,25 +1,17 @@
 slope ;  slope.sd ;  slope.p ;  DATA ;  Season ;  var ;  slope.stat_sig
- 2.14225994 ;  3.07101490 ;  0.5115555893 ;  All sky cond. ;  Winter ;  Dir. Beam Irrad. ;  48.84444
--1.38693492 ;  1.07270770 ;  0.2525510618 ;  All sky cond. ;  Spring ;  Dir. Beam Irrad. ;  74.74489
- 0.76087914 ;  1.26816887 ;  0.5746710689 ;  All sky cond. ;  Summer ;  Dir. Beam Irrad. ;  42.53289
- 1.26823865 ;  3.10444814 ;  0.6997974914 ;  All sky cond. ;  Autumn ;  Dir. Beam Irrad. ;  30.02025
- 0.81724317 ;  0.20061327 ;  0.0003273650 ;  All sky cond. ;  Winter ;  Global Irrad. ;  99.96726
- 0.21805132 ;  0.10369595 ;  0.0445988386 ;  All sky cond. ;  Spring ;  Global Irrad. ;  95.54012
- 0.12756652 ;  0.07222649 ;  0.0882645373 ;  All sky cond. ;  Summer ;  Global Irrad. ;  91.17355
- 0.44198542 ;  0.14504022 ;  0.0049950100 ;  All sky cond. ;  Autumn ;  Global Irrad. ;  99.50050
- 1.08293327 ;  0.53954747 ;  0.0915197304 ;  Clear sky cond. ;  Winter ;  Dir. Beam Irrad. ;  90.84803
--0.23797468 ;  0.40683827 ;  0.5839902337 ;  Clear sky cond. ;  Spring ;  Dir. Beam Irrad. ;  41.60098
- 0.46602487 ;  0.48764104 ;  0.3831270805 ;  Clear sky cond. ;  Summer ;  Dir. Beam Irrad. ;  61.68729
- 0.59064191 ;  0.76326509 ;  0.4740081946 ;  Clear sky cond. ;  Autumn ;  Dir. Beam Irrad. ;  52.59918
- 0.58837035 ;  0.13435709 ;  0.0001417224 ;  Clear sky cond. ;  Winter ;  Global Irrad. ;  99.98583
- 0.11545681 ;  0.08192202 ;  0.1697420370 ;  Clear sky cond. ;  Spring ;  Global Irrad. ;  83.02580
- 0.11952102 ;  0.04272046 ;  0.0092049798 ;  Clear sky cond. ;  Summer ;  Global Irrad. ;  99.07950
- 0.27834145 ;  0.10100971 ;  0.0101854226 ;  Clear sky cond. ;  Autumn ;  Global Irrad. ;  98.98146
- 7.83752087 ;  4.57232788 ;  0.1373354069 ;  Cloudy cond. ;  Winter ;  Dir. Beam Irrad. ;  86.26646
--2.97234375 ;  1.82122398 ;  0.1635956809 ;  Cloudy cond. ;  Spring ;  Dir. Beam Irrad. ;  83.64043
- 4.45216419 ;  1.47053827 ;  0.0291622715 ;  Cloudy cond. ;  Summer ;  Dir. Beam Irrad. ;  97.08377
- 6.45944024 ;  1.49375561 ;  0.0075399115 ;  Cloudy cond. ;  Autumn ;  Dir. Beam Irrad. ;  99.24601
- 0.73508390 ;  0.22384867 ;  0.0026761327 ;  Cloudy cond. ;  Winter ;  Global Irrad. ;  99.73239
- 0.16778987 ;  0.12008513 ;  0.1733112005 ;  Cloudy cond. ;  Spring ;  Global Irrad. ;  82.66888
--0.06263596 ;  0.08628261 ;  0.4739006134 ;  Cloudy cond. ;  Summer ;  Global Irrad. ;  52.60994
- 0.38058617 ;  0.19743241 ;  0.0640948419 ;  Cloudy cond. ;  Autumn ;  Global Irrad. ;  93.59052
+ 2.1811794 ;  3.08246084 ;  0.5057305254 ;  All sky cond. ;  Winter ;  Dir. Beam Irrad. ;  49.42695
+-1.3869349 ;  1.07270770 ;  0.2525510618 ;  All sky cond. ;  Spring ;  Dir. Beam Irrad. ;  74.74489
+ 0.7608791 ;  1.26816887 ;  0.5746710689 ;  All sky cond. ;  Summer ;  Dir. Beam Irrad. ;  42.53289
+ 1.2682386 ;  3.10444814 ;  0.6997974914 ;  All sky cond. ;  Autumn ;  Dir. Beam Irrad. ;  30.02025
+ 0.8172476 ;  0.20061434 ;  0.0003273648 ;  All sky cond. ;  Winter ;  Global Irrad. ;  99.96726
+ 0.2180513 ;  0.10369595 ;  0.0445988386 ;  All sky cond. ;  Spring ;  Global Irrad. ;  95.54012
+ 0.1275665 ;  0.07222649 ;  0.0882645373 ;  All sky cond. ;  Summer ;  Global Irrad. ;  91.17355
+ 0.4419854 ;  0.14504022 ;  0.0049950100 ;  All sky cond. ;  Autumn ;  Global Irrad. ;  99.50050
+-0.8434135 ;  3.54296800 ;  0.8212880247 ;  Cloudy cond. ;  Winter ;  Dir. Beam Irrad. ;  17.87120
+-1.3869349 ;  1.07270770 ;  0.2525510618 ;  Cloudy cond. ;  Spring ;  Dir. Beam Irrad. ;  74.74489
+ 0.7608791 ;  1.26816887 ;  0.5746710689 ;  Cloudy cond. ;  Summer ;  Dir. Beam Irrad. ;  42.53289
+ 1.2682386 ;  3.10444814 ;  0.6997974914 ;  Cloudy cond. ;  Autumn ;  Dir. Beam Irrad. ;  30.02025
+ 0.6762699 ;  0.19607323 ;  0.0017992505 ;  Cloudy cond. ;  Winter ;  Global Irrad. ;  99.82007
+ 0.2180513 ;  0.10369595 ;  0.0445988386 ;  Cloudy cond. ;  Spring ;  Global Irrad. ;  95.54012
+ 0.1275665 ;  0.07222649 ;  0.0882645373 ;  Cloudy cond. ;  Summer ;  Global Irrad. ;  91.17355
+ 0.4419854 ;  0.14504022 ;  0.0049950100 ;  Cloudy cond. ;  Autumn ;  Global Irrad. ;  99.50050
