@@ -163,7 +163,7 @@ values for the corresponding time step, and subtracting them .........
 ## Long-term trends
 
 ```{r trackercomm, echo=F, fig.cap="tracker"}
-knitr::include_graphics("./images/LongtermTrends-1.pdf")
+knitr::include_graphics("./images/LongtermTrends-2.pdf")
 ```
 
 This is it \@ref(fig:trackercomm).

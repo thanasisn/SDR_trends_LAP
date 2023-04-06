@@ -639,7 +639,7 @@ for (adb in database) {
             pdb   <- DB[ SZA == asza ]
             pdb   <- pdb[, ..wcare]
 
-            ## start empty plot
+            ## Plot cum sum
             xlim  <- range(pdb$Date)
             ylim  <- range(pdb[[paste0(avar,"_cusum")]], na.rm = T)
 
@@ -666,72 +666,75 @@ for (adb in database) {
             title(paste(sub("_.*","",adb), "monthly cumulative sum ",
                         translate(avar), "for SZA", asza,""), cex.main = 1)
 
-            # cat("\n \n \n")
+            cat("\n \n \n")
 
 
-            gpa <- ggplot(data = pdb,
-                         aes(x     = Date,
-                             y     = get(paste0(avar,"_des")),
-                             color = preNoon))          +
-                # geom_line(size = .8)                  +
-                geom_point(size = .8)                   +
-                geom_smooth(method = "lm", se = FALSE)  +
-                ggtitle(paste0("Anomaly % for ", asza, " SZA bin "))   +
-                xlab("Year")                            +
-                ylab("Anomaly %")                       +
-                scale_color_manual(breaks = plotpreNoon,
-                                   values = plotpNcol)  +
-                theme_bw()                              +
-                labs(color = "Period of day with `lm`") +
-                theme(plot.title = element_text(hjust = 0.5,
-                                                size  = 10,
-                                                face  = "bold" ),
-                      legend.position   = "bottom",
-                      legend.margin     = margin( t = -5 ),
-                      legend.background = element_rect(fill = alpha("white", 0.5)),
-                      legend.title      = element_text(size = 10),
-                      legend.text       = element_text(size = 10))
+            ## plot anomaly with linear fit
+            mainvar <- paste0(avar,"_des")
+            xlim  <- range(pdb$Date)
+            ylim  <- range(pdb[[mainvar]], na.rm = T)
 
-            suppressWarnings(suppressMessages(  print(gpa)  ))
+            plot(1, type = "n",
+                 xlab = "",
+                 xlim = xlim, ylim = ylim,
+                 xaxt = "n",
+                 ylab = bquote("Seasonal Anomaly [%]" ) )
+            axis.Date(1, pdb$Date)
+            abline(h = 0, lty = 2, lwd = 0.8)
 
-            ## make it interactive
-            # plotly::ggplotly(gpa)
+            ## for a sza
+            for (i in 1:length(plotpreNoon) ) {
+                pp <- pdb[preNoon == plotpreNoon[i]]
+                points(pp$Date, pp[[mainvar]], col = plotpNcol[i], cex = 0.5)
+            }
 
+            for (i in 1:length(plotpreNoon) ) {
+                pp <- pdb[preNoon == plotpreNoon[i]]
+                abline(lm(pp[[mainvar]] ~ pp$Date), col = plotpNcol[i], lwd = 2)
+            }
+
+            legend("top", legend = plotpreNoon, col = plotpNcol, title = "Linear fit",
+                   lty = 1, bty = "n", ncol = 3, cex = 0.8)
 
 
-            gpb <- ggplot(data = pdb,
-                         aes(x     = Date,
-                             y     = get(paste0(avar,"_des")),
-                             color = preNoon))          +
-                geom_point(size = .8)                   +
-                geom_smooth(method = "loess", se = F)   +
-                ggtitle(paste0("Anomaly % for ", asza, " SZA bin "))   +
-                xlab("Year")                            +
-                ylab("Anomaly %")                       +
-                scale_color_manual(breaks = plotpreNoon,
-                                   values = plotpNcol)  +
-                theme_bw()                              +
-                labs(color = "Period of day with `loess`") +
-                theme(plot.title = element_text(hjust = 0.5,
-                                                size  = 10,
-                                                face  = "bold" ),
-                      legend.position   = "bottom",
-                      legend.margin     = margin( t = -5 ),
-                      legend.background = element_rect(fill = alpha("white", 0.5)),
-                      legend.title      = element_text(size = 10),
-                      legend.text       = element_text(size = 10))
 
-            plot.new()
-            suppressWarnings(suppressMessages(  print(gpb)  ))
+            ## plot anomaly with loess smoothing
+            mainvar <- paste0(avar,"_des")
+            xlim  <- range(pdb$Date)
+            ylim  <- range(pdb[[mainvar]], na.rm = T)
 
-            # ## test plot for reference
-            # plot(DB$Date, DBn[avar]], col = plotpNcol[3],
-            #      ylab = bquote("Seasonal Anomaly [%]"),
-            #      cex = 0.5)
-            # for (i in 1:length(plotpreNoon) ) {
-            #     pp <- DBn[preNoon == plotpreNoon[i] & SZA == asza]
-            #     points(as.Date(pp$Date), pp[[avar]], col = plotpNcol[i], lwd = 2, cex = 0.5)
-            # }
+            plot(1, type = "n",
+                 xlab = "",
+                 xlim = xlim, ylim = ylim,
+                 xaxt = "n",
+                 ylab = bquote("Seasonal Anomaly [%]" ) )
+            axis.Date(1, pdb$Date)
+            abline(h = 0, lty = 2, lwd = 0.8)
+
+            ## for a sza
+            for (i in 1:length(plotpreNoon) ) {
+                pp <- pdb[preNoon == plotpreNoon[i]]
+                points(pp$Date, pp[[mainvar]], col = plotpNcol[i], cex = 0.5)
+            }
+
+            for (i in 1:length(plotpreNoon) ) {
+                pp <- pdb[preNoon == plotpreNoon[i]]
+                pp <- pp[ !is.na(pp[[mainvar]]) ]
+
+                LOESS_CRITERIO <-  c("aicc", "gcv")[2]
+                FTSE.lo3 <- loess.as(pp$Date, pp[[mainvar]],
+                                     degree    = 1,
+                                     criterion = LOESS_CRITERIO,
+                                     user.span = NULL,
+                                     plot      = FALSE)
+                FTSE.lo.predict3 <- predict(FTSE.lo3, pp$Date)
+                lines(pp$Date, FTSE.lo.predict3, col = plotpNcol[i], lwd = 2.5)
+            }
+
+            legend("top", legend = plotpreNoon, col = plotpNcol, title = "LOESS",
+                   lty = 1, bty = "n", ncol = 3, cex = 0.8)
+
+
         }
     }
 }
@@ -800,72 +803,80 @@ for (adb in database) {
             title(paste(sub("_.*","",adb), "monthly cumulative sum ",
                         translate(avar), "for SZA", asza,""), cex.main = 1)
 
-            # cat("\n \n \n")
-
-
-            gpa <- ggplot(data = pdb,
-                          aes(x     = Date,
-                              y     = get(paste0(avar,"_des")),
-                              color = preNoon))          +
-                # geom_line(size = .8)                  +
-                geom_point(size = .8)                   +
-                geom_smooth(method = "lm", se = FALSE)  +
-                ggtitle(paste0("Anomaly % for ", asza, " SZA bin "))   +
-                xlab("Year")                            +
-                ylab("Anomaly %")                       +
-                scale_color_manual(breaks = plotpreNoon,
-                                   values = plotpNcol)  +
-                theme_bw()                              +
-                labs(color = "Period of day with `lm`") +
-                theme(plot.title = element_text(hjust = 0.5,
-                                                size  = 10,
-                                                face  = "bold" ),
-                      legend.position   = "bottom",
-                      legend.margin     = margin( t = -5 ),
-                      legend.background = element_rect(fill = alpha("white", 0.5)),
-                      legend.title      = element_text(size = 10),
-                      legend.text       = element_text(size = 10))
-
-            suppressWarnings(suppressMessages(  print(gpa)  ))
-
-            ## make it interactive
-            # plotly::ggplotly(gpa)
+            cat("\n \n \n")
 
 
 
-            gpb <- ggplot(data = pdb,
-                          aes(x     = Date,
-                              y     = get(paste0(avar,"_des")),
-                              color = preNoon))          +
-                geom_point(size = .8)                   +
-                geom_smooth(method = "loess", se = F)   +
-                ggtitle(paste0("Anomaly % for ", asza, " SZA bin "))   +
-                xlab("Year")                            +
-                ylab("Anomaly %")                       +
-                scale_color_manual(breaks = plotpreNoon,
-                                   values = plotpNcol)  +
-                theme_bw()                              +
-                labs(color = "Period of day with `loess`") +
-                theme(plot.title = element_text(hjust = 0.5,
-                                                size  = 10,
-                                                face  = "bold" ),
-                      legend.position   = "bottom",
-                      legend.margin     = margin( t = -5 ),
-                      legend.background = element_rect(fill = alpha("white", 0.5)),
-                      legend.title      = element_text(size = 10),
-                      legend.text       = element_text(size = 10))
 
-            plot.new()
-            suppressWarnings(suppressMessages(  print(gpb)  ))
+            ## plot anomaly with linear fit
+            mainvar <- paste0(avar,"_des")
+            xlim  <- range(pdb$Date)
+            ylim  <- range(pdb[[mainvar]], na.rm = T)
 
-            # ## test plot for reference
-            # plot(DB$Date, DBn[avar]], col = plotpNcol[3],
-            #      ylab = bquote("Seasonal Anomaly [%]"),
-            #      cex = 0.5)
-            # for (i in 1:length(plotpreNoon) ) {
-            #     pp <- DBn[preNoon == plotpreNoon[i] & SZA == asza]
-            #     points(as.Date(pp$Date), pp[[avar]], col = plotpNcol[i], lwd = 2, cex = 0.5)
-            # }
+            plot(1, type = "n",
+                 xlab = "",
+                 xlim = xlim, ylim = ylim,
+                 xaxt = "n",
+                 ylab = bquote("Seasonal Anomaly [%]" ) )
+            axis.Date(1, pdb$Date)
+            abline(h = 0, lty = 2, lwd = 0.8)
+
+            ## for a sza
+            for (i in 1:length(plotpreNoon) ) {
+                pp <- pdb[preNoon == plotpreNoon[i]]
+                points(pp$Date, pp[[mainvar]], col = plotpNcol[i], cex = 0.5)
+            }
+
+            for (i in 1:length(plotpreNoon) ) {
+                pp <- pdb[preNoon == plotpreNoon[i]]
+                abline(lm(pp[[mainvar]] ~ pp$Date), col = plotpNcol[i], lwd = 2)
+            }
+
+            legend("top", legend = plotpreNoon, col = plotpNcol, title = "Linear fit",
+                   lty = 1, bty = "n", ncol = 3, cex = 0.8)
+
+
+
+            ## plot anomaly with loess smoothing
+            mainvar <- paste0(avar,"_des")
+            xlim  <- range(pdb$Date)
+            ylim  <- range(pdb[[mainvar]], na.rm = T)
+
+            plot(1, type = "n",
+                 xlab = "",
+                 xlim = xlim, ylim = ylim,
+                 xaxt = "n",
+                 ylab = bquote("Seasonal Anomaly [%]" ) )
+            axis.Date(1, pdb$Date)
+            abline(h = 0, lty = 2, lwd = 0.8)
+
+            ## for a sza
+            for (i in 1:length(plotpreNoon) ) {
+                pp <- pdb[preNoon == plotpreNoon[i]]
+                points(pp$Date, pp[[mainvar]], col = plotpNcol[i], cex = 0.5)
+            }
+
+            for (i in 1:length(plotpreNoon) ) {
+                pp <- pdb[preNoon == plotpreNoon[i]]
+                pp <- pp[ !is.na(pp[[mainvar]]) ]
+
+                LOESS_CRITERIO <-  c("aicc", "gcv")[2]
+                FTSE.lo3 <- loess.as(pp$Date, pp[[mainvar]],
+                                     degree    = 1,
+                                     criterion = LOESS_CRITERIO,
+                                     user.span = NULL,
+                                     plot      = FALSE)
+                FTSE.lo.predict3 <- predict(FTSE.lo3, pp$Date)
+                lines(pp$Date, FTSE.lo.predict3, col = plotpNcol[i], lwd = 2.5)
+            }
+
+            legend("top", legend = plotpreNoon, col = plotpNcol, title = "LOESS",
+                   lty = 1, bty = "n", ncol = 3, cex = 0.8)
+
+
+
+
+
         }
     }
 }

@@ -102,6 +102,10 @@ options(error = function() {
 
 ## __ Flags --------------------------------------------------------------------
 
+DRAFT <- TRUE
+DRAFT <- FALSE
+
+
 ## override plot options
 par(pch = ".")
 
@@ -251,28 +255,29 @@ for (DBn in dbs) {
             ## plot fit line
             abline(lm1, lwd = 2)
 
-            ## Running mean
-            first <- head(which(!is.na(dataset[[avar]])),1)
-            last  <- tail(which(!is.na(dataset[[avar]])),1)
+            if (DRAFT) {
+                ## Running mean
+                first <- head(which(!is.na(dataset[[avar]])),1)
+                last  <- tail(which(!is.na(dataset[[avar]])),1)
 
-            rm <- frollmean(dataset[[avar]][first:last],
-                            round(running_mean_window_days),
-                            na.rm = TRUE,
-                            algo  = "exact",
-                            align = "center")
+                rm <- frollmean(dataset[[avar]][first:last],
+                                round(running_mean_window_days),
+                                na.rm = TRUE,
+                                algo  = "exact",
+                                align = "center")
 
-            # points(dataset$Date, rm, col = "red", cex = 0.5)
-            lines(dataset$Date[first:last], rm, col = "red", lwd = 1.5)
+                # points(dataset$Date, rm, col = "red", cex = 0.5)
+                lines(dataset$Date[first:last], rm, col = "red", lwd = 1.5)
 
 
-            ## LOESS curve
-            vec <- !is.na(dataset[[avar]])
-            FTSE.lo3 <- loess.as(dataset$Date[vec], dataset[[avar]][vec],
-                                 degree = 1,
-                                 criterion = LOESS_CRITERIO, user.span = NULL, plot = F)
-            FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Date)
-            lines(dataset$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
-
+                ## LOESS curve
+                vec <- !is.na(dataset[[avar]])
+                FTSE.lo3 <- loess.as(dataset$Date[vec], dataset[[avar]][vec],
+                                     degree = 1,
+                                     criterion = LOESS_CRITERIO, user.span = NULL, plot = F)
+                FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Date)
+                lines(dataset$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
+            }
 
 
             ## decorations
@@ -415,28 +420,29 @@ for (DBn in dbs) {
 
             abline(lm2)
 
+            if (DRAFT) {
+                ## Running mean years * months in data set
+                first <- head(which(!is.na(dataset[[avar]])),1)
+                last  <- tail(which(!is.na(dataset[[avar]])),1)
 
-            ## Running mean years * months in data set
-            first <- head(which(!is.na(dataset[[avar]])),1)
-            last  <- tail(which(!is.na(dataset[[avar]])),1)
+                rm <- frollmean(dataset[[avar]][first:last],
+                                running_mean_window_years,
+                                na.rm = TRUE,
+                                algo  = "exact",
+                                align = "center")
 
-            rm <- frollmean(dataset[[avar]][first:last],
-                            running_mean_window_years,
-                            na.rm = TRUE,
-                            algo  = "exact",
-                            align = "center")
-
-            # points(dataset$Date, rm, col = "red", cex = 0.5)
-            lines(dataset$Year[first:last], rm, col = "red", cex = 0.5)
+                # points(dataset$Date, rm, col = "red", cex = 0.5)
+                lines(dataset$Year[first:last], rm, col = "red", cex = 0.5)
 
 
-            ## LOESS curve
-            vec <- !is.na(dataset[[avar]])
-            FTSE.lo3 <- loess.as(dataset$Year[vec], dataset[[avar]][vec],
-                                 degree = 1,
-                                 criterion = LOESS_CRITERIO, user.span = NULL, plot = F)
-            FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Year)
-            lines(dataset$Year, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
+                ## LOESS curve
+                vec <- !is.na(dataset[[avar]])
+                FTSE.lo3 <- loess.as(dataset$Year[vec], dataset[[avar]][vec],
+                                     degree = 1,
+                                     criterion = LOESS_CRITERIO, user.span = NULL, plot = F)
+                FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Year)
+                lines(dataset$Year, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
+            }
 
 
             ## decorations
@@ -617,26 +623,28 @@ for (DBn in dbs) {
 
             abline(lm2)
 
-            ## plot running mean
-            first <- head(which(!is.na(dataset[[avar]])),1)
-            last  <- tail(which(!is.na(dataset[[avar]])),1)
 
-            rm <- frollmean(dataset[[avar]][first:last],
-                            running_mean_window_years,
-                            na.rm = TRUE,
-                            algo  = "exact",
-                            align = "center")
-            lines(dataset$Year[first:last], rm, col = "red")
+            if (DRAFT) {
+                ## plot running mean
+                first <- head(which(!is.na(dataset[[avar]])),1)
+                last  <- tail(which(!is.na(dataset[[avar]])),1)
+
+                rm <- frollmean(dataset[[avar]][first:last],
+                                running_mean_window_years,
+                                na.rm = TRUE,
+                                algo  = "exact",
+                                align = "center")
+                lines(dataset$Year[first:last], rm, col = "red")
 
 
-            ## LOESS curve
-            vec <- !is.na(dataset[[avar]])
-            FTSE.lo3 <- loess.as(dataset$Year[vec], dataset[[avar]][vec],
-                                 degree = 1,
-                                 criterion = LOESS_CRITERIO, user.span = NULL, plot = F)
-            FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Year)
-            lines(dataset$Year, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
-
+                ## LOESS curve
+                vec <- !is.na(dataset[[avar]])
+                FTSE.lo3 <- loess.as(dataset$Year[vec], dataset[[avar]][vec],
+                                     degree = 1,
+                                     criterion = LOESS_CRITERIO, user.span = NULL, plot = F)
+                FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Year)
+                lines(dataset$Year, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
+            }
 
 
             ## decorations
