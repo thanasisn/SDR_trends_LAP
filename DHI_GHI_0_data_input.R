@@ -16,8 +16,8 @@ D_14_1 <- FALSE
 D_14   <- FALSE
 D_13   <- FALSE
 
-# D_14_1 <- TRUE
-D_14   <- TRUE
+D_14_1 <- TRUE
+# D_14   <- TRUE
 # D_13   <- TRUE
 
 ## new new implementation with corrected limits
