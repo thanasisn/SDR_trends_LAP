@@ -31,7 +31,7 @@ translate <- function(x) {
 
 #### Data range ####
 ## will not include the last/first day
-LAST_DAY                 <- as.Date("2023-03-01")
+LAST_DAY                 <- as.Date("2023-04-01")
 FIRST_DAY                <- as.Date("1900-07-01")
 
 #### Paths ####
