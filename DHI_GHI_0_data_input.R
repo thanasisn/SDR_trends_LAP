@@ -79,12 +79,25 @@ if (havetorun) {
             temp$wattHOR_unc_NT  <- NULL
             temp$wattHOR_unc_WT  <- NULL
 
+            temp <- unique(temp)
             DATA <- rbind(temp, DATA, fill = TRUE)
             rm(temp)
         }
+        DATA <- unique(DATA)
 
         ## TODO warn duplicate dates
         stopifnot(sum(duplicated(DATA$Date)) == 0)
+
+
+        test <- DATA[duplicated(DATA$Date) | duplicated(DATA$Date, fromLast = TRUE)]
+
+        test <- DATA[duplicated(DATA$Date) | duplicated(DATA$Date, fromLast = TRUE), which = TRUE]
+
+        cols <- names(DATA)
+        DATA[test]
+        DATA[test, (cols) := lapply(.SD, median, na.rm=T), .SDcols = cols]
+
+        duplicated(DATA$Date, fromLast = TRUE)
 
         ## make sure data are ok
         DATA <- unique(DATA)
