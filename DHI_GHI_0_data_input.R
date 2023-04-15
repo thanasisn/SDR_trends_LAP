@@ -86,21 +86,24 @@ if (havetorun) {
         DATA <- unique(DATA)
 
         ## TODO warn duplicate dates
-        stopifnot(sum(duplicated(DATA$Date)) == 0)
+        if (sum(duplicated(DATA$Date)) > 0) {
+            warning("There are duplicate dates in the data")
+        }
 
-
+        ## There are some duplicates introduced at some point!!
         test <- DATA[duplicated(DATA$Date) | duplicated(DATA$Date, fromLast = TRUE)]
+        stopifnot( nrow(test) < 1000 )
 
-        test <- DATA[duplicated(DATA$Date) | duplicated(DATA$Date, fromLast = TRUE), which = TRUE]
+        ## Workaround for duplicates
+        test_vec <- DATA[is.na(wattGLB) &
+                             (duplicated(DATA$Date) | duplicated(DATA$Date, fromLast = TRUE)),
+                         which = TRUE]
+        ## Drop some data
+        DATA <- DATA[!test_vec]
 
-        cols <- names(DATA)
-        DATA[test]
-        DATA[test, (cols) := lapply(.SD, median, na.rm=T), .SDcols = cols]
-
-        duplicated(DATA$Date, fromLast = TRUE)
-
-        ## make sure data are ok
-        DATA <- unique(DATA)
+        ## retest
+        test <- DATA[duplicated(DATA$Date) | duplicated(DATA$Date, fromLast = TRUE)]
+        cat("\n\nThere are ", nrow(test), " duplicate dates remaining!")
 
         ## this is used by old scripts
         setorder(DATA,Date)
@@ -125,15 +128,15 @@ if (havetorun) {
     #' ### Set data range to use
     #' We set the last day of the data the ***`r print(LAST_DAY)`**
     #+ echo=F, include=T
-    DATA <- DATA[ as.Date(Date) < LAST_DAY  ]
-    DATA <- DATA[ as.Date(Date) > FIRST_DAY ]
+    DATA <- DATA[as.Date(Date) < LAST_DAY ]
+    DATA <- DATA[as.Date(Date) > FIRST_DAY]
 
     #' ### Filter min elevation
     #' Keep data with Sun elevation above `r MIN_ELEVA`
-    DATA <- DATA[ Elevat >= MIN_ELEVA, ]
+    DATA <- DATA[Elevat >= MIN_ELEVA, ]
 
     #' ### Bais paper obstacle filter
-    DATA <- DATA[ !(Azimuth > 35 & Azimuth < 120 & Elevat < 10) ]
+    DATA <- DATA[!(Azimuth > 35 & Azimuth < 120 & Elevat < 10)]
     #+ echo=F, include=T
 
     if (D_13) {
@@ -149,18 +152,18 @@ if (havetorun) {
     if (D_14) {
         #' ### Keep only data characterized as 'TRUE' by the Radiation Quality control procedure **v14**
         #+ echo=F, include=T
-        DATA[ QCF_DIR == FALSE, wattDIR := NA]
-        DATA[ QCF_DIR == FALSE, wattHOR := NA]
-        DATA[ QCF_GLB == FALSE, wattGLB := NA]
+        DATA[QCF_DIR == FALSE, wattDIR := NA]
+        DATA[QCF_DIR == FALSE, wattHOR := NA]
+        DATA[QCF_GLB == FALSE, wattGLB := NA]
     }
 
     DATA <- DATA[ !(is.na(wattDIR) & is.na(wattGLB)) ]
 
     #' ## Data preparation
     #' ### Move measurements to mean earth distance
-    DATA[ , wattDIR_1au := wattDIR * (sun_dist ^ 2)]
-    DATA[ , wattGLB_1au := wattGLB * (sun_dist ^ 2)]
-    DATA[ , wattHOR_1au := wattHOR * (sun_dist ^ 2)]
+    DATA[, wattDIR_1au := wattDIR * (sun_dist ^ 2)]
+    DATA[, wattGLB_1au := wattGLB * (sun_dist ^ 2)]
+    DATA[, wattHOR_1au := wattHOR * (sun_dist ^ 2)]
     #+ echo=F, include=T
 
     # #' ### Relative to actual TSI at 1au variable representation
@@ -170,9 +173,9 @@ if (havetorun) {
 
     #' ### Use original variable representation
     #+ echo=F, include=T
-    DATA[ , DIR_att := wattDIR_1au]
-    DATA[ , GLB_att := wattGLB_1au]
-    DATA[ , HOR_att := wattHOR_1au]
+    DATA[, DIR_att := wattDIR_1au]
+    DATA[, GLB_att := wattGLB_1au]
+    DATA[, HOR_att := wattHOR_1au]
     #+ echo=F, include=T
 
     # #' ### Ground effect removal?
@@ -187,8 +190,8 @@ if (havetorun) {
     #+ echo=F, include=T
 
     ## fix noon just in case
-    DATA[ Azimuth <= 180 , preNoon := TRUE  ]
-    DATA[ Azimuth >  180 , preNoon := FALSE ]
+    DATA[Azimuth <= 180 , preNoon := TRUE ]
+    DATA[Azimuth >  180 , preNoon := FALSE]
 
 
     ## Split data to Clear Sky, non Clear sky and cloud sky data ---------------
@@ -203,8 +206,8 @@ if (havetorun) {
     wecare     <- grep("CSflag_", names(DATA), value = T)
     ## use only cm21 flags
     wecare     <- grep("_11", wecare, invert = T, value = T)
-    DATA_Clear <- DATA[ rowSums( DATA[, ..wecare ], na.rm = T ) == 0, ]
-    DATA_Cloud <- DATA[ rowSums( DATA[, ..wecare ], na.rm = T ) != 0, ]
+    DATA_Clear <- DATA[rowSums(DATA[, ..wecare ], na.rm = T) == 0,]
+    DATA_Cloud <- DATA[rowSums(DATA[, ..wecare ], na.rm = T) != 0,]
     #+ echo=F, include=T
 
     ## old flags usage
