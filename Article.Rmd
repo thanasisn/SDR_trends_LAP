@@ -77,10 +77,13 @@ basic conceptions
 
 ## Preparation.
 
-We can separate the data preparation in three parts, .......... 
+We can separate the data preparation in three parts, a) the acquisition of radiation measurements from the sensor, b) a radiation data quality check, and c) the identification of "clear sky" conditions from the radiometric data.
+
+### Acquisition of radiometric data.
 
 <!-- measurement -->
-For both CM-21 and CHP-1 instruments, the mean signal and the standard deviation over one minute is recorded every one minute.
+We sample the signal of the CM-21 pyranometer with a rate of $1 {Hz}$, and record the average signal and the standard deviation over each minute of the hour. The measurements are corrected for the zero offset of the instrument, using the "dark signal" (Sun elevation bellow $10\circ$, for a period of
+
 <!-- screening -->
 A manual screening processes, removes inconsistencies and erroneous recordings, that can occur on a long contentious operation, like this one.
 <!-- physical quantities -->
