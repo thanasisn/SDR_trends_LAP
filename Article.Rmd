@@ -62,10 +62,10 @@ source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 
 
 
-# Intoduction.
+# Introduction.
 
 <!-- time span -->
-Time span for CM21 is 1993-2022 and 2016-2022 for CHP1.
+Time span for CM-21 is 1993-2022 and 2016-2022 for CHP-1.
 
 goal
 
@@ -75,14 +75,16 @@ basic conceptions
 
 # Data and methodology.
 
-## Preperation.
+## Preparation.
+
+We can separate the data preparation in three parts, .......... 
 
 <!-- measurement -->
-For both CM21 and CHP1 instruments, the mean signal and the standard deviation over one minute is recorded every one minute.
+For both CM-21 and CHP-1 instruments, the mean signal and the standard deviation over one minute is recorded every one minute.
 <!-- screening -->
 A manual screening processes, removes inconsistencies and erroneous recordings, that can occur on a long contentious operation, like this one.
 <!-- physical quantities -->
-The conversion to irradiance was done using the available calibrations factors. For CHP1, there is only the initial one by the manufacture, and for CM21 there are seven calibration procedure in the span of the period we investigate.
+The conversion to irradiance was done using the available calibrations factors. For CHP-1, there is only the initial one by the manufacture, and for CM-21 there are seven calibration procedure in the span of the period we investigate.
 <!-- Dark signal -->
 We have adjusted the measurements for the dark signal offset, by a daily value, using the nights before and after each day.
 <!-- Quality assurance -->
