@@ -82,16 +82,26 @@ We can separate the data preparation in three parts, a) the acquisition of radia
 ### Acquisition of radiometric data.
 
 <!-- measurement -->
-We sample the signal of the CM-21 pyranometer with a rate of $1 {Hz}$, and record the average signal and the standard deviation over each minute of the hour. The measurements are corrected for the zero offset of the instrument, using the "dark signal" (Sun elevation bellow $10\circ$, for a period of
+We sample the signal of the CM-21 pyranometer with a rate of $1 {Hz}$, and record the average signal and the standard deviation over each minute of the hour.
+<!-- dark correction -->
+The measurements are corrected for the zero offset of the instrument, using the "dark signal" (Sun elevation bellow $10^\circ$, for a period of $3 h$).
+<!-- physical quantities -->
+The signal is converted to radiation using a ramped value of the instrument sensitivity, derived from the eight laboratory calibrations of the instrument, during the study period.
+
+### Radiation data quality check
 
 <!-- screening -->
-A manual screening processes, removes inconsistencies and erroneous recordings, that can occur on a long contentious operation, like this one.
-<!-- physical quantities -->
-The conversion to irradiance was done using the available calibrations factors. For CHP-1, there is only the initial one by the manufacture, and for CM-21 there are seven calibration procedure in the span of the period we investigate.
-<!-- Dark signal -->
-We have adjusted the measurements for the dark signal offset, by a daily value, using the nights before and after each day.
+A manual screening is performed, to remove inconsistencies and erroneous recordings, that can occur during a long continuous operation.
 <!-- Quality assurance -->
-A radiation data quality assurance procedure was applied, adjusted for the site, based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006]. Only data characterized as good quality were used in this study.
+The manual screening is aided by a radiation data quality assurance procedure, adjusted for this site, based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006]. 
+
+Only data characterized as good quality were used in this study.
+.....
+
+### Clear-sky identification
+
+......
+
 <!-- Data selection -->
 Due to larger measurement uncertainty near the horizon, we exclude
 all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$. 
