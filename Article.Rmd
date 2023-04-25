@@ -128,7 +128,7 @@ We adjusted all 1-minute radiometric values to the mean Sun - Earth distance.
 
 In this study, we present any radiometric data as an percent departure from the corresponding seasonal mean.
 When we use daily aggregated data we compute the mean values for the day and exclude instances with less than `r  Daily_aggregation_N_lim` valid data points.
-Accordingly monthly values are computed from the daily aggregated data, `r Monthly_aggegation_N_lim`
+Accordingly, monthly values are computed from the daily aggregated data, month with less than `r Monthly_aggegation_N_lim` days are rejected. 
 
 
 
