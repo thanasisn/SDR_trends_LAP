@@ -149,7 +149,7 @@ if (havetorun) {
         DATA[!QCF_GLB %in% keepQF, wattGLB := NA]
     }
 
-    if (D_14) {
+    if (D_14 | D_14_1) {
         #' ### Keep only data characterized as 'TRUE' by the Radiation Quality control procedure **v14**
         #+ echo=F, include=T
         DATA[QCF_DIR == FALSE, wattDIR := NA]
