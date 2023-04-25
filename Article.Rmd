@@ -100,25 +100,31 @@ Only data characterized as good quality were used in this study.
 
 ### Clear-sky identification
 
-......
-
-<!-- Data selection -->
-Due to larger measurement uncertainty near the horizon, we exclude
-all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$. 
-Moreover, due to some obstructions around the site (hills and buildings), we remove data with Azimuth angle between 
-$35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$. At 
-those cases the Sun, were not visible by the instruments.
+In order to estimate the effect of the clouds on the global radiation we create three datasets. 
+The all sky conditions containing all the valid measurements. 
+The clear-sky conditions data and the remainder part the cloudy condition data. 
+To identify the clear-sky conditions we used a method proposed by @Long2000 and by @Reno2016 that was adapted and configured for the site.
 
 
 ## Data process.
 
+
+### Data selection 
+
+Due to a significant measurement uncertainty near the horizon, we exclude
+all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$. 
+Moreover, due to some obstructions around the site (hills and buildings), we exclude data with Azimuth angle between 
+$35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$.
+At those cases the Sun systematically, is not visible by the instruments.
+
 To make the measurements comparable throughout the dataset. 
 <!-- 1au -->
-We adjusted all 1-minute values to the mean Sun and Earth distance.
+We adjusted all 1-minute radiometric values to the mean Sun - Earth distance.
 <!-- TSI -->
 <!-- And, we made all measurements relative to the TSI at 1au, in order to compensate for the the Suns intensity variability, using an homogenized timeseries of satellite TSI observations. As a result, we processed all radiation data as a fraction of Suns TSI. -->
 
 
+### Process and aggregation of radiometric data
 
 
 
@@ -126,12 +132,10 @@ We adjusted all 1-minute values to the mean Sun and Earth distance.
 
 
 
-<!-- Clear Sky -->
-In this analysis, we need .............
-, we using two selection of our measurements dataset, one with all sky conditions (ALL),
-consisting of the whole available data, and one filtered for 'clear sky' 
-conditions (CS). The latter was created, using a method adapted to our 
-site, and was proposed by @Long2000 and by @Reno2016.
+
+
+
+
 
 
 
