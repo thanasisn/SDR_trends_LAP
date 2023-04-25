@@ -95,6 +95,7 @@ A manual screening is performed, to remove inconsistencies and erroneous recordi
 <!-- Quality assurance -->
 The manual screening is aided by a radiation data quality assurance procedure, adjusted for this site, based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006]. 
 
+....
 Only data characterized as good quality were used in this study.
 .....
 
@@ -136,18 +137,25 @@ The daily seasonal values are computed based on the day of year number and the m
 
 
 
-
-
-
-
-
-
-
 # Results
 
 ## Long term trends
 
-## Zenith angle dependance and years seasons.
+Using the mean daily Global radiation we produce the trends of each data set, as departure from the seasonal value.
+
+```{r trendALL, echo=F, fig.cap="Daily Global radiation seasonal anomaly and long term trend, for all sky conditions."}
+knitr::include_graphics("./images/LongtermTrends-2.pdf")
+```
+
+```{r trendCLEAR, echo=F, fig.cap="Daily Global radiation seasonal anomaly and long term trend, for clear sky conditions."}
+knitr::include_graphics("./images/LongtermTrends-4.pdf")
+```
+
+```{r trendCLOUD, echo=F, fig.cap="Daily Global radiation seasonal anomaly and long term trend, for cloud sky conditions."}
+knitr::include_graphics("./images/LongtermTrends-6.pdf")
+```
+
+## Zenith angle dependence and years seasons.
 
 ## Consistency of the trends
 
@@ -168,8 +176,6 @@ The daily seasonal values are computed based on the day of year number and the m
 
 Both dataset were aggregate in $1^\circ$ SZA bins by am, pm, am+pm
 
-some data was rejected.......
-
 by daily mean 
 
 daily sum
@@ -184,23 +190,23 @@ values for the corresponding time step, and subtracting them .........
 
 ## Long-term trends
 
-```{r trackercomm, echo=F, fig.cap="tracker"}
-knitr::include_graphics("./images/LongtermTrends-2.pdf")
-```
 
-This is it \@ref(fig:trackercomm).
+This is it \@ref(fig:trendALL).
 
 
 \FloatBarrier
 
 
-<!-- \tiny -->
+\tiny 
 ```{r echo=F}
 pp <- data.table::fread("./figures/tbl_longterm_trends.dat")
 pander::pander(pp,
                caption = "Table of trends and stats")
 ```
-<!-- \normalsize -->
+\normalsize
+
+
+Some more text here
 
 
 **END**
