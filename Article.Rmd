@@ -43,13 +43,13 @@ date: "`r format(Sys.time(), '%F')`"
 
 
 
-```{r echo=F, include=F, cache=T}
+```{r echo=F, include=T}
 knitr::opts_chunk$set(comment    = ""      )
 knitr::opts_chunk$set(dev        = "pdf"   )
 knitr::opts_chunk$set(out.width  = "70%"   )
 knitr::opts_chunk$set(fig.align  = "center")
 knitr::opts_chunk$set(fig.pos    = '!h'    )
-
+library(pander)
 ```
 
 
@@ -157,7 +157,21 @@ knitr::include_graphics("./images/LongtermTrends-6.pdf")
 ```
 
 
+\footnotesize
+```{r trendtable, echo=F}
+pp <- read.csv("./figures/tbl_longterm_trends.dat",
+               strip.white = TRUE,
+               sep = ";",
+               header = TRUE)
 
+pp$slope.sd           <- NULL
+pp$slope.ConfInt_0.95 <- NULL
+pp$slope.ConfInt_0.99 <- NULL
+pp <- pp[grep("Global" ,pp$var), ]
+
+pander(pp)
+```
+\normalsize
 
 
 
