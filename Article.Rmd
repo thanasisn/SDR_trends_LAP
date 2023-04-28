@@ -148,9 +148,11 @@ Using the mean daily Global radiation we produce the trends of each data set, as
 knitr::include_graphics("./images/LongtermTrends-2.pdf")
 ```
 
-```{r trendCLEAR, echo=F, fig.cap="Daily Global radiation seasonal anomaly and long term trend, for clear sky conditions."}
-knitr::include_graphics("./images/LongtermTrends-4.pdf")
-```
+
+<!-- ```{r trendCLEAR, echo=F, fig.cap="Daily Global radiation seasonal anomaly and long term trend, for clear sky conditions."} -->
+<!-- knitr::include_graphics("./images/LongtermTrends-4.pdf") -->
+<!-- ``` -->
+
 
 ```{r trendCLOUD, echo=F, fig.cap="Daily Global radiation seasonal anomaly and long term trend, for cloud sky conditions."}
 knitr::include_graphics("./images/LongtermTrends-6.pdf")
@@ -163,13 +165,17 @@ pp <- read.csv("./figures/tbl_longterm_trends.dat",
                strip.white = TRUE,
                sep = ";",
                header = TRUE)
-
+pp <- pp[grep("Global" ,pp$var), ]
 pp$slope.sd           <- NULL
 pp$slope.ConfInt_0.95 <- NULL
 pp$slope.ConfInt_0.99 <- NULL
-pp <- pp[grep("Global" ,pp$var), ]
+pp$var                <- NULL
+rownames(pp) <- NULL
+names(pp) <- c("Trend", "Trend p-value", "Sky condition", "Trend statistical significance")
 
-pander(pp)
+panderOptions("table.alignment.default", "left")
+pander(pp,
+       caption = "Trends of daily means by sky conditions.")
 ```
 \normalsize
 
@@ -192,6 +198,28 @@ knitr::include_graphics("./images/SeasonaltTrends-2.pdf")
 knitr::include_graphics("./images/SeasonaltTrends-3.pdf")
 ```
 
+
+
+
+\footnotesize
+```{r trendseasontable, echo=F}
+pp <- read.csv("./figures/tbl_longterm_trends_season.dat",
+               strip.white = TRUE,
+               sep = ";",
+               header = TRUE)
+pp <- pp[grep("Global" ,pp$var), ]
+pp$slope.sd           <- NULL
+pp$slope.ConfInt_0.95 <- NULL
+pp$slope.ConfInt_0.99 <- NULL
+pp$var                <- NULL
+rownames(pp) <- NULL
+names(pp) <- c("Trend", "Trend p-value", "Sky condition", "Season", "Trend statistical sign.")
+
+panderOptions("table.alignment.default", "left")
+pander(pp,
+       caption = "Trends of daily means by sky conditions.")
+```
+\normalsize
 
 
 
