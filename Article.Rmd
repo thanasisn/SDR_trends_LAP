@@ -237,6 +237,10 @@ pander(pp,
 \FloatBarrier
 
 
+```{r cm, echo=F, fig.cap="Donditions."}
+knitr::include_graphics("./images/SeasonaltTrends-1.pdf")
+```
+
 
 
 
