@@ -132,9 +132,7 @@ Accordingly, monthly values are computed from the daily aggregated data, month w
 The daily seasonal values are computed based on the day of year number and the monthly by the calendar month.
 
 <!-- Seasonal -->
-..... Define seasons aggregation if used .......
-
-
+For the seasons of the year trends we grouped the mean daily values by season (December - February: Winter, March - May: Spring, etc.)
 
 # Results
 

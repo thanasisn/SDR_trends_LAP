@@ -354,7 +354,7 @@ myRtools::write_dat(pprint,
 #'
 #' ### Trends for each season of the year
 #'
-#' We calculated monthly means from the daily means
+#' We calculated Seasonla means from the daily means
 #'
 #+ echo=F, include=F
 
