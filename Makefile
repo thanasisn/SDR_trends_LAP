@@ -47,7 +47,7 @@ $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	## Sync article files
-	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --exclude 'unnamed-chunk*.png' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@## Sync presentation files
 	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
 	@## copy stat data
@@ -88,7 +88,7 @@ $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	## Sync article files
-	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --exclude 'unnamed-chunk*.png' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@## Sync presentation files
 	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
 	@#setsid evince    $@ &
@@ -121,7 +121,7 @@ $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	## Sync article files
-	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.pdf' --exclude 'unnamed-chunk*.png' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
 	@## Sync presentation files
 	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
 	@#setsid evince    $@ &
@@ -144,11 +144,11 @@ $(RUNT): $(RMD)
 clean_cache:
 	rm -f -r ./Article_cache
 	rm -f -r ./DHI_GHI_1_longterm_trends_cache
-	@#rm -f -r ./DHI_GHI_1_longterm_trends_files
+	rm -f -r ./DHI_GHI_1_longterm_trends_files
 	rm -f -r ./DHI_GHI_2_sza_trends_cache
-	@#rm -f -r ./DHI_GHI_2_sza_trends_files
+	rm -f -r ./DHI_GHI_2_sza_trends_files
 	rm -f -r ./DHI_GHI_3_trends_consistency_cache
-	@#rm -f -r ./DHI_GHI_3_trends_consistency_files
+	rm -f -r ./DHI_GHI_3_trends_consistency_files
 	rm -f -r ./runtime/DHI_GHI_1_longterm_trends.pdf
 	rm -f -r ./runtime/DHI_GHI_2_sza_trends.pdf
 	rm -f -r ./runtime/DHI_GHI_3_trends_consistency.pdf
