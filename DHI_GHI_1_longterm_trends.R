@@ -269,7 +269,6 @@ for (DBn in dbs) {
                 # points(dataset$Date, rm, col = "red", cex = 0.5)
                 lines(dataset$Date[first:last], rm, col = "red", lwd = 1.5)
 
-
                 ## LOESS curve
                 vec <- !is.na(dataset[[avar]])
                 FTSE.lo3 <- loess.as(dataset$Date[vec], dataset[[avar]][vec],
