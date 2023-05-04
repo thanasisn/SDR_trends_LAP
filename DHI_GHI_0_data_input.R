@@ -6,6 +6,7 @@
 # file.remove(common_data)
 
 require(data.table)
+require(zoo)
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
@@ -623,36 +624,29 @@ if (havetorun) {
 
 
 
-
-
-
-
-
-
-
-
     ## Season of year daily aggregation ----------------------------------------
-    ## add season of year flag
-      ALL_1_daily_mean[month(Date) %in% c(12, 1, 2), Season := "Winter"]
-      ALL_1_daily_mean[month(Date) %in% c( 3, 4, 5), Season := "Spring"]
-      ALL_1_daily_mean[month(Date) %in% c( 6, 7, 8), Season := "Summer"]
-      ALL_1_daily_mean[month(Date) %in% c( 9,10,11), Season := "Autumn"]
-    CLEAR_1_daily_mean[month(Date) %in% c(12, 1, 2), Season := "Winter"]
-    CLEAR_1_daily_mean[month(Date) %in% c( 3, 4, 5), Season := "Spring"]
-    CLEAR_1_daily_mean[month(Date) %in% c( 6, 7, 8), Season := "Summer"]
-    CLEAR_1_daily_mean[month(Date) %in% c( 9,10,11), Season := "Autumn"]
-    CLOUD_1_daily_mean[month(Date) %in% c(12, 1, 2), Season := "Winter"]
-    CLOUD_1_daily_mean[month(Date) %in% c( 3, 4, 5), Season := "Spring"]
-    CLOUD_1_daily_mean[month(Date) %in% c( 6, 7, 8), Season := "Summer"]
-    CLOUD_1_daily_mean[month(Date) %in% c( 9,10,11), Season := "Autumn"]
+
+    ## Quarter of year with one month shift to include December in the next years winter
+      ALL_1_daily_mean[, season_Yqrt := as.yearqtr(as.yearmon(paste(year(Date), month(Date), sep = "-")) + 1/12)]
+    CLEAR_1_daily_mean[, season_Yqrt := as.yearqtr(as.yearmon(paste(year(Date), month(Date), sep = "-")) + 1/12)]
+    CLOUD_1_daily_mean[, season_Yqrt := as.yearqtr(as.yearmon(paste(year(Date), month(Date), sep = "-")) + 1/12)]
+
+    ## Flag seasons using quarters
+      ALL_1_daily_mean[season_Yqrt %% 1 == 0   , Season := "Winter"]
+      ALL_1_daily_mean[season_Yqrt %% 1 == 0.25, Season := "Spring"]
+      ALL_1_daily_mean[season_Yqrt %% 1 == 0.50, Season := "Summer"]
+      ALL_1_daily_mean[season_Yqrt %% 1 == 0.75, Season := "Autumn"]
+    CLEAR_1_daily_mean[season_Yqrt %% 1 == 0   , Season := "Winter"]
+    CLEAR_1_daily_mean[season_Yqrt %% 1 == 0.25, Season := "Spring"]
+    CLEAR_1_daily_mean[season_Yqrt %% 1 == 0.50, Season := "Summer"]
+    CLEAR_1_daily_mean[season_Yqrt %% 1 == 0.75, Season := "Autumn"]
+    CLOUD_1_daily_mean[season_Yqrt %% 1 == 0   , Season := "Winter"]
+    CLOUD_1_daily_mean[season_Yqrt %% 1 == 0.25, Season := "Spring"]
+    CLOUD_1_daily_mean[season_Yqrt %% 1 == 0.50, Season := "Summer"]
+    CLOUD_1_daily_mean[season_Yqrt %% 1 == 0.75, Season := "Autumn"]
 
 
-    warning("This aggregation is not perfect")
-    ## Year change mid season!!
-    ## TODO
-    ## shift +one month aggregate
-    # shift -one month to reset
-
+    ## _ Create variables by season from daily means ---------------------------
     ALL_1_bySeason_daily_mean <-
         ALL_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
                             GLB_att    = mean(GLB_att,    na.rm = T),
@@ -663,8 +657,11 @@ if (havetorun) {
                             GLB_att_sd = sd(  GLB_att,    na.rm = T),
                             GLB_att_N  = sum(!is.na(GLB_att)),
                             HOR_att_N  = sum(!is.na(HOR_att)),
-                            DIR_att_N  = sum(!is.na(DIR_att))  ),
-                         by = .( Year = year(Date), Season)]
+                            DIR_att_N  = sum(!is.na(DIR_att)),
+                            minDate    = min(Date),
+                            maxDate    = max(Date),
+                            medDate    = median(Date)    ),
+                         by = .( Yqrt = season_Yqrt) ]
 
     CLEAR_1_bySeason_daily_mean <-
         CLEAR_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
@@ -676,8 +673,11 @@ if (havetorun) {
                               GLB_att_sd = sd(  GLB_att,    na.rm = T),
                               GLB_att_N  = sum(!is.na(GLB_att)),
                               HOR_att_N  = sum(!is.na(HOR_att)),
-                              DIR_att_N  = sum(!is.na(DIR_att))  ),
-                           by = .( Year = year(Date), Season)]
+                              DIR_att_N  = sum(!is.na(DIR_att)),
+                              minDate    = min(Date),
+                              maxDate    = max(Date),
+                              medDate    = median(Date)    ),
+                           by = .( Yqrt = season_Yqrt) ]
 
     CLOUD_1_bySeason_daily_mean <-
         CLOUD_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
@@ -689,8 +689,29 @@ if (havetorun) {
                               GLB_att_sd = sd(  GLB_att,    na.rm = T),
                               GLB_att_N  = sum(!is.na(GLB_att)),
                               HOR_att_N  = sum(!is.na(HOR_att)),
-                              DIR_att_N  = sum(!is.na(DIR_att))  ),
-                           by = .( Year = year(Date), Season)]
+                              DIR_att_N  = sum(!is.na(DIR_att)),
+                              minDate    = min(Date),
+                              maxDate    = max(Date),
+                              medDate    = median(Date)    ),
+                           by = .( Yqrt = season_Yqrt) ]
+
+
+    ## Flag seasons using quarters
+      ALL_1_bySeason_daily_mean[Yqrt %% 1 == 0   , Season := "Winter"]
+      ALL_1_bySeason_daily_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
+      ALL_1_bySeason_daily_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
+      ALL_1_bySeason_daily_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
+    CLEAR_1_bySeason_daily_mean[Yqrt %% 1 == 0   , Season := "Winter"]
+    CLEAR_1_bySeason_daily_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
+    CLEAR_1_bySeason_daily_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
+    CLEAR_1_bySeason_daily_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
+    CLOUD_1_bySeason_daily_mean[Yqrt %% 1 == 0   , Season := "Winter"]
+    CLOUD_1_bySeason_daily_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
+    CLOUD_1_bySeason_daily_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
+    CLOUD_1_bySeason_daily_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
+
+
+
 
 
 
@@ -763,18 +784,22 @@ if (havetorun) {
     CLOUD_1_D_bySeason_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
     CLOUD_1_D_bySeason_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
 
+    ## Create year from quarter!
+    warning("Years in by Season are shifted by a month to match seasons")
+      ALL_1_D_bySeason_DESEAS[, Year := year(Yqrt)]
+    CLEAR_1_D_bySeason_DESEAS[, Year := year(Yqrt)]
+    CLOUD_1_D_bySeason_DESEAS[, Year := year(Yqrt)]
 
-    setorder(  ALL_1_D_bySeason_DESEAS, Year, Season)
-    setorder(CLEAR_1_D_bySeason_DESEAS, Year, Season)
-    setorder(CLOUD_1_D_bySeason_DESEAS, Year, Season)
+
+    setorder(  ALL_1_D_bySeason_DESEAS, Yqrt)
+    setorder(CLEAR_1_D_bySeason_DESEAS, Yqrt)
+    setorder(CLOUD_1_D_bySeason_DESEAS, Yqrt)
 
 
     rm(  ALL_1_daily_mean,   ALL_1_daily_seas,
        CLEAR_1_daily_mean, CLEAR_1_daily_seas,
        CLOUD_1_daily_mean, CLOUD_1_daily_seas)
     gc()
-
-
 
 
 
@@ -1599,9 +1624,10 @@ if (havetorun) {
     rm(DATA_Cloud)
 
     ##.----
-    #### 0.  Save the whole work space  ----------------------------------------
+    ##  Save the whole work space  ---------------------------------------------
     if (!TEST) {
-        save(list = ls(all = TRUE),file = common_data)
+        save(list = ls(all = TRUE), file = common_data)
+        cat("\nSaved workspace:", common_data, "\n\n")
     }
 } else {
     cat(paste("\n\nLoad environment and data from: ", common_data,"\n\n"))
@@ -1611,7 +1637,7 @@ if (havetorun) {
 
 ##_----
 
-# #### run on all quarter of the hour #####################################
+# #### run on all quarter of the hour
 # ayear$quarter <- ((as.numeric( ayear$Date ) %/% (3600/4) ) )
 #
 # selectqua  <- list(ayear$quarter)
@@ -1628,7 +1654,7 @@ if (havetorun) {
 # qGLstdCNT  <- aggregate(ayear$wattGLB_SD, by = selectqua, FUN = function(x) sum(!is.na(x)) )
 # qGLstdSTD  <- aggregate(ayear$wattGLB_SD, by = selectqua, FUN = sd,   na.rm = TRUE )
 #
-# #### output of quarterly data #######################################
+# #### output of quarterly data
 # ayearquarter <- data.frame( Dates      = qDates$x,
 #                             qGlobal    = qGlobal$x,
 #                             qGlobalCNT = qGlobalCNT$x,
@@ -1638,7 +1664,7 @@ if (havetorun) {
 #                             qGLstdCNT  = qGLstdCNT$x,
 #                             qGLstdSTD  = qGLstdSTD$x)
 #
-# #### run on 4 quarters of every hour ################################
+# #### run on 4 quarters of every hour
 # ayearquarter$hourly <- as.numeric( ayearquarter$Dates ) %/% 3600
 # hposic              <- as.POSIXct( ayearquarter$hourly * 3600, origin = "1970-01-01" )
 #
@@ -1648,4 +1674,3 @@ if (havetorun) {
 #
 # hGlobal    <- aggregate( ayearquarter$qGlobal, by = selecthour, FUN = mean, na.rm = FALSE )  ## na.rm must be FALSE!
 # hGlobalCNT <- aggregate( ayearquarter$qGlobal, by = selecthour, FUN = function(x) sum(!is.na(x)))
-
