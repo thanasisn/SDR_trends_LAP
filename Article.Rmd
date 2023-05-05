@@ -9,7 +9,7 @@ abstract:
 documentclass:  article
 classoption:    a4paper,oneside
 fontsize:       12pt
-geometry:       "left=0.5in,right=0.5in,top=0.5in,bottom=0.5in"
+geometry:       "left=0.75in,right=0.75in,top=0.75in,bottom=0.75in"
 link-citations: yes
 colorlinks:     yes
 urlcolor:       blue
