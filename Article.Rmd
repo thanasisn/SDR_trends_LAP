@@ -13,17 +13,18 @@ geometry:       "left=0.75in,right=0.75in,top=0.75in,bottom=0.75in"
 link-citations: yes
 colorlinks:     yes
 urlcolor:       blue
-
 bibliography:   [references.bib]
 biblio-style:   apalike
-
+date:           "`r format(Sys.time(), '%F')`"
     
 header-includes:
   - \usepackage{caption}
   - \usepackage{placeins}
   - \captionsetup{font=small}
+  - \usepackage{setspace}\doublespacing
+  - \usepackage{float}
 
-output:
+output:  
   bookdown::pdf_document2:
     number_sections: no
     fig_caption:     yes
@@ -37,7 +38,6 @@ output:
     toc:             true
     fig_width:       7.5
     fig_height:      5
-date: "`r format(Sys.time(), '%F')`"
 
 ---
 
@@ -75,6 +75,7 @@ Here we investigate the trend on shortwave radiation for the last decades at The
 
 <!-- basic concepts -->
 The approach of our method to characterize the sky conditions and the definition of each sky condition has some ......μη αντικειμένικότητα
+
 
 
 
