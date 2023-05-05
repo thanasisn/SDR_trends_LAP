@@ -74,8 +74,8 @@ In some algorithms we used direct radiation data for comparisons, obtained by a 
 Here we investigate the trend on shortwave radiation for the last decades at Thessaloniki, and try to infer a relation to sky conditions (all, clear, cloudy).
 
 <!-- basic concepts -->
-Our method to characterize the sky conditions and the definition of each sky condition has some subjectivity. The algorithm was calibrated with the main focus to identify the presence of clouds on the sky dome, although there are marginal cases that there will be false positives or false negateives.
-
+Our method to characterize the sky conditions and the definition of each sky condition has some subjectivity.
+The algorithm was calibrated with the main focus to identify the presence of clouds on the sky dome, although there are marginal cases that there will be false positives or false negatives identifications.
 
 
 
@@ -83,12 +83,16 @@ Our method to characterize the sky conditions and the definition of each sky con
 
 ## Preparation.
 
-We can separate the data preparation in three parts, a) the acquisition of radiation measurements from the sensor, b) a radiation data quality check, and c) the identification of "clear sky" conditions from the radiometric data.
+We can separate the data preparation in three parts,
+a) the acquisition of radiation measurements from the sensor, 
+b) a radiation data quality check, and 
+c) the identification of "clear sky" conditions from the radiometric data.
 
 ### Acquisition of radiometric data.
 
+
 <!-- measurement -->
-We sample the signal of the CM-21 pyranometer with a rate of $1 {Hz}$, and record the average signal and the standard deviation over each minute of the hour.
+The signal of the CM-21 pyranometer is sampled with a rate of $1 {Hz}$, and a record the average signal and the standard deviation every one minute is recorded.
 <!-- dark correction -->
 The measurements are corrected for the zero offset of the instrument, using the "dark signal" (Sun elevation bellow $10^\circ$, for a period of $3 h$).
 <!-- physical quantities -->
