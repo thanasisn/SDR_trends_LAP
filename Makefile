@@ -21,7 +21,7 @@ Ap: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
-	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::odt_document2()', output_file='$(TARGET).odt')"
+	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::odt_document2', output_file='$(TARGET).odt')"
 	@# echo "Changed:  $?"
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
