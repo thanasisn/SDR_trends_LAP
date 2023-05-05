@@ -44,16 +44,16 @@ date: "`r format(Sys.time(), '%F')`"
 
 
 ```{r echo=F, include=T}
+## document configurations 
 knitr::opts_chunk$set(comment    = ""      )
 knitr::opts_chunk$set(dev        = "pdf"   )
 knitr::opts_chunk$set(out.width  = "70%"   )
 knitr::opts_chunk$set(fig.align  = "center")
 knitr::opts_chunk$set(fig.pos    = '!h'    )
 library(pander)
-```
-
-
-```{r echo=F, include=T}
+library(data.table)
+## load data
+load("./data/common_data_14_2.Rda")
 ## variables we use
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 ```
@@ -64,11 +64,17 @@ source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 # Introduction.
 
 <!-- time span -->
-Time span for CM-21 is 1993-2022 and 2016-2022 for CHP-1.
+The global radiation was obtained from the pyranometer CM-21, for the period
+`r min(ALL_1_daily_DESEAS$Date)` -  `r max(ALL_1_daily_DESEAS$Date)`.
+In some algorithms we used direct radiation data for comparisons, obtained by a CM-21 pyrheliometer, with data span
+`r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])` - `r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
 
-goal
 
-basic conceptions
+<!-- goals -->
+Here we investigate the trend on shortwave radiation for the last decades at Thessaloniki, and try to infer a relation to sky conditions (all, clear, cloudy).
+
+<!-- basic concepts -->
+The approach of our method to characterize the sky conditions and the definition of each sky condition has some ......μη αντικειμένικότητα
 
 
 
@@ -134,11 +140,13 @@ The daily seasonal values are computed based on the day of year number and the m
 <!-- Seasonal -->
 For the seasons of the year trends we grouped the mean daily values by season (December - February: Winter, March - May: Spring, etc.)
 
+
 # Results
+
+\FloatBarrier
 
 ## Long term trends
 
-\FloatBarrier
 
 Using the mean daily Global radiation we produce the trends of each data set, as departure from the seasonal value.
 
@@ -169,7 +177,7 @@ pp$slope.ConfInt_0.95 <- NULL
 pp$slope.ConfInt_0.99 <- NULL
 pp$var                <- NULL
 rownames(pp) <- NULL
-names(pp) <- c("Trend", "Trend p-value", "Sky condition", "Trend statistical significance")
+names(pp) <- c("Trend %/year", "Trend p-value", "Sky condition", "Trend statistical significance")
 
 panderOptions("table.alignment.default", "left")
 pander(pp,
@@ -180,19 +188,20 @@ pander(pp,
 
 
 
-## Long term trends by season of year
-
 \FloatBarrier
 
-```{r seasonalALL, echo=F, fig.cap="Donditions."}
+## Long term trends by season of year
+
+
+```{r seasonalALL, echo=F, fig.cap="Trends by season for All-sky condition. Displays monthly means of daily means."}
 knitr::include_graphics("./images/SeasonaltTrends-1.pdf")
 ```
 
-```{r seasonalCLEAR, echo=F, fig.cap="Daiditions."}
+```{r seasonalCLEAR, echo=F, fig.cap="Trends by season for Clear-sky condition. Displays monthly means of daily means."}
 knitr::include_graphics("./images/SeasonaltTrends-2.pdf")
 ```
 
-```{r seasonalCLOUD, echo=F, fig.cap="Daiditions."}
+```{r seasonalCLOUD, echo=F, fig.cap="Trends by season for Cloudy-sky condition. Displays monthly means of daily means."}
 knitr::include_graphics("./images/SeasonaltTrends-3.pdf")
 ```
 
@@ -211,7 +220,7 @@ pp$slope.ConfInt_0.95 <- NULL
 pp$slope.ConfInt_0.99 <- NULL
 pp$var                <- NULL
 rownames(pp) <- NULL
-names(pp) <- c("Trend", "Trend p-value", "Sky condition", "Season", "Trend statistical sign.")
+names(pp) <- c("Trend %/year", "Trend p-value", "Sky condition", "Season", "Trend statistical sign.")
 
 panderOptions("table.alignment.default", "left")
 pander(pp,
@@ -222,21 +231,21 @@ pander(pp,
 
 
 
+\FloatBarrier
 
 ## Zenith angle dependence and years seasons.
 
+
+
+
 \FloatBarrier
-
-
-
 
 ## Consistency of the trends
 
-\FloatBarrier
 
 
 ```{r cm, echo=F, fig.cap="Donditions."}
-knitr::include_graphics("./images/SeasonaltTrends-1.pdf")
+knitr::include_graphics("./images/CumulativeDailyCumSum-1.pdf")
 ```
 
 
