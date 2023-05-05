@@ -74,7 +74,7 @@ In some algorithms we used direct radiation data for comparisons, obtained by a 
 Here we investigate the trend on shortwave radiation for the last decades at Thessaloniki, and try to infer a relation to sky conditions (all, clear, cloudy).
 
 <!-- basic concepts -->
-The approach of our method to characterize the sky conditions and the definition of each sky condition has some ......μη αντικειμένικότητα
+Our method to characterize the sky conditions and the definition of each sky condition has some subjectivity. The algorithm was calibrated with the main focus to identify the presence of clouds on the sky dome, although there are marginal cases that there will be false positives or false negateives.
 
 
 
