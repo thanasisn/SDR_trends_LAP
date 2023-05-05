@@ -6,7 +6,7 @@ all:       clean_all pdf html rtim
 render:    pdf html rtim
 pdf:       p1 p2 p3 Ap
 html:      h1 h2 h3 Ah
-rtim:      r1 r2 r3 
+rtim:      r1 r2 r3
 clean_all: clean_cache clean_data clean_pdfs
 
 presentation = "../presentations/2023-01-18_LAP_GHI_trends/"
@@ -21,9 +21,12 @@ Ap: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::odt_document2()', output_file='$(TARGET).odt')"
 	@# echo "Changed:  $?"
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
+
+
 
 Ah: $(SLIDY)
 $(SLIDY): $(RMD)
@@ -42,7 +45,7 @@ PDF    := $(TARGET).pdf
 SLIDY  := $(TARGET).html
 RUNT   := ./runtime/$(TARGET).pdf
 
-p1: $(PDF) 
+p1: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
@@ -160,6 +163,6 @@ clean_pdfs:
 
 clean_data:
 	rm -f    ./data/*.*
-	
+
 
 
