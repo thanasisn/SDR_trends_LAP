@@ -249,11 +249,20 @@ pander(pp,
 
 
 
-```{r cm, echo=F, fig.cap="Donditions."}
+```{r cumsumALL, echo=F, fig.cap="Donditions."}
 knitr::include_graphics("./images/CumulativeDailyCumSum-1.pdf")
 ```
 
 
+
+```{r cumsumCLEAR, echo=F, fig.cap="Donditions."}
+knitr::include_graphics("./images/CumulativeDailyCumSum-5.pdf")
+```
+
+
+```{r cumsumCLOUD, echo=F, fig.cap="Donditions."}
+knitr::include_graphics("./images/CumulativeDailyCumSum-9.pdf")
+```
 
 
 
