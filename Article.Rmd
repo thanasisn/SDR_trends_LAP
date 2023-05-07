@@ -63,21 +63,26 @@ source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 
 # Introduction.
 
-<!-- time span -->
-The global radiation was obtained from the pyranometer CM-21, for the period
-`r min(ALL_1_daily_DESEAS$Date)` -  `r max(ALL_1_daily_DESEAS$Date)`.
-In some algorithms we used direct radiation data for comparisons, obtained by a CM-21 pyrheliometer, with data span
-`r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])` - `r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
+......
 
+<!-- time span -->
+The global radiation was obtained from the pyranometer CM-21, for the period from
+`r min(ALL_1_daily_DESEAS$Date)` to `r max(ALL_1_daily_DESEAS$Date)`.
+In some algorithms we auxialiary used direct radiation data for comparisons, obtained by a CM-21 pyrheliometer, with data span from 
+`r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])` to `r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
+
+......
 
 <!-- goals -->
 Here we investigate the trend on shortwave radiation for the last decades at Thessaloniki, and try to infer a relation to sky conditions (all, clear, cloudy).
+
+......
 
 <!-- basic concepts -->
 Our method to characterize the sky conditions and the definition of each sky condition has some subjectivity.
 The algorithm was calibrated with the main focus to identify the presence of clouds on the sky dome, although there are marginal cases that there will be false positives or false negatives identifications.
 
-
+......
 
 # Data and methodology.
 
