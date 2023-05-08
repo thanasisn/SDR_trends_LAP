@@ -5,7 +5,7 @@
 ---------------
 
 Object name:    object      
-Date written:   2023-05-05 05:56:01.4 UTC  
+Date written:   2023-05-08 05:52:43.6 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_monthly.dat      
 Data file size: 7.4 KiB (7625) 
 Size in memory: 6840.0 B      
@@ -21,9 +21,9 @@ Notes:          NA
 
 ```
 Classes ‘data.table’ and 'data.frame':	72 obs. of  8 variables:
- $ slope         : num  6.768 11.291 -0.793 -4.366 2.879 ...
+ $ slope         : num  6.769 11.292 -0.794 -4.366 2.88 ...
  $ slope.sd      : num  3.62 2.51 2.11 2.39 1.55 ...
- $ slope.p       : num  0.1208 0.00639 0.72184 0.12674 0.12168 ...
+ $ slope.p       : num  0.12071 0.00639 0.72164 0.12674 0.1217 ...
  $ DATA          : chr  "All sky cond." "All sky cond." "All sky cond." "All sky cond." ...
  $ Month         : int  1 2 3 4 5 6 7 8 9 10 ...
  $ var           : chr  "Dir. Beam Irrad." "Dir. Beam Irrad." "Dir. Beam Irrad." "Dir. Beam Irrad." ...
@@ -46,24 +46,24 @@ Classes ‘data.table’ and 'data.frame':	72 obs. of  8 variables:
  Data Summary.
 ---------------
 
-|            slope |        slope.sd |           slope.p |             DATA |         Month |              var |
-|-----------------:|----------------:|------------------:|-----------------:|--------------:|-----------------:|
-| Min.   :-11.0581 | Min.   :0.04366 | Min.   :0.0002935 |        Length:72 | Min.   : 1.00 |        Length:72 |
-| 1st Qu.: -0.0330 | 1st Qu.:0.15164 | 1st Qu.:0.0245562 | Class :character | 1st Qu.: 3.75 | Class :character |
-| Median :  0.4261 | Median :0.35078 | Median :0.1305970 | Mode  :character | Median : 6.50 | Mode  :character |
-| Mean   :  0.9287 | Mean   :1.32992 | Mean   :0.2609683 |               NA | Mean   : 6.50 |               NA |
-| 3rd Qu.:  1.0305 | 3rd Qu.:2.12384 | 3rd Qu.:0.4561497 |               NA | 3rd Qu.: 9.25 |               NA |
-| Max.   : 14.1843 | Max.   :8.93707 | Max.   :0.9544595 |               NA | Max.   :12.00 |               NA |
+|             slope |        slope.sd |           slope.p |             DATA |         Month |              var |
+|------------------:|----------------:|------------------:|-----------------:|--------------:|-----------------:|
+| Min.   :-11.05752 | Min.   :0.04366 | Min.   :0.0002942 |        Length:72 | Min.   : 1.00 |        Length:72 |
+| 1st Qu.: -0.03318 | 1st Qu.:0.15165 | 1st Qu.:0.0245690 | Class :character | 1st Qu.: 3.75 | Class :character |
+| Median :  0.42605 | Median :0.35078 | Median :0.1306744 | Mode  :character | Median : 6.50 | Mode  :character |
+| Mean   :  0.92852 | Mean   :1.33007 | Mean   :0.2610024 |               NA | Mean   : 6.50 |               NA |
+| 3rd Qu.:  1.03043 | 3rd Qu.:2.12388 | 3rd Qu.:0.4562267 |               NA | 3rd Qu.: 9.25 |               NA |
+| Max.   : 14.18152 | Max.   :8.93721 | Max.   :0.9543150 |               NA | Max.   :12.00 |               NA |
 
  
 
 |             N | slope.stat_sig |
 |--------------:|---------------:|
-| Min.   : 4.00 | Min.   : 4.554 |
-| 1st Qu.: 7.00 | 1st Qu.:54.385 |
-| Median : 9.50 | Median :86.940 |
-| Mean   :16.88 | Mean   :73.903 |
-| 3rd Qu.:29.00 | 3rd Qu.:97.544 |
+| Min.   : 4.00 | Min.   : 4.569 |
+| 1st Qu.: 7.00 | 1st Qu.:54.377 |
+| Median : 9.50 | Median :86.933 |
+| Mean   :16.88 | Mean   :73.900 |
+| 3rd Qu.:29.00 | 3rd Qu.:97.543 |
 | Max.   :30.00 | Max.   :99.971 |
 
 
@@ -71,9 +71,9 @@ Classes ‘data.table’ and 'data.frame':	72 obs. of  8 variables:
   * **slope**:
 
 
-    |   Min. | 1st Qu. | Median |   Mean | 3rd Qu. |  Max. |
-    |-------:|--------:|-------:|-------:|--------:|------:|
-    | -11.06 |  -0.033 | 0.4261 | 0.9288 |   1.031 | 14.18 |
+    |   Min. |  1st Qu. | Median |   Mean | 3rd Qu. |  Max. |
+    |-------:|---------:|-------:|-------:|--------:|------:|
+    | -11.06 | -0.03318 |  0.426 | 0.9285 |    1.03 | 14.18 |
 
   * **slope.sd**:
 
@@ -87,7 +87,7 @@ Classes ‘data.table’ and 'data.frame':	72 obs. of  8 variables:
 
     |      Min. | 1st Qu. | Median |  Mean | 3rd Qu. |   Max. |
     |----------:|--------:|-------:|------:|--------:|-------:|
-    | 0.0002935 | 0.02456 | 0.1306 | 0.261 |  0.4561 | 0.9545 |
+    | 0.0002942 | 0.02457 | 0.1307 | 0.261 |  0.4562 | 0.9543 |
 
   * **DATA**:
 
@@ -122,7 +122,7 @@ Classes ‘data.table’ and 'data.frame':	72 obs. of  8 variables:
 
     |  Min. | 1st Qu. | Median | Mean | 3rd Qu. |  Max. |
     |------:|--------:|-------:|-----:|--------:|------:|
-    | 4.554 |   54.39 |  86.94 | 73.9 |   97.54 | 99.97 |
+    | 4.568 |   54.38 |  86.93 | 73.9 |   97.54 | 99.97 |
 
 
 <!-- end of list -->
