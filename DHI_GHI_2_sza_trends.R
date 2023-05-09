@@ -107,7 +107,7 @@ par(pch = ".")
 
 ## choose to grid some plots
 FIGURESGRID <- TRUE
-# FIGURESGRID <- FALSE
+FIGURESGRID <- FALSE
 
 ## choose loess criterion for span
 LOESS_CRITERIO <-  c("aicc", "gcv")[1]

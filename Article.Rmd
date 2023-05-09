@@ -163,7 +163,7 @@ For the seasons of the year trends we grouped the mean daily values by season (D
 Using the mean daily Global radiation we produce the trends of each data set, as departure from the seasonal value.
 Only for All-sky (Fig. \@ref(fig:trendALL)) and Cloudy-sky (Fig. \@ref(fig:trendCLOUD)) conditions the statistical significance of the trends is acceptable (Tab. \@ref(tab:trendtable)).
 
-```{r trendALL, echo=F, fig.cap="Daily Global radiation seasonal anomaly and long term trend, for all sky conditions."}
+```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily Global radiation relative to climatogical values for 1993 - 2022. The straight black line shows the lond term trend for All-sky conditions."}
 knitr::include_graphics("./images/LongtermTrends-2.pdf")
 ```
 
@@ -199,6 +199,12 @@ pander(pp,
 # knitr::kable(pp, caption = "Trends of daily means by sky conditions.")
 ```
 \normalsize
+
+
+\FloatBarrier
+
+## Trends by SZA
+
 
 
 
