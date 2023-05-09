@@ -258,7 +258,7 @@ pander(pp,
 
 ## Consistency of the trends
 
-
+A method to evaluate changes in the long term trend is to use the cumulative sum of the variable.
 
 ```{r cumsumALL, echo=F, fig.cap="Donditions."}
 knitr::include_graphics("./images/CumulativeDailyCumSum-1.pdf")
