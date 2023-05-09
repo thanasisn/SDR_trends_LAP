@@ -161,6 +161,7 @@ For the seasons of the year trends we grouped the mean daily values by season (D
 
 
 Using the mean daily Global radiation we produce the trends of each data set, as departure from the seasonal value.
+Only for All-sky (Fig. \@ref(fig:trendALL)) and Cloudy-sky (Fig. \@ref(fig:trendCLOUD)) conditions the statistical significance of the trends is acceptable (Tab. \@ref(tab:trendtable)).
 
 ```{r trendALL, echo=F, fig.cap="Daily Global radiation seasonal anomaly and long term trend, for all sky conditions."}
 knitr::include_graphics("./images/LongtermTrends-2.pdf")
@@ -193,7 +194,9 @@ names(pp) <- c("Trend %/year", "Trend p-value", "Sky condition", "Trend statisti
 
 panderOptions("table.alignment.default", "left")
 pander(pp,
-       caption = "Trends of daily means by sky conditions.")
+       caption = "\\label{tab:trendtable}Trends of daily means by sky conditions.")
+# \\label{tab:tab2}
+# knitr::kable(pp, caption = "Trends of daily means by sky conditions.")
 ```
 \normalsize
 
@@ -204,6 +207,7 @@ pander(pp,
 
 ## Long term trends by season of year
 
+Similar we have produced the deseaonilised trend for different sky conditions for each season of the year, using the corresponding mean monthly values.
 
 ```{r seasonalALL, echo=F, fig.cap="Trends by season for All-sky condition. Displays monthly means of daily means."}
 knitr::include_graphics("./images/SeasonaltTrends-1.pdf")
@@ -236,7 +240,7 @@ names(pp) <- c("Trend %/year", "Trend p-value", "Sky condition", "Season", "Tren
 
 panderOptions("table.alignment.default", "left")
 pander(pp,
-       caption = "Trends of daily means by sky conditions.")
+       caption = "\\label{tab:trendseasontable}Trends of daily means by sky conditions for the season of the year.")
 ```
 \normalsize
 
