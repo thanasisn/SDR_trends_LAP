@@ -238,7 +238,8 @@ pp$var                <- NULL
 rownames(pp) <- NULL
 names(pp) <- c("Trend %/year", "Trend p-value", "Sky condition", "Season", "Trend statistical sign.")
 
-panderOptions("table.alignment.default", "left")
+# panderOptions("table.alignment.default", "left")
+panderOptions("table.alignment.default", "center")
 pander(pp,
        caption = "\\label{tab:trendseasontable}Trends of daily means by sky conditions for the season of the year.")
 ```
@@ -265,8 +266,8 @@ knitr::include_graphics("./images/CumulativeDailyCumSum-1.pdf")
 ```
 
 
-
-```{r cumsumCLEAR, echo=F, fig.cap="Donditions."}
+<!-- Not showing this trend -->
+```{r cumsumCLEAR, echo=F, fig.cap="Donditions.", include=FALSE}
 knitr::include_graphics("./images/CumulativeDailyCumSum-5.pdf")
 ```
 
