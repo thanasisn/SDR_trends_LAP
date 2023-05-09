@@ -281,9 +281,7 @@ wecare <- grep("^slope|^N",  names(szatrends), ignore.case = T, value = T)
 wecare <- grep("^slope\\.t", wecare, ignore.case = T, value = T, invert = T)
 wecare <- grep("slope\\.sd", wecare, ignore.case = T, value = T, invert = T)
 
-
-
-
+## TODO seperate plots by direct global
 
 #+ SzaTrends, echo=F, include=T, results = "asis"
 ## ALL - CS
@@ -306,8 +304,8 @@ for (type in unique(szatrends$DATA)) {
             awename <- gsub("(\\D)(\\D+)", "\\U\\1\\L\\2", sub("\\."," ", awe), perl = TRUE)
 
             ## select All/CS and DIR/GLB/trans
-            subdata <- szatrends[ szatrends$DATA == type &    ##
-                                      szatrends$var  == avar , ]
+            subdata <- szatrends[ szatrends$DATA == type &
+                                  szatrends$var  == avar , ]
 
             xlim <- range(subdata$SZA,    na.rm = T)
             ylim <- range(subdata[[awe]], na.rm = T)
@@ -325,8 +323,8 @@ for (type in unique(szatrends$DATA)) {
 
             title(paste(awename, translate(type), translate(avar) ), cex.main = .8)
 
-            lines(pam$SZA, pam[[awe]], pch =  pch_am, col = 2, type = "b", lwd = 1, cex = 0.5)
-            lines(ppm$SZA, ppm[[awe]], pch =  pch_pm, col = 3, type = "b", lwd = 1, cex = 0.5)
+            lines(pam$SZA, pam[[awe]], pch = pch_am, col = 2, type = "b", lwd = 1, cex = 0.5)
+            lines(ppm$SZA, ppm[[awe]], pch = pch_pm, col = 3, type = "b", lwd = 1, cex = 0.5)
 
             legend("top",
                    legend = c("Morning", "Evening"),
@@ -354,6 +352,8 @@ for (type in unique(szatrends$DATA)) {
 
 
 ## __ Calculate SZA ~ Season stats  --------------------------------------------
+
+warning("Check aggregation by season")
 
 # vars        <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
 vars        <- c("DIR_att_des", "GLB_att_des")
