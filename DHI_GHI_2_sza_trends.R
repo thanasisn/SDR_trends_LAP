@@ -47,7 +47,7 @@
 
 #+ echo=F, include=F
 knitr::opts_chunk$set(comment    = ""       )
-knitr::opts_chunk$set(dev        = "pdf"    )
+# knitr::opts_chunk$set(dev        = "pdf"    )
 # knitr::opts_chunk$set(dev        = "png"    )
 knitr::opts_chunk$set(out.width  = "100%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
@@ -101,6 +101,9 @@ options(error = function() {
 })
 
 ## __ Flags --------------------------------------------------------------------
+
+DRAFT <- TRUE
+DRAFT <- FALSE
 
 ## override plot options
 par(pch = ".")
@@ -321,7 +324,7 @@ for (type in unique(szatrends$DATA)) {
 
             abline(h = 0, lty = 3 )
 
-            title(paste(awename, translate(type), translate(avar) ), cex.main = .8)
+            title(paste(awename, translate(type), translate(avar)), cex.main = .8)
 
             lines(pam$SZA, pam[[awe]], pch = pch_am, col = 2, type = "b", lwd = 1, cex = 0.5)
             lines(ppm$SZA, ppm[[awe]], pch = pch_pm, col = 3, type = "b", lwd = 1, cex = 0.5)
