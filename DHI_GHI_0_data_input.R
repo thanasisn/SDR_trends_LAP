@@ -242,7 +242,7 @@ if (havetorun) {
     ## . ----
     #### 1. long-term  ---------------------------------------------------------
 
-    ##  Daily means of data ----------------------------------------------------
+    ##  Daily means  -----------------------------------------------------------
 
     ALL_1_daily_mean <-
         DATA_all[,.(DIR_att       = mean(DIR_att,     na.rm = T),
@@ -982,9 +982,9 @@ if (havetorun) {
 
 
     ##.----
-    ####  2. Long term by SZA  #################################################
+    ####  2. Long term by SZA  -------------------------------------------------
 
-    ## _ Calculate daily SZA means ####
+    ## Daily SZA means ---------------------------------------------------------
     ALL_2_daily_mean <-
         DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                      HOR_att       = mean(HOR_att,    na.rm = T),
@@ -1094,20 +1094,40 @@ if (havetorun) {
     CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
 
 
-    ## _ By season of year -----------------------------------------------------
-    ## add season of year tag
-    DATA_all[  month(Date) %in% c(12, 1, 2), Season := "Winter"]
-    DATA_all[  month(Date) %in% c( 3, 4, 5), Season := "Spring"]
-    DATA_all[  month(Date) %in% c( 6, 7, 8), Season := "Summer"]
-    DATA_all[  month(Date) %in% c( 9,10,11), Season := "Autumn"]
-    DATA_Clear[month(Date) %in% c(12, 1, 2), Season := "Winter"]
-    DATA_Clear[month(Date) %in% c( 3, 4, 5), Season := "Spring"]
-    DATA_Clear[month(Date) %in% c( 6, 7, 8), Season := "Summer"]
-    DATA_Clear[month(Date) %in% c( 9,10,11), Season := "Autumn"]
-    DATA_Cloud[month(Date) %in% c(12, 1, 2), Season := "Winter"]
-    DATA_Cloud[month(Date) %in% c( 3, 4, 5), Season := "Spring"]
-    DATA_Cloud[month(Date) %in% c( 6, 7, 8), Season := "Summer"]
-    DATA_Cloud[month(Date) %in% c( 9,10,11), Season := "Autumn"]
+    ## Season of year SZA daily  -----------------------------------------------
+    ## Quarter of year with one month shift to include December in the next years winter
+      DATA_all[, season_Yqrt := as.yearqtr(as.yearmon(paste(year(Date), month(Date), sep = "-")) + 1/12)]
+    DATA_Clear[, season_Yqrt := as.yearqtr(as.yearmon(paste(year(Date), month(Date), sep = "-")) + 1/12)]
+    DATA_Cloud[, season_Yqrt := as.yearqtr(as.yearmon(paste(year(Date), month(Date), sep = "-")) + 1/12)]
+
+    ## Flag seasons using quarters
+      DATA_all[season_Yqrt %% 1 == 0   , Season := "Winter"]
+      DATA_all[season_Yqrt %% 1 == 0.25, Season := "Spring"]
+      DATA_all[season_Yqrt %% 1 == 0.50, Season := "Summer"]
+      DATA_all[season_Yqrt %% 1 == 0.75, Season := "Autumn"]
+    DATA_Clear[season_Yqrt %% 1 == 0   , Season := "Winter"]
+    DATA_Clear[season_Yqrt %% 1 == 0.25, Season := "Spring"]
+    DATA_Clear[season_Yqrt %% 1 == 0.50, Season := "Summer"]
+    DATA_Clear[season_Yqrt %% 1 == 0.75, Season := "Autumn"]
+    DATA_Cloud[season_Yqrt %% 1 == 0   , Season := "Winter"]
+    DATA_Cloud[season_Yqrt %% 1 == 0.25, Season := "Spring"]
+    DATA_Cloud[season_Yqrt %% 1 == 0.50, Season := "Summer"]
+    DATA_Cloud[season_Yqrt %% 1 == 0.75, Season := "Autumn"]
+
+
+    # ## add season of year tag
+    #   DATA_all[  month(Date) %in% c(12, 1, 2), Season := "Winter"]
+    #   DATA_all[  month(Date) %in% c( 3, 4, 5), Season := "Spring"]
+    #   DATA_all[  month(Date) %in% c( 6, 7, 8), Season := "Summer"]
+    #   DATA_all[  month(Date) %in% c( 9,10,11), Season := "Autumn"]
+    # DATA_Clear[month(Date) %in% c(12, 1, 2), Season := "Winter"]
+    # DATA_Clear[month(Date) %in% c( 3, 4, 5), Season := "Spring"]
+    # DATA_Clear[month(Date) %in% c( 6, 7, 8), Season := "Summer"]
+    # DATA_Clear[month(Date) %in% c( 9,10,11), Season := "Autumn"]
+    # DATA_Cloud[month(Date) %in% c(12, 1, 2), Season := "Winter"]
+    # DATA_Cloud[month(Date) %in% c( 3, 4, 5), Season := "Spring"]
+    # DATA_Cloud[month(Date) %in% c( 6, 7, 8), Season := "Summer"]
+    # DATA_Cloud[month(Date) %in% c( 9,10,11), Season := "Autumn"]
 
 
     ALL_2_bySeason_daily_mean <-
@@ -1126,7 +1146,7 @@ if (havetorun) {
                  by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                         Date    = Day,
                         preNoon = preNoon,
-                        Season  = Season) ]
+                        Yqrt    = season_Yqrt)]
 
     CLEAR_2_bySeason_daily_mean <-
         DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
@@ -1144,7 +1164,7 @@ if (havetorun) {
                    by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                           Date    = Day,
                           preNoon = preNoon,
-                          Season  = Season) ]
+                          Yqrt    = season_Yqrt)]
 
     CLOUD_2_bySeason_daily_mean <-
         DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
@@ -1162,11 +1182,28 @@ if (havetorun) {
                    by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                           Date    = Day,
                           preNoon = preNoon,
-                          Season  = Season) ]
+                          Yqrt    = season_Yqrt)]
+
+
+    ## Flag seasons using quarters
+      ALL_2_bySeason_daily_mean[Yqrt %% 1 == 0   , Season := "Winter"]
+      ALL_2_bySeason_daily_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
+      ALL_2_bySeason_daily_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
+      ALL_2_bySeason_daily_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
+    CLEAR_2_bySeason_daily_mean[Yqrt %% 1 == 0   , Season := "Winter"]
+    CLEAR_2_bySeason_daily_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
+    CLEAR_2_bySeason_daily_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
+    CLEAR_2_bySeason_daily_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
+    CLOUD_2_bySeason_daily_mean[Yqrt %% 1 == 0   , Season := "Winter"]
+    CLOUD_2_bySeason_daily_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
+    CLOUD_2_bySeason_daily_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
+    CLOUD_2_bySeason_daily_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
 
 
 
-    ## _ Seasonal by season ----------------------------------------------------
+
+
+    ## _ Seasonal by season SZA values -----------------------------------------
 
     ALL_2_bySeason_daily_seas <-
         DATA_all[, .(DIR_att_seas       = mean(DIR_att,    na.rm = T),
@@ -1238,6 +1275,16 @@ if (havetorun) {
     CLOUD_2_bySeason_daily_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
     CLOUD_2_bySeason_daily_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
 
+    ## Create year from quarter!
+    warning("Years in by Season are shifted by a month to match seasons")
+      ALL_2_bySeason_daily_DESEAS[, Year := year(Yqrt)]
+    CLEAR_2_bySeason_daily_DESEAS[, Year := year(Yqrt)]
+    CLOUD_2_bySeason_daily_DESEAS[, Year := year(Yqrt)]
+
+
+    setorder(  ALL_2_bySeason_daily_DESEAS, Yqrt)
+    setorder(CLEAR_2_bySeason_daily_DESEAS, Yqrt)
+    setorder(CLOUD_2_bySeason_daily_DESEAS, Yqrt)
 
     rm(  ALL_2_bySeason_daily_mean,   ALL_2_bySeason_daily_seas,
        CLEAR_2_bySeason_daily_mean, CLEAR_2_bySeason_daily_seas,
@@ -1254,7 +1301,7 @@ if (havetorun) {
 
 
 
-    ## _ Calculate daily seasonal values by SZA  -------------------------------
+    ## _ Calculate daily seasonal values by doy prenoon SZA  -------------------
     ALL_2_daily_seas <-
         ALL_2_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
                             HOR_att_seas       = mean(HOR_att,    na.rm = T),

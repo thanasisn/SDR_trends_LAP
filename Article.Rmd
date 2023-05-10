@@ -34,10 +34,6 @@ output:
     toc_depth:       4
     fig_width:       7
     fig_height:      4.5
-  html_document:
-    toc:             true
-    fig_width:       7.5
-    fig_height:      5
 
 ---
 
@@ -68,7 +64,7 @@ source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 <!-- time span -->
 The global radiation was obtained from the pyranometer CM-21, for the period from
 `r min(ALL_1_daily_DESEAS$Date)` to `r max(ALL_1_daily_DESEAS$Date)`.
-In some algorithms we auxialiary used direct radiation data for comparisons, obtained by a CM-21 pyrheliometer, with data span from 
+In some algorithms we auxiliary used direct radiation data for comparisons, obtained by a CM-21 pyrheliometer, with data span from 
 `r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])` to `r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
 
 ......
@@ -99,7 +95,7 @@ c) the identification of "clear sky" conditions from the radiometric data.
 <!-- measurement -->
 The signal of the CM-21 pyranometer is sampled with a rate of $1 {Hz}$, and a record the average signal and the standard deviation every one minute is recorded.
 <!-- dark correction -->
-The measurements are corrected for the zero offset of the instrument, using the "dark signal" (Sun elevation angle bellow $-10^\circ$, for a period of $3 h$).
+The measurements were corrected for the zero offset of the instrument, using the "dark signal" (Sun elevation angle bellow $-10^\circ$, for a period of $3 h$).
 <!-- physical quantities -->
 The signal is converted to radiation using a ramped value of the instrument sensitivity, derived from the eight laboratory calibrations of the instrument, during the study period.
 
@@ -163,7 +159,7 @@ For the seasons of the year trends we grouped the mean daily values by season (D
 Using the mean daily Global radiation we produce the trends of each data set, as departure from the seasonal value.
 Only for All-sky (Fig. \@ref(fig:trendALL)) and Cloudy-sky (Fig. \@ref(fig:trendCLOUD)) conditions the statistical significance of the trends is acceptable (Tab. \@ref(tab:trendtable)).
 
-```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily Global radiation relative to climatogical values for 1993 - 2022. The straight black line shows the lond term trend for All-sky conditions."}
+```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily Global radiation relative to climatological values for 1993 - 2022. The straight black line shows the long term trend for All-sky conditions."}
 knitr::include_graphics("./images/LongtermTrends-2.pdf")
 ```
 
@@ -213,7 +209,7 @@ pander(pp,
 
 ## Long term trends by season of year
 
-Similar we have produced the deseaonilised trend for different sky conditions for each season of the year, using the corresponding mean monthly values.
+Similar we have produced the deseasonalized trend for different sky conditions for each season of the year, using the corresponding mean monthly values.
 
 ```{r seasonalALL, echo=F, fig.cap="Trends by season for All-sky condition. Displays monthly means of daily means."}
 knitr::include_graphics("./images/SeasonaltTrends-1.pdf")
@@ -272,10 +268,12 @@ knitr::include_graphics("./images/CumulativeDailyCumSum-1.pdf")
 ```
 
 
-<!-- Not showing this trend -->
+<!--
+Not showing this trend
 ```{r cumsumCLEAR, echo=F, fig.cap="Donditions.", include=FALSE}
 knitr::include_graphics("./images/CumulativeDailyCumSum-5.pdf")
 ```
+-->
 
 
 ```{r cumsumCLOUD, echo=F, fig.cap="Donditions."}
@@ -296,7 +294,7 @@ This is it \@ref(fig:trendALL).
 
 ## Aggregation 
 
-Both dataset were aggregate in $1^\circ$ SZA bins by am, pm, am+pm
+Both datasets were aggregate in $1^\circ$ SZA bins by am, pm, am+pm
 
 by daily mean 
 
