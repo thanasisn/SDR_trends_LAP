@@ -313,8 +313,10 @@ values for the corresponding time step, and subtracting them .........
 <!--\tiny -->
 ```{r echo=F}
 pp <- data.table::fread("./figures/tbl_longterm_trends.dat")
+cat('\n\n\\footnotesize\n\n')
 pander::pander(pp,
                caption = "Table of trends and stats")
+cat('\n\n\\normalsize\n\n')
 ```
 <!--\normalsize-->
 
