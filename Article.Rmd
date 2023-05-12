@@ -205,6 +205,8 @@ pander(pp,
 
 
 
+
+
 \FloatBarrier
 
 ## Long term trends by season of year
