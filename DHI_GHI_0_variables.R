@@ -33,6 +33,7 @@ translate <- function(x) {
 ## will not include the last/first day
 LAST_DAY                 <- as.Date("2023-04-01")
 FIRST_DAY                <- as.Date("1900-07-01")
+FIRST_DAY                <- as.Date("2005-01-01") ## data inspected by me
 
 #### Paths ####
 CLEARdir                 <- "~/DATA/Broad_Band/CS_id"

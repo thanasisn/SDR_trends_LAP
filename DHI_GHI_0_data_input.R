@@ -74,7 +74,7 @@ if (havetorun) {
 
 
 
-    if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
+    if (!file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
         cat(paste("Load data from Clear Sky proccess from original\n"))
         DATA <- data.table()
         for (af in input_files) {
