@@ -59,6 +59,8 @@ source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 
 # Introduction.
 
+
+
 ......
 
 <!-- time span -->
@@ -104,13 +106,13 @@ The signal is converted to radiation using a ramped value of the instrument sens
 <!-- screening -->
 A manual screening is performed, to remove inconsistencies and erroneous recordings, that can occur during a long continuous operation.
 <!-- Quality assurance -->
-The manual screening is aided by a radiation data quality assurance procedure, adjusted for this site, based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006]. 
+The manual screening is aided by a radiation data quality assurance procedure, adjusted for this site, based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006].
+Problematic recordings have been excluded from processing, although it is not possible to detect all the bad data, the large number of data and the aggregation scheme we use, can provides us with accurate radiometric measurements.
 
 
 
-....
-Only data characterized as good quality were used in this study.
-.....
+
+
 
 ### Clear-sky identification
 
@@ -201,7 +203,7 @@ pander(pp,
 
 ## Trends by SZA
 
-
+..............
 
 
 
@@ -254,9 +256,9 @@ pander(pp,
 
 \FloatBarrier
 
-## Zenith angle dependence and years seasons.
+## Zenith angle dependency and seasons of the year.
 
-
+..............
 
 
 \FloatBarrier
@@ -323,7 +325,6 @@ cat('\n\n\\normalsize\n\n')
 <!--\normalsize-->
 
 
-Some more text here
 
 
 **END**

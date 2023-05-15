@@ -34,7 +34,7 @@ translate <- function(x) {
 LAST_DAY                 <- as.Date("2023-04-01")
 FIRST_DAY                <- as.Date("1900-07-01")
 # FIRST_DAY                <- as.Date("2005-01-01") ## data inspected by me
-FIRST_DAY                <- as.Date("2016-04-01") ## start of chp1
+# FIRST_DAY                <- as.Date("2016-04-01") ## start of chp1
 
 #### Paths ####
 CLEARdir                 <- "~/DATA/Broad_Band/CS_id"
