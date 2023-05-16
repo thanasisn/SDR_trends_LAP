@@ -1,5 +1,5 @@
 ---
-title:         "Trends of downward SDR in Thessaloniki"
+title:         "Trends of SDR in Thessaloniki"
 author:
   - Natsis Athanasios^[Laboratory of Atmospheric Physics, AUTH, natsisphysicist@gmail.com]
   - Alkiviadis Bais^[Laboratory of Atmospheric Physics, AUTH]
@@ -54,12 +54,16 @@ load("./data/common_data_14_2.Rda")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 ```
 
-
+<!-- SDR or GHI -->
 
 
 # Introduction.
 
+The shortwave downward solar irradiance (SDR) at the Earth's surface plays s significant role, on the climate.
+Changes of the SDR can be related to major changes on the factors affecting the radiative forcing balance.
+In this study we examine the trends of SDR with the ground-based measurements at Thessaloniki for the period 1993 - 2023.
 
+[@Bais2013]
 
 ......
 
