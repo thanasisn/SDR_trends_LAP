@@ -1,5 +1,7 @@
 ## Build a single Rmd file
 
+SHELL = /bin/bash
+
 .DEFAULT_GOAL := render
 
 all:       clean_all pdf html rtim
@@ -9,8 +11,18 @@ html:      h1 h2 h3 Ah
 rtim:      r1 r2 r3
 clean_all: clean_cache clean_data clean_pdfs
 
+include .buildver.makefile
+
 presentation = "../presentations/2023-01-18_LAP_GHI_trends/"
 LIBRARY      = ~/LIBRARY/REPORTS/
+
+
+Ah: $(SLIDY)
+$(SLIDY): $(RMD)
+	@echo "Building: $@"
+	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
+	@#echo "Changed:  $?"
+	@# setsid mimeopen  $@ &
 
 ###      Article
 TARGET = Article
@@ -26,6 +38,19 @@ $(PDF): $(RMD)
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
 
+TARGET = Article_$(shell cat $(BLD_FILE))
+RMD    = $(TARGET).Rmd
+PDF    = $(TARGET).pdf
+SLIDY  = $(TARGET).html
+Apv: $(PDF)
+$(PDF): $(RMD)
+	@echo "Building: $@"
+	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::odt_document2', output_file='Article.odt')"
+	$(call buildver)
+	@# echo "Changed:  $?"
+	@#setsid evince    $@ &
+	@-rsync -a "$@" ${LIBRARY}
 
 
 Ah: $(SLIDY)
