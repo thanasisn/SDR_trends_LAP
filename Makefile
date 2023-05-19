@@ -38,20 +38,6 @@ $(PDF): $(RMD)
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
 
-TARGET = Article_$(shell cat $(BLD_FILE))
-RMD    = $(TARGET).Rmd
-PDF    = $(TARGET).pdf
-SLIDY  = $(TARGET).html
-Apv: $(PDF)
-$(PDF): $(RMD)
-	@echo "Building: $@"
-	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
-	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::odt_document2', output_file='Article.odt')"
-	$(call buildver)
-	@# echo "Changed:  $?"
-	@#setsid evince    $@ &
-	@-rsync -a "$@" ${LIBRARY}
-
 
 Ah: $(SLIDY)
 $(SLIDY): $(RMD)
@@ -59,6 +45,21 @@ $(SLIDY): $(RMD)
 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
 	@#echo "Changed:  $?"
 	@# setsid mimeopen  $@ &
+
+
+
+## create pdf with build number
+TARGET = Article
+RMD    = $(TARGET).Rmd
+PDF    = $(TARGET)_B$(shell cat $(BLD_FILE)).pdf
+SLIDY  = $(TARGET).html
+Apv: $(PDF)
+$(PDF): $(RMD)
+	@echo "Building: $@"
+	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='Article_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).pdf')"
+	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::odt_document2', output_file='Article_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).odt')"
+	-cp 'Article.Rmd' 'Article_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).Rmd'
+	$(call buildver)
 
 
 
