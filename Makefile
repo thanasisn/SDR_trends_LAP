@@ -32,7 +32,8 @@ SLIDY  = $(TARGET).html
 Ap: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
-	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	@#-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	-Rscript -e "rmarkdown::find_pandoc(cache = FALSE, dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools') ;rmarkdown::render('$?', output_format='rticles::elsevier_article', output_file='$@')"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::odt_document2', output_file='Article.odt')"
 	@# echo "Changed:  $?"
 	@#setsid evince    $@ &
