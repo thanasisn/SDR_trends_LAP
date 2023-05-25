@@ -22,26 +22,26 @@ title:         "Trends of SDR in Thessaloniki"
 author:
   - name:        Natsis Athanasios
     email:       natsisphysicist@gmail.com
-    affiliation: Laboratory of Atmospheric Physics, AUTH
+    affiliation: Laboratory of Atmospheric Physics
     correspondingauthor: true
     footnote:    1
   - name:        Alkiviadis Bais
     email:       bob@example.com
     affiliation: Another University
 address:
-  - code:         Aristotle University of Thessaloniki
-    organization: Big Wig University
+  - code:         Laboratory of Atmospheric Physics
+    organization: Aristotle University of Thessaloniki
     addressline:  1 main street
     city:         Thessaloniki
-    state: State
-    postcode: 123456
+    state:        State
+    postcode:     123456
     country:      Greece
   - code:         Another University
     organization: Department
-    addressline: A street 29
-    postcode:    2054 NX
-    city:        Manchester,
-    country:     The Netherlands
+    addressline:  A street 29
+    postcode:     2054 NX
+    city:         Manchester,
+    country:      The Netherlands
 footnote:
   - code: 1
     text: "This is the first author footnote."
@@ -54,18 +54,16 @@ abstract: |
 keywords: 
   - keyword1
   - keyword2
-journal: "An awesome journal"
-date: "`r Sys.Date()`"
-classoption: preprint, 3p, authoryear
-bibliography: references.bib
-linenumbers: false
+journal:        "An awesome journal"
+date:           "`r Sys.Date()`"
+classoption:    preprint, 3p, authoryear
+bibliography:   references.bib
+linenumbers:    false
 numbersections: true
-
-
 
 output: 
   rticles::elsevier_article:
-    keep_tex:         true
+    keep_tex:         false
     citation_package: natbib
   bookdown::pdf_document2:
     number_sections: no
@@ -95,7 +93,7 @@ load("./data/common_data_14_2.Rda")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 ```
 
-<!-- SDR or GHI -->
+<!-- SDR or GHI ? -->
 
 
 # Introduction.
