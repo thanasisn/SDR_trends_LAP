@@ -1,30 +1,73 @@
 ---
 title:         "Trends of SDR in Thessaloniki"
+
+# documentclass:  article
+# classoption:    a4paper,oneside
+# fontsize:       12pt
+# geometry:       "left=0.75in,right=0.75in,top=0.75in,bottom=0.75in"
+# link-citations: yes
+# colorlinks:     yes
+# urlcolor:       blue
+# bibliography:   [references.bib]
+# biblio-style:   apalike
+# date:           "`r format(Sys.time(), '%F')`"
+# 
+# header-includes:
+#   - \usepackage{caption}
+#   - \usepackage{placeins}
+#   - \captionsetup{font=small}
+#   - \usepackage{setspace}\doublespacing
+#   - \usepackage{float}
+
+
 author:
-  - Natsis Athanasios^[Laboratory of Atmospheric Physics, AUTH, natsisphysicist@gmail.com]
-  - Alkiviadis Bais^[Laboratory of Atmospheric Physics, AUTH]
-abstract:
-  "Study of GHI and DNI radiation for 'clear-sky' and all-sky conditions."
+  - name:        Natsis Athanasios
+    email:       natsisphysicist@gmail.com
+    affiliation: Laboratory of Atmospheric Physics, AUTH
+    correspondingauthor: true
+    footnote: 1
+  - name:        Alkiviadis Bais
+    email:       bob@example.com
+    affiliation: Another University
+address:
+  - code: Some Institute of Technology
+    organization: Big Wig University
+    addressline: 1 main street
+    city: Gotham
+    state: State
+    postcode: 123456
+    country: United States
+  - code: Another University
+    organization: Department
+    addressline: A street 29
+    postcode: 2054 NX
+    city: Manchester,
+    country: The Netherlands
+footnote:
+  - code: 1
+    text: "This is the first author footnote."
+  - code: 2
+    text: "Another author footnote."
+abstract: |
+  Study of GHI and DNI radiation for 'clear-sky' and all-sky conditions.
 
-documentclass:  article
-classoption:    a4paper,oneside
-fontsize:       12pt
-geometry:       "left=0.75in,right=0.75in,top=0.75in,bottom=0.75in"
-link-citations: yes
-colorlinks:     yes
-urlcolor:       blue
-bibliography:   [references.bib]
-biblio-style:   apalike
-date:           "`r format(Sys.time(), '%F')`"
-    
-header-includes:
-  - \usepackage{caption}
-  - \usepackage{placeins}
-  - \captionsetup{font=small}
-  - \usepackage{setspace}\doublespacing
-  - \usepackage{float}
+  It consists of two paragraphs.
+keywords: 
+  - keyword1
+  - keyword2
+journal: "An awesome journal"
+date: "`r Sys.Date()`"
+classoption: preprint, 3p, authoryear
+bibliography: references.bib
+linenumbers: false
+numbersections: true
 
-output:  
+
+
+output: 
+  rticles::elsevier_article:
+    keep_tex: true
+    citation_package: natbib
   bookdown::pdf_document2:
     number_sections: no
     fig_caption:     yes
@@ -34,7 +77,6 @@ output:
     toc_depth:       4
     fig_width:       7
     fig_height:      4.5
-
 ---
 
 
@@ -45,7 +87,7 @@ knitr::opts_chunk$set(comment    = ""      )
 knitr::opts_chunk$set(dev        = "pdf"   )
 knitr::opts_chunk$set(out.width  = "70%"   )
 knitr::opts_chunk$set(fig.align  = "center")
-knitr::opts_chunk$set(fig.pos    = '!h'    )
+knitr::opts_chunk$set(fig.pos    = '!ht'   )
 library(pander)
 library(data.table)
 ## load data
@@ -158,7 +200,7 @@ For the seasons of the year trends we grouped the mean daily values by season (D
 
 # Results
 
-\FloatBarrier
+<!-- \FloatBarrier -->
 
 ## Long term trends
 
@@ -204,7 +246,7 @@ pander(pp,
 \normalsize
 
 
-\FloatBarrier
+<!-- \FloatBarrier -->
 
 ## Trends by SZA
 
@@ -214,7 +256,7 @@ pander(pp,
 
 
 
-\FloatBarrier
+<!-- \FloatBarrier -->
 
 ## Long term trends by season of year
 
@@ -259,14 +301,14 @@ pander(pp,
 
 
 
-\FloatBarrier
+<!-- \FloatBarrier -->
 
 ## Zenith angle dependency and seasons of the year.
 
 ..............
 
 
-\FloatBarrier
+<!-- \FloatBarrier -->
 
 ## Consistency of the trends
 
