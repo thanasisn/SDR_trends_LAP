@@ -19,30 +19,29 @@ title:         "Trends of SDR in Thessaloniki"
 #   - \usepackage{setspace}\doublespacing
 #   - \usepackage{float}
 
-
 author:
   - name:        Natsis Athanasios
     email:       natsisphysicist@gmail.com
     affiliation: Laboratory of Atmospheric Physics, AUTH
     correspondingauthor: true
-    footnote: 1
+    footnote:    1
   - name:        Alkiviadis Bais
     email:       bob@example.com
     affiliation: Another University
 address:
-  - code: Some Institute of Technology
+  - code:         Aristotle University of Thessaloniki
     organization: Big Wig University
-    addressline: 1 main street
-    city: Gotham
+    addressline:  1 main street
+    city:         Thessaloniki
     state: State
     postcode: 123456
-    country: United States
-  - code: Another University
+    country:      Greece
+  - code:         Another University
     organization: Department
     addressline: A street 29
-    postcode: 2054 NX
-    city: Manchester,
-    country: The Netherlands
+    postcode:    2054 NX
+    city:        Manchester,
+    country:     The Netherlands
 footnote:
   - code: 1
     text: "This is the first author footnote."
@@ -66,7 +65,7 @@ numbersections: true
 
 output: 
   rticles::elsevier_article:
-    keep_tex: true
+    keep_tex:         true
     citation_package: natbib
   bookdown::pdf_document2:
     number_sections: no
