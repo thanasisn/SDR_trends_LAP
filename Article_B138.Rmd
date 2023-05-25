@@ -1,0 +1,377 @@
+---
+title:         "Trends of SDR in Thessaloniki"
+
+# documentclass:  article
+# classoption:    a4paper,oneside
+# fontsize:       12pt
+# geometry:       "left=0.75in,right=0.75in,top=0.75in,bottom=0.75in"
+# link-citations: yes
+# colorlinks:     yes
+# urlcolor:       blue
+# bibliography:   [references.bib]
+# biblio-style:   apalike
+# date:           "`r format(Sys.time(), '%F')`"
+# 
+# header-includes:
+#   - \usepackage{caption}
+#   - \usepackage{placeins}
+#   - \captionsetup{font=small}
+#   - \usepackage{setspace}\doublespacing
+#   - \usepackage{float}
+
+author:
+  - name:        Natsis Athanasios
+    email:       natsisphysicist@gmail.com
+    affiliation: Laboratory of Atmospheric Physics, AUTH
+    correspondingauthor: true
+    footnote:    1
+  - name:        Alkiviadis Bais
+    email:       bob@example.com
+    affiliation: Another University
+address:
+  - code:         Aristotle University of Thessaloniki
+    organization: Big Wig University
+    addressline:  1 main street
+    city:         Thessaloniki
+    state: State
+    postcode: 123456
+    country:      Greece
+  - code:         Another University
+    organization: Department
+    addressline: A street 29
+    postcode:    2054 NX
+    city:        Manchester,
+    country:     The Netherlands
+footnote:
+  - code: 1
+    text: "This is the first author footnote."
+  - code: 2
+    text: "Another author footnote."
+abstract: |
+  Study of GHI and DNI radiation for 'clear-sky' and all-sky conditions.
+
+  It consists of two paragraphs.
+keywords: 
+  - keyword1
+  - keyword2
+journal: "An awesome journal"
+date: "`r Sys.Date()`"
+classoption: preprint, 3p, authoryear
+bibliography: references.bib
+linenumbers: false
+numbersections: true
+
+
+
+output: 
+  rticles::elsevier_article:
+    keep_tex:         true
+    citation_package: natbib
+  bookdown::pdf_document2:
+    number_sections: no
+    fig_caption:     yes
+    keep_tex:        no
+    latex_engine:    xelatex
+    toc:             yes
+    toc_depth:       4
+    fig_width:       7
+    fig_height:      4.5
+---
+
+
+
+```{r echo=F, include=T}
+## document configurations 
+knitr::opts_chunk$set(comment    = ""      )
+knitr::opts_chunk$set(dev        = "pdf"   )
+knitr::opts_chunk$set(out.width  = "70%"   )
+knitr::opts_chunk$set(fig.align  = "center")
+knitr::opts_chunk$set(fig.pos    = '!ht'   )
+library(pander)
+library(data.table)
+## load data
+load("./data/common_data_14_2.Rda")
+## variables we use
+source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
+```
+
+<!-- SDR or GHI -->
+
+
+# Introduction.
+
+The shortwave downward solar irradiance (SDR) at the Earth's surface plays s significant role, on the climate.
+Changes of the SDR can be related to major changes on the factors affecting the radiative forcing balance.
+
+In this study we examine the trends of SDR with the ground-based measurements at Thessaloniki for the period 1993 - 2023.
+
+[@Bais2013]
+
+......
+
+<!-- time span -->
+The global radiation was obtained from the pyranometer CM-21, for the period from
+`r min(ALL_1_daily_DESEAS$Date)` to `r max(ALL_1_daily_DESEAS$Date)`.
+In some algorithms we auxiliary used direct radiation data for comparisons, obtained by a CM-21 pyrheliometer, with data span from 
+`r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])` to `r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
+
+......
+
+<!-- goals -->
+Here we investigate the trend on shortwave radiation for the last decades at Thessaloniki, and try to infer a relation to sky conditions (all, clear, cloudy).
+
+......
+
+<!-- basic concepts -->
+Our method to characterize the sky conditions and the definition of each sky condition has some subjectivity.
+The algorithm was calibrated with the main focus to identify the presence of clouds on the sky dome, although there are marginal cases that there will be false positives or false negatives identifications.
+
+......
+
+# Data and methodology.
+
+## Preparation.
+
+We can separate the data preparation in three parts,
+a) the acquisition of radiation measurements from the sensor, 
+b) a radiation data quality check, and 
+c) the identification of "clear sky" conditions from the radiometric data.
+
+### Acquisition of radiometric data.
+
+
+<!-- measurement -->
+The signal of the CM-21 pyranometer is sampled with a rate of $1 {Hz}$, and a record the average signal and the standard deviation every one minute is recorded.
+<!-- dark correction -->
+The measurements were corrected for the zero offset of the instrument, using the "dark signal" (Sun elevation angle bellow $-10^\circ$, for a period of $3 h$).
+<!-- physical quantities -->
+The signal is converted to radiation using a ramped value of the instrument sensitivity, derived from the eight laboratory calibrations of the instrument, during the study period.
+
+### Radiation data quality check
+
+<!-- screening -->
+A manual screening is performed, to remove inconsistencies and erroneous recordings, that can occur during a long continuous operation.
+<!-- Quality assurance -->
+The manual screening is aided by a radiation data quality assurance procedure, adjusted for this site, based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006].
+Problematic recordings have been excluded from processing, although it is not possible to detect all the bad data, the large number of data and the aggregation scheme we use, can provides us with accurate radiometric measurements.
+
+
+
+
+
+
+### Clear-sky identification
+
+In order to estimate the effect of the clouds on the global radiation we create three datasets. 
+The all sky conditions containing all the valid measurements. 
+The clear-sky conditions data and the remainder part the cloudy condition data. 
+To identify the clear-sky conditions we used a method proposed by @Long2000 and by @Reno2016 that was adapted and configured for the site.
+
+
+## Data process.
+
+
+### Data selection 
+
+Due to a significant measurement uncertainty near the horizon, we exclude
+all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$. 
+Moreover, due to some obstructions around the site (hills and buildings), we exclude data with Azimuth angle between 
+$35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$.
+At those cases the Sun systematically, is not visible by the instruments.
+
+To make the measurements comparable throughout the dataset. 
+<!-- 1au -->
+We adjusted all 1-minute radiometric values to the mean Sun - Earth distance.
+<!-- TSI -->
+<!-- And, we made all measurements relative to the TSI at 1au, in order to compensate for the Suns intensity variability, using a homogenized timeseries of satellite TSI observations. As a result, we processed all radiation data as a fraction of Suns TSI. -->
+
+
+### Process and aggregation of radiometric data
+
+In this study, we present any radiometric data as a percent departure from the corresponding seasonal mean.
+When we use daily aggregated data we compute the mean values for the day and exclude instances with less than `r Daily_aggregation_N_lim` valid data points.
+Accordingly, monthly values are computed from the daily aggregated data, month with less than `r Monthly_aggegation_N_lim` days are rejected. 
+The daily seasonal values are computed based on the day of year number and the monthly by the calendar month.
+
+<!-- Seasonal -->
+For the seasons of the year trends we grouped the mean daily values by season (December - February: Winter, March - May: Spring, etc.)
+
+
+# Results
+
+<!-- \FloatBarrier -->
+
+## Long term trends
+
+
+Using the mean daily Global radiation we produce the trends of each data set, as departure from the seasonal value.
+Only for All-sky (Fig. \@ref(fig:trendALL)) and Cloudy-sky (Fig. \@ref(fig:trendCLOUD)) conditions the statistical significance of the trends is acceptable (Tab. \@ref(tab:trendtable)).
+
+```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily Global radiation relative to climatological values for 1993 - 2022. The straight black line shows the long term trend for All-sky conditions."}
+knitr::include_graphics("./images/LongtermTrends-2.pdf")
+```
+
+
+<!-- ```{r trendCLEAR, echo=F, fig.cap="Daily Global radiation seasonal anomaly and long term trend, for clear sky conditions."} -->
+<!-- knitr::include_graphics("./images/LongtermTrends-4.pdf") -->
+<!-- ``` -->
+
+
+```{r trendCLOUD, echo=F, fig.cap="Daily Global radiation seasonal anomaly and long term trend, for cloud sky conditions."}
+knitr::include_graphics("./images/LongtermTrends-6.pdf")
+```
+
+
+\footnotesize
+```{r trendtable, echo=F}
+pp <- read.csv("./figures/tbl_longterm_trends.dat",
+               strip.white = TRUE,
+               sep = ";",
+               header = TRUE)
+pp <- pp[grep("Global" ,pp$var), ]
+pp$slope.sd           <- NULL
+pp$slope.ConfInt_0.95 <- NULL
+pp$slope.ConfInt_0.99 <- NULL
+pp$var                <- NULL
+rownames(pp) <- NULL
+names(pp) <- c("Trend %/year", "Trend p-value", "Sky condition", "Trend statistical significance")
+
+panderOptions("table.alignment.default", "left")
+pander(pp,
+       caption = "\\label{tab:trendtable}Trends of daily means by sky conditions.")
+# \\label{tab:tab2}
+# knitr::kable(pp, caption = "Trends of daily means by sky conditions.")
+```
+\normalsize
+
+
+<!-- \FloatBarrier -->
+
+## Trends by SZA
+
+..............
+
+
+
+
+
+<!-- \FloatBarrier -->
+
+## Long term trends by season of year
+
+Similar we have produced the deseasonalized trend for different sky conditions for each season of the year, using the corresponding mean monthly values.
+
+```{r seasonalALL, echo=F, fig.cap="Trends by season for All-sky condition. Displays monthly means of daily means."}
+knitr::include_graphics("./images/SeasonaltTrends-1.pdf")
+```
+
+```{r seasonalCLEAR, echo=F, fig.cap="Trends by season for Clear-sky condition. Displays monthly means of daily means."}
+knitr::include_graphics("./images/SeasonaltTrends-2.pdf")
+```
+
+```{r seasonalCLOUD, echo=F, fig.cap="Trends by season for Cloudy-sky condition. Displays monthly means of daily means."}
+knitr::include_graphics("./images/SeasonaltTrends-3.pdf")
+```
+
+
+
+
+\footnotesize
+```{r trendseasontable, echo=F}
+pp <- read.csv("./figures/tbl_longterm_trends_season.dat",
+               strip.white = TRUE,
+               sep = ";",
+               header = TRUE)
+pp <- pp[grep("Global" ,pp$var), ]
+pp$slope.sd           <- NULL
+pp$slope.ConfInt_0.95 <- NULL
+pp$slope.ConfInt_0.99 <- NULL
+pp$var                <- NULL
+rownames(pp) <- NULL
+names(pp) <- c("Trend %/year", "Trend p-value", "Sky condition", "Season", "Trend statistical sign.")
+
+# panderOptions("table.alignment.default", "left")
+panderOptions("table.alignment.default", "center")
+pander(pp,
+       caption = "\\label{tab:trendseasontable}Trends of daily means by sky conditions for the season of the year.")
+```
+\normalsize
+
+
+
+
+<!-- \FloatBarrier -->
+
+## Zenith angle dependency and seasons of the year.
+
+..............
+
+
+<!-- \FloatBarrier -->
+
+## Consistency of the trends
+
+A method to evaluate changes in the long term trend is to use the cumulative sum of the variable.
+
+```{r cumsumALL, echo=F, fig.cap="Donditions."}
+knitr::include_graphics("./images/CumulativeDailyCumSum-1.pdf")
+```
+
+
+<!--
+Not showing this trend
+```{r cumsumCLEAR, echo=F, fig.cap="Donditions.", include=FALSE}
+knitr::include_graphics("./images/CumulativeDailyCumSum-5.pdf")
+```
+-->
+
+
+```{r cumsumCLOUD, echo=F, fig.cap="Donditions."}
+knitr::include_graphics("./images/CumulativeDailyCumSum-9.pdf")
+```
+
+
+
+# Conclusions
+
+This is it \@ref(fig:trendALL).
+
+
+---------------------------
+
+
+
+
+## Aggregation 
+
+Both datasets were aggregate in $1^\circ$ SZA bins by am, pm, am+pm
+
+by daily mean 
+
+daily sum
+
+seasonal daily mean
+
+<!-- Deseasonalization -->
+We remove the natural occurring seasonal variation, by calculating the mean
+values for the corresponding time step, and subtracting them .........
+
+
+
+
+
+<!--\tiny -->
+```{r echo=F}
+pp <- data.table::fread("./figures/tbl_longterm_trends.dat")
+cat('\n\n\\footnotesize\n\n')
+pander::pander(pp,
+               caption = "Table of trends and stats")
+cat('\n\n\\normalsize\n\n')
+```
+<!--\normalsize-->
+
+
+
+
+**END**
+
