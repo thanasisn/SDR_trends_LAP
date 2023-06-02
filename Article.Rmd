@@ -175,7 +175,7 @@ Due to a significant measurement uncertainty near the horizon, we exclude
 all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$. 
 Moreover, due to some obstructions around the site (hills and buildings), we exclude data with Azimuth angle between 
 $35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$.
-At those cases the Sun systematically, is not visible by the instruments.
+At those instances, Sun is systematically, not visible by the instruments location.
 
 To make the measurements comparable throughout the dataset. 
 <!-- 1au -->
