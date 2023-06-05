@@ -100,6 +100,7 @@ source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 
 The shortwave downward solar irradiance (SDR) at the Earth's surface plays s significant role, on the climate.
 Changes of the SDR can be related to major changes on the factors affecting the radiative forcing balance.
+Multiple studies attempt to evaluate the phenomenon and its causes [@Ohvril2009; @Schwarz2020; @Wild2009; @Wild2012; @Xia2007], .
 
 In this study we examine the trends of SDR with the ground-based measurements at Thessaloniki for the period 1993 - 2023.
 
