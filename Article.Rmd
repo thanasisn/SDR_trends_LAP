@@ -66,14 +66,14 @@ output:
     keep_tex:         false
     citation_package: natbib
   bookdown::pdf_document2:
-    number_sections: no
-    fig_caption:     yes
-    keep_tex:        no
-    latex_engine:    xelatex
-    toc:             yes
-    toc_depth:       4
-    fig_width:       7
-    fig_height:      4.5
+    number_sections:  no
+    fig_caption:      yes
+    keep_tex:         yes
+    latex_engine:     xelatex
+    toc:              yes
+    toc_depth:        4
+    fig_width:        7
+    fig_height:       4.5
 ---
 
 
@@ -134,32 +134,32 @@ In some algorithms we used as auxiliary data, the direct beam radiation (DNI) fo
 ......
 
 
-## Preparation.
+<!-- ## Preparation. -->
 
-We can separate the data preparation in three parts,
-a) the acquisition of radiation measurements from the sensor, 
+There are three distinct step to the creation of this dataset:
+a) the acquisition of radiation measurements from the sensors, 
 b) a radiation data quality check, and 
 c) the identification of "clear sky" conditions from the radiometric data.
 
-### Acquisition of radiometric data.
-
+<!-- ### Acquisition of radiometric data. -->
 
 <!-- measurement -->
-The signal of the CM-21 pyranometer is sampled with a rate of $1 {Hz}$, and a record the average signal and the standard deviation every one minute is recorded.
+For the acquisition of radiometric data,
+the signal of the broadband instruments is sampled with a rate of $1 \text{Hz}$, and the signal mean and standard deviation is recorded for every minute.
 <!-- dark correction -->
-The measurements were corrected for the zero offset of the instrument, using the "dark signal" (Sun elevation angle bellow $-10^\circ$, for a period of $3 h$).
+The measurements are corrected for the zero offset of the instrument signal.
+As reference of the "dark signal" is used a Sun elevation angle bellow $-10^\circ$, for a period of $3 \text{h}$.
 <!-- physical quantities -->
 The signal is converted to radiation using a ramped value of the instrument sensitivity, derived from the eight laboratory calibrations of the instrument, during the study period.
 
-### Radiation data quality check
-
+<!-- ### Radiation data quality check -->
+<!-- The radiation quality is assured with a manual screening, aided by an automatic assessment process. -->
 <!-- screening -->
-A manual screening is performed, to remove inconsistencies and erroneous recordings, that can occur during a long continuous operation.
+A manual screening is performed, to remove inconsistencies and erroneous recordings, that can occur during the long continuous operation of the instrument.
 <!-- Quality assurance -->
 The manual screening is aided by a radiation data quality assurance procedure, adjusted for this site, based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006].
-Problematic recordings have been excluded from processing, although it is not possible to detect all the bad data, the large number of data and the aggregation scheme we use, can provides us with accurate radiometric measurements.
-
-
+Problematic recordings have been excluded from further processing. 
+Although it is not possible to detect all the bad data, the large number of data and the aggregation scheme we use, can provide us with accurate radiometric measurements, for the scope of this study.
 
 
 
@@ -167,9 +167,13 @@ Problematic recordings have been excluded from processing, although it is not po
 ### Clear-sky identification
 
 In order to estimate the effect of the clouds on the global radiation we create three datasets. 
-The all sky conditions containing all the valid measurements. 
-The clear-sky conditions data and the remainder part the cloudy condition data. 
-To identify the clear-sky conditions we used a method proposed by @Long2000 and by @Reno2016 that was adapted and configured for the site.
+The all-sky conditions, containing all the valid measurements. 
+The clear-sky conditions data, and the remainder part the cloudy condition data (cloud-sky). 
+To identify the clear-sky conditions we used the method proposed by @Long2000 and by @Reno2016, that was adapted and configured for the site.
+
+.....
+cs - cloud distinction elaborate
+......
 
 
 ## Data process.
@@ -209,7 +213,8 @@ For the seasons of the year trends we grouped the mean daily values by season (D
 
 
 Using the mean daily Global radiation we produce the trends of each data set, as departure from the seasonal value.
-Only for All-sky (Fig. \@ref(fig:trendALL)) and Cloudy-sky (Fig. \@ref(fig:trendCLOUD)) conditions the statistical significance of the trends is acceptable (Tab. \@ref(tab:trendtable)).
+Only for All-sky (Fig. \ref{fig:trendALL}) and Cloudy-sky (Fig. \ref{fig:trendCLOUD}) conditions the statistical significance of the trends is acceptable (Tab. \ref{tab:trendtable}).
+
 
 ```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily Global radiation relative to climatological values for 1993 - 2022. The straight black line shows the long term trend for All-sky conditions."}
 knitr::include_graphics("./images/LongtermTrends-2.pdf")
