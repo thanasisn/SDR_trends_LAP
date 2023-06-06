@@ -98,21 +98,18 @@ source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 
 # Introduction.
 
-The shortwave downward solar irradiance (SDR) at the Earth's surface plays s significant role, on the climate.
-Changes of the SDR can be related to major changes on the factors affecting the radiative forcing balance.
+The shortwave downward solar irradiance (SDR) at the Earth's surface plays a significant role, on Earths climate.
+Changes of the SDR can be related to major changes on factors affecting the radiative forcing balance and human activities.
 Multiple studies attempt to evaluate the phenomenon and the potential causes [@Ohvril2009; @Schwarz2020; @Wild2009; @Wild2012; @Xia2007; @Zerefos2009].
-Although, there are regional variation in the radiation, with both positive and negative trends, most of the studies agree that a major factor is the interaction of aerosols and clouds.
+Although, there is regional variation of SDR, with both positive and negative trends, most of the studies agree that the major factors are the interaction of aerosols and clouds.
 
-In this study we examine the trends of SDR with ground-based measurements at Thessaloniki for the period 1993 - 2023, as derived from a CM-21 pyranometer.
+In this study, we examine the trends of SDR with ground-based measurements at Thessaloniki for the period 1993 - 2023, as derived from a CM-21 pyranometer.
+<!-- goals -->
 We reevaluate and extend the dataset used by @Bais2013, applying a different algorithm for the identification of clear-/cloud-sky instances, and we derive the radiation trends for this period under different sky conditions (all-sky, clear-sky and cloud-sky).
 
 
 ....describe CS and cloud definition....
 
-......
-
-<!-- goals -->
-Here we investigate the trend on shortwave radiation for the last decades at Thessaloniki, and try to infer a relation to sky conditions (all, clear, cloudy).
 
 ......
 
@@ -126,7 +123,7 @@ The algorithm was calibrated with the main focus to identify the presence of clo
 
 <!-- time span -->
 The SDR is equivalent to the whole sky global radiation (GHI), and was obtained with a horizontal leveled, CM-21 pyranometer.
-Data spans the period 
+SDR data spans the period of 
 `r min(ALL_1_daily_DESEAS$Date)` to `r max(ALL_1_daily_DESEAS$Date)`.
 In some algorithms we used as auxiliary data, the direct beam radiation (DNI) for comparisons, obtained by a CHP-1 pyrheliometer, with data availability from 
 `r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])` to `r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
