@@ -107,18 +107,12 @@ In this study, we examine the trends of SDR with ground-based measurements at Th
 <!-- goals -->
 We reevaluate and extend the dataset used by @Bais2013, applying a different algorithm for the identification of clear-/cloud-sky instances, and we derive the radiation trends for this period under different sky conditions (all-sky, clear-sky and cloud-sky).
 
-... site location and aerosols effect...
-
-....describe CS and cloud definition....
-
-
-......
+... site location description and aerosols effect...
 
 <!-- basic concepts -->
 Our method to characterize the sky conditions and the definition of each sky condition has some subjectivity.
 The algorithm was calibrated with the main focus to identify the presence of clouds on the sky dome, although there are marginal cases that there will be false positives or false negatives identifications.
 
-......
 
 # Data and methodology.
 
@@ -160,36 +154,35 @@ The manual screening is aided by a radiation data quality assurance procedure, a
 Thus, problematic recordings have been excluded from further processing. 
 Although it is not possible to detect all the bad data, the large number of data and the aggregation scheme we use, can provide us with accurate radiometric measurements, for the scope of this study.
 
-<!-- ### Clear sky id --->
+<!-- ### Clear sky ID -->
 In order to estimate the effect of the clouds on the SDR we created three datasets, by characterizing each one-minute measurement with a corresponding sky condition. 
 The all-sky conditions, containing all the valid measurements. 
 The clear-sky conditions data, where we have inferred that the sky was almost clear of clouds, and the remainder part the data as cloudy sky conditions data (cloud-sky). 
 To identify the clear-sky conditions we used the method proposed by @Long2000 and by @Reno2016, that was adapted and configured for the site.
-
-.....
-cs - cloud distinction elaborate
-......
+<!-- CS subjectivity -->
+We have to note, that the definition of what constitutes as clear or cloudy sky, has some subjectivity, due to the used method of characterization.
+As a result, the details of the definition are site specific, it relies on a combination of threshold of comparisons with ideal actinometric models and statistics on different signal behaviours.
 
 
 ## Data process.
 
-
-### Data selection 
-
-Due to a significant measurement uncertainty near the horizon, we exclude
+<!-- ### Data selection -->
+Due to a significant measurement uncertainty near the horizon, we have to exclude
 all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$. 
-Moreover, due to some obstructions around the site (hills and buildings), we exclude data with Azimuth angle between 
-$35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$.
-At those instances, Sun is systematically, not visible by the instrument's location.
-
-To make the measurements comparable throughout the dataset. 
+Moreover, due to some obstructions around the site (hills and buildings), we excluded data with Azimuth angle between 
+$35^\circ$ and $120^\circ$ with SZA greater than $80^\circ$.
+At the latter instances, Sun is systematically, not visible by the instrument's location.
 <!-- 1au -->
+To make the measurements comparable throughout the dataset. 
 We adjusted all 1-minute radiometric values to the mean Sun - Earth distance.
 <!-- TSI -->
-<!-- And, we made all measurements relative to the TSI at 1au, in order to compensate for the Suns intensity variability, using a homogenized timeseries of satellite TSI observations. As a result, we processed all radiation data as a fraction of Suns TSI. -->
+Subsequently, we made all measurements relative to the TSI at 1au, in order to compensate for the Suns intensity variability, using a homogenized time series of satellite TSI observations.
+As a result, we processed all radiation data as a fraction of Suns TSI. 
+
+..... cite NOAA TSI .....
 
 
-### Process and aggregation of radiometric data
+## Process and aggregation of radiometric data
 
 In this study, we present any radiometric data as a percent departure from the corresponding seasonal mean.
 When we use daily aggregated data we compute the mean values for the day and exclude instances with less than `r Daily_aggregation_N_lim` valid data points.
