@@ -107,6 +107,7 @@ In this study, we examine the trends of SDR with ground-based measurements at Th
 <!-- goals -->
 We reevaluate and extend the dataset used by @Bais2013, applying a different algorithm for the identification of clear-/cloud-sky instances, and we derive the radiation trends for this period under different sky conditions (all-sky, clear-sky and cloud-sky).
 
+... site location and aerosols effect...
 
 ....describe CS and cloud definition....
 
@@ -133,39 +134,36 @@ In some algorithms we used as auxiliary data, the direct beam radiation (DNI) fo
 
 <!-- ## Preparation. -->
 
-There are three distinct step to the creation of this dataset:
+There are three distinct steps to the creation of this dataset:
 a) the acquisition of radiation measurements from the sensors, 
 b) a radiation data quality check, and 
-c) the identification of "clear sky" conditions from the radiometric data.
+c) the identification of "clear sky" conditions from the radiometric data
+d) data aggregation and trend analysis.
 
 <!-- ### Acquisition of radiometric data. -->
 
 <!-- measurement -->
 For the acquisition of radiometric data,
-the signal of the broadband instruments is sampled with a rate of $1 \text{Hz}$, and the signal mean and standard deviation is recorded for every minute.
+the signal of the broadband instruments is sampled with a rate of $1 \text{Hz}$. The mean and standard deviation values are recorded for every minute.
 <!-- dark correction -->
 The measurements are corrected for the zero offset of the instrument signal.
-As reference of the "dark signal" is used a Sun elevation angle bellow $-10^\circ$, for a period of $3 \text{h}$.
+As reference of the "dark signal" is used the Sun elevation angle bellow $-10^\circ$, for a period of $3 \text{h}$.
 <!-- physical quantities -->
-The signal is converted to radiation using a ramped value of the instrument sensitivity, derived from the eight laboratory calibrations of the instrument, during the study period.
+The signal is converted to radiation flux, using a ramped value of the instrument sensitivity, derived from the eight laboratory calibrations of the instrument, during the study period.
 
 <!-- ### Radiation data quality check -->
 <!-- The radiation quality is assured with a manual screening, aided by an automatic assessment process. -->
 <!-- screening -->
-A manual screening is performed, to remove inconsistencies and erroneous recordings, that can occur during the long continuous operation of the instrument.
+A manual screening is performed, to remove inconsistencies and erroneous recordings, that can occur randomly or systematically, during the long continuous operation of the instrument.
 <!-- Quality assurance -->
 The manual screening is aided by a radiation data quality assurance procedure, adjusted for this site, based on methods of Long and Shi\ [-@long_automated_2008; -@Long2006].
-Problematic recordings have been excluded from further processing. 
+Thus, problematic recordings have been excluded from further processing. 
 Although it is not possible to detect all the bad data, the large number of data and the aggregation scheme we use, can provide us with accurate radiometric measurements, for the scope of this study.
 
-
-
-
-### Clear-sky identification
-
-In order to estimate the effect of the clouds on the global radiation we create three datasets. 
+<!-- ### Clear sky id --->
+In order to estimate the effect of the clouds on the SDR we created three datasets, by characterizing each one-minute measurement with a corresponding sky condition. 
 The all-sky conditions, containing all the valid measurements. 
-The clear-sky conditions data, and the remainder part the cloudy condition data (cloud-sky). 
+The clear-sky conditions data, where we have inferred that the sky was almost clear of clouds, and the remainder part the data as cloudy sky conditions data (cloud-sky). 
 To identify the clear-sky conditions we used the method proposed by @Long2000 and by @Reno2016, that was adapted and configured for the site.
 
 .....
@@ -182,7 +180,7 @@ Due to a significant measurement uncertainty near the horizon, we exclude
 all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$. 
 Moreover, due to some obstructions around the site (hills and buildings), we exclude data with Azimuth angle between 
 $35^\circ$ and $120^\circ$ and SZA greater than $80^\circ$.
-At those instances, Sun is systematically, not visible by the instruments location.
+At those instances, Sun is systematically, not visible by the instrument's location.
 
 To make the measurements comparable throughout the dataset. 
 <!-- 1au -->
