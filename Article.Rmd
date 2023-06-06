@@ -20,14 +20,14 @@ title:         "Trends of SDR in Thessaloniki"
 #   - \usepackage{float}
 
 author:
-  - name:        Natsis Athanasios
-    email:       natsisphysicist@gmail.com
-    affiliation: Laboratory of Atmospheric Physics
+  - name:         Natsis Athanasios
+    email:        natsisphysicist@gmail.com
+    affiliation:  Laboratory of Atmospheric Physics
+    footnote:     1
     correspondingauthor: true
-    footnote:    1
-  - name:        Alkiviadis Bais
-    email:       bob@example.com
-    affiliation: Another University
+  - name:         Alkiviadis Bais
+    email:        bob@example.com
+    affiliation:  Another University
 address:
   - code:         Laboratory of Atmospheric Physics
     organization: Aristotle University of Thessaloniki
@@ -43,10 +43,10 @@ address:
     city:         Manchester,
     country:      The Netherlands
 footnote:
-  - code: 1
-    text: "This is the first author footnote."
-  - code: 2
-    text: "Another author footnote."
+  - code:         1
+    text:         "This is the first author footnote."
+  - code:         2
+    text:         "Another author footnote."
 abstract: |
   Study of GHI and DNI radiation for 'clear-sky' and all-sky conditions.
 
@@ -190,7 +190,32 @@ Accordingly, monthly values are computed from the daily aggregated data, month w
 The daily seasonal values are computed based on the day of year number and the monthly by the calendar month.
 
 <!-- Seasonal -->
-For the seasons of the year trends we grouped the mean daily values by season (December - February: Winter, March - May: Spring, etc.)
+For the seasons of the year trends, we also grouped the mean daily values by season (December - February: Winter, March - May: Spring, etc.)
+
+<!-- Deseasonalization -->
+Finally, for each data set, we remove the natural occurring seasonal variation.
+This is done, by calculating the mean values for the appropriate time step, and subtracting the annual cycle from the actual data.
+Thus, for each data set we have obtained the relative departure of the seasonal mean.
+These values are presented in the following section.
+
+.......................
+
+## Aggregation 
+
+Both datasets were aggregate in $1^\circ$ SZA bins by am, pm, am+pm
+
+by daily mean 
+
+daily sum
+
+seasonal daily mean
+
+filtering of means
+
+statistical significance
+
+
+Significance and aggregation scheme and filtering will be noted along with the corresponding results.
 
 
 # Results
@@ -331,29 +356,14 @@ knitr::include_graphics("./images/CumulativeDailyCumSum-9.pdf")
 
 # Conclusions
 
-This is it \@ref(fig:trendALL).
+About:
 
+- long terms trends
+- seasonal trends
+- effect of SZA
+- effect of clouds
 
----------------------------
-
-
-
-
-## Aggregation 
-
-Both datasets were aggregate in $1^\circ$ SZA bins by am, pm, am+pm
-
-by daily mean 
-
-daily sum
-
-seasonal daily mean
-
-<!-- Deseasonalization -->
-We remove the natural occurring seasonal variation, by calculating the mean
-values for the corresponding time step, and subtracting them .........
-
-
+- Aerosols
 
 
 
@@ -366,8 +376,6 @@ pander::pander(pp,
 cat('\n\n\\normalsize\n\n')
 ```
 <!--\normalsize-->
-
-
 
 
 **END**
