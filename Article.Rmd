@@ -68,12 +68,11 @@ output:
     documentclass:  article
     classoption:    a4paper,oneside
     fontsize:       12pt
-# geometry:       "left=0.75in,right=0.75in,top=0.75in,bottom=0.75in"
-# link-citations: yes
-# colorlinks:     yes
-# urlcolor:       blue
-# bibliography:   [references.bib]
-# biblio-style:   apalike
+    geometry:       "left=0.75in,right=0.75in,top=0.75in,bottom=0.75in"
+    link-citations: yes
+    colorlinks:     yes
+    urlcolor:       blue
+    biblio-style:   apalike
 # date:           "`r format(Sys.time(), '%F')`"
 ---
 
