@@ -1,16 +1,6 @@
 ---
 title:         "Trends of SDR in Thessaloniki"
 
-# documentclass:  article
-# classoption:    a4paper,oneside
-# fontsize:       12pt
-# geometry:       "left=0.75in,right=0.75in,top=0.75in,bottom=0.75in"
-# link-citations: yes
-# colorlinks:     yes
-# urlcolor:       blue
-# bibliography:   [references.bib]
-# biblio-style:   apalike
-# date:           "`r format(Sys.time(), '%F')`"
 # 
 # header-includes:
 #   - \usepackage{caption}
@@ -23,30 +13,31 @@ author:
   - name:         Natsis Athanasios
     email:        natsisphysicist@gmail.com
     affiliation:  Laboratory of Atmospheric Physics
-    footnote:     1
+#    footnote:     1
     correspondingauthor: true
   - name:         Alkiviadis Bais
-    email:        bob@example.com
-    affiliation:  Another University
+    email:        abais@auth.gr 
+    affiliation:  Laboratory of Atmospheric Physics
+    correspondingauthor: false
 address:
   - code:         Laboratory of Atmospheric Physics
     organization: Aristotle University of Thessaloniki
-    addressline:  1 main street
+    addressline:  Campus Box 149
     city:         Thessaloniki
-    state:        State
-    postcode:     123456
+    # state:        State
+    postcode:     54124
     country:      Greece
-  - code:         Another University
-    organization: Department
-    addressline:  A street 29
-    postcode:     2054 NX
-    city:         Manchester,
-    country:      The Netherlands
-footnote:
-  - code:         1
-    text:         "This is the first author footnote."
-  - code:         2
-    text:         "Another author footnote."
+#  - code:         Another University
+#    organization: Department
+#    addressline:  A street 29
+#    postcode:     2054 NX
+#    city:         Manchester,
+#    country:      The Netherlands
+# footnote:
+#   - code:         1
+#     text:         "This is the first author footnote."
+#   - code:         2
+#     text:         "Another author footnote."
 abstract: |
   Study of GHI and DNI radiation for 'clear-sky' and all-sky conditions.
 
@@ -74,6 +65,16 @@ output:
     toc_depth:        4
     fig_width:        7
     fig_height:       4.5
+    documentclass:  article
+    classoption:    a4paper,oneside
+    fontsize:       12pt
+# geometry:       "left=0.75in,right=0.75in,top=0.75in,bottom=0.75in"
+# link-citations: yes
+# colorlinks:     yes
+# urlcolor:       blue
+# bibliography:   [references.bib]
+# biblio-style:   apalike
+# date:           "`r format(Sys.time(), '%F')`"
 ---
 
 
@@ -222,7 +223,7 @@ Significance and aggregation scheme and filtering will be noted along with the c
 
 <!-- \FloatBarrier -->
 
-## Long term trends
+## Long-term trends
 
 
 Using the mean daily Global radiation we produce the trends of each data set, as departure from the seasonal value.
