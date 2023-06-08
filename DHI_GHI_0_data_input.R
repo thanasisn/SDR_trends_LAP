@@ -74,7 +74,7 @@ if (havetorun) {
 
 
 
-    if (!file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
+    if (TEST | !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
         cat(paste("Load data from Clear Sky proccess from original\n"))
         DATA <- data.table()
         for (af in input_files) {
@@ -173,6 +173,15 @@ if (havetorun) {
     }
 
     DATA <- DATA[ !(is.na(wattDIR) & is.na(wattGLB)) ]
+
+    #' ## TSI source
+    #' Info about time span of each TSI source used
+    #'
+    TSI_info <- DATA[, .(Start = min(Date),
+                         End   = max(Date)), by = TSI_Source]
+    myRtools::write_dat(TSI_info,
+                        "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_tsi_info.dat")
+    rm(TSI_info)
 
     #' ## Data preparation
     #' ### Move measurements to mean earth distance
