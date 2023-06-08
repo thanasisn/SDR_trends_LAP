@@ -165,28 +165,24 @@ The clear-sky conditions data, where we have inferred that the sky was almost cl
 To identify the clear-sky conditions we used the method proposed by @Long2000 and by @Reno2016, that was adapted and configured for the site.
 <!-- CS subjectivity -->
 We have to note, that the definition of what constitutes as clear or cloudy sky, has some subjectivity, due to the used method of characterization.
-As a result, the details of the definition are site specific, it relies on a combination of threshold of comparisons with ideal actinometric models and statistics on different signal behaviours.
+As a result, the details of the definition are site specific, it relies on a combination of threshold of comparisons with ideal actinometric models and statistics on different signal behavior.
 
 
 ## Data process.
 
 <!-- ### Data selection -->
-Due to a significant measurement uncertainty near the horizon, we have to exclude
+Due to a significant measurement uncertainty near, the horizon, we have to exclude
 all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$. 
 Moreover, due to some obstructions around the site (hills and buildings), we excluded data with Azimuth angle between 
 $35^\circ$ and $120^\circ$ with SZA greater than $80^\circ$.
-At the latter instances, Sun is systematically, not visible by the instrument's location.
+On the latter instances, Sun is systematically, not visible by the instrument's location.
 <!-- 1au -->
-To make the measurements comparable throughout the dataset. 
-We adjusted all 1-minute radiometric values to the mean Sun - Earth distance.
+To make the measurements comparable throughout the dataset, we adjusted all 1-minute radiometric values to the mean Sun - Earth distance.
 <!-- TSI -->
-Subsequently, we made all measurements relative to the TSI at 1au, in order to compensate for the Suns intensity variability, using a homogenized time series of satellite TSI observations.
-As a result, we processed all radiation data as a fraction of Suns TSI. 
+Subsequently, we made all measurements relative to the TSI at $1 \text{au}$, in order to compensate for the Sun's intensity variability, using a homogenized time series of satellite TSI observations.
+The TSI data is a combination of data from NOAA [@Coddington2005] (`r as.Date(TSIinfo[TSI_Source == "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source == "NOAA", End])`) and adjusted data from @TSIStsi (`r as.Date(TSIinfo[TSI_Source != "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source != "NOAA", End])`).
+As a result, we processed all radiation data as a fraction of Suns TSI.
 
-..... cite NOAA TSI .....
-```{r}
-as.Date(TSIinfo[TSI_Source == "NOAA", End])
-```
 
 
 
@@ -206,7 +202,7 @@ This is done, by calculating the mean values for the appropriate time step, and 
 Thus, for each data set we have obtained the relative departure of the seasonal mean.
 These values are presented in the following section.
 
-.......................
+........................
 
 ## Aggregation 
 
