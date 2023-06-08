@@ -242,7 +242,7 @@ Using the mean daily Global radiation we produce the trends of each data set, as
 Only for All-sky (Fig. \ref{fig:trendALL}) and Cloudy-sky (Fig. \ref{fig:trendCLOUD}) conditions, the statistical significance of the trends is acceptable (Tab. \ref{tab:trendtable}).
 
 
-```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily Global radiation relative to climatological values for 1993 - 2022. The straight black line shows the long term trend for All-sky conditions."}
+```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily Global radiation relative to climatological values for 1993 - 2023. The straight black line shows the long term trend for All-sky conditions."}
 knitr::include_graphics("./images/LongtermTrends-2.pdf")
 ```
 
@@ -257,7 +257,7 @@ knitr::include_graphics("./images/LongtermTrends-6.pdf")
 ```
 
 
-\footnotesize
+<!-- \footnotesize -->
 ```{r trendtable, echo=F}
 pp <- read.csv("./figures/tbl_longterm_trends.dat",
                strip.white = TRUE,
@@ -277,7 +277,7 @@ pander(pp,
 # \\label{tab:tab2}
 # knitr::kable(pp, caption = "Trends of daily means by sky conditions.")
 ```
-\normalsize
+<!-- \normalsize -->
 
 
 <!-- \FloatBarrier -->
@@ -390,16 +390,8 @@ About:
 
 
 
-<!--\tiny -->
-```{r echo=F}
-pp <- data.table::fread("./figures/tbl_longterm_trends.dat")
-cat('\n\n\\footnotesize\n\n')
-pander::pander(pp,
-               caption = "Table of trends and stats")
-cat('\n\n\\normalsize\n\n')
-```
-<!--\normalsize-->
 
 
-**END**
-
+-------------------------------------------------
+                   **END**
+-------------------------------------------------
