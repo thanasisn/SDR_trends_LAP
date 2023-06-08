@@ -89,6 +89,10 @@ library(pander)
 library(data.table)
 ## load data
 load("./data/common_data_14_2.Rda")
+TSIinfo <- data.table(read.csv("./figures/tbl_tsi_info.dat",
+                    strip.white = TRUE,
+                    sep = ";",
+                    header = TRUE))
 ## variables we use
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 ```
@@ -180,6 +184,10 @@ Subsequently, we made all measurements relative to the TSI at 1au, in order to c
 As a result, we processed all radiation data as a fraction of Suns TSI. 
 
 ..... cite NOAA TSI .....
+```{r}
+as.Date(TSIinfo[TSI_Source == "NOAA", End])
+```
+
 
 
 ## Process and aggregation of radiometric data
