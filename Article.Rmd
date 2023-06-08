@@ -43,8 +43,9 @@ abstract: |
 
   It consists of two paragraphs.
 keywords: 
-  - keyword1
-  - keyword2
+  - GHI
+  - SDR
+  - Solar Brigthening/Dimming
 journal:        "An awesome journal"
 date:           "`r Sys.Date()`"
 classoption:    preprint, 3p, authoryear
@@ -65,14 +66,14 @@ output:
     toc_depth:        4
     fig_width:        7
     fig_height:       4.5
-    documentclass:  article
-    classoption:    a4paper,oneside
-    fontsize:       12pt
-    geometry:       "left=0.75in,right=0.75in,top=0.75in,bottom=0.75in"
-    link-citations: yes
-    colorlinks:     yes
-    urlcolor:       blue
-    biblio-style:   apalike
+    documentclass:    article
+    classoption:      a4paper,oneside
+    fontsize:         12pt
+    geometry:         "left=0.75in,right=0.75in,top=0.75in,bottom=0.75in"
+    link-citations:   yes
+    colorlinks:       yes
+    urlcolor:         blue
+    biblio-style:     apalike
 # date:           "`r format(Sys.time(), '%F')`"
 ---
 
@@ -111,7 +112,11 @@ In this study, we examine the trends of SDR with ground-based measurements at Th
 <!-- goals -->
 We reevaluate and extend the dataset used by @Bais2013, applying a different algorithm for the identification of clear-/cloud-sky instances, and we derive the radiation trends for this period under different sky conditions (all-sky, clear-sky and cloud-sky).
 
-... site location description and aerosols effect...
+...
+
+site location description and aerosols effect 
+
+...
 
 <!-- basic concepts -->
 Our method to characterize the sky conditions and the definition of each sky condition has some subjectivity.
@@ -127,7 +132,9 @@ SDR data spans the period of
 In some algorithms we used as auxiliary data, the direct beam radiation (DNI) for comparisons, obtained by a CHP-1 pyrheliometer, with data availability from 
 `r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])` to `r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
 
-......
+...
+
+...
 
 
 <!-- ## Preparation. -->
@@ -202,7 +209,9 @@ This is done, by calculating the mean values for the appropriate time step, and 
 Thus, for each data set we have obtained the relative departure of the seasonal mean.
 These values are presented in the following section.
 
-........................
+........
+
+................
 
 ## Aggregation 
 
@@ -230,7 +239,7 @@ Significance and aggregation scheme and filtering will be noted along with the c
 
 
 Using the mean daily Global radiation we produce the trends of each data set, as departure from the seasonal value.
-Only for All-sky (Fig. \ref{fig:trendALL}) and Cloudy-sky (Fig. \ref{fig:trendCLOUD}) conditions the statistical significance of the trends is acceptable (Tab. \ref{tab:trendtable}).
+Only for All-sky (Fig. \ref{fig:trendALL}) and Cloudy-sky (Fig. \ref{fig:trendCLOUD}) conditions, the statistical significance of the trends is acceptable (Tab. \ref{tab:trendtable}).
 
 
 ```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily Global radiation relative to climatological values for 1993 - 2022. The straight black line shows the long term trend for All-sky conditions."}
@@ -275,7 +284,9 @@ pander(pp,
 
 ## Trends by SZA
 
-..............
+.....
+
+.........
 
 
 
@@ -330,7 +341,10 @@ pander(pp,
 
 ## Zenith angle dependency and seasons of the year.
 
-..............
+.....
+
+
+.........
 
 
 <!-- \FloatBarrier -->
@@ -339,10 +353,13 @@ pander(pp,
 
 A method to evaluate changes in the long term trend is to use the cumulative sum of the variable.
 
-```{r cumsumALL, echo=F, fig.cap="Donditions."}
+
+... different in aggregation ...
+
+
+```{r cumsumALL, echo=F, fig.cap="Running cumulative sum."}
 knitr::include_graphics("./images/CumulativeDailyCumSum-1.pdf")
 ```
-
 
 <!--
 Not showing this trend
@@ -359,6 +376,8 @@ knitr::include_graphics("./images/CumulativeDailyCumSum-9.pdf")
 
 
 # Conclusions
+
+Our result reaffirm the 
 
 About:
 

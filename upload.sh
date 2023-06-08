@@ -17,6 +17,6 @@ bwlimit="  --bwlimit=${bwlim}k"
 # fi
 
 echo "Upload all pdfs"
-"${rclone}" ${otheropt} ${bwlimit} --config "$config" --include "*.pdf" --include "*.odt" copy "$HOME/MANUSCRIPTS/2022_sdr_trends/" "lapauththanasis:/Trends"
+"${rclone}" ${otheropt} ${bwlimit} --config "$config" --max-depth 1 --include "*.{pdf,odt,Rmd}" copy "$HOME/MANUSCRIPTS/2022_sdr_trends/" "lapauththanasis:/Trends"
 
 exit 0 
