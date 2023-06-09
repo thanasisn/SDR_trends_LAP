@@ -104,7 +104,7 @@ We reevaluate and extend the dataset used by @Bais2013, applying a different alg
 
 ...
 
-Site location description and aerosols effect 
+site location description and aerosols effect 
 
 ...
 
@@ -186,7 +186,7 @@ As a result, we can present all radiation data as a fraction of Sun's TSI.
 Before further analysis and Deseasonalization, we implement an appropriate aggregation scheme on the 1-minute data. To preserve the representativeness we use the following criteria:
 a) for daily mean values we exclude instances with less than `r Daily_aggregation_N_lim` valid data points,
 b) accordingly, monthly values are computed by daily aggregated data, where months with less than `r Monthly_aggegation_N_lim` days are rejected. 
-The daily seasonal values were indexed based on the day of year number, and the monthly by the corresponding calendar month.
+The daily seasonal values are indexed based on the day of year number, and the monthly by the corresponding calendar month.
 <!-- Seasonal -->
 For the seasons of the year trends, we grouped the mean daily values by season (December - February: Winter, March - May: Spring, etc.).
 <!-- Deseasonalization -->
