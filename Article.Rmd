@@ -175,7 +175,7 @@ We have to note, that the definition of what constitutes as clear or cloudy sky,
 As a result, the details of the definition are site specific, it relies on a combination of threshold of comparisons with ideal actinometric models and statistics on different signal behavior.
 
 
-## Data process.
+## Data and data selection.
 
 <!-- ### Data selection -->
 Due to a significant measurement uncertainty near, the horizon, we have to exclude
@@ -188,17 +188,15 @@ To make the measurements comparable throughout the dataset, we adjusted all 1-mi
 <!-- TSI -->
 Subsequently, we made all measurements relative to the Total Solar Irradiance (TSI) at $1 \text{au}$, in order to compensate for the Sun's intensity variability, using a homogenized time series of satellite TSI observations.
 The TSI data we use, is a combination of data from NOAA [@Coddington2005] (for `r as.Date(TSIinfo[TSI_Source == "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source == "NOAA", End])`) and adjusted data from @TSIStsi (for `r as.Date(TSIinfo[TSI_Source != "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source != "NOAA", End])`).
-As a result, we can analyze all radiation data as a fraction of Sun's TSI.
+As a result, we can present all radiation data as a fraction of Sun's TSI.
 
+### Aggregation of radiometric data
 
+Before further analysis, we implement an appropriate aggregation scheme on the 1-minute data, to preserve the ....representabiliyt....
+When we use daily mean values we exclude instances with less than `r Daily_aggregation_N_lim` valid data points.
+Accordingly, monthly values are computed from the daily aggregated data, where months with less than `r Monthly_aggegation_N_lim` days are rejected. 
+The daily seasonal values are indexed based on the day of year number, and the monthly by the corresponding calendar month.
 
-
-## Process and aggregation of radiometric data
-
-In this study, we present any radiometric data as a percent departure from the corresponding seasonal mean.
-When we use daily aggregated data we compute the mean values for the day and exclude instances with less than `r Daily_aggregation_N_lim` valid data points.
-Accordingly, monthly values are computed from the daily aggregated data, month with less than `r Monthly_aggegation_N_lim` days are rejected. 
-The daily seasonal values are computed based on the day of year number and the monthly by the calendar month.
 
 <!-- Seasonal -->
 For the seasons of the year trends, we also grouped the mean daily values by season (December - February: Winter, March - May: Spring, etc.)
