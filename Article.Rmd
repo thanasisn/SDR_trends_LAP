@@ -183,7 +183,7 @@ As a result, we can present all radiation data as a fraction of Sun's TSI.
 ### Aggregation of radiometric data
 
 <!-- aggregation -->
-Before further analysis and Deseasonalization, we implement an appropriate aggregation scheme on the 1-minute data. To preserve the representativeness we use the following criteria:
+Before further analysis and deseasonalization, we implement an appropriate aggregation scheme on the 1-minute data. To preserve the representativeness we use the following criteria:
 a) for daily mean values we exclude instances with less than `r Daily_aggregation_N_lim` valid data points,
 b) accordingly, monthly values are computed by daily aggregated data, where months with less than `r Monthly_aggegation_N_lim` days are rejected. 
 The daily seasonal values were indexed based on the day of year number, and the monthly by the corresponding calendar month.
@@ -252,7 +252,7 @@ LT$slope.ConfInt_0.99 <- NULL
 LT$var                <- NULL
 setorder(LT, -slope.stat_sig)
 rownames(LT) <- NULL
-names(LT) <- c("Trend %/year", "Trend p-value", "Sky condition", "Trend statistical significance")
+names(LT) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Trend statistical signif. [%]")
 
 panderOptions("table.alignment.default", "center")
 pander(LT,
@@ -261,9 +261,9 @@ pander(LT,
 # knitr::kable(LT, caption = "Trends of daily means by sky conditions.")
 
 ## some vars to use
-alltrend   <- signif(LT[`Sky condition` == "All sky cond.",   `Trend %/year`], 2)
-cleartrend <- signif(LT[`Sky condition` == "Clear sky cond.", `Trend %/year`], 2)
-cloudtrend <- signif(LT[`Sky condition` == "Cloudy cond.",    `Trend %/year`], 2)
+alltrend   <- signif(LT[`Sky condition` == "All sky cond.",   `Trend [%/year]`], 2)
+cleartrend <- signif(LT[`Sky condition` == "Clear sky cond.", `Trend [%/year]`], 2)
+cloudtrend <- signif(LT[`Sky condition` == "Cloudy cond.",    `Trend [%/year]`], 2)
 ```
 <!-- \normalsize -->
 
@@ -313,7 +313,7 @@ pp$slope.ConfInt_0.95 <- NULL
 pp$slope.ConfInt_0.99 <- NULL
 pp$var                <- NULL
 rownames(pp) <- NULL
-names(pp) <- c("Trend %/year", "Trend p-value", "Sky condition", "Season", "Trend statistical sign.")
+names(pp) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Season", "Trend statistical signif. [%]")
 
 # panderOptions("table.alignment.default", "left")
 panderOptions("table.alignment.default", "center")
@@ -365,7 +365,7 @@ knitr::include_graphics("./images/CumulativeDailyCumSum-9.pdf")
 # Conclusions
 
 Our result for all-sky condition ($`r alltrend`\%/year$), reaffirm the previous results of @Bais2013 for the site.
-The increasing of this trend shows that the phenomenon and probably the causes have been amplified.
+The increase of this trend, shows that the phenomenon and probably the causes have been amplified.
 
 .....
 Also, the trend of $`r cloudtrend`\%/year$ for cloud-sky condition indicate the major part that clouds play on the
