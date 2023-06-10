@@ -284,7 +284,7 @@ wecare <- grep("^slope|^N",  names(szatrends), ignore.case = T, value = T)
 wecare <- grep("^slope\\.t", wecare, ignore.case = T, value = T, invert = T)
 wecare <- grep("slope\\.sd", wecare, ignore.case = T, value = T, invert = T)
 
-## TODO seperate plots by direct global
+## TODO separate plots by direct global
 
 #+ SzaTrends, echo=F, include=T, results = "asis"
 ## ALL - CS
@@ -307,8 +307,8 @@ for (type in unique(szatrends$DATA)) {
             awename <- gsub("(\\D)(\\D+)", "\\U\\1\\L\\2", sub("\\."," ", awe), perl = TRUE)
 
             ## select All/CS and DIR/GLB/trans
-            subdata <- szatrends[ szatrends$DATA == type &
-                                  szatrends$var  == avar , ]
+            subdata <- szatrends[szatrends$DATA == type &
+                                 szatrends$var  == avar, ]
 
             xlim <- range(subdata$SZA,    na.rm = T)
             ylim <- range(subdata[[awe]], na.rm = T)
