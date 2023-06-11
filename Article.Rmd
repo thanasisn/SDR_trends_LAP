@@ -41,8 +41,12 @@ journal:        "An awesome journal"
 date:           "`r Sys.Date()`"
 classoption:    preprint, 3p, authoryear
 bibliography:   references.bib
-linenumbers:    false
-numbersections: true
+linenumbers:          false
+numbersections:       true
+
+header-includes:
+   - \usepackage{subfig}
+
 output: 
   rticles::elsevier_article:
     keep_tex:         false
@@ -277,29 +281,26 @@ cloudtrend <- signif(LT[`Sky condition` == "Cloudy cond.",    `Trend [%/year]`],
 .........
 
 
-```{r , echo=F, fig.cap="Trendns."}
-knitr::include_graphics("./images/SzaTrends-5.pdf")
-```
+<!-- ```{r , echo=F, fig.cap="All sky"} -->
+<!-- knitr::include_graphics("./images/SzaTrends-5.pdf") -->
+<!-- ``` -->
 
-.........
-
-
-```{r , echo=F, fig.cap="Trendns."}
+<!--
+```{r , echo=F, fig.cap="Clear sky"}
 knitr::include_graphics("./images/SzaTrends-13.pdf")
 ```
+-->
 
-.........
-
-
-```{r , echo=F, fig.cap="Trendns."}
+<!-- ```{r , echo=F, fig.cap="Cloud sky"}
 knitr::include_graphics("./images/SzaTrends-21.pdf")
-```
+``` -->
 
 
-```{r, fig.cap='Figure 1', fig.subcap=c('(a)', '(b)', '(c)')}
-plot(1:10)
-plot(cars, pch = 19)
-boxplot(Sepal.Width ~ Species, data = iris)
+
+See Figures \ref{fig:szatrends}a and \ref{fig:szatrends}b
+
+```{r szatrends, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.35\\linewidth', fig.asp=1, fig.ncol = 2}
+knitr::include_graphics(c("./images/SzaTrends-5.pdf", "./images/SzaTrends-21.pdf"))
 ```
 
 
@@ -369,10 +370,11 @@ A method to evaluate changes in the long term trend is to use the cumulative sum
 
 ... different in aggregation ...
 
-
+<!--
 ```{r cumsumALL, echo=F, fig.cap="Running cumulative sum."}
 knitr::include_graphics("./images/CumulativeDailyCumSum-1.pdf")
 ```
+-->
 
 <!--
 Not showing this trend
@@ -381,10 +383,15 @@ knitr::include_graphics("./images/CumulativeDailyCumSum-5.pdf")
 ```
 -->
 
+<!--
 ```{r cumsumCLOUD, echo=F, fig.cap="Donditions."}
 knitr::include_graphics("./images/CumulativeDailyCumSum-9.pdf")
 ```
+-->
 
+```{r cumsum, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.35\\linewidth', fig.asp=1, fig.ncol = 2}
+knitr::include_graphics(c("./images/CumulativeDailyCumSum-1.pdf", "./images/CumulativeDailyCumSum-9.pdf"))
+```
 
 
 # Conclusions
