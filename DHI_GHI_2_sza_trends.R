@@ -64,7 +64,7 @@ Script.Name <- tryCatch({ funr::sys.script() },
 if (!interactive()) {
     pdf( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
     sink(file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
-    filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
+    # filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
 
@@ -306,9 +306,14 @@ for (type in unique(szatrends$DATA)) {
         for (awe in wecare) {
             awename <- gsub("(\\D)(\\D+)", "\\U\\1\\L\\2", sub("\\."," ", awe), perl = TRUE)
 
+            ## limit plot p-values
+            p_lim <- 0.05
+
             ## select All/CS and DIR/GLB/trans
             subdata <- szatrends[szatrends$DATA == type &
                                  szatrends$var  == avar, ]
+
+            subdata <- subdata[ slope.p > p_lim ]
 
             xlim <- range(subdata$SZA,    na.rm = T)
             ylim <- range(subdata[[awe]], na.rm = T)
@@ -325,6 +330,7 @@ for (type in unique(szatrends$DATA)) {
             abline(h = 0, lty = 3 )
 
             title(paste(awename, translate(type), translate(avar)), cex.main = .8)
+
 
             lines(pam$SZA, pam[[awe]], pch = pch_am, col = 2, type = "b", lwd = 1, cex = 0.5)
             lines(ppm$SZA, ppm[[awe]], pch = pch_pm, col = 3, type = "b", lwd = 1, cex = 0.5)
