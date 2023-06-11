@@ -327,25 +327,33 @@ for (avar in unique(szatrends$var)) {
             pam  <- subdata[ preNoon == T ]
             ppm  <- subdata[ preNoon == F ]
 
+            ccex <- 1.6
+            par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
+
             plot(1, type = "n",
                  xlab = "SZA",
                  ylab = awename,
                  xlim = xlim,
                  ylim = ylim )
 
-            abline(h = 0, lty = 3 )
+            abline(h = 0, lty = 3)
 
-            title(paste(awename, translate(type), translate(avar)), cex.main = .8)
+            title(paste(awename, translate(type), translate(avar)), cex.main =  .8 * ccex)
 
 
-            lines(pam$SZA, pam[[awe]], pch = pch_am, col = 2, type = "b", lwd = 1, cex = 0.5)
-            lines(ppm$SZA, ppm[[awe]], pch = pch_pm, col = 3, type = "b", lwd = 1, cex = 0.5)
+            lines(pam$SZA, pam[[awe]], pch = pch_am, col = 2, type = "b", lwd = 1, cex = 1)
+            lines(ppm$SZA, ppm[[awe]], pch = pch_pm, col = 3, type = "b", lwd = 1, cex = 1)
 
             legend("top",
                    legend = c("Morning", "Evening"),
                    # col    = c(unique(pam$col), unique(ppm$col)),
                    col    = c(2, 3),
-                   pch    = c(unique(pam$pch), unique(ppm$pch)), ncol = 2, bty = "n")
+                   pch    = c(unique(pam$pch), unique(ppm$pch)), ncol = 2, bty = "n",
+                   cex    = ccex)
+
+            ccex <- 1
+            par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
+
 
             cat("\n\n")
         }
