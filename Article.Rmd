@@ -44,6 +44,9 @@ bibliography:   references.bib
 linenumbers:    false
 numbersections: true
 output: 
+  rticles::elsevier_article:
+    keep_tex:         false
+    citation_package: natbib
   bookdown::pdf_document2:
     number_sections:  no
     fig_caption:      yes
@@ -61,9 +64,6 @@ output:
     colorlinks:       yes
     urlcolor:         blue
     biblio-style:     apalike
-  rticles::elsevier_article:
-    keep_tex:         false
-    citation_package: natbib
 # date:           "`r format(Sys.time(), '%F')`"
 ---
 
@@ -276,6 +276,31 @@ cloudtrend <- signif(LT[`Sky condition` == "Cloudy cond.",    `Trend [%/year]`],
 
 .........
 
+
+```{r , echo=F, fig.cap="Trendns."}
+knitr::include_graphics("./images/SzaTrends-5.pdf")
+```
+
+.........
+
+
+```{r , echo=F, fig.cap="Trendns."}
+knitr::include_graphics("./images/SzaTrends-13.pdf")
+```
+
+.........
+
+
+```{r , echo=F, fig.cap="Trendns."}
+knitr::include_graphics("./images/SzaTrends-21.pdf")
+```
+
+
+```{r, fig.cap='Figure 1', fig.subcap=c('(a)', '(b)', '(c)')}
+plot(1:10)
+plot(cars, pch = 19)
+boxplot(Sepal.Width ~ Species, data = iris)
+```
 
 
 
