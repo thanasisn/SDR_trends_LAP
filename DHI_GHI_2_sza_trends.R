@@ -245,11 +245,11 @@ szatrends[, slope    := slope    * Days_of_year ]
 szatrends[, slope.sd := slope.sd * Days_of_year ]
 
 ## set some plot option for data
-szatrends[ var == "DIR_att_des",    col := col_DIR_att    ]
-szatrends[ var == "GLB_att_des",    col := col_GLB_att    ]
-szatrends[ var == "DIR_transp_des", col := col_DIR_transp ]
-szatrends[ preNoon == T, pch := pch_am ]
-szatrends[ preNoon == F, pch := pch_pm ]
+szatrends[var == "DIR_att_des",    col := col_DIR_att    ]
+szatrends[var == "GLB_att_des",    col := col_GLB_att    ]
+szatrends[var == "DIR_transp_des", col := col_DIR_transp ]
+szatrends[preNoon == T, pch := pch_am ]
+szatrends[preNoon == F, pch := pch_pm ]
 
 
 
@@ -287,10 +287,10 @@ wecare <- grep("slope\\.sd", wecare, ignore.case = T, value = T, invert = T)
 ## TODO separate plots by direct global
 
 #+ SzaTrends, echo=F, include=T, results = "asis"
-## ALL - CS
-for (type in unique(szatrends$DATA)) {
-    ## DIR - GLB - transp
-    for (avar in unique(szatrends$var)) {
+## DIR - GLB - transp
+for (avar in unique(szatrends$var)) {
+    ## ALL - CS
+    for (type in unique(szatrends$DATA)) {
 
         cat("\n\\newpage\n\n")
         cat("\n#### ", translate(type), translate(avar) , "\n\n")
@@ -309,11 +309,17 @@ for (type in unique(szatrends$DATA)) {
             ## limit plot p-values
             p_lim <- 0.05
 
-            ## select All/CS and DIR/GLB/trans
-            subdata <- szatrends[szatrends$DATA == type &
-                                 szatrends$var  == avar, ]
+            szatrends <- data.table(szatrends)
 
-            subdata <- subdata[ slope.p > p_lim ]
+            ## select All/CS and DIR/GLB/trans
+            subdata <- szatrends[DATA == type &
+                                 var  == avar, ]
+
+            # szatrends[DATA == type]
+            # szatrends[var  == avar]
+
+            ## plot only under accepted p-value limit
+            subdata <- subdata[ slope.p < p_lim, ]
 
             xlim <- range(subdata$SZA,    na.rm = T)
             ylim <- range(subdata[[awe]], na.rm = T)
