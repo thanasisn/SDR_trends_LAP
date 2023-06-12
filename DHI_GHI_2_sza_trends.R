@@ -331,7 +331,7 @@ for (avar in unique(szatrends$var)) {
             par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
 
             plot(1, type = "n",
-                 xlab = "SZA",
+                 xlab = "Solar zenith angle",
                  ylab = awename,
                  xlim = xlim,
                  ylim = ylim )
@@ -341,8 +341,10 @@ for (avar in unique(szatrends$var)) {
             title(paste(awename, translate(type), translate(avar)), cex.main =  .8 * ccex)
 
 
-            lines(pam$SZA, pam[[awe]], pch = pch_am, col = 2, type = "b", lwd = 1, cex = 1)
-            lines(ppm$SZA, ppm[[awe]], pch = pch_pm, col = 3, type = "b", lwd = 1, cex = 1)
+            lines(pam$SZA, pam[[awe]], pch = pch_am, col = 2,
+                  type = "b", lwd = ccex, cex = 1)
+            lines(ppm$SZA, ppm[[awe]], pch = pch_pm, col = 3,
+                  type = "b", lwd = ccex, cex = 1)
 
             legend("top",
                    legend = c("Morning", "Evening"),
