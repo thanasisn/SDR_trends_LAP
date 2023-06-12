@@ -79,7 +79,7 @@ knitr::opts_chunk$set(comment    = ""      )
 knitr::opts_chunk$set(dev        = "pdf"   )
 knitr::opts_chunk$set(out.width  = "70%"   )
 knitr::opts_chunk$set(fig.align  = "center")
-knitr::opts_chunk$set(fig.pos    = '!ht'   )
+knitr::opts_chunk$set(fig.pos    = 'h!'    )
 library(pander)
 library(data.table)
 ## load data
@@ -196,22 +196,12 @@ For the seasons of the year trends, we grouped the mean daily values by season (
 <!-- Deseasonalization -->
 Finally, for each data set, we remove the natural occurring seasonal variation.
 This is done, by calculating the mean values for the appropriate time step, and subtracting the annual cycle from the actual data.
-Thus, for each data set we have obtained the relative departure of the seasonal mean.
 <!-- SZA Deseasonalization -->
-In addition to the previous aggregation scheme, each dataset was aggregate in $1^\circ$ SZA bins, separate for cases before and after local noon.
+In addition to the previous aggregation scheme, each dataset was aggregate in $1^\circ$ SZA bins, separate for cases before and after local noon. 
+This gave us an approximation of Sun's SZA contribution to the SDR brightening. 
 
-by daily mean 
-
-daily sum
-
-seasonal daily mean
-
-filtering of means
-
-statistical significance
-
-
-Significance and aggregation scheme and filtering will be noted along with the corresponding results.
+Thus, for each data set we have obtained the relative departure of the seasonal mean.
+The statistical significance and aggregation scheme and filtering will be noted along with the corresponding results.
 
 
 # Results
@@ -219,7 +209,6 @@ Significance and aggregation scheme and filtering will be noted along with the c
 <!-- \FloatBarrier -->
 
 ## Long-term trends
-
 
 Using the mean daily Global radiation we produce the trends of each data set, as departure from the seasonal value.
 Only for All-sky (Fig. \ref{fig:trendALL}) and Cloudy-sky (Fig. \ref{fig:trendCLOUD}) conditions, the statistical significance of the trends are acceptable (Tab. \ref{tab:trendtable}), to draw some conclusions.
@@ -293,7 +282,7 @@ knitr::include_graphics("./images/SzaTrends-21.pdf")
 See Figures \ref{fig:szatrends}a and \ref{fig:szatrends}b
 
 ```{r szatrends, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.35\\linewidth', fig.asp=1, fig.ncol = 2}
-knitr::include_graphics(c("./images/SzaTrends-5.pdf", "./images/SzaTrends-21.pdf"))
+knitr::include_graphics(c("./images/SzaTrends-13.pdf", "./images/SzaTrends-21.pdf"))
 ```
 
 
