@@ -115,6 +115,8 @@ FIGURESGRID <- FALSE
 ## choose loess criterion for span
 LOESS_CRITERIO <-  c("aicc", "gcv")[1]
 
+## cex value for side by side
+ccex_sbs <- 1.3
 
 
 #+ echo=F, include=T
@@ -327,7 +329,7 @@ for (avar in unique(szatrends$var)) {
             pam  <- subdata[ preNoon == T ]
             ppm  <- subdata[ preNoon == F ]
 
-            ccex <- 1.6
+            ccex <- ccex_sbs
             par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
 
             plot(1, type = "n",
