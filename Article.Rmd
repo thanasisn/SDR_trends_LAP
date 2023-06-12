@@ -197,15 +197,8 @@ For the seasons of the year trends, we grouped the mean daily values by season (
 Finally, for each data set, we remove the natural occurring seasonal variation.
 This is done, by calculating the mean values for the appropriate time step, and subtracting the annual cycle from the actual data.
 Thus, for each data set we have obtained the relative departure of the seasonal mean.
-These values are presented in the following section.
-
-........
-
-................
-
-## SZA Aggregation 
-
-Both datasets were aggregate in $1^\circ$ SZA bins by am, pm, am+pm
+<!-- SZA Deseasonalization -->
+In addition to the previous aggregation scheme, each dataset was aggregate in $1^\circ$ SZA bins, separate for cases before and after local noon.
 
 by daily mean 
 
