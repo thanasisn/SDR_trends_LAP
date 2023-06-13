@@ -48,6 +48,7 @@ header-includes:
    - \usepackage{subfig}
 
 output: 
+
   rticles::elsevier_article:
     keep_tex:         false
     citation_package: natbib
@@ -68,6 +69,11 @@ output:
     colorlinks:       yes
     urlcolor:         blue
     biblio-style:     apalike
+  word_document:      
+    toc:              yes  
+  odt_document:       default
+ 
+  
 # date:           "`r format(Sys.time(), '%F')`"
 ---
 
