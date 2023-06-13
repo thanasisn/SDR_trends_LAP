@@ -109,6 +109,7 @@ DRAFT <- FALSE
 ## override plot options
 par(pch = ".")
 
+
 ## choose to grid some plots
 FIGURESGRID <- TRUE
 # FIGURESGRID <- FALSE
@@ -247,9 +248,12 @@ for (DBn in dbs) {
                  cex      = 2,
                  main     = paste(translate(DBn), translate(avar)),
                  cex.main = 0.8,
+                 yaxt     = "n",
                  xlab     = "",
-                 ylab     = bquote("Seasonal Anomaly [%]")
+                 ylab     = bquote("Anomaly [%]")
             )
+            axis(2, pretty(dataset[[avar]]), las = 2 )
+
             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
 
             ## plot fit line
@@ -354,13 +358,15 @@ myRtools::write_dat(pprint,
 #'
 #' ### Trends for each season of the year
 #'
-#' We calculated Seasonla means from the daily means
+#' We calculated Seasonal means from the daily means
 #'
 #+ echo=F, include=F
 
 ## __ Plot trends for each season  ---------------------------------------------
 
-#+ SeasonaltTrends, echo=F, include=T, results="asis"
+## ____ by sky conditions  -----------------------------------------------------
+
+#+ SeasonalTrends, echo=F, include=T, results="asis"
 # vars        <- c("DIR_att", "GLB_att")
 vars        <- c("GLB_att_des")
 
@@ -398,23 +404,29 @@ for (DBn in dbs) {
             lm2 <- lm( dataset[[avar]] ~ dataset$Year )
 
             ## plot
-            par("mar" = c(2, 3.4, 2, 0.5))
+            par("mar" = c(2, 3.6, 2, 0.5))
 
             plot(dataset$Year, dataset[[avar]],
                  # ylim = ylim,
-                 pch  = 19,
-                 col  = get(paste0(c("col",
-                                     unlist(strsplit(avar, split = "_" ))[1:2]),
-                                   collapse = "_")),
-                 cex  = .5,
-                 main = paste(ase, translate(DBn), translate(avar)),
-                 ylab = bquote("Seasonal Anomaly [%]"),
-                 xlab = "",
+                 pch      = 19,
+                 col      = get(paste0(c("col",
+                                         unlist(strsplit(avar, split = "_" ))[1:2]),
+                                       collapse = "_")),
+                 cex      = .5,
+                 main     = paste(ase, translate(DBn), translate(avar)),
+                 ylab     = "",
+                 yaxt     = "n",
+                 xlab     = "",
                  cex.main = 0.9,
                  cex.lab  = 0.8,
                  cex.axis = 0.8,
                  mgp  = c(2, 0.5, 0)
             )
+            axis(2, pretty(dataset[[avar]]), las = 2)
+            mtext(text = bquote("Anomaly [%]"),
+                  cex  = 0.8,
+                  side = 2,
+                  line = 2.6)
             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]"))
 
             abline(lm2)
@@ -433,7 +445,6 @@ for (DBn in dbs) {
                 # points(dataset$Date, rm, col = "red", cex = 0.5)
                 lines(dataset$Year[first:last], rm, col = "red", cex = 0.5)
 
-
                 ## LOESS curve
                 vec <- !is.na(dataset[[avar]])
                 FTSE.lo3 <- loess.as(dataset$Year[vec], dataset[[avar]][vec],
@@ -442,7 +453,6 @@ for (DBn in dbs) {
                 FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Year)
                 lines(dataset$Year, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
             }
-
 
             ## decorations
             fit <- lm2[[1]]
@@ -471,6 +481,115 @@ for (DBn in dbs) {
     }
 }
 #+ echo=F, include=F
+
+
+
+
+#+ SeasonalTrendsTogether, echo=F, include=T, results="asis"
+# vars        <- c("DIR_att", "GLB_att")
+vars        <- c("GLB_att_des")
+
+## Monthly aggregation
+dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
+                   "CLEAR_1_D_bySeason_DESEAS",
+                   "CLOUD_1_D_bySeason_DESEAS")
+
+Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
+
+
+for (avar in vars) {
+
+    par(mfrow = c(length(Seasons), length(dbs)))
+
+
+    for (DBn in dbs) {
+        DB <- get(DBn)
+
+        ylim <- range(DB[[avar]], na.rm = TRUE )
+
+        for (ase in Seasons) {
+
+            dataset <- DB[ Season == ase, ]
+
+            if (sum(!is.na(dataset[[avar]])) <= 1) next()
+
+            ## linear model counting years
+            lm2 <- lm( dataset[[avar]] ~ dataset$Year )
+
+            ## plot
+            par("mar" = c(2, 3.6, 2, 0.5))
+
+            plot(dataset$Year, dataset[[avar]],
+                 # ylim = ylim,
+                 pch      = 19,
+                 col      = get(paste0(c("col",
+                                         unlist(strsplit(avar, split = "_" ))[1:2]),
+                                       collapse = "_")),
+                 cex      = .5,
+                 main     = paste(ase, translate(DBn), translate(avar)),
+                 ylab     = "",
+                 yaxt     = "n",
+                 xlab     = "",
+                 cex.main = 0.9,
+                 cex.lab  = 0.8,
+                 cex.axis = 0.8,
+                 mgp  = c(2, 0.5, 0)
+            )
+            axis(2, pretty(dataset[[avar]]), las = 2)
+            mtext(text = bquote("Anomaly [%]"),
+                  cex  = 0.8,
+                  side = 2,
+                  line = 2.6)
+            # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]"))
+
+            abline(lm2)
+
+            if (DRAFT) {
+                ## Running mean years * months in data set
+                first <- head(which(!is.na(dataset[[avar]])),1)
+                last  <- tail(which(!is.na(dataset[[avar]])),1)
+
+                rm <- frollmean(dataset[[avar]][first:last],
+                                running_mean_window_years,
+                                na.rm = TRUE,
+                                algo  = "exact",
+                                align = "center")
+
+                # points(dataset$Date, rm, col = "red", cex = 0.5)
+                lines(dataset$Year[first:last], rm, col = "red", cex = 0.5)
+
+                ## LOESS curve
+                vec <- !is.na(dataset[[avar]])
+                FTSE.lo3 <- loess.as(dataset$Year[vec], dataset[[avar]][vec],
+                                     degree = 1,
+                                     criterion = LOESS_CRITERIO, user.span = NULL, plot = F)
+                FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Year)
+                lines(dataset$Year, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
+            }
+
+            ## decorations
+            fit <- lm2[[1]]
+
+            legend("bottom", lty = 1, bty = "n", lwd = 2, cex = 1,
+                   paste("Trend: ",
+                         if (fit[2] > 0) '+' else '-',
+                         signif(abs(fit[2]), 3),
+                         "% per year")
+            )
+        }
+    }
+    par(mfrow = c(1, 1)) ## just reset layout
+}
+#+ echo=F, include=F
+
+
+
+
+
+
+
+
+
 
 
 ## __ Calculate trends for each season  ----------------------------------------
@@ -612,7 +731,7 @@ for (DBn in dbs) {
                  cex      = 0.5,
                  main     = paste(month.name[ase], translate(DBn), translate(avar)),
                  xlab     = "",
-                 ylab     = bquote("Seasonal Anomaly [%]"),
+                 ylab     = bquote("Anomaly [%]"),
                  cex.main = 0.9,
                  cex.lab  = 0.8,
                  cex.axis = 0.8,

@@ -6,7 +6,7 @@
 dict <- list(DIR_att    = 'Dir. Beam Irrad.',
              HOR_att    = 'Dir. Irrad. horizontal plane',
              DIR_transp = 'Transp. for Dir. Irrad.',
-             GLB_att    = "Global Irrad.",
+             GLB_att    = "SDR",
              tsi1au_att = "TSI at 1au",
              ALL        = "All sky cond.",
              CLEAR      = "Clear sky cond.",

@@ -5,14 +5,14 @@
 ---------------
 
 Object name:    object      
-Date written:   2023-06-08 06:29:09.7 UTC  
+Date written:   2023-06-13 09:53:40.8 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat      
-Data file size: 820.0 B (820) 
-Size in memory: 3288.0 B      
+Data file size: 790.0 B (790) 
+Size in memory: 3280.0 B      
 Info file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.inf.md      
 Script name:    Script name could not be resolved      
 User@Host:      athan@sagan   
-Contact:        <natsisphysicist@gmail.com>      
+Contact:        <lapauththanasis@gmail.com>      
 Notes:          NA      
 
 
@@ -27,7 +27,7 @@ Classes 'data.table' and 'data.frame':	6 obs. of  8 variables:
  $ slope.ConfInt_0.95: num  1.3085 0.0792 0.2289 0.035 1.8271 ...
  $ slope.ConfInt_0.99: num  1.72 0.104 0.301 0.046 2.402 ...
  $ DATA              : chr  "All sky cond." "All sky cond." "Clear sky cond." "Clear sky cond." ...
- $ var               : chr  "Dir. Beam Irrad." "Global Irrad." "Dir. Beam Irrad." "Global Irrad." ...
+ $ var               : chr  "Dir. Beam Irrad." "SDR" "Dir. Beam Irrad." "SDR" ...
  $ slope.stat_sig    : num  78 100 100 61.8 100 ...
  - attr(*, ".internal.selfref")=<externalptr> 
 ```
