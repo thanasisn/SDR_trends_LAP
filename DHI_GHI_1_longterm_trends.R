@@ -483,7 +483,7 @@ for (DBn in dbs) {
 #+ echo=F, include=F
 
 
-
+# ____ by season  --------------------------------------------------------------
 
 #+ SeasonalTrendsTogether, echo=F, include=T, results="asis"
 # vars        <- c("DIR_att", "GLB_att")
@@ -497,15 +497,24 @@ dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
 Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 
 
+
+## variable
 for (avar in vars) {
 
     par(mfrow = c(length(Seasons), length(dbs)))
 
+    ## get global ylim
+    gylim <- c()
+    for (DBn in dbs) {
+        DB   <- get(DBn)
+        gylim <- c(gylim, range(DB[[avar]], na.rm = TRUE))
+    }
+    ylim <- range(gylim, na.rm = TRUE)
 
+
+    ## sky conditions
     for (DBn in dbs) {
         DB <- get(DBn)
-
-        ylim <- range(DB[[avar]], na.rm = TRUE )
 
         for (ase in Seasons) {
 
@@ -520,7 +529,7 @@ for (avar in vars) {
             par("mar" = c(2, 3.6, 2, 0.5))
 
             plot(dataset$Year, dataset[[avar]],
-                 # ylim = ylim,
+                 ylim     = ylim,
                  pch      = 19,
                  col      = get(paste0(c("col",
                                          unlist(strsplit(avar, split = "_" ))[1:2]),
@@ -535,7 +544,8 @@ for (avar in vars) {
                  cex.axis = 0.8,
                  mgp  = c(2, 0.5, 0)
             )
-            axis(2, pretty(dataset[[avar]]), las = 2)
+            # axis(2, pretty(dataset[[avar]]), las = 2)
+            axis(2, pretty(ylim), las = 2)
             mtext(text = bquote("Anomaly [%]"),
                   cex  = 0.8,
                   side = 2,
