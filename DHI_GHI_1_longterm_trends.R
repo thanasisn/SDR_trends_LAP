@@ -58,9 +58,7 @@ warning("Don't use cache it breaks computations")
 #+ include=F, echo=F
 ## __ Set environment ----------------------------------------------------------
 Sys.setenv(TZ = "UTC")
-Script.Name <- tryCatch({ funr::sys.script() },
-                        error = function(e) { cat(paste("\nUnresolved script name: ", e),"\n\n")
-                            return("Climatological_") })
+Script.Name <- "~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_1_longterm_trends.R"
 if (!interactive()) {
     pdf( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
     sink(file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
