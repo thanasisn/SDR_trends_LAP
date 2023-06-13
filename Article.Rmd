@@ -210,18 +210,18 @@ The statistical significance and aggregation scheme and filtering will be noted 
 
 ## Long-term trends
 
-Using the mean daily Global radiation we produce the trends of each data set, as departure from the seasonal value.
+Using the mean daily SDR we produce the trends of each data set, as departure from the seasonal value.
 Only for All-sky (Fig. \ref{fig:trendALL}) and Cloudy-sky (Fig. \ref{fig:trendCLOUD}) conditions, the statistical significance of the trends are acceptable (Tab. \ref{tab:trendtable}), to draw some conclusions.
 
-```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily Global radiation relative to climatological values for 1993 - 2023. The black line shows the long term trend for all-sky conditions."}
+```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023. The black line shows the long term trend for all-sky conditions."}
 knitr::include_graphics("./images/LongtermTrends-2.pdf")
 ```
 
-<!-- ```{r trendCLEAR, echo=F, fig.cap="Daily Global radiation seasonal anomaly and long term trend, for clear sky conditions."} -->
+<!-- ```{r trendCLEAR, echo=F, fig.cap="Daily SDR seasonal anomaly and long term trend, for clear sky conditions."} -->
 <!-- knitr::include_graphics("./images/LongtermTrends-4.pdf") -->
 <!-- ``` -->
 
-```{r trendCLOUD, echo=F, fig.cap="Anomaly (\\%) of the daily Global radiation relative to climatological values for 1993 - 2023. The black line shows the long term trend for cloud-sky conditions."}
+```{r trendCLOUD, echo=F, fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023. The black line shows the long term trend for cloud-sky conditions."}
 knitr::include_graphics("./images/LongtermTrends-6.pdf")
 ```
 
