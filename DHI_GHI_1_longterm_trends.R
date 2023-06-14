@@ -88,6 +88,7 @@ source("~/CODE/FUNCTIONS/R/data.R")
 ## __ Source initial scripts ---------------------------------------------------
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
+source("~/CODE/R_myRtools/myRtools/R/write_.R")
 tic <- Sys.time()
 
 ## notification function
@@ -342,8 +343,9 @@ pander(pprint,
 #' \normalsize
 #+ echo=F, include=T
 
-myRtools::write_dat(pprint,
-                    "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat")
+write_dat(pprint,
+          "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat",
+          clean = TRUE)
 
 
 
@@ -662,7 +664,9 @@ pander(pprint,
        cap = "Slope is in %/year")
 #+ echo=F, include=F
 
-myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_season.dat")
+write_dat(pprint,
+          "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_season.dat",
+          clean = TRUE)
 
 
 
@@ -873,7 +877,9 @@ pander(pprint,
 #' \normalsize
 #+ echo=F, include=T
 
-myRtools::write_dat(pprint, "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_monthly.dat")
+write_dat(pprint,
+          "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_monthly.dat",
+          clean = TRUE)
 
 
 
