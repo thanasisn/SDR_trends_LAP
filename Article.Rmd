@@ -157,6 +157,15 @@ The manual screening is aided by a radiation data quality assurance procedure, a
 Thus, problematic recordings have been excluded from further processing. 
 Although it is not possible to detect all the bad data, the large number of data and the aggregation scheme we use, can provide us with accurate radiometric measurements, for the scope of this study.
 
+
+## Clear sky identification 
+
+......
+
+expanded discription
+
+....
+
 <!-- ### Clear sky ID -->
 In order to estimate the effect of the clouds on the SDR we created three datasets, by characterizing each one-minute measurement with a corresponding sky condition. 
 The all-sky conditions, containing all the valid measurements. 
@@ -209,7 +218,7 @@ The statistical significance and aggregation scheme and filtering will be noted 
 ## Long-term trends
 
 Using the mean daily SDR we produce the trends of each data set, as departure from the seasonal value.
-Only for All-sky (Fig. \ref{fig:trendALL}) and Cloudy-sky (Fig. \ref{fig:trendCLOUD}) conditions, the statistical significance of the trends are acceptable (Tab. \ref{tab:trendtable}), to draw some conclusions.
+Only for All-sky (Fig. \ref{fig:trendALL}) <!--and Cloudy-sky (Fig. \ref{fig:trendCLOUD})--> conditions, the statistical significance of the trends are acceptable (Tab. \ref{tab:trendtable}), to draw some conclusions.
 
 ```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023. The black line shows the long term trend for all-sky conditions."}
 knitr::include_graphics("./images/LongtermTrends-2.pdf")
@@ -219,9 +228,9 @@ knitr::include_graphics("./images/LongtermTrends-2.pdf")
 <!-- knitr::include_graphics("./images/LongtermTrends-4.pdf") -->
 <!-- ``` -->
 
-```{r trendCLOUD, echo=F, fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023. The black line shows the long term trend for cloud-sky conditions."}
-knitr::include_graphics("./images/LongtermTrends-6.pdf")
-```
+<!-- ```{r trendCLOUD, echo=F, fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023. The black line shows the long term trend for cloud-sky conditions."} -->
+<!-- knitr::include_graphics("./images/LongtermTrends-6.pdf") -->
+<!-- ``` -->
 
 <!-- \footnotesize -->
 ```{r trendtable, echo=F}
@@ -272,10 +281,17 @@ knitr::include_graphics("./images/SzaTrends-13.pdf")
 knitr::include_graphics("./images/SzaTrends-21.pdf")
 ``` -->
 
-```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA.', fig.subcap=c('Trend distribution for all-sky conditions.', 'Trend distribution for cloud-sky conditions.'), out.width='.34\\linewidth', fig.asp=1, fig.ncol = 2}
-knitr::include_graphics(c("./images/SzaTrends-13.pdf", "./images/SzaTrends-21.pdf"))
+```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA.', fig.subcap=c('Trend distribution for all-sky conditions.', 'Trend distribution for cloud-sky conditions.'), out.width='.30\\linewidth', fig.asp=1, fig.ncol = 2}
+knitr::include_graphics("./images/SzaTrends-13.pdf")
+cat(" space ")     
+knitr::include_graphics("./images/SzaTrends-21.pdf")
 ```
 
+```{r szatrends2, results="asis", echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA.', fig.subcap=c('Trend distribution for all-sky conditions.', 'Trend distribution for cloud-sky conditions.'), out.width='.30\\linewidth', fig.asp=1, fig.ncol = 2}
+knitr::include_graphics("./images/SzaTrends-13.pdf")
+cat("\\ \n")     
+knitr::include_graphics("./images/SzaTrends-21.pdf")
+```
 
 
 <!-- \FloatBarrier -->
@@ -323,17 +339,10 @@ pander(pp,
 
 
 
-
 <!-- \FloatBarrier -->
-
+<!-- 
 ## Zenith angle dependency and seasons of the year.
-
-......
-
-NOT INCLUDE?
-
-.....
-
+-->
 
 <!-- \FloatBarrier -->
 
