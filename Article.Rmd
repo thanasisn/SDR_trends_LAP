@@ -288,15 +288,15 @@ Similar we have produced the deseasonalized trend for different sky conditions f
 This can give us a better understanding of the annual variability of the trends.
 
 ```{r seasonalALL, echo=F, fig.cap="Trends by season for All-sky condition. Displays monthly means of daily means."}
-knitr::include_graphics("./images/SeasonaltTrends-1.pdf")
+knitr::include_graphics("./images/SeasonalTrends-1.pdf")
 ```
 
 ```{r seasonalCLEAR, echo=F, fig.cap="Trends by season for Clear-sky condition. Displays monthly means of daily means."}
-knitr::include_graphics("./images/SeasonaltTrends-2.pdf")
+knitr::include_graphics("./images/SeasonalTrends-2.pdf")
 ```
 
 ```{r seasonalCLOUD, echo=F, fig.cap="Trends by season for Cloudy-sky condition. Displays monthly means of daily means."}
-knitr::include_graphics("./images/SeasonaltTrends-3.pdf")
+knitr::include_graphics("./images/SeasonalTrends-3.pdf")
 ```
 
 
