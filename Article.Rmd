@@ -43,14 +43,9 @@ classoption:    preprint, 3p, authoryear
 bibliography:   references.bib
 linenumbers:          false
 numbersections:       true
-
 header-includes:
    - \usepackage{subfig}
-
 output: 
-  rticles::elsevier_article:
-    keep_tex:         false
-    citation_package: natbib
   bookdown::pdf_document2:
     number_sections:  no
     fig_caption:      yes
@@ -68,6 +63,9 @@ output:
     colorlinks:       yes
     urlcolor:         blue
     biblio-style:     apalike
+  rticles::elsevier_article:
+    keep_tex:         false
+    citation_package: natbib
 # date:           "`r format(Sys.time(), '%F')`"
 ---
 
@@ -120,7 +118,7 @@ The algorithm was calibrated with the main focus to identify the presence of clo
 # Data and methodology.
 
 <!-- time span -->
-The SDR is equivalent to the whole sky global radiation (GHI), and was obtained with a horizontal leveled, CM-21 pyranometer.
+The SDR is equivalent to the whole sky Global radiation, also refered as Global Horizontal Irradiance (GHI), and was obtained with a horizontal leveled, CM-21 pyranometer.
 SDR data spans the period of 
 `r min(ALL_1_daily_DESEAS$Date)` to `r max(ALL_1_daily_DESEAS$Date)`.
 In some algorithms we used as auxiliary data, the direct beam radiation (DNI) for comparisons, obtained by a CHP-1 pyrheliometer, with data availability from 
@@ -231,7 +229,7 @@ LT <- data.table(read.csv("./figures/tbl_longterm_trends.dat",
                strip.white = TRUE,
                sep = ";",
                header = TRUE))
-LT <- LT[grep("Global", LT$var), ]
+LT <- LT[grep("SDR", LT$var), ]
 LT$slope.sd           <- NULL
 LT$slope.ConfInt_0.95 <- NULL
 LT$slope.ConfInt_0.99 <- NULL
@@ -308,7 +306,7 @@ pp <- read.csv("./figures/tbl_longterm_trends_season.dat",
                strip.white = TRUE,
                sep = ";",
                header = TRUE)
-pp <- pp[grep("Global" ,pp$var), ]
+pp <- pp[grep("SDR" ,pp$var), ]
 pp$slope.sd           <- NULL
 pp$slope.ConfInt_0.95 <- NULL
 pp$slope.ConfInt_0.99 <- NULL
