@@ -281,15 +281,14 @@ knitr::include_graphics("./images/SzaTrends-13.pdf")
 knitr::include_graphics("./images/SzaTrends-21.pdf")
 ``` -->
 
-```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA.', fig.subcap=c('Trend distribution for all-sky conditions.', 'Trend distribution for cloud-sky conditions.'), out.width='.30\\linewidth', fig.asp=1, fig.ncol = 2}
+```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA.', fig.subcap=c('Trend distribution for all-sky conditions.', 'Trend distribution for cloud-sky conditions.'), out.width='.33\\linewidth', fig.asp=1, fig.ncol = 2}
 knitr::include_graphics("./images/SzaTrends-13.pdf")
-cat(" space ")     
 knitr::include_graphics("./images/SzaTrends-21.pdf")
 ```
 
 ```{r szatrends2, results="asis", echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA.', fig.subcap=c('Trend distribution for all-sky conditions.', 'Trend distribution for cloud-sky conditions.'), out.width='.30\\linewidth', fig.asp=1, fig.ncol = 2}
 knitr::include_graphics("./images/SzaTrends-13.pdf")
-cat("\\ \n")     
+cat("\\ \\ \n")     
 knitr::include_graphics("./images/SzaTrends-21.pdf")
 ```
 
