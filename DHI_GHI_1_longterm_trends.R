@@ -496,12 +496,11 @@ dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
 
 Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 
-
-
 ## variable
 for (avar in vars) {
 
-    par(mfrow = c(length(Seasons), length(dbs)))
+    par(mfcol = c(length(Seasons), length(dbs)))
+    cplots <- 0
 
     ## get global ylim
     gylim <- c()
@@ -517,16 +516,17 @@ for (avar in vars) {
         DB <- get(DBn)
 
         for (ase in Seasons) {
+            cplots <- cplots + 1
 
             dataset <- DB[ Season == ase, ]
 
-            if (sum(!is.na(dataset[[avar]])) <= 1) next()
+            # if (sum(!is.na(dataset[[avar]])) <= 1) next()
 
             ## linear model counting years
-            lm2 <- lm( dataset[[avar]] ~ dataset$Year )
+            lm2 <- lm(dataset[[avar]] ~ dataset$Year)
 
             ## plot
-            par("mar" = c(2, 3.6, 2, 0.5))
+            par("mar" = c(2, 3.6, 2, 0))
 
             plot(dataset$Year, dataset[[avar]],
                  ylim     = ylim,
@@ -546,10 +546,12 @@ for (avar in vars) {
             )
             # axis(2, pretty(dataset[[avar]]), las = 2)
             axis(2, pretty(ylim), las = 2)
-            mtext(text = bquote("Anomaly [%]"),
-                  cex  = 0.8,
-                  side = 2,
-                  line = 2.6)
+            if (cplots <= 4) {
+                mtext(text = bquote("Anomaly [%]"),
+                      cex  = 0.8,
+                      side = 2,
+                      line = 2.6)
+            }
             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]"))
 
             abline(lm2)

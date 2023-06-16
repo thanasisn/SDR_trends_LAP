@@ -302,11 +302,14 @@ for (avar in unique(szatrends$var)) {
             par(mfrow = c(ceiling(length(wecare)/2), 2))
         }
 
-        par("mar" = c(4,4,2,1))
+        par("mar" = c(4, 5, 2, 2))
 
         ## statistic variable
         for (awe in wecare) {
             awename <- gsub("(\\D)(\\D+)", "\\U\\1\\L\\2", sub("\\."," ", awe), perl = TRUE)
+
+            ## Replace variable name
+            if (awename == "Slope") { awename <- "Trend" }
 
             ## limit plot p-values
             p_lim <- 0.05
@@ -326,8 +329,8 @@ for (avar in unique(szatrends$var)) {
             xlim <- range(subdata$SZA,    na.rm = T)
             ylim <- range(subdata[[awe]], na.rm = T)
 
-            pam  <- subdata[ preNoon == T ]
-            ppm  <- subdata[ preNoon == F ]
+            pam  <- subdata[preNoon == TRUE ]
+            ppm  <- subdata[preNoon == FALSE]
 
             ccex <- ccex_sbs
             par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)

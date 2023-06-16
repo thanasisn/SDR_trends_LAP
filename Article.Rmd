@@ -44,8 +44,12 @@ bibliography:   references.bib
 linenumbers:          false
 numbersections:       true
 header-includes:
-   - \usepackage{subfig}
+   # - \usepackage{subfig}
+   - \usepackage{subcaption}
 output: 
+  rticles::elsevier_article:
+    keep_tex:         true
+    citation_package: natbib
   bookdown::pdf_document2:
     number_sections:  no
     fig_caption:      yes
@@ -63,9 +67,6 @@ output:
     colorlinks:       yes
     urlcolor:         blue
     biblio-style:     apalike
-  rticles::elsevier_article:
-    keep_tex:         false
-    citation_package: natbib
 # date:           "`r format(Sys.time(), '%F')`"
 ---
 
@@ -162,7 +163,7 @@ Although it is not possible to detect all the bad data, the large number of data
 
 ......
 
-expanded discription
+expanded description
 
 ....
 
@@ -281,16 +282,12 @@ knitr::include_graphics("./images/SzaTrends-13.pdf")
 knitr::include_graphics("./images/SzaTrends-21.pdf")
 ``` -->
 
-```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA.', fig.subcap=c('Trend distribution for all-sky conditions.', 'Trend distribution for cloud-sky conditions.'), out.width='.33\\linewidth', fig.asp=1, fig.ncol = 2}
+
+```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA.', fig.subcap=c('Trend distribution for all-sky conditions.', 'Trend distribution for cloud-sky conditions.'), out.width='.35\\linewidth', fig.asp=1, fig.ncol = 2}
 knitr::include_graphics("./images/SzaTrends-13.pdf")
 knitr::include_graphics("./images/SzaTrends-21.pdf")
 ```
 
-```{r szatrends2, results="asis", echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA.', fig.subcap=c('Trend distribution for all-sky conditions.', 'Trend distribution for cloud-sky conditions.'), out.width='.30\\linewidth', fig.asp=1, fig.ncol = 2}
-knitr::include_graphics("./images/SzaTrends-13.pdf")
-cat("\\ \\ \n")     
-knitr::include_graphics("./images/SzaTrends-21.pdf")
-```
 
 
 <!-- \FloatBarrier -->
@@ -300,17 +297,22 @@ knitr::include_graphics("./images/SzaTrends-21.pdf")
 Similar we have produced the deseasonalized trend for different sky conditions for each season of the year, using the corresponding mean monthly values.
 This can give us a better understanding of the annual variability of the trends.
 
-```{r seasonalALL, echo=F, fig.cap="Trends by season for All-sky condition. Displays monthly means of daily means."}
-knitr::include_graphics("./images/SeasonalTrends-1.pdf")
+```{r seasonalALL, echo=F, fig.cap="Trends by season for all condition. Displaying monthly means of daily means.", out.width="100%"}
+knitr::include_graphics("./images/SeasonalTrendsTogether-1.pdf")
 ```
 
-```{r seasonalCLEAR, echo=F, fig.cap="Trends by season for Clear-sky condition. Displays monthly means of daily means."}
-knitr::include_graphics("./images/SeasonalTrends-2.pdf")
-```
 
-```{r seasonalCLOUD, echo=F, fig.cap="Trends by season for Cloudy-sky condition. Displays monthly means of daily means."}
-knitr::include_graphics("./images/SeasonalTrends-3.pdf")
-```
+<!-- ```{r seasonalALL, echo=F, fig.cap="Trends by season for All-sky condition. Displays monthly means of daily means."} -->
+<!-- knitr::include_graphics("./images/SeasonalTrends-1.pdf") -->
+<!-- ``` -->
+
+<!-- ```{r seasonalCLEAR, echo=F, fig.cap="Trends by season for Clear-sky condition. Displays monthly means of daily means."} -->
+<!-- knitr::include_graphics("./images/SeasonalTrends-2.pdf") -->
+<!-- ``` -->
+
+<!-- ```{r seasonalCLOUD, echo=F, fig.cap="Trends by season for Cloudy-sky condition. Displays monthly means of daily means."} -->
+<!-- knitr::include_graphics("./images/SeasonalTrends-3.pdf") -->
+<!-- ``` -->
 
 
 
