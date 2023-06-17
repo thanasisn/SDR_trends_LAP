@@ -163,7 +163,9 @@ Although it is not possible to detect all the bad data, the large number of data
 
 ......
 
-expanded description
+
+```{r child = '/home/athan/CS_id/Clear_sky_id_Reno-Hansen_description_v14.2.Rmd'}
+```
 
 ....
 
