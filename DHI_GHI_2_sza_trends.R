@@ -98,6 +98,7 @@ options(error = function() {
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
         system("notify-send -u normal -t 30000 'R session' 'An error occurred!'")
     }
+    traceback()
 })
 
 ## __ Flags --------------------------------------------------------------------
@@ -255,23 +256,22 @@ szatrends[preNoon == F, pch := pch_pm ]
 
 
 
-hist(szatrends[DATA == dbs[1], N], breaks = 100)
-hist(szatrends[DATA == dbs[2], N], breaks = 100)
+# hist(szatrends[DATA == dbs[1], N], breaks = 100)
+# hist(szatrends[DATA == dbs[2], N], breaks = 100)
 
-hist(szatrends[var == vars[1], N], breaks = 100)
-hist(szatrends[var == vars[2], N], breaks = 100)
+# hist(szatrends[var == vars[1], N], breaks = 100)
+# hist(szatrends[var == vars[2], N], breaks = 100)
 
 # szatrends <- szatrends[ N > 50]
 
-
-plot(szatrends$SZA,szatrends$N)
+# plot(szatrends$SZA,szatrends$N)
 
 test1 <- szatrends[DATA == "CLEAR_2_daily_DESEAS" & var == "DIR_att_des"]
 test2 <- szatrends[DATA == "CLEAR_2_daily_DESEAS" & var == "GLB_att_des"]
-plot(test1$SZA, test1$N, pch = 19)
-abline(h=50)
-plot(test2$SZA, test2$N, pch = 19)
-abline(h=300)
+# plot(test1$SZA, test1$N, pch = 19)
+# abline(h=50)
+# plot(test2$SZA, test2$N, pch = 19)
+# abline(h=300)
 
 # szatrends[ var == "GLB_att_des"    & N <= 300, slope := NA ]
 # szatrends[ var == "DIR_att_des"    & N <=  50, slope := NA ]
@@ -445,29 +445,27 @@ szatrends_seas[ preNoon == F, pch := pch_pm ]
 
 
 
-
-
-hist(szatrends_seas[DATA == dbs[1],N],  breaks = 100)
-hist(szatrends_seas[DATA == dbs[2],N],  breaks = 100)
-hist(szatrends_seas[DATA == dbs[3],N],  breaks = 100)
-hist(szatrends_seas[var  == vars[1],N], breaks = 100)
-hist(szatrends_seas[var  == vars[2],N], breaks = 100)
+# hist(szatrends_seas[DATA == dbs[1],N],  breaks = 100)
+# hist(szatrends_seas[DATA == dbs[2],N],  breaks = 100)
+# hist(szatrends_seas[DATA == dbs[3],N],  breaks = 100)
+# hist(szatrends_seas[var  == vars[1],N], breaks = 100)
+# hist(szatrends_seas[var  == vars[2],N], breaks = 100)
 
 # szatrends_seas <- szatrends_seas[ N > 50]
 
 plot(szatrends_seas$SZA,szatrends_seas$N)
 
-test <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "DIR_att_des" ]
-plot(test$SZA, test$N, pch = 19)
+# test <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "DIR_att_des" ]
+# plot(test$SZA, test$N, pch = 19)
 
 
 szatrends[ N <= 30, slope := NA]
 
 
-test1 <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "DIR_att_des" ]
-test2 <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "GLB_att_des" ]
-plot(test1$SZA, test1$N, pch = 19)
-plot(test2$SZA, test2$N, pch = 19)
+# test1 <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "DIR_att_des" ]
+# test2 <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "GLB_att_des" ]
+# plot(test1$SZA, test1$N, pch = 19)
+# plot(test2$SZA, test2$N, pch = 19)
 
 # szatrends[ var == "GLB_att_des"    & N <= 300, slope := NA ]
 # szatrends[ var == "DIR_att_des"    & N <=  50, slope := NA ]
