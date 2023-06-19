@@ -98,6 +98,7 @@ options(error = function() {
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
         system("notify-send -u normal -t 30000 'R session' 'An error occurred!'")
     }
+    traceback()
 })
 
 ## __ Flags --------------------------------------------------------------------
@@ -778,6 +779,8 @@ for (adb in database) {
             pdb   <- pdb[, ..wcare]
 
             pdb   <- pdb[!is.na(pdb[[avar]])]
+
+            if (nrow(pdb) == 0) next()
 
             ## start empty plot
             xlim  <- range(pdb$Date)

@@ -160,6 +160,7 @@ for (i in data_list) {
             col <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
                               collapse = "_"))
             vect <- Dplot[[yvar]]
+            if (all(is.na(vect))) next()
             plot(Dplot[[xvar]], vect,
                  pch  = 19,
                  cex  = .3,
@@ -222,6 +223,8 @@ for (DBn in dbs) {
 
         for (avar in vars) {
             dataset <- DB
+
+            if (all(is.na(dataset[[avar]]))) next()
 
             ## linear model by day step
             lm1 <- lm(dataset[[avar]] ~ dataset$Date)
