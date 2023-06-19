@@ -369,7 +369,7 @@ write_dat(pprint,
 
 ## ____ by sky conditions  -----------------------------------------------------
 
-#+ SeasonalTrends, echo=F, include=T, results="asis"
+#+ SeasonalTrends, echo=F, include=T, results="asis, fig.asp = 0.5"
 # vars        <- c("DIR_att", "GLB_att")
 vars        <- c("GLB_att_des")
 
