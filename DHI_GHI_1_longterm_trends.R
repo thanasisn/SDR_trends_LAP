@@ -51,7 +51,7 @@ knitr::opts_chunk$set(dev        = c("pdf", "png")    )
 # knitr::opts_chunk$set(dev        = "png"    )
 knitr::opts_chunk$set(out.width  = "100%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
-knitr::opts_chunk$set(cache      =  F       )  ## !! breaks calculations
+knitr::opts_chunk$set(cache      =  FALSE   )  ## !! breaks calculations
 # knitr::opts_chunk$set(fig.pos    = '!h'    )
 warning("Don't use cache it breaks computations")
 
@@ -97,6 +97,7 @@ options(error = function() {
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
         system("notify-send -u normal -t 30000 'R session' 'An error occurred!'")
     }
+    traceback()
 })
 
 ## __ Flags --------------------------------------------------------------------
@@ -104,10 +105,8 @@ options(error = function() {
 DRAFT <- TRUE
 DRAFT <- FALSE
 
-
 ## override plot options
 par(pch = ".")
-
 
 ## choose to grid some plots
 FIGURESGRID <- TRUE
