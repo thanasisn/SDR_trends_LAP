@@ -35,6 +35,7 @@
 #'     keep_md:         yes
 #'     fig_width:       7
 #'     fig_height:      4.5
+#'     self_contained:  no
 #'
 #' date: "`r format(Sys.time(), '%F')`"
 #'
@@ -885,6 +886,7 @@ pander(pprint,
 write_dat(pprint,
           "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_monthly.dat",
           clean = TRUE)
+
 
 
 
