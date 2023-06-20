@@ -67,6 +67,7 @@ output:
     colorlinks:       yes
     urlcolor:         blue
     biblio-style:     apalike
+  bookdown::word_document2: default
 # date:           "`r format(Sys.time(), '%F')`"
 ---
 
@@ -79,6 +80,7 @@ knitr::opts_chunk$set(comment    = ""      )
 knitr::opts_chunk$set(out.width  = "70%"   )
 knitr::opts_chunk$set(fig.align  = "center")
 knitr::opts_chunk$set(fig.pos    = 'h!'    )
+options(knitr.graphics.auto_pdf = FALSE)
 library(pander)
 library(data.table)
 ## load data
@@ -340,8 +342,9 @@ Using the mean daily SDR we produce the trends of each data set, as departure fr
 Only for All-sky (Fig. \ref{fig:trendALL}) <!--and Cloudy-sky (Fig. \ref{fig:trendCLOUD})--> conditions, the statistical significance of the trends are acceptable (Tab. \ref{tab:trendtable}), to draw some conclusions.
 
 ```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023. The black line shows the long term trend for all-sky conditions."}
-knitr::include_graphics("./images/LongtermTrends-2.pdf")
+knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
+
 
 <!-- ```{r trendCLEAR, echo=F, fig.cap="Daily SDR seasonal anomaly and long term trend, for clear sky conditions."} -->
 <!-- knitr::include_graphics("./images/LongtermTrends-4.pdf") -->
