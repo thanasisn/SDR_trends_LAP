@@ -47,9 +47,7 @@ header-includes:
    # - \usepackage{subfig}
    - \usepackage{subcaption}
 output: 
-  rticles::elsevier_article:
-    keep_tex:         true
-    citation_package: natbib
+  bookdown::word_document2: default
   bookdown::pdf_document2:
     number_sections:  no
     fig_caption:      yes
@@ -67,7 +65,9 @@ output:
     colorlinks:       yes
     urlcolor:         blue
     biblio-style:     apalike
-  bookdown::word_document2: default
+  rticles::elsevier_article:
+    keep_tex:         true
+    citation_package: natbib
 # date:           "`r format(Sys.time(), '%F')`"
 ---
 
@@ -347,11 +347,11 @@ knitr::include_graphics("./images/LongtermTrends-2.png")
 
 
 <!-- ```{r trendCLEAR, echo=F, fig.cap="Daily SDR seasonal anomaly and long term trend, for clear sky conditions."} -->
-<!-- knitr::include_graphics("./images/LongtermTrends-4.pdf") -->
+<!-- knitr::include_graphics("./images/LongtermTrends-4.png") -->
 <!-- ``` -->
 
 <!-- ```{r trendCLOUD, echo=F, fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023. The black line shows the long term trend for cloud-sky conditions."} -->
-<!-- knitr::include_graphics("./images/LongtermTrends-6.pdf") -->
+<!-- knitr::include_graphics("./images/LongtermTrends-6.png") -->
 <!-- ``` -->
 
 <!-- \footnotesize -->
@@ -390,23 +390,23 @@ cloudtrend <- signif(LT[`Sky condition` == "Cloudy cond.",    `Trend [%/year]`],
 Analyzing the long term trends of SDR to bins of SZA, we can see the contribution of the geometry and time in a diurnal level (Figures \ref{fig:szatrends}a and \ref{fig:szatrends}b). Although there is a seasonal distribution of SZA than in not presented here.
 
 <!-- ```{r , echo=F, fig.cap="All sky"} -->
-<!-- knitr::include_graphics("./images/SzaTrends-5.pdf") -->
+<!-- knitr::include_graphics("./images/SzaTrends-5.png") -->
 <!-- ``` -->
 
 <!--
 ```{r , echo=F, fig.cap="Clear sky"}
-knitr::include_graphics("./images/SzaTrends-13.pdf")
+knitr::include_graphics("./images/SzaTrends-13.png")
 ```
 -->
 
 <!-- ```{r , echo=F, fig.cap="Cloud sky"}
-knitr::include_graphics("./images/SzaTrends-21.pdf")
+knitr::include_graphics("./images/SzaTrends-21.png")
 ``` -->
 
 
 ```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA.', fig.subcap=c('Trend distribution for all-sky conditions.', 'Trend distribution for cloud-sky conditions.'), out.width='.35\\linewidth', fig.asp=1, fig.ncol = 2}
-knitr::include_graphics("./images/SzaTrends-13.pdf")
-knitr::include_graphics("./images/SzaTrends-21.pdf")
+knitr::include_graphics("./images/SzaTrends-13.png")
+knitr::include_graphics("./images/SzaTrends-21.png")
 ```
 
 
@@ -419,20 +419,20 @@ Similar we have produced the deseasonalized trend for different sky conditions f
 This can give us a better understanding of the annual variability of the trends.
 
 ```{r seasonalALL, echo=F, fig.cap="Trends by season for all condition. Displaying monthly means of daily means.", out.width="100%"}
-knitr::include_graphics("./images/SeasonalTrendsTogether-1.pdf")
+knitr::include_graphics("./images/SeasonalTrendsTogether-1.png")
 ```
 
 
 <!-- ```{r seasonalALL, echo=F, fig.cap="Trends by season for All-sky condition. Displays monthly means of daily means."} -->
-<!-- knitr::include_graphics("./images/SeasonalTrends-1.pdf") -->
+<!-- knitr::include_graphics("./images/SeasonalTrends-1.png") -->
 <!-- ``` -->
 
 <!-- ```{r seasonalCLEAR, echo=F, fig.cap="Trends by season for Clear-sky condition. Displays monthly means of daily means."} -->
-<!-- knitr::include_graphics("./images/SeasonalTrends-2.pdf") -->
+<!-- knitr::include_graphics("./images/SeasonalTrends-2.png") -->
 <!-- ``` -->
 
 <!-- ```{r seasonalCLOUD, echo=F, fig.cap="Trends by season for Cloudy-sky condition. Displays monthly means of daily means."} -->
-<!-- knitr::include_graphics("./images/SeasonalTrends-3.pdf") -->
+<!-- knitr::include_graphics("./images/SeasonalTrends-3.png") -->
 <!-- ``` -->
 
 
@@ -478,25 +478,25 @@ Figure \ref{fig:cumsum}
 
 <!--
 ```{r cumsumALL, echo=F, fig.cap="Running cumulative sum."}
-knitr::include_graphics("./images/CumulativeDailyCumSum-1.pdf")
+knitr::include_graphics("./images/CumulativeDailyCumSum-1.png")
 ```
 -->
 
 <!--
 Not showing this trend
 ```{r cumsumCLEAR, echo=F, fig.cap="Donditions.", include=FALSE}
-knitr::include_graphics("./images/CumulativeDailyCumSum-5.pdf")
+knitr::include_graphics("./images/CumulativeDailyCumSum-5.png")
 ```
 -->
 
 <!--
 ```{r cumsumCLOUD, echo=F, fig.cap="Donditions."}
-knitr::include_graphics("./images/CumulativeDailyCumSum-9.pdf")
+knitr::include_graphics("./images/CumulativeDailyCumSum-9.png")
 ```
 -->
 
 ```{r cumsum, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.35\\linewidth', fig.asp=1, fig.ncol = 2}
-knitr::include_graphics(c("./images/CumulativeDailyCumSum-1.pdf", "./images/CumulativeDailyCumSum-9.pdf"))
+knitr::include_graphics(c("./images/CumulativeDailyCumSum-1.png", "./images/CumulativeDailyCumSum-9.png"))
 ```
 
 
