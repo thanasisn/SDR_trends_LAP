@@ -7,7 +7,8 @@ SHELL = /bin/bash
 all:       clean_all pdf html rtim
 render:    pdf html rtim
 pdf:       p1 p2 p3 Ap
-html:      h1 h2 h3
+#html:      h1 h2 h3
+html:      h2 h3
 rtim:      r1 r2 r3
 clean_all: clean_cache clean_data clean_pdfs
 
@@ -72,19 +73,22 @@ $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
+	@echo "Building: $(SLIDY)"
+	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$(SLIDY)')"
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
 	@#mkdir -p                   "$(presentation)/figures/"
 	@#-cp -u "./figures/"*".dat" "$(presentation)/figures/"
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
 
-h1: $(SLIDY)
-$(SLIDY): $(RMD)
-	@echo "Building: $@"
-	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
-	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
-	@#mkdir -p                   "$(presentation)/figures/"
-	@#-cp -u "./figures/"*".dat" "$(presentation)/figures/"
-	@# setsid mimeopen  $@ &
+# h1: $(SLIDY)
+# $(SLIDY): $(RMD)
+# 	@echo "Building: $@"
+# 	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
+# 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
+# 	@#mkdir -p                   "$(presentation)/figures/"
+# 	@#-cp -u "./figures/"*".dat" "$(presentation)/figures/"
+# 	@# setsid mimeopen  $@ &
 
 r1: $(RUNT)
 $(RUNT): $(RMD)
