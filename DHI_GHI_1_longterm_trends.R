@@ -35,7 +35,6 @@
 #'     keep_md:         yes
 #'     fig_width:       7
 #'     fig_height:      4.5
-#'     self_contained:  no
 #'
 #' date: "`r format(Sys.time(), '%F')`"
 #'
@@ -48,7 +47,7 @@
 
 #+ echo=F, include=F
 knitr::opts_chunk$set(comment    = ""       )
-# knitr::opts_chunk$set(dev        = "pdf"    )
+knitr::opts_chunk$set(dev        = c("pdf", "png")    )
 # knitr::opts_chunk$set(dev        = "png"    )
 knitr::opts_chunk$set(out.width  = "100%"   )
 knitr::opts_chunk$set(fig.align  = "center" )

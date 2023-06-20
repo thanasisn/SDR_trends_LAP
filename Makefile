@@ -72,10 +72,10 @@ p1: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
-	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.pdf' ./DHI_GHI_*/figure-latex/ ./images
-	@echo "Building: $(SLIDY)"
-	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$(SLIDY)')"
-	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
+	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.pdf' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
+	#@echo "Building: $(SLIDY)"
+	#-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$(SLIDY)')"
+	#@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
 	@#mkdir -p                   "$(presentation)/figures/"
 	@#-cp -u "./figures/"*".dat" "$(presentation)/figures/"
 	@#setsid evince    $@ &
