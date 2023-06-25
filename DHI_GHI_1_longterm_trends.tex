@@ -1,0 +1,887 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  10pt,
+  a4paper,oneside]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Trends of SDR in Thessaloniki},
+  pdfauthor={Natsis Athanasios; Alkiviadis Bais},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[left=0.5in,right=0.5in,top=0.5in,bottom=0.5in]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{caption}
+\usepackage{placeins}
+\captionsetup{font=small}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Trends of SDR in Thessaloniki}
+\author{Natsis Athanasios\footnote{Laboratory of Atmospheric Physics, AUTH, \href{mailto:natsisphysicist@gmail.com}{\nolinkurl{natsisphysicist@gmail.com}}} \and Alkiviadis Bais\footnote{Laboratory of Atmospheric Physics, AUTH}}
+\date{2023-06-25}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Study of GHI and DNI radiation for `clear sky' and all sly conditions.
+\end{abstract}
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{4}
+\tableofcontents
+}
+\begin{verbatim}
+fANCOVA 0.6-1 loaded
+\end{verbatim}
+
+\begin{verbatim}
+Loading required package: zoo
+\end{verbatim}
+
+\begin{verbatim}
+Attaching package: 'zoo'
+\end{verbatim}
+
+\begin{verbatim}
+The following objects are masked from 'package:base':
+
+    as.Date, as.Date.numeric
+\end{verbatim}
+
+\begin{verbatim}
+ !! (Re)Create environment and data input -> ~/MANUSCRIPTS/2022_sdr_trends/data/common_data_14_2.Rda 
+Written:  /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_tsi_info.dat 
+
+Written:  /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_tsi_info.inf.md 
+\end{verbatim}
+
+\begin{verbatim}
+Removing columns: CSflag
+Removing columns: CSflag_1
+Removing columns: CSflag_2
+Removing columns: CSflag_3
+Removing columns: CSflag_4
+Removing columns: CSflag_5
+\end{verbatim}
+
+\begin{verbatim}
+Removing columns: CSflag
+Removing columns: CSflag_1
+Removing columns: CSflag_2
+Removing columns: CSflag_3
+Removing columns: CSflag_4
+Removing columns: CSflag_5
+
+Removing columns: CSflag
+Removing columns: CSflag_1
+Removing columns: CSflag_2
+Removing columns: CSflag_3
+Removing columns: CSflag_4
+Removing columns: CSflag_5
+\end{verbatim}
+
+\begin{verbatim}
+Warning in eval(ei, envir): Years in by Season are shifted by a month to match
+seasons
+
+Warning in eval(ei, envir): Years in by Season are shifted by a month to match
+seasons
+\end{verbatim}
+
+\begin{verbatim}
+Saved workspace: ~/MANUSCRIPTS/2022_sdr_trends/data/common_data_14_2.Rda 
+\end{verbatim}
+
+\hypertarget{long-term-anomaly-trends}{%
+\subsection{1. Long term anomaly trends}\label{long-term-anomaly-trends}}
+
+\hypertarget{data-info}{%
+\subsubsection{Data info}\label{data-info}}
+
+Time data span 1993-04-12, 2023-05-31
+
+Where is a \textbf{running mean the window is 1826.2125 days} or
+5 years.
+
+\hypertarget{process}{%
+\subsubsection{Process}\label{process}}
+
+\begin{itemize}
+\tightlist
+\item
+  Daily means are used to produce monthly means.
+\item
+  Some quality constrains have been applied
+\item
+  In each case the seasonal data have been created with the same process as
+  the data that are de-seasonalised.
+\end{itemize}
+
+\newpage
+\FloatBarrier
+
+\hypertarget{trends-from-daily-means}{%
+\subsubsection{Trends from daily means}\label{trends-from-daily-means}}
+
+\newpage
+
+\hypertarget{trends-on-all-sky-cond.-data}{%
+\paragraph{Trends on All sky cond. data}\label{trends-on-all-sky-cond.-data}}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_1_longterm_trends_files/figure-latex/LongtermTrends-1} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_1_longterm_trends_files/figure-latex/LongtermTrends-2} \end{center}
+
+\newpage
+
+\hypertarget{trends-on-clear-sky-cond.-data}{%
+\paragraph{Trends on Clear sky cond. data}\label{trends-on-clear-sky-cond.-data}}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_1_longterm_trends_files/figure-latex/LongtermTrends-3} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_1_longterm_trends_files/figure-latex/LongtermTrends-4} \end{center}
+
+\newpage
+
+\hypertarget{trends-on-cloudy-cond.-data}{%
+\paragraph{Trends on Cloudy cond. data}\label{trends-on-cloudy-cond.-data}}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_1_longterm_trends_files/figure-latex/LongtermTrends-5} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_1_longterm_trends_files/figure-latex/LongtermTrends-6} \end{center}
+
+\newpage
+
+\hypertarget{table-of-total-trends.}{%
+\paragraph{Table of total trends.}\label{table-of-total-trends.}}
+
+\scriptsize
+
+\begin{longtable}[]{@{}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.0769}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.0962}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1058}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1923}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1923}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1635}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1731}}@{}}
+\caption{Slope is in \%/year (continued below)}\tabularnewline
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedleft
+slope
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.p
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.ConfInt\_0.95
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.ConfInt\_0.99
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+DATA
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+var
+\end{minipage} \\
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedleft
+slope
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.p
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.ConfInt\_0.95
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.ConfInt\_0.99
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+DATA
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+var
+\end{minipage} \\
+\midrule
+\endhead
+0.2934 & 0.6577 & 0.6556 & 1.29 & 1.695 & All sky cond. & Dir. Beam Irrad. \\
+0.381 & 0.04025 & 3.479e-21 & 0.07889 & 0.1037 & All sky cond. & SDR \\
+0.2376 & 0.6738 & 0.7244 & 1.321 & 1.737 & Clear sky cond. & Dir. Beam Irrad. \\
+0.3605 & 0.04337 & 1.068e-16 & 0.08502 & 0.1117 & Clear sky cond. & SDR \\
+1.633 & 0.5319 & 0.002234 & 1.044 & 1.374 & Cloudy cond. & Dir. Beam Irrad. \\
+0.3472 & 0.0602 & 8.968e-09 & 0.118 & 0.1552 & Cloudy cond. & SDR \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}r@{}}
+\toprule
+slope.stat\_sig \\
+\midrule
+\endhead
+34.44 \\
+100 \\
+27.56 \\
+100 \\
+99.78 \\
+100 \\
+\bottomrule
+\end{longtable}
+
+\normalsize
+
+\begin{verbatim}
+Written:  /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat 
+\end{verbatim}
+
+\newpage
+\FloatBarrier
+
+\hypertarget{trends-for-each-season-of-the-year}{%
+\subsubsection{Trends for each season of the year}\label{trends-for-each-season-of-the-year}}
+
+We calculated Seasonal means from the daily means
+
+\begin{verbatim}
+\newpage
+
+####  All sky cond. SDR 
+\end{verbatim}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_1_longterm_trends_files/figure-latex/SeasonalTrends-1} \end{center}
+
+\begin{verbatim}
+ 
+ \footnotesize 
+ 
+
+| Year | Season | GLB_att | GLB_att_sd | GLB_att_N | GLB_att_seas | GLB_att_sd_seas | GLB_att_N_seas | GLB_att_des |
+|-----:|-------:|--------:|-----------:|----------:|-------------:|----------------:|---------------:|------------:|
+| 1996 | Winter |   125.3 |       83.1 |        80 |          220 |           115.3 |           2466 |      -43.04 |
+| 2022 | Winter |   256.3 |      109.4 |        88 |          220 |           115.3 |           2466 |       16.49 |
+| 2010 | Winter |     188 |      103.2 |        75 |          220 |           115.3 |           2466 |      -14.56 |
+| 2020 | Autumn |   374.6 |      121.9 |        85 |        327.1 |           148.4 |           2629 |       14.54 |
+| 2016 | Winter |   250.6 |      104.4 |        78 |          220 |           115.3 |           2466 |       13.89 |
+
+Table: Extreme anomaly values
+
+
+ 
+ \normalsize 
+ 
+\newpage
+
+####  Clear sky cond. SDR 
+\end{verbatim}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_1_longterm_trends_files/figure-latex/SeasonalTrends-2} \end{center}
+
+\begin{verbatim}
+ 
+ \footnotesize 
+ 
+
+| Year | Season | GLB_att | GLB_att_sd | GLB_att_N | GLB_att_seas | GLB_att_sd_seas | GLB_att_N_seas | GLB_att_des |
+|-----:|-------:|--------:|-----------:|----------:|-------------:|----------------:|---------------:|------------:|
+| 1996 | Winter |   126.5 |      86.89 |        79 |        229.2 |           125.3 |           2451 |      -44.81 |
+| 2022 | Winter |   276.8 |        126 |        88 |        229.2 |           125.3 |           2451 |       20.78 |
+| 2016 | Winter |   270.7 |      123.6 |        78 |        229.2 |           125.3 |           2451 |        18.1 |
+| 2010 | Winter |   192.3 |      107.1 |        75 |        229.2 |           125.3 |           2451 |       -16.1 |
+| 2023 | Winter |   264.2 |      124.7 |        89 |        229.2 |           125.3 |           2451 |       15.27 |
+
+Table: Extreme anomaly values
+
+
+ 
+ \normalsize 
+ 
+\newpage
+
+####  Cloudy cond. SDR 
+\end{verbatim}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_1_longterm_trends_files/figure-latex/SeasonalTrends-3} \end{center}
+
+\begin{verbatim}
+ 
+ \footnotesize 
+ 
+
+| Year | Season | GLB_att | GLB_att_sd | GLB_att_N | GLB_att_seas | GLB_att_sd_seas | GLB_att_N_seas | GLB_att_des |
+|-----:|-------:|--------:|-----------:|----------:|-------------:|----------------:|---------------:|------------:|
+| 2012 | Winter |   392.4 |      136.7 |         2 |        272.3 |            91.4 |            299 |       44.08 |
+| 2005 | Winter |   203.6 |      45.01 |         8 |        272.3 |            91.4 |            299 |      -25.25 |
+| 2016 | Autumn |     451 |      111.1 |        13 |        361.3 |           110.4 |            556 |       24.86 |
+| 2000 | Winter |   337.2 |      84.87 |         9 |        272.3 |            91.4 |            299 |       23.82 |
+| 2008 | Winter |   330.4 |      104.7 |         8 |        272.3 |            91.4 |            299 |       21.32 |
+
+Table: Extreme anomaly values
+
+
+ 
+ \normalsize 
+ 
+\end{verbatim}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_1_longterm_trends_files/figure-latex/SeasonalTrendsTogether-1} \end{center}
+
+\newpage
+\FloatBarrier
+
+\hypertarget{table-of-trends-by-season.}{%
+\paragraph{Table of trends by season.}\label{table-of-trends-by-season.}}
+
+\begin{longtable}[]{@{}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1124}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1124}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1124}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1910}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.0899}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.2022}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1798}}@{}}
+\caption{Slope is in \%/year}\tabularnewline
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedleft
+slope
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.p
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+DATA
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Season
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+var
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.stat\_sig
+\end{minipage} \\
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedleft
+slope
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.p
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+DATA
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Season
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+var
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.stat\_sig
+\end{minipage} \\
+\midrule
+\endhead
+3.04 & 2.263 & 0.2369 & All sky cond. & Winter & Dir. Beam Irrad. & 76.31 \\
+-2.52 & 1.046 & 0.05264 & All sky cond. & Spring & Dir. Beam Irrad. & 94.74 \\
+0.8261 & 1.259 & 0.5408 & All sky cond. & Summer & Dir. Beam Irrad. & 45.92 \\
+1.271 & 3.1 & 0.6987 & All sky cond. & Autumn & Dir. Beam Irrad. & 30.13 \\
+0.7215 & 0.2003 & 0.001209 & All sky cond. & Winter & SDR & 99.88 \\
+0.1679 & 0.1013 & 0.1083 & All sky cond. & Spring & SDR & 89.17 \\
+0.128 & 0.07219 & 0.08705 & All sky cond. & Summer & SDR & 91.29 \\
+0.4239 & 0.1446 & 0.006659 & All sky cond. & Autumn & SDR & 99.33 \\
+2.888 & 2.341 & 0.2721 & Clear sky cond. & Winter & Dir. Beam Irrad. & 72.79 \\
+-2.968 & 1.057 & 0.03081 & Clear sky cond. & Spring & Dir. Beam Irrad. & 96.92 \\
+0.5223 & 1.164 & 0.6726 & Clear sky cond. & Summer & Dir. Beam Irrad. & 32.74 \\
+1.619 & 3.273 & 0.6417 & Clear sky cond. & Autumn & Dir. Beam Irrad. & 35.83 \\
+0.8715 & 0.2092 & 0.000269 & Clear sky cond. & Winter & SDR & 99.97 \\
+0.09719 & 0.1119 & 0.3923 & Clear sky cond. & Spring & SDR & 60.77 \\
+-0.02369 & 0.09133 & 0.7972 & Clear sky cond. & Summer & SDR & 20.28 \\
+0.3583 & 0.1567 & 0.02996 & Clear sky cond. & Autumn & SDR & 97 \\
+5.777 & 3.098 & 0.1212 & Cloudy cond. & Winter & Dir. Beam Irrad. & 87.88 \\
+0.2013 & 1.834 & 0.9162 & Cloudy cond. & Spring & Dir. Beam Irrad. & 8.384 \\
+3.443 & 0.6879 & 0.004087 & Cloudy cond. & Summer & Dir. Beam Irrad. & 99.59 \\
+0.329 & 3.757 & 0.9336 & Cloudy cond. & Autumn & Dir. Beam Irrad. & 6.637 \\
+-0.02581 & 0.3067 & 0.9335 & Cloudy cond. & Winter & SDR & 6.646 \\
+0.3557 & 0.1885 & 0.06914 & Cloudy cond. & Spring & SDR & 93.09 \\
+0.442 & 0.145 & 0.004988 & Cloudy cond. & Summer & SDR & 99.5 \\
+0.4776 & 0.1928 & 0.01955 & Cloudy cond. & Autumn & SDR & 98.04 \\
+\bottomrule
+\end{longtable}
+
+\newpage
+\FloatBarrier
+
+\hypertarget{monthly-trends}{%
+\subsubsection{Monthly trends}\label{monthly-trends}}
+
+We calculated monthly means from the daily means and the we produce the
+seasonal data and the departure from the seasonal value in \%.
+
+\newpage
+
+\hypertarget{all-sky-cond.-sdr}{%
+\paragraph{All sky cond. SDR}\label{all-sky-cond.-sdr}}
+
+\begin{center}\includegraphics[width=1\linewidth,height=0.97\textheight]{DHI_GHI_1_longterm_trends_files/figure-latex/TrendByMonth-1} \end{center}
+
+\scriptsize 
+
+\begin{longtable}[]{@{}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.0682}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.0795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1023}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1364}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1364}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1591}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1932}}@{}}
+\caption{Extreme anomaly values (continued below)}\tabularnewline
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedleft
+Year
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Month
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_EM
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_seas
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_sd\_seas
+\end{minipage} \\
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedleft
+Year
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Month
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_EM
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_seas
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_sd\_seas
+\end{minipage} \\
+\midrule
+\endhead
+1996 & 2 & 120.7 & 77.23 & 24 & NA & 279.9 & 127.3 \\
+2015 & 12 & 249.5 & 63.77 & 21 & NA & 178.1 & 90.73 \\
+2001 & 1 & 125.4 & 81.13 & 31 & NA & 203.3 & 100.3 \\
+1996 & 1 & 125.4 & 88.54 & 29 & NA & 203.3 & 100.3 \\
+1996 & 3 & 232.6 & 156.9 & 31 & NA & 360.6 & 152.5 \\
+2000 & 1 & 271.6 & 74.87 & 29 & NA & 203.3 & 100.3 \\
+1993 & 11 & 146.4 & 103.2 & 30 & NA & 219.4 & 105.1 \\
+2016 & 12 & 233.4 & 78.36 & 31 & NA & 178.1 & 90.73 \\
+1997 & 11 & 151.9 & 99.54 & 30 & NA & 219.4 & 105.1 \\
+2015 & 11 & 286.8 & 88.76 & 30 & NA & 219.4 & 105.1 \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}rr@{}}
+\toprule
+GLB\_att\_N\_seas & GLB\_att\_des \\
+\midrule
+\endhead
+806 & -56.87 \\
+816 & 40.11 \\
+844 & -38.32 \\
+844 & -38.3 \\
+902 & -35.5 \\
+844 & 33.6 \\
+857 & -33.26 \\
+816 & 31.07 \\
+857 & -30.77 \\
+857 & 30.7 \\
+\bottomrule
+\end{longtable}
+
+\normalsize 
+
+\newpage
+
+\hypertarget{clear-sky-cond.-sdr}{%
+\paragraph{Clear sky cond. SDR}\label{clear-sky-cond.-sdr}}
+
+\begin{center}\includegraphics[width=1\linewidth,height=0.97\textheight]{DHI_GHI_1_longterm_trends_files/figure-latex/TrendByMonth-2} \end{center}
+
+\scriptsize 
+
+\begin{longtable}[]{@{}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.0682}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.0795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1023}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1364}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1364}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1591}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1932}}@{}}
+\caption{Extreme anomaly values (continued below)}\tabularnewline
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedleft
+Year
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Month
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_EM
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_seas
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_sd\_seas
+\end{minipage} \\
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedleft
+Year
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Month
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_EM
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_seas
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_sd\_seas
+\end{minipage} \\
+\midrule
+\endhead
+1996 & 2 & 118.7 & 71.6 & 24 & NA & 288.5 & 137.1 \\
+2015 & 12 & 265 & 71.64 & 21 & NA & 185.3 & 100.5 \\
+2001 & 1 & 123.7 & 83.77 & 30 & NA & 214.4 & 112.7 \\
+1996 & 1 & 130.9 & 97.13 & 29 & NA & 214.4 & 112.7 \\
+1996 & 3 & 238.2 & 169.7 & 31 & NA & 368.3 & 162.5 \\
+2020 & 1 & 287.5 & 89.17 & 31 & NA & 214.4 & 112.7 \\
+1997 & 11 & 152.6 & 102.5 & 30 & NA & 229 & 115.3 \\
+2016 & 12 & 245.3 & 88.63 & 30 & NA & 185.3 & 100.5 \\
+1993 & 11 & 156.1 & 118.6 & 30 & NA & 229 & 115.3 \\
+2022 & 1 & 281 & 116.2 & 31 & NA & 214.4 & 112.7 \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}rr@{}}
+\toprule
+GLB\_att\_N\_seas & GLB\_att\_des \\
+\midrule
+\endhead
+806 & -58.84 \\
+805 & 43.04 \\
+840 & -42.28 \\
+840 & -38.93 \\
+902 & -35.31 \\
+840 & 34.08 \\
+854 & -33.37 \\
+805 & 32.38 \\
+854 & -31.84 \\
+840 & 31.08 \\
+\bottomrule
+\end{longtable}
+
+\normalsize 
+
+\newpage
+
+\hypertarget{cloudy-cond.-sdr}{%
+\paragraph{Cloudy cond. SDR}\label{cloudy-cond.-sdr}}
+
+\begin{center}\includegraphics[width=1\linewidth,height=0.97\textheight]{DHI_GHI_1_longterm_trends_files/figure-latex/TrendByMonth-3} \end{center}
+
+\scriptsize 
+
+\begin{longtable}[]{@{}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.0682}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.0795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1023}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1364}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1364}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1591}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1932}}@{}}
+\caption{Extreme anomaly values (continued below)}\tabularnewline
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedleft
+Year
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Month
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_EM
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_seas
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_sd\_seas
+\end{minipage} \\
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedleft
+Year
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Month
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_EM
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_seas
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+GLB\_att\_sd\_seas
+\end{minipage} \\
+\midrule
+\endhead
+1996 & 7 & 330.7 & 134.7 & 13 & NA & 473.3 & 169.2 \\
+1997 & 7 & 601.1 & 150 & 13 & NA & 473.3 & 169.2 \\
+2012 & 8 & 307.3 & 122 & 11 & NA & 419.5 & 145.9 \\
+2002 & 6 & 600.5 & 149.9 & 11 & NA & 480.5 & 160 \\
+2004 & 8 & 523.6 & 169.1 & 13 & NA & 419.5 & 145.9 \\
+1994 & 9 & 304.3 & 59.23 & 17 & NA & 404.2 & 114.1 \\
+2020 & 9 & 500.1 & 84.24 & 11 & NA & 404.2 & 114.1 \\
+2003 & 8 & 325.8 & 117 & 11 & NA & 419.5 & 145.9 \\
+2018 & 9 & 494.3 & 113.7 & 11 & NA & 404.2 & 114.1 \\
+2004 & 7 & 576.8 & 189.1 & 14 & NA & 473.3 & 169.2 \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}rr@{}}
+\toprule
+GLB\_att\_N\_seas & GLB\_att\_des \\
+\midrule
+\endhead
+377 & -30.13 \\
+377 & 27.01 \\
+342 & -26.75 \\
+378 & 24.98 \\
+342 & 24.82 \\
+266 & -24.71 \\
+266 & 23.7 \\
+342 & -22.35 \\
+266 & 22.27 \\
+377 & 21.87 \\
+\bottomrule
+\end{longtable}
+
+\normalsize 
+
+\FloatBarrier
+
+\hypertarget{table-of-trends-by-month.}{%
+\paragraph{Table of trends by month.}\label{table-of-trends-by-month.}}
+
+\scriptsize
+
+\begin{longtable}[]{@{}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1087}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1087}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1087}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1848}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.0761}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1957}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.0435}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1739}}@{}}
+\caption{Slope is in \%/year}\tabularnewline
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedleft
+slope
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.p
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+DATA
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Month
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+var
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.stat\_sig
+\end{minipage} \\
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedleft
+slope
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.p
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+DATA
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Month
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+var
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+slope.stat\_sig
+\end{minipage} \\
+\midrule
+\endhead
+6.916 & 3.532 & 0.1076 & All sky cond. & 1 & Dir. Beam Irrad. & 7 & 89.24 \\
+11.29 & 2.506 & 0.00636 & All sky cond. & 2 & Dir. Beam Irrad. & 7 & 99.36 \\
+-0.7942 & 2.103 & 0.7212 & All sky cond. & 3 & Dir. Beam Irrad. & 7 & 27.88 \\
+-3.286 & 1.838 & 0.1241 & All sky cond. & 4 & Dir. Beam Irrad. & 8 & 87.59 \\
+-2.084 & 3.211 & 0.5404 & All sky cond. & 5 & Dir. Beam Irrad. & 8 & 45.96 \\
+0.5846 & 2.308 & 0.8101 & All sky cond. & 6 & Dir. Beam Irrad. & 7 & 18.99 \\
+1.578 & 1.437 & 0.3337 & All sky cond. & 7 & Dir. Beam Irrad. & 6 & 66.63 \\
+-1.674 & 2.151 & 0.4797 & All sky cond. & 8 & Dir. Beam Irrad. & 6 & 52.03 \\
+2.78 & 2.325 & 0.2854 & All sky cond. & 9 & Dir. Beam Irrad. & 7 & 71.46 \\
+0.8405 & 4.471 & 0.8583 & All sky cond. & 10 & Dir. Beam Irrad. & 7 & 14.17 \\
+-0.2378 & 4.137 & 0.9564 & All sky cond. & 11 & Dir. Beam Irrad. & 7 & 4.362 \\
+-11 & 7.189 & 0.1864 & All sky cond. & 12 & Dir. Beam Irrad. & 7 & 81.36 \\
+1.01 & 0.3116 & 0.003257 & All sky cond. & 1 & SDR & 28 & 99.67 \\
+0.4735 & 0.3383 & 0.1735 & All sky cond. & 2 & SDR & 28 & 82.65 \\
+0.1991 & 0.2501 & 0.4326 & All sky cond. & 3 & SDR & 30 & 56.74 \\
+0.3048 & 0.18 & 0.1015 & All sky cond. & 4 & SDR & 30 & 89.85 \\
+0.1551 & 0.1549 & 0.3253 & All sky cond. & 5 & SDR & 30 & 67.47 \\
+-0.1379 & 0.09632 & 0.1632 & All sky cond. & 6 & SDR & 30 & 83.68 \\
+0.2513 & 0.1001 & 0.01841 & All sky cond. & 7 & SDR & 29 & 98.16 \\
+0.2715 & 0.114 & 0.02456 & All sky cond. & 8 & SDR & 29 & 97.54 \\
+0.2282 & 0.1626 & 0.1715 & All sky cond. & 9 & SDR & 30 & 82.85 \\
+0.6003 & 0.2482 & 0.02258 & All sky cond. & 10 & SDR & 29 & 97.74 \\
+0.6518 & 0.2991 & 0.03822 & All sky cond. & 11 & SDR & 29 & 96.18 \\
+0.703 & 0.3541 & 0.05817 & All sky cond. & 12 & SDR & 27 & 94.18 \\
+7.275 & 3.875 & 0.1193 & Clear sky cond. & 1 & Dir. Beam Irrad. & 7 & 88.07 \\
+10.18 & 2.247 & 0.006231 & Clear sky cond. & 2 & Dir. Beam Irrad. & 7 & 99.38 \\
+-1.681 & 2.017 & 0.4424 & Clear sky cond. & 3 & Dir. Beam Irrad. & 7 & 55.76 \\
+-3.509 & 1.903 & 0.1148 & Clear sky cond. & 4 & Dir. Beam Irrad. & 8 & 88.52 \\
+-2.203 & 3.073 & 0.5003 & Clear sky cond. & 5 & Dir. Beam Irrad. & 8 & 49.97 \\
+0.3273 & 2.374 & 0.8957 & Clear sky cond. & 6 & Dir. Beam Irrad. & 7 & 10.43 \\
+2.531 & 0.8882 & 0.03583 & Clear sky cond. & 7 & Dir. Beam Irrad. & 7 & 96.42 \\
+-1.462 & 1.759 & 0.4527 & Clear sky cond. & 8 & Dir. Beam Irrad. & 6 & 54.73 \\
+3.01 & 2.444 & 0.2728 & Clear sky cond. & 9 & Dir. Beam Irrad. & 7 & 72.72 \\
+1.515 & 4.443 & 0.747 & Clear sky cond. & 10 & Dir. Beam Irrad. & 7 & 25.3 \\
+-0.09377 & 4.157 & 0.9829 & Clear sky cond. & 11 & Dir. Beam Irrad. & 7 & 1.712 \\
+-10.99 & 7.346 & 0.1948 & Clear sky cond. & 12 & Dir. Beam Irrad. & 7 & 80.52 \\
+1.173 & 0.322 & 0.001175 & Clear sky cond. & 1 & SDR & 28 & 99.88 \\
+0.6212 & 0.3368 & 0.07574 & Clear sky cond. & 2 & SDR & 30 & 92.43 \\
+0.1991 & 0.2593 & 0.449 & Clear sky cond. & 3 & SDR & 30 & 55.1 \\
+0.2797 & 0.19 & 0.1522 & Clear sky cond. & 4 & SDR & 30 & 84.78 \\
+0.05498 & 0.1545 & 0.7245 & Clear sky cond. & 5 & SDR & 31 & 27.55 \\
+-0.2363 & 0.1021 & 0.02827 & Clear sky cond. & 6 & SDR & 30 & 97.17 \\
+0.04976 & 0.1193 & 0.6798 & Clear sky cond. & 7 & SDR & 30 & 32.02 \\
+0.1263 & 0.1494 & 0.4051 & Clear sky cond. & 8 & SDR & 30 & 59.49 \\
+0.1094 & 0.1883 & 0.5659 & Clear sky cond. & 9 & SDR & 30 & 43.41 \\
+0.522 & 0.2478 & 0.04426 & Clear sky cond. & 10 & SDR & 30 & 95.57 \\
+0.6342 & 0.3262 & 0.062 & Clear sky cond. & 11 & SDR & 30 & 93.8 \\
+0.8598 & 0.366 & 0.02671 & Clear sky cond. & 12 & SDR & 28 & 97.33 \\
+-1.252 & NA & NA & Cloudy cond. & 4 & Dir. Beam Irrad. & 2 & NA \\
+3.32 & 2.252 & 0.237 & Cloudy cond. & 6 & Dir. Beam Irrad. & 5 & 76.3 \\
+16.3 & 5.778 & 0.2169 & Cloudy cond. & 7 & Dir. Beam Irrad. & 3 & 78.31 \\
+0.6572 & 1.038 & 0.5913 & Cloudy cond. & 8 & Dir. Beam Irrad. & 4 & 40.87 \\
+7.485 & 4.734 & 0.359 & Cloudy cond. & 9 & Dir. Beam Irrad. & 3 & 64.1 \\
+-0.7544 & 1.501 & 0.7035 & Cloudy cond. & 3 & SDR & 3 & 29.65 \\
+-1.012 & 0.3858 & 0.1198 & Cloudy cond. & 4 & SDR & 4 & 88.02 \\
+0.611 & 0.2948 & 0.06803 & Cloudy cond. & 5 & SDR & 11 & 93.2 \\
+0.3858 & 0.2239 & 0.1003 & Cloudy cond. & 6 & SDR & 22 & 89.97 \\
+0.4889 & 0.3168 & 0.1384 & Cloudy cond. & 7 & SDR & 22 & 86.16 \\
+0.415 & 0.3691 & 0.2757 & Cloudy cond. & 8 & SDR & 20 & 72.43 \\
+1.514 & 0.2401 & 0.001473 & Cloudy cond. & 9 & SDR & 7 & 99.85 \\
+\bottomrule
+\end{longtable}
+
+\normalsize
+
+\begin{verbatim}
+Written:  /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_monthly.dat 
+\end{verbatim}
+
+\textbf{END}
+
+\begin{verbatim}
+2023-06-25 17:36:55.3 athan@tyler DHI_GHI_1_longterm_trends.R 2.690781 mins
+\end{verbatim}
+
+\end{document}
