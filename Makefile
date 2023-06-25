@@ -8,7 +8,7 @@ all:       clean_all pdf html rtim
 render:    pdf html rtim
 pdf:       p1 p2 p3 Ap
 #html:      h1 h2 h3
-html:      h2 h3
+#html:      h2 h3
 rtim:      r1 r2 r3
 clean_all: clean_cache clean_data clean_pdfs
 
