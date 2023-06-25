@@ -5,13 +5,13 @@
 ---------------
 
 Object name:    object      
-Date written:   2023-06-25 17:23:24.7 UTC  
+Date written:   2023-06-25 22:01:48.2 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_tsi_info.dat      
 Data file size: 141.0 B (141) 
 Size in memory: 2304 bytes      
 Info file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_tsi_info.inf.md      
 Script name:    Script name could not be resolved      
-User@Host:      athan@tyler   
+User@Host:      athan@sagan   
 Contact:        <natsisphysicist@gmail.com>      
 Notes:          NA      
 
