@@ -5,7 +5,7 @@ SHELL = /bin/bash
 .DEFAULT_GOAL := render
 
 all:       clean_all pdf html rtim
-render:    pdf html rtim
+render:    pdf rtim
 pdf:       p1 p2 p3 Ap
 #html:      h1 h2 h3
 #html:      h2 h3
