@@ -2,34 +2,47 @@
 
 
 library(stringr)
+library(bib2df)
 
+
+setwd("~/MANUSCRIPTS/2022_sdr_trends/")
 sourcefile   <- "./Article.Rmd"
 mainreposit  <- "./references2.bib"
 localreposit <- "./references3.bib"
+folderlink   <- "./References"
 
-## gather citations
+
+## gather citations from file
 lines   <- paste(readLines(sourcefile), collapse = "")
 entries <- unique(str_match_all(lines, "@([a-zA-Z0-9]+)[,\\. \\?\\!\\]\\;]")[[1]][, 2])
 entries <- grep("gmail|auth", entries, value = TRUE, invert = TRUE)
 
-bib <- readLines(mainreposit)
+## get refs
+bib <- bib2df(mainreposit)
+bib$ABSTRACT <- NA
 
-grep("Long2008", bib, value = T)
-bib <- paste(bib, collapse = "\n")
-bib <- unlist(strsplit(bib, "\n@"))
+## export sub file
+output <- bib[bib$BIBTEXKEY %in% entries, ]
+df2bib(output, localreposit)
 
-output <- sapply(entries, grep, bib, value = T)
-grep("Long2008", output, value = T)
-output <- paste("@", as.character(output), sep = "")
+filesp <- output$FILE
+names(output)
+basepath <- dirname(Sys.readlink(mainreposit))
 
-output <- gsub("^@c\\(\"", "@", output)
-output <- gsub("\"\n\\)$",  "", output)
-# output <- gsub("\\\\n",  "\n", output)
+for (af in strsplit(filesp, ":")) {
+    cat(length(af),"\n")
+    if (length(af)>=2) {
+        af[2]
+
+        sourcefl <- paste0(basepath,"/", af[2])
+        cat(sourcefl, "\n")
+
+        if (file.exists(sourcefl)) {
+            dir.create()
+            file.link()
+
+        }
+    }
+}
 
 
-gsub("^@c\\(\"", "@", grep("Long2008", output, value = T))
-
-gsub("\\\\n\"\n\\)$",  "", grep("Long2008", output, value = T))
-
-
-writeLines(unlist(output), localreposit)
