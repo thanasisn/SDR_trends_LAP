@@ -31,8 +31,8 @@ translate <- function(x) {
 
 #### Data range ####
 ## will not include the last/first day
-LAST_DAY                 <- as.Date("2023-06-01")
-# LAST_DAY                 <- as.Date("2011-04-01") ## similar to Bais analysis
+# LAST_DAY                 <- as.Date("2023-06-01")
+LAST_DAY                 <- as.Date("2011-04-01") ## similar to Bais analysis
 FIRST_DAY                <- as.Date("1900-07-01")
 # FIRST_DAY                <- as.Date("2005-01-01") ## data inspected by me
 # FIRST_DAY                <- as.Date("2016-04-01") ## start of chp1
