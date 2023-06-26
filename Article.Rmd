@@ -37,12 +37,13 @@ keywords:
   - GHI
   - SDR
   - Solar Brigthening/Dimming
-journal:        "An awesome journal"
-date:           "`r Sys.Date()`"
-classoption:    preprint, 3p, authoryear
-bibliography:   references.bib
-linenumbers:          false
-numbersections:       true
+journal:         "An awesome journal"
+date:            "`r Sys.Date()`"
+classoption:     preprint, 3p, authoryear
+# bibliography:    references.bib
+bibliography:    '/home/athan/LIBRARY/A_Atmosphere/A_Atmosphere.bib'
+linenumbers:     false
+numbersections:  true
 header-includes:
    # - \usepackage{subfig}
    - \usepackage{subcaption}
