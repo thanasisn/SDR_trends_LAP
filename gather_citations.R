@@ -35,12 +35,11 @@ for (af in strsplit(filesp, ":")) {
         af[2]
 
         sourcefl <- paste0(basepath,"/", af[2])
-        cat(sourcefl, "\n")
+
 
         if (file.exists(sourcefl)) {
-            dir.create()
-            file.link()
-
+            dir.create(folderlink)
+            file.symlink(sourcefl, paste0(folderlink, "/", basename(af[2])))
         }
     }
 }
