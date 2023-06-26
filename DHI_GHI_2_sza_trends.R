@@ -24,7 +24,7 @@
 #'   bookdown::pdf_document2:
 #'     number_sections: no
 #'     fig_caption:     no
-#'     keep_tex:        no
+#'     keep_tex:        yes
 #'     latex_engine:    xelatex
 #'     toc:             yes
 #'     toc_depth:       4
@@ -176,9 +176,6 @@ ccex_sbs <- 1.3
 # }
 # #+ echo=F, include=F
 # rm(data_list)
-
-
-
 
 
 

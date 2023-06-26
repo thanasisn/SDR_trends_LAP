@@ -47,7 +47,9 @@ header-includes:
    # - \usepackage{subfig}
    - \usepackage{subcaption}
 output: 
-  bookdown::word_document2: default
+  rticles::elsevier_article:
+    keep_tex:         true
+    citation_package: natbib
   bookdown::pdf_document2:
     number_sections:  no
     fig_caption:      yes
@@ -65,9 +67,7 @@ output:
     colorlinks:       yes
     urlcolor:         blue
     biblio-style:     apalike
-  rticles::elsevier_article:
-    keep_tex:         true
-    citation_package: natbib
+  bookdown::word_document2: default
 # date:           "`r format(Sys.time(), '%F')`"
 ---
 
@@ -342,7 +342,7 @@ Using the mean daily SDR we produce the trends of each data set, as departure fr
 Only for All-sky (Fig. \ref{fig:trendALL}) <!--and Cloudy-sky (Fig. \ref{fig:trendCLOUD})--> conditions, the statistical significance of the trends are acceptable (Tab. \ref{tab:trendtable}), to draw some conclusions.
 
 ```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023. The black line shows the long term trend for all-sky conditions."}
-knitr::include_graphics("./images/LongtermTrends-2.png")
+knitr::include_graphics("./images/LongtermTrends-1.png")
 ```
 
 

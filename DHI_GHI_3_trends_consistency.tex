@@ -1,0 +1,704 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  10pt,
+  a4paper,oneside]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Trends of SDR in Thessaloniki},
+  pdfauthor={Natsis Athanasios; Alkiviadis Bais},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[left=0.5in,right=0.5in,top=0.5in,bottom=0.5in]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{caption}
+\usepackage{placeins}
+\captionsetup{font=small}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Trends of SDR in Thessaloniki}
+\author{Natsis Athanasios\footnote{Laboratory of Atmospheric Physics, AUTH, \href{mailto:natsisphysicist@gmail.com}{\nolinkurl{natsisphysicist@gmail.com}}} \and Alkiviadis Bais\footnote{Laboratory of Atmospheric Physics, AUTH}}
+\date{2023-06-26}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Study of GHI and DNI radiation for `clear sky' and all sly conditions.
+\end{abstract}
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{4}
+\tableofcontents
+}
+\begin{verbatim}
+fANCOVA 0.6-1 loaded
+\end{verbatim}
+
+\begin{verbatim}
+Loading required package: zoo
+\end{verbatim}
+
+\begin{verbatim}
+Attaching package: 'zoo'
+\end{verbatim}
+
+\begin{verbatim}
+The following objects are masked from 'package:base':
+
+    as.Date, as.Date.numeric
+\end{verbatim}
+
+\begin{verbatim}
+
+Load environment and data from:  ~/MANUSCRIPTS/2022_sdr_trends/data/common_data_14_2.Rda 
+\end{verbatim}
+
+\hypertarget{consistency-of-trends}{%
+\subsection{3. Consistency of trends}\label{consistency-of-trends}}
+
+\hypertarget{data-info}{%
+\subsubsection{Data info}\label{data-info}}
+
+Time data span 1993-04-12, 2023-05-31
+
+Where is a \textbf{running mean the window is 1826.2125 days} or
+5 years.
+
+\hypertarget{process}{%
+\subsubsection{Process}\label{process}}
+
+\newpage
+\FloatBarrier
+
+\hypertarget{whole-day-daily-cumulative-sum}{%
+\subsubsection{Whole day daily cumulative sum}\label{whole-day-daily-cumulative-sum}}
+
+All data in this section are referring to daily means.
+
+\newpage
+
+\hypertarget{daily-cum-sums-for-all-sky-cond.}{%
+\paragraph{Daily cum sums for All sky cond.}\label{daily-cum-sums-for-all-sky-cond.}}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeDailyCumSum-1} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeDailyCumSum-2} \end{center}
+
+\newpage
+
+\footnotesize
+
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1410}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1923}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1923}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1154}}@{}}
+\toprule
+\begin{minipage}[b]{\linewidth}\centering
+~
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+PositiveSum
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+NegativeSum
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+PositiveMean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+NegativeMean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Sum
+\end{minipage} \\
+\midrule
+\endhead
+\textbf{1993} & 2232 & -3205 & 16.06 & -31.43 & -973.5 \\
+\textbf{1994} & 4452 & -5575 & 22.83 & -35.29 & -1123 \\
+\textbf{1995} & 3407 & -5415 & 21.29 & -30.6 & -2009 \\
+\textbf{1996} & 2788 & -7750 & 16.79 & -41.44 & -4962 \\
+\textbf{1997} & 4470 & -6190 & 22.81 & -39.17 & -1719 \\
+\textbf{1998} & 4367 & -6098 & 22.06 & -40.12 & -1731 \\
+\textbf{1999} & 4700 & -5052 & 22.49 & -33.02 & -352.4 \\
+\textbf{2000} & 5692 & -3631 & 23.23 & -32.71 & 2061 \\
+\textbf{2001} & 4570 & -5386 & 23.08 & -36.89 & -816 \\
+\textbf{2002} & 4535 & -5942 & 23.62 & -36.01 & -1407 \\
+\textbf{2003} & 4989 & -5994 & 24.46 & -38.67 & -1004 \\
+\textbf{2004} & 4499 & -5379 & 21.63 & -36.35 & -880 \\
+\textbf{2005} & 4613 & -3980 & 23.66 & -29.26 & 633.2 \\
+\textbf{2006} & 4764 & -4385 & 23.58 & -32.97 & 378.7 \\
+\textbf{2007} & 4446 & -4126 & 21.9 & -36.19 & 319.5 \\
+\textbf{2008} & 5096 & -4847 & 22.06 & -38.16 & 249 \\
+\textbf{2009} & 5253 & -5057 & 26.27 & -35.61 & 196.8 \\
+\textbf{2010} & 3749 & -4362 & 23.14 & -36.35 & -613.4 \\
+\textbf{2011} & 4780 & -4629 & 22.44 & -38.26 & 150.5 \\
+\textbf{2012} & 4944 & -4277 & 21.5 & -40.35 & 667.3 \\
+\textbf{2013} & 5326 & -4362 & 23.88 & -34.08 & 964.2 \\
+\textbf{2014} & 4270 & -5710 & 21.57 & -38.07 & -1440 \\
+\textbf{2015} & 5612 & -4511 & 27.11 & -36.09 & 1101 \\
+\textbf{2016} & 6263 & -4623 & 27.23 & -35.03 & 1640 \\
+\textbf{2017} & 6655 & -4315 & 26.94 & -37.85 & 2340 \\
+\textbf{2018} & 5163 & -5085 & 24.59 & -34.83 & 78.02 \\
+\textbf{2019} & 5472 & -3791 & 23.39 & -32.97 & 1681 \\
+\textbf{2020} & 5989 & -3791 & 25.49 & -33.84 & 2199 \\
+\textbf{2021} & 5750 & -4535 & 24.47 & -35.16 & 1215 \\
+\textbf{2022} & 6231 & -4079 & 25.33 & -35.47 & 2151 \\
+\textbf{2023} & 2958 & -1952 & 32.51 & -34.85 & 1006 \\
+\bottomrule
+\end{longtable}
+
+\normalsize
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeDailyCumSum-3} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeDailyCumSum-4} \end{center}
+
+\newpage
+
+\hypertarget{daily-cum-sums-for-clear-sky-cond.}{%
+\paragraph{Daily cum sums for Clear sky cond.}\label{daily-cum-sums-for-clear-sky-cond.}}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeDailyCumSum-5} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeDailyCumSum-6} \end{center}
+
+\newpage
+
+\footnotesize
+
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1410}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1923}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1923}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1154}}@{}}
+\toprule
+\begin{minipage}[b]{\linewidth}\centering
+~
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+PositiveSum
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+NegativeSum
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+PositiveMean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+NegativeMean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Sum
+\end{minipage} \\
+\midrule
+\endhead
+\textbf{1993} & 2814 & -3584 & 21.48 & -33.19 & -770.5 \\
+\textbf{1994} & 5696 & -5936 & 28.77 & -38.8 & -240 \\
+\textbf{1995} & 4001 & -6110 & 27.98 & -31.66 & -2109 \\
+\textbf{1996} & 3804 & -8259 & 25.36 & -40.69 & -4456 \\
+\textbf{1997} & 4762 & -6823 & 27.06 & -38.33 & -2060 \\
+\textbf{1998} & 4678 & -6597 & 25.85 & -39.04 & -1919 \\
+\textbf{1999} & 5594 & -5572 & 28.11 & -34.19 & 21.55 \\
+\textbf{2000} & 5954 & -4077 & 26.35 & -31.36 & 1877 \\
+\textbf{2001} & 4426 & -5877 & 24.73 & -36.5 & -1451 \\
+\textbf{2002} & 5201 & -6534 & 30.06 & -35.9 & -1333 \\
+\textbf{2003} & 5346 & -6573 & 27.84 & -39.36 & -1228 \\
+\textbf{2004} & 4671 & -5968 & 26.54 & -33.16 & -1297 \\
+\textbf{2005} & 5624 & -4485 & 30.9 & -30.31 & 1139 \\
+\textbf{2006} & 5677 & -4802 & 30.36 & -32.67 & 875 \\
+\textbf{2007} & 5241 & -4427 & 27.3 & -35.42 & 813.7 \\
+\textbf{2008} & 5997 & -5223 & 28.29 & -36.02 & 773.4 \\
+\textbf{2009} & 5527 & -5536 & 29.87 & -35.26 & -9.141 \\
+\textbf{2010} & 3575 & -4751 & 24.66 & -34.68 & -1176 \\
+\textbf{2011} & 4797 & -5050 & 24.98 & -35.81 & -253.1 \\
+\textbf{2012} & 5341 & -4680 & 25.8 & -36.57 & 660.7 \\
+\textbf{2013} & 5225 & -4814 & 25.49 & -32.97 & 410.7 \\
+\textbf{2014} & 4806 & -6218 & 25.98 & -38.15 & -1412 \\
+\textbf{2015} & 5698 & -4929 & 29.22 & -35.98 & 768.7 \\
+\textbf{2016} & 6797 & -5042 & 30.75 & -36.01 & 1755 \\
+\textbf{2017} & 6495 & -4752 & 29.12 & -34.44 & 1743 \\
+\textbf{2018} & 5927 & -5644 & 31.03 & -34.21 & 283.1 \\
+\textbf{2019} & 5870 & -4292 & 28.08 & -30.88 & 1578 \\
+\textbf{2020} & 6083 & -4301 & 28.83 & -31.63 & 1781 \\
+\textbf{2021} & 6692 & -4976 & 29.88 & -35.54 & 1716 \\
+\textbf{2022} & 6803 & -4447 & 28.83 & -35.57 & 2356 \\
+\textbf{2023} & 3233 & -2072 & 36.33 & -35.72 & 1161 \\
+\bottomrule
+\end{longtable}
+
+\normalsize
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeDailyCumSum-7} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeDailyCumSum-8} \end{center}
+
+\newpage
+
+\hypertarget{daily-cum-sums-for-cloudy-cond.}{%
+\paragraph{Daily cum sums for Cloudy cond.}\label{daily-cum-sums-for-cloudy-cond.}}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeDailyCumSum-9} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeDailyCumSum-10} \end{center}
+
+\newpage
+
+\footnotesize
+
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1410}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1923}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1923}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1154}}@{}}
+\toprule
+\begin{minipage}[b]{\linewidth}\centering
+~
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+PositiveSum
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+NegativeSum
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+PositiveMean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+NegativeMean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Sum
+\end{minipage} \\
+\midrule
+\endhead
+\textbf{1993} & 555.1 & -1190 & 20.56 & -27.05 & -635.2 \\
+\textbf{1994} & 661.9 & -1754 & 18.39 & -24.7 & -1092 \\
+\textbf{1995} & 640.4 & -1042 & 18.3 & -21.7 & -401.2 \\
+\textbf{1996} & 873 & -1718 & 26.46 & -28.17 & -845.2 \\
+\textbf{1997} & 1272 & -1106 & 23.56 & -26.98 & 166.2 \\
+\textbf{1998} & 1049 & -992.1 & 20.58 & -20.67 & 57.34 \\
+\textbf{1999} & 714.5 & -1368 & 17.43 & -20.73 & -653.8 \\
+\textbf{2000} & 972.2 & -1160 & 23.15 & -22.74 & -187.7 \\
+\textbf{2001} & 1005 & -655.4 & 24.5 & -18.73 & 349.2 \\
+\textbf{2002} & 1166 & -1155 & 21.2 & -23.56 & 11.55 \\
+\textbf{2003} & 1045 & -1142 & 24.31 & -22.83 & -96.28 \\
+\textbf{2004} & 1356 & -646.1 & 27.68 & -19.58 & 710.1 \\
+\textbf{2005} & 825.7 & -1101 & 20.14 & -20.78 & -275.8 \\
+\textbf{2006} & 941.4 & -1006 & 21.89 & -21.86 & -64.25 \\
+\textbf{2007} & 654.3 & -1183 & 21.81 & -25.71 & -528.3 \\
+\textbf{2008} & 845 & -1394 & 22.84 & -21.78 & -549 \\
+\textbf{2009} & 839.7 & -755.1 & 22.69 & -22.21 & 84.59 \\
+\textbf{2010} & 792.5 & -529.7 & 23.31 & -21.19 & 262.8 \\
+\textbf{2011} & 1305 & -775.3 & 26.1 & -23.49 & 529.9 \\
+\textbf{2012} & 1132 & -1052 & 25.15 & -25.05 & 79.83 \\
+\textbf{2013} & 1382 & -776.3 & 27.1 & -18.05 & 605.7 \\
+\textbf{2014} & 856.1 & -815.9 & 23.14 & -19.9 & 40.2 \\
+\textbf{2015} & 949 & -515.4 & 21.09 & -20.61 & 433.7 \\
+\textbf{2016} & 1287 & -1040 & 24.76 & -22.12 & 247.8 \\
+\textbf{2017} & 971.9 & -737.2 & 22.6 & -21.06 & 234.7 \\
+\textbf{2018} & 1244 & -867.5 & 24.4 & -23.44 & 376.8 \\
+\textbf{2019} & 928.5 & -866.3 & 23.81 & -21.13 & 62.18 \\
+\textbf{2020} & 1196 & -579.6 & 22.15 & -17.56 & 616.7 \\
+\textbf{2021} & 1048 & -844.3 & 16.64 & -16.56 & 203.8 \\
+\textbf{2022} & 1112 & -784.9 & 21.8 & -19.14 & 326.9 \\
+\textbf{2023} & 131.9 & -203 & 10.99 & -20.3 & -71.12 \\
+\bottomrule
+\end{longtable}
+
+\normalsize
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeDailyCumSum-11} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeDailyCumSum-12} \end{center}
+
+\newpage
+\FloatBarrier
+
+\hypertarget{whole-day-monthly-cumulative-sum}{%
+\subsubsection{Whole day monthly cumulative sum}\label{whole-day-monthly-cumulative-sum}}
+
+In this section the monthly values have been calculated from daily mean values.
+
+\newpage
+
+\hypertarget{monthly-cum-sums-for-all-sky-cond.}{%
+\paragraph{Monthly cum sums for All sky cond.}\label{monthly-cum-sums-for-all-sky-cond.}}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlyCumSum-1} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlyCumSum-2} \end{center}
+
+\newpage
+
+\footnotesize
+
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1410}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1923}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1923}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1154}}@{}}
+\toprule
+\begin{minipage}[b]{\linewidth}\centering
+~
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+PositiveSum
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+NegativeSum
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+PositiveMean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+NegativeMean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Sum
+\end{minipage} \\
+\midrule
+\endhead
+\textbf{1993} & 19.08 & -48.52 & 6.36 & -9.704 & -29.44 \\
+\textbf{1994} & 26.02 & -74.45 & 5.204 & -10.64 & -48.42 \\
+\textbf{1995} & 26.9 & -93 & 5.38 & -15.5 & -66.1 \\
+\textbf{1996} & 3.185 & -182.2 & 1.592 & -18.22 & -179 \\
+\textbf{1997} & 26.52 & -81.3 & 8.84 & -9.033 & -54.78 \\
+\textbf{1998} & 27.93 & -76.09 & 5.586 & -10.87 & -48.16 \\
+\textbf{1999} & 7.774 & -24.16 & 1.943 & -3.02 & -16.39 \\
+\textbf{2000} & 77.82 & -18.31 & 8.646 & -6.102 & 59.51 \\
+\textbf{2001} & 49.51 & -76.54 & 9.901 & -10.93 & -27.03 \\
+\textbf{2002} & 38.91 & -84.7 & 12.97 & -9.411 & -45.78 \\
+\textbf{2003} & 29.84 & -56.12 & 4.974 & -9.354 & -26.28 \\
+\textbf{2004} & 28.81 & -57.29 & 4.802 & -9.548 & -28.48 \\
+\textbf{2005} & 33.86 & -14.68 & 4.837 & -3.669 & 19.19 \\
+\textbf{2006} & 37.15 & -35.07 & 7.43 & -5.844 & 2.085 \\
+\textbf{2007} & 24.02 & -15.11 & 4.805 & -3.022 & 8.915 \\
+\textbf{2008} & 50.75 & -31.9 & 7.25 & -6.38 & 18.85 \\
+\textbf{2009} & 56.6 & -55.74 & 8.086 & -11.15 & 0.8636 \\
+\textbf{2010} & 24.77 & -38.35 & 6.191 & -9.587 & -13.58 \\
+\textbf{2011} & 24.73 & -28.67 & 4.122 & -5.733 & -3.935 \\
+\textbf{2012} & 45 & -23.46 & 5.624 & -7.819 & 21.54 \\
+\textbf{2013} & 64.93 & -36.73 & 8.116 & -9.184 & 28.2 \\
+\textbf{2014} & 20.71 & -64.85 & 4.141 & -9.264 & -44.14 \\
+\textbf{2015} & 92.01 & -45.21 & 13.14 & -11.3 & 46.8 \\
+\textbf{2016} & 73.43 & -18.02 & 8.159 & -6.007 & 55.41 \\
+\textbf{2017} & 89.19 & -11.66 & 9.91 & -3.886 & 77.53 \\
+\textbf{2018} & 51.06 & -44.16 & 7.294 & -8.832 & 6.901 \\
+\textbf{2019} & 61.82 & -17.06 & 8.831 & -3.413 & 44.75 \\
+\textbf{2020} & 97.56 & -20.95 & 10.84 & -6.983 & 76.61 \\
+\textbf{2021} & 60.92 & -21.37 & 8.703 & -4.274 & 39.55 \\
+\textbf{2022} & 94.15 & -18.65 & 11.77 & -4.662 & 75.5 \\
+\textbf{2023} & 55.86 & -21.35 & 13.96 & -21.35 & 34.51 \\
+\bottomrule
+\end{longtable}
+
+\normalsize
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlyCumSum-3} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlyCumSum-4} \end{center}
+
+\newpage
+
+\hypertarget{monthly-cum-sums-for-clear-sky-cond.}{%
+\paragraph{Monthly cum sums for Clear sky cond.}\label{monthly-cum-sums-for-clear-sky-cond.}}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlyCumSum-5} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlyCumSum-6} \end{center}
+
+\newpage
+
+\footnotesize
+
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1410}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1923}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1923}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1154}}@{}}
+\toprule
+\begin{minipage}[b]{\linewidth}\centering
+~
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+PositiveSum
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+NegativeSum
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+PositiveMean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+NegativeMean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Sum
+\end{minipage} \\
+\midrule
+\endhead
+\textbf{1993} & 23 & -43.35 & 7.667 & -8.67 & -20.35 \\
+\textbf{1994} & 44.44 & -62.1 & 7.406 & -10.35 & -17.67 \\
+\textbf{1995} & 32.54 & -101.2 & 5.424 & -16.86 & -68.62 \\
+\textbf{1996} & 12.47 & -175.1 & 2.495 & -25.01 & -162.6 \\
+\textbf{1997} & 25.04 & -91.64 & 8.348 & -10.18 & -66.6 \\
+\textbf{1998} & 25.99 & -80.59 & 5.197 & -11.51 & -54.61 \\
+\textbf{1999} & 18.37 & -24 & 4.592 & -3.001 & -5.637 \\
+\textbf{2000} & 70.9 & -18.61 & 8.862 & -4.653 & 52.28 \\
+\textbf{2001} & 43.97 & -96.18 & 7.328 & -16.03 & -52.21 \\
+\textbf{2002} & 39.75 & -83.65 & 9.937 & -10.46 & -43.9 \\
+\textbf{2003} & 23.96 & -58.03 & 5.989 & -7.254 & -34.07 \\
+\textbf{2004} & 23.1 & -64.67 & 7.7 & -7.186 & -41.57 \\
+\textbf{2005} & 72.61 & -8.362 & 8.068 & -2.787 & 64.25 \\
+\textbf{2006} & 66.38 & -30.4 & 9.483 & -6.08 & 35.98 \\
+\textbf{2007} & 38.48 & -24.91 & 5.497 & -6.227 & 13.57 \\
+\textbf{2008} & 69.96 & -32.22 & 8.744 & -8.054 & 37.74 \\
+\textbf{2009} & 49.6 & -58.44 & 8.267 & -9.741 & -8.844 \\
+\textbf{2010} & 17.47 & -62.67 & 3.495 & -10.45 & -45.2 \\
+\textbf{2011} & 21.77 & -41.61 & 5.443 & -5.944 & -19.84 \\
+\textbf{2012} & 44.68 & -23.08 & 6.383 & -5.769 & 21.61 \\
+\textbf{2013} & 58.06 & -48.54 & 8.295 & -9.708 & 9.523 \\
+\textbf{2014} & 17.42 & -60.43 & 3.484 & -8.632 & -43.01 \\
+\textbf{2015} & 88.25 & -47.45 & 14.71 & -7.909 & 40.8 \\
+\textbf{2016} & 87.36 & -24.92 & 8.736 & -12.46 & 62.44 \\
+\textbf{2017} & 80.13 & -22.2 & 11.45 & -4.44 & 57.93 \\
+\textbf{2018} & 60.39 & -47.65 & 10.07 & -7.942 & 12.74 \\
+\textbf{2019} & 60.79 & -20.92 & 10.13 & -3.487 & 39.87 \\
+\textbf{2020} & 94.67 & -32.11 & 15.78 & -5.352 & 62.56 \\
+\textbf{2021} & 78.64 & -21.81 & 9.83 & -5.452 & 56.83 \\
+\textbf{2022} & 105.8 & -22.44 & 13.22 & -5.609 & 83.35 \\
+\textbf{2023} & 59.84 & -21.19 & 14.96 & -21.19 & 38.66 \\
+\bottomrule
+\end{longtable}
+
+\normalsize
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlyCumSum-7} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlyCumSum-8} \end{center}
+
+\newpage
+
+\hypertarget{monthly-cum-sums-for-cloudy-cond.}{%
+\paragraph{Monthly cum sums for Cloudy cond.}\label{monthly-cum-sums-for-cloudy-cond.}}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlyCumSum-9} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlyCumSum-10} \end{center}
+
+\newpage
+
+\footnotesize
+
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1410}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1923}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1923}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1154}}@{}}
+\toprule
+\begin{minipage}[b]{\linewidth}\centering
+~
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+PositiveSum
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+NegativeSum
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+PositiveMean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+NegativeMean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Sum
+\end{minipage} \\
+\midrule
+\endhead
+\textbf{1996} & 1.041 & -32.43 & 1.041 & -16.21 & -31.39 \\
+\textbf{1997} & 30.94 & -13.28 & 15.47 & -6.639 & 17.66 \\
+\textbf{1998} & 22.21 & -11.6 & 7.405 & -5.802 & 10.61 \\
+\textbf{2000} & 5.152 & -11.35 & 5.152 & -11.35 & -6.197 \\
+\textbf{2001} & 17.63 & -11.37 & 17.63 & -11.37 & 6.265 \\
+\textbf{2002} & 35.68 & -15.07 & 17.84 & -7.534 & 20.61 \\
+\textbf{2003} & 31.3 & -26.37 & 15.65 & -13.19 & 4.926 \\
+\textbf{2005} & 0.5237 & -13.4 & 0.5237 & -4.466 & -12.87 \\
+\textbf{2006} & 20.63 & -22.47 & 6.878 & -11.24 & -1.839 \\
+\textbf{2008} & 1.037 & -22.67 & 0.5185 & -7.558 & -21.64 \\
+\textbf{2011} & 9.071 & -7.749 & 4.535 & -7.749 & 1.322 \\
+\textbf{2012} & 18.89 & -26.75 & 9.443 & -26.75 & -7.868 \\
+\textbf{2013} & 23.84 & -3.169 & 11.92 & -3.169 & 20.67 \\
+\textbf{2016} & 15.27 & -12.07 & 7.633 & -4.024 & 3.193 \\
+\textbf{2021} & 15.2 & -16.53 & 5.068 & -8.266 & -1.329 \\
+\bottomrule
+\end{longtable}
+
+\normalsize
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlyCumSum-11} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlyCumSum-12} \end{center}
+
+\newpage
+\FloatBarrier
+
+\hypertarget{cumulative-sums-by-sza-and-part-of-day}{%
+\subsubsection{Cumulative sums by SZA and part of day}\label{cumulative-sums-by-sza-and-part-of-day}}
+
+Use deseasonalized monthly values to calculate cumulative sums
+by a SZA bin and a period of day.
+
+\newpage
+
+\FloatBarrier
+
+\hypertarget{monthly-cum-sums-for-all-sky-cond.-by-sza}{%
+\paragraph{Monthly cum sums for All sky cond. by SZA}\label{monthly-cum-sums-for-all-sky-cond.-by-sza}}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlySZACumSum-1} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlySZACumSum-2} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlySZACumSum-3} \end{center}
+
+\newpage
+
+\FloatBarrier
+
+\hypertarget{monthly-cum-sums-for-clear-sky-cond.-by-sza}{%
+\paragraph{Monthly cum sums for Clear sky cond. by SZA}\label{monthly-cum-sums-for-clear-sky-cond.-by-sza}}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlySZACumSum-4} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlySZACumSum-5} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlySZACumSum-6} \end{center}
+
+\newpage
+
+\FloatBarrier
+
+\hypertarget{monthly-cum-sums-for-cloudy-cond.-by-sza}{%
+\paragraph{Monthly cum sums for Cloudy cond. by SZA}\label{monthly-cum-sums-for-cloudy-cond.-by-sza}}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlySZACumSum-7} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlySZACumSum-8} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeMonthlySZACumSum-9} \end{center}
+
+\newpage
+
+\FloatBarrier
+
+\hypertarget{monthly-cum-sums-for-all-sky-cond.-by-sza-1}{%
+\paragraph{Monthly cum sums for All sky cond. by SZA}\label{monthly-cum-sums-for-all-sky-cond.-by-sza-1}}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-1} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-2} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-3} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-4} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-5} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-6} \end{center}
+
+\newpage
+
+\FloatBarrier
+
+\hypertarget{monthly-cum-sums-for-clear-sky-cond.-by-sza-1}{%
+\paragraph{Monthly cum sums for Clear sky cond. by SZA}\label{monthly-cum-sums-for-clear-sky-cond.-by-sza-1}}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-7} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-8} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-9} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-10} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-11} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-12} \end{center}
+
+\newpage
+
+\FloatBarrier
+
+\hypertarget{monthly-cum-sums-for-cloudy-cond.-by-sza-1}{%
+\paragraph{Monthly cum sums for Cloudy cond. by SZA}\label{monthly-cum-sums-for-cloudy-cond.-by-sza-1}}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-13} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-14} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-15} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-16} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-17} \end{center}
+
+\begin{center}\includegraphics[width=1\linewidth]{DHI_GHI_3_trends_consistency_files/figure-latex/CumulativeSZASumDir-18} \end{center}
+
+\textbf{END}
+
+\begin{verbatim}
+2023-06-26 08:43:11.9 athan@sagan DHI_GHI_1_longterm_trends.R 2.054883 mins
+\end{verbatim}
+
+\end{document}
