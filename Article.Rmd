@@ -46,14 +46,16 @@ numbersections:       true
 header-includes:
    # - \usepackage{subfig}
    - \usepackage{subcaption}
+   
+   
 output: 
   rticles::elsevier_article:
-    keep_tex:         true
+    keep_tex:         no
     citation_package: natbib
   bookdown::pdf_document2:
     number_sections:  no
     fig_caption:      yes
-    keep_tex:         yes
+    keep_tex:         no
     latex_engine:     xelatex
     toc:              yes
     toc_depth:        4
@@ -94,6 +96,17 @@ source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
 ```
 
 <!-- SDR or GHI ? -->
+
+Cloud “shrinking” and “optical thinning” in the “dimming” period and a subsequent recovery in the “brightening” period over China
+
+aerosols not only strengthen but also weaken the
+growth of clouds with respect to their coverage and
+optical thickness, depending on the levels of pollution
+and the associated amounts of aerosols as postulated
+in a conceptual framework (Wild 2009a, 2012, Yang
+et al 2012). 
+
+
 
 
 # Introduction.
@@ -342,7 +355,7 @@ Using the mean daily SDR we produce the trends of each data set, as departure fr
 Only for All-sky (Fig. \ref{fig:trendALL}) <!--and Cloudy-sky (Fig. \ref{fig:trendCLOUD})--> conditions, the statistical significance of the trends are acceptable (Tab. \ref{tab:trendtable}), to draw some conclusions.
 
 ```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023. The black line shows the long term trend for all-sky conditions."}
-knitr::include_graphics("./images/LongtermTrends-1.png")
+knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
 
 
