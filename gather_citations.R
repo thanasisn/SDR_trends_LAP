@@ -3,7 +3,7 @@
 
 library(stringr)
 library(bib2df)
-
+library(RefManageR)
 
 setwd("~/MANUSCRIPTS/2022_sdr_trends/")
 sourcefile   <- "./Article.Rmd"
@@ -51,3 +51,5 @@ for (af in strsplit(filesp, ":")) {
 }
 
 
+tt <- ReadBib(mainreposit, check = FALSE)
+ss <- ReadBib(localreposit, check = FALSE)
