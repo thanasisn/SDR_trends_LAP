@@ -40,7 +40,7 @@ keywords:
 journal:         "An awesome journal"
 date:            "`r Sys.Date()`"
 classoption:     preprint, 3p, authoryear
-bibliography:    references2.bib
+bibliography:    Mainreferences.bib
 linenumbers:     false
 numbersections:  true
 header-includes:
@@ -75,7 +75,7 @@ output:
 
 
 
-```{r echo=F, include=T}
+```{r echo=F, include=T, warning=FALSE}
 ## document configurations 
 knitr::opts_chunk$set(comment    = ""      )
 # knitr::opts_chunk$set(dev        = "pdf"   )
@@ -93,6 +93,19 @@ TSIinfo <- data.table(read.csv("./figures/tbl_tsi_info.dat",
                     header = TRUE))
 ## variables we use
 source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
+
+## create local citations file
+source("~/CODE/FUNCTIONS/R/gather_citations.R")
+
+suppressMessages(
+    gather_citations(
+        sourcefile   = "./Article.Rmd",
+        mainreposit  = "./Mainreferences.bib",
+        localreposit = "./references.bib",
+        folderlink   = "./References_links",
+        workingdir   = "~/MANUSCRIPTS/2022_sdr_trends/"
+    )
+)
 ```
 
 
@@ -113,6 +126,15 @@ et al 2012).
 
 
 # Introduction.
+
+Describe the variability of the phenomenn
+
+the inpacts of the radiation
+
+the as far studies/coauses
+
+
+
 
 The shortwave downward solar irradiance (SDR) at the Earth's surface plays a significant role, on Earths climate.
 Changes of the SDR can be related to major changes on factors affecting the radiative forcing balance and human activities.
@@ -172,7 +194,7 @@ The signal is converted to radiation flux, using a ramped value of the instrumen
 <!-- screening -->
 A manual screening is performed, to remove inconsistencies and erroneous recordings, that can occur randomly or systematically, during the long continuous operation of the instrument.
 <!-- Quality assurance -->
-The manual screening is aided by a radiation data quality assurance procedure, adjusted for this site, based on methods of Long and Shi\ [-@Long2008; -@Long2006].
+The manual screening is aided by a radiation data quality assurance procedure, adjusted for this site, based on methods of Long and Shi\ [@Long2008a ; @Long2006].
 Thus, problematic recordings have been excluded from further processing. 
 Although it is not possible to detect all the bad data, the large number of data and the aggregation scheme we use, can provide us with accurate radiometric measurements, for the scope of this study.
 
