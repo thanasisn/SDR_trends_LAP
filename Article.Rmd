@@ -137,7 +137,9 @@ the as far studies/coauses
 
 
 The shortwave downward solar irradiance (SDR) at the Earth's surface plays a significant role, on Earths climate.
-Changes of the SDR can be related to major changes on factors affecting the radiative forcing balance and human activities.
+Changes of the SDR can be related to major changes on the Earths energy budget, the climate change mechanisms and the water and carbon cycles [@Wild2009].
+Studies of SDR variability, have identify some distinct SDR trends on different regions of the world and for different periods, using the term 'brightening' for positive trends, and 'dimming' for negative trends.
+
 Multiple studies attempt to evaluate the phenomenon and the potential causes [@Ohvril2009; @Schwarz2020; @Wild2009; @Wild2012; @Xia2007; @Zerefos2009].
 Although, there is regional variation of SDR, with both positive and negative trends, most of the studies agree that the major factors are the interaction of aerosols and clouds.
 
