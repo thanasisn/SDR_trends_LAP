@@ -9,3 +9,33 @@ Analysis
 
 
 
+
+# intro
+
+Intro on the phenomenon
+
+State of the research and the phenomenon
+
+- long term
+- spatial/regional differences
+- proposed causes
+
+Similar research to ours
+
+Brief our take on the mater
+
+# observational data and methods
+
+Describe location
+
+Describe measurement
+
+Describe analysis
+
+# results
+
+Data figures and details
+
+# conclusions
+
+
