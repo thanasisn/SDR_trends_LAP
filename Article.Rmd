@@ -140,13 +140,18 @@ The shortwave downward solar irradiance (SDR) at the Earth's surface plays a sig
 Changes of the SDR can be related to major changes on the Earths energy budget, the climate change mechanisms and the water and carbon cycles [@Wild2009].
 Studies of SDR variability, have identify some distinct SDR trends on different regions of the world and for different time periods, using the term 'brightening' for positive trends, and 'dimming' for negative trends.
 Multiple studies attempt to evaluate the phenomenon and the potential causes [@Ohvril2009; @Schwarz2020; @Wild2009; @Wild2012; @Xia2007; @Zerefos2009; and references therein].
-There is a general consensus that the major factors of the attenuation of SDR is the interaction with the atmospheric aerosols and the clouds.
+
+@Yang2021 reports a general dimming before 2000 and a brightening afterwards on  multiple station in China. 
+
+
 
 - observed long term changes
-  europe / asia africa regions
+-  europe / asia africa regions
+- split in trends
 
 
-Although, there is regional variation of SDR, with both positive and negative trends, most of the studies agree that .
+There is a general consensus, among researchers, that the major factors of the attenuation of SDR is the interaction with the atmospheric aerosols and the clouds.
+
 
 In this study, we examine the trends of SDR with ground-based measurements at Thessaloniki for the period 1993 - 2023, as derived from a CM-21 pyranometer.
 <!-- goals -->
