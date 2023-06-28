@@ -57,7 +57,7 @@ output:
     fig_caption:      yes
     keep_tex:         no
     latex_engine:     xelatex
-    toc:              yes
+    toc:              no
     toc_depth:        4
     fig_width:        7
     fig_height:       4.5
@@ -127,30 +127,30 @@ et al 2012).
 
 # Introduction.
 
-Describe the variability of the phenomenn
-
-the inpacts of the radiation
-
-the as far studies/coauses
-
-
-
-
 The shortwave downward solar irradiance (SDR) at the Earth's surface plays a significant role, on Earths climate.
-Changes of the SDR can be related to major changes on the Earths energy budget, the climate change mechanisms and the water and carbon cycles [@Wild2009].
-Studies of SDR variability, have identify some distinct SDR trends on different regions of the world and for different time periods, using the term 'brightening' for positive trends, and 'dimming' for negative trends.
+Changes of the SDR can be related to major changes on the Earth's energy budget, the mechanisms of climate change, and water and carbon cycle [@Wild2009].
+Studies of SDR variability, have identified some distinct SDR trends on different regions of the world and for different time periods, using the term 'brightening' for positive trends, and 'dimming' for negative trends.
+There are many cases on the long term records, showing a change of SDR trends direction, occurring roughly at the last decades of the 20th century.
+<!-- Trends -->
+@Yang2021 reports a general dimming before 2000 and a brightening afterwards on multiple station in China. 
+@Wild2021 shows a similar pattern, with the breaking point around 1980 from a 71 years record of a Central Europe station and for Brazil by @Yamasoe2021.
+<!-- @Yamasoe2021 similar dimming and brightening around 1980 in Brazil -->
+@Yuan2021 with AI aided spatial analysis on continent level, containing numerous observational station, reach similar conclusions for the above regions and the global trend.
+
+
+Although, there is a consensus, among researchers, that the major factors of the attenuation of SDR is the interaction with the atmospheric aerosols and the clouds. 
+
+Due to the variability of those factors and the interaction between them,
+
+...... cloud formation occurrences and constitution nuclei. cite.....
+
+it is difficult to estimate the SDR trends on each site.
+
 Multiple studies attempt to evaluate the phenomenon and the potential causes [@Ohvril2009; @Schwarz2020; @Wild2009; @Wild2012; @Xia2007; @Zerefos2009; and references therein].
-
-@Yang2021 reports a general dimming before 2000 and a brightening afterwards on  multiple station in China. 
-
+<!-- causes say less we don't do that -->
 
 
-- observed long term changes
--  europe / asia africa regions
-- split in trends
 
-
-There is a general consensus, among researchers, that the major factors of the attenuation of SDR is the interaction with the atmospheric aerosols and the clouds.
 
 
 In this study, we examine the trends of SDR with ground-based measurements at Thessaloniki for the period 1993 - 2023, as derived from a CM-21 pyranometer.
