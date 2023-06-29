@@ -142,7 +142,7 @@ Those interactions, among other factors, have been analysed with modeling [@Li20
 And similar finds, have been showed in observational data [@Schwarz2020; @Ohvril2009; @Zerefos2009; @Xia2007 and references therein].
 
 
-<!-- Sun variability: should cite that there is no significant trend found -->
+<!-- Sun variability: should cite that there is no significant trend found Wild2021 -->
 
 
 
