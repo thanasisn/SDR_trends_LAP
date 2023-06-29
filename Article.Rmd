@@ -135,10 +135,11 @@ There are many cases on the long term records, showing a change of SDR trends di
 @Yang2021 reports a general dimming before 2000 and a brightening afterwards on multiple station in China. 
 @Wild2021 shows a similar pattern, with the breaking point around 1980 from a 71 years record of a Central Europe station and for Brazil by @Yamasoe2021.
 <!-- @Yamasoe2021 similar dimming and brightening around 1980 in Brazil -->
-@Yuan2021 with AI aided spatial analysis on continent level, containing numerous observational station, reach similar conclusions for the above regions and the global trend.
+Another approach, using AI aided spatial analysis on continent level, of numerous observational stations data, reach similar conclusions for the above regions and the global trend [@Yuan2021].
 
 
-Although, there is a consensus, among researchers, that the major factors of the attenuation of SDR is the interaction with the atmospheric aerosols and the clouds. 
+
+There is a consensus, among researchers, that the major factors of the attenuation of SDR is the interaction with the atmospheric aerosols and the clouds. 
 
 Due to the variability of those factors and the interaction between them,
 
@@ -150,7 +151,7 @@ Multiple studies attempt to evaluate the phenomenon and the potential causes [@O
 <!-- causes say less we don't do that -->
 
 
-
+There is a also a need to evalutate the trends on different location
 
 
 In this study, we examine the trends of SDR with ground-based measurements at Thessaloniki for the period 1993 - 2023, as derived from a CM-21 pyranometer.
