@@ -138,8 +138,11 @@ There are many cases on the long term records, showing a change of SDR trends di
 Another approach, using AI aided spatial analysis on continent level, of numerous observational stations data, reach similar conclusions for the above regions and the global trend [@Yuan2021].
 
 
-
 There is a consensus, among researchers, that the major factors of the attenuation of SDR is the interaction with the atmospheric aerosols and the clouds. 
+
+In multiple studies the complex interaction between Aerosols and clouds have been analysed [@Li2016; @Samset2018]
+
+along with the 
 
 Due to the variability of those factors and the interaction between them,
 
@@ -150,6 +153,8 @@ it is difficult to estimate the SDR trends on each site.
 Multiple studies attempt to evaluate the phenomenon and the potential causes [@Ohvril2009; @Schwarz2020; @Wild2009; @Wild2012; @Xia2007; @Zerefos2009; and references therein].
 <!-- causes say less we don't do that -->
 
+
+Investigate multiple interaction @Li2016 @Samset2018 data analysis and modeling
 
 There is a also a need to evalutate the trends on different location
 
