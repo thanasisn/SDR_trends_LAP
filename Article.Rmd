@@ -132,20 +132,24 @@ Changes of the SDR can be related to major changes on the Earth's energy budget,
 Studies of SDR variability, have identified some distinct SDR trends on different regions of the world and for different time periods, using the term 'brightening' for positive trends, and 'dimming' for negative trends.
 There are many cases on the long term records, showing a change of SDR trends direction, occurring roughly at the last decades of the 20th century.
 <!-- Trends -->
-@Yang2021 reports a general dimming before 2000 and a brightening afterwards on multiple station in China. 
-@Wild2021 shows a similar pattern, with the breaking point around 1980 from a 71 years record of a Central Europe station and for Brazil by @Yamasoe2021.
+A general dimming before 2000 and a brightening afterwards, was found on multiple station in China [@Yang2021]. 
+And a similar pattern was identified, with the breaking point around 1980, from a 71 years record of a Central Europe station [@Wild2021] and for Brazil [@Yamasoe2021].
 <!-- @Yamasoe2021 similar dimming and brightening around 1980 in Brazil -->
 Another approach, using AI aided spatial analysis on continent level, of numerous observational stations data, reach similar conclusions for the above regions and the global trend [@Yuan2021].
 
-
 There is a consensus, among researchers, that the major factors of the attenuation of SDR is the interaction with the atmospheric aerosols and the clouds. 
-
-The interaction between Aerosols and clouds, among other factors, has been analysed with modeling [@Li2016; @Samset2018], showing the existence of feedback mechanisms between the two.
-
-Similar links have been showed with observational data [@Ohvril2009; @Schwarz2020; ]
+Those interactions, among other factors, have been analysed with modeling [@Li2016; @Samset2018], showing the existence of feedback mechanisms between the two.
+And similar finds, have been showed in observational data [@Schwarz2020; @Ohvril2009; @Zerefos2009; @Xia2007 and references therein].
 
 
+<!-- Sun variability -->
 
+
+
+
+
+
+@Wild2012 : ~ 
 
 Due to the variability of those factors and the interaction between them,
 
@@ -153,11 +157,6 @@ Due to the variability of those factors and the interaction between them,
 
 it is difficult to estimate the SDR trends on each site.
 
-Multiple studies attempt to evaluate the phenomenon and the potential causes [;  @Wild2012; @Xia2007; @Zerefos2009; and references therein].
-<!-- causes say less we don't do that -->
-
-
-Investigate multiple interaction @Li2016 @Samset2018 data analysis and modeling
 
 There is a also a need to evaluate the trends on different location
 
