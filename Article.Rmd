@@ -139,38 +139,26 @@ Another approach, using AI aided spatial analysis on continent level, of numerou
 
 There is a consensus, among researchers, that the major factors of the attenuation of SDR is the interaction with the atmospheric aerosols and the clouds. 
 Those interactions, among other factors, have been analysed with modeling [@Li2016; @Samset2018], showing the existence of feedback mechanisms between the two.
-And similar finds, have been showed in observational data [@Schwarz2020; @Ohvril2009; @Zerefos2009; @Xia2007 and references therein].
-
-
+Similar finds, have been showed in observational data [@Schwarz2020; @Ohvril2009; @Zerefos2009; @Xia2007 and references therein].
 <!-- Sun variability: should cite that there is no significant trend found Wild2021 -->
+
+Due to the variability of the phenomenon, and its contributing factors, there is a need to further investigate SDR tendencies, in different sites, to estimate its magnitude, and its relation to the local conditions.
+In this study, we examine the trends of SDR, with ground-based measurements at Thessaloniki for the period 1993 - 2023, as derived from a CM-21 pyranometer.
+<!-- goals -->
+We reevaluated and extended the dataset used by @Bais2013, applying a different algorithm for the identification of clear-/cloud-sky instances [@Reno2016; @Reno2012a], and we derive the radiation trends for the period `r year(min(ALL_1_daily_DESEAS$Date))` to `r year(max(ALL_1_daily_DESEAS$Date))`, under different sky conditions (all-sky, clear-sky and cloud-sky).
 
 
 
 @Wild2012 : ~ 
 
-Due to the variability of those factors and the interaction between them,
 
 ...... cloud formation occurrences and constitution nuclei. cite.....
-
-it is difficult to estimate the SDR trends on each site.
-
-
-There is a also a need to evaluate the trends on different location
-
-
-In this study, we examine the trends of SDR with ground-based measurements at Thessaloniki for the period 1993 - 2023, as derived from a CM-21 pyranometer.
-<!-- goals -->
-We reevaluate and extend the dataset used by @Bais2013, applying a different algorithm for the identification of clear-/cloud-sky instances, and we derive the radiation trends for this period under different sky conditions (all-sky, clear-sky and cloud-sky).
 
 ...
 
 Site location description and aerosols effect 
 
 ...
-
-<!-- basic concepts -->
-Our method to characterize the sky conditions and the definition of each sky condition has some subjectivity.
-The algorithm was calibrated with the main focus to identify the presence of clouds on the sky dome, although there are marginal cases that there will be false positives or false negatives identifications.
 
 
 # Data and methodology.
@@ -221,17 +209,19 @@ Although it is not possible to detect all the bad data, the large number of data
 
 ......
 
-<!-- CS_id v14.2 inserted here -->
+<!-- basic concepts -->
+Our method to characterize the sky conditions and the definition of each sky condition has some subjectivity.
+The algorithm was calibrated with the main focus to identify the presence of clouds on the sky dome, although there are marginal cases that there will be false positives or false negatives identifications.
+
+
 ```{r setup, echo=F, include=T, eval=TRUE}
-## Load Clear Sky id variables
+## Load Clear Sky id v14.2 variables
 MS <- data.frame(readRDS("~/CS_id/PARAMS/Clear_sky_id_Reno-Hansen_apply_v14_2.Rds"))
-# export all variables
+# export all Clear Sky variables
 for (an in names(MS)) {
     assign(an, MS[[an]])
 }
-```
-
-```{r TSIslope, echo=F}
+## get TSI slope for reference
 TSI <- data.table(read.csv("./figures/tbl_longterm_trends.dat",
                strip.white = TRUE,
                sep = ";",
@@ -244,8 +234,7 @@ TSI$var                <- NULL
 setorder(TSI, -slope.stat_sig)
 rownames(TSI) <- NULL
 names(TSI) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Trend statistical signif. [%]")
-TSIall <- TSI["Sky condition" == ""]
-
+TSIskopeAll <- TSI[`Sky condition` == "All sky cond."]
 ```
 
 <!-- # Detection of clear periods in GHI measurements for SDR trends. -->
