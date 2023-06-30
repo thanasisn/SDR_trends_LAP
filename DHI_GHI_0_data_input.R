@@ -256,16 +256,16 @@ if (havetorun) {
     ##  Daily means  -----------------------------------------------------------
 
     ALL_1_daily_mean <-
-        DATA_all[,.(DIR_att       = mean(DIR_att,     na.rm = T),
-                    GLB_att       = mean(GLB_att,     na.rm = T),
-                    HOR_att       = mean(HOR_att,     na.rm = T),
-                    DIR_transp    = mean(DIR_transp,  na.rm = T),
-                    tsi1au_att    = mean(tsi_1au_comb,na.rm = T),
-                    DIR_att_sd    = sd(  DIR_att,     na.rm = T),
-                    GLB_att_sd    = sd(  GLB_att,     na.rm = T),
-                    HOR_att_sd    = sd(  HOR_att,     na.rm = T),
-                    DIR_transp_sd = sd(  DIR_transp,  na.rm = T),
-                    tsi1au_att_sd = sd(  tsi_1au_comb,na.rm = T),
+        DATA_all[,.(DIR_att       = mean(DIR_att,      na.rm = T),
+                    GLB_att       = mean(GLB_att,      na.rm = T),
+                    HOR_att       = mean(HOR_att,      na.rm = T),
+                    DIR_transp    = mean(DIR_transp,   na.rm = T),
+                    tsi1au_att    = mean(tsi_1au_comb, na.rm = T),
+                    DIR_att_sd    = sd(  DIR_att,      na.rm = T),
+                    GLB_att_sd    = sd(  GLB_att,      na.rm = T),
+                    HOR_att_sd    = sd(  HOR_att,      na.rm = T),
+                    DIR_transp_sd = sd(  DIR_transp,   na.rm = T),
+                    tsi1au_att_sd = sd(  tsi_1au_comb, na.rm = T),
                     doy           = yday(Date),
                     GLB_att_N     = sum(!is.na(GLB_att)),
                     HOR_att_N     = sum(!is.na(HOR_att)),
@@ -273,14 +273,16 @@ if (havetorun) {
                  by = .( Date = Day ) ]
 
     CLEAR_1_daily_mean <-
-        DATA_Clear[,.(DIR_att       = mean(DIR_att,   na.rm = T),
-                      GLB_att       = mean(GLB_att,   na.rm = T),
-                      HOR_att       = mean(HOR_att,   na.rm = T),
-                      DIR_transp    = mean(DIR_transp,na.rm = T),
-                      DIR_att_sd    = sd(  DIR_att,   na.rm = T),
-                      GLB_att_sd    = sd(  GLB_att,   na.rm = T),
-                      HOR_att_sd    = sd(  HOR_att,   na.rm = T),
-                      DIR_transp_sd = sd(  DIR_transp,na.rm = T),
+        DATA_Clear[,.(DIR_att       = mean(DIR_att,      na.rm = T),
+                      GLB_att       = mean(GLB_att,      na.rm = T),
+                      HOR_att       = mean(HOR_att,      na.rm = T),
+                      DIR_transp    = mean(DIR_transp,   na.rm = T),
+                      tsi1au_att    = mean(tsi_1au_comb, na.rm = T),
+                      DIR_att_sd    = sd(  DIR_att,      na.rm = T),
+                      GLB_att_sd    = sd(  GLB_att,      na.rm = T),
+                      HOR_att_sd    = sd(  HOR_att,      na.rm = T),
+                      DIR_transp_sd = sd(  DIR_transp,   na.rm = T),
+                      tsi1au_att_sd = sd(  tsi_1au_comb, na.rm = T),
                       doy           = yday(Date),
                       GLB_att_N     = sum(!is.na(GLB_att)),
                       HOR_att_N     = sum(!is.na(HOR_att)),
@@ -288,14 +290,16 @@ if (havetorun) {
                    by = .( Date = Day ) ]
 
     CLOUD_1_daily_mean <-
-        DATA_Cloud[,.(DIR_att       = mean(DIR_att,   na.rm = T),
-                      GLB_att       = mean(GLB_att,   na.rm = T),
-                      HOR_att       = mean(HOR_att,   na.rm = T),
-                      DIR_transp    = mean(DIR_transp,na.rm = T),
-                      DIR_att_sd    = sd(  DIR_att,   na.rm = T),
-                      GLB_att_sd    = sd(  GLB_att,   na.rm = T),
-                      HOR_att_sd    = sd(  HOR_att,   na.rm = T),
-                      DIR_transp_sd = sd(  DIR_transp,na.rm = T),
+        DATA_Cloud[,.(DIR_att       = mean(DIR_att,      na.rm = T),
+                      GLB_att       = mean(GLB_att,      na.rm = T),
+                      HOR_att       = mean(HOR_att,      na.rm = T),
+                      DIR_transp    = mean(DIR_transp,   na.rm = T),
+                      tsi1au_att    = mean(tsi_1au_comb, na.rm = T),
+                      DIR_att_sd    = sd(  DIR_att,      na.rm = T),
+                      GLB_att_sd    = sd(  GLB_att,      na.rm = T),
+                      HOR_att_sd    = sd(  HOR_att,      na.rm = T),
+                      DIR_transp_sd = sd(  DIR_transp,   na.rm = T),
+                      tsi1au_att_sd = sd(  tsi_1au_comb, na.rm = T),
                       doy           = yday(Date),
                       GLB_att_N     = sum(!is.na(GLB_att)),
                       HOR_att_N     = sum(!is.na(HOR_att)),
@@ -449,15 +453,23 @@ if (havetorun) {
     CLOUD_1_daily_DESEAS[, GLB_att_des   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
     CLOUD_1_daily_DESEAS[, DIR_transp_des:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas]
 
-    ## also add tsi data to data
-    ALL_1_daily_mean[ , tsi1au_att_des := 100*(tsi1au_att - mean(tsi1au_att)) / mean(tsi1au_att)  ]
+    ## add TSI data process
+    ## data departure from mean value
+    ALL_1_daily_mean    [, tsi1au_att_des := 100*(tsi1au_att - mean(tsi1au_att)) / mean(tsi1au_att)]
     ALL_1_daily_mean <-
-        merge( ALL_1_daily_DESEAS,
-               ALL_1_daily_mean[, .(Date, tsi1au_att)], by = "Date", all = T )
+        merge(ALL_1_daily_DESEAS,
+              ALL_1_daily_mean[, .(Date, tsi1au_att)], by = "Date", all = T )
 
+    ## just for completeness or to see if there is any selection bias
+    CLEAR_1_daily_DESEAS[, tsi1au_att_des := 100*(tsi1au_att - mean(tsi1au_att)) / mean(tsi1au_att)]
+    CLOUD_1_daily_DESEAS[, tsi1au_att_des := 100*(tsi1au_att - mean(tsi1au_att)) / mean(tsi1au_att)]
+    CLEAR_1_daily_mean <-
+        merge(CLEAR_1_daily_DESEAS,
+              CLEAR_1_daily_mean[, .(Date, tsi1au_att)], by = "Date", all = T )
 
-
-
+    CLOUD_1_daily_mean <-
+        merge(CLOUD_1_daily_DESEAS,
+              CLOUD_1_daily_mean[, .(Date, tsi1au_att)], by = "Date", all = T )
 
 
 
