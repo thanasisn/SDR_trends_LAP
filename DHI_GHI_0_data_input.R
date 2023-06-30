@@ -143,8 +143,10 @@ if (havetorun) {
     #' ### Set data range to use
     #' We set the last day of the data the ***`r print(LAST_DAY)`**
     #+ echo=F, include=T
-    DATA <- DATA[as.Date(Date) < LAST_DAY ]
-    DATA <- DATA[as.Date(Date) > FIRST_DAY]
+    # DATA <- DATA[as.Date(Date) < LAST_DAY ]
+    # DATA <- DATA[as.Date(Date) > FIRST_DAY]
+    DATA <- DATA[Date < LAST_DAY ]
+    DATA <- DATA[Date > FIRST_DAY]
 
     #' ### Filter min elevation
     #' Keep data with Sun elevation above `r MIN_ELEVA`
