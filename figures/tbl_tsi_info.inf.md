@@ -5,10 +5,10 @@
 ---------------
 
 Object name:    object      
-Date written:   2023-06-26 08:18:41.7 UTC  
+Date written:   2023-06-30 09:37:37.2 UTC  
 Data file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_tsi_info.dat      
-Data file size: 141.0 B (141) 
-Size in memory: 2304 bytes      
+Data file size: 80.0 B (80) 
+Size in memory: 2216 bytes      
 Info file:      /home/athan/MANUSCRIPTS/2022_sdr_trends/figures/tbl_tsi_info.inf.md      
 Script name:    Script name could not be resolved      
 User@Host:      athan@sagan   
@@ -20,10 +20,10 @@ Notes:          NA
 -----------------
 
 ```
-Classes 'data.table' and 'data.frame':	2 obs. of  3 variables:
- $ TSI_Source: chr  "NOAA" "TSIS_adjusted"
- $ Start     : POSIXct, format: "1993-04-12 11:05:30" "2023-03-31 12:00:30"
- $ End       : POSIXct, format: "2023-03-31 11:59:30" "2023-05-31 17:17:30"
+Classes 'data.table' and 'data.frame':	1 obs. of  3 variables:
+ $ TSI_Source: chr "NOAA"
+ $ Start     : POSIXct, format: "1993-04-12 11:05:30"
+ $ End       : POSIXct, format: "2023-03-31 11:58:30"
  - attr(*, ".internal.selfref")=<externalptr> 
 ```
 
@@ -31,7 +31,7 @@ Classes 'data.table' and 'data.frame':	2 obs. of  3 variables:
  Data quality.
 ---------------
  Data Summary.
----------------[1] "\n\n  * **TSI_Source**:\n\n\n    | Length |     Class |      Mode |\n    |-------:|----------:|----------:|\n    |      2 | character | character |\n\n  * **Start**:\n\n\n    |                Min. |             1st Qu. |              Median |                Mean |             3rd Qu. |\n    |--------------------:|--------------------:|--------------------:|--------------------:|--------------------:|\n    | 1993-04-12 11:05:30 | 2000-10-08 17:19:15 | 2008-04-05 23:33:00 | 2008-04-05 23:33:00 | 2015-10-03 05:46:45 |\n\n\n\n    |                Max. |\n    |--------------------:|\n    | 2023-03-31 12:00:30 |\n\n  * **End**:\n\n\n    |                Min. |             1st Qu. |              Median |                Mean |             3rd Qu. |\n    |--------------------:|--------------------:|--------------------:|--------------------:|--------------------:|\n    | 2023-03-31 11:59:30 | 2023-04-15 19:19:00 | 2023-05-01 02:38:30 | 2023-05-01 02:38:30 | 2023-05-16 09:58:00 |\n\n\n\n    |                Max. |\n    |--------------------:|\n    | 2023-05-31 17:17:30 |\n\n\n<!-- end of list -->\n\n\n"
+---------------[1] "\n\n  * **TSI_Source**:\n\n\n    | Length |     Class |      Mode |\n    |-------:|----------:|----------:|\n    |      1 | character | character |\n\n  * **Start**:\n\n\n    |                Min. |             1st Qu. |              Median |                Mean |             3rd Qu. |\n    |--------------------:|--------------------:|--------------------:|--------------------:|--------------------:|\n    | 1993-04-12 11:05:30 | 1993-04-12 11:05:30 | 1993-04-12 11:05:30 | 1993-04-12 11:05:30 | 1993-04-12 11:05:30 |\n\n\n\n    |                Max. |\n    |--------------------:|\n    | 1993-04-12 11:05:30 |\n\n  * **End**:\n\n\n    |                Min. |             1st Qu. |              Median |                Mean |             3rd Qu. |\n    |--------------------:|--------------------:|--------------------:|--------------------:|--------------------:|\n    | 2023-03-31 11:58:30 | 2023-03-31 11:58:30 | 2023-03-31 11:58:30 | 2023-03-31 11:58:30 | 2023-03-31 11:58:30 |\n\n\n\n    |                Max. |\n    |--------------------:|\n    | 2023-03-31 11:58:30 |\n\n\n<!-- end of list -->\n\n\n"
 attr(,"class")
 [1] "knit_asis"
 attr(,"knit_cacheable")
