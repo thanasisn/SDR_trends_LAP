@@ -206,7 +206,7 @@ rm(data_list)
 #'
 #+ LongtermTrends, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
-vars <- c("DIR_att_des", "GLB_att_des")
+vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att")
 # dbs  <- c("ALL_1_daily_DEseas")
 
 dbs         <- c(  "ALL_1_daily_DESEAS",
