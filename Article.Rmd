@@ -365,7 +365,7 @@ On the latter instances, Sun is systematically, not visible by the instrument's 
 To make the measurements comparable throughout the dataset, we adjusted all 1-minute radiometric values to the mean Sun - Earth distance.
 <!-- TSI -->
 Subsequently, we made all measurements relative to the Total Solar Irradiance (TSI) at $1 \text{au}$, in order to compensate for the Sun's intensity variability, using a homogenized time series of satellite TSI observations.
-The TSI data we use, comes from NOAA [@Coddington2005].
+The TSI data we use, comes from NOAA [@Coddington2005], it overlaps with our data, and is interpolated to match with the time step of the data.
 <!-- The TSI data we use, is a combination of data from NOAA [@Coddington2005] (for `r as.Date(TSIinfo[TSI_Source == "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source == "NOAA", End])`) and adjusted data from @LASP2023 (for `r as.Date(TSIinfo[TSI_Source != "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source != "NOAA", End])`).-->
 As a result, we can present all radiation data as a fraction of Sun's TSI.
 
