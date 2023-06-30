@@ -231,6 +231,22 @@ for (an in names(MS)) {
 }
 ```
 
+```{r TSIslope, echo=F}
+TSI <- data.table(read.csv("./figures/tbl_longterm_trends.dat",
+               strip.white = TRUE,
+               sep = ";",
+               header = TRUE))
+TSI <- TSI[grep("TSI", TSI$var), ]
+TSI$slope.sd           <- NULL
+TSI$slope.ConfInt_0.95 <- NULL
+TSI$slope.ConfInt_0.99 <- NULL
+TSI$var                <- NULL
+setorder(TSI, -slope.stat_sig)
+rownames(TSI) <- NULL
+names(TSI) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Trend statistical signif. [%]")
+TSIall <- TSI["Sky condition" == ""]
+
+```
 
 <!-- # Detection of clear periods in GHI measurements for SDR trends. -->
 
