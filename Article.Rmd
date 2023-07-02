@@ -158,14 +158,21 @@ et al 2012).
 
 # Data and methodology.
 
+
+<!-- time span -->
+The SDR is equivalent to the whole sky Global radiation (or Global Horizontal Irradiance, GHI), and was obtained with a horizontal leveled, CM-21 pyranometer, from \mbox{`r min(ALL_1_daily_DESEAS$Date)`} to \mbox{`r max(ALL_1_daily_DESEAS$Date)`}.
+Also, we have measurements of direct beam radiation (DNI) obtained by a collocated CHP-1 pyrheliometer, from \mbox{`r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`} to \mbox{`r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`}
+
+
+In some algorithms, we used as auxiliary data, the direct beam radiation (DNI) for comparisons, obtained by a CHP-1 pyrheliometer, with data availability from  
+`r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])` to `r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
+
+
+
 Location
 
-The SDR data used in this study cover the period from
-January 1993 to March 2011, and were measured with
-a Kipp & Zonen CM-21 pyranometer operating contin-
-uously at the Laboratory of Atmospheric Physics of the
-Aristotle University of Thessaloniki ($40^\deg$38"N, $22^\circ$57"E,
-∼80 m above sea level). The monitoring site is located
+
+The SDR data used in this study cover the period from January 1993 to March 2011, and were measured with a Kipp & Zonen CM-21 pyranometer operating continuously at the Laboratory of Atmospheric Physics of the Aristotle University of Thessaloniki ( $40^\circ38'$N, $22^\circ57'$E, 80 m above sea level). The monitoring site is located
 near the city centre. The horizon is clear of obstruc-
 ◦ ◦
 tions except for the azimuth angles between 35 and 120where obstacles of up to 10 elevation block the direct
@@ -187,12 +194,6 @@ transport (LRT) trajectories, as we move from central and east-
 ern Europe to the Mediterranean (Zerefos et. al., 2002). On the
 
 
-<!-- time span -->
-The SDR is equivalent to the whole sky Global radiation, also refered as Global Horizontal Irradiance (GHI), and was obtained with a horizontal leveled, CM-21 pyranometer.
-SDR data spans the period of 
-`r min(ALL_1_daily_DESEAS$Date)` to `r max(ALL_1_daily_DESEAS$Date)`.
-In some algorithms we used as auxiliary data, the direct beam radiation (DNI) for comparisons, obtained by a CHP-1 pyrheliometer, with data availability from 
-`r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])` to `r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
 
 
 ...
@@ -425,7 +426,7 @@ The statistical significance and aggregation scheme and filtering will be noted 
 ## Long-term trends
 
 Using the mean daily SDR we produce the trends of each data set, as departure from the seasonal value.
-Only for All-sky (Fig. \ref{fig:trendALL}) <!--and Cloudy-sky (Fig. \ref{fig:trendCLOUD})--> conditions, the statistical significance of the trends are acceptable (Tab. \ref{tab:trendtable}), to draw some conclusions.
+Only for All-sky (Fig.~\ref{fig:trendALL}) <!--and Cloudy-sky (Fig. \ref{fig:trendCLOUD})--> conditions, the statistical significance of the trends are acceptable (Tab.~\ref{tab:trendtable}), to draw some conclusions.
 
 ```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023. The black line shows the long term trend for all-sky conditions."}
 knitr::include_graphics("./images/LongtermTrends-2.png")
