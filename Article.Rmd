@@ -112,13 +112,15 @@ suppressMessages(
 
 # Introduction.
 
-The shortwave downward solar irradiance (SDR) at the Earth's surface plays a significant role, on Earths climate.
-Changes of the SDR can be related to major changes on the Earth's energy budget, the mechanisms of climate change, and water and carbon cycle [@Wild2009].
-Studies of SDR variability, have identified some distinct SDR trends on different regions of the world and for different time periods, using the term 'brightening' for positive trends, and 'dimming' for negative trends.
-There are many cases on the long term records, showing a change of SDR trends direction, occurring roughly at the last decades of the 20th century.
+The shortwave downward solar irradiance (SDR) at Earth's surface play a significant role, on it's climate.
+Changes of the SDR can be related to changes on Earth's energy budget, the mechanisms of climate change, and water and carbon cycle [@Wild2009].
+Can also affect, solar and agricultural production, and living organisms.
+Studies of SDR variability, have identified some distinct SDR trends on different regions of the world and for different time periods.
+The term 'brightening' is generally used for periods of positive trends of SDR, and 'dimming' for negative trends.
+There are many cases on the long term records of irradiance, showing a systematic change of SDR's trend slope, occurring roughly at the last decades of the 20th century.
 <!-- Trends -->
-A general dimming before 2000 and a brightening afterwards, was found on multiple station in China [@Yang2021]. 
-And a similar pattern was identified, with the breaking point around 1980, from a 71 years record of a Central Europe station [@Wild2021] and for Brazil [@Yamasoe2021].
+On multiple station in China, a dimming period was reported until about 2000, followed by a brightening period [@Yang2021]. 
+A similar pattern was identified, with the breaking point around 1980, from stations in Central Europe [@Wild2021] and Brazil [@Yamasoe2021].
 <!-- @Yamasoe2021 similar dimming and brightening around 1980 in Brazil -->
 Another approach, using AI aided spatial analysis on continent level, of numerous observational stations data, reach similar conclusions for the above regions and the global trend [@Yuan2021].
 
