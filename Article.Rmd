@@ -156,16 +156,34 @@ et al 2012).
 
 -->
 
-# Data and methodology.
+# Observational data and methodology.
 
 
 <!-- time span -->
-The SDR is equivalent to the whole sky Global radiation (or Global Horizontal Irradiance, GHI), and was obtained with a horizontal leveled, CM-21 pyranometer, from \mbox{`r min(ALL_1_daily_DESEAS$Date)`} to \mbox{`r max(ALL_1_daily_DESEAS$Date)`}.
-Also, we have measurements of direct beam radiation (DNI) obtained by a collocated CHP-1 pyrheliometer, from \mbox{`r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`} to \mbox{`r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`}
+The SDR is equivalent to the whole sky Global radiation (or Global Horizontal Irradiance, GHI), and was obtained with a horizontal leveled, CM-21 pyranometer, from 
+<!-- \mbox{ -->
+`r min(ALL_1_daily_DESEAS$Date)`
+<!-- } -->
+to
+<!-- \mbox{ -->
+`r max(ALL_1_daily_DESEAS$Date)`.
+<!-- }. -->
+Also, we have measurements of direct beam radiation (DNI) obtained by a collocated CHP-1 pyrheliometer, from 
+<!-- \mbox{ -->
+`r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`
+<!-- } -->
+to
+<!-- \mbox{ -->
+`r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
+<!-- }. -->
+Although, we performed similar analysis to DNI as for SDR, due to the sorter duration of the data, the results are not presented here, as they lack the appropriate statistical significance.
 
+Moreover, the DNI was used as auxiliary data, with the clear sky identification algorithm (CSid), to aid with the selection of the appropriate thresholds. 
+We have to note that, despite the capability of the CSid to use the DNI as an characterization parameter, 
 
-In some algorithms, we used as auxiliary data, the direct beam radiation (DNI) for comparisons, obtained by a CHP-1 pyrheliometer, with data availability from  
-`r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])` to `r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
+.... wi dindnt use it  .....
+
+but was not used as indicator of clear sky instances  
 
 
 
