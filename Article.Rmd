@@ -2,7 +2,7 @@
 title:         "Trends of SDR in Thessaloniki"
 # header-includes:
 author:
-  - name:         Natsis Athanasios
+  - name:         Athanasios Natsis 
     email:        natsisphysicist@gmail.com
     affiliation:  Laboratory of Atmospheric Physics
 #    footnote:     1
@@ -340,16 +340,18 @@ L = \sum_{i=1}^{n-1}\sqrt{\left ( \text{SDR}_{i+1} - \text{SDR}_{i}\right )^2 + 
 We calculate the standard deviation $\sigma$ of the slope
 ($s$) between sequential points in the time series, normalized by the average SDR during the time interval.
 
+<!--
 \begin{gather}
 s_i = \frac{\text{SDR}_{i+1} - \text{SDR}_{i}}{t_{i+1} - t_i}, \forall i \in \left \{ 1, 2, \ldots, n-1 \right \} \label{eq:VCT1} \\
 \bar{s} = \frac{1}{n-1} \sum_{i=1}^{n-1} s_i \label{eq:VCT2} \\
 \sigma_i = \frac {\sqrt{\frac{1}{n-1} \sum_{i=1}^{n-1} \left( s_i - \bar{s} \right)^2} } {\bar{G_i}} \label{eq:VCT3}
 \end{gather}
+-->
 
 \begin{equation}
-s_i = \frac{\text{SDR}_{i+1} - \text{SDR}_{i}}{t_{i+1} - t_i}, \forall i \in \left \{ 1, 2, \ldots, n-1 \right \} \label{eq:VCT1} \\
-\bar{s} = \frac{1}{n-1} \sum_{i=1}^{n-1} s_i \label{eq:VCT2} \\
-\sigma_i = \frac {\sqrt{\frac{1}{n-1} \sum_{i=1}^{n-1} \left( s_i - \bar{s} \right)^2} } {\bar{G_i}} \label{eq:VCT3}
+s_i = \frac{\text{SDR}_{i+1} - \text{SDR}_{i}}{t_{i+1} - t_i}, \forall i \in \left \{ 1, 2, \ldots, n-1 \right \},\;\;
+\bar{s} = \frac{1}{n-1} \sum_{i=1}^{n-1} s_i,\;\;
+\sigma_i = \frac {\sqrt{\frac{1}{n-1} \sum_{i=1}^{n-1} \left( s_i - \bar{s} \right)^2} } {\bar{G_i}} \label{eq:VCT3b}
 \end{equation}
 
 
@@ -423,7 +425,7 @@ The statistical significance and aggregation scheme and filtering will be noted 
 ## Long-term trends
 
 Using the mean daily SDR we produce the trends of each data set, as departure from the seasonal value.
-Only for All-sky (Fig.~\ref{fig:trendALL}) <!--and Cloudy-sky (Fig. \ref{fig:trendCLOUD})--> conditions, the statistical significance of the trends are acceptable (Tab.~\ref{tab:trendtable}), to draw some conclusions.
+Only for All-sky (Fig. \ref{fig:trendALL}) <!--and Cloudy-sky (Fig. \ref{fig:trendCLOUD})--> conditions, the statistical significance of the trends are acceptable (Tab. \ref{tab:trendtable}), to draw some conclusions.
 
 ```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023. The black line shows the long term trend for all-sky conditions."}
 knitr::include_graphics("./images/LongtermTrends-2.png")
