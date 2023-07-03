@@ -112,6 +112,8 @@ suppressMessages(
 
 # Introduction.
 
+<!-- something about aerosols: bais mail -->
+
 The shortwave downward solar irradiance (SDR) at Earth's surface play a significant role, on it's climate.
 Changes of the SDR can be related to changes on Earth's energy budget, the mechanisms of climate change, and water and carbon cycle [@Wild2009].
 Can also affect, solar and agricultural production, and living organisms.
