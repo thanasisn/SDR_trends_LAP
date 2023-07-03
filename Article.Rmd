@@ -436,11 +436,16 @@ The statistical significance and aggregation scheme and filtering will be noted 
 
 We calculated the SDR trends, from the mean daily values of the departure from the seasonal values, for the whole time series for the three sky conditions (Table \ref{tab:trendtable}).
 
+....
 
-```{r trendALL, echo=F, out.width='.70\\linewidth', fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023  `r year(min(ALL_1_daily_DESEAS$Date))` to `r year(max(ALL_1_daily_DESEAS$Date))`. The black line shows the long term trend for all-sky conditions."}
+more about trend in relation to other trends
+
+......
+
+
+```{r trendALL, echo=F, out.width='.70\\linewidth', fig.cap=paste0("Anomaly (\\%) of the daily SDR relative to climatological values for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term trend for all-sky conditions.")}
 knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
-
 
 <!-- ```{r trendCLEAR, echo=F, fig.cap="Daily SDR seasonal anomaly and long term trend, for clear sky conditions."} -->
 <!-- knitr::include_graphics("./images/LongtermTrends-4.png") -->
@@ -509,8 +514,6 @@ knitr::include_graphics("./images/SzaTrends-21.png")
 
 
 
-<!-- \FloatBarrier -->
-
 ## Long term trends by season of year
 
 Similar we have produced the deseasonalized trend for different sky conditions for each season of the year, using the corresponding mean monthly values.
@@ -559,12 +562,10 @@ pander(pp,
 
 
 
-<!-- \FloatBarrier -->
 <!-- 
 ## Zenith angle dependency and seasons of the year.
 -->
 
-<!-- \FloatBarrier -->
 
 ## Consistency of the trends
 
