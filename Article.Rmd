@@ -432,14 +432,12 @@ The statistical significance and aggregation scheme and filtering will be noted 
 
 # Results
 
-<!-- \FloatBarrier -->
+## Long-term SDR trends
 
-## Long-term trends
+We calculated the SDR trends, from the mean daily values of the departure from the seasonal values, for the whole time series for the three sky conditions (Table \ref{tab:trendtable}).
 
-Using the mean daily SDR we produce the trends of each data set, as departure from the seasonal value.
-Only for All-sky (Fig. \ref{fig:trendALL}) <!--and Cloudy-sky (Fig. \ref{fig:trendCLOUD})--> conditions, the statistical significance of the trends are acceptable (Tab. \ref{tab:trendtable}), to draw some conclusions.
 
-```{r trendALL, echo=F, fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023. The black line shows the long term trend for all-sky conditions."}
+```{r trendALL, echo=F, out.width='.70\\linewidth', fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023  `r year(min(ALL_1_daily_DESEAS$Date))` to `r year(max(ALL_1_daily_DESEAS$Date))`. The black line shows the long term trend for all-sky conditions."}
 knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
 
@@ -452,7 +450,7 @@ knitr::include_graphics("./images/LongtermTrends-2.png")
 <!-- knitr::include_graphics("./images/LongtermTrends-6.png") -->
 <!-- ``` -->
 
-<!-- \footnotesize -->
+\footnotesize
 ```{r trendtable, echo=F}
 LT <- data.table(read.csv("./figures/tbl_longterm_trends.dat",
                strip.white = TRUE,
@@ -465,23 +463,25 @@ LT$slope.ConfInt_0.99 <- NULL
 LT$var                <- NULL
 setorder(LT, -slope.stat_sig)
 rownames(LT) <- NULL
-names(LT) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Trend statistical signif. [%]")
+names(LT)    <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Trend statistical signif. [%]")
+## no need all are 100%
+LT$`Trend statistical signif. [%]` <- NULL
 
 panderOptions("table.alignment.default", "center")
 pander(LT,
-       caption = "\\label{tab:trendtable}Trends of daily means by sky conditions.")
-# \\label{tab:tab2}
+       caption = "\\label{tab:trendtable}Trends of daily SDR means, for different sky conditions. All cases have a statistical significance above $99.9\\%$")
 # knitr::kable(LT, caption = "Trends of daily means by sky conditions.")
 
-## some vars to use
+## some vars to use later
 alltrend   <- signif(LT[`Sky condition` == "All sky cond.",   `Trend [%/year]`], 2)
 cleartrend <- signif(LT[`Sky condition` == "Clear sky cond.", `Trend [%/year]`], 2)
 cloudtrend <- signif(LT[`Sky condition` == "Cloudy cond.",    `Trend [%/year]`], 2)
 ```
-<!-- \normalsize -->
+\normalsize
 
 
-<!-- \FloatBarrier -->
+
+
 
 ## Long term trends by Solar zenith angle.
 
