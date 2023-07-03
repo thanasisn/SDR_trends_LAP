@@ -113,6 +113,16 @@ suppressMessages(
 # Introduction.
 
 <!-- something about aerosols: bais mail -->
+<!-- something about clouds: bais mail -->
+<!--
+Η εισαγωγή είναι εντάξει. Ίσως θα μπορούσες να βάλεις στη 2η
+παράγραφο ακόμη 2-3 σειρές για τις τάσεις του αεροζόλ και των νεφών
+από τις εργασίες και να καταλήξεις με κάποια στοιχεία για το αεροζόλ
+στη Θεσσαλονίκη από εργασίες δικές μας. Για τα νέφη δεν έχω υπόψη μου
+καμία εργασία αλλά ίσως θα μπορούσε να ειπωθεί κάτι χρησιμοποιώντας
+παγκόσμιες εκτιμήσεις για την περιοχή της Μεσογείου.
+π.χ.https://link.springer.com/article/10.1007/s00382-022-06438-3
+-->
 
 The shortwave downward solar irradiance (SDR) at Earth's surface play a significant role, on it's climate.
 Changes of the SDR can be related to changes on Earth's energy budget, the mechanisms of climate change, and water and carbon cycle [@Wild2009].
