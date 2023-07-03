@@ -121,7 +121,7 @@ suppressMessages(
 στη Θεσσαλονίκη από εργασίες δικές μας. Για τα νέφη δεν έχω υπόψη μου
 καμία εργασία αλλά ίσως θα μπορούσε να ειπωθεί κάτι χρησιμοποιώντας
 παγκόσμιες εκτιμήσεις για την περιοχή της Μεσογείου.
-π.χ.https://link.springer.com/article/10.1007/s00382-022-06438-3
+π.χ. https://link.springer.com/article/10.1007/s00382-022-06438-3
 -->
 
 The shortwave downward solar irradiance (SDR) at Earth's surface play a significant role, on it's climate.
@@ -217,6 +217,7 @@ pollutants from Europe, in the path of the prevailing long-range
 transport (LRT) trajectories, as we move from central and east-
 ern Europe to the Mediterranean (Zerefos et. al., 2002). On the
 -->
+
 
 
 <!-- a) Acquisition -->
