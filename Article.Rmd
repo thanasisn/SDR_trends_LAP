@@ -99,10 +99,10 @@ source("~/CODE/FUNCTIONS/R/gather_citations.R")
 
 suppressMessages(
     gather_citations(
-        sourcefile   = "./Article.Rmd",
-        mainreposit  = "./Mainreferences.bib",
-        localreposit = "./references.bib",
-        folderlink   = "./References_links",
+        sourcefile   = "~/MANUSCRIPTS/2022_sdr_trends/Article.Rmd",
+        mainreposit  = "~/MANUSCRIPTS/2022_sdr_trends/Mainreferences.bib",
+        localreposit = "~/MANUSCRIPTS/2022_sdr_trends/references.bib",
+        folderlink   = "~/MANUSCRIPTS/2022_sdr_trends/References_links",
         workingdir   = "~/MANUSCRIPTS/2022_sdr_trends/"
     )
 )
