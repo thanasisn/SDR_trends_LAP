@@ -19,7 +19,8 @@ LIBRARY      = ~/LIBRARY/REPORTS/
 
 
 
-###      Article
+### Article
+## using rstudio pandoc
 TARGET = Article
 RMD    = $(TARGET).Rmd
 PDF    = $(TARGET).pdf
@@ -29,22 +30,14 @@ $(PDF): $(RMD)
 	@echo "Building: $@"
 	@#-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	-Rscript -e "rmarkdown::find_pandoc(cache = FALSE, dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='rticles::elsevier_article', output_file='$@')" &
-	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='Article_A.pdf')"
+	-Rscript -e "rmarkdown::find_pandoc(cache = FALSE, dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2',   output_file='Article_A.pdf')"
 	@# echo "Changed:  $?"
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
 
 
-Ah: $(SLIDY)
-$(SLIDY): $(RMD)
-	@echo "Building: $@"
-	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
-	@#echo "Changed:  $?"
-	@# setsid mimeopen  $@ &
-
-
-
 ## Article pdf with build number
+## using rstudio pandoc
 TARGET = Article
 RMD    = $(TARGET).Rmd
 PDF    = $(TARGET)_B$(shell cat $(BLD_FILE)).pdf
@@ -52,9 +45,9 @@ SLIDY  = $(TARGET).html
 Apv: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
-	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='Article_A$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).pdf')"
+	-Rscript -e "rmarkdown::find_pandoc(cache = FALSE, dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='Article_A$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).pdf')"
 	-Rscript -e "rmarkdown::find_pandoc(cache = FALSE, dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='rticles::elsevier_article', output_file='Article_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).pdf')"
-	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::word_document2', output_file='Article_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).docx')"
+	-Rscript -e "rmarkdown::find_pandoc(cache = FALSE, dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::word_document2', output_file='Article_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).docx')"
 	-cp 'Article.Rmd' 'Article_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).Rmd'
 	$(call buildver)
 
