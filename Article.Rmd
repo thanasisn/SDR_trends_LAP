@@ -75,7 +75,8 @@ output:
 
 
 
-```{r echo=F, include=T, warning=FALSE}
+```{r echo=F, include=T, warning=FALSE, message=FALSE}
+res <- rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools')
 ## document configurations 
 knitr::opts_chunk$set(comment    = ""      )
 # knitr::opts_chunk$set(dev        = "pdf"   )
@@ -86,7 +87,7 @@ options(knitr.graphics.auto_pdf = FALSE)
 library(pander)
 library(data.table)
 ## load data
-load("./data/common_data_14_2.Rda")
+load("~/MANUSCRIPTS/2022_sdr_trends/data/common_data_14_2.Rda")
 TSIinfo <- data.table(read.csv("~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_tsi_info.dat",
                     strip.white = TRUE,
                     sep = ";",
@@ -194,15 +195,15 @@ We have to note also, that despite the capability of the CSid to use the DNI as 
 
 <!-- Location -->
 
-The SDR data were measured with a Kipp & Zonen CM-21 pyranometer operating continuously at the Laboratory of Atmospheric Physics of the Aristotle University of Thessaloniki ($40^\circ38'$N, $22^\circ57'$E, 80m a.s.l.).
+The SDR data were measured with a Kipp & Zonen CM-21 pyranometer operating continuously at the Laboratory of Atmospheric Physics of the Aristotle University of Thessaloniki ($40^\circ38'$N, $22^\circ57'$E, 80m\ a.s.l.).
 The monitoring site is located near the city centre.
 During the study period the CM-21 pyranometer has been independently calibrated four times.
 <!-- Preparation. -->
 There are three distinct steps to the creation of this dataset:
-a) the acquisition of radiation measurements from the sensors, 
-b) a radiation data quality check, and 
-c) the identification of "clear sky" conditions from the radiometric data
-d) data aggregation and trend analysis.
+a)\ the acquisition of radiation measurements from the sensors, 
+b)\ a radiation data quality check,
+c)\ the identification of "clear sky" conditions from the radiometric data, and
+d)\ data aggregation and trend analysis.
 
 <!--
 The horizon is clear of obstructions except for the azimuth angles between 35 and 120 where obstacles of up to 10 elevation block the direct irradiance in the morning for SZA larger than 80.  These data points were excluded from the analysis, as
@@ -285,7 +286,7 @@ TSIskopeAll <- TSI[`Sky condition` == "All sky cond."]
 
 <!-- # Detection of clear periods in GHI measurements for SDR trends. -->
 
-As global radiation clear sky reference we are using the Haurwitz’s model, adjusted for our site with a factor of `r signif(alpha,3)` (Eq. \ref{eq:ahau}).
+As global radiation clear sky reference we are using the Haurwitz’s model, adjusted for our site with a factor of `r signif(alpha,3)` (Eq.\ \ref{eq:ahau}).
 The selection of a clear sky reference model, was based on SDR observation from the period 2016 – 2021.
 Where, after an iterative optimization of eight simple models (Daneshyar–Paltridge–Proctor, Kasten–Czeplak, Haurwitz, Berger–Duffie, Adnot–Bourges–Campana–Gicquel, Robledo-Soler, Kasten and Ineichen-Perez) with different factors.
 We found, that Haurwitz’s model, adjusted with a factor of `r signif(alpha,3)` has the lower root mean squared error (RMSE). 
@@ -319,7 +320,7 @@ The mean of the measured value $\overline{G}_i$ must be inside an envelope based
 <!-- 2. MaxVIP -->
 <!-- ### Max value of irradiance during the time period. -->
 
-The running max measured value $M_{Gi} = max[\text{SDR}_{i}]$, is compared to a similar constructed value from the reference $M_{CSi} = max[\text{SDR}_{i\text{Clear Sky}}]$ (Eq. \ref{eq:MaxVIP}).
+The running max measured value $M_{Gi} = max[\text{SDR}_{i}]$, is compared to a similar constructed value from the reference $M_{CSi} = max[\text{SDR}_{i\text{Clear Sky}}]$ (Eq.\ \ref{eq:MaxVIP}).
 
 \begin{equation}
 `r MaxVIP_fct` \times M_{CSi} - `r MaxVIP_off_low`
@@ -435,7 +436,7 @@ The statistical significance and aggregation scheme and filtering will be noted 
 
 ## Long-term SDR trends
 
-We calculated the SDR trends, from the mean daily values of the departure from the seasonal values, for the whole time series for the three sky conditions (Table \ref{tab:trendtable}).
+We calculated the SDR trends, from the mean daily values of the departure from the seasonal values, for the whole time series for the three sky conditions (Table\ \ref{tab:trendtable}).
 
 ....
 
@@ -491,7 +492,7 @@ cloudtrend <- signif(LT[`Sky condition` == "Cloudy cond.",    `Trend [%/year]`],
 
 ## Long term trends by Solar zenith angle.
 
-Analyzing the long term trends of SDR to bins of SZA, we can see the contribution of the geometry and time in a diurnal level (Figures \ref{fig:szatrends}a and \ref{fig:szatrends}b). Although there is a seasonal distribution of SZA than in not presented here.
+Analyzing the long term trends of SDR to bins of SZA, we can see the contribution of the geometry and time in a diurnal level (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b). Although there is a seasonal distribution of SZA than in not presented here.
 
 <!-- ```{r , echo=F, fig.cap="All sky"} -->
 <!-- knitr::include_graphics("./images/SzaTrends-5.png") -->
@@ -572,7 +573,7 @@ pander(pp,
 
 A method to evaluate changes in the long term trend is to use the cumulative sum of the variable.
 
-Figure \ref{fig:cumsum}
+Figure\ \ref{fig:cumsum}
 
 ... different in aggregation ...
 
@@ -623,7 +624,7 @@ About:
 
 
 similar results with Evidence for Clear‐Sky Dimming and Brightening in Central Europe_Wild2021.pdf
-inclue in discusion
+include in discussion
 
 
 -------------------------------------------------
