@@ -437,6 +437,8 @@ The statistical significance and aggregation scheme and filtering will be noted 
 ## Long-term SDR trends
 
 We calculated the SDR trends, from the mean daily values of the departure from the seasonal values, for the whole time series for the three sky conditions (Table\ \ref{tab:trendtable}).
+In this time period, we could not find any significant break or change in the variability of the trends.
+Other studies for the European region are reporting a change of the SDR slope, around the '80, few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009].
 
 ....
 
