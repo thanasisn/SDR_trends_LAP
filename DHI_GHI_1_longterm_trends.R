@@ -301,6 +301,105 @@ for (DBn in dbs) {
 
 
 
+#+ LongtermTrendsRuMe, echo=F, include=T, results="asis"
+# vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
+vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att")
+# dbs  <- c("ALL_1_daily_DEseas")
+
+dbs         <- c(  "ALL_1_daily_DESEAS",
+                 "CLEAR_1_daily_DESEAS",
+                 "CLOUD_1_daily_DESEAS")
+## gather trends
+gather <- data.frame()
+
+for (DBn in dbs) {
+    DB <- get(DBn)
+    cat("\n\\newpage\n")
+    cat("\n#### Trends on", translate(DBn), "data with running mean\n\n" )
+
+        for (avar in vars) {
+            dataset <- DB
+
+            if (all(is.na(dataset[[avar]]))) next()
+
+            ## linear model by day step
+            lm1 <- lm(dataset[[avar]] ~ dataset$Date)
+
+            ## capture lm for table
+            gather <- rbind(gather,
+                            data.frame(
+                                linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
+                                DATA      = DBn,
+                                var       = avar,
+                                N         = sum(!is.na(dataset[[avar]]))
+                            ))
+
+            par("mar" = c(3, 4, 2, 1))
+
+
+            ## plot data
+            plot(dataset$Date, dataset[[avar]],
+                 pch  = ".",
+                 col  = get(paste0(c("col",
+                                     unlist(strsplit(avar, split = "_"))[1:2]),
+                                   collapse = "_")),
+                 cex      = 2,
+                 main     = paste(translate(DBn), translate(avar)),
+                 cex.main = 0.8,
+                 yaxt     = "n",
+                 xlab     = "",
+                 ylab     = bquote("Anomaly [%]")
+            )
+            axis(2, pretty(dataset[[avar]]), las = 2 )
+
+            # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
+
+            ## plot fit line
+            abline(lm1, lwd = 2)
+
+            ## Running mean
+            first <- head(which(!is.na(dataset[[avar]])),1)
+            last  <- tail(which(!is.na(dataset[[avar]])),1)
+
+            rm <- frollmean(dataset[[avar]][first:last],
+                            round(running_mean_window_days),
+                            na.rm = TRUE,
+                            algo  = "exact",
+                            align = "center")
+
+            # points(dataset$Date, rm, col = "red", cex = 0.5)
+            lines(dataset$Date[first:last], rm, col = "red", lwd = 1.5)
+
+            ## LOESS curve
+            vec <- !is.na(dataset[[avar]])
+            FTSE.lo3 <- loess.as(dataset$Date[vec], dataset[[avar]][vec],
+                                 degree = 1,
+                                 criterion = LOESS_CRITERIO, user.span = NULL, plot = F)
+            FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Date)
+            lines(dataset$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
+
+
+            ## decorations
+            fit <- lm1[[1]]
+
+            legend("top", lty = 1, bty = "n", lwd = 2, cex = 1,
+                   paste("Trend: ",
+                         if (fit[2] > 0) "+" else "-",
+                         signif(abs(fit[2]) * Days_of_year, 3),
+                         "% per year")
+            )
+
+    }
+}
+#+ echo=F, include=F
+
+
+
+
+
+
+
+
 
 ## __ Trends table  ------------------------------------------------------------
 #'
