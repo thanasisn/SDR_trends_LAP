@@ -478,7 +478,7 @@ LT$`Trend statistical signif. [%]` <- NULL
 
 panderOptions("table.alignment.default", "center")
 pander(LT,
-       caption = "\\label{tab:trendtable}Trends of daily SDR means, for different sky conditions. All cases have a statistical significance above $99.9\\%$")
+       caption = "\\label{tab:trendtable}Trends of daily SDR means, for different sky conditions. All cases have a statistical significance above $99.9\\%$.")
 # knitr::kable(LT, caption = "Trends of daily means by sky conditions.")
 
 ## some vars to use later
@@ -598,8 +598,11 @@ knitr::include_graphics("./images/CumulativeDailyCumSum-9.png")
 ```
 -->
 
-```{r cumsum, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.35\\linewidth', fig.asp=1, fig.ncol = 2}
-knitr::include_graphics(c("./images/CumulativeDailyCumSum-1.png", "./images/CumulativeDailyCumSum-9.png"))
+```{r cumsum, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+knitr::include_graphics(c(
+    "./images/CumulativeDailyCumSum-1.png",    # ALL sky
+    "./images/CumulativeDailyCumSum-5.png",    # CLEAR sky
+    "./images/CumulativeDailyCumSum-9.png"))   # Cloud sky
 ```
 
 
@@ -632,3 +635,4 @@ include in discussion
 -------------------------------------------------
                    **END**
 -------------------------------------------------
+\newpage

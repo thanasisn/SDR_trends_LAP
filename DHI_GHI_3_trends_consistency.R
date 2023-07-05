@@ -296,7 +296,7 @@ for (adb in database) {
              xlab = "",
              xlim = xlim, ylim = ylim,
              xaxt = "n",
-             ylab = bquote("Cumulative Seasonal Anomaly [%]"))
+             ylab = bquote("Cumulative Sum of Anomaly [%]"))
         axis.Date(1, pdb$Date)
         abline(h = 0, lty = 2, lwd = 0.8)
 
@@ -312,7 +312,7 @@ for (adb in database) {
         lm1 <- lm(pdb[[paste0(avar,"_des")]] ~ pdb$Date)
 
         plot(pdb$Date, pdb[[paste0(avar,"_des")]],
-             ylab = bquote("Seasonal Anomaly [%]"),
+             ylab = bquote("Daily Anomaly [%]"),
              cex = 0.3,
              col = col)
         abline(h = 0, lty = 2, lwd = 0.8)
@@ -459,7 +459,7 @@ for (adb in database) {
              xlab = "",
              xlim = xlim, ylim = ylim,
              xaxt = "n",
-             ylab = bquote("Cumulative Seasonal Anomaly [%]"))
+             ylab = bquote("Cumulative Sum Anomaly [%]"))
         axis.Date(1, pdb$Date)
         abline(h = 0, lty = 2, lwd = 0.8)
 
@@ -475,7 +475,7 @@ for (adb in database) {
         lm1 <- lm(pdb[[paste0(avar,"_des")]] ~ pdb$Date)
 
         plot(pdb$Date, pdb[[paste0(avar,"_des")]],
-             ylab = bquote("Seasonal Anomaly [%]"),
+             ylab = bquote("Monthly Anomaly [%]"),
              cex = 0.5,
              col = col)
         abline(h = 0, lty = 2, lwd = 0.8)
@@ -654,7 +654,7 @@ for (adb in database) {
                  xlab = "",
                  xlim = xlim, ylim = ylim,
                  xaxt = "n",
-                 ylab = bquote("Cumulative Seasonal Anomaly [%]" ) )
+                 ylab = bquote("Cumulative Sum Anomaly [%]" ) )
             axis.Date(1, pdb$Date)
             abline(h = 0, lty = 2, lwd = 0.8)
 
@@ -793,7 +793,7 @@ for (adb in database) {
                  xlab = "",
                  xlim = xlim, ylim = ylim,
                  xaxt = "n",
-                 ylab = bquote("Cumulative Seasonal Anomaly [%]" ) )
+                 ylab = bquote("Cumulative Sum of Anomaly [%]" ) )
             axis.Date(1, pdb$Date)
             abline(h = 0, lty = 2, lwd = 0.8)
 
@@ -823,7 +823,7 @@ for (adb in database) {
                  xlab = "",
                  xlim = xlim, ylim = ylim,
                  xaxt = "n",
-                 ylab = bquote("Seasonal Anomaly [%]" ) )
+                 ylab = bquote("Anomaly [%]" ) )
             axis.Date(1, pdb$Date)
             abline(h = 0, lty = 2, lwd = 0.8)
 
@@ -878,10 +878,6 @@ for (adb in database) {
 
             legend("top", legend = plotpreNoon, col = plotpNcol, title = "LOESS",
                    lty = 1, bty = "n", ncol = 3, cex = 0.8)
-
-
-
-
 
         }
     }
