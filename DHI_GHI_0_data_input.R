@@ -9,7 +9,7 @@ require(data.table)
 require(zoo)
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
-source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
+source("./DHI_GHI_0_variables.R")
 
 ####  Run data construction ####################################################
 
@@ -50,6 +50,11 @@ if (D_13) {
     inpatern    <- "Clear_Sky_[0-9]{4}.Rds"
 }
 
+## create local folders
+dir.create(dirname(common_data), showWarnings = FALSE)
+dir.create("./figures",          showWarnings = FALSE)
+dir.create("./images",           showWarnings = FALSE)
+dir.create("./runtime",          showWarnings = FALSE)
 
 
 ## check if we need to run data production
@@ -69,10 +74,9 @@ if (havetorun) {
     input_files <- grep("_stats_", input_files, value = TRUE, invert = TRUE)
 
     if (TEST) {
-        input_files <- sample(input_files, 4)
+        warning("\nTEST MODE IS ACTIVE!!\n\n")
+        input_files <- sample(input_files, 3)
     }
-
-
 
     if (TEST | !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
         cat(paste("Load data from Clear Sky proccess from original\n"))
@@ -122,7 +126,7 @@ if (havetorun) {
 
         ## this is used by old scripts
         setorder(DATA,Date)
-        myRtools::write_RDS(object = DATA, file = CS_file)
+        myRtools::write_RDS(object = DATA, file = CS_file, clean = TRUE)
     } else {
         DATA <- readRDS(CS_file)
     }
@@ -181,8 +185,9 @@ if (havetorun) {
     #'
     TSI_info <- DATA[, .(Start = min(Date),
                          End   = max(Date)), by = TSI_Source]
-    myRtools::write_dat(TSI_info,
-                        "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_tsi_info.dat")
+    myRtools::write_dat(object = TSI_info,
+                        file   = "./figures/tbl_tsi_info.dat",
+                        clean  = TRUE)
     rm(TSI_info)
 
     #' ## Data preparation
@@ -638,10 +643,6 @@ if (havetorun) {
     CLOUD_1_D_monthly_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
     CLOUD_1_D_monthly_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
     CLOUD_1_D_monthly_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-
-
-
-
 
 
 
@@ -1318,11 +1319,6 @@ if (havetorun) {
 
 
 
-# stop()
-
-
-
-
 
     ## _ Calculate daily seasonal values by doy prenoon SZA  -------------------
     ALL_2_daily_seas <-
@@ -1333,11 +1329,11 @@ if (havetorun) {
                             DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
                             HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
                             GLB_att_sd_seas    = sd(  GLB_att,    na.rm = T),
-                            DIR_transp_sd_seas = sd(DIR_transp, na.rm = T),
+                            DIR_transp_sd_seas = sd(DIR_transp,   na.rm = T),
                             GLB_att_N_seas     = sum(!is.na(GLB_att)),
                             HOR_att_N_seas     = sum(!is.na(HOR_att)),
-                            DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
-                         by = .( doy, SZA, preNoon ) ]
+                            DIR_att_N_seas     = sum(!is.na(DIR_att)) ),
+                         by = .(doy, SZA, preNoon)]
 
     CLEAR_2_daily_seas <-
         CLEAR_2_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
@@ -1347,11 +1343,11 @@ if (havetorun) {
                               DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
                               HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
                               GLB_att_sd_seas    = sd(  GLB_att,    na.rm = T),
-                              DIR_transp_sd_seas = sd(DIR_transp, na.rm = T),
+                              DIR_transp_sd_seas = sd(DIR_transp,   na.rm = T),
                               GLB_att_N_seas     = sum(!is.na(GLB_att)),
                               HOR_att_N_seas     = sum(!is.na(HOR_att)),
-                              DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
-                           by = .( doy, SZA, preNoon ) ]
+                              DIR_att_N_seas     = sum(!is.na(DIR_att)) ),
+                           by = .(doy, SZA, preNoon)]
 
     CLOUD_2_daily_seas <-
         CLOUD_2_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
@@ -1361,11 +1357,11 @@ if (havetorun) {
                               DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
                               HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
                               GLB_att_sd_seas    = sd(  GLB_att,    na.rm = T),
-                              DIR_transp_sd_seas = sd(DIR_transp, na.rm = T),
+                              DIR_transp_sd_seas = sd(DIR_transp,   na.rm = T),
                               GLB_att_N_seas     = sum(!is.na(GLB_att)),
                               HOR_att_N_seas     = sum(!is.na(HOR_att)),
-                              DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
-                           by = .( doy, SZA, preNoon ) ]
+                              DIR_att_N_seas     = sum(!is.na(DIR_att)) ),
+                           by = .(doy, SZA, preNoon)]
 
 
     ## _ Margin of error for confidence interval  ------------------------------
@@ -1444,7 +1440,7 @@ if (havetorun) {
                  by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                         Year    = year(Date),
                         Month   = month(Date),
-                        preNoon = preNoon  ) ]
+                        preNoon = preNoon)]
 
     ALL_3_monthly_meanB <-
         DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
@@ -1461,7 +1457,7 @@ if (havetorun) {
                      preNoon       = "am+pm"),
                  by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                         Year    = year(Date),
-                        Month   = month(Date) ) ]
+                        Month   = month(Date))]
 
     ALL_3_monthly_mean <- data.table(rbind( data.frame(ALL_3_monthly_meanB),
                                             data.frame(ALL_3_monthly_meanA) ))
@@ -1484,7 +1480,7 @@ if (havetorun) {
                    by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                           Year    = year(Date),
                           Month   = month(Date),
-                          preNoon = preNoon  ) ]
+                          preNoon = preNoon)]
 
     CLEAR_3_monthly_meanB <-
         DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
@@ -1501,7 +1497,7 @@ if (havetorun) {
                        preNoon       = "am+pm"),
                    by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                           Year    = year(Date),
-                          Month   = month(Date) ) ]
+                          Month   = month(Date))]
 
     CLEAR_3_monthly_mean <- data.table(rbind(data.frame(CLEAR_3_monthly_meanB),
                                              data.frame(CLEAR_3_monthly_meanA) ))
@@ -1524,7 +1520,7 @@ if (havetorun) {
                    by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                           Year    = year(Date),
                           Month   = month(Date),
-                          preNoon = preNoon  ) ]
+                          preNoon = preNoon)]
 
     CLOUD_3_monthly_meanB <-
         DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
@@ -1541,7 +1537,7 @@ if (havetorun) {
                        preNoon       = "am+pm"),
                    by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                           Year    = year(Date),
-                          Month   = month(Date) ) ]
+                          Month   = month(Date))]
 
     CLOUD_3_monthly_mean <- data.table(rbind(data.frame(CLOUD_3_monthly_meanB),
                                              data.frame(CLOUD_3_monthly_meanA) ))
@@ -1695,13 +1691,13 @@ if (havetorun) {
 
     ##.----
     ##  Save the whole work space  ---------------------------------------------
-    if (!TEST) {
+    # if (!TEST) {
         save(list = ls(all = TRUE), file = common_data)
         cat("\nSaved workspace:", common_data, "\n\n")
-    }
+    # }
 } else {
     cat(paste("\n\nLoad environment and data from: ", common_data,"\n\n"))
-    load( file = common_data)
+    load(file = common_data)
 }
 
 

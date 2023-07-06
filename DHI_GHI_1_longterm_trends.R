@@ -58,11 +58,12 @@ warning("Don't use cache it breaks computations")
 #+ include=F, echo=F
 ## __ Set environment ----------------------------------------------------------
 Sys.setenv(TZ = "UTC")
-Script.Name <- "~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_1_longterm_trends.R"
+Script.Name <- "./DHI_GHI_1_longterm_trends.R"
+
 if (!interactive()) {
-    pdf( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
-    sink(file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
-    filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
+    pdf( file = paste0("./runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
+    sink(file = paste0("./runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
+    filelock::lock(paste0("./runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
 
@@ -86,8 +87,8 @@ source("~/CODE/FUNCTIONS/R/data.R")
 
 
 ## __ Source initial scripts ---------------------------------------------------
-source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
-source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
+source("./DHI_GHI_0_data_input.R")
+source("./DHI_GHI_0_variables.R")
 source("~/CODE/R_myRtools/myRtools/R/write_.R")
 tic <- Sys.time()
 
@@ -445,7 +446,7 @@ pander(pprint,
 #+ echo=F, include=T
 
 write_dat(pprint,
-          "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends.dat",
+          "./figures/tbl_longterm_trends.dat",
           clean = TRUE)
 
 
@@ -768,7 +769,7 @@ pander(pprint,
 #+ echo=F, include=F
 
 write_dat(pprint,
-          "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_season.dat",
+          "./figures/tbl_longterm_trends_season.dat",
           clean = TRUE)
 
 
@@ -981,7 +982,7 @@ pander(pprint,
 #+ echo=F, include=T
 
 write_dat(pprint,
-          "~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_longterm_trends_monthly.dat",
+          "./figures/tbl_longterm_trends_monthly.dat",
           clean = TRUE)
 
 

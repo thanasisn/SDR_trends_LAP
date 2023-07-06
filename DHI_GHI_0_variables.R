@@ -32,8 +32,8 @@ translate <- function(x) {
 #### Data range ####
 ## will not include the last/first day
 # LAST_DAY                 <- as.Date("2023-06-01") ## Cleaned data
-# LAST_DAY                 <- as.Date("2011-04-01") ## similar to Bais analysis
-LAST_DAY                 <- as.POSIXct("2023-03-31 11:59:30") ## set the date of last NOAA TSI data
+LAST_DAY                 <- as.Date("2011-04-01") ## similar to Bais analysis
+# LAST_DAY                 <- as.POSIXct("2023-03-31 11:59:30") ## set the date of last NOAA TSI data
 FIRST_DAY                <- as.POSIXct("1900-07-01") ## include all available
 # FIRST_DAY                <- as.Date("2005-01-01") ## data inspected by me
 # FIRST_DAY                <- as.Date("2016-04-01") ## start of chp1
@@ -42,15 +42,15 @@ FIRST_DAY                <- as.POSIXct("1900-07-01") ## include all available
 #### Paths ####
 CLEARdir                 <- "~/DATA/Broad_Band/CS_id"
 tag                      <- paste0("Natsis Athanasios LAP AUTH ", strftime(Sys.time(), format = "%b %Y" ))
-CS_file_13               <- "~/DATA/Common_application/Clear_Sky_13.Rds"
-CS_file_14               <- "~/DATA/Common_application/Clear_Sky_14.Rds"
-CS_file_14               <- "~/DATA/Common_application/Clear_Sky_14.Rds"
-CS_file_14_2             <- "~/DATA/Common_application/Clear_Sky_14_2.Rds"
-common_data_13           <- "~/MANUSCRIPTS/2022_sdr_trends/data/common_data_13.Rda"
-common_data_14           <- "~/MANUSCRIPTS/2022_sdr_trends/data/common_data_14.Rda"
-common_data_14_2         <- "~/MANUSCRIPTS/2022_sdr_trends/data/common_data_14_2.Rda"
-variables_fl             <- "~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R"
-data_procsess_fl         <- "~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R"
+CS_file_13               <- "./data/Clear_Sky_13.Rds"
+CS_file_14               <- "./data/Clear_Sky_14.Rds"
+CS_file_14               <- "./data/Clear_Sky_14.Rds"
+CS_file_14_2             <- "./data/Clear_Sky_14_2.Rds"
+common_data_13           <- "./data/common_data_13.Rda"
+common_data_14           <- "./data/common_data_14.Rda"
+common_data_14_2         <- "./data/common_data_14_2.Rda"
+variables_fl             <- "./DHI_GHI_0_variables.R"
+data_procsess_fl         <- "./DHI_GHI_0_data_input.R"
 
 #### colors ####
 col_DIR_att              <- "#2166ac"

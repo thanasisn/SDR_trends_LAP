@@ -58,13 +58,12 @@ warning("Don't use cache it breaks computations")
 #+ include=F, echo=F
 ## __ Set environment ----------------------------------------------------------
 Sys.setenv(TZ = "UTC")
-Script.Name <- tryCatch({ funr::sys.script() },
-                        error = function(e) { cat(paste("\nUnresolved script name: ", e),"\n\n")
-                            return("Climatological_") })
+Script.Name <- "./DHI_GHI_3_trends_consistency.R"
+
 if (!interactive()) {
-    pdf( file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
-    sink(file = paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
-    filelock::lock(paste0("~/MANUSCRIPTS/2022_sdr_trends/runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
+    pdf( file = paste0("./runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
+    sink(file = paste0("./runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
+    filelock::lock(paste0("./runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
 
@@ -88,8 +87,8 @@ source("~/CODE/FUNCTIONS/R/data.R")
 
 
 ## __ Source initial scripts ---------------------------------------------------
-source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_data_input.R")
-source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
+source("./DHI_GHI_0_data_input.R")
+source("./DHI_GHI_0_variables.R")
 tic <- Sys.time()
 
 ## notification function

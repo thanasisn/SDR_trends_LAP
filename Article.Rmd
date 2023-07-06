@@ -76,7 +76,9 @@ output:
 
 
 ```{r echo=F, include=T, warning=FALSE, message=FALSE}
-res <- rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools')
+suppressMessages(
+    res <- rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools')
+)
 ## document configurations 
 knitr::opts_chunk$set(comment    = ""      )
 # knitr::opts_chunk$set(dev        = "pdf"   )
@@ -87,24 +89,24 @@ options(knitr.graphics.auto_pdf = FALSE)
 library(pander)
 library(data.table)
 ## load data
-load("~/MANUSCRIPTS/2022_sdr_trends/data/common_data_14_2.Rda")
-TSIinfo <- data.table(read.csv("~/MANUSCRIPTS/2022_sdr_trends/figures/tbl_tsi_info.dat",
+load("./data/common_data_14_2.Rda")
+TSIinfo <- data.table(read.csv("./figures/tbl_tsi_info.dat",
                     strip.white = TRUE,
                     sep = ";",
                     header = TRUE))
 ## variables we use
-source("~/MANUSCRIPTS/2022_sdr_trends/DHI_GHI_0_variables.R")
+source("./DHI_GHI_0_variables.R")
 
 ## create local citations file
 source("~/CODE/FUNCTIONS/R/gather_citations.R")
 
 suppressMessages(
     gather_citations(
-        sourcefile   = "~/MANUSCRIPTS/2022_sdr_trends/Article.Rmd",
-        mainreposit  = "~/MANUSCRIPTS/2022_sdr_trends/Mainreferences.bib",
-        localreposit = "~/MANUSCRIPTS/2022_sdr_trends/references.bib",
-        folderlink   = "~/MANUSCRIPTS/2022_sdr_trends/References_links",
-        workingdir   = "~/MANUSCRIPTS/2022_sdr_trends/"
+        sourcefile   = "./Article.Rmd",
+        mainreposit  = "./Mainreferences.bib",
+        localreposit = "./references.bib",
+        folderlink   = "./References_links",
+        workingdir   = "./"
     )
 )
 ```
