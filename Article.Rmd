@@ -97,7 +97,7 @@ TSIinfo <- data.table(read.csv("./figures/tbl_tsi_info.dat",
 ## variables we use
 source("./DHI_GHI_0_variables.R")
 
-## create local citations file
+## create local citations file and links here
 source("~/CODE/FUNCTIONS/R/gather_citations.R")
 
 suppressMessages(
