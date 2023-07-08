@@ -442,6 +442,18 @@ We calculated the SDR trends, from the mean daily values of the departure from t
 In this time period, we could not find any significant break or change in the variability of the trends.
 Other studies for the European region are reporting a change of the SDR slope, around the '80, few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009].
 
+......
+
+Cumulative sum [@Regier2019]
+
+```{r cumsum, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+knitr::include_graphics(c(
+    "./images/CumulativeDailyCumSum-1.png",    # ALL sky
+    "./images/CumulativeDailyCumSum-5.png",    # CLEAR sky
+    "./images/CumulativeDailyCumSum-9.png"))   # Cloud sky
+```
+
+
 ....
 
 more about trend in relation to other trends
@@ -600,12 +612,14 @@ knitr::include_graphics("./images/CumulativeDailyCumSum-9.png")
 ```
 -->
 
-```{r cumsum, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
-knitr::include_graphics(c(
-    "./images/CumulativeDailyCumSum-1.png",    # ALL sky
-    "./images/CumulativeDailyCumSum-5.png",    # CLEAR sky
-    "./images/CumulativeDailyCumSum-9.png"))   # Cloud sky
-```
+
+
+<!-- ```{r cumsumSTD, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
+<!-- knitr::include_graphics(c( -->
+<!--     "./images/CumulativeDailyCumSumSTD-1.png",    # ALL sky -->
+<!--     "./images/CumulativeDailyCumSumSTD-2.png",    # CLEAR sky -->
+<!--     "./images/CumulativeDailyCumSumSTD-3.png"))   # Cloud sky -->
+<!-- ``` -->
 
 
 # Conclusions

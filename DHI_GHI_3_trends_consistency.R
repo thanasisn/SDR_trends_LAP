@@ -218,15 +218,15 @@ CLOUD_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,
 CLOUD_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
 
 ## Standardized cumsum
-  ALL_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
-  ALL_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
-  ALL_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
-CLEAR_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
-CLEAR_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
-CLEAR_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
-CLOUD_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
-CLOUD_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
-CLOUD_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+  ALL_1_daily_DESEAS[, GLB_att_cusumSTD    := cumsum(tidyr::replace_na((GLB_att_des    - mean(GLB_att_des   , na.rm = T)) / sd(GLB_att_des   , na.rm = T), 0))]
+  ALL_1_daily_DESEAS[, DIR_att_cusumSTD    := cumsum(tidyr::replace_na((DIR_att_des    - mean(DIR_att_des   , na.rm = T)) / sd(DIR_att_des   , na.rm = T), 0))]
+  ALL_1_daily_DESEAS[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((DIR_transp_des - mean(DIR_transp_des, na.rm = T)) / sd(DIR_transp_des, na.rm = T), 0))]
+CLEAR_1_daily_DESEAS[, GLB_att_cusumSTD    := cumsum(tidyr::replace_na((GLB_att_des    - mean(GLB_att_des   , na.rm = T)) / sd(GLB_att_des   , na.rm = T), 0))]
+CLEAR_1_daily_DESEAS[, DIR_att_cusumSTD    := cumsum(tidyr::replace_na((DIR_att_des    - mean(DIR_att_des   , na.rm = T)) / sd(DIR_att_des   , na.rm = T), 0))]
+CLEAR_1_daily_DESEAS[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((DIR_transp_des - mean(DIR_transp_des, na.rm = T)) / sd(DIR_transp_des, na.rm = T), 0))]
+CLOUD_1_daily_DESEAS[, GLB_att_cusumSTD    := cumsum(tidyr::replace_na((GLB_att_des    - mean(GLB_att_des   , na.rm = T)) / sd(GLB_att_des   , na.rm = T), 0))]
+CLOUD_1_daily_DESEAS[, DIR_att_cusumSTD    := cumsum(tidyr::replace_na((DIR_att_des    - mean(DIR_att_des   , na.rm = T)) / sd(DIR_att_des   , na.rm = T), 0))]
+CLOUD_1_daily_DESEAS[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((DIR_transp_des - mean(DIR_transp_des, na.rm = T)) / sd(DIR_transp_des, na.rm = T), 0))]
 
 
 ## ~ Calculate monthly cum sum -------------------------------------------------
@@ -262,7 +262,7 @@ CLOUD_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_tran
 
 
 
-### Whole day daily cumulative sum ---------------------------------------------
+## Daily cumulative sums ------------------------------------------------------
 
 #'
 #' \newpage
@@ -288,7 +288,8 @@ for (adb in database) {
     cat("\n#### Daily cum sums for", translate(sub("_.*", "", adb)), "\n\n")
 
     for (avar in vars) {
-        ## get only the vars we need
+
+        ## Plot regular cumsums
         wcare <- c("Date", paste0(avar,"_des"), paste0(avar,"_cusum"))
         pdb   <- DB[, ..wcare]
         rm(DB)
@@ -307,7 +308,7 @@ for (adb in database) {
              xaxt = "n",
              ylab = bquote("Cumulative Sum of Anomaly [%]"))
         axis.Date(1, pdb$Date)
-        abline(h = 0, lty = 2, lwd = 0.8)
+        # abline(h = 0, lty = 2, lwd = 0.8)
 
         ## daily from other DT
         lines(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = col, lwd = 2)
@@ -344,8 +345,6 @@ for (adb in database) {
                              criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
         FTSE.lo.predict3 <- predict(FTSE.lo3, pdb$Date)
         lines(pdb$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
-
-
 
 
         ## decorations
@@ -420,7 +419,48 @@ for (adb in database) {
 #+ echo=F, include=T
 
 
+## Daily standardized cum sums -------------------------------------------------
 
+#+ CumulativeDailyCumSumSTD, echo=F, include=T, results="asis"
+for (adb in database) {
+    DB  <- get(adb)
+
+    cat("\n\\newpage\n")
+    cat("\n#### Daily cum sums for", translate(sub("_.*", "", adb)), "\n\n")
+
+    for (avar in vars) {
+
+        ## Plot Standarized cumsums
+        wcare <- c("Date", paste0(avar,"_des"), paste0(avar,"_cusumSTD"))
+        pdb   <- DB[, ..wcare]
+        rm(DB)
+        xlim  <- range(pdb$Date)
+        ylim  <- range(pdb[[paste0(avar,"_cusumSTD")]],na.rm = T)
+        col   <- get(paste0(c("col",
+                              unlist(strsplit(avar, split = "_" ))[1:2]),
+                            collapse = "_"))
+
+        par("mar" = c(3,4,2,1))
+        par(pch = 19)
+
+        plot(1, type = "n",
+             xlab = "",
+             xlim = xlim, ylim = ylim,
+             xaxt = "n",
+             ylab = bquote("STD Cumulative Sum of Anomaly [%]"))
+        axis.Date(1, pdb$Date)
+        abline(h = 0, lty = 2, lwd = 0.8)
+
+        ## daily from other DT
+        lines(pdb$Date, pdb[[paste0(avar,"_cusumSTD")]], col = col, lwd = 2)
+
+        title(paste(sub("_.*","",adb), "mean daily cumulative sum STD",
+                    translate(avar) ), cex.main = 1)
+
+    }
+}
+#'
+#+ echo=F, include=T
 
 
 
