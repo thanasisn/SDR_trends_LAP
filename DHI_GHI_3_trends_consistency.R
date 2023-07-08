@@ -217,6 +217,16 @@ CLOUD_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,
 CLOUD_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
 CLOUD_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
 
+## Standardized cumsum
+  ALL_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+  ALL_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+  ALL_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+CLEAR_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+CLEAR_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+CLEAR_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+CLOUD_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+CLOUD_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+CLOUD_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
 
 
 ## ~ Calculate monthly cum sum -------------------------------------------------
