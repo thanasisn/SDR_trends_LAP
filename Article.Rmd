@@ -478,6 +478,12 @@ knitr::include_graphics("./images/LongtermTrends-2.png")
 
 
 Although, using the cumulative sums plots we can reveal some structure within the trends and some difference between the sky conditions [@Regier2019]. 
+On all three plots on Figure\ \ref{fig:cumsum}, we observe a step downward part in the begin of the period until about 2000, an almost steady part until about 2016 for All-sky and Clear-sky conditions (Figures\ \ref{fig:cumsum-1}, \ref{fig:cumsum-2}), and until 2009 for Cloud-sky conditions (Figure\ \ref{fig:cumsum-3}), and finally, a steep upward part until the present.
+For a more uniform trend we expect the cumulative sum plot of the anomaly, to have a symmetric 'V' shape.
+In this case......
+
+
+suspected stagnend period
 
 Comparining the conditions
 
