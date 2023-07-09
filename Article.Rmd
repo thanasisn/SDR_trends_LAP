@@ -439,41 +439,11 @@ The statistical significance and aggregation scheme and filtering will be noted 
 ## Long-term SDR trends
 
 We calculated the SDR trends, from the mean daily values of the departure from the seasonal values, for the whole time series for the three sky conditions (Table\ \ref{tab:trendtable}).
-In this time period, we could not find any significant break or change in the variability of the trends.
-Other studies for the European region are reporting a change of the SDR slope, around the '80, few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009].
+We present only the plot for the trend under all-sky conditions (Figure\ \ref{fig:trendALL}), as the plots for clear-sky condition and cloud-sky condition, are very similar.
+In the studied time period, there is no significant break or change in the variability of the overall trends.
+Other studies for the European region are reporting a change of the SDR slope, around the 1980, few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009].
 
-......
-
-Cumulative sum [@Regier2019]
-
-```{r cumsum, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
-knitr::include_graphics(c(
-    "./images/CumulativeDailyCumSum-1.png",    # ALL sky
-    "./images/CumulativeDailyCumSum-5.png",    # CLEAR sky
-    "./images/CumulativeDailyCumSum-9.png"))   # Cloud sky
-```
-
-
-....
-
-more about trend in relation to other trends
-
-......
-
-
-```{r trendALL, echo=F, out.width='.70\\linewidth', fig.cap=paste0("Anomaly (\\%) of the daily SDR relative to climatological values for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term trend for all-sky conditions.")}
-knitr::include_graphics("./images/LongtermTrends-2.png")
-```
-
-<!-- ```{r trendCLEAR, echo=F, fig.cap="Daily SDR seasonal anomaly and long term trend, for clear sky conditions."} -->
-<!-- knitr::include_graphics("./images/LongtermTrends-4.png") -->
-<!-- ``` -->
-
-<!-- ```{r trendCLOUD, echo=F, fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023. The black line shows the long term trend for cloud-sky conditions."} -->
-<!-- knitr::include_graphics("./images/LongtermTrends-6.png") -->
-<!-- ``` -->
-
-\footnotesize
+<!-- \footnotesize -->
 ```{r trendtable, echo=F}
 LT <- data.table(read.csv("./figures/tbl_longterm_trends.dat",
                strip.white = TRUE,
@@ -492,15 +462,62 @@ LT$`Trend statistical signif. [%]` <- NULL
 
 panderOptions("table.alignment.default", "center")
 pander(LT,
-       caption = "\\label{tab:trendtable}Trends of daily SDR means, for different sky conditions. All cases have a statistical significance above $99.9\\%$.")
+       caption = paste0("\\label{tab:trendtable}Trends of daily SDR means, for different sky conditions for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". For all cases the statistical significance is above $99.9\\%$."))
 # knitr::kable(LT, caption = "Trends of daily means by sky conditions.")
-
 ## some vars to use later
 alltrend   <- signif(LT[`Sky condition` == "All sky cond.",   `Trend [%/year]`], 2)
 cleartrend <- signif(LT[`Sky condition` == "Clear sky cond.", `Trend [%/year]`], 2)
 cloudtrend <- signif(LT[`Sky condition` == "Cloudy cond.",    `Trend [%/year]`], 2)
 ```
-\normalsize
+<!-- \normalsize -->
+
+
+```{r trendALL, echo=F, out.width='.70\\linewidth', fig.cap=paste0("Anomaly (\\%) of the daily SDR relative to climatological values for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term trend for all-sky conditions.")}
+knitr::include_graphics("./images/LongtermTrends-2.png")
+```
+
+
+Although, using the cumulative sums plots we can reveal some structure within the trends and some difference between the sky conditions [@Regier2019]. 
+
+Comparining the conditions
+
+Variability issues
+
+
+```{r cumsum, echo = FALSE, fig.cap='Running plots of the cumulative sum of the daily SDR for three different sky conditions', fig.subcap=c('All-sky conditions', 'Clear-sky conditions', 'Cloud-sky conditions'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+knitr::include_graphics(c(
+    "./images/CumulativeDailyCumSum-1.png",    # ALL sky
+    "./images/CumulativeDailyCumSum-5.png",    # CLEAR sky
+    "./images/CumulativeDailyCumSum-9.png"))   # Cloud sky
+```
+
+<!-- ```{r cumsumSTD, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
+<!-- knitr::include_graphics(c( -->
+<!--     "./images/CumulativeDailyCumSumSTD-1.png",    # ALL sky -->
+<!--     "./images/CumulativeDailyCumSumSTD-2.png",    # CLEAR sky -->
+<!--     "./images/CumulativeDailyCumSumSTD-3.png"))   # Cloud sky -->
+<!-- ``` -->
+
+
+
+
+....
+
+more about trend in relation to other trends
+Aerosols and clouds
+
+......
+
+
+
+<!-- ```{r trendCLEAR, echo=F, fig.cap="Daily SDR seasonal anomaly and long term trend, for clear sky conditions."} -->
+<!-- knitr::include_graphics("./images/LongtermTrends-4.png") -->
+<!-- ``` -->
+
+<!-- ```{r trendCLOUD, echo=F, fig.cap="Anomaly (\\%) of the daily SDR relative to climatological values for 1993 - 2023. The black line shows the long term trend for cloud-sky conditions."} -->
+<!-- knitr::include_graphics("./images/LongtermTrends-6.png") -->
+<!-- ``` -->
+
 
 
 
@@ -614,12 +631,6 @@ knitr::include_graphics("./images/CumulativeDailyCumSum-9.png")
 
 
 
-<!-- ```{r cumsumSTD, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
-<!-- knitr::include_graphics(c( -->
-<!--     "./images/CumulativeDailyCumSumSTD-1.png",    # ALL sky -->
-<!--     "./images/CumulativeDailyCumSumSTD-2.png",    # CLEAR sky -->
-<!--     "./images/CumulativeDailyCumSumSTD-3.png"))   # Cloud sky -->
-<!-- ``` -->
 
 
 # Conclusions
