@@ -293,12 +293,19 @@ TSIskopeAll <- TSI[`Sky condition` == "All sky cond."]
 
 <!-- # Detection of clear periods in GHI measurements for SDR trends. -->
 
-As global radiation clear sky reference we are using the Haurwitz’s model, adjusted for our site with a factor of `r signif(alpha,3)` (Eq.\ \ref{eq:ahau}).
+As SDR clear sky reference we are using the radiation model by Haurwitz’s, adjusted for our site with the factor  $a = `r signif(alpha,3)`$ (Eq.\ \ref{eq:ahau}), resulted by an iterative optimization process.
 The selection of a clear sky reference model, was based on SDR observation from the period 2016 – 2021.
-Where, after an iterative optimization of eight simple models (Daneshyar–Paltridge–Proctor, Kasten–Czeplak, Haurwitz, Berger–Duffie, Adnot–Bourges–Campana–Gicquel, Robledo-Soler, Kasten and Ineichen-Perez) with different factors.
-We found, that Haurwitz’s model, adjusted with a factor of `r signif(alpha,3)` has the lower root mean squared error (RMSE). 
-The tried models are described by @Reno2012 and tested by @Reno2016.
-The iterative optimization method, for the selection of the reference is discussed by @Long2000 and @Reno2016.
+Where, after an iterative optimization of eight simple models (Daneshyar–Paltridge–Proctor, Kasten–Czeplak, Haurwitz, Berger–Duffie, Adnot–Bourges–Campana–Gicquel, Robledo-Soler, Kasten and Ineichen-Perez) with a wide range factors.
+We found, that Haurwitz’s model, adjusted with a factor of `r signif(alpha,3)` has one of the lowest root mean squared error (RMSE), while retains most of our data. 
+The tried models are described in more details by @Reno2012 and tested by @Reno2016.
+The iterative optimization method, for the selection of the reference is described by @Long2000 and @Reno2016.
+The target of the optimization was the minimizing of the function .......
+
+
+
+\begin{equation}
+f(a)=\frac{1}{n}\sum_{i=1}^{n}( \text{SDR}_{\text{meas},CS,i} - a \times \text{SDR}_{\text{ref},CS,i})^2
+\end{equation}
 
 \begin{equation}
 \text{SDR}_\text{Clear Sky} = `r signif(alpha,3)` \times 1098 \times \cos( \text{SZA} ) \times \exp \left( \frac{ - 0.057}{\cos(\text{SZA})} \right) \label{eq:ahau}
@@ -662,6 +669,10 @@ About:
 
 similar results with Evidence for Clear‐Sky Dimming and Brightening in Central Europe_Wild2021.pdf
 include in discussion
+
+
+
+${MSE}={Cost}=\frac{1}{n}\sum_{i=1}^{n}(A_i - B_i)^2$
 
 
 -------------------------------------------------

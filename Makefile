@@ -6,6 +6,7 @@ SHELL = /bin/bash
 
 all:       clean_all pdf rtim
 render:    pdf rtim
+Ap:        Ap1 Ap2
 pdf:       p1 p2 p3 Ap
 rtim:      r1 r2 r3
 clean_all: clean_cache clean_data clean_pdfs
@@ -23,15 +24,30 @@ TARGET = Article
 RMD    = $(TARGET).Rmd
 PDF    = $(TARGET).pdf
 SLIDY  = $(TARGET).html
-Ap: $(PDF)
+Ap2: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
 	@#-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='rticles::elsevier_article', output_file='$@', clean = TRUE)" 
+	@# echo "Changed:  $?"
+	@#setsid evince    $@ &
+	@-rsync -a "$@" ${LIBRARY}
+
+
+TARGET = Article
+RMD    = $(TARGET).Rmd
+PDF    = $(TARGET).pdf
+SLIDY  = $(TARGET).html
+Ap1: $(PDF)
+$(PDF): $(RMD)
+	@echo "Building: $@"
+	@#-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2',   output_file='Article_A.pdf', clean = TRUE)"
 	@# echo "Changed:  $?"
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
+
+
 
 
 ## Article pdf with build number
