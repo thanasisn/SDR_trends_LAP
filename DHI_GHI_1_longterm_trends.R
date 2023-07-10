@@ -563,7 +563,7 @@ for (DBn in dbs) {
                    paste("Trend: ",
                          if (fit[2] > 0) '+' else '-',
                          signif(abs(fit[2]), 3),
-                         "% per year")
+                         "% / year")
             )
 
         }
@@ -684,11 +684,11 @@ for (avar in vars) {
             ## decorations
             fit <- lm2[[1]]
 
-            legend("bottom", lty = 1, bty = "n", lwd = 2, cex = 1,
+            legend("bottom", lty = 1, bty = "n", lwd = 2, cex = 0.8,
                    paste("Trend: ",
                          if (fit[2] > 0) '+' else '-',
                          signif(abs(fit[2]), 3),
-                         "% per year")
+                         "% / year")
             )
         }
     }

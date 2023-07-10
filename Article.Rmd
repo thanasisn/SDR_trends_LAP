@@ -90,6 +90,11 @@ library(pander)
 library(data.table)
 ## load data
 load("./data/common_data_14_2.Rda")
+## number of measurements
+SDR_N_All   <- sum(  ALL_1_daily_DESEAS[,GLB_att_N])
+SDR_N_Clear <- sum(CLEAR_1_daily_DESEAS[,GLB_att_N])
+SDR_N_Cloud <- sum(CLOUD_1_daily_DESEAS[,GLB_att_N])
+
 TSIinfo <- data.table(read.csv("./figures/tbl_tsi_info.dat",
                     strip.white = TRUE,
                     sep = ";",
@@ -395,7 +400,11 @@ X_i < `r offVSM`
 \label{eq:VSMcr}
 \end{equation}
 
-
+Of the total 1-minute measurements
+$`r signif(100 * SDR_N_Clear / SDR_N_All, 3)`\%$ 
+is characterized with clear-sky conditon, and the rest 
+$`r signif(100 * SDR_N_Cloud / SDR_N_All, 3)`\%$
+with cloud-sky conditions.
 
 
 
@@ -531,12 +540,12 @@ The relative position of the Sun in the sky, seem to be a major drive of the att
 
 ... Aerosols and clouds ...
 
-We group the anomaly data in $1^\circ$ SZA bins, and calculate the overall trend for each bin 
+We group the anomaly data in $1^\circ$ SZA bins, and calculated the overall trend for each bin 
 
 Analyzing the long term trends of SDR to bins of SZA, we can see the contribution of the geometry and time in a diurnal level (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b). Although there is a seasonal distribution of SZA than in not presented here.
 
 
-```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA.', fig.subcap=c('Trend distribution for all-sky conditions.', 'Trend distribution for cloud-sky conditions.'), out.width='.35\\linewidth', out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.35\\linewidth', out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics("./images/SzaTrends-13.png")
 knitr::include_graphics("./images/SzaTrends-17.png" )
 knitr::include_graphics("./images/SzaTrends-21.png")
