@@ -305,7 +305,7 @@ for (avar in unique(szatrends$var)) {
             awename <- gsub("(\\D)(\\D+)", "\\U\\1\\L\\2", sub("\\."," ", awe), perl = TRUE)
 
             ## Replace variable name
-            if (awename == "Slope") { awename <- "Trend" }
+            if (awename == "Slope") { awename <- "Anomaly Trend [%/y]" }
 
             ## limit plot p-values
             p_lim <- 0.05
@@ -316,11 +316,15 @@ for (avar in unique(szatrends$var)) {
             subdata <- szatrends[DATA == type &
                                  var  == avar, ]
 
-            # szatrends[DATA == type]
-            # szatrends[var  == avar]
+            ## set symbols for plotting
+            subdata[ slope.p  < p_lim & preNoon == TRUE,  pch := 16 ]
+            subdata[ slope.p >= p_lim & preNoon == TRUE,  pch :=  1 ]
+            subdata[ slope.p  < p_lim & preNoon == FALSE, pch := 17 ]
+            subdata[ slope.p >= p_lim & preNoon == FALSE, pch :=  2 ]
+
 
             ## plot only under accepted p-value limit
-            subdata <- subdata[ slope.p < p_lim, ]
+            # subdata <- subdata[ slope.p < p_lim, ]
 
             xlim <- range(subdata$SZA,    na.rm = T)
             ylim <- range(subdata[[awe]], na.rm = T)
@@ -339,24 +343,43 @@ for (avar in unique(szatrends$var)) {
 
             abline(h = 0, lty = 3)
 
-            title(paste(awename, translate(type), translate(avar)), cex.main =  .8 * ccex)
+            # title(paste(translate(avar), awename, "for", translate(type)), cex.main =  .8 * ccex)
+            title(paste(translate(avar), "trend", "for", translate(type)), cex.main =  .8 * ccex)
 
 
-            lines(pam$SZA, pam[[awe]], pch = pch_am, col = 2,
-                  type = "b", lwd = ccex, cex = 1)
-            lines(ppm$SZA, ppm[[awe]], pch = pch_pm, col = 3,
-                  type = "b", lwd = ccex, cex = 1)
+            ## morning lines
+            lines(pam$SZA, pam[[awe]],
+                  col  = 2,
+                  type = "c",
+                  lwd  = ccex,
+                  cex = 1)
+            ## morning points
+            points(pam$SZA, pam[[awe]],
+                   pch = pam$pch,
+                   col = 2,
+                   cex = 1)
+
+            ## evening lines
+            lines(ppm$SZA, ppm[[awe]],
+                  col  = 3,
+                  type = "c",
+                  lwd  = ccex,
+                  cex = 1)
+            ## evening points
+            points(pam$SZA, ppm[[awe]],
+                   pch = ppm$pch,
+                   col = 3,
+                   cex = 1)
 
             legend("top",
                    legend = c("Morning", "Evening"),
                    # col    = c(unique(pam$col), unique(ppm$col)),
-                   col    = c(2, 3),
-                   pch    = c(unique(pam$pch), unique(ppm$pch)), ncol = 2, bty = "n",
+                   col    = c( 2,  3),
+                   pch    = c(16, 17), ncol = 2, bty = "n",
                    cex    = ccex)
 
             ccex <- 1
             par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
-
 
             cat("\n\n")
         }
@@ -510,7 +533,6 @@ for (ase in seasons) {
                 # xlim <- range( subdata$SZA,        na.rm = T )
                 ## use same axis for all
                 xlim <- range( szatrends_seas$SZA, na.rm = T )
-
 
                 ylim <- range( subdata[[awe]], na.rm = T )
 
