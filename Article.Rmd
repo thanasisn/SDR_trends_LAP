@@ -479,15 +479,11 @@ knitr::include_graphics("./images/LongtermTrends-2.png")
 
 Although, using the cumulative sums plots we can reveal some structure within the trends and some difference between the sky conditions [@Regier2019]. 
 On all three plots on Figure\ \ref{fig:cumsum}, we observe a step downward part in the begin of the period until about 2000, an almost steady part until about 2016 for All-sky and Clear-sky conditions (Figures\ \ref{fig:cumsum-1}, \ref{fig:cumsum-2}), and until 2009 for Cloud-sky conditions (Figure\ \ref{fig:cumsum-3}), and finally, a steep upward part until the present.
-For a more uniform trend we expect the cumulative sum plot of the anomaly, to have a symmetric 'V' shape.
-In this case......
-
-
-suspected stagnend period
-
-Comparining the conditions
-
-Variability issues
+For a more uniform trend, we expect the cumulative sum plot of the anomaly, to have a symmetric 'V' shape.
+In our case, for all sky conditions we observe a period where the cumulative remain relative steady.
+This indicates, that the anomaly was evenly distributed around the climatological mean.
+Another distinct feature of the cumulative plots, is the difference, between the sky conditions, of the start of the sums sudden increase, for the latter part of the period.
+This can make us to suspected that clear-Sky conditions SDR and cloud-sky SDR is affected by different mechanisms.
 
 
 ```{r cumsum, echo = FALSE, fig.cap='Running plots of the cumulative sum of the daily SDR for three different sky conditions', fig.subcap=c('All-sky conditions', 'Clear-sky conditions', 'Cloud-sky conditions'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
@@ -527,9 +523,14 @@ Aerosols and clouds
 
 
 
+## Effects of the solar zenith angle on SDR.
 
+.... cite paper low elevation SDR .....
 
-## Long term trends by Solar zenith angle.
+The relative position of the Sun in the sky, seem to be a major drive of the attenuation of SDR, as it is affect 
+
+... Aerosols and clouds ...
+
 
 Analyzing the long term trends of SDR to bins of SZA, we can see the contribution of the geometry and time in a diurnal level (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b). Although there is a seasonal distribution of SZA than in not presented here.
 
@@ -556,6 +557,7 @@ knitr::include_graphics("./images/SzaTrends-21.png")
 
 
 ## Long term trends by season of year
+
 
 Similar we have produced the deseasonalized trend for different sky conditions for each season of the year, using the corresponding mean monthly values.
 This can give us a better understanding of the annual variability of the trends.
