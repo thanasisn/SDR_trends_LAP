@@ -176,6 +176,7 @@ et al 2012).
 
 
 ...... cloud formation occurrences and constitution nuclei. cite .....
+p>        "  Too hard to vim
 
 
 #Wild2012 : simplify interaction nice graph
@@ -186,7 +187,7 @@ et al 2012).
 
 
 <!-- time span -->
-The SDR is equivalent to the whole sky Global radiation (or Global Horizontal Irradiance, GHI), and was obtained with a horizontal leveled, CM-21 pyranometer, from 
+The SDR is equivalent to the whole sky Global radiation (or Global Horizontal Irradiance, GHI), and was obtained with a horizontal leveled, CM-21 pyranometer, in the period from
 <!-- \mbox{ -->
 `r min(ALL_1_daily_DESEAS$Date)`
 <!-- } -->
@@ -194,7 +195,7 @@ to
 <!-- \mbox{ -->
 `r max(ALL_1_daily_DESEAS$Date)`.
 <!-- }. -->
-Also, we have measurements of direct beam radiation (DNI) obtained by a collocated CHP-1 pyrheliometer, from 
+Along with SDR, we obtained the direct beam radiation (DNI) by a collocated CHP-1 pyrheliometer, for the period
 <!-- \mbox{ -->
 `r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`
 <!-- } -->
@@ -202,18 +203,18 @@ to
 <!-- \mbox{ -->
 `r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
 <!-- }. -->
-Although, we performed a similar analysis to the DNI as for the SDR, the results are not presented here, as they lack the appropriate statistical significance, due to the sorter duration of the data.
-Moreover, the DNI was used as auxiliary data, with the clear sky identification algorithm (CSid), to aid with the selection of the appropriate thresholds. 
-We have to note also, that despite the capability of the CSid to use the DNI as a characterization parameter, we haven't used it, to avoid any selection bias due to unequal availability of measurements.
+Although, we have performed a similar analysis to the DNI, as for the SDR, the results are not presented here, as they lack the appropriate statistical significance, due to the sorter duration of the data.
+Moreover, the DNI data were used as auxiliary data, with the clear sky identification algorithm (CSid), to aid with the selection of the appropriate thresholds. 
+We have to note, that despite the capability of the CSid algorithm, to use the DNI as a characterization parameter, we haven't used it here, to avoid any selection bias due to unequal availability of the two datasets.
 
 <!-- Location -->
 
-The SDR data were measured with a Kipp & Zonen CM-21 pyranometer operating continuously at the Laboratory of Atmospheric Physics of the Aristotle University of Thessaloniki ($40^\circ38'$N, $22^\circ57'$E, 80m\ a.s.l.).
-The monitoring site is located near the city centre.
-During the study period the CM-21 pyranometer has been independently calibrated four times.
-........ to verify number ........
+The SDR data were measured with a Kipp & Zonen CM-21 pyranometer operating continuously at the Laboratory of Atmospheric Physics of the Aristotle University of Thessaloniki ($40^\circ\,38'\,$N, $22^\circ\,57'\,$E, $80\,$m\ a.s.l.).
+The monitoring site is located near the city centre, and we expect to be affected by the urban environment.
+During the study period, the CM-21 pyranometer has been independently calibrated ..... **four** .... times.
+........ verify number ........
 <!-- Preparation. -->
-There are three distinct steps to the creation of this dataset:
+There are three distinct steps in the creation of the dataset analysed here:
 a)\ the acquisition of radiation measurements from the sensors, 
 b)\ a radiation data quality check,
 c)\ the identification of "clear sky" conditions from the radiometric data, and
@@ -234,37 +235,36 @@ ern Europe to the Mediterranean (Zerefos et. al., 2002). On the
 -->
 
 
-
 <!-- a) Acquisition -->
 For the acquisition of radiometric data,
-the signal of the broadband instruments is sampled with a rate of $1 \text{Hz}$. The mean and its standard deviation are recorded for every minute.
+the signal of the broadband instruments is sampled with a rate of $1\,\text{Hz}$. The mean and the standard deviation are recorded for every minute.
 <!-- dark correction -->
-The measurements were corrected for the zero offset of the instrument signal.
-As reference of the "dark signal" is used the Sun elevation angle bellow $-10^\circ$, for a period of $3 \text{h}$.
+The measurements are corrected for the zero offset of the instrument dark voltage signal.
+As reference of the "dark signal" is used the Sun elevation angle bellow $-10^\circ$, for a period of $3\,\text{h}$.
 <!-- physical quantities -->
-The signal is converted to radiation flux, using a ramped value of the instrument sensitivity, derived from the eight laboratory calibrations of the instrument, during the study period.
+The signal is converted to radiation flux, using a ramped value of the instrument sensitivity, derived from the ...... **eight** ......  laboratory calibrations of the instrument, during the study period.
 
 <!-- b) Radiation data quality check -->
 <!-- The radiation quality is assured with a manual screening, aided by an automatic assessment process. -->
 <!-- screening -->
-A manual screening was performed, to remove inconsistencies and erroneous recordings, that can occur randomly or systematically, during the long continuous operation of the instrument.
+A manual screening was performed, to remove inconsistencies and erroneous recordings, that can occur stochastically or systematically, during the continuous operation of the instrument.
 <!-- Quality assurance -->
-The manual screening is aided by a radiation data quality assurance procedure, adjusted for this site, based on methods of Long and Shi\ [-@Long2008a; -@Long2006].
+The manual screening is aided by a radiation data quality assurance procedure, adjusted for the site, based on methods of Long and Shi\ [-@Long2008a; -@Long2006].
 Thus, problematic recordings have been excluded from further processing. 
-Although it is not possible to detect all the bad data, the large number of data and the aggregation scheme we use, can provide us with accurate radiometric measurements, for the scope of this study.
+Although it is not possible to detect all the bad data, the large number of available data, and the aggregation scheme we use, can provide us with accurate radiometric measurements, for the scope of this study.
 
 
 <!-- c) Clear sky identification -->
-In order to estimate the effect of the clouds on the SDR, we created three datasets, by characterizing each one-minute measurement with a corresponding sky condition. 
+In order to be able to estimate the effect of the clouds on the SDR, we created three datasets, by characterizing each one-minute measurement with a corresponding sky condition. 
 The all-sky conditions, containing all the valid measurements. 
-The clear-sky conditions data, correspond to data where we have inferred that the sky was almost clear of clouds, and the remainder part the data was characterized with cloud sky conditions (cloud-sky). 
-To identify the clear-sky conditions we used the method proposed by @Long2000 and by @Reno2016, that was adapted and configured for the site.
+The clear-sky conditions data, corresponding to data, where we have inferred that the sky was almost clear of clouds, and the remainder part of the data, characterized as cloud-sky conditions. 
+To identify the clear-sky conditions we used the method proposed by @Long2000 and by @Reno2016, that was adapted and configured for the site, as the authors suggest.
 
 <!-- CS subjectivity -->
-We have to note, that the definition of what constitutes as clear or cloudy sky, has some subjectivity, due to the used method of characterization.
-As a result, the details of the definition are site specific, it relies on a combination of threshold of comparisons with ideal actinometric models and statistics on different signal behavior.
+We have to note, that the definition of what constitutes as clear or cloudy sky, has some subjectivity, in this method of characterization.
+As a result, the details of the definition is site specific, it relies on a combination of thresholds and comparisons with ideal actinometric models and statistical analysis on different signal metrics.
 <!-- basic concepts -->
-The algorithm was calibrated with the main focus to identify the presence of clouds on the sky dome, although there are marginal cases that there will be false positives or false negatives identifications.
+The algorithm was calibrated with the main focus to identify the presence of clouds on the sky dome, although few marginal cases exist that will be false positive or false negative identified, but can not affect the general outcome.
 
 
 ```{r setup, echo=F, include=T, eval=TRUE}
@@ -272,13 +272,13 @@ The algorithm was calibrated with the main focus to identify the presence of clo
 MS <- data.frame(readRDS("~/CS_id/PARAMS/Clear_sky_id_Reno-Hansen_apply_v14_2.Rds"))
 # export all Clear Sky variables
 for (an in names(MS)) {
-    assign(an, MS[[an]])
+assign(an, MS[[an]])
 }
 ## get TSI slope for reference
 TSI <- data.table(read.csv("./figures/tbl_longterm_trends.dat",
-               strip.white = TRUE,
-               sep = ";",
-               header = TRUE))
+           strip.white = TRUE,
+           sep = ";",
+           header = TRUE))
 TSI <- TSI[grep("TSI", TSI$var), ]
 TSI$slope.sd           <- NULL
 TSI$slope.ConfInt_0.95 <- NULL
@@ -292,10 +292,10 @@ TSIskopeAll <- TSI[`Sky condition` == "All sky cond."]
 
 <!-- # Detection of clear periods in GHI measurements for SDR trends. -->
 
+For completeness, we will provide a brief overview of the CSid process along with the site specific thresholds.
 As SDR clear sky reference we are using the radiation model by Haurwitz’s, adjusted for our site with the factor  $a = `r signif(alpha,3)`$ (Eq.\ \ref{eq:ahau}), resulted by an iterative optimization process.
-The selection of a clear sky reference model, was based on SDR observation from the period 2016 – 2021.
-Where, after an iterative optimization of eight simple models (Daneshyar–Paltridge–Proctor, Kasten–Czeplak, Haurwitz, Berger–Duffie, Adnot–Bourges–Campana–Gicquel, Robledo-Soler, Kasten and Ineichen-Perez) with a wide range factors.
-We found, that Haurwitz’s model, adjusted with a factor of `r signif(alpha,3)` has one of the lowest root mean squared error (RMSE), while retains most of our data. 
+The selection of this clear sky reference model, was based on SDR observations from the period 2016 – 2021.
+Where, after an iterative optimization between eight simple models (Daneshyar–Paltridge–Proctor, Kasten–Czeplak, Haurwitz, Berger–Duffie, Adnot–Bourges–Campana–Gicquel, Robledo-Soler, Kasten and Ineichen-Perez) with a wide range factors, we found, that Haurwitz’s model, adjusted with a factor of `r signif(alpha,3)` has one of the lowest root mean squared error (RMSE), while retains most of our data (Eq.\ \ref{eq:ahau}). 
 The tried models are described in more details by @Reno2012 and tested by @Reno2016.
 The iterative optimization method, for the selection of the reference is described by @Long2000 and @Reno2016.
 The target of the optimization was the minimization of the function $f(a)$ (Eq.\ \ref{eq:minf}) and was accomplished by the computing function `stats::optimise` [@RCT2023], which is based on work by @Brent1973.
