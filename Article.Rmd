@@ -386,13 +386,12 @@ s_i = \frac{\text{SDR}_{i+1} - \text{SDR}_{i}}{t_{i+1} - t_i}, \forall i \in \le
 <!-- 5. VSM -->
 <!-- ### Variability in the Shape of the irradiance Measurements. -->
 
-The maximum difference $X$ between the change in measured irradiance and the change in clear sky
-irradiance over each measurement interval.
+The maximum difference $X$ between the change in measured irradiance and the change in clear sky irradiance over each measurement interval, must be lower than a threshold (Eq.\ \ref{eq:VSMcr}).
 
 \begin{gather}
 x_i = \text{SDR}_{i+1} - \text{SDR}_{i} \forall i \in \left \{ 1, 2, \ldots, n-1 \right \} \label{eq:VSM1} \\
-x_{CS,i} = \text{SDR}_{CS,i+1} - \text{SDR}_{CS,i} \forall i \in \left \{ 1, 2, \ldots, n-1 \right \} \label{eq:VSM2} \\
-X_i = \max{\left \{ \left | x_i - x_{CS,i} \right | \right \}} \label{eq:VSM3}
+x_{\text{CSref},i} = \text{SDR}_{\text{CSref},i+1} - \text{SDR}_{\text{CSref},i} \forall i \in \left \{ 1, 2, \ldots, n-1 \right \} \label{eq:VSM2} \\
+X_i = \max{\left \{ \left | x_i - x_{\text{CSref},i} \right | \right \}} \label{eq:VSM3}
 \end{gather}
 
 \begin{equation}
@@ -402,25 +401,24 @@ X_i < `r offVSM`
 
 
 <!-- ### Data selection -->
-Due to a significant measurement uncertainty near, the horizon, we have to exclude
-all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$. 
+Due to a significant measurement uncertainty near the horizon, we have to exclude all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$. 
 Moreover, due to some obstructions around the site (hills and buildings), we excluded data with Azimuth angle between 
 $35^\circ$ and $120^\circ$ with SZA greater than $80^\circ$.
 On the latter instances, Sun is systematically, not visible by the instrument's location.
 <!-- 1au -->
 To make the measurements comparable throughout the dataset, we adjusted all 1-minute radiometric values to the mean Sun - Earth distance.
 <!-- TSI -->
-Subsequently, we made all measurements relative to the Total Solar Irradiance (TSI) at $1 \text{au}$, in order to compensate for the Sun's intensity variability, using a homogenized time series of satellite TSI observations.
+Subsequently, we made all measurements relative to the Total Solar Irradiance (TSI) at $1\,\text{au}$, in order to compensate for the Sun's intensity variability, using a homogenized time series of satellite TSI observations.
 The TSI data we use, comes from NOAA [@Coddington2005], it overlaps with our data, and is interpolated to match with the time step of the data.
 <!-- The TSI data we use, is a combination of data from NOAA [@Coddington2005] (for `r as.Date(TSIinfo[TSI_Source == "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source == "NOAA", End])`) and adjusted data from @LASP2023 (for `r as.Date(TSIinfo[TSI_Source != "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source != "NOAA", End])`).-->
-As a result, we can present all radiation data as a fraction of Sun's TSI.
-
+As a result, we can present all radiation data as a fraction of Sun's TSI. 
 After the preparation of the data, we have $`r SDR_N_All`$  1-minute measurements, of which,
 $`r signif(100 * SDR_N_Clear / SDR_N_All, 3)`\%$ 
 are characterized with clear-sky condition, and the rest 
 $`r signif(100 * SDR_N_Cloud / SDR_N_All, 3)`\%$
 with cloud-sky conditions.
 
+.......!!!.......
 
 ### Aggregation of radiometric data
 
