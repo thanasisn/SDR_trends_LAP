@@ -293,38 +293,37 @@ TSIskopeAll <- TSI[`Sky condition` == "All sky cond."]
 <!-- # Detection of clear periods in GHI measurements for SDR trends. -->
 
 For completeness, we will provide a brief overview of the CSid process, along with the site specific thresholds.
-As a reference clear sky SDR, we are using the radiation model by Haurwitz’s, adjusted for our site with the factor $a = `r signif(alpha,3)`$ (Eq.\ \ref{eq:ahau}), resulted by an iterative optimization process, as described by @Long2000 and @Reno2016.
-The target of the optimization was the minimization of the function $f(a)$ (Eq.\ \ref{eq:minf}) and was accomplished with the computing function `stats::optimise` [@RCT2023], which is based on work by @Brent1973.
+As a reference clear sky SDR, we are using the radiation model by Haurwitz’s, adjusted for our site with a factor $a$, resulting by an iterative optimization process, as described by @Long2000 and @Reno2016.
+The target of the optimization was the minimization of the function $f(a)$ (Eq.\ \ref{eq:minf}) and was accomplished with the computing function `stats::optimise` [@RCT2023], based on work by @Brent1973.
 The optimization and the selection of the clear sky reference model, was performed on SDR observations for the period 2016 – 2021.
 During the optimization, eight simple clear sky radiation models were tested (Daneshyar–Paltridge–Proctor, Kasten–Czeplak, Haurwitz, Berger–Duffie, Adnot–Bourges–Campana–Gicquel, Robledo-Soler, Kasten and Ineichen-Perez), with a wide range of factors. We found, that Haurwitz’s model, adjusted with the factor $a = `r signif(alpha,3)`$ has one of the lowest root mean squared error (RMSE), while correlates with large amount of our data. Thus, our clear sky reference is the Eq.\ \ref{eq:ahau}. 
 The tried models are described in more details by @Reno2012 and evaluated by @Reno2016.
 
-
-
+<!-- cost fuction -->
 \begin{equation}
-f(a)=\frac{1}{n}\sum_{i=1}^{n}( \text{SDR}_{\text{meas},CS,i} - a \times \text{SDR}_{\text{ref},CS,i})^2 \label{eq:minf}
+f(a)=\frac{1}{n}\sum_{i=1}^{n}( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i})^2 \label{eq:minf}
 \end{equation}
 
+<!-- adjusted Haurwitz -->
 \begin{equation}
-\text{SDR}_\text{Clear Sky} = `r signif(alpha,3)` \times 1098 \times \cos( \text{SZA} ) \times \exp \left( \frac{ - 0.057}{\cos(\text{SZA})} \right) \label{eq:ahau}
+\text{SDR}_\text{CSref} = a \times \text{SDR}_\text{Haurwitz}  = `r signif(alpha,3)` \times 1098 \times \cos( \text{SZA} ) \times \exp \left( \frac{ - 0.057}{\cos(\text{SZA})} \right) \label{eq:ahau}
 \end{equation}
-
 
 
 The following criteria and thresholds were used to identify clear-sky conditions.
 Each criterion was applied for a running window of $`r nt`$ consecutive measurements/minutes, and the characterization is applied at the center value of the window.
-A data point is consider as under cloud-sky condition if it fails to pass any of the criteria, all the other data points are characterized as clear-sky.
+A data point is consider as under cloud-sky condition if it fails to pass any of the criteria, the rest data points are characterized as clear-sky.
 
 
 <!-- 1. MeanVIP -->
 <!-- ### Mean value of irradiance during the time period. -->
 
-The mean of the measured value $\overline{G}_i$ must be inside an envelope based on the reference model $\text{SDR}_\text{Clear Sky}$ (Eq. \ref{eq:MeanVIP}).
+The mean of the measured value $\overline{\text{SDR}}_i = \text{mean}_{n=i-5}^{n=i+5}[\text{SDR}_{n}]$ must be inside an envelope based on the equivalent mean of the reference model $\overline{\text{SDR}}_\text{CSref} = \text{mean}_{n=i-5}^{n=i+5}[\text{SDR}_{\text{CSref},n}]$ (Eq. \ref{eq:MeanVIP}).
 
 \begin{equation}
-`r 1 - CS_ref_rm_VIP_RelLow` \times \overline{\text{SDR}}_{i\text{Clear Sky}} - `r CS_ref_rm_VIP_LowOff`
-< \overline{G}_i <
-`r 1 + CS_ref_rm_VIP_RelUpp` \times \overline{\text{SDR}}_{i\text{Clear Sky}} + `r CS_ref_rm_VIP_UppOff`
+`r 1 - CS_ref_rm_VIP_RelLow` \times \overline{\text{SDR}}_{\text{CSref},i} - `r CS_ref_rm_VIP_LowOff`
+< \overline{SDR}_i <
+`r 1 + CS_ref_rm_VIP_RelUpp` \times \overline{\text{SDR}}_{\text{CSref},i} + `r CS_ref_rm_VIP_UppOff`
 \label{eq:MeanVIP}
 \end{equation}
 
@@ -332,11 +331,11 @@ The mean of the measured value $\overline{G}_i$ must be inside an envelope based
 <!-- 2. MaxVIP -->
 <!-- ### Max value of irradiance during the time period. -->
 
-The running max measured value $M_{Gi} = max[\text{SDR}_{i}]$, is compared to a similar constructed value from the reference $M_{CSi} = max[\text{SDR}_{i\text{Clear Sky}}]$ (Eq.\ \ref{eq:MaxVIP}).
+The running max measured value $M_{\text{SDR},i} = \max_{n=i-5}^{n=i+5}[\text{SDR}_{n}]$, is compared to a similar constructed value from the reference $M_{CSi} = \max_{n=i-5}^{n=i+5}[\text{SDR}_{\text{CSref},n}]$ (Eq.\ \ref{eq:MaxVIP}).
 
 \begin{equation}
 `r MaxVIP_fct` \times M_{CSi} - `r MaxVIP_off_low`
-< M_{Gi} <
+< M_{\text{SDR},i} <
 `r MaxVIP_fct` \times M_{CSi} + `r MaxVIP_off_upp`
 \label{eq:MaxVIP}
 \end{equation}
@@ -345,11 +344,10 @@ The running max measured value $M_{Gi} = max[\text{SDR}_{i}]$, is compared to a 
 <!-- 3. VIL -->
 <!-- ### Variability in irradiance by line length. -->
 
-The length $L$ (Eq. \ref{eq:VILeq}) of the sequence of line segments connecting the points of the SDR time
-series for the measured values $L$ and similar for the reference $L_{CS}$, must be within the limits of Eq. \ref{eq:VILcr}.
+The length $L$ of the sequence of line segments, connecting the points of the SDR time series for the measured values (Eq.\ \ref{eq:VILeq}), and similar for the reference $L_{CS}$, must be within the limits of Eq. \ref{eq:VILcr}.
 
 \begin{equation}
-L = \sum_{i=1}^{n-1}\sqrt{\left ( \text{SDR}_{i+1} - \text{SDR}_{i}\right )^2 + \left ( t_{i+1} - t_i \right )^2}
+L_i = \sum_{i=1}^{n-1}\sqrt{\left ( \text{SDR}_{i+1} - \text{SDR}_{i}\right )^2 + \left ( t_{i+1} - t_i \right )^2}
 \label{eq:VILeq}
 \end{equation}
 
@@ -363,8 +361,7 @@ L = \sum_{i=1}^{n-1}\sqrt{\left ( \text{SDR}_{i+1} - \text{SDR}_{i}\right )^2 + 
 <!-- ### Variance of Changes in the Time series. -->
 
 <!-- Standard deviation of rate of change in irradiance. -->
-We calculate the standard deviation $\sigma$ of the slope
-($s$) between sequential points in the time series, normalized by the average SDR during the time interval.
+The standard deviation $\sigma$ of the slope ($s$) between sequential points in the time series, normalized by the average SDR during the time interval, must be bellow a threshold (Eq.\ \ref{eq:VCTcr}).
 
 <!--
 \begin{gather}
@@ -379,8 +376,6 @@ s_i = \frac{\text{SDR}_{i+1} - \text{SDR}_{i}}{t_{i+1} - t_i}, \forall i \in \le
 \bar{s} = \frac{1}{n-1} \sum_{i=1}^{n-1} s_i,\;\;
 \sigma_i = \frac {\sqrt{\frac{1}{n-1} \sum_{i=1}^{n-1} \left( s_i - \bar{s} \right)^2} } {\bar{G_i}} \label{eq:VCT3b}
 \end{equation}
-
-
 
 \begin{equation}
 \sigma_i < `r offVCT`
