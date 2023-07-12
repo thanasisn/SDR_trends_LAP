@@ -23,7 +23,6 @@ LIBRARY      = ~/LIBRARY/REPORTS/
 TARGET = Article
 RMD    = $(TARGET).Rmd
 PDF    = $(TARGET).pdf
-SLIDY  = $(TARGET).html
 Ap2: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
@@ -36,13 +35,12 @@ $(PDF): $(RMD)
 
 TARGET = Article
 RMD    = $(TARGET).Rmd
-PDF    = $(TARGET).pdf
-SLIDY  = $(TARGET).html
+PDF    = $(TARGET)_A.pdf
 Ap1: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
 	@#-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
-	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2',   output_file='Article_A.pdf', clean = TRUE)"
+	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@', clean = TRUE)"
 	@# echo "Changed:  $?"
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}

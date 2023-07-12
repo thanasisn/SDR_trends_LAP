@@ -292,13 +292,13 @@ TSIskopeAll <- TSI[`Sky condition` == "All sky cond."]
 
 <!-- # Detection of clear periods in GHI measurements for SDR trends. -->
 
-For completeness, we will provide a brief overview of the CSid process along with the site specific thresholds.
-As SDR clear sky reference we are using the radiation model by Haurwitz’s, adjusted for our site with the factor  $a = `r signif(alpha,3)`$ (Eq.\ \ref{eq:ahau}), resulted by an iterative optimization process.
-The selection of this clear sky reference model, was based on SDR observations from the period 2016 – 2021.
-Where, after an iterative optimization between eight simple models (Daneshyar–Paltridge–Proctor, Kasten–Czeplak, Haurwitz, Berger–Duffie, Adnot–Bourges–Campana–Gicquel, Robledo-Soler, Kasten and Ineichen-Perez) with a wide range factors, we found, that Haurwitz’s model, adjusted with a factor of `r signif(alpha,3)` has one of the lowest root mean squared error (RMSE), while retains most of our data (Eq.\ \ref{eq:ahau}). 
-The tried models are described in more details by @Reno2012 and tested by @Reno2016.
-The iterative optimization method, for the selection of the reference is described by @Long2000 and @Reno2016.
-The target of the optimization was the minimization of the function $f(a)$ (Eq.\ \ref{eq:minf}) and was accomplished by the computing function `stats::optimise` [@RCT2023], which is based on work by @Brent1973.
+For completeness, we will provide a brief overview of the CSid process, along with the site specific thresholds.
+As a reference clear sky SDR, we are using the radiation model by Haurwitz’s, adjusted for our site with the factor $a = `r signif(alpha,3)`$ (Eq.\ \ref{eq:ahau}), resulted by an iterative optimization process, as described by @Long2000 and @Reno2016.
+The target of the optimization was the minimization of the function $f(a)$ (Eq.\ \ref{eq:minf}) and was accomplished with the computing function `stats::optimise` [@RCT2023], which is based on work by @Brent1973.
+The optimization and the selection of the clear sky reference model, was performed on SDR observations for the period 2016 – 2021.
+During the optimization, eight simple clear sky radiation models were tested (Daneshyar–Paltridge–Proctor, Kasten–Czeplak, Haurwitz, Berger–Duffie, Adnot–Bourges–Campana–Gicquel, Robledo-Soler, Kasten and Ineichen-Perez), with a wide range of factors. We found, that Haurwitz’s model, adjusted with the factor $a = `r signif(alpha,3)`$ has one of the lowest root mean squared error (RMSE), while correlates with large amount of our data. Thus, our clear sky reference is the Eq.\ \ref{eq:ahau}. 
+The tried models are described in more details by @Reno2012 and evaluated by @Reno2016.
+
 
 
 \begin{equation}
