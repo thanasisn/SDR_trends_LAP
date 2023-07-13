@@ -420,6 +420,7 @@ with cloud-sky conditions.
 
 .......!!!.......
 
+
 ### Aggregation of radiometric data
 
 <!-- aggregation -->
