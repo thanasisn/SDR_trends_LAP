@@ -361,7 +361,7 @@ L_i = \sum_{i=1}^{n-1}\sqrt{\left ( \text{SDR}_{i+1} - \text{SDR}_{i}\right )^2 
 <!-- ### Variance of Changes in the Time series. -->
 
 <!-- Standard deviation of rate of change in irradiance. -->
-The standard deviation $\sigma$ of the slope ($s$) between sequential points in the time series, normalized by the average SDR during the time interval, must be below a threshold (Eq.\ \ref{eq:VCTcr}).
+The standard deviation $\sigma$ of the slope ($s$) between sequential points in the time series, normalized by the average SDR during the time interval, must be bellow a threshold (Eq.\ \ref{eq:VCTcr}).
 
 <!--
 \begin{gather}
