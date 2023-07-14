@@ -88,23 +88,22 @@ knitr::opts_chunk$set(fig.pos    = 'h!'    )
 options(knitr.graphics.auto_pdf = FALSE)
 library(pander)
 library(data.table)
-## load data
+## load data from trends analysis
 load("./data/common_data_14_2.Rda")
-## number of measurements
+## number of measurements for each dataset
 SDR_N_All   <- sum(  ALL_1_daily_DESEAS[,GLB_att_N])
 SDR_N_Clear <- sum(CLEAR_1_daily_DESEAS[,GLB_att_N])
 SDR_N_Cloud <- sum(CLOUD_1_daily_DESEAS[,GLB_att_N])
-
+## TSI data span info
 TSIinfo <- data.table(read.csv("./figures/tbl_tsi_info.dat",
                     strip.white = TRUE,
                     sep = ";",
                     header = TRUE))
-## variables we use
+## variables we use in the analysis
 source("./DHI_GHI_0_variables.R")
 
 ## create local citations file and links here
 source("~/CODE/FUNCTIONS/R/gather_citations.R")
-
 suppressMessages(
     gather_citations(
         sourcefile   = "./Article.Rmd",
@@ -244,20 +243,18 @@ Long and Shi\ [-@Long2008a; -@Long2006].
 Thus, problematic recordings have been excluded from further processing. 
 Although it is impossible to detect all false data, the large number of available data, and the aggregation scheme we used, ensures the good quality of the radiometric measurements used in this study.
 
-
-
-
 <!-- c) Clear sky identification -->
-In order to be able to estimate the effect of the clouds on the SDR, we created three datasets, by characterizing each one-minute measurement with a corresponding sky condition. 
-The all-sky conditions, containing all the valid measurements. 
-The clear-sky conditions data, corresponding to data, where we have inferred that the sky was almost clear of clouds, and the remainder part of the data, characterized as cloud-sky conditions. 
-To identify the clear-sky conditions we used the method proposed by @Long2000 and by @Reno2016, that was adapted and configured for the site, as the authors suggest.
+In order to be able to estimate the effect of the clouds on the long term variability of SDR, we created three datasets, by characterizing each one-minute measurement with a corresponding sky condition (i.e., all-sky, clear-sky and cloudy-sky).
+To identify the clear-sky conditions we used the method proposed by
+@Long2000
+and by
+@Reno2016,
+which was adapted and configured for the site, as the authors suggest.
 
 <!-- CS subjectivity -->
 We have to note, that the definition of what constitutes as clear or cloudy sky, has some subjectivity, in this method of characterization.
 As a result, the details of the definition is site specific, it relies on a combination of thresholds and comparisons with ideal actinometric models and statistical analysis on different signal metrics.
-<!-- basic concepts -->
-The algorithm was calibrated with the main focus to identify the presence of clouds on the sky dome, although few marginal cases exist that will be false positive or false negative identified, but can not affect the general outcome.
+The CSid algorithm was calibrated with the main focus to identify the presence of clouds on the sky dome, although few marginal cases exist that have been identified as false positive or false negative, but cannot affect the results of the study.
 
 
 ```{r setup, echo=F, include=T, eval=TRUE}
