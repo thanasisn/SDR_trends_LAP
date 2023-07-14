@@ -185,9 +185,9 @@ p>        "  Too hard to vim
 
 # Observational data and methodology.
 
-
-<!-- time span -->
-The SDR is equivalent to the whole sky Global radiation (or Global Horizontal Irradiance, GHI), and was obtained with a horizontal leveled, CM-21 pyranometer, in the period from
+The SDR data were measured with a Kipp & Zonen CM-21 pyranometer operating continuously at the Laboratory of Atmospheric Physics of the Aristotle University of Thessaloniki 
+($40^\circ\,38'\,$N, $22^\circ\,57'\,$E, $80\,$m\ a.s.l.)
+in the period from 
 <!-- \mbox{ -->
 `r min(ALL_1_daily_DESEAS$Date)`
 <!-- } -->
@@ -195,7 +195,9 @@ to
 <!-- \mbox{ -->
 `r max(ALL_1_daily_DESEAS$Date)`.
 <!-- }. -->
-Along with SDR, we obtained the direct beam radiation (DNI) by a collocated CHP-1 pyrheliometer, for the period
+The monitoring site is located near the city centre, and we expect to be affected by the urban environment. 
+During the study period, the pyranometer has been independently calibrated three times at the Meteorologisches Observatorium Lindenberg, DWD, when it was verified the stability of the instrument to within better than $0.7\%$ relative to the initial calibration by the manufacturer. 
+Along with SDR, the direct beam radiation (DNI) was also measured by a collocated Kipp & Zonen CHP-1 pyrheliometer, for the period
 <!-- \mbox{ -->
 `r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`
 <!-- } -->
@@ -203,29 +205,20 @@ to
 <!-- \mbox{ -->
 `r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
 <!-- }. -->
-Although, we have performed a similar analysis to the DNI, as for the SDR, the results are not presented here, as they lack the appropriate statistical significance, due to the sorter duration of the data.
-Moreover, the DNI data were used as auxiliary data, with the clear sky identification algorithm (CSid), to aid with the selection of the appropriate thresholds. 
-We have to note, that despite the capability of the CSid algorithm, to use the DNI as a characterization parameter, we haven't used it here, to avoid any selection bias due to unequal availability of the two datasets.
-
-<!-- Location -->
-
-The SDR data were measured with a Kipp & Zonen CM-21 pyranometer operating continuously at the Laboratory of Atmospheric Physics of the Aristotle University of Thessaloniki ($40^\circ\,38'\,$N, $22^\circ\,57'\,$E, $80\,$m\ a.s.l.).
-The monitoring site is located near the city centre, and we expect to be affected by the urban environment.
-During the study period, the CM-21 pyranometer has been independently calibrated ..... **four** .... times.
-........ verify number ........
-<!-- Preparation. -->
+Although, we have performed a similar analysis to the DNI data the results are not presented here, as they lack the appropriate statistical significance, due to the sorter duration of the data. 
+However, the DNI data were used as auxiliary data, in the clear sky identification algorithm (CSid), which is discussed later, for the selection of the appropriate thresholds.
+It is noted that despite the capability of the CSid algorithm to use the DNI as a characterization parameter, we haven't used it here, to avoid any selection bias due to unequal length of the two datasets. 
 There are three distinct steps in the creation of the dataset analysed here:
-a)\ the acquisition of radiation measurements from the sensors, 
-b)\ a radiation data quality check,
-c)\ the identification of "clear sky" conditions from the radiometric data, and
-d)\ data aggregation and trend analysis.
+a)\ the acquisition of radiation measurements from the sensors,
+b)\ the data quality check,
+c)\ the identification of "clear sky" conditions from the radiometric data, and d)\ the aggregation of data and trend analysis.
+
 
 <!--
 The horizon is clear of obstructions except for the azimuth angles between 35 and 120 where obstacles of up to 10 elevation block the direct irradiance in the morning for SZA larger than 80.  These data points were excluded from the analysis, as
 -->
 
 <!-- Zerefos 
-
 Northern Greece has been selected because it is well known to be located at the crossroads of aerosols and various pollutants pathways originating in central and Eastern
 Europe (Lelieveld et al., 2002; Zerefos et al., 2002). Thessa-
 loniki, the major city in northern Greece, lies along the exit of air
@@ -234,24 +227,24 @@ transport (LRT) trajectories, as we move from central and east-
 ern Europe to the Mediterranean (Zerefos et. al., 2002). On the
 -->
 
-
-<!-- a) Acquisition -->
-For the acquisition of radiometric data,
-the signal of the broadband instruments is sampled with a rate of $1\,\text{Hz}$. The mean and the standard deviation are recorded for every minute.
-<!-- dark correction -->
-The measurements are corrected for the zero offset of the instrument dark voltage signal.
-As reference of the "dark signal" is used the Sun elevation angle bellow $-10^\circ$, for a period of $3\,\text{h}$.
-<!-- physical quantities -->
-The signal is converted to radiation flux, using a ramped value of the instrument sensitivity, derived from the ...... **eight** ......  laboratory calibrations of the instrument, during the study period.
+<!-- a) acquisition -->
+For the acquisition of radiometric data, the signal of the pyranometer is sampled with a rate of $1\,\text{Hz}$.
+The mean and the standard deviation of these samples are recorded every minute.
+The measurements are corrected for the zero offset (dark signal in volts).
+The "dark signal" is calculated by averaging all measurements recorded for a period of 
+$3\,\text{h}$ 
+before (morning) or after (evening), when the Sun reaches an elevation angle of
+$-10^\circ$.
+The signal is converted to irradiance using a ramped value of the instrument’s sensitivity between the calibrations.
 
 <!-- b) Radiation data quality check -->
-<!-- The radiation quality is assured with a manual screening, aided by an automatic assessment process. -->
-<!-- screening -->
-A manual screening was performed, to remove inconsistencies and erroneous recordings, that can occur stochastically or systematically, during the continuous operation of the instrument.
-<!-- Quality assurance -->
-The manual screening is aided by a radiation data quality assurance procedure, adjusted for the site, based on methods of Long and Shi\ [-@Long2008a; -@Long2006].
+A manual screening was performed, to remove inconsistent and erroneous recordings that can occur stochastically or systematically, during the continuous operation of the instruments.
+The manual screening is aided by a radiation data quality assurance procedure, adjusted for the site, which is based on the methods of 
+Long and Shi\ [-@Long2008a; -@Long2006].
 Thus, problematic recordings have been excluded from further processing. 
-Although it is not possible to detect all the bad data, the large number of available data, and the aggregation scheme we use, can provide us with accurate radiometric measurements, for the scope of this study.
+Although it is impossible to detect all false data, the large number of available data, and the aggregation scheme we used, ensures the good quality of the radiometric measurements used in this study.
+
+
 
 
 <!-- c) Clear sky identification -->
