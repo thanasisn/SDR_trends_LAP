@@ -46,12 +46,8 @@ numbersections:  true
 header-includes:
    # - \usepackage{subfig}
    - \usepackage{subcaption}
-   
-   
 output: 
-  rticles::elsevier_article:
-    keep_tex:         no
-    citation_package: natbib
+  bookdown::word_document2: default
   bookdown::pdf_document2:
     number_sections:  no
     fig_caption:      yes
@@ -69,7 +65,9 @@ output:
     colorlinks:       yes
     urlcolor:         blue
     biblio-style:     apalike
-  bookdown::word_document2: default
+  rticles::elsevier_article:
+    keep_tex:         no
+    citation_package: natbib
 # date:           "`r format(Sys.time(), '%F')`"
 ---
 
@@ -399,30 +397,42 @@ Moreover, due to some obstructions around the site (hills and buildings), we exc
 $35^\circ$ and $120^\circ$ with SZA greater than $80^\circ$.
 On the latter instances, Sun is systematically, not visible by the instrument's location.
 <!-- 1au -->
-To make the measurements comparable throughout the dataset, we adjusted all 1-minute radiometric values to the mean Sun - Earth distance.
+To make the measurements comparable throughout the dataset, we adjusted all one-minute radiometric values to the mean Sun - Earth distance.
 <!-- TSI -->
 Subsequently, we made all measurements relative to the Total Solar Irradiance (TSI) at $1\,\text{au}$, in order to compensate for the Sun's intensity variability, using a homogenized time series of satellite TSI observations.
-The TSI data we use, comes from NOAA [@Coddington2005], it overlaps with our data, and is interpolated to match with the time step of the data.
-<!-- The TSI data we use, is a combination of data from NOAA [@Coddington2005] (for `r as.Date(TSIinfo[TSI_Source == "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source == "NOAA", End])`) and adjusted data from @LASP2023 (for `r as.Date(TSIinfo[TSI_Source != "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source != "NOAA", End])`).-->
-As a result, we can present all radiation data as a fraction of Sun's TSI. 
-After the preparation of the data, we have $`r SDR_N_All`$  1-minute measurements, of which,
-$`r signif(100 * SDR_N_Clear / SDR_N_All, 3)`\%$ 
-are characterized with clear-sky condition, and the rest 
+The TSI data we use, comes from NOAA [@Coddington2005], and were interpolated to match with the time step of our measurements. 
+The final dataset contains
+$`r SDR_N_All`$
+one-minute measurements, of which,  $`r signif(100 * SDR_N_Clear / SDR_N_All, 3)`\%$
+correspond to clear-sky conditions and 
 $`r signif(100 * SDR_N_Cloud / SDR_N_All, 3)`\%$
-with cloud-sky conditions.
+to cloud-sky conditions.
+<!-- The TSI data we use, is a combination of data from NOAA [@Coddington2005] (for `r as.Date(TSIinfo[TSI_Source == "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source == "NOAA", End])`) and adjusted data from @LASP2023 (for `r as.Date(TSIinfo[TSI_Source != "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source != "NOAA", End])`).-->
 
 <!-- aggregation -->
-In order to investigate the SDR trend, we implement an appropriate aggregation scheme of the 1-minute data to a coarser time scale. To preserve the representativeness we are using the following criteria:
+In order to investigate the SDR trends, we implemented an appropriate aggregation scheme to the 1-minute data to derive series in coarser time scales.
+To preserve the representativeness of the data we used the following criteria: 
 a) for daily mean values we exclude days with less than `r Daily_aggregation_N_lim` valid data points,
-b) accordingly, monthly values are computed by daily means, and months with less than `r Monthly_aggegation_N_lim` days are omitted. 
-To create the daily and monthly seasonal values, we group the data based on the day of year number, and the corresponding calendar month respectively.
+b) accordingly, monthly values were computed from daily means
+only when at least `r Monthly_aggegation_N_lim` days were available.
+To create the daily and monthly climatological means, we averaged the data based on the day of year and calendar month, respectively.
 <!-- Seasonal -->
-For the seasons of the year trends, we grouped the mean daily values by the corresponding season (Winter: December - February, Spring: March - May, etc.).
+For the seasonal means we averaged the mean daily values in each season (Winter: December - February, Spring: March - May, etc.).
 <!-- Deseasonalization -->
-Finally, for each data set, we remove the natural occurring seasonal variation, by calculating the mean values for the appropriate time step, and subtracting the annual cycle from the actual data.
-<!-- SZA Deseasonalization -->
-To estimate Sun's SZA contribution to the SDR brightening, the 1-minute data were aggregate in $1^\circ$ SZA bins, separated for instances before and after the local noon, and then was deseasonalized as above. 
-Thus, for each dataset we have obtained the relative departure of the seasonal mean.
+Finally, each data set was deseasonalized by subtracting the corresponding climatological annual cycle (daily or monthly) from the actual data.  
+To estimate SZA contribution to the SDR trends, the one-minute data were aggregated the data in $1^\circ$ SZA bins, separately for the morning and afternoon hours, which were then deseasonalized as mentioned above.
+
+
+
+a) for daily mean values we excluded days with less
+than 
+[This is not a good criterion! It must be seasonal and 2 hours of
+data are not enough for the calculation of daily means.\
+How about: "excluded days with more than 180 missing i-minute values
+during daylight hours".]{.comment-start id="6" author="Alkis Bais"
+date="2023-07-14T07:52:00Z"}180 valid data points[]{.comment-end
+id="6"}, 
+   
 
 
 # Results
