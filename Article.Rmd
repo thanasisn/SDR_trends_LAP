@@ -282,6 +282,9 @@ TSIskopeAll <- TSI[`Sky condition` == "All sky cond."]
 
 <!-- # Detection of clear periods in GHI measurements for SDR trends. -->
 
+
+
+
 For completeness, we will provide a brief overview of the CSid process, along with the site specific thresholds.
 As a reference clear sky SDR, we are using the radiation model by Haurwitz’s, adjusted for our site with a factor $a$, resulting by an iterative optimization process, as described by @Long2000 and @Reno2016.
 The target of the optimization was the minimization of the function $f(a)$ (Eq.\ \ref{eq:minf}) and was accomplished with the computing function `stats::optimise` [@RCT2023], based on work by @Brent1973.
