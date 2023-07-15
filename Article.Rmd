@@ -305,13 +305,18 @@ We found, that Haurwitz's model, adjusted with the factor $a = `r signif(alpha,3
 
 <!-- cost fuction -->
 \begin{equation}
-f(a)=\frac{1}{n}\sum_{i=1}^{n}( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i})^2 \label{eq:minf}
+f(a) = \frac{1}{n}\sum_{i=1}^{n} ( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i} )^2 \label{eq:minf}
 \end{equation}
+
+where: $n$ is the total number of daylight records, $\text{SDR}_{\text{CSid},i}$ are the records identified as clear sky by CSid, $a$ is a hypothetical adjustment factor, and $\text{SDR}_{\text{testCSref},i}$ is the tested model clear sky radiation.
+
 
 <!-- adjusted Haurwitz -->
 \begin{equation}
 \text{SDR}_\text{CSref} = a \times \text{SDR}_\text{Haurwitz}  = `r signif(alpha,3)` \times 1098 \times \cos( \text{SZA} ) \times \exp \left( \frac{ - 0.057}{\cos(\text{SZA})} \right) \label{eq:ahau}
 \end{equation}
+
+where: $\text{SDR}_\text{CSref}$ is the reference clear sky SDR, in $w\;m^{-2}$.
 
 
 The following criteria and thresholds were used to identify clear-sky conditions.
