@@ -280,11 +280,18 @@ TSIskopeAll <- TSI[`Sky condition` == "All sky cond."]
 
 <!-- # Detection of clear periods in GHI measurements for SDR trends. -->
 
+For completeness, we will provide below a brief overview of the
+[??]{.comment-start id="0" author="Alkis Bais"
+date="2023-07-14T07:52:00Z"}CSid algorithm[]{.comment-end id="0"}, along
+with the site specific thresholds.
+To calculate the reference clear sky
+SDR~CSref~ we used the [Not visible equation]{.comment-start id="2"
+author="A N" date="2023-07-15T19:23:34Z"}${}_{}$[[]{.comment-end
+id="2"}]{.insertion author="A N" date="2023-07-15T19:23:34Z"} derive by
+the radiation model of @Haurwitz1945, adjusted for our site with a
+factor $a$, resulted by an iterative optimization process, as described
+by @Long2000 and @Reno2016.
 
-
-
-For completeness, we will provide a brief overview of the CSid process, along with the site specific thresholds.
-As a reference clear sky SDR, we are using the radiation model by Haurwitz’s, adjusted for our site with a factor $a$, resulting by an iterative optimization process, as described by @Long2000 and @Reno2016.
 The target of the optimization was the minimization of the function $f(a)$ (Eq.\ \ref{eq:minf}) and was accomplished with the computing function `stats::optimise` [@RCT2023], based on work by @Brent1973.
 The optimization and the selection of the clear sky reference model, was performed on SDR observations for the period 2016 – 2021.
 During the optimization, eight simple clear sky radiation models were tested (Daneshyar–Paltridge–Proctor, Kasten–Czeplak, Haurwitz, Berger–Duffie, Adnot–Bourges–Campana–Gicquel, Robledo-Soler, Kasten and Ineichen-Perez), with a wide range of factors. We found, that Haurwitz’s model, adjusted with the factor $a = `r signif(alpha,3)`$ has one of the lowest root mean squared error (RMSE), while correlates with large amount of our data. Thus, our clear sky reference is the Eq.\ \ref{eq:ahau}. 
