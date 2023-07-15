@@ -316,12 +316,26 @@ where: $n$ is the total number of daylight records, $\text{SDR}_{\text{CSid},i}$
 \text{SDR}_\text{CSref} = a \times \text{SDR}_\text{Haurwitz}  = `r signif(alpha,3)` \times 1098 \times \cos( \text{SZA} ) \times \exp \left( \frac{ - 0.057}{\cos(\text{SZA})} \right) \label{eq:ahau}
 \end{equation}
 
-where: $\text{SDR}_\text{CSref}$ is the reference clear sky SDR, in $w\;m^{-2}$.
+where: $\text{SDR}_\text{CSref}$ is the reference clear sky SDR, in $\text{w}\;\text{m}^{-2}$.
 
 
-The following criteria and thresholds were used to identify clear-sky conditions.
-Each criterion was applied for a running window of $`r nt`$ consecutive measurements/minutes, and the characterization is applied at the center value of the window.
-A data point is consider as under cloud-sky condition if it fails to pass any of the criteria, the rest data points are characterized as clear-sky.
+The criteria that were used to identify whether a measurement was taken
+under clear-sky conditions are presented below.
+A data point is flagged
+as "clear-sky" if all criteria are satisfied.
+Each criterion was applied
+for a running window of $`r nt`$ consecutive one-minute measurements, and
+the characterization is assigned to the central value of the window.
+Each parameter was calculated both from the measurements and the
+clear-sky model.
+The allowable range of variation is defined by the
+model-derived value of the parameter multiplied by a factor plus an
+offset. [.... .expanded the description ....]{.comment-start id="4"
+author="A N" date="2023-07-15T22:48:13Z"}The factors and offsets were
+determined empirically, by manual inspecting each filters performance on
+selected days, and adjusting them accordingly, during the iterative
+process.[[]{.comment-end id="4"}]{.insertion author="A N"
+date="2023-07-15T22:48:13Z"}
 
 
 <!-- 1. MeanVIP -->
