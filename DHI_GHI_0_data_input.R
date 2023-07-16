@@ -1,8 +1,8 @@
 
 
-## Data input
+## Data input for this paper
 
-## to force a rebuild
+## to force a rebuild of the dataset remove stored
 # file.remove(common_data)
 
 require(data.table)
@@ -11,7 +11,7 @@ source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 source("./DHI_GHI_0_variables.R")
 
-####  Run data construction ####################################################
+#  Run data construction  ------------------------------------------------------
 
 D_14_2 <- FALSE
 D_14   <- FALSE
@@ -22,7 +22,7 @@ D_14_2 <- TRUE
 # D_13   <- TRUE
 
 TEST <- TRUE
-TEST <- FALSE
+# TEST <- FALSE
 
 if (TEST) {
     warning("Running in TEST mode!!")
@@ -57,7 +57,7 @@ dir.create("./images",           showWarnings = FALSE)
 dir.create("./runtime",          showWarnings = FALSE)
 
 
-## check if we need to run data production
+#_  Check if we need to run data production  -----------------------------------
 havetorun <- !file.exists(common_data) |
     file.mtime(CS_file)          > file.mtime(common_data) |
     file.mtime(variables_fl)     > file.mtime(common_data) |
@@ -67,7 +67,7 @@ havetorun <- !file.exists(common_data) |
 if (havetorun) {
     cat(paste("\n !! (Re)Create environment and data input ->", common_data),"\n")
 
-    #### 0. Get data from Clear sky id data  ###################################
+    #_  Get data from Clear sky id data  ---------------------------------------
     input_files <- list.files( path       = CLEARdir,
                                pattern    = inpatern,
                                full.names = T )
@@ -97,12 +97,24 @@ if (havetorun) {
             temp$wattHOR_tmp_cr  <- NULL
             temp$wattHOR_unc_NT  <- NULL
             temp$wattHOR_unc_WT  <- NULL
+            temp$chp1TempCF      <- NULL
+            temp$GLBINC_SD_wpsm  <- NULL
+            temp$GLBINC_strict   <- NULL
+            temp$GLBINC_wpsm     <- NULL
+            temp$Pressure        <- NULL
+            temp$Pressure_source <- NULL
+            temp$HOR_strict      <- NULL
+            temp$DIR_strict      <- NULL
+            temp$GLB_strict      <- NULL
+            temp$DIFF_strict     <- NULL
+            temp$pressure        <- NULL
 
             temp <- unique(temp)
             DATA <- rbind(temp, DATA, fill = TRUE)
             rm(temp)
         }
         DATA <- unique(DATA)
+        gc()
 
         ## TODO warn duplicate dates
         if (sum(duplicated(DATA$Date)) > 0) {
@@ -142,22 +154,33 @@ if (havetorun) {
     #
     # vec1[which(vec1$Diff != 0), ]
 
-    #### 0. Process data for this project  #####################################
+    #_  Select data for this project  ------------------------------------------
 
-    #' ### Set data range to use
-    #' We set the last day of the data the ***`r print(LAST_DAY)`**
-    #+ echo=F, include=T
-    # DATA <- DATA[as.Date(Date) < LAST_DAY ]
-    # DATA <- DATA[as.Date(Date) > FIRST_DAY]
+    #__  Set date range to use  ------------------------------------------------
     DATA <- DATA[Date < LAST_DAY ]
     DATA <- DATA[Date > FIRST_DAY]
 
-    #' ### Filter min elevation
-    #' Keep data with Sun elevation above `r MIN_ELEVA`
-    DATA <- DATA[Elevat >= MIN_ELEVA, ]
+    #__  Keep daylight only  ---------------------------------------------------
+    DATA <- DATA[Elevat >= 0, ]
 
-    #' ### Bais paper obstacle filter
-    DATA <- DATA[!(Azimuth > 35 & Azimuth < 120 & Elevat < 10)]
+    #__  Exclude low Sun elevation  --------------------------------------------
+    DATA[Elevat >= MIN_ELEVA, wattDIR     := NA ]
+    DATA[Elevat >= MIN_ELEVA, wattDIR_sds := NA ]
+    DATA[Elevat >= MIN_ELEVA, wattGLB     := NA ]
+    DATA[Elevat >= MIN_ELEVA, wattGLB_sds := NA ]
+    DATA[Elevat >= MIN_ELEVA, wattHOR     := NA ]
+    DATA[Elevat >= MIN_ELEVA, wattHOR_sds := NA ]
+
+    #__  Bais paper obstacle filter  -------------------------------------------
+
+
+stop("dd")
+
+    ### Filter min elevation
+    # DATA <- DATA[Elevat >= MIN_ELEVA, ]
+
+    ### Bais paper obstacle filter
+    # DATA <- DATA[!(Azimuth > 35 & Azimuth < 120 & Elevat < 10)]
     #+ echo=F, include=T
 
     if (D_13) {
@@ -255,7 +278,7 @@ if (havetorun) {
     DATA_Cloud[, CS_ref_HOR := NULL]
 
 
-    ## . ----
+    # ..................................................................... ----
     #### 1. long-term  ---------------------------------------------------------
 
     ##  Daily means  -----------------------------------------------------------
@@ -1005,7 +1028,7 @@ if (havetorun) {
     # QHD_cloud[ !is.na(GLB_att), .N ]
 
 
-    ##.----
+    # ..................................................................... ----
     ####  2. Long term by SZA  -------------------------------------------------
 
     ## Daily SZA means ---------------------------------------------------------
@@ -1418,7 +1441,7 @@ if (havetorun) {
 
 
 
-    ##.----
+    # ..................................................................... ----
     ####  3. Consistency of trends  ############################################
 
     ## _ Monthly means by SZA prenoon month ------------------------------------
@@ -1689,7 +1712,7 @@ if (havetorun) {
     rm(DATA_Clear)
     rm(DATA_Cloud)
 
-    ##.----
+    # ..................................................................... ----
     ##  Save the whole work space  ---------------------------------------------
     # if (!TEST) {
         save(list = ls(all = TRUE), file = common_data)
@@ -1701,7 +1724,8 @@ if (havetorun) {
 }
 
 
-##_----
+# ......................................................................... ----
+
 
 # #### run on all quarter of the hour
 # ayear$quarter <- ((as.numeric( ayear$Date ) %/% (3600/4) ) )
