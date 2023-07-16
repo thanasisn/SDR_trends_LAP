@@ -22,7 +22,7 @@ D_14_2 <- TRUE
 # D_13   <- TRUE
 
 TEST <- TRUE
-# TEST <- FALSE
+TEST <- FALSE
 
 if (TEST) {
     warning("Running in TEST mode!!")
@@ -262,7 +262,7 @@ if (havetorun) {
     #  Split data to Clear Sky, non Clear sky and cloud sky data  --------------
     ## Method based and adapted from: Identification of Periods of Clear Sky Irradiance in Time Series of GHI Measurements _Matthew J. Reno and Clifford W. Hansen_.
 
-    #  Representation filtering  -----------------------------------------------
+    #  GLB Representation filtering  -------------------------------------------
     temp <- DATA[!is.na(GLB_att),
                  .(Day_N = .N,
                    DayLim = max(DayLength) * All_daily_ratio_lim),
@@ -272,22 +272,27 @@ if (havetorun) {
     Days_with_filtered_glb_data <- temp[ Day_N >= DayLim, .N ]
     cat("\nExcluded days:", Days_with_all_glb_data - Days_with_filtered_glb_data, "\n\n")
 
+    all_days_to_keep <- temp[ Day_N >= DayLim, Day ]
+    rm(temp)
 
+    ## Keep only good enough days
+    all_glb_datapoints     <- DATA[Day %in% all_days_to_keep, .N]
+    filterd_glb_datapoints <- DATA[, .N]
+    cat("\nKeeping:", 100 * all_glb_datapoints / filterd_glb_datapoints, "% of ALL data\n\n")
 
-
+    DATA <- DATA[Day %in% all_days_to_keep ]
 
 
     #__  ALL data  -------------------------------------------------------------
     DATA_all   <- DATA
 
-
-
-stop("dd")
-    wecare     <- grep("CSflag_", names(DATA), value = T)
     ## use only cm21 flags for trends
+    wecare     <- grep("CSflag_", names(DATA), value = T)
     wecare     <- grep("_11", wecare, invert = T, value = T)
+
     #__  CLEAR data  -----------------------------------------------------------
     DATA_Clear <- DATA[rowSums(DATA[, ..wecare ], na.rm = T) == 0,]
+
     #__  CLOUD data  -----------------------------------------------------------
     DATA_Cloud <- DATA[rowSums(DATA[, ..wecare ], na.rm = T) != 0,]
 
@@ -305,13 +310,8 @@ stop("dd")
     DATA_Cloud[, CS_ref_HOR := NULL]
 
 
-
-
-
-stop("dd")
-
     # ..................................................................... ----
-    #### 1. long-term  ---------------------------------------------------------
+    ##  1. long-term  ----------------------------------------------------------
 
     ##  Daily means  -----------------------------------------------------------
 
@@ -329,7 +329,7 @@ stop("dd")
                     doy           = yday(Date),
                     GLB_att_N     = sum(!is.na(GLB_att)),
                     HOR_att_N     = sum(!is.na(HOR_att)),
-                    DIR_att_N     = sum(!is.na(DIR_att))       ),
+                    DIR_att_N     = sum(!is.na(DIR_att))),
                  by = .( Date = Day ) ]
 
     CLEAR_1_daily_mean <-
@@ -346,7 +346,7 @@ stop("dd")
                       doy           = yday(Date),
                       GLB_att_N     = sum(!is.na(GLB_att)),
                       HOR_att_N     = sum(!is.na(HOR_att)),
-                      DIR_att_N     = sum(!is.na(DIR_att))  ),
+                      DIR_att_N     = sum(!is.na(DIR_att))),
                    by = .( Date = Day ) ]
 
     CLOUD_1_daily_mean <-
@@ -363,7 +363,7 @@ stop("dd")
                       doy           = yday(Date),
                       GLB_att_N     = sum(!is.na(GLB_att)),
                       HOR_att_N     = sum(!is.na(HOR_att)),
-                      DIR_att_N     = sum(!is.na(DIR_att))  ),
+                      DIR_att_N     = sum(!is.na(DIR_att))),
                    by = .( Date = Day ) ]
 
     ## _ Margin of error for confidence interval -------------------------------
