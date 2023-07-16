@@ -75,7 +75,7 @@ if (havetorun) {
 
     if (TEST) {
         warning("\nTEST MODE IS ACTIVE!!\n\n")
-        input_files <- sample(input_files, 3)
+        input_files <- sample(input_files, 2)
     }
 
     if (TEST | !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
@@ -134,7 +134,7 @@ if (havetorun) {
 
         ## retest
         test <- DATA[duplicated(DATA$Date) | duplicated(DATA$Date, fromLast = TRUE)]
-        cat("\n\nThere are ", nrow(test), " duplicate dates remaining!")
+        cat("\nThere are ", nrow(test), " duplicate dates remaining!\n")
 
         ## this is used by old scripts
         setorder(DATA,Date)
@@ -151,10 +151,9 @@ if (havetorun) {
     #                         Date = DATA$Date,
     #                         Elev = DATA$Elevat)
     # vec1$Diff <- c(0,diff(vec1$Sign))
-    #
     # vec1[which(vec1$Diff != 0), ]
 
-    #_  Select data for this project  ------------------------------------------
+    #  Select data for this project  -------------------------------------------
 
     #__  Set date range to use  ------------------------------------------------
     DATA <- DATA[Date < LAST_DAY ]
@@ -164,48 +163,57 @@ if (havetorun) {
     DATA <- DATA[Elevat >= 0, ]
 
     #__  Exclude low Sun elevation  --------------------------------------------
-    DATA[Elevat >= MIN_ELEVA, wattDIR     := NA ]
-    DATA[Elevat >= MIN_ELEVA, wattDIR_sds := NA ]
-    DATA[Elevat >= MIN_ELEVA, wattGLB     := NA ]
-    DATA[Elevat >= MIN_ELEVA, wattGLB_sds := NA ]
-    DATA[Elevat >= MIN_ELEVA, wattHOR     := NA ]
-    DATA[Elevat >= MIN_ELEVA, wattHOR_sds := NA ]
+    DATA[Elevat < MIN_ELEVA, wattDIR     := NA ]
+    DATA[Elevat < MIN_ELEVA, wattDIR_sds := NA ]
+    DATA[Elevat < MIN_ELEVA, wattGLB     := NA ]
+    DATA[Elevat < MIN_ELEVA, wattGLB_sds := NA ]
+    DATA[Elevat < MIN_ELEVA, wattHOR     := NA ]
+    DATA[Elevat < MIN_ELEVA, wattHOR_sds := NA ]
+
+    ## show included data
+    plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])
 
     #__  Bais paper obstacle filter  -------------------------------------------
+    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattDIR     := NA ]
+    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattDIR_sds := NA ]
+    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattGLB     := NA ]
+    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattGLB_sds := NA ]
+    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattHOR     := NA ]
+    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattHOR_sds := NA ]
 
+    ## show included data
+    plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])
 
-stop("dd")
 
     ### Filter min elevation
     # DATA <- DATA[Elevat >= MIN_ELEVA, ]
 
     ### Bais paper obstacle filter
     # DATA <- DATA[!(Azimuth > 35 & Azimuth < 120 & Elevat < 10)]
-    #+ echo=F, include=T
 
+
+    #__  Keep data characterized as 'good' by Radiation Quality control v13 ----
     if (D_13) {
         keepQF <- c("good","Possible Direct Obstruction (23)","Biology Building (22)")
-        #' ### Keep only data characterized as 'good' by the Radiation Quality control procedure **v13**
-        #' Keep data marked as `r cat(paste(keepQF,collapse = ", "))`.
-        #+ echo=F, include=T
         DATA[!QCF_DIR %in% keepQF, wattDIR := NA]
         DATA[!QCF_DIR %in% keepQF, wattHOR := NA]
         DATA[!QCF_GLB %in% keepQF, wattGLB := NA]
     }
 
+    #__  Keep data characterized as 'TRUE' by Radiation Quality control v14 ----
     if (D_14 | D_14_2) {
-        #' ### Keep only data characterized as 'TRUE' by the Radiation Quality control procedure **v14**
-        #+ echo=F, include=T
         DATA[QCF_DIR == FALSE, wattDIR := NA]
         DATA[QCF_DIR == FALSE, wattHOR := NA]
         DATA[QCF_GLB == FALSE, wattGLB := NA]
     }
 
+    #__ Count daylight length  -------------------------------------------------
+    DATA[, DayLength := .N, by = Day]
+
+    #__ DROP MISSING RECORDS!! -------------------------------------------------
     DATA <- DATA[ !(is.na(wattDIR) & is.na(wattGLB)) ]
 
-    #' ## TSI source
-    #' Info about time span of each TSI source used
-    #'
+    #__  Info for TIS time span source used  -----------------------------------
     TSI_info <- DATA[, .(Start = min(Date),
                          End   = max(Date)), by = TSI_Source]
     myRtools::write_dat(object = TSI_info,
@@ -213,26 +221,27 @@ stop("dd")
                         clean  = TRUE)
     rm(TSI_info)
 
-    #' ## Data preparation
-    #' ### Move measurements to mean earth distance
+
+stop("dd")
+
+    #  Data preparation  -------------------------------------------------------
+
+    #_  Move measurements to mean earth distance  ------------------------------
     DATA[, wattDIR_1au := wattDIR * (sun_dist ^ 2)]
     DATA[, wattGLB_1au := wattGLB * (sun_dist ^ 2)]
     DATA[, wattHOR_1au := wattHOR * (sun_dist ^ 2)]
-    #+ echo=F, include=T
 
-    # #' ### Relative to actual TSI at 1au variable representation
+    #_  Relative to actual TSI at 1au variable representation
     # DATA[ , DIR_att := wattDIR_1au / tsi_1au_comb ]
     # DATA[ , GLB_att := wattGLB_1au / tsi_1au_comb ]
     # DATA[ , HOR_att := wattHOR_1au / tsi_1au_comb ]
 
-    #' ### Use original variable representation
-    #+ echo=F, include=T
+    ### Use original variable representation
     DATA[, DIR_att := wattDIR_1au]
     DATA[, GLB_att := wattGLB_1au]
     DATA[, HOR_att := wattHOR_1au]
-    #+ echo=F, include=T
 
-    # #' ### Ground effect removal?
+    ### Ground effect removal?
     # #' Aerosol direct effects on global solar shortwave irradiance at high mountainous station Musala Bulgaria_Nojarov2021.pdf
     # DATA$wattGLB_1au <- DATA$wattGLB_1au / cosde(DATA$SZA)
     # DATA$wattDIR_1au <- DATA$wattDIR_1au / cosde(DATA$SZA)
