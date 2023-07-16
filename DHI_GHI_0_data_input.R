@@ -185,10 +185,10 @@ if (havetorun) {
     plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])
 
 
-    ### Filter min elevation
+    ## Filter min elevation
     # DATA <- DATA[Elevat >= MIN_ELEVA, ]
 
-    ### Bais paper obstacle filter
+    ## Bais paper obstacle filter
     # DATA <- DATA[!(Azimuth > 35 & Azimuth < 120 & Elevat < 10)]
 
 
@@ -207,10 +207,10 @@ if (havetorun) {
         DATA[QCF_GLB == FALSE, wattGLB := NA]
     }
 
-    #__ Count daylight length  -------------------------------------------------
+    #__  Count daylight length  ------------------------------------------------
     DATA[, DayLength := .N, by = Day]
 
-    #__ DROP MISSING RECORDS!! -------------------------------------------------
+    #__  DROP MISSING RECORDS!! ------------------------------------------------
     DATA <- DATA[ !(is.na(wattDIR) & is.na(wattGLB)) ]
 
     #__  Info for TIS time span source used  -----------------------------------
@@ -221,8 +221,6 @@ if (havetorun) {
                         clean  = TRUE)
     rm(TSI_info)
 
-
-stop("dd")
 
     #  Data preparation  -------------------------------------------------------
 
@@ -236,42 +234,62 @@ stop("dd")
     # DATA[ , GLB_att := wattGLB_1au / tsi_1au_comb ]
     # DATA[ , HOR_att := wattHOR_1au / tsi_1au_comb ]
 
-    ### Use original variable representation
+    ## Use original variable representation for conviniance
     DATA[, DIR_att := wattDIR_1au]
     DATA[, GLB_att := wattGLB_1au]
     DATA[, HOR_att := wattHOR_1au]
 
-    ### Ground effect removal?
-    # #' Aerosol direct effects on global solar shortwave irradiance at high mountainous station Musala Bulgaria_Nojarov2021.pdf
+    ## Ground effect removal?
+    ## Aerosol direct effects on global solar shortwave irradiance at high mountainous station Musala Bulgaria_Nojarov2021.pdf
     # DATA$wattGLB_1au <- DATA$wattGLB_1au / cosde(DATA$SZA)
     # DATA$wattDIR_1au <- DATA$wattDIR_1au / cosde(DATA$SZA)
-    # #+ echo=F, include=T
 
-    #' ### Calculate Bouguer atmospheric transparency
-    #' see: Changes in solar radiation and their influence on temperature trend in Estonia 1955 2007_Russak2009.pdf
+
+    ## Calculate Bouguer atmospheric transparency
+    ## Changes in solar radiation and their influence on temperature trend in Estonia 1955 2007_Russak2009.pdf
     DATA[, DIR_transp := ( wattDIR_1au / tsi_1au_comb ) ^ ( 1 / cosde(SZA) ) ]
-    #+ echo=F, include=T
+
 
     ## fix noon just in case
     DATA[Azimuth <= 180 , preNoon := TRUE ]
     DATA[Azimuth >  180 , preNoon := FALSE]
 
+    ## drop some data
+    DATA[, wattDIR_1au := NULL]
+    DATA[, wattGLB_1au := NULL]
+    DATA[, wattHOR_1au := NULL]
 
-    ## Split data to Clear Sky, non Clear sky and cloud sky data ---------------
+    #  Split data to Clear Sky, non Clear sky and cloud sky data  --------------
+    ## Method based and adapted from: Identification of Periods of Clear Sky Irradiance in Time Series of GHI Measurements _Matthew J. Reno and Clifford W. Hansen_.
 
-    #' ### Split data to Clear Sky, non Clear sky and cloud sky data
-    #' Method based and adapted to site from: Identification of Periods of Clear Sky
-    #' Irradiance in Time Series of GHI Measurements
-    #' _Matthew J. Reno and Clifford W. Hansen_.
-    #+ echo=F, include=T
+    #  Representation filtering  -----------------------------------------------
+    temp <- DATA[!is.na(GLB_att),
+                 .(Day_N = .N,
+                   DayLim = max(DayLength) * All_daily_ratio_lim),
+                 by = Day]
+
+    Days_with_all_glb_data      <- temp[ , .N ]
+    Days_with_filtered_glb_data <- temp[ Day_N >= DayLim, .N ]
+    cat("\nExcluded days:", Days_with_all_glb_data - Days_with_filtered_glb_data, "\n\n")
+
+
+
+
+
+
+    #__  ALL data  -------------------------------------------------------------
     DATA_all   <- DATA
 
+
+
+stop("dd")
     wecare     <- grep("CSflag_", names(DATA), value = T)
-    ## use only cm21 flags
+    ## use only cm21 flags for trends
     wecare     <- grep("_11", wecare, invert = T, value = T)
+    #__  CLEAR data  -----------------------------------------------------------
     DATA_Clear <- DATA[rowSums(DATA[, ..wecare ], na.rm = T) == 0,]
+    #__  CLOUD data  -----------------------------------------------------------
     DATA_Cloud <- DATA[rowSums(DATA[, ..wecare ], na.rm = T) != 0,]
-    #+ echo=F, include=T
 
     ## old flags usage
     # DATA_Clear <- DATA_all[ CSflag == 0 ]
@@ -286,6 +304,11 @@ stop("dd")
     DATA_Clear[, CS_ref_HOR := NULL]
     DATA_Cloud[, CS_ref_HOR := NULL]
 
+
+
+
+
+stop("dd")
 
     # ..................................................................... ----
     #### 1. long-term  ---------------------------------------------------------
