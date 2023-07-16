@@ -35,7 +35,7 @@ $(PDF): $(RMD)
 
 TARGET = Article
 RMD    = $(TARGET).Rmd
-PDF    = $(TARGET)_A.pdf
+PDF    = $(TARGET)_A.pdf 
 Ap1: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
@@ -85,6 +85,8 @@ $(PDF): $(RMD)
 	@#-cp -u "./figures/"*".dat" "$(presentation)/figures/"
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
+	@-touch Article.Rmd
+
 
 
 r1: $(RUNT)
@@ -100,7 +102,6 @@ $(RUNT): $(RMD)
 TARGET := DHI_GHI_2_sza_trends
 RMD    := $(TARGET).R
 PDF    := $(TARGET).pdf
-SLIDY  := $(TARGET).html
 RUNT   := ./runtime/$(TARGET).pdf
 
 p2: $(PDF)
@@ -111,14 +112,7 @@ $(PDF): $(RMD)
 	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
-
-h2: $(SLIDY)
-$(SLIDY): $(RMD)
-	@echo "Building: $@"
-	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
-	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
-	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
-	@#setsid mimeopen  $@ &
+	@-touch Article.Rmd
 
 r2: $(RUNT)
 $(RUNT): $(RMD)
@@ -131,7 +125,6 @@ $(RUNT): $(RMD)
 TARGET := DHI_GHI_3_trends_consistency
 RMD    := $(TARGET).R
 PDF    := $(TARGET).pdf
-SLIDY  := $(TARGET).html
 RUNT   := ./runtime/$(TARGET).pdf
 
 p3: $(PDF)
@@ -141,13 +134,7 @@ $(PDF): $(RMD)
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.pdf' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
-
-h3: $(SLIDY)
-$(SLIDY): $(RMD)
-	@echo "Building: $@"
-	-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$@')"
-	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
-	@# setsid mimeopen  $@ &
+	@-touch Article.Rmd
 
 r3: $(RUNT)
 $(RUNT): $(RMD)
