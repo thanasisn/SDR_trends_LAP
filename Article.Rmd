@@ -300,7 +300,7 @@ of the R language [@RCT2023], with an implementation based on the work of @Brent
 The optimization and the selection of the clear sky reference model, was performed on SDR observations for the period 2016 - 2021.
 During the optimization, eight simple clear sky radiation models were tested (Daneshyar-Paltridge-Proctor, Kasten-Czeplak, Haurwitz, Berger-Duffie, Adnot-Bourges-Campana-Gicquel, Robledo-Soler, Kasten and Ineichen-Perez), with a wide range of factors.
 These models are described in more details by @Reno2012 and evaluated by @Reno2016.
-We found, that Haurwitz's model, adjusted with the factor $a = `r signif(alpha,3)`$ yields one of the lowest root mean squared errors (RMSE), [....rephrased....]{.comment-start id="3" author="A N" date="2023-07-15T20:32:50Z"}while the whole procedure, manages to characterize large amount of our data[]{.comment-end id="3"}. Thus, our clear sky reference is derived by the Eq.\ \ref{eq:ahau}.
+We found, that Haurwitz's model, adjusted with the factor $a = `r signif(alpha,3)`$ yields one of the lowest root mean squared errors (RMSE), [....rephrased....]{.comment-start id="3" author="A N" date="2023-07-15T20:32:50Z"}while the procedure, manages to characterize the majority of our data[]{.comment-end id="3"}. Thus, our clear sky reference is derived by the Eq.\ \ref{eq:ahau}.
 
 
 <!-- cost fuction -->
@@ -308,7 +308,7 @@ We found, that Haurwitz's model, adjusted with the factor $a = `r signif(alpha,3
 f(a) = \frac{1}{n}\sum_{i=1}^{n} ( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i} )^2 \label{eq:minf}
 \end{equation}
 
-where: $n$ is the total number of daylight records, $\text{SDR}_{\text{CSid},i}$ are the records identified as clear sky by CSid, $a$ is a hypothetical adjustment factor, and $\text{SDR}_{\text{testCSref},i}$ is the tested model clear sky radiation.
+where: $n$ is the total number of daylight records, $\text{SDR}_{\text{CSid},i}$ are the records identified as clear sky by CSid, $a$ is a hypothetical adjustment factor, and $\text{SDR}_{\text{testCSref},i}$ is the tested model of clear sky radiation.
 
 
 <!-- adjusted Haurwitz -->
@@ -316,7 +316,7 @@ where: $n$ is the total number of daylight records, $\text{SDR}_{\text{CSid},i}$
 \text{SDR}_\text{CSref} = a \times \text{SDR}_\text{Haurwitz}  = `r signif(alpha,3)` \times 1098 \times \cos( \text{SZA} ) \times \exp \left( \frac{ - 0.057}{\cos(\text{SZA})} \right) \label{eq:ahau}
 \end{equation}
 
-where: $\text{SDR}_\text{CSref}$ is the reference clear sky SDR, in $\text{w}\;\text{m}^{-2}$.
+where: $\text{SDR}_\text{CSref}$ is the reference clear sky SDR, in $\text{w}\,\text{m}^{-2}$.
 
 
 The criteria that were used to identify whether a measurement was taken
@@ -341,7 +341,7 @@ date="2023-07-15T22:48:13Z"}
 <!-- 1. MeanVIP -->
 <!-- ### Mean value of irradiance during the time period. -->
 
-The mean of the measured value $\overline{\text{SDR}}_i = \text{mean}_{n=i-5}^{n=i+5}[\text{SDR}_{n}]$ must be inside an envelope based on the equivalent mean of the reference model $\overline{\text{SDR}}_\text{CSref} = \text{mean}_{n=i-5}^{n=i+5}[\text{SDR}_{\text{CSref},n}]$ (Eq. \ref{eq:MeanVIP}).
+a) Mean of the measured $\overline{\text{SDR}}_i$ <!--= \text{mean}_{n=i-5}^{n=i+5}[\text{SDR}_{n}]$--> and running mean of the reference $\overline{\text{SDR}}_{\text{CSref},i}$ <!-- = \text{mean}_{n=i-5}^{n=i+5}[\text{SDR}_{\text{CSref},n}]$--> (Eq. \ref{eq:MeanVIP}).
 
 \begin{equation}
 `r 1 - CS_ref_rm_VIP_RelLow` \times \overline{\text{SDR}}_{\text{CSref},i} - `r CS_ref_rm_VIP_LowOff`
@@ -354,15 +354,16 @@ The mean of the measured value $\overline{\text{SDR}}_i = \text{mean}_{n=i-5}^{n
 <!-- 2. MaxVIP -->
 <!-- ### Max value of irradiance during the time period. -->
 
-The running max measured value $M_{\text{SDR},i} = \max_{n=i-5}^{n=i+5}[\text{SDR}_{n}]$, is compared to a similar constructed value from the reference $M_{CSi} = \max_{n=i-5}^{n=i+5}[\text{SDR}_{\text{CSref},n}]$ (Eq.\ \ref{eq:MaxVIP}).
+<!-- The running max measured value $M_{\text{SDR},i} = \max_{n=i-5}^{n=i+5}[\text{SDR}_{n}]$, is compared to a similar constructed value from the reference $M_{CSrefi} = \max_{n=i-5}^{n=i+5}[\text{SDR}_{\text{CSref},n}]$ (Eq.\ \ref{eq:MaxVIP}). -->
+
+b) Maximum measured value $M_{\text{}}$, and maximum reference $M_{\text{CSref}}$ (Eq.\ \ref{eq:MaxVIP}).
 
 \begin{equation}
-`r MaxVIP_fct` \times M_{CSi} - `r MaxVIP_off_low`
-< M_{\text{SDR},i} <
-`r MaxVIP_fct` \times M_{CSi} + `r MaxVIP_off_upp`
+`r MaxVIP_fct` \times M_{\text{CSref},i} - `r MaxVIP_off_low`
+< M_{\text{}i} <
+`r MaxVIP_fct` \times {\text{CSref},i} + `r MaxVIP_off_upp`
 \label{eq:MaxVIP}
 \end{equation}
-
 
 <!-- 3. VIL -->
 <!-- ### Variability in irradiance by line length. -->
