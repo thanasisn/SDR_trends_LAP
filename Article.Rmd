@@ -367,7 +367,7 @@ b) Maximum measured value $M_{\text{}}$ (Eq.\ \ref{eq:MaxVIP}).
 
 <!-- 3. VIL -->
 <!-- ### Variability in irradiance by line length. -->
-c) Length $L_i$ of the sequential line segments, connecting the points of the $`r nt`$ SDR values (Eq. \ref{eq:VILcr}).
+c) Length $L_i$ of the sequential line segments, connecting the points of the $`r nt`$ SDR values (Eq. \ref{eq:VILeq}).
 \begin{equation}
 L_i = \sum_{i=1}^{n-1}\sqrt{\left ( \text{SDR}_{i+1} - \text{SDR}_{i}\right )^2 + \left ( t_{i+1} - t_i \right )^2}
 \label{eq:VILeq}
