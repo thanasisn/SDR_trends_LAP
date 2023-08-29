@@ -275,7 +275,7 @@ TSI$var                <- NULL
 setorder(TSI, -slope.stat_sig)
 rownames(TSI) <- NULL
 names(TSI) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Trend statistical signif. [%]")
-TSIskopeAll <- TSI[`Sky condition` == "All sky cond."]
+TSIslopeAll <- TSI[`Sky condition` == "All sky cond."]
 ```
 
 <!-- # Detection of clear periods in GHI measurements for SDR trends. -->
@@ -454,7 +454,7 @@ To estimate SZA contribution to the SDR trends, the one-minute data were aggrega
 We calculated the SDR trends, from the mean daily values of the departure from the seasonal values, for the whole time series for the three sky conditions (Table\ \ref{tab:trendtable}).
 We present only the plot for the trend under all-sky conditions (Figure\ \ref{fig:trendALL}), as the plots for clear-sky condition and cloud-sky condition, are very similar.
 In the studied time period, there is no significant break or change in the variability of the overall trends.
-Other studies for the European region are reporting a change of the SDR slope, around the 1980, few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009].
+Other studies for the European region are reporting a change of the SDR slope, around the 1980, few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009]. It is interesting to note, that for the observation period, the trend of the TSI is $`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\%/year$.
 
 <!-- \footnotesize -->
 ```{r trendtable, echo=F}
