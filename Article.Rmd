@@ -454,7 +454,8 @@ To estimate SZA contribution to the SDR trends, the one-minute data were aggrega
 We calculated the SDR trends, from the mean daily values of the departure from the seasonal values, for the whole time series for the three sky conditions (Table\ \ref{tab:trendtable}).
 We present only the plot for the trend under all-sky conditions (Figure\ \ref{fig:trendALL}), as the plots for clear-sky condition and cloud-sky condition, are very similar.
 In the studied time period, there is no significant break or change in the variability of the overall trends.
-Other studies for the European region are reporting a change of the SDR slope, around the 1980, few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009]. It is interesting to note, that for the observation period, the trend of the TSI is $`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\%/year$.
+Other studies for the European region are reporting a change of the SDR slope, around the 1980, few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009]. It is interesting to note, that for the observation period, the trend of the TSI is
+$`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\%/year$.
 
 <!-- \footnotesize -->
 ```{r trendtable, echo=F}
@@ -492,12 +493,15 @@ knitr::include_graphics("./images/LongtermTrends-2.png")
 
 Although, using the cumulative sums plots we can reveal some structure within the trends and some difference between the sky conditions [@Regier2019]. 
 On all three plots on Figure\ \ref{fig:cumsum}, we observe a step downward part at the start of the period until about 2000, an almost steady part until about 2016 for All-sky and Clear-sky conditions (Figures\ \ref{fig:cumsum-1}, \ref{fig:cumsum-2}), and until 2009 for Cloud-sky conditions (Figure\ \ref{fig:cumsum-3}), and finally, a steep upward part until the present.
-For a more uniform trend, we expect the cumulative sum plot of the anomaly, to have a symmetric 'V' shape.
-In our case, for all sky conditions we observe a period where the cumulative remain relative steady.
-This indicates, that the anomaly was evenly distributed around the climatological mean.
-Another distinct feature of the cumulative plots, is the difference, between the sky conditions, of the start of the sums sudden increase, for the latter part of the period.
-This can make us to suspected that clear-Sky conditions SDR and cloud-sky SDR is affected by different mechanisms.
+For a uniform trend, we expected the cumulative sum plot of the anomaly to have a symmetric 'V' shape.
+This would indicate, that the anomaly is evenly distributed around the climatological mean.
+In our case, for all sky conditions we observe periods where the cumulative sum remains relative steady, roughly in the middle of the study dataset.
+Another distinct feature of the cumulative plots, is the difference, between the Cloud-sky and the rest of the sky conditions, where they display an supplementary behavior. 
 
+<!--
+This can make us to suspected that clear-Sky conditions SDR and cloud-sky SDR is affected by different mechanisms.
+The similarity of the All-sky and Clear-sky conditions, can make us to suspected that on both sky conditions the attenuation of SDR has .
+-->
 
 ```{r cumsum, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR for three different sky conditions', fig.subcap=c('All-sky conditions', 'Clear-sky conditions', 'Cloud-sky conditions'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics(c(
