@@ -543,11 +543,11 @@ Aerosols and clouds
 ## Effects of the solar zenith angle on SDR.
 
 The relative position of the Sun in the sky, is a major drive of the attenuation of SDR reaching the ground, as it is affected by the radiation path in the atmosphere and possible human activities in urban environment emitting aerosols [@Wang2021].
-In order to estimate the contribution of the SZA, we group the anomaly data in $1^\circ$ SZA bins, and calculated the overall trend for each bin (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b).
-Although there is a seasonal change of SZA limits than is not represented here, the brightening effect of SDR is stronger for All-sky and Clear-sky condition for low Sun elevation angles.
+In order to estimate the contribution of the SZA, we group the anomaly data in $1^\circ$ SZA bins, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
+Although there is a seasonal change of SZA limits than is not represented here, the brightening effect of SDR is stronger for All-sky and Clear-sky condition for low Sun elevation angles (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b).
+In the case of Cloud-sky condition (Figure\ \ref{fig:szatrends}c), there is no strong correlation between SDR brightening and SZA, except for some low Sun angles, that occur only for a small part of the year, and thus we can not draw more conclusions from this analysis for the over trend.
 
-
-```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.35\\linewidth', out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$).', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.35\\linewidth', out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics("./images/SzaTrends-13.png")
 knitr::include_graphics("./images/SzaTrends-17.png" )
 knitr::include_graphics("./images/SzaTrends-21.png")
