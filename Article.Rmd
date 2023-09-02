@@ -562,13 +562,15 @@ knitr::include_graphics("./images/SzaTrends-21.png")
 
 
 Similar to the long term trends discussed above, we have produced the deseasonalized trend for the different sky conditions, for each season of the year, using the corresponding mean monthly values.
-While in Spring and Summer the brightening of the SDR seem to be very low, there are significant changes in Winter and Autumn.
 
 
+While in Spring and Summer the brightening of the SDR seem to be very low, although the statistical significance is now adequate for all cases, there are significant changes in Winter and Autumn
+(Figure\ \ref{fig:seasonalALL} and Table\ \ref{tab:trendseasontable}).
+Especially for winter and 
 
 This can give us a better understanding of the annual cycle of the trends.
 
-```{r seasonalALL, echo=F, fig.cap="Trends by season for all condition. Displaying monthly means of daily means.", out.width="100%"}
+```{r seasonalALL, echo=F, fig.cap="SDR trends by season of the year for the three sky conditions. Each point is a monthly mean calculated from daily means. The vertical scale is common for all subplots, for easier comparison.", out.width="100%"}
 knitr::include_graphics("./images/SeasonalTrendsTogether-1.png")
 ```
 
@@ -604,6 +606,7 @@ names(pp) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Season", "St
 ## order by season
 target    <- c("Winter", "Spring", "Summer", "Autumn")
 new_order <- sapply(target, function(x,pp){which(pp$Season == x)}, pp=pp)
+which(pp)
 pp        <- pp[new_order,]
 ## numeric precision
 pp$`Trend [%/year]`          <- signif(pp$`Trend [%/year]`, 3)
@@ -615,7 +618,9 @@ rownames(pp) <- NULL
 # panderOptions("table.alignment.default", "left")
 panderOptions("table.alignment.default", "center")
 pander(pp,
-       caption = "\\label{tab:trendseasontable}SDR trends of monthly anomaly for each season of the year. The vertical scale is common for all subplots, for easier comparison.")
+       justify = c('center', 'center', 'right', 'right', 'center'),
+       split.table = Inf,
+       caption = "\\label{tab:trendseasontable}SDR trends of monthly anomaly for each season of the year.")
 ```
 <!-- \normalsize -->
 
