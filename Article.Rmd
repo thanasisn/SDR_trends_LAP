@@ -562,6 +562,9 @@ knitr::include_graphics("./images/SzaTrends-21.png")
 
 
 Similar to the long term trends discussed above, we have produced the deseasonalized trend for the different sky conditions, for each season of the year, using the corresponding mean monthly values.
+While in Spring and Summer the brightening of the SDR seem to be very low, there are significant changes in Winter and Autumn.
+
+
 
 This can give us a better understanding of the annual cycle of the trends.
 
