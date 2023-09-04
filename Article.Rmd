@@ -661,6 +661,8 @@ knitr::include_graphics("./images/CumulativeDailyCumSum-9.png")
 
 # Conclusions
 
+We demonstrate that in the period `r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is brightening trend of SDR for All-sky conditions ($`r alltrend`\%/year$) and Clear-sky conditions ($`r cleartrend`\%/year$)
+
 Our result for all-sky condition ($`r alltrend`\%/year$), reaffirm the previous results of @Bais2013 for the site.
 The increase of this trend, shows that the phenomenon and probably the causes have been amplified.
 
