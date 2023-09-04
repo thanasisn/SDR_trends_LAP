@@ -661,18 +661,17 @@ knitr::include_graphics("./images/CumulativeDailyCumSum-9.png")
 
 # Conclusions
 
-We demonstrate that in the period `r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is brightening trend of SDR for All-sky conditions ($`r alltrend`\%/year$) and Clear-sky conditions ($`r cleartrend`\%/year$)
+We demonstrate that in the period `r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is brightening trend of SDR for All-sky conditions ($`r alltrend`\%/year$).
+On a previous study [@Bais2013] for the period 1993 - 2011 the trend was found to be $0.33\%/year$.
+The increase of this trend, indicates that the phenomenon and probably the causes, still persists.
+Accordingly, we found a similar trend for Clear-sky conditions ($`r cleartrend`\%/year$) that further supports that the brightening can be independent from the cloud occurrences.
+We have calculate the effect of TSI variability to be negligible, but unfortunately there is no available data for this period for the Aerosols, in order to estimate their effect on SDR, which is the most probable main cause.
 
-Our result for all-sky condition ($`r alltrend`\%/year$), reaffirm the previous results of @Bais2013 for the site.
-The increase of this trend, shows that the phenomenon and probably the causes have been amplified.
+The dimming effect of SDR under Cloud-sky condition ($`r cloudtrend`\%/year$), shows that clouds can also attenuate the amount of SDR reaching the ground, and changes on their occurrences can effect the net energy balance.
+Although, we have no adequate data to investigate long term changes of cloud formation in the region, in order to infer if the SDR trend we observe under Cloud-sky is biased by those changes.
 
 Brightening is driven during Winter and Summer
 
-.....
-Also, the trend of $`r cloudtrend`\%/year$ for cloud-sky condition indicate the major part that clouds play on the
-.....
-
-.......
 
  
 About:

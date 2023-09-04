@@ -575,7 +575,7 @@ for (DBn in dbs) {
         cat("\n \n \\footnotesize \n ")
         cat(
             pander(
-                DB[ order(abs(DB[[avar]]), decreasing = T )[1:5] , ..wca ],
+                DB[order(abs(DB[[avar]]), decreasing = T )[1:5] , ..wca ],
                 cap = "Extreme anomaly values"
             )
         )
@@ -592,9 +592,9 @@ for (DBn in dbs) {
 vars        <- c("GLB_att_des")
 
 ## Monthly aggregation
-dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
-                   "CLEAR_1_D_bySeason_DESEAS",
-                   "CLOUD_1_D_bySeason_DESEAS")
+dbs         <- c("ALL_1_D_bySeason_DESEAS",
+                 "CLEAR_1_D_bySeason_DESEAS",
+                 "CLOUD_1_D_bySeason_DESEAS")
 
 Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 
@@ -687,7 +687,7 @@ for (avar in vars) {
             legend("bottom", lty = 1, bty = "n", lwd = 2, cex = 0.8,
                    paste("Trend: ",
                          if (fit[2] > 0) '+' else '-',
-                         signif(abs(fit[2]), 3),
+                         signif(abs(fit[2]), 2),
                          "% / year")
             )
         }
