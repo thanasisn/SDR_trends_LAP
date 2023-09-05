@@ -128,17 +128,16 @@ suppressMessages(
 παγκόσμιες εκτιμήσεις για την περιοχή της Μεσογείου.
 π.χ. https://link.springer.com/article/10.1007/s00382-022-06438-3
 -->
-....
 
+<!--
 more about trend in relation to other trends
 Aerosols and clouds
-
-......
+-->
 
 The shortwave downward solar irradiance (SDR) at Earth's surface play a significant role, on its climate.
 Changes of the SDR can be related to changes on Earth's energy budget, the mechanisms of climate change, and water and carbon cycle [@Wild2009].
-Can also affect, solar and agricultural production, and living organisms.
-Studies of SDR variability, have identified some distinct SDR trends on different regions of the world and for different time periods.
+Can also affect, solar and agricultural production, and all living organisms.
+Studies of SDR variability, have identified some distinct SDR trends on different regions of the world on different time periods.
 The term 'brightening' is generally used to describe periods of positive SDR trend, and 'dimming' for negative trend.
 There are many cases on the long term records of irradiance, showing a systematic change of SDR's trend slope, occurring roughly at the last decades of the 20th century.
 <!-- Trends china -->
@@ -522,14 +521,10 @@ knitr::include_graphics(c(
 
 
 
-
-....
-
+<!--
 more about trend in relation to other trends
 Aerosols and clouds
-
-......
-
+-->
 
 
 <!-- ```{r trendCLEAR, echo=F, fig.cap="Daily SDR seasonal anomaly and long term trend, for clear sky conditions."} -->
@@ -663,34 +658,18 @@ knitr::include_graphics("./images/CumulativeDailyCumSum-9.png")
 
 We demonstrate that in the period `r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is brightening trend of SDR for All-sky conditions ($`r alltrend`\%/year$).
 On a previous study [@Bais2013] for the period 1993 - 2011 the trend was found to be $0.33\%/year$.
-The increase of this trend, indicates that the phenomenon and probably the causes, still persists.
-Accordingly, we found a similar trend for Clear-sky conditions ($`r cleartrend`\%/year$) that further supports that the brightening can be independent from the cloud occurrences.
+The increase of this trend, indicates that the phenomenon and probably the causes, are still occurring.
+Accordingly, we found a similar trend for Clear-sky conditions ($`r cleartrend`\%/year$) that further supports that the brightening can be independent from the cloud occurrences. 
 We have calculate the effect of TSI variability to be negligible, but unfortunately there is no available data for this period for the Aerosols, in order to estimate their effect on SDR, which is the most probable main cause.
-
+The attenuation of SDR by Aerosols over Europe have been proposed as major factor by @Wild2021.
 The dimming effect of SDR under Cloud-sky condition ($`r cloudtrend`\%/year$), shows that clouds can also attenuate the amount of SDR reaching the ground, and changes on their occurrences can effect the net energy balance.
-Although, we have no adequate data to investigate long term changes of cloud formation in the region, in order to infer if the SDR trend we observe under Cloud-sky is biased by those changes.
+Because we have no adequate data to investigate long term changes of cloud formation in the region, we can not infer if the SDR trend we observe under Cloud-sky is biased by changes in clouds and local climate.
+The observed brightening of SDR over Thessaloniki, is correlated with the SZA (higher SZA, have stronger brightening trends). And also, with the seasons of the year, where Winter and Autumn show a significant strong trend, in contrast to Spring and Summer.
 
-Brightening is driven during Winter and Summer
-
-
- 
-About:
-
-- long terms trends
-- seasonal trends
-- effect of SZA
-- effect of clouds
-
-- Aerosols
-
-
+<!--
 similar results with Evidence for Clear‐Sky Dimming and Brightening in Central Europe_Wild2021.pdf
 include in discussion
+-->
 
 
-
-
--------------------------------------------------
-                   **END**
--------------------------------------------------
-\newpage
+# References
