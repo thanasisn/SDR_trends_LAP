@@ -60,6 +60,7 @@ $(PDF): $(RMD)
 	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', clean = TRUE, output_format='bookdown::pdf_document2', output_file='Article_A$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).pdf')"
 	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', clean = TRUE, output_format='rticles::elsevier_article', output_file='Article_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).pdf')"
 	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', clean = TRUE, output_format='bookdown::word_document2', output_file='Article_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).docx')"
+	-mkdir -p "Build_$(shell echo $$(($$(cat $(BLD_FILE)) + 1)))"
 	-cp 'Article.Rmd' 'Article_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).Rmd'
 	$(call buildver)
 
