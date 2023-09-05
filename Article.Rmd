@@ -505,18 +505,19 @@ knitr::include_graphics("./images/LongtermTrends-2.png")
 
 
 Although the trends are quite constant, using plots of the cumulative sums we can reveal some structure within the trends and some differences between the sky conditions [@Regier2019]. 
-On all three plots on Figure\ \ref{fig:cumsum}, we observe a downward part at the start of the period until about 2000, an almost steady part until about 2016 for All-sky and Clear-sky conditions (Figures\ \ref{fig:cumsum-1}, \ref{fig:cumsum-2}), and until 2009 for Cloud-sky conditions (Figure\ \ref{fig:cumsum-3}), and finally, a steep upward part until the present.
+On all three plots on Figure\ \ref{fig:cumsum}, we observe a downward part at the start of the period until about 2000, an almost steady part until about 2016 for All-sky and Clear-sky conditions (Figures\ \ref{fig:cumsum-1}, \ref{fig:cumsum-2}) and until 2009 for Cloud-sky conditions (Figure\ \ref{fig:cumsum-3}), and finally, a steep upward part until the present.
 For a uniform trend, we expected the cumulative sum plot of the anomaly to have a symmetric 'V' shape.
 This would indicate, that the anomaly is evenly distributed around the climatological mean.
-In our case, for all sky conditions we observe periods where the cumulative sum remains relative steady, roughly in the middle of the study dataset.
+In our case, for all sky conditions, we observe periods where the cumulative sum remains relative steady, roughly in the middle of the study dataset.
 Another distinct feature of the cumulative plots, is the difference, between the Cloud-sky and the rest of the sky conditions, where they display an supplementary behavior. 
+The causes for these discrepancies haven't been investigated yet. 
 
 <!--
 This can make us to suspected that clear-Sky conditions SDR and cloud-sky SDR is affected by different mechanisms.
 The similarity of the All-sky and Clear-sky conditions, can make us to suspected that on both sky conditions the attenuation of SDR has .
 -->
 
-```{r cumsum, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR for three different sky conditions', fig.subcap=c('All-sky conditions', 'Clear-sky conditions', 'Cloud-sky conditions'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+```{r cumsum, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR for three different sky conditions.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics(c(
     "./images/CumulativeDailyCumSum-1.png",    # ALL sky
     "./images/CumulativeDailyCumSum-5.png",    # CLEAR sky
@@ -553,8 +554,9 @@ Aerosols and clouds
 
 The relative position of the Sun in the sky, is a major drive of the attenuation of SDR reaching the ground, as it is affected by the radiation path in the atmosphere and possible human activities in urban environment emitting aerosols [@Wang2021].
 In order to estimate the contribution of the SZA, we group the anomaly data in $1^\circ$ SZA bins, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
-Although there is a seasonal change of SZA limits than is not represented here, the brightening effect of SDR is stronger for All-sky and Clear-sky condition for low Sun elevation angles (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b).
-In the case of Cloud-sky condition (Figure\ \ref{fig:szatrends}c), there is no strong correlation between SDR brightening and SZA, except for some low Sun angles, that occur only for a small part of the year, and thus we can not draw more conclusions from this analysis for the over trend.
+Although there is a seasonal variation of the minimum SZA, that is not examined here.
+The brightening effect of SDR is stronger for All-sky and Clear-sky condition for low Sun elevation angles (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b).
+In the case of Cloud-sky condition (Figure\ \ref{fig:szatrends}c), there is no strong correlation between SDR brightening and SZA, except for some low Sun angles, that occur only for a small part of the year, and thus we can not draw more conclusions from this analysis for the overall trends.
 
 ```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$).', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.35\\linewidth', out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics("./images/SzaTrends-13.png")
@@ -567,10 +569,10 @@ knitr::include_graphics("./images/SzaTrends-21.png")
 ## Long term trends by season of year
 
 
-Similar to the long term trends discussed above, we have produced the deseasonalized trend for the different sky conditions, for each season of the year, using the corresponding mean monthly values
+Similar to the long term trends discussed above, we have produced the deseasonalized trend for the different sky conditions and for each season of the year, using the corresponding mean monthly values
 (Figure\ \ref{fig:seasonalALL} and Table\ \ref{tab:trendseasontable}).
 For All-sky condition the brightening of SDR is very significant for the Winter, close to the long term trend for the Autumn, and almost four times lower than the long term trend for Sprint and Summer, indicating a relation to the cloud pattern of each season.
-Moreover when examining the Clear- and Cloud-sky conditions the trends between these condition are are almost complementary to each other for Winter and Autumn respectively. On the latter cases during Spring and Summer the statistical significance along with the actual trend are very low for a meaningful comparison.
+Moreover when examining the Clear- and Cloud-sky conditions the trends between these condition are almost complementary to each other for Winter and Autumn respectively. On the latter cases, during Spring and Summer the statistical significance along with the actual trend are very low for a meaningful comparison.
 
 ```{r seasonalALL, echo=F, fig.cap="SDR trends by season of the year for the three sky conditions. Each point is a monthly mean calculated from daily means. The vertical scale is common for all subplots, for easier comparison.", out.width="100%"}
 knitr::include_graphics("./images/SeasonalTrendsTogether-1.png")
@@ -667,15 +669,19 @@ knitr::include_graphics("./images/CumulativeDailyCumSum-9.png")
 
 # Conclusions
 
-We demonstrate that in the period `r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is brightening trend of SDR for All-sky conditions ($`r alltrend`\%/year$).
-On a previous study [@Bais2013] for the period 1993 - 2011 the trend was found to be $0.33\%/year$.
+We demonstrate that in the period 
+`r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is a brightening trend of SDR for All-sky conditions ($`r alltrend`\%/year$).
+On a previous study [@Bais2013], for the period 1993 - 2011 the trend was found to be $0.33\%/year$.
 The increase of this trend, indicates that the phenomenon and probably the causes, are still occurring.
 Accordingly, we found a similar trend for Clear-sky conditions ($`r cleartrend`\%/year$) that further supports that the brightening can be independent from the cloud occurrences. 
-We have calculate the effect of TSI variability to be negligible, but unfortunately there is no available data for this period for the Aerosols, in order to estimate their effect on SDR, which is the most probable main cause.
+We have calculated the effect of TSI variability to be a negligible factor in SDR variability.
+Unfortunately, there is no available data for this period for the Aerosols, in order to estimate their effect on SDR, which is the most probable main cause.
 The attenuation of SDR by Aerosols over Europe have been proposed as major factor by @Wild2021.
 The dimming effect of SDR under Cloud-sky condition ($`r cloudtrend`\%/year$), shows that clouds can also attenuate the amount of SDR reaching the ground, and changes on their occurrences can effect the net energy balance.
 Because we have no adequate data to investigate long term changes of cloud formation in the region, we can not infer if the SDR trend we observe under Cloud-sky is biased by changes in clouds and local climate.
 The observed brightening of SDR over Thessaloniki, is correlated with the SZA (higher SZA, have stronger brightening trends). And also, with the seasons of the year, where Winter and Autumn show a significant strong trend, in contrast to Spring and Summer.
+
+Future observation from the colocated pyrheliometer, may provide us with the means to further investigate the variability of Sun radiation on ground level in Thessaloniki. 
 
 <!--
 similar results with Evidence for Clear‐Sky Dimming and Brightening in Central Europe_Wild2021.pdf
