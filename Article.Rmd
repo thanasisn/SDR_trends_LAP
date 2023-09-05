@@ -251,8 +251,9 @@ which was adapted and configured for the site, as the authors suggest.
 
 <!-- CS subjectivity -->
 We have to note, that the definition of what constitutes as clear or cloudy sky, has some subjectivity, in any method of characterization.
-As a result, the details of the definition are site specific, it rely on a combination of thresholds and comparisons with ideal actinometric models and statistical analysis on different signal metrics.
-The CSid algorithm was calibrated with the main focus, to identify the presence of clouds on the sky dome. Although the fine tuning of the procedure, few marginal cases exist, that have been identified manually as false positive or false negative but cannot affect the final results of the study.
+As a result, the details of the definition are site specific, it relies on a combination of thresholds and comparisons with ideal actinometric models and statistical analysis on different signal metrics.
+The CSid algorithm was calibrated with the main focus, to identify the presence of clouds on the sky dome.
+Although the fine-tuning of the procedure, few marginal cases exist, that have been identified manually as false positive or false negative but cannot affect the final results of the study.
 
 
 ```{r setup, echo=F, include=T, eval=TRUE}
@@ -326,21 +327,25 @@ where: $\text{SDR}_\text{CSref}$ is the reference clear sky SDR, in $\text{w}\,\
 The criteria that were used to identify whether a measurement was taken
 under clear-sky conditions are presented below.
 A data point is flagged
-as "clear-sky" if all criteria are satisfied.
+as "clear-sky" if all criteria are satisfied, otherwise it is considered to be "cloud-sky".
 Each criterion was applied
 for a running window of $`r nt`$ consecutive one-minute measurements, and
 the characterization is assigned to the central value of the window.
-Each parameter was calculated both from the measurements and the
-clear-sky model.
+Each parameter, was calculated both from the observations and the
+reference clear sky model, for each comparison.
 The allowable range of variation is defined by the
 model-derived value of the parameter multiplied by a factor plus an
-offset. [.... .expanded the description ....]{.comment-start id="4"
-author="A N" date="2023-07-15T22:48:13Z"}The factors and offsets were
+offset. 
+<!--[.... .expanded the description ....]{.comment-start id="4"
+author="A N" date="2023-07-15T22:48:13Z"}
+-->
+The factors and the offsets were
 determined empirically, by manual inspecting each filters performance on
-selected days, and adjusting them accordingly, during the iterative
-process.[[]{.comment-end id="4"}]{.insertion author="A N"
+selected days, and adjusting them accordingly, during an iterative
+process.
+<!--[[]{.comment-end id="4"}]{.insertion author="A N"
 date="2023-07-15T22:48:13Z"}
-
+-->
 
 <!-- 1. MeanVIP -->
 <!-- ### Mean value of irradiance during the time period. -->
@@ -350,7 +355,7 @@ date="2023-07-15T22:48:13Z"}
 a) Mean of the measured $\overline{\text{SDR}}_i$ (Eq. \ref{eq:MeanVIP}).
 \begin{equation}
 `r 1 - CS_ref_rm_VIP_RelLow` \times \overline{\text{SDR}}_{\text{CSref},i} - `r CS_ref_rm_VIP_LowOff`
-< \overline{SDR}_i <
+< \overline{\text{SDR}}_i <
 `r 1 + CS_ref_rm_VIP_RelUpp` \times \overline{\text{SDR}}_{\text{CSref},i} + `r CS_ref_rm_VIP_UppOff`
 \label{eq:MeanVIP}
 \end{equation}
@@ -365,7 +370,7 @@ b) Maximum measured value $M_{\text{}}$ (Eq.\ \ref{eq:MaxVIP}).
 \begin{equation}
 `r MaxVIP_fct` \times M_{\text{CSref},i} - `r MaxVIP_off_low`
 < M_{\text{}i} <
-`r MaxVIP_fct` \times {\text{CSref},i} + `r MaxVIP_off_upp`
+`r MaxVIP_fct` \times M_{\text{CSref},i} + `r MaxVIP_off_upp`
 \label{eq:MaxVIP}
 \end{equation}
 
@@ -377,7 +382,7 @@ L_i = \sum_{i=1}^{n-1}\sqrt{\left ( \text{SDR}_{i+1} - \text{SDR}_{i}\right )^2 
 \label{eq:VILeq}
 \end{equation}
 \begin{equation}
-`r MinVIL_fct` \times L_{\text{CSref},i} - `r offVIL_dwl` < L_i < `r MaxVIL_fct` L_{\text{CSref},i} + `r offVIL_upl`
+`r MinVIL_fct` \times L_{\text{CSref},i} - `r offVIL_dwl` < L_i < `r MaxVIL_fct` \times L_{\text{CSref},i} + `r offVIL_upl`
 \label{eq:VILcr}
 \end{equation}
 where: $t_i$ is the time each SDR measurement has been measured
@@ -423,8 +428,9 @@ On the latter instances, Sun is systematically, not visible by the instrument's 
 <!-- 1au -->
 To make the measurements comparable throughout the dataset, we adjusted all one-minute radiometric values to the mean Sun - Earth distance.
 <!-- TSI -->
-Subsequently, we made all measurements relative to the Total Solar Irradiance (TSI) at $1\,\text{au}$, in order to compensate for the Sun's intensity variability, using a homogenized time series of satellite TSI observations.
-The TSI data we use are part of the "NOAA Climate Data Record of Total Solar Irradiance" dataset [@Coddington2005].Where the initial daily values, were interpolated to match with the time step of our measurements. 
+Subsequently, we made all measurements relative to the Total Solar Irradiance (TSI) at $1\,\text{au}$, in order to compensate for the Sun's intensity variability, using a <!--homogenized--> time series of satellite TSI observations.
+The TSI data we use are part of the "NOAA Climate Data Record of Total Solar Irradiance" dataset [@Coddington2005]. 
+Where the initial daily values, were interpolated to match with the time step of our measurements. 
 The final dataset contains
 $`r SDR_N_All`$
 one-minute measurements, of which, 
@@ -435,7 +441,7 @@ as under cloud-sky conditions.
 <!-- The TSI data we use, is a combination of data from NOAA [@Coddington2005] (for `r as.Date(TSIinfo[TSI_Source == "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source == "NOAA", End])`) and adjusted data from @LASP2023 (for `r as.Date(TSIinfo[TSI_Source != "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source != "NOAA", End])`).-->
 
 <!-- aggregation -->
-In order to investigate the SDR trends, we implemented an appropriate aggregation scheme to the 1-minute data to derive series in coarser time scales.
+In order to investigate the SDR trends, we implemented an appropriate aggregation scheme to the 1-minute data to derive a series in coarser time scale.
 To preserve the representativeness of the data we used the following criteria: 
 <!-- a) for daily mean values we exclude days with less than `r Daily_aggregation_N_lim` valid data points, -->
 a) for the daily mean values we accept days with more than `r 100 * All_daily_ratio_lim`% of the daytime measurements, present and valid,
@@ -450,16 +456,16 @@ To estimate SZA contribution to the SDR trends, the one-minute data were aggrega
 
 
 
-
 # Results
 
 ## Long-term SDR trends
 
-We calculated the SDR trends, from the mean daily values of the departure from the seasonal values, for the whole time series for the three sky conditions (Table\ \ref{tab:trendtable}).
+We calculated the SDR trends, from the mean daily values of the departure from the seasonal values, for the three sky conditions (Table\ \ref{tab:trendtable}).
 We present only the plot for the trend under all-sky conditions (Figure\ \ref{fig:trendALL}), as the plots for clear-sky condition and cloud-sky condition, are very similar.
 In the studied time period, there is no significant break or change in the variability of the overall trends.
 Other studies for the European region are reporting a change of the SDR slope, around the 1980, few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009]. It is interesting to note, that for the observation period, the trend of the TSI is
-$`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\%/year$.
+$`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\%/year$, and thus we can not attribute any major effect on SDR trend to Sun variability.
+
 
 <!-- \footnotesize -->
 ```{r trendtable, echo=F}
@@ -498,8 +504,8 @@ knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
 
 
-Although, using the cumulative sums plots we can reveal some structure within the trends and some difference between the sky conditions [@Regier2019]. 
-On all three plots on Figure\ \ref{fig:cumsum}, we observe a step downward part at the start of the period until about 2000, an almost steady part until about 2016 for All-sky and Clear-sky conditions (Figures\ \ref{fig:cumsum-1}, \ref{fig:cumsum-2}), and until 2009 for Cloud-sky conditions (Figure\ \ref{fig:cumsum-3}), and finally, a steep upward part until the present.
+Although the trends are quite constant, using plots of the cumulative sums we can reveal some structure within the trends and some differences between the sky conditions [@Regier2019]. 
+On all three plots on Figure\ \ref{fig:cumsum}, we observe a downward part at the start of the period until about 2000, an almost steady part until about 2016 for All-sky and Clear-sky conditions (Figures\ \ref{fig:cumsum-1}, \ref{fig:cumsum-2}), and until 2009 for Cloud-sky conditions (Figure\ \ref{fig:cumsum-3}), and finally, a steep upward part until the present.
 For a uniform trend, we expected the cumulative sum plot of the anomaly to have a symmetric 'V' shape.
 This would indicate, that the anomaly is evenly distributed around the climatological mean.
 In our case, for all sky conditions we observe periods where the cumulative sum remains relative steady, roughly in the middle of the study dataset.
