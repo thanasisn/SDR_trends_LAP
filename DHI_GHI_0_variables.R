@@ -33,7 +33,7 @@ translate <- function(x) {
 ## will not include the last/first day
 # LAST_DAY                 <- as.Date("2023-06-01") ## Cleaned data
 # LAST_DAY                 <- as.Date("2011-04-01") ## similar to Bais analysis
-LAST_DAY                 <- as.POSIXct("2023-03-31 11:59:30") ## set the date of last NOAA TSI data
+LAST_DAY                 <- as.POSIXct("2023-06-30 11:59:30") ## set the date of last NOAA TSI data
 FIRST_DAY                <- as.POSIXct("1900-07-01") ## include all available
 # FIRST_DAY                <- as.Date("2005-01-01") ## data inspected by me
 # FIRST_DAY                <- as.Date("2016-04-01") ## start of chp1
