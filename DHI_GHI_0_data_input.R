@@ -22,7 +22,7 @@ D_14_2 <- TRUE
 # D_13   <- TRUE
 
 TEST <- TRUE
-TEST <- FALSE
+# TEST <- FALSE
 
 if (TEST) {
     warning("Running in TEST mode!!")
@@ -116,15 +116,6 @@ if (havetorun) {
         DATA <- unique(DATA)
         gc()
 
-
-        ## __ Skip ranges for CM-21 --------------------------------------------
-        for (as in nrow(SKIP_cm21)) {
-            skip <- SKIP_cm21[as,]
-            DATA[ Date >= skip$From & Date <= skip$Until, wattGLB    := NA ]
-            DATA[ Date >= skip$From & Date <= skip$Until, wattGLB_SD := NA ]
-        }
-
-
         ## TODO warn duplicate dates
         if (sum(duplicated(DATA$Date)) > 0) {
             warning("There are duplicate dates in the data")
@@ -151,6 +142,15 @@ if (havetorun) {
     } else {
         DATA <- readRDS(CS_file)
     }
+
+
+    ## __ Skip data ranges for CM-21 --------------------------------------------
+    for (as in nrow(SKIP_cm21)) {
+        skip <- SKIP_cm21[as,]
+        DATA[ Date >= skip$From & Date <= skip$Until, wattGLB    := NA ]
+        DATA[ Date >= skip$From & Date <= skip$Until, wattGLB_SD := NA ]
+    }
+    # DATA[ Date >= skip$From & Date <= skip$Until, wattGLB]
 
     # ## Sunset and sunrise
     # hist(DATA[ Elevat < 5, Elevat ])
