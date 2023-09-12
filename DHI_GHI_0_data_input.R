@@ -22,7 +22,7 @@ D_14_2 <- TRUE
 # D_13   <- TRUE
 
 TEST <- TRUE
-# TEST <- FALSE
+TEST <- FALSE
 
 if (TEST) {
     warning("Running in TEST mode!!")
