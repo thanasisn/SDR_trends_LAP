@@ -91,3 +91,18 @@ Clear_daily_ratio_lim     <- 0.5
 Cloud_daily_ratio_lim     <- 0.5
 
 
+
+## extra skip ranges for this work
+SKIP_cm21 <- matrix(
+##     From                  Until                  Comment
+    c("1996-02-10 00:00:00", "1996-02-29 23:59:00", "Systematic cut off due to gain error",
+      NULL),
+    byrow = TRUE,
+    ncol = 3)
+
+## Format to data frame
+SKIP_cm21 <- data.frame(From    = as.POSIXct(  SKIP_cm21[,1]),
+                        Until   = as.POSIXct(  SKIP_cm21[,2]),
+                        Comment = as.character(SKIP_cm21[,3]))
+
+

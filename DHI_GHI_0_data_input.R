@@ -68,9 +68,9 @@ if (havetorun) {
     cat(paste("\n !! (Re)Create environment and data input ->", common_data),"\n")
 
     #_  Get data from Clear sky id data  ---------------------------------------
-    input_files <- list.files( path       = CLEARdir,
-                               pattern    = inpatern,
-                               full.names = T )
+    input_files <- list.files(path       = CLEARdir,
+                              pattern    = inpatern,
+                              full.names = T )
     input_files <- grep("_stats_", input_files, value = TRUE, invert = TRUE)
 
     if (TEST) {
@@ -79,7 +79,7 @@ if (havetorun) {
     }
 
     if (TEST | !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
-        cat(paste("Load data from Clear Sky proccess from original\n"))
+        cat(paste("Load data from Clear Sky process from original\n"))
         DATA <- data.table()
         for (af in input_files) {
             cat("READING:", af, "\n")
@@ -115,6 +115,15 @@ if (havetorun) {
         }
         DATA <- unique(DATA)
         gc()
+
+
+        ## __ Skip ranges for CM-21 --------------------------------------------
+        for (as in nrow(SKIP_cm21)) {
+            skip <- SKIP_cm21[as,]
+            DATA[ Date >= skip$From & Date <= skip$Until, wattGLB    := NA ]
+            DATA[ Date >= skip$From & Date <= skip$Until, wattGLB_SD := NA ]
+        }
+
 
         ## TODO warn duplicate dates
         if (sum(duplicated(DATA$Date)) > 0) {
@@ -1369,7 +1378,6 @@ if (havetorun) {
        CLEAR_2_bySeason_daily_mean, CLEAR_2_bySeason_daily_seas,
        CLOUD_2_bySeason_daily_mean, CLOUD_2_bySeason_daily_seas)
     gc()
-
 
 
 
