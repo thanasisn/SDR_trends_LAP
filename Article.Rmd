@@ -465,10 +465,10 @@ To estimate SZA contribution to the SDR trends, the one-minute data were aggrega
 ## Long-term SDR trends
 
 We calculated the linear SDR trends, from the departures of the mean daily values from the seasonal values, and for the three sky conditions (Table\ \ref{tab:trendtable}).
-In Figure\ \ref{fig:trendALL} we present only the time series under all-sky conditions; the plots for clear-sky and cloud-sky conditions, are very similar.
+In Figure\ \ref{fig:trendALL} we present only the time series under all-sky conditions; the plots for clear-sky and cloud-sky conditions, are very similar and shown in the Appendix (Figures\ \ref{fig:trendCLEAR} and \ref{fig:trendCLOUD}).
 In the studied time period, there is no significant break or change in the variability of the overall trends.
-Other studies for the European region are reporting a change of the SDR slope, around the 1980, few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009]. It is interesting to note, that for the observation period, the trend of the TSI is
-$`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\%/year$, and thus we can not attribute any major effect on SDR trend to Sun variability.
+Other studies for the European region report a change of the SDR slope, around 1980, a few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009]. It is interesting to note, that for the observation period, the trend of the TSI is
+$`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\%/year$, and thus we can not attribute any major effect on SDR trend to Solar variability.
 
 
 <!-- \footnotesize -->
@@ -503,7 +503,7 @@ cloudtrend <- signif(LT[`Sky condition` == "Cloudy cond.",    `Trend [%/year]`],
 <!-- \normalsize -->
 
 
-```{r trendALL, echo=F, out.width='.70\\linewidth', fig.cap=paste0("Anomaly (\\%) of the daily All-sky SDR, relative to climatological values for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term trend for all-sky conditions.")}
+```{r trendALL, echo=F, out.width='.70\\linewidth', fig.cap=paste0("Anomaly (\\%) of the daily All-sky SDR, relative to climatological values for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term linear trend for all-sky conditions.")}
 knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
 
@@ -631,7 +631,7 @@ panderOptions("table.alignment.default", "center")
 pander(pp,
        justify = c('right', 'right', 'right', 'right', 'center'),
        split.table = Inf,
-       caption = "\\label{tab:trendseasontable}SDR trends of monthly anomaly for each season of the year.")
+       caption = "\\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.")
 ```
 <!-- \normalsize -->
 
@@ -675,11 +675,11 @@ Unfortunately, there is no available data for this period for the Aerosols, in o
 The attenuation of SDR by Aerosols over Europe have been proposed as major factor by @Wild2021.
 The dimming effect of SDR under cloud-sky condition ($`r cloudtrend`\%/year$), shows that clouds can also attenuate the amount of SDR reaching the ground, and changes on their occurrences can effect the net energy balance.
 Because we have no adequate data to investigate long term changes of cloud formation in the region, we can not infer if the SDR trend we observe under cloud-sky is biased by changes in clouds and local climate.
-The observed brightening of SDR over Thessaloniki, is correlated with the SZA (higher SZA, have stronger brightening trends). And also, with the seasons of the year, where Winter and Autumn show a significant strong trend, in contrast to Spring and Summer.
+The observed brightening of SDR over Thessaloniki, is dependent on SZA (higher SZA, have stronger brightening trends). And also, with the seasons of the year, where Winter and Autumn show a significant strong trend, in contrast to Spring and Summer.
 
-Our finds are in agreement with other researchers for the region.
-Future observation from the colocated pyrheliometer, may provide us with the means to further investigate the variability of Sun radiation on ground level in Thessaloniki. 
-Also, more data (cloud occurrence, aerosols, atmospheric water, etc.), will help us to determine the extent of SDR attenuation by each factor. 
+Our findings are in agreement with other researchers for the region.
+Future observations from the collocated pyrheliometer, may provide us with the means to further investigate the variability of Solar radiation at ground level in Thessaloniki. 
+Also, more data (cloud occurrence, aerosols, atmospheric water vapour, etc.), will help us to determine the extent of SDR attenuation by each factor. 
 
 <!--
 similar results with Evidence for Clear‐Sky Dimming and Brightening in Central Europe_Wild2021.pdf
@@ -697,11 +697,11 @@ include in discussion
 
 
 
-```{r trendCLEAR, echo=F, fig.cap=paste0("Anomaly (\\%) of the daily clear-sky SDR, relative to climatological values for", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term trend for clear-sky conditions.")}
+```{r trendCLEAR, echo=F, fig.cap=paste0("Anomaly (\\%) of the daily clear-sky SDR, relative to climatological values for", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term linear trend for clear-sky conditions.")}
 knitr::include_graphics("./images/LongtermTrends-5.png")
 ```
 
-```{r trendCLOUD, echo=F, fig.cap=paste0("Anomaly (\\%) of the daily cloud-sky SDR, relative to climatological values for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term trend for cloud-sky conditions.")}
+```{r trendCLOUD, echo=F, fig.cap=paste0("Anomaly (\\%) of the daily cloud-sky SDR, relative to climatological values for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term linear trend for cloud-sky conditions.")}
 knitr::include_graphics("./images/LongtermTrends-8.png")
 ```
 
