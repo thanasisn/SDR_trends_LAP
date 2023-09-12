@@ -410,7 +410,8 @@ for (DBn in dbs) {
 #'
 #+ echo=F, include=T
 
-wecare      <- grep("intercept", names(gather), value = T, invert = T)
+wecare      <- names(gather)
+# wecare      <- grep("intercept", names(gather), value = T, invert = T)
 gather      <- data.table(gather)
 gather$DATA <- sub("_.*", "", gather$DATA)
 
@@ -422,11 +423,15 @@ pprint[, Rsqrd          := NULL]
 pprint[, RsqrdAdj       := NULL]
 pprint[, N              := NULL]
 
+saveRDS(pprint,
+        "./figures/tbl_longterm_trends.Rds")
 ## convert slope / year
 pprint[, slope              := slope              * Days_of_year]
 pprint[, slope.sd           := slope.sd           * Days_of_year]
 pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year]
 pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year]
+wecare <- grep("intercept", names(pprint), value = T, invert = T)
+pprint <- pprint[ , ..wecare]
 pprint[, DATA               := translate(DATA)                  ]
 pprint[, var                := translate(var)                   ]
 

@@ -206,6 +206,40 @@ setorder(CLOUD_1_daily_DESEAS, Date)
 # CLOUD_1_daily_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
 # CLOUD_1_daily_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
 
+## get linear trends
+trends <- readRDS("./figures/tbl_longterm_trends.Rds")
+
+## Remove trend before cumulative sum ----
+dsets <- c("ALL_1_daily_DESEAS",
+           "CLEAR_1_daily_DESEAS",
+           "CLOUD_1_daily_DESEAS")
+
+
+for (ad in dsets) {
+    DBS  <- get(ad)
+    type <- sub("_.*", "", ad)
+    temp <- trends[DATA == type]
+
+    for (avaa in temp$var) {
+        ll   <- temp[var == avaa]
+        apll <- function(date) {
+            SDR <- ll$intercept + data * ll$slope
+            return(SDR)
+        }
+
+        apll(DBS$Date)
+
+    }
+
+}
+
+
+
+
+
+
+
+
 ## Calculate cumsum with zeroing NA
   ALL_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
   ALL_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
