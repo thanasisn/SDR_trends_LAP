@@ -209,28 +209,28 @@ setorder(CLOUD_1_daily_DESEAS, Date)
 ## get linear trends
 trends <- readRDS("./figures/tbl_longterm_trends.Rds")
 
-## Remove trend before cumulative sum ----
+
+## !! Remove trends before cumulative sum --------------------------------------
 dsets <- c("ALL_1_daily_DESEAS",
            "CLEAR_1_daily_DESEAS",
            "CLOUD_1_daily_DESEAS")
-
-
+warning("Removing trends from data before cumsum!!!")
+cat("Removing trends from data before cumsum!!!")
 for (ad in dsets) {
     DBS  <- get(ad)
     type <- sub("_.*", "", ad)
     temp <- trends[DATA == type]
 
     for (avaa in temp$var) {
+        ## get lm data
         ll   <- temp[var == avaa]
-        apll <- function(date) {
-            SDR <- ll$intercept + data * ll$slope
-            return(SDR)
-        }
-
-        apll(DBS$Date)
-
+        ## compute trend
+        SDRtredn <- ll$intercept + as.numeric(DBS$Date) * ll$slope
+        ## remove trend from data
+        DBS[[avaa]] <- DBS[[avaa]] - SDRtredn
     }
-
+    ## save new data to data table
+    assign(ad, DBS)
 }
 
 
