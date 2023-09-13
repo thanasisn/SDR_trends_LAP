@@ -71,7 +71,6 @@ $(PDF): $(RMD)
 TARGET := DHI_GHI_1_longterm_trends
 RMD    := $(TARGET).R
 PDF    := $(TARGET).pdf
-SLIDY  := $(TARGET).html
 RUNT   := ./runtime/$(TARGET).pdf
 
 p1: $(PDF)
@@ -87,8 +86,6 @@ $(PDF): $(RMD)
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
 	@-touch Article.Rmd
-
-
 
 r1: $(RUNT)
 $(RUNT): $(RMD)

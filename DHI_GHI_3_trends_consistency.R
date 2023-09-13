@@ -210,7 +210,7 @@ setorder(CLOUD_1_daily_DESEAS, Date)
 trends <- readRDS("./figures/tbl_longterm_trends.Rds")
 
 
-## !! Remove trends before cumulative sum --------------------------------------
+### !! Remove trends before cumulative sum --------------------------------------
 dsets <- c("ALL_1_daily_DESEAS",
            "CLEAR_1_daily_DESEAS",
            "CLOUD_1_daily_DESEAS")
@@ -229,13 +229,9 @@ for (ad in dsets) {
         ## remove trend from data
         DBS[[avaa]] <- DBS[[avaa]] - SDRtredn
     }
-    ## save new data to data table
-    assign(ad, DBS)
+    ## save new data data table without the trend
+    assign(paste0(ad, "_notrend"), DBS)
 }
-
-
-
-
 
 
 
@@ -261,6 +257,50 @@ CLEAR_1_daily_DESEAS[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((DIR_tran
 CLOUD_1_daily_DESEAS[, GLB_att_cusumSTD    := cumsum(tidyr::replace_na((GLB_att_des    - mean(GLB_att_des   , na.rm = T)) / sd(GLB_att_des   , na.rm = T), 0))]
 CLOUD_1_daily_DESEAS[, DIR_att_cusumSTD    := cumsum(tidyr::replace_na((DIR_att_des    - mean(DIR_att_des   , na.rm = T)) / sd(DIR_att_des   , na.rm = T), 0))]
 CLOUD_1_daily_DESEAS[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((DIR_transp_des - mean(DIR_transp_des, na.rm = T)) / sd(DIR_transp_des, na.rm = T), 0))]
+
+
+
+
+## Calculate cumsum with zeroing NA
+  ALL_1_daily_DESEAS_notrend[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+  ALL_1_daily_DESEAS_notrend[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+  ALL_1_daily_DESEAS_notrend[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+CLEAR_1_daily_DESEAS_notrend[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+CLEAR_1_daily_DESEAS_notrend[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+CLEAR_1_daily_DESEAS_notrend[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+CLOUD_1_daily_DESEAS_notrend[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+CLOUD_1_daily_DESEAS_notrend[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+CLOUD_1_daily_DESEAS_notrend[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+
+## Standardized cumsum
+  ALL_1_daily_DESEAS_notrend[, GLB_att_cusumSTD    := cumsum(tidyr::replace_na((GLB_att_des    - mean(GLB_att_des   , na.rm = T)) / sd(GLB_att_des   , na.rm = T), 0))]
+  ALL_1_daily_DESEAS_notrend[, DIR_att_cusumSTD    := cumsum(tidyr::replace_na((DIR_att_des    - mean(DIR_att_des   , na.rm = T)) / sd(DIR_att_des   , na.rm = T), 0))]
+  ALL_1_daily_DESEAS_notrend[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((DIR_transp_des - mean(DIR_transp_des, na.rm = T)) / sd(DIR_transp_des, na.rm = T), 0))]
+CLEAR_1_daily_DESEAS_notrend[, GLB_att_cusumSTD    := cumsum(tidyr::replace_na((GLB_att_des    - mean(GLB_att_des   , na.rm = T)) / sd(GLB_att_des   , na.rm = T), 0))]
+CLEAR_1_daily_DESEAS_notrend[, DIR_att_cusumSTD    := cumsum(tidyr::replace_na((DIR_att_des    - mean(DIR_att_des   , na.rm = T)) / sd(DIR_att_des   , na.rm = T), 0))]
+CLEAR_1_daily_DESEAS_notrend[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((DIR_transp_des - mean(DIR_transp_des, na.rm = T)) / sd(DIR_transp_des, na.rm = T), 0))]
+CLOUD_1_daily_DESEAS_notrend[, GLB_att_cusumSTD    := cumsum(tidyr::replace_na((GLB_att_des    - mean(GLB_att_des   , na.rm = T)) / sd(GLB_att_des   , na.rm = T), 0))]
+CLOUD_1_daily_DESEAS_notrend[, DIR_att_cusumSTD    := cumsum(tidyr::replace_na((DIR_att_des    - mean(DIR_att_des   , na.rm = T)) / sd(DIR_att_des   , na.rm = T), 0))]
+CLOUD_1_daily_DESEAS_notrend[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((DIR_transp_des - mean(DIR_transp_des, na.rm = T)) / sd(DIR_transp_des, na.rm = T), 0))]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## ~ Calculate monthly cum sum -------------------------------------------------
@@ -296,7 +336,7 @@ CLOUD_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_tran
 
 
 
-## Daily cumulative sums ------------------------------------------------------
+## Daily cumulative sums plot --------------------------------------------------
 
 #'
 #' \newpage
@@ -453,7 +493,183 @@ for (adb in database) {
 #+ echo=F, include=T
 
 
-## Daily standardized cum sums -------------------------------------------------
+
+
+
+## Daily cumulative sums without trend plot --------------------------------------------------
+
+#'
+#' \newpage
+#' \FloatBarrier
+#'
+#' ### Whole day daily cumulative sum  without trend
+#'
+#' All data in this section are referring to daily means.
+#'
+#' With the corresponding long term trend removed.
+#'
+#+ echo=F, include=T
+
+# vars        <- c("GLB_att", "DIR_att", "DIR_transp")
+vars        <- c("GLB_att")
+database    <- c(  "ALL_1_daily_DESEAS_notrend",
+                 "CLEAR_1_daily_DESEAS_notrend",
+                 "CLOUD_1_daily_DESEAS_notrend")
+
+#+ CumulativeDailyCumSumNOtrend, echo=F, include=T, results="asis"
+for (adb in database) {
+    DB  <- get(adb)
+
+    cat("\n\\newpage\n")
+    cat("\n#### Daily cum sums for", translate(sub("_.*", "", adb)), "\n\n")
+
+    for (avar in vars) {
+
+        ## Plot regular cumsums
+        wcare <- c("Date", paste0(avar,"_des"), paste0(avar,"_cusum"))
+        pdb   <- DB[, ..wcare]
+        rm(DB)
+        xlim  <- range(pdb$Date)
+        ylim  <- range(pdb[[paste0(avar,"_cusum")]],na.rm = T)
+        col   <- get(paste0(c("col",
+                              unlist(strsplit(avar, split = "_" ))[1:2]),
+                            collapse = "_"))
+
+        par("mar" = c(3,4,2,1))
+        par(pch = 19)
+
+        plot(1, type = "n",
+             xlab = "",
+             xlim = xlim, ylim = ylim,
+             xaxt = "n",
+             ylab = bquote("Cumulative Sum of Anomaly [%]"))
+        axis.Date(1, pdb$Date)
+        # abline(h = 0, lty = 2, lwd = 0.8)
+
+        ## daily from other DT
+        lines(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = col, lwd = 2)
+
+        title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
+                    translate(avar) ), cex.main = 1)
+
+
+        ## test plot for reference
+        ## linear model
+        lm1 <- lm(pdb[[paste0(avar,"_des")]] ~ pdb$Date)
+
+        plot(pdb$Date, pdb[[paste0(avar,"_des")]],
+             ylab = bquote("Daily Anomaly [%]"),
+             cex = 0.3,
+             col = col)
+        abline(h = 0, lty = 2, lwd = 0.8)
+        title(paste(sub("_.*","",adb), "mean daily values ",
+                    translate(avar) ), cex.main = 1)
+        abline(lm1, lwd = 2)
+
+
+        ## running mean
+        rm <- frollmean(pdb[[paste0(avar,"_des")]], round(running_mean_window_days),
+                        na.rm = TRUE, algo = "exact", align = "center")
+        points(pdb$Date, rm, col = "red", cex = 0.4)
+
+
+
+        ## LOESS curve
+        vec <- !is.na(pdb[[paste0(avar,"_des")]])
+        FTSE.lo3 <- loess.as(pdb$Date[vec], pdb[[paste0(avar,"_des")]][vec],
+                             degree = 1,
+                             criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
+        FTSE.lo.predict3 <- predict(FTSE.lo3, pdb$Date)
+        lines(pdb$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
+
+
+        ## decorations
+        fit <- lm1[[1]]
+        legend("top", lty = 1, bty = "n", lwd = 2, cex = 1,
+               paste("Trend: ",
+                     if (fit[2] > 0) "+" else "-",
+                     signif(abs(fit[2]) * Days_of_year, 3),
+                     "% per year")
+        )
+
+
+        # hist(pdb$GLB_att_cusum)
+        # hist(pdb$GLB_att_des)
+        # sum(pdb[ GLB_att_des > 0, GLB_att_des ])
+        # sum(pdb[ , GLB_att_des ], na.rm = T)
+        # tail(pdb[ , GLB_att_cusum ])
+
+        cat("\n\\newpage\n")
+        cat("\n\\footnotesize\n")
+        # cat("\n\\small\n")
+
+        testdb <-
+            merge(
+                merge(
+                    merge(
+                        merge(
+                            pdb[get(paste0(avar,"_des")) > 0, .(PositiveSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)],
+                            pdb[get(paste0(avar,"_des")) < 0, .(NegativeSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+                        pdb[get(paste0(avar,"_des")) > 0, .(PositiveMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+                    pdb[get(paste0(avar,"_des")) < 0, .(NegativeMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]
+                ),
+                pdb[ , .(Sum = sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date) ]
+            )
+
+        cat(pander(testdb))
+        cat("\n\\normalsize\n")
+
+
+        ylim <- range(testdb$PositiveSum, -testdb$NegativeSum)
+        plot( testdb$year,  testdb$PositiveSum, type = "l", col = "blue", ylim = ylim)
+        lines(testdb$year, -testdb$NegativeSum, type = "l", col = "red")
+        title("Sum of negative and positive values by year")
+
+        legend("top", ncol = 2, bty = "n",
+               lty = 1, pch = NA, cex = 0.7,
+               legend = c("Sum of positive anomaly",
+                          "Sum of negative anomaly"),
+               col    = c("blue", "red")
+        )
+
+        # ylim <- c(-max(abs(testdb$Sum), na.rm = T), max(abs(testdb$Sum), na.rm = T))
+        # plot( testdb$year,  testdb$Sum, type = "l", col = "black", ylim = ylim)
+        # abline(h = 0, lty = 2, lwd = 0.8)
+        # title("Sum of all yearly values")
+
+
+        gp <- ggplot(data = testdb, aes(x = year, y = Sum)) +
+            geom_col(data = testdb[Sum <= 0], fill = "red") +
+            geom_col(data = testdb[Sum >= 0], fill = "blue") +
+            ggtitle("Sum of all year values") +
+            xlab("Year")     +
+            ylab("Year Sum") +
+            theme_bw()       +
+            theme(plot.title = element_text(hjust = 0.5))
+
+        print(gp)
+
+    }
+}
+#'
+#+ echo=F, include=T
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Daily standardized cum sums plots  ------------------------------------------
 
 #+ CumulativeDailyCumSumSTD, echo=F, include=T, results="asis"
 for (adb in database) {
@@ -499,7 +715,7 @@ for (adb in database) {
 
 
 
-### Whole day monthly cumulative sum -------------------------------------------
+## Whole day monthly cumulative sum --------------------------------------------
 
 #'
 #' \newpage

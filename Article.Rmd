@@ -496,6 +496,9 @@ alltrend   <- signif(LT[`Sky condition` == "All sky cond.",   `Trend [%/year]`],
 cleartrend <- signif(LT[`Sky condition` == "Clear sky cond.", `Trend [%/year]`], 2)
 cloudtrend <- signif(LT[`Sky condition` == "Cloudy cond.",    `Trend [%/year]`], 2)
 
+## rename sky conditions
+LT$`Sky condition` <- sub(" cond.", "", LT$`Sky condition`)
+
 panderOptions("table.alignment.default", "center")
 pander(LT,
        caption = paste0("\\label{tab:trendtable}Trends of daily SDR means, for different sky conditions for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". For all cases the statistical significance is above $99.9\\%$."))
@@ -508,12 +511,12 @@ knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
 
 
-Although the trends are quite constant, using plots of the cumulative sums we can reveal some structure within the trends and some differences between the sky conditions [@Regier2019]. 
+Although the trends are quite constant, using plots of the cumulative sum (CUSUM) we can reveal some structure within the trends and some differences between the sky conditions [@Regier2019]. 
 On all three plots on Figure\ \ref{fig:cumsum}, we observe a downward part at the start of the period until about 2000, an almost steady part until about 2016 for All-sky and clear-sky conditions (Figures\ \ref{fig:cumsum-1}, \ref{fig:cumsum-2}) and until 2009 for cloud-sky conditions (Figure\ \ref{fig:cumsum-3}), and finally, a steep upward part until the present.
-For a uniform trend, we expected the cumulative sum plot of the anomaly to have a symmetric 'V' shape.
-This would indicate, that the anomaly is evenly distributed around the climatological mean.
-In our case, for all sky conditions, we observe periods where the cumulative sum remains relative steady, roughly in the middle of the study dataset.
-Another distinct feature of the cumulative plots, is the difference, between the cloud-sky and the rest of the sky conditions, where they display a supplementary behavior. 
+For a uniform trend, we would expect the cumulative sums of the anomalies to have a symmetric 'V' shape.
+This would indicate that the anomalies are evenly distributed around the climatological mean.
+In our case, for all sky conditions, we observe periods where the CUSUMs remain relative steady, roughly around the middle of the study dataset.
+Another distinct feature of CUSUMs, is the difference, between the cloud-sky and the rest of the sky conditions, where they display a supplementary behavior. 
 The causes for these discrepancies haven't been investigated yet. 
 
 <!--
@@ -548,7 +551,7 @@ Aerosols and clouds
 
 ## Effects of the solar zenith angle on SDR.
 
-The relative position of the Sun in the sky, is a major drive of the attenuation of SDR reaching the ground, as it is affected by the radiation path in the atmosphere and possible human activities in urban environment emitting aerosols [@Wang2021].
+The solar zenith angle  is a major driver of the attenuation of SDR reaching the ground, as SDR is affected by the enhancement of the radiation path in the atmosphere, especially in urban environment with human activities emitting aerosols [@Wang2021].
 In order to estimate the contribution of the SZA, we group the anomaly data in $1^\circ$ SZA bins, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
 Although there is a seasonal variation of the minimum SZA, that is not examined here.
 The brightening effect of SDR is stronger for All-sky and clear-sky condition for low Sun elevation angles (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b).
