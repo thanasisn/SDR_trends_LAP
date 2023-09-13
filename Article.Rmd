@@ -487,18 +487,18 @@ rownames(LT) <- NULL
 names(LT)    <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Trend statistical signif. [%]")
 ## no need all are 100%
 LT$`Trend statistical signif. [%]` <- NULL
-## numeric presision
+## numeric precision
 LT$`Trend [%/year]` <- signif(LT$`Trend [%/year]`, 3)
 LT$`Trend p-value`  <- signif(LT$`Trend p-value`,  3)
 
-panderOptions("table.alignment.default", "center")
-pander(LT,
-       caption = paste0("\\label{tab:trendtable}Trends of daily SDR means, for different sky conditions for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". For all cases the statistical significance is above $99.9\\%$."))
-# knitr::kable(LT, caption = "Trends of daily means by sky conditions.")
 ## some vars to use later
 alltrend   <- signif(LT[`Sky condition` == "All sky cond.",   `Trend [%/year]`], 2)
 cleartrend <- signif(LT[`Sky condition` == "Clear sky cond.", `Trend [%/year]`], 2)
 cloudtrend <- signif(LT[`Sky condition` == "Cloudy cond.",    `Trend [%/year]`], 2)
+
+panderOptions("table.alignment.default", "center")
+pander(LT,
+       caption = paste0("\\label{tab:trendtable}Trends of daily SDR means, for different sky conditions for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". For all cases the statistical significance is above $99.9\\%$."))
 ```
 <!-- \normalsize -->
 
