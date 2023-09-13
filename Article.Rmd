@@ -506,13 +506,13 @@ pander(LT,
 <!-- \normalsize -->
 
 
-```{r trendALL, echo=F, out.width='.70\\linewidth', fig.cap=paste0("Anomaly (\\%) of the daily All-sky SDR, relative to climatological values for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term linear trend for all-sky conditions.")}
+```{r trendALL, echo=F, out.width='.70\\linewidth', fig.cap=paste0("Anomaly (\\%) of the daily all-sky SDR, relative to climatological values for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term linear trend for all-sky conditions.")}
 knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
 
 
 Although the trends are quite constant, using plots of the cumulative sum (CUSUM) we can reveal some structure within the trends and some differences between the sky conditions [@Regier2019]. 
-On all three plots on Figure\ \ref{fig:cumsum}, we observe a downward part at the start of the period until about 2000, an almost steady part until about 2016 for All-sky and clear-sky conditions (Figures\ \ref{fig:cumsum-1}, \ref{fig:cumsum-2}) and until 2009 for cloud-sky conditions (Figure\ \ref{fig:cumsum-3}), and finally, a steep upward part until the present.
+On all three plots on Figure\ \ref{fig:cumsum}, we observe a downward part at the start of the period until about 2000, an almost steady part until about 2016 for all-sky and clear-sky conditions (Figures\ \ref{fig:cumsum-1}, \ref{fig:cumsum-2}) and until 2009 for cloud-sky conditions (Figure\ \ref{fig:cumsum-3}), and finally, a steep upward part until the present.
 For a uniform trend, we would expect the cumulative sums of the anomalies to have a symmetric 'V' shape.
 This would indicate that the anomalies are evenly distributed around the climatological mean.
 In our case, for all sky conditions, we observe periods where the CUSUMs remain relative steady, roughly around the middle of the study dataset.
@@ -521,7 +521,7 @@ The causes for these discrepancies haven't been investigated yet.
 
 <!--
 This can make us to suspected that clear-Sky conditions SDR and cloud-sky SDR is affected by different mechanisms.
-The similarity of the All-sky and clear-sky conditions, can make us to suspected that on both sky conditions the attenuation of SDR has .
+The similarity of the all-sky and clear-sky conditions, can make us to suspected that on both sky conditions the attenuation of SDR has .
 -->
 
 ```{r cumsum, echo = FALSE, fig.cap='....... Running cumulative ...... sum plots of the daily SDR for three different sky conditions.', fig.subcap=c('All-sky conditions.', 'clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
@@ -554,7 +554,7 @@ Aerosols and clouds
 The solar zenith angle  is a major driver of the attenuation of SDR reaching the ground, as SDR is affected by the enhancement of the radiation path in the atmosphere, especially in urban environment with human activities emitting aerosols [@Wang2021].
 In order to estimate the contribution of the SZA, we group the anomaly data in $1^\circ$ SZA bins, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
 Although there is a seasonal variation of the minimum SZA, that is not examined here.
-The brightening effect of SDR is stronger for All-sky and clear-sky condition for low Sun elevation angles (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b).
+The brightening effect of SDR is stronger for all-sky and clear-sky condition for low Sun elevation angles (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b).
 In the case of cloud-sky condition (Figure\ \ref{fig:szatrends}c), there is no strong correlation between SDR brightening and SZA, except for some low Sun angles, that occur only for a small part of the year, and thus we can not draw more conclusions from this analysis for the overall trends.
 
 ```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$).', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.35\\linewidth', out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
@@ -568,9 +568,9 @@ knitr::include_graphics("./images/SzaTrends-21.png")
 ## Long term trends by season of year
 
 
-Similar to the long term trends discussed above, we have produced the deseasonalized trend for the different sky conditions and for each season of the year, using the corresponding mean monthly values
+Similar to the long term trends discussed above, we have calculated the trend of the anomalies for the three different sky conditions and for each season of the year, using the corresponding mean monthly values
 (Figure\ \ref{fig:seasonalALL} and Table\ \ref{tab:trendseasontable}).
-For All-sky condition the brightening of SDR is very significant for the Winter, close to the long term trend for the Autumn, and almost four times lower than the long term trend for Sprint and Summer, indicating a relation to the cloud pattern of each season.
+For all-sky condition the trend in SDR is very significant for the Winter, close to the long term trend for the Autumn, and almost four times lower than the long term trend for Sprint and Summer, indicating a relation to the cloud pattern of each season.
 Moreover, when examining the clear- and cloud-sky conditions the trends between these conditions are almost complementary to each other for Winter and Autumn respectively. On the latter cases, during Spring and Summer the statistical significance along with the actual trend are very low for a meaningful comparison.
 
 ```{r seasonalALL, echo=F, fig.cap="SDR trends by season of the year for the three sky conditions. Each point is a monthly mean calculated from daily means. The vertical scale is common for all subplots, for easier comparison.", out.width="100%"}
@@ -578,7 +578,7 @@ knitr::include_graphics("./images/SeasonalTrendsTogether-1.png")
 ```
 
 
-<!-- ```{r seasonalALL, echo=F, fig.cap="Trends by season for All-sky condition. Displays monthly means of daily means."} -->
+<!-- ```{r seasonalALL, echo=F, fig.cap="Trends by season for all-sky condition. Displays monthly means of daily means."} -->
 <!-- knitr::include_graphics("./images/SeasonalTrends-1.png") -->
 <!-- ``` -->
 
@@ -610,6 +610,9 @@ names(pp) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Season", "St
 target    <- c("Winter", "Spring", "Summer", "Autumn")
 new_order <- sapply(target, function(x,pp){which(pp$Season == x)}, pp = pp)
 pp        <- pp[new_order,]
+## order by sky condition
+pp <- pp[order(pp$`Sky condition`),]
+
 # ## put all sky first
 # A  <- which(pp$`Sky condition` == "All sky cond.")
 # B  <- which(pp$`Sky condition` != "All sky cond.")
@@ -618,6 +621,9 @@ pp        <- pp[new_order,]
 pp$`Trend [%/year]`          <- signif(pp$`Trend [%/year]`, 3)
 pp$`Trend p-value`           <- signif(pp$`Trend p-value`,  3)
 pp$`Statistical signif. [%]` <- signif(pp$`Statistical signif. [%]`,  3)
+
+## rename sky conditions
+pp$`Sky condition` <- sub(" cond.", "", pp$`Sky condition`)
 
 ## arrange columns
 pp <- pp[,c(
@@ -669,7 +675,7 @@ knitr::include_graphics("./images/CumulativeDailyCumSum-9.png")
 # Conclusions
 
 We demonstrate that in the period 
-`r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is a brightening trend of SDR for All-sky conditions ($`r alltrend`\%/year$).
+`r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is a brightening trend of SDR for all-sky conditions ($`r alltrend`\%/year$).
 On a previous study [@Bais2013], for the period 1993 - 2011 the trend was found to be $0.33\%/year$.
 The increase of this trend, indicates that the phenomenon and probably the causes, are still occurring.
 Accordingly, we found a similar trend for clear-sky conditions ($`r cleartrend`\%/year$) that further supports that the brightening can be independent of the cloud occurrences. 

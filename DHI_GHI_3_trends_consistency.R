@@ -289,20 +289,6 @@ CLOUD_1_daily_DESEAS_notrend[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## ~ Calculate monthly cum sum -------------------------------------------------
 
 setorder(  ALL_1_D_monthly_DESEAS, Date)

@@ -76,7 +76,7 @@ RUNT   := ./runtime/$(TARGET).pdf
 p1: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
-	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.pdf' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
 	#@echo "Building: $(SLIDY)"
 	#-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$(SLIDY)')"
@@ -105,7 +105,7 @@ RUNT   := ./runtime/$(TARGET).pdf
 p2: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
-	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.pdf' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
 	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
 	@#setsid evince    $@ &
@@ -128,7 +128,7 @@ RUNT   := ./runtime/$(TARGET).pdf
 p3: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
-	-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.pdf' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
