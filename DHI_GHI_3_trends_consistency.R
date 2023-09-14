@@ -528,15 +528,17 @@ for (adb in database) {
              xlab = "",
              xlim = xlim, ylim = ylim,
              xaxt = "n",
-             ylab = bquote("Cumulative Sum of Anomaly [%]"))
+             ylab = bquote("Cumulative Sum of Anomaly with long trend removed [%]"))
         axis.Date(1, pdb$Date)
-        # abline(h = 0, lty = 2, lwd = 0.8)
+        abline(h = 0, lty = 2, lwd = 0.8)
 
         ## daily from other DT
         lines(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = col, lwd = 2)
 
         title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
                     translate(avar) ), cex.main = 1)
+
+
 
 
         ## test plot for reference
@@ -552,13 +554,10 @@ for (adb in database) {
                     translate(avar) ), cex.main = 1)
         abline(lm1, lwd = 2)
 
-
         ## running mean
         rm <- frollmean(pdb[[paste0(avar,"_des")]], round(running_mean_window_days),
                         na.rm = TRUE, algo = "exact", align = "center")
         points(pdb$Date, rm, col = "red", cex = 0.4)
-
-
 
         ## LOESS curve
         vec <- !is.na(pdb[[paste0(avar,"_des")]])
@@ -568,7 +567,6 @@ for (adb in database) {
         FTSE.lo.predict3 <- predict(FTSE.lo3, pdb$Date)
         lines(pdb$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
 
-
         ## decorations
         fit <- lm1[[1]]
         legend("top", lty = 1, bty = "n", lwd = 2, cex = 1,
@@ -577,6 +575,7 @@ for (adb in database) {
                      signif(abs(fit[2]) * Days_of_year, 3),
                      "% per year")
         )
+
 
 
         # hist(pdb$GLB_att_cusum)

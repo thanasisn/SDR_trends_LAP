@@ -466,7 +466,7 @@ To estimate SZA contribution to the SDR trends, the one-minute data were aggrega
 
 We calculated the linear SDR trends, from the departures of the mean daily values from the seasonal values, and for the three sky conditions (Table\ \ref{tab:trendtable}).
 In Figure\ \ref{fig:trendALL} we present only the time series under all-sky conditions; the plots for clear-sky and cloud-sky conditions, are very similar and shown in the Appendix (Figures\ \ref{fig:trendCLEAR} and \ref{fig:trendCLOUD}).
-In the studied time period, there is no significant break or change in the variability of the overall trends.
+In the studied period, there is no significant break or change in the variability of the time series.
 Other studies for the European region report a change of the SDR slope, around 1980, a few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009]. It is interesting to note, that for the observation period, the trend of the TSI is
 $`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\%/year$, and thus we can not attribute any major effect on SDR trend to Solar variability.
 
@@ -524,12 +524,20 @@ This can make us to suspected that clear-Sky conditions SDR and cloud-sky SDR is
 The similarity of the all-sky and clear-sky conditions, can make us to suspected that on both sky conditions the attenuation of SDR has .
 -->
 
-```{r cumsum, echo = FALSE, fig.cap='....... Running cumulative ...... sum plots of the daily SDR for three different sky conditions.', fig.subcap=c('All-sky conditions.', 'clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+```{r cumsum, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR for the three different sky conditions.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics(c(
     "./images/CumulativeDailyCumSum-1.png",    # ALL sky
     "./images/CumulativeDailyCumSum-5.png",    # CLEAR sky
     "./images/CumulativeDailyCumSum-9.png"))   # Cloud sky
 ```
+
+```{r cumsumnotrend, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR after removing the long term trend from the daily values, for the three different sky conditions.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+knitr::include_graphics(c(
+    "./images/CumulativeDailyCumSumNOtrend-1.png",    # ALL sky
+    "./images/CumulativeDailyCumSumNOtrend-5.png",    # CLEAR sky
+    "./images/CumulativeDailyCumSumNOtrend-9.png"))   # Cloud sky
+```
+
 
 <!-- ```{r cumsumSTD, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
 <!-- knitr::include_graphics(c( -->
