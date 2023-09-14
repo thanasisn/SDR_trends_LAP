@@ -710,7 +710,7 @@ for (avar in vars) {
 
 ## ____ by season in a nice grid -----------------------------------------------
 
-
+## pre list the combination and attributes and use them to fill the graphs
 
 nf <- layout(
     matrix(1:30, ncol = 5, byrow = TRUE),
