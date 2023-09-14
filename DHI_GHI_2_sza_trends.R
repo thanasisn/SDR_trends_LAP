@@ -335,6 +335,12 @@ for (avar in unique(szatrends$var)) {
             ccex <- ccex_sbs
             par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
 
+            if (DRAFT == TRUE) {
+                par("mar" = c(4,   5,   2,   2))
+            } else {
+                par("mar" = c(4.5, 4.5, 0.5, 0.5))
+            }
+
             plot(1, type = "n",
                  xlab = "Solar zenith angle",
                  ylab = awename,
@@ -343,8 +349,21 @@ for (avar in unique(szatrends$var)) {
 
             abline(h = 0, lty = 3)
 
-            # title(paste(translate(avar), awename, "for", translate(type)), cex.main =  .8 * ccex)
-            title(paste(translate(avar), "trend", "for", translate(type)), cex.main =  .8 * ccex)
+            if (DRAFT == TRUE) {
+                # title(paste(translate(avar), awename, "for", translate(type)), cex.main =  .8 * ccex)
+                title(paste(translate(avar), "trend", "for", translate(type)), cex.main =  .8 * ccex)
+            } else {
+                legend("bottom", 0, translate(type),
+                       cex   = .8 * ccex,
+                       xjust = 0.5,      # 0.5 means center adjusted
+                       yjust = 0.5,      # 0.5 means center adjusted
+                       x.intersp = -0.5, # adjust character interspacing as you like to effect box width
+                       y.intersp =  0.2, # adjust character interspacing to effect box height
+                       adj = c(0, 0.5))  # adjust string position (default values used here)
+                # text.font = 2)  # bold the text if you like (not used here)
+                par("mar" = c(4,   5,   2,   2))
+            }
+
 
 
             ## morning lines
