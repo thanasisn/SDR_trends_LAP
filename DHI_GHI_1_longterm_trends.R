@@ -808,6 +808,12 @@ for (avar in vars) {
 
 
 
+
+
+
+
+
+
 nf <- layout(
     matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16), ncol=4, byrow=TRUE),
     widths  = c(0.5, 1),
@@ -816,26 +822,32 @@ nf <- layout(
 layout.show(nf)
 
 # 1
+par("mar"=c(0,0,0,0))
 plot.new()
 # 2
-plot(x = 0:1,                   # Create empty plot
-     y = 0:1,
-     ann = F,
-     bty = "n",
-     type = "n",
-     xaxt = "n",
-     yaxt = "n")
+plot.new()
 text(x = 0.5,                   # Add text to empty plot
      y = 0.5,
+     adj  = c(0.5,0.5),
      "All sky cond.",
      cex = 1.2)
 
 # 3
 plot.new()
-title("Clear")
+text(x = 0.5,                   # Add text to empty plot
+     y = 0.5,
+     adj  = c(0.5,0.5),
+     "Clear sky cond.",
+     cex = 1.2)
+
 # 4
 plot.new()
-title("Cloud")
+text(x = 0.5,                   # Add text to empty plot
+     y = 0.5,
+     adj  = c(0.5,0.5),
+     "Cloudy sky cond.",
+     cex = 1.2)
+
 
 
 for (i  in 5:16) {
