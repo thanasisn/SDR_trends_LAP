@@ -359,22 +359,45 @@ for (adb in database) {
                               unlist(strsplit(avar, split = "_" ))[1:2]),
                             collapse = "_"))
 
-        par("mar" = c(3,4,2,1))
+        if (DRAFT == TRUE) {
+            par("mar" = c(3,4,2,1))
+        } else {
+            par("mar" = c(3,4,0.5,0.5))
+        }
+        par(pch = 19)
+
+
+
         par(pch = 19)
 
         plot(1, type = "n",
              xlab = "",
              xlim = xlim, ylim = ylim,
              xaxt = "n",
-             ylab = bquote("Cumulative Sum of Anomaly [%]"))
+             ylab = bquote("Anomaly CUSUM [%]"))
         axis.Date(1, pdb$Date)
         # abline(h = 0, lty = 2, lwd = 0.8)
 
         ## daily from other DT
         lines(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = col, lwd = 2)
 
-        title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
-                    translate(avar) ), cex.main = 1)
+        if (DRAFT == T) {
+            title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
+                        translate(avar) ), cex.main = 1)
+        } else {
+            legend("bottomleft", 0, translate(sub("_.*","",adb)),
+                   cex   = 1.1,
+                   xjust = 0.5,      # 0.5 means center adjusted
+                   yjust = 0.5,      # 0.5 means center adjusted
+                   x.intersp = -0.5, # adjust character interspacing as you like to effect box width
+                   y.intersp =  0.2, # adjust character interspacing to effect box height
+                   adj = c(0, 0.5))  # adjust string position (default values used here)
+            # cex = 1.5,      # change cex if you like (not used here)
+            # text.font = 2)  # bold the text if you like (not used here)
+            par("mar" = c(3,4,2,1))
+        }
+
+
 
 
         ## test plot for reference
@@ -396,8 +419,6 @@ for (adb in database) {
                         na.rm = TRUE, algo = "exact", align = "center")
         points(pdb$Date, rm, col = "red", cex = 0.4)
 
-
-
         ## LOESS curve
         vec <- !is.na(pdb[[paste0(avar,"_des")]])
         FTSE.lo3 <- loess.as(pdb$Date[vec], pdb[[paste0(avar,"_des")]][vec],
@@ -405,7 +426,6 @@ for (adb in database) {
                              criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
         FTSE.lo.predict3 <- predict(FTSE.lo3, pdb$Date)
         lines(pdb$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
-
 
         ## decorations
         fit <- lm1[[1]]
@@ -521,22 +541,44 @@ for (adb in database) {
                               unlist(strsplit(avar, split = "_" ))[1:2]),
                             collapse = "_"))
 
-        par("mar" = c(3,4,2,1))
+        if (DRAFT == TRUE) {
+            par("mar" = c(3,4,2,1))
+        } else {
+            par("mar" = c(3,4,0.5,0.5))
+        }
         par(pch = 19)
+
+
 
         plot(1, type = "n",
              xlab = "",
              xlim = xlim, ylim = ylim,
              xaxt = "n",
-             ylab = bquote("Cumulative Sum of Anomaly with long trend removed [%]"))
+             ylab = bquote("Anomaly CUSUM with long trend removed [%]"))
         axis.Date(1, pdb$Date)
         abline(h = 0, lty = 2, lwd = 0.8)
 
         ## daily from other DT
         lines(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = col, lwd = 2)
 
-        title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
-                    translate(avar) ), cex.main = 1)
+
+
+        if (DRAFT == T) {
+            title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
+                        translate(avar) ), cex.main = 1)
+        } else {
+            legend("bottomleft", 0, translate(sub("_.*","",adb)),
+                   cex   = 1.1,
+                   bty   = "n",
+                   xjust = 0.5,      # 0.5 means center adjusted
+                   yjust = 0.5,      # 0.5 means center adjusted
+                   x.intersp = -0.5, # adjust character interspacing as you like to effect box width
+                   y.intersp =  0.2, # adjust character interspacing to effect box height
+                   adj = c(0, 0.5))  # adjust string position (default values used here)
+            # cex = 1.5,      # change cex if you like (not used here)
+            # text.font = 2)  # bold the text if you like (not used here)
+            par("mar" = c(3,4,2,1))
+        }
 
 
 

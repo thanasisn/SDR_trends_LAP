@@ -150,6 +150,7 @@ data_list <- c(  "ALL_1_D_monthly_DESEAS",
                    "CLEAR_1_daily_DESEAS")
 
 by_var     <- c("doy")
+#+ echo=F, include=F
 for (i in data_list) {
     ## get data and y vars to plot
     Dplot  <- get(i)
@@ -172,6 +173,7 @@ for (i in data_list) {
 }
 
 ## ____ Histograms Plots all data ----------------------------------------------
+#+ echo=F, include=F
 for (i in data_list) {
     ## get data and y vars to plot
     Dplot  <- get(i)
