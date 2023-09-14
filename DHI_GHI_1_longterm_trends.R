@@ -815,9 +815,9 @@ for (avar in vars) {
 
 
 nf <- layout(
-    matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16), ncol=4, byrow=TRUE),
-    widths  = c(0.5, 1),
-    heights = c(0.5, 1)
+    matrix(1:30, ncol = 5, byrow = TRUE),
+    widths  = c(0.5,   1,1,1, 0.1),
+    heights = c(0.3, 1,1,1,1, 0.3)
 )
 layout.show(nf)
 
@@ -848,12 +848,64 @@ text(x = 0.5,                   # Add text to empty plot
      "Cloudy sky cond.",
      cex = 1.2)
 
+# 5
+plot.new()
+
+# 6
+plot.new()
+text(x = 0.5,                   # Add text to empty plot
+     y = 0.5,
+     adj  = c(0.5,0.5),
+     srt  = 90,
+     "Winter",
+     cex = 1.2)
 
 
-for (i  in 5:16) {
+for (i  in 7:24) {
+
+    if (i == 11) {
+        plot.new()
+        text(x = 0.5,                   # Add text to empty plot
+             y = 0.5,
+             adj  = c(0.5,0.5),
+             srt  = 90,
+             "Summer",
+             cex = 1.2)
+    }
+
+    if (i == 16) {
+        plot.new()
+        text(x = 0.5,                   # Add text to empty plot
+             y = 0.5,
+             adj  = c(0.5,0.5),
+             srt  = 90,
+             "Autumn",
+             cex = 1.2)
+    }
+
+    if (i == 21) {
+        plot.new()
+        text(x = 0.5,                   # Add text to empty plot
+             y = 0.5,
+             adj  = c(0.5,0.5),
+             srt  = 90,
+             "Spring",
+             cex = 1.2)
+    }
+
+    if (i %in% c(10,15,20,25)) {
+        plot.new()
+    }
+
+    if (! i %in% c(11,16,21,10,15,20,25)) {
     plot(0,0)
+    }
 }
 
+for (i in 1:6) {
+    plot.new()
+}
+par(mfrow=c(1,1))
 
 #+ echo=F, include=F
 

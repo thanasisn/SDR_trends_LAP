@@ -354,6 +354,7 @@ for (avar in unique(szatrends$var)) {
                 title(paste(translate(avar), "trend", "for", translate(type)), cex.main =  .8 * ccex)
             } else {
                 legend("bottom", 0, translate(type),
+                       bty   = "n",
                        cex   = .8 * ccex,
                        xjust = 0.5,      # 0.5 means center adjusted
                        yjust = 0.5,      # 0.5 means center adjusted
