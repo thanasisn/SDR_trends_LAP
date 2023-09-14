@@ -708,109 +708,7 @@ for (avar in vars) {
 
 
 
-
-## variable
-for (avar in vars) {
-
-    par(mfcol = c(length(Seasons), length(dbs)))
-    cplots <- 0
-
-    ## get global ylim
-    gylim <- c()
-    for (DBn in dbs) {
-        DB   <- get(DBn)
-        gylim <- c(gylim, range(DB[[avar]], na.rm = TRUE))
-    }
-    ylim <- range(gylim, na.rm = TRUE)
-
-
-    ## sky conditions
-    for (DBn in dbs) {
-        DB <- get(DBn)
-
-        for (ase in Seasons) {
-            cplots <- cplots + 1
-
-            dataset <- DB[ Season == ase, ]
-
-            # if (sum(!is.na(dataset[[avar]])) <= 1) next()
-
-            ## linear model counting years
-            lm2 <- lm(dataset[[avar]] ~ dataset$Year)
-
-            ## plot
-            par("mar" = c(2, 3.6, 2, 0))
-
-            plot(dataset$Year, dataset[[avar]],
-                 ylim     = ylim,
-                 pch      = 19,
-                 col      = get(paste0(c("col",
-                                         unlist(strsplit(avar, split = "_" ))[1:2]),
-                                       collapse = "_")),
-                 cex      = .5,
-                 # main     = paste(ase, translate(DBn), translate(avar)),
-                 ylab     = "",
-                 yaxt     = "n",
-                 xlab     = "",
-                 cex.main = 0.9,
-                 cex.lab  = 0.8,
-                 cex.axis = 0.8,
-                 mgp  = c(2, 0.5, 0)
-            )
-            # axis(2, pretty(dataset[[avar]]), las = 2)
-            axis(2, pretty(ylim), las = 2)
-            if (cplots <= 4) {
-                mtext(text = bquote("Anomaly [%]"),
-                      cex  = 0.8,
-                      side = 2,
-                      line = 2.6)
-            }
-            # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]"))
-
-            abline(lm2)
-
-            if (DRAFT) {
-                ## Running mean years * months in data set
-                first <- head(which(!is.na(dataset[[avar]])),1)
-                last  <- tail(which(!is.na(dataset[[avar]])),1)
-
-                rm <- frollmean(dataset[[avar]][first:last],
-                                running_mean_window_years,
-                                na.rm = TRUE,
-                                algo  = "exact",
-                                align = "center")
-
-                # points(dataset$Date, rm, col = "red", cex = 0.5)
-                lines(dataset$Year[first:last], rm, col = "red", cex = 0.5)
-
-                ## LOESS curve
-                vec <- !is.na(dataset[[avar]])
-                FTSE.lo3 <- loess.as(dataset$Year[vec], dataset[[avar]][vec],
-                                     degree = 1,
-                                     criterion = LOESS_CRITERIO, user.span = NULL, plot = F)
-                FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Year)
-                lines(dataset$Year, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
-            }
-
-            ## decorations
-            fit <- lm2[[1]]
-
-            legend("bottom", lty = 1, bty = "n", lwd = 2, cex = 0.8,
-                   paste("Trend: ",
-                         if (fit[2] > 0) '+' else '-',
-                         signif(abs(fit[2]), 2),
-                         "% / year")
-            )
-        }
-    }
-    par(mfrow = c(1, 1)) ## just reset layout
-}
-
-
-
-
-
-
+## ____ by season in a nice grid -----------------------------------------------
 
 
 
@@ -865,7 +763,7 @@ for (i  in 7:24) {
 
     if (i == 11) {
         plot.new()
-        text(x = 0.5,                   # Add text to empty plot
+        text(x = 0.5,
              y = 0.5,
              adj  = c(0.5,0.5),
              srt  = 90,
@@ -875,7 +773,7 @@ for (i  in 7:24) {
 
     if (i == 16) {
         plot.new()
-        text(x = 0.5,                   # Add text to empty plot
+        text(x = 0.5,
              y = 0.5,
              adj  = c(0.5,0.5),
              srt  = 90,
@@ -885,7 +783,7 @@ for (i  in 7:24) {
 
     if (i == 21) {
         plot.new()
-        text(x = 0.5,                   # Add text to empty plot
+        text(x = 0.5,
              y = 0.5,
              adj  = c(0.5,0.5),
              srt  = 90,
@@ -893,15 +791,25 @@ for (i  in 7:24) {
              cex = 1.2)
     }
 
+
+    ## fill right empty space
     if (i %in% c(10,15,20,25)) {
         plot.new()
     }
 
+    ## actual plots
     if (! i %in% c(11,16,21,10,15,20,25)) {
-    plot(0,0)
+        par("mar"=c(1,1,1,1))
+        plot(0,0)
+        par("mar"=c(0,0,0,0))
     }
+
+
+
+
 }
 
+## fill bottom emty space
 for (i in 1:6) {
     plot.new()
 }
