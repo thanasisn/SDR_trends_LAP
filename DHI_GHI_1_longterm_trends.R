@@ -598,8 +598,7 @@ for (DBn in dbs) {
 # vars        <- c("DIR_att", "GLB_att")
 vars        <- c("GLB_att_des")
 
-## Monthly aggregation
-dbs         <- c("ALL_1_D_bySeason_DESEAS",
+dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
                  "CLEAR_1_D_bySeason_DESEAS",
                  "CLOUD_1_D_bySeason_DESEAS")
 
@@ -712,6 +711,19 @@ for (avar in vars) {
 
 ## pre list the combination and attributes and use them to fill the graphs
 
+vars        <- c("GLB_att_des")
+avar        <- vars[1]
+
+dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
+                 "CLEAR_1_D_bySeason_DESEAS",
+                 "CLOUD_1_D_bySeason_DESEAS")
+
+Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
+
+## the order must be predefined to match
+expanded <- expand.grid(Dataset = dbs, Seasons = Seasons, stringsAsFactors = FALSE)
+
+
 nf <- layout(
     matrix(1:30, ncol = 5, byrow = TRUE),
     widths  = c(0.5,   1,1,1, 0.1),
@@ -799,8 +811,48 @@ for (i  in 7:24) {
 
     ## actual plots
     if (! i %in% c(11,16,21,10,15,20,25)) {
-        par("mar"=c(1,1,1,1))
-        plot(0,0)
+
+        kk <- expanded[1,]
+
+        DB      <- get(kk$Dataset)
+        dataset <- DB[ Season == kk$Seasons, ]
+
+        ## linear model counting years
+        lm2 <- lm(dataset[[avar]] ~ dataset$Year)
+
+        ## plot
+        par("mar" = c(2, 3.6, 2, 0))
+
+        plot(dataset$Year, dataset[[avar]],
+             ylim     = ylim,
+             pch      = 19,
+             col      = get(paste0(c("col",
+                                     unlist(strsplit(avar, split = "_" ))[1:2]),
+                                   collapse = "_")),
+             cex      = .5,
+             main     = paste(ase, translate(kk$Dataset), translate(avar)),
+             ylab     = "",
+             yaxt     = "n",
+             xlab     = "",
+             cex.main = 0.9,
+             cex.lab  = 0.8,
+             cex.axis = 0.8,
+             mgp  = c(2, 0.5, 0)
+        )
+        # axis(2, pretty(dataset[[avar]]), las = 2)
+        axis(2, pretty(ylim), las = 2)
+        if (cplots <= 4) {
+            mtext(text = bquote("Anomaly [%]"),
+                  cex  = 0.8,
+                  side = 2,
+                  line = 2.6)
+        }
+        # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]"))
+
+        abline(lm2)
+
+
+
         par("mar"=c(0,0,0,0))
     }
 
