@@ -575,14 +575,53 @@ knitr::include_graphics("./images/SzaTrends-21.png")
 
 ## Long term trends by season of year
 
+```{r echo=F, eval=TRUE}
+## Prepare table and data
+spp <- read.csv("./figures/tbl_longterm_trends_season.dat",
+               strip.white = TRUE,
+               sep         = ";",
+               header      = TRUE)
+spp <- spp[grep("SDR" ,spp$var), ]
+spp$slope.sd           <- NULL
+spp$slope.ConfInt_0.95 <- NULL
+spp$slope.ConfInt_0.99 <- NULL
+spp$var                <- NULL
+rownames(spp)          <- NULL
+names(spp) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Season", "Statistical signif. [%]")
+## order by season
+target    <- c("Winter", "Spring", "Summer", "Autumn")
+new_order <- sapply(target, function(x,spp){which(spp$Season == x)}, spp = spp)
+spp        <- spp[new_order,]
+## order by sky condition
+spp <- spp[order(spp$`Sky condition`),]
+
+# ## put all sky first
+# A  <- which(spp$`Sky condition` == "All sky cond.")
+# B  <- which(spp$`Sky condition` != "All sky cond.")
+# spp <- spp[c(A,B),]
+## numeric precision
+spp$`Trend [%/year]`          <- signif(spp$`Trend [%/year]`, 3)
+spp$`Trend p-value`           <- signif(spp$`Trend p-value`,  3)
+spp$`Statistical signif. [%]` <- signif(spp$`Statistical signif. [%]`,  3)
+
+## rename sky conditions
+spp$`Sky condition` <- sub(" cond.", "", spp$`Sky condition`)
+```
+
 
 Similar to the long term trends discussed above, we have calculated the trend of the anomalies for the three different sky conditions and for each season of the year, using the corresponding mean monthly values
 (Figure\ \ref{fig:seasonalALL} and Table\ \ref{tab:trendseasontable}).
-For all-sky condition the trend in SDR is very significant for the Winter, close to the long term trend for the Autumn, and almost four times lower than the long term trend for Sprint and Summer, indicating a relation to the cloud pattern of each season.
+For all-sky condition the trend in SDR in winter is the largest
+($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$),
+followed by the trend in autumn
+($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$,
+close to the long term trend) both statistically significant above the $99\,\%$ confidence level. 
+In sprint and summer   , indicating a relation to the cloud pattern of each season.
 Moreover, when examining the clear- and cloud-sky conditions the trends between these conditions are almost complementary to each other for Winter and Autumn respectively. On the latter cases, during Spring and Summer the statistical significance along with the actual trend are very low for a meaningful comparison.
 
+
 ```{r seasonalALL, echo=F, fig.cap="SDR trends by season of the year for the three sky conditions. Each point is a monthly mean calculated from daily means. The vertical scale is common for all subplots, for easier comparison.", out.width="100%"}
-knitr::include_graphics("./images/SeasonalTrendsTogether-1.png")
+knitr::include_graphics("./images/SeasonalTrendsTogether2-2.png")
 ```
 
 
@@ -603,38 +642,10 @@ knitr::include_graphics("./images/SeasonalTrendsTogether-1.png")
 
 <!-- \footnotesize -->
 ```{r trendseasontable, echo=F}
-pp <- read.csv("./figures/tbl_longterm_trends_season.dat",
-               strip.white = TRUE,
-               sep         = ";",
-               header      = TRUE)
-pp <- pp[grep("SDR" ,pp$var), ]
-pp$slope.sd           <- NULL
-pp$slope.ConfInt_0.95 <- NULL
-pp$slope.ConfInt_0.99 <- NULL
-pp$var                <- NULL
-rownames(pp)          <- NULL
-names(pp) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Season", "Statistical signif. [%]")
-## order by season
-target    <- c("Winter", "Spring", "Summer", "Autumn")
-new_order <- sapply(target, function(x,pp){which(pp$Season == x)}, pp = pp)
-pp        <- pp[new_order,]
-## order by sky condition
-pp <- pp[order(pp$`Sky condition`),]
 
-# ## put all sky first
-# A  <- which(pp$`Sky condition` == "All sky cond.")
-# B  <- which(pp$`Sky condition` != "All sky cond.")
-# pp <- pp[c(A,B),]
-## numeric precision
-pp$`Trend [%/year]`          <- signif(pp$`Trend [%/year]`, 3)
-pp$`Trend p-value`           <- signif(pp$`Trend p-value`,  3)
-pp$`Statistical signif. [%]` <- signif(pp$`Statistical signif. [%]`,  3)
-
-## rename sky conditions
-pp$`Sky condition` <- sub(" cond.", "", pp$`Sky condition`)
 
 ## arrange columns
-pp <- pp[,c(
+spp <- spp[,c(
       "Sky condition",
       "Season",
       "Trend [%/year]", 
@@ -642,10 +653,10 @@ pp <- pp[,c(
       "Statistical signif. [%]"
       )]
 
-rownames(pp) <- NULL
+rownames(spp) <- NULL
 # panderOptions("table.alignment.default", "left")
 panderOptions("table.alignment.default", "center")
-pander(pp,
+pander(spp,
        justify = c('right', 'right', 'right', 'right', 'center'),
        split.table = Inf,
        caption = "\\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.")
@@ -683,14 +694,14 @@ knitr::include_graphics("./images/CumulativeDailyCumSum-9.png")
 # Conclusions
 
 We demonstrate that in the period 
-`r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is a brightening trend of SDR for all-sky conditions ($`r alltrend`\%/year$).
-On a previous study [@Bais2013], for the period 1993 - 2011 the trend was found to be $0.33\%/year$.
+`r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is a brightening trend of SDR for all-sky conditions ($`r alltrend`\%/y$).
+On a previous study [@Bais2013], for the period 1993 - 2011 the trend was found to be $0.33\%/y$.
 The increase of this trend, indicates that the phenomenon and probably the causes, are still occurring.
-Accordingly, we found a similar trend for clear-sky conditions ($`r cleartrend`\%/year$) that further supports that the brightening can be independent of the cloud occurrences. 
+Accordingly, we found a similar trend for clear-sky conditions ($`r cleartrend`\%/y$) that further supports that the brightening can be independent of the cloud occurrences. 
 We have calculated the effect of TSI variability to be a negligible factor in SDR variability.
 Unfortunately, there is no available data for this period for the Aerosols, in order to estimate their effect on SDR, which is the most probable main cause.
 The attenuation of SDR by Aerosols over Europe have been proposed as major factor by @Wild2021.
-The dimming effect of SDR under cloud-sky condition ($`r cloudtrend`\%/year$), shows that clouds can also attenuate the amount of SDR reaching the ground, and changes on their occurrences can effect the net energy balance.
+The dimming effect of SDR under cloud-sky condition ($`r cloudtrend`\%/y$), shows that clouds can also attenuate the amount of SDR reaching the ground, and changes on their occurrences can effect the net energy balance.
 Because we have no adequate data to investigate long term changes of cloud formation in the region, we can not infer if the SDR trend we observe under cloud-sky is biased by changes in clouds and local climate.
 The observed brightening of SDR over Thessaloniki, is dependent on SZA (higher SZA, have stronger brightening trends). And also, with the seasons of the year, where Winter and Autumn show a significant strong trend, in contrast to Spring and Summer.
 
