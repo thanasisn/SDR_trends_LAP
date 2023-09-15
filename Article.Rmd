@@ -616,6 +616,7 @@ For all-sky condition the trend in SDR in winter is the largest
 followed by the trend in autumn
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$,
 close to the long term trend) both statistically significant above the $99\,\%$ confidence level. 
+...........................
 In sprint and summer   , indicating a relation to the cloud pattern of each season.
 Moreover, when examining the clear- and cloud-sky conditions the trends between these conditions are almost complementary to each other for Winter and Autumn respectively. On the latter cases, during Spring and Summer the statistical significance along with the actual trend are very low for a meaningful comparison.
 
