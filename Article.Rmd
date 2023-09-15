@@ -560,7 +560,7 @@ Aerosols and clouds
 ## Effects of the solar zenith angle on SDR.
 
 The solar zenith angle  is a major driver of the attenuation of SDR reaching the ground, as SDR is affected by the enhancement of the radiation path in the atmosphere, especially in urban environment with human activities emitting aerosols [@Wang2021].
-In order to estimate the contribution of the SZA, we group the anomaly data in $1^\circ$ SZA bins, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
+In order to estimate the effect of the SZA on the SDR trends, we grouped the anomaly data in bin of $1^\circ$ SZA, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
 Although there is a seasonal variation of the minimum SZA, that is not examined here.
 The brightening effect of SDR is stronger for all-sky and clear-sky condition for low Sun elevation angles (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b).
 In the case of cloud-sky condition (Figure\ \ref{fig:szatrends}c), there is no strong correlation between SDR brightening and SZA, except for some low Sun angles, that occur only for a small part of the year, and thus we can not draw more conclusions from this analysis for the overall trends.
@@ -616,8 +616,9 @@ For all-sky condition the trend in SDR in winter is the largest
 followed by the trend in autumn
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$,
 close to the long term trend) both statistically significant above the $99\,\%$ confidence level. 
-...........................
-In sprint and summer   , indicating a relation to the cloud pattern of each season.
+In sprint and summer, the trends are much smaller and less significant.
+These seasonal differences indicate a possible relation of the trends in clouds during winter and autumn.
+For clear-skies, the trend in winter is even larger than for all-skies ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear sky"], 2)`\,\%/y$) which is another indication of the effects 
 Moreover, when examining the clear- and cloud-sky conditions the trends between these conditions are almost complementary to each other for Winter and Autumn respectively. On the latter cases, during Spring and Summer the statistical significance along with the actual trend are very low for a meaningful comparison.
 
 
