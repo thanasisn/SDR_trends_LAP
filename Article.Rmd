@@ -562,7 +562,7 @@ Aerosols and clouds
 The solar zenith angle  is a major driver of the attenuation of SDR reaching the ground, as SDR is affected by the enhancement of the radiation path in the atmosphere, especially in urban environment with human activities emitting aerosols [@Wang2021].
 In order to estimate the effect of the SZA on the SDR trends, we grouped the anomaly data in bin of $1^\circ$ SZA, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
 Although there is a seasonal variation of the minimum SZA, its possible effect has not been examined here.
-The brightening effect of SDR is stronger for all-sky and clear-sky condition for low Sun elevation angles (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b).
+For all-sky and clear-sky conditions the brightening effect of SDR (positive trend) for large SZAs (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b).
 In the case of cloud-sky condition (Figure\ \ref{fig:szatrends}c), there is no strong correlation between SDR brightening and SZA, except for some low Sun angles, that occur only for a small part of the year, and thus we can not draw more conclusions from this analysis for the overall trends.
 
 ```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$).', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.35\\linewidth', out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
@@ -705,7 +705,7 @@ Unfortunately, there is no available data for this period for the Aerosols, in o
 The attenuation of SDR by Aerosols over Europe have been proposed as major factor by @Wild2021.
 The dimming effect of SDR under cloud-sky condition ($`r cloudtrend`\%/y$), shows that clouds can also attenuate the amount of SDR reaching the ground, and changes on their occurrences can effect the net energy balance.
 Because we have no adequate data to investigate long term changes of cloud formation in the region, we can not infer if the SDR trend we observe under cloud-sky is biased by changes in clouds and local climate.
-The observed brightening of SDR over Thessaloniki, is dependent on SZA (higher SZA, have stronger brightening trends). And also, with the seasons of the year, where Winter and Autumn show a significant strong trend, in contrast to Spring and Summer.
+The observed brightening of SDR over Thessaloniki; is dependent on SZA (higher SZA, have stronger brightening trends). And also, with the seasons of the year, where Winter and Autumn show a significant strong trend, in contrast to Spring and Summer.
 
 Our findings are in agreement with other researchers for the region.
 Future observations from the collocated pyrheliometer, may provide us with the means to further investigate the variability of Solar radiation at ground level in Thessaloniki. 
@@ -718,13 +718,13 @@ include in discussion
 
 
 
-# References
+# References {-}
 
 <div id="refs"></div>
 
 
 
-# Appendix
+# Appendix {-}
 
 ```{r trendCLEAR, echo=F, fig.cap=paste0("Anomaly (\\%) of the daily clear-sky SDR, relative to climatological values for", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term linear trend for clear-sky conditions.")}
 knitr::include_graphics("./images/LongtermTrends-5.png")
