@@ -250,7 +250,6 @@ for (DBn in dbs) {
                                      unlist(strsplit(avar, split = "_"))[1:2]),
                                    collapse = "_")),
                  cex      = 2,
-                 main     = paste(translate(DBn), translate(avar)),
                  cex.main = 0.8,
                  yaxt     = "n",
                  xlab     = "",
@@ -258,12 +257,18 @@ for (DBn in dbs) {
             )
             axis(2, pretty(dataset[[avar]]), las = 2 )
 
+            if (DRAFT == TRUE) {
+                title(main = paste(translate(DBn), translate(avar)),
+                      cex.main = 0.8 )
+            }
+
+
             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
 
             ## plot fit line
             abline(lm1, lwd = 2)
 
-            if (DRAFT) {
+            if (DRAFT == TRUE) {
                 ## Running mean
                 first <- head(which(!is.na(dataset[[avar]])),1)
                 last  <- tail(which(!is.na(dataset[[avar]])),1)
@@ -287,7 +292,7 @@ for (DBn in dbs) {
             }
 
 
-            ## decorations
+            ## display trend on graph
             fit <- lm1[[1]]
 
             legend("top", lty = 1, bty = "n", lwd = 2, cex = 1,
