@@ -594,7 +594,7 @@ for (DBn in dbs) {
 
 # ____ by season  --------------------------------------------------------------
 
-#+ SeasonalTrendsTogether, echo=F, include=T, results="asis"
+#+ SeasonalTrendsTogether, echo=F, include=T
 # vars        <- c("DIR_att", "GLB_att")
 vars        <- c("GLB_att_des")
 
@@ -735,19 +735,19 @@ for (avar in vars) {
     plot.new()
     text(x = 0.6, y = 0.4,
          adj  = c(0.6,0.5),
-         "All sky cond.", cex = 1, font = 2)
+         "All sky cond.",    cex = 0.9, font = 2)
 
     # 3
     plot.new()
     text(x = 0.6, y = 0.4,
          adj  = c(0.5,0.5),
-         "Clear sky cond.", cex = 1, font = 2)
+         "Clear sky cond.",  cex = 0.9, font = 2)
 
     # 4
     plot.new()
     text(x = 0.6, y = 0.4,
          adj  = c(0.5,0.5),
-         "Cloudy sky cond.", cex = 1, font = 2)
+         "Cloudy sky cond.", cex = 0.9, font = 2)
 
     # 5
     plot.new()
@@ -760,26 +760,26 @@ for (avar in vars) {
             plot.new()
             text(x = 0.5, y = 0.5,
                  adj  = c(0.5, 0.5),
-                 srt  = 90, "Winter", cex = 1, font = 2)
+                 srt  = 90, "Winter", cex = 0.9, font = 2)
         }
         if (i == 10) {
             plot.new()
             text(x = 0.5, y = 0.5,
                  adj  = c(0.5, 0.5),
-                 srt  = 90, "Winter", cex = 1, font = 2)
+                 srt  = 90, "Winter", cex = 0.9, font = 2)
         }
 
         if (i == 11) {
             plot.new()
             text(x = 0.5, y = 0.5,
                  adj  = c(0.5,0.5),
-                 srt  = 90, "Summer", cex = 1, font = 2)
+                 srt  = 90, "Summer", cex = 0.9, font = 2)
         }
         if (i == 15) {
             plot.new()
             text(x = 0.5, y = 0.5,
                  adj  = c(0.5,0.5),
-                 srt  = 90, "Summer", cex = 1, font = 2)
+                 srt  = 90, "Summer", cex = 0.9, font = 2)
         }
 
 
@@ -787,13 +787,13 @@ for (avar in vars) {
             plot.new()
             text(x = 0.5, y = 0.5,
                  adj  = c(0.5,0.5),
-                 srt  = 90, "Autumn", cex = 1, font = 2)
+                 srt  = 90, "Autumn", cex = 0.9, font = 2)
         }
         if (i == 20) {
             plot.new()
             text(x = 0.5, y = 0.5,
                  adj  = c(0.5,0.5),
-                 srt  = 90, "Autumn", cex = 1, font = 2)
+                 srt  = 90, "Autumn", cex = 0.9, font = 2)
         }
 
 
@@ -801,13 +801,13 @@ for (avar in vars) {
             plot.new()
             text(x = 0.5, y = 0.5,
                  adj  = c(0.5,0.5),
-                 srt  = 90, "Spring", cex = 1, font = 2)
+                 srt  = 90, "Spring", cex = 0.9, font = 2)
         }
         if (i == 25) {
             plot.new()
             text(x = 0.5, y = 0.5,
                  adj  = c(0.5,0.5),
-                 srt  = 90, "Spring", cex = 1, font = 2)
+                 srt  = 90, "Spring", cex = 0.9, font = 2)
         }
 
 
@@ -829,7 +829,7 @@ for (avar in vars) {
             lm2 <- lm(dataset[[avar]] ~ dataset$Year)
 
             ## plot
-            par("mar" = c(1, 3, 1, 0))
+            par("mar" = c(1, 2.5, 1, 0))
 
             plot(dataset$Year, dataset[[avar]],
                  ylim     = ylim,
@@ -843,12 +843,12 @@ for (avar in vars) {
                  xlab     = "",
                  cex.main = 0.9,
                  cex.lab  = 0.8,
-                 cex.axis = 0.6,
+                 cex.axis = 0.8,
                  mgp  = c(2, 0.5, 0)
             )
             # axis(2, pretty(dataset[[avar]]), las = 2)
 
-            axis(2, pretty(ylim), las = 2, cex = 0.6)
+            axis(2, pretty(ylim), las = 2, cex.axis = 0.8)
 
             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]"))
 
@@ -858,7 +858,7 @@ for (avar in vars) {
             ## decorations
             fit <- lm2[[1]]
 
-            legend("bottom", lty = 1, bty = "n", lwd = 2, cex = 0.8,
+            legend("top", lty = 1, bty = "n", lwd = 1, cex = 0.8,
                    paste("Trend: ",
                          if (fit[2] > 0) '+' else '-',
                          signif(abs(fit[2]), 2),
@@ -869,7 +869,7 @@ for (avar in vars) {
                 mtext(text = bquote("Anomaly [%]"),
                       cex  = 0.6,
                       side = 2,
-                      line = 2.6)
+                      line = 2.3)
             }
 
             par("mar" = c(0,0,0,0))
@@ -891,19 +891,19 @@ for (avar in vars) {
     plot.new()
     text(x = 0.6, y = 0.3,
          adj  = c(0.6,0.5),
-         "All sky cond.", cex = 1, font = 2)
+         "All sky cond.",    cex = 0.9, font = 2)
 
     # 3
     plot.new()
     text(x = 0.6, y = 0.3,
          adj  = c(0.5, 0.5),
-         "Clear sky cond.", cex = 1, font = 2)
+         "Clear sky cond.",  cex = 0.9, font = 2)
 
     # 4
     plot.new()
     text(x = 0.6, y = 0.3,
          adj  = c(0.5, 0.5),
-         "Cloudy sky cond.", cex = 1, font = 2)
+         "Cloudy sky cond.", cex = 0.9, font = 2)
 
     # 5
     plot.new()
