@@ -31,12 +31,11 @@ address:
 #   - code:         2
 #     text:         "Another author footnote."
 abstract: |
-  The shortwave downward solar irradiance (SDR).........
-  Human and climate.......
-  Brigthening dimming...............
-  We study 29 years of CHP1 data.........
-  Clear cloud id ................
-  Found trends ......
+  The shortwave downward solar irradiance (SDR) is an important factor that drives climate processes, production and can affect all living organisms.
+  While monitoring the long term variability, there are observations of upward and downward SDR trends on different locations around the world for different time periods.
+  Periods of positive tredns are refered as brightening periods and with negative tredns as dimming periods.
+  We studied 29 years of CHP1 data from Thessaloniki, Greece, under three sky conditions (clear sky, cloudy sky and all sky conditions), applying a cloud sky identification algorithm.
+  We found a positive trend for all-sky and clear-sky conditions, and also, investigated the consistency of those trend, the effect of the solar zenith angle, and the variation of the trends for the seasons of the year.
 keywords: 
   - GHI
   - SDR
@@ -464,15 +463,7 @@ To estimate SZA contribution to the SDR trends, the one-minute data were aggrega
 
 ## Long-term SDR trends
 
-We calculated the linear SDR trends, from the departures of the mean daily values from the seasonal values, and for the three sky conditions (Table\ \ref{tab:trendtable}).
-In Figure\ \ref{fig:trendALL} we present only the time series under all-sky conditions; the plots for clear-sky and cloud-sky conditions, are very similar and shown in the Appendix (Figures\ \ref{fig:trendCLEAR} and \ref{fig:trendCLOUD}).
-In the studied period, there is no significant break or change in the variability of the time series.
-Other studies for the European region report a change of the SDR slope, around 1980, a few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009]. It is interesting to note, that for the observation period, the trend of the TSI is
-$`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\,\%/y$, and thus we can not attribute any major effect on SDR trend to Solar variability.
-
-
-<!-- \footnotesize -->
-```{r trendtable, echo=F}
+```{r echo=F, eval=TRUE}
 LT <- data.table(read.csv("./figures/tbl_longterm_trends.dat",
                strip.white = TRUE,
                sep = ";",
@@ -486,6 +477,7 @@ setorder(LT, -slope.stat_sig)
 rownames(LT) <- NULL
 names(LT)    <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Trend statistical signif. [%]")
 ## no need all are 100%
+LTminSSig <- signif(min(LT$`Trend statistical signif. [%]`),4)
 LT$`Trend statistical signif. [%]` <- NULL
 ## numeric precision
 LT$`Trend [%/year]` <- signif(LT$`Trend [%/year]`, 3)
@@ -498,10 +490,22 @@ cloudtrend <- signif(LT[`Sky condition` == "Cloudy sky cond.", `Trend [%/year]`]
 
 ## rename sky conditions
 LT$`Sky condition` <- sub(" cond.", "", LT$`Sky condition`)
+```
 
+We calculated the linear SDR trends, from the departures of the mean daily values from the seasonal values, and for the three sky conditions (Table\ \ref{tab:trendtable}).
+In Figure\ \ref{fig:trendALL} we present only the time series under all-sky conditions; the plots for clear-sky and cloud-sky conditions, are very similar and shown in the Appendix (Figures\ \ref{fig:trendCLEAR} and\  \ref{fig:trendCLOUD}).
+We observe a positive trend for all-sky conditions 
+($`r alltrend`\,\%/y$), a very close but lower trend for clear-sky ($`r cleartrend`\,\%/y$) and a negative weaker trend for cloud-sky ($`r cloudtrend`\,\%/y$).
+In the studied period, there is no significant break or change in the variability of the time series.
+Other studies for the European region report a change of the SDR slope, around 1980, a few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009]. It is interesting to note, that for the observation period, the trend of the TSI is
+$`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\,\%/y$, and thus we can not attribute any major effect on SDR trend to Solar variability.
+
+
+<!-- \footnotesize -->
+```{r trendtable, echo=F}
 panderOptions("table.alignment.default", "center")
 pander(LT,
-       caption = paste0("\\label{tab:trendtable}Trends of daily SDR means, for different sky conditions for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". For all cases the statistical significance is above $99.9\\%$."))
+       caption = paste0("\\label{tab:trendtable}Trends of daily SDR means, for different sky conditions for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". For all cases the statistical significance is above $", LTminSSig, "\\,\\%$."))
 ```
 <!-- \normalsize -->
 
@@ -511,7 +515,7 @@ knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
 
 
-Although the trends suggest that raw data have an homogeneous behavior, using plots of the cumulative sum (CUSUM) of the computed anomalies, we can reveal some structure within the trends and some differences between the sky conditions [@Regier2019]. 
+Although the trends suggest that raw data have a homogeneous behavior, using plots of the cumulative sum (CUSUM) of the computed anomalies, we can reveal some structure within the trends and some differences between the sky conditions [@Regier2019]. 
 On all three plots on Figure\ \ref{fig:cumsum}, we observe a downward part at the start of the period until about 2000, an almost steady part until about 2016 for all-sky and clear-sky conditions (Figures\ \ref{fig:cumsum-1}, \ref{fig:cumsum-2}) and until 2009 for cloud-sky conditions (Figure\ \ref{fig:cumsum-3}), and finally, a steep upward part until the present.
 For a uniform trend, we would expect the cumulative sums of the anomalies to have a symmetric 'V' shape.
 This would indicate that the anomalies are evenly distributed around the climatological mean.
@@ -519,6 +523,11 @@ In our case, for all sky conditions, we observe periods where the CUSUMs remain 
 Another distinct feature of the CUSUMs, is the different pattern of the cloudy-sky dataset which peaks around the middle of the period.
 The CUSUMs of the clear and the all-sky conditions exhibit similar patterns.
 The causes for these discrepancies haven't been investigated yet. 
+
+.......
+cusums without trends?
+........
+
 
 <!--
 This can make us to suspected that clear-Sky conditions SDR and cloud-sky SDR is affected by different mechanisms.
@@ -560,7 +569,7 @@ Aerosols and clouds
 
 ## Effects of the solar zenith angle on SDR.
 
-The solar zenith angle  is a major driver of the attenuation of SDR reaching the ground, as SDR is affected by the enhancement of the radiation path in the atmosphere, especially in urban environment with human activities emitting aerosols [@Wang2021].
+The solar zenith angle is a major driver of the attenuation of SDR reaching the ground, as SDR is affected by the enhancement of the radiation path in the atmosphere, especially in urban environment with human activities emitting aerosols [@Wang2021].
 In order to estimate the effect of the SZA on the SDR trends, we grouped the anomaly data in bin of $1^\circ$ SZA, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
 Although there is a seasonal variation of the minimum SZA, its possible effect has not been examined here.
 For all-sky and clear-sky conditions the brightening effect of SDR (positive trend) for large SZAs (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b).

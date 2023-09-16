@@ -422,10 +422,12 @@ for (avar in unique(szatrends$var)) {
 
 ## __ Calculate SZA ~ Season stats  --------------------------------------------
 
-warning("Check aggregation by season")
+warning("Check aggregation by season on 1")
 
 # vars        <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
 vars        <- c("DIR_att_des", "GLB_att_des")
+vars        <- c("GLB_att_des")
+
 
 dbs         <- c(  "ALL_2_bySeason_daily_DESEAS",
                  "CLEAR_2_bySeason_daily_DESEAS",
