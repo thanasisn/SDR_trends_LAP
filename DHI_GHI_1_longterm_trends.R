@@ -1053,6 +1053,7 @@ for (avar in vars) {
                  mgp  = c(2, 0.5, 0)
             )
 
+            ## y axis
             if (i %in% c(7,12,17,22)){
                 axis(2, pretty(ylim), las = 2, cex.axis = 0.8)
             } else {
@@ -1061,6 +1062,7 @@ for (avar in vars) {
 
             }
 
+            ## x axis
             if (i %in% c(22, 23, 24)){
                 axis(1, pretty(dataset$Year), las = 1, cex.axis = 0.8, line =  0,   labels = NA)
                 axis(1, pretty(dataset$Year), las = 1, cex.axis = 0.8, line = -0.5, tck = 0, lwd = 0)
