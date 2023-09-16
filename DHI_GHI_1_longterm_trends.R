@@ -1109,13 +1109,13 @@ for (avar in vars) {
 
     # 3
     plot.new()
-    text(x = 0.5, y = 0.2,
+    text(x = 0.5, y = 0.25,
          adj  = c(0.5, 0.5),
          "Clear sky cond.",  cex = 0.9, font = 2)
 
     # 4
     plot.new()
-    text(x = 0.5, y = 0.1,
+    text(x = 0.5, y = 0.25,
          adj  = c(0.5, 0.5),
          "Cloudy sky cond.", cex = 0.9, font = 2)
 
