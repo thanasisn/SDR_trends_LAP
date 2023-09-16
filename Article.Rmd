@@ -511,12 +511,13 @@ knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
 
 
-Although the trends are quite constant, using plots of the cumulative sum (CUSUM) we can reveal some structure within the trends and some differences between the sky conditions [@Regier2019]. 
+Although the trends suggest that raw data have an homogeneous behavior, using plots of the cumulative sum (CUSUM) of the computed anomalies, we can reveal some structure within the trends and some differences between the sky conditions [@Regier2019]. 
 On all three plots on Figure\ \ref{fig:cumsum}, we observe a downward part at the start of the period until about 2000, an almost steady part until about 2016 for all-sky and clear-sky conditions (Figures\ \ref{fig:cumsum-1}, \ref{fig:cumsum-2}) and until 2009 for cloud-sky conditions (Figure\ \ref{fig:cumsum-3}), and finally, a steep upward part until the present.
 For a uniform trend, we would expect the cumulative sums of the anomalies to have a symmetric 'V' shape.
 This would indicate that the anomalies are evenly distributed around the climatological mean.
 In our case, for all sky conditions, we observe periods where the CUSUMs remain relative steady, roughly around the middle of the study dataset.
-Another distinct feature of CUSUMs, is the difference, between the cloud-sky and the rest of the sky conditions, where they display a supplementary behavior. 
+Another distinct feature of the CUSUMs, is the different pattern of the cloudy-sky dataset which peaks around the middle of the period.
+The CUSUMs of the clear and the all-sky conditions exhibit similar patterns.
 The causes for these discrepancies haven't been investigated yet. 
 
 <!--
