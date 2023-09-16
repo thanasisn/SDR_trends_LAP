@@ -573,7 +573,14 @@ The solar zenith angle is a major driver of the attenuation of SDR reaching the 
 In order to estimate the effect of the SZA on the SDR trends, we grouped the anomaly data in bin of $1^\circ$ SZA, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
 Although there is a seasonal variation of the minimum SZA, its possible effect has not been examined here.
 For all-sky and clear-sky conditions the brightening effect of SDR (positive trend) for large SZAs (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b).
-In the case of cloud-sky condition (Figure\ \ref{fig:szatrends}c), there is no strong correlation between SDR brightening and SZA, except for some low Sun angles, that occur only for a small part of the year, and thus we can not draw more conclusions from this analysis for the overall trends.
+The trends in the morning and afternoon hours are more or less consistent with small differences which can be attributed to systematic diurnal variations of aerosols, particularly during the warm period of the year [@Wang2021].
+
+For cloud-sky conditions (Figure\ \ref{fig:szatrends}c),there is no dependence of the trends with SZA. 
+
+The trends are variable ranging within about $\pm 0.2\,\%/y$. 
+
+Between $55^\circ$ and $75^\circ$ SZA the trends are mostly negative for cloud sky conditions and are possibly associated with stronger attenuation by clouds. 
+
 
 ```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$).', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.35\\linewidth', out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics("./images/SzaTrends-13.png")
@@ -744,4 +751,55 @@ knitr::include_graphics("./images/LongtermTrends-5.png")
 knitr::include_graphics("./images/LongtermTrends-8.png")
 ```
 
+
+
+```{r  echo=F, fig.cap="Seasonal SZA"}
+knitr::include_graphics("./images/SzaTrendsSeas-1.png")
+```
+
+
+```{r  echo=F, fig.cap="Seasonal SZA"}
+knitr::include_graphics("./images/SzaTrendsSeas-2.png")
+```
+
+```{r  echo=F, fig.cap="Seasonal SZA"}
+knitr::include_graphics("./images/SzaTrendsSeas-3.png")
+```
+
+```{r  echo=F, fig.cap="Seasonal SZA"}
+knitr::include_graphics("./images/SzaTrendsSeas-4.png")
+```
+
+```{r  echo=F, fig.cap="Seasonal SZA"}
+knitr::include_graphics("./images/SzaTrendsSeas-5.png")
+```
+
+```{r  echo=F, fig.cap="Seasonal SZA"}
+knitr::include_graphics("./images/SzaTrendsSeas-6.png")
+```
+
+```{r  echo=F, fig.cap="Seasonal SZA"}
+knitr::include_graphics("./images/SzaTrendsSeas-7.png")
+```
+
+
+```{r  echo=F, fig.cap="Seasonal SZA"}
+knitr::include_graphics("./images/SzaTrendsSeas-8.png")
+```
+
+```{r  echo=F, fig.cap="Seasonal SZA"}
+knitr::include_graphics("./images/SzaTrendsSeas-9.png")
+```
+
+```{r  echo=F, fig.cap="Seasonal SZA"}
+knitr::include_graphics("./images/SzaTrendsSeas-10.png")
+```
+
+```{r  echo=F, fig.cap="Seasonal SZA"}
+knitr::include_graphics("./images/SzaTrendsSeas-11.png")
+```
+
+```{r  echo=F, fig.cap="Seasonal SZA"}
+knitr::include_graphics("./images/SzaTrendsSeas-12.png")
+```
 
