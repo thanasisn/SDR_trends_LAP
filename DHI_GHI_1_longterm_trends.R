@@ -729,7 +729,7 @@ for (avar in vars) {
     nf <- layout(
         matrix(1:30, ncol = 5, byrow = TRUE),
         widths  = c(0.2,   1,1,1, 0.1),
-        heights = c(0.1, 1,1,1,1, 0.2)
+        heights = c(0.1, 1,1,1,1, 0.24)
     )
     layout.show(nf)
 
@@ -934,7 +934,7 @@ for (avar in vars) {
     nf <- layout(
         matrix(1:30, ncol = 5, byrow = TRUE),
         widths  = c(0.3,   1,1,1, 0.1),
-        heights = c(0.2, 1,1,1,1, 0.3)
+        heights = c(0.2, 1,1,1,1, 0.4)
     )
     layout.show(nf)
 
@@ -1115,7 +1115,7 @@ for (avar in vars) {
 
     # 4
     plot.new()
-    text(x = 0.5, y = 0.2,
+    text(x = 0.5, y = 0.1,
          adj  = c(0.5, 0.5),
          "Cloudy sky cond.", cex = 0.9, font = 2)
 
@@ -1125,7 +1125,6 @@ for (avar in vars) {
     par(mfrow = c(1,1))
 }
 #+ echo=F, include=F
-
 
 
 
