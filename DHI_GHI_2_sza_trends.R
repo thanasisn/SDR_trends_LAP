@@ -308,7 +308,7 @@ for (avar in unique(szatrends$var)) {
             if (awename == "Slope") { awename <- "Anomaly Trend [%/y]" }
 
             ## limit plot p-values
-            p_lim <- 0.05
+            p_lim     <- 0.05
 
             szatrends <- data.table(szatrends)
 
@@ -345,7 +345,10 @@ for (avar in unique(szatrends$var)) {
                  xlab = "Solar zenith angle",
                  ylab = awename,
                  xlim = xlim,
-                 ylim = ylim )
+                 ylim = ylim,
+                 yaxt = "n")
+
+            axis(2, pretty(ylim), las = 2)
 
             abline(h = 0, lty = 3)
 
@@ -386,7 +389,7 @@ for (avar in unique(szatrends$var)) {
                   lwd  = ccex,
                   cex = 1)
             ## evening points
-            points(pam$SZA, ppm[[awe]],
+            points(ppm$SZA, ppm[[awe]],
                    pch = ppm$pch,
                    col = 3,
                    cex = 1)
@@ -412,6 +415,7 @@ for (avar in unique(szatrends$var)) {
 
 
 
+
 ##  SZA trends for season of year  ---------------------------------------------
 
 #'
@@ -422,7 +426,6 @@ for (avar in unique(szatrends$var)) {
 
 ## __ Calculate SZA ~ Season stats  --------------------------------------------
 
-warning("Check aggregation by season on 1")
 
 # vars        <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
 vars        <- c("DIR_att_des", "GLB_att_des")
@@ -494,7 +497,7 @@ szatrends_seas[ preNoon == F, pch := pch_pm ]
 
 # szatrends_seas <- szatrends_seas[ N > 50]
 
-plot(szatrends_seas$SZA,szatrends_seas$N)
+# plot(szatrends_seas$SZA, szatrends_seas$N)
 
 # test <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "DIR_att_des" ]
 # plot(test$SZA, test$N, pch = 19)
@@ -523,6 +526,9 @@ wecare <- grep( "^slope|^N", names(szatrends_seas), ignore.case = T, value = T)
 wecare <- grep("^slope\\.t", wecare, ignore.case = T, value = T, invert = T)
 wecare <- grep("slope\\.sd", wecare, ignore.case = T, value = T, invert = T)
 
+wecare <- "slope"
+
+# FIGURESGRID <- TRUE
 
 #+ SzaTrendsSeas, echo=F, include=T, results = "asis"
 ## Winter - Summer ....
@@ -547,32 +553,54 @@ for (ase in seasons) {
 
                 par("mar" = c(4,4,1,0))
 
+                ## limit plot p-values
+                p_lim     <- 0.05
+
                 ## select All/CS  DIR/GLB/trans winter/summer
                 subdata <- szatrends_seas[ DATA   == type &
                                            var    == avar &
                                            Season == ase    , ]
 
+                ## set symbols for plotting
+                subdata[ slope.p  < p_lim & preNoon == TRUE,  pch := 16 ]
+                subdata[ slope.p >= p_lim & preNoon == TRUE,  pch :=  1 ]
+                subdata[ slope.p  < p_lim & preNoon == FALSE, pch := 17 ]
+                subdata[ slope.p >= p_lim & preNoon == FALSE, pch :=  2 ]
+
+
                 # xlim <- range( subdata$SZA,        na.rm = T )
                 ## use same axis for all
-                xlim <- range( szatrends_seas$SZA, na.rm = T )
-
-                ylim <- range( subdata[[awe]], na.rm = T )
+                xlim <- range(szatrends_seas$SZA, na.rm = T)
+                ylim <- range(subdata[[awe]],     na.rm = T)
 
                 ## test always show zero on plots
-                ylim <- range(0, subdata[[awe]], na.rm = T )
+                ylim <- range(0, subdata[[awe]], na.rm = T)
 
 
                 pam  <- subdata[ preNoon == T ]
                 ppm  <- subdata[ preNoon == F ]
 
 
+                ccex <- ccex_sbs
+                par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
+
+                if (DRAFT == TRUE) {
+                    par("mar" = c(4,   5,   2,   2))
+                } else {
+                    par("mar" = c(4.5, 4.5, 0.5, 0.5))
+                }
+
+
                 plot(1, type = "n",
-                     xlab = "SZA",
+                     xlab = "Solar zenith angle",
                      ylab = awename,
                      xlim = xlim,
-                     ylim = ylim )
+                     ylim = ylim,
+                     yaxt = "n")
 
-                abline(h = 0, lty = 3 )
+                axis(2, pretty(ylim), las = 2)
+
+                abline(h = 0, lty = 3)
 
                 ## test for some plots
                 if (grepl("CLEAR", type, ignore.case = T)) typeP <- "Clear Sky (Deseas.)"
@@ -583,14 +611,50 @@ for (ase in seasons) {
                 # lines(pam$SZA, pam[[awe]], pch =  pch_am, col = pam$col, type = "b")
                 # lines(pam$SZA, ppm[[awe]], pch =  pch_pm, col = pam$col, type = "b")
 
-                lines(pam$SZA, pam[[awe]], pch = pch_am, col = 2, type = "b", lwd = 1, cex = .5)
-                lines(ppm$SZA, ppm[[awe]], pch = pch_pm, col = 3, type = "b", lwd = 1, cex = .5)
+                # lines(pam$SZA, pam[[awe]], pch = pch_am, col = 2, type = "b", lwd = 1, cex = .5)
+                # lines(ppm$SZA, ppm[[awe]], pch = pch_pm, col = 3, type = "b", lwd = 1, cex = .5)
+
+
+                ## morning lines
+                lines(pam$SZA, pam[[awe]],
+                      col  = 2,
+                      type = "c",
+                      lwd  = ccex,
+                      cex = 1)
+                ## morning points
+                points(pam$SZA, pam[[awe]],
+                       pch = pam$pch,
+                       col = 2,
+                       cex = 1)
+
+                ## evening lines
+                lines(ppm$SZA, ppm[[awe]],
+                      col  = 3,
+                      type = "c",
+                      lwd  = ccex,
+                      cex = 1)
+                ## evening points
+                points(ppm$SZA, ppm[[awe]],
+                       pch = ppm$pch,
+                       col = 3,
+                       cex = 1)
+
+                # legend("top",
+                #        legend = c("Morning", "Evening"),
+                #        # col    = c(unique(pam$col), unique(ppm$col)),
+                #        col    = c( 2,  3),
+                #        pch    = c(16, 17), ncol = 2, bty = "n",
+                #        cex    = ccex)
+
+                ## reset fonts
+                ccex <- 1
+                par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
 
                 legend("bottom",
                        legend = c("Morning",       "Evening"),
                        # col    = c(unique(pam$col), unique(ppm$col)),
                        col    = c(2, 3),
-                       pch    = c(unique(pam$pch), unique(ppm$pch)), ncol = 2, bty = "n")
+                       pch    = c(16, 17), ncol = 2, bty = "n")
             }
             par(mfrow = c(1, 1)) ## just reset layout
         }
