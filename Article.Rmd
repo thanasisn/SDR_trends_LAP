@@ -90,6 +90,7 @@ knitr::opts_chunk$set(fig.pos    = 'h!'    )
 options(knitr.graphics.auto_pdf = FALSE)
 library(pander)
 library(data.table)
+library(kableExtra)
 ## load data from trends analysis
 load("./data/common_data_14_2.Rda")
 ## number of measurements for each dataset
@@ -514,6 +515,22 @@ $`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\,\%/y$, and thus we ca
 panderOptions("table.alignment.default", "center")
 pander(LT,
        caption = paste0("\\label{tab:trendtable}Trends of daily SDR means, for different sky conditions for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". For all cases the statistical significance is above $", LTminSSig, "\\,\\%$."))
+
+
+x_latex <- knitr::kable(LT,
+                        format   = "latex",
+                        booktabs = T,
+                        escape   = T,
+                        # format.args = list(digits = 3),
+                        linesep  = "",
+                        # align    = "ccrr",
+                        caption  = "sssssss")
+x_latex %>%
+    collapse_rows(columns = 1, valign = "middle", latex_hline = "custom") %>%
+    kable_styling(latex_options = c("striped",
+                                    "hold_position")
+                  ) 
+
 ```
 <!-- \normalsize -->
 
@@ -671,6 +688,7 @@ knitr::include_graphics("./images/SeasonalTrendsTogether3-2.png")
 
 
 <!-- \footnotesize -->
+
 ```{r trendseasontable, echo=F}
 ## arrange columns
 spp <- spp[,c(
@@ -683,14 +701,33 @@ spp <- spp[,c(
 
 rownames(spp) <- NULL
 # panderOptions("table.alignment.default", "left")
-panderOptions("table.alignment.default", "center")
-pander(spp,
-       justify = c('center', 'right', 'right', 'center'),
-       split.table = Inf,
-       caption = "\\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.")
-```
-<!-- \normalsize -->
+# panderOptions("table.alignment.default", "center")
+# pander(spp,
+#        justify = c('center', 'right', 'right', 'center'),
+#        split.table = Inf,
+#        caption = "\\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.")
 
+
+## use kable
+
+x_latex <- knitr::kable(spp,
+                        format   = "latex",
+                        booktabs = T,
+                        escape   = T,
+                        # format.args = list(digits = 3),
+                        linesep  = "",
+                        align    = "ccrr",
+                        caption  = "\\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.")
+x_latex %>%
+    collapse_rows(columns = 1, valign = "middle", latex_hline = "custom") %>%
+    kable_styling(latex_options = c("striped",
+                                    "hold_position")
+                  ) 
+# position = "float_left"
+
+```
+
+<!-- \normalsize -->
 
 <!--
 ## Consistency of the trends
