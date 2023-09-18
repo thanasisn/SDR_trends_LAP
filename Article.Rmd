@@ -492,8 +492,8 @@ cloudtrend <- signif(LT[`Sky condition` == "Cloudy sky cond.", `Trend [%/year]`]
 ## order columns
 LT <- LT[,c(
       "Sky condition",
-      "Season",
-      "Trend [%/year]"
+      "Trend [%/year]",
+      "Trend p-value"
       )]
 
 ## rename sky conditions
@@ -679,7 +679,7 @@ spp <- spp[,c(
       "Sky condition",
       "Season",
       "Trend [%/year]", 
-      "Trend p-value", 
+      # "Trend p-value", 
       "Statistical signif. [%]"
       )]
 
