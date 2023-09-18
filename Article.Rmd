@@ -593,7 +593,7 @@ The trends are variable ranging within about $\pm 0.2\,\%/y$.
 Between $55^\circ$ and $75^\circ$ SZA the trends are mostly negative for cloud sky conditions and are possibly associated with stronger attenuation by clouds. 
 
 
-```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$).', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.35\\linewidth', out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$).', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics("./images/SzaTrends-13.png")
 knitr::include_graphics("./images/SzaTrends-17.png" )
 knitr::include_graphics("./images/SzaTrends-21.png")
@@ -672,8 +672,6 @@ knitr::include_graphics("./images/SeasonalTrendsTogether3-2.png")
 
 <!-- \footnotesize -->
 ```{r trendseasontable, echo=F}
-
-
 ## arrange columns
 spp <- spp[,c(
       "Sky condition",
@@ -687,7 +685,7 @@ rownames(spp) <- NULL
 # panderOptions("table.alignment.default", "left")
 panderOptions("table.alignment.default", "center")
 pander(spp,
-       justify = c('center', 'right', 'right', 'right', 'center'),
+       justify = c('center', 'right', 'right', 'center'),
        split.table = Inf,
        caption = "\\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.")
 ```
@@ -764,53 +762,53 @@ knitr::include_graphics("./images/LongtermTrends-8.png")
 
 
 
-```{r  echo=F, fig.cap="Seasonal SZA"}
+
+
+```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-1.png")
 ```
 
-
-```{r  echo=F, fig.cap="Seasonal SZA"}
+```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-2.png")
 ```
 
-```{r  echo=F, fig.cap="Seasonal SZA"}
+```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-3.png")
 ```
 
-```{r  echo=F, fig.cap="Seasonal SZA"}
+```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-4.png")
 ```
 
-```{r  echo=F, fig.cap="Seasonal SZA"}
+```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-5.png")
 ```
 
-```{r  echo=F, fig.cap="Seasonal SZA"}
+```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-6.png")
 ```
 
-```{r  echo=F, fig.cap="Seasonal SZA"}
+```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-7.png")
 ```
 
-
-```{r  echo=F, fig.cap="Seasonal SZA"}
+```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-8.png")
 ```
 
-```{r  echo=F, fig.cap="Seasonal SZA"}
+```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-9.png")
 ```
 
-```{r  echo=F, fig.cap="Seasonal SZA"}
+```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-10.png")
 ```
 
-```{r  echo=F, fig.cap="Seasonal SZA"}
+```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-11.png")
 ```
 
-```{r  echo=F, fig.cap="Seasonal SZA"}
+```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-12.png")
 ```
 
