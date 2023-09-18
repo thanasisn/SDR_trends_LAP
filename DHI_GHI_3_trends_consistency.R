@@ -115,7 +115,8 @@ FIGURESGRID <- TRUE
 ## choose loess criterion for span
 LOESS_CRITERIO <-  c("aicc", "gcv")[1]
 
-
+## cex value for side by side
+ccex_sbs <- 1.3
 
 #+ echo=F, include=T
 #'
@@ -349,7 +350,7 @@ for (adb in database) {
 
     for (avar in vars) {
 
-        ## Plot regular cumsums
+        ## Plot regular cusums
         wcare <- c("Date", paste0(avar,"_des"), paste0(avar,"_cusum"))
         pdb   <- DB[, ..wcare]
         rm(DB)
@@ -366,17 +367,29 @@ for (adb in database) {
         }
         par(pch = 19)
 
-
-
-        par(pch = 19)
+        ## scale fonts
+        ccex <- ccex_sbs
+        par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
 
         plot(1, type = "n",
              xlab = "",
              xlim = xlim, ylim = ylim,
              xaxt = "n",
-             ylab = bquote("Anomaly CUSUM [%]"))
+             yaxt = "n",
+             ylab = "")
+
+        # x axis
         axis.Date(1, pdb$Date)
-        # abline(h = 0, lty = 2, lwd = 0.8)
+        # y axis
+        axis(2,
+             pretty(ylim), las = 2, ylab = "")
+
+        mtext(text = bquote("Anomaly CUSUM [%]"),
+              # cex  = 0.6,
+              side = 2,
+              line = 4)
+
+        paste0(pretty(ylim) / 1000,"k")
 
         ## daily from other DT
         lines(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = col, lwd = 2)
@@ -397,6 +410,9 @@ for (adb in database) {
             par("mar" = c(3,4,2,1))
         }
 
+        ##  reset fonts
+        ccex <- 1
+        par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
 
 
 
