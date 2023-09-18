@@ -35,7 +35,8 @@ abstract: |
   While monitoring the long term variability, there are observations of upward and downward SDR trends on different locations around the world for different time periods.
   Periods of positive tredns are refered as brightening periods and with negative tredns as dimming periods.
   We studied 29 years of CHP1 data from Thessaloniki, Greece, under three sky conditions (clear sky, cloudy sky and all sky conditions), applying a cloud sky identification algorithm.
-  We found a positive trend for all-sky and clear-sky conditions, and also, investigated the consistency of those trend, the effect of the solar zenith angle, and the variation of the trends for the seasons of the year.
+  We found a positive trend for all-sky and clear-sky conditions, and also, investigated the consistency of those trends, the effect of the solar zenith angle, and the variation of the trends for the seasons of the year.
+  We indentified that there are some anomalies in the long term SDR trends, for all sky conditions.
 keywords: 
   - GHI
   - SDR
@@ -488,6 +489,13 @@ alltrend   <- signif(LT[`Sky condition` == "All sky cond.",    `Trend [%/year]`]
 cleartrend <- signif(LT[`Sky condition` == "Clear sky cond.",  `Trend [%/year]`], 2)
 cloudtrend <- signif(LT[`Sky condition` == "Cloudy sky cond.", `Trend [%/year]`], 2)
 
+## order columns
+LT <- LT[,c(
+      "Sky condition",
+      "Season",
+      "Trend [%/year]"
+      )]
+
 ## rename sky conditions
 LT$`Sky condition` <- sub(" cond.", "", LT$`Sky condition`)
 ```
@@ -523,6 +531,9 @@ In our case, for all sky conditions, we observe periods where the CUSUMs remain 
 Another distinct feature of the CUSUMs, is the different pattern of the cloudy-sky dataset which peaks around the middle of the period.
 The CUSUMs of the clear and the all-sky conditions exhibit similar patterns.
 The causes for these discrepancies haven't been investigated yet. 
+
+In order to compare any features within the trends, we created another set of CUSUMs plots, by subtracting the corresponding long term trend from the data, prior the CUSUM calculation (Figure\ \ref{fig:cumsumnotrend}).
+With this approach periods where the CUSUM diverge from zero can be interpreted as systematic variation of SDR, further from the climatological mean.
 
 .......
 cusums without trends?
@@ -676,7 +687,7 @@ rownames(spp) <- NULL
 # panderOptions("table.alignment.default", "left")
 panderOptions("table.alignment.default", "center")
 pander(spp,
-       justify = c('right', 'right', 'right', 'right', 'center'),
+       justify = c('center', 'right', 'right', 'right', 'center'),
        split.table = Inf,
        caption = "\\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.")
 ```
