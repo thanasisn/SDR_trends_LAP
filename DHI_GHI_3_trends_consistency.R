@@ -361,9 +361,9 @@ for (adb in database) {
                             collapse = "_"))
 
         if (DRAFT == TRUE) {
-            par("mar" = c(3,4,2,1))
+            par("mar" = c(3, 4, 2,  1))
         } else {
-            par("mar" = c(3,4,0.5,0.5))
+            par("mar" = c(3, 4.5, 0.5,0.5))
         }
         par(pch = 19)
 
@@ -380,6 +380,7 @@ for (adb in database) {
 
         # x axis
         axis.Date(1, pdb$Date)
+
         # y axis
         sfmt <- paste0(pretty(ylim) / 1000,"k")
         sfmt <- sub("^0k$", "0", sfmt)
@@ -388,11 +389,12 @@ for (adb in database) {
              labels = sfmt,
              las    = 2,
              ylab   = "")
-
-        mtext(text = bquote("Anomaly CUSUM [%]"),
-              cex  = ccex,
-              side = 2,
-              line = 3)
+        title(ylab = bquote("Anomaly CUSUM [%]"),
+              line = 3.5)
+        # mtext(text = bquote("Anomaly CUSUM [%]"),
+        #       cex  = 1/(2/3),
+        #       side = 2,
+        #       line = 3.5)
 
 
 
