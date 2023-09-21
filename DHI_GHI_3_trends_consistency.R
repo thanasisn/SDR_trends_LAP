@@ -137,11 +137,11 @@ ccex_sbs <- 1.3
 
 ## ____ Scatter plots with SZA all data -----------------------------------------
 data_list <- c(  "ALL_1_D_monthly_DESEAS",
-               "CLEAR_1_D_monthly_DESEAS",
-               "CLOUD_1_D_monthly_DESEAS",
-                     "ALL_1_daily_DESEAS",
-                   "CLEAR_1_daily_DESEAS",
-                   "CLEAR_1_daily_DESEAS")
+                 "CLEAR_1_D_monthly_DESEAS",
+                 "CLOUD_1_D_monthly_DESEAS",
+                 "ALL_1_daily_DESEAS",
+                 "CLEAR_1_daily_DESEAS",
+                 "CLEAR_1_daily_DESEAS")
 
 by_var     <- c("Date", "SZA")
 for (i in data_list) {
@@ -215,8 +215,8 @@ trends <- readRDS("./figures/tbl_longterm_trends.Rds")
 dsets <- c("ALL_1_daily_DESEAS",
            "CLEAR_1_daily_DESEAS",
            "CLOUD_1_daily_DESEAS")
-warning("Removing trends from data before cumsum!!!")
-cat("Removing trends from data before cumsum!!!")
+warning("Removing trends from data before cusum!!!")
+cat("Removing trends from data before cusum!!!")
 for (ad in dsets) {
     DBS  <- get(ad)
     type <- sub("_.*", "", ad)
@@ -237,10 +237,10 @@ for (ad in dsets) {
 
 
 
-## Calculate cumsum with zeroing NA
-  ALL_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
-  ALL_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
-  ALL_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+## Calculate cusum with zeroing NA
+ALL_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+ALL_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+ALL_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
 CLEAR_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
 CLEAR_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
 CLEAR_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
@@ -248,10 +248,10 @@ CLOUD_1_daily_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,
 CLOUD_1_daily_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
 CLOUD_1_daily_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
 
-## Standardized cumsum
-  ALL_1_daily_DESEAS[, GLB_att_cusumSTD    := cumsum(tidyr::replace_na((GLB_att_des    - mean(GLB_att_des   , na.rm = T)) / sd(GLB_att_des   , na.rm = T), 0))]
-  ALL_1_daily_DESEAS[, DIR_att_cusumSTD    := cumsum(tidyr::replace_na((DIR_att_des    - mean(DIR_att_des   , na.rm = T)) / sd(DIR_att_des   , na.rm = T), 0))]
-  ALL_1_daily_DESEAS[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((DIR_transp_des - mean(DIR_transp_des, na.rm = T)) / sd(DIR_transp_des, na.rm = T), 0))]
+## Standardized cusum
+ALL_1_daily_DESEAS[, GLB_att_cusumSTD    := cumsum(tidyr::replace_na((GLB_att_des    - mean(GLB_att_des   , na.rm = T)) / sd(GLB_att_des   , na.rm = T), 0))]
+ALL_1_daily_DESEAS[, DIR_att_cusumSTD    := cumsum(tidyr::replace_na((DIR_att_des    - mean(DIR_att_des   , na.rm = T)) / sd(DIR_att_des   , na.rm = T), 0))]
+ALL_1_daily_DESEAS[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((DIR_transp_des - mean(DIR_transp_des, na.rm = T)) / sd(DIR_transp_des, na.rm = T), 0))]
 CLEAR_1_daily_DESEAS[, GLB_att_cusumSTD    := cumsum(tidyr::replace_na((GLB_att_des    - mean(GLB_att_des   , na.rm = T)) / sd(GLB_att_des   , na.rm = T), 0))]
 CLEAR_1_daily_DESEAS[, DIR_att_cusumSTD    := cumsum(tidyr::replace_na((DIR_att_des    - mean(DIR_att_des   , na.rm = T)) / sd(DIR_att_des   , na.rm = T), 0))]
 CLEAR_1_daily_DESEAS[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((DIR_transp_des - mean(DIR_transp_des, na.rm = T)) / sd(DIR_transp_des, na.rm = T), 0))]
@@ -262,10 +262,10 @@ CLOUD_1_daily_DESEAS[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((DIR_tran
 
 
 
-## Calculate cumsum with zeroing NA
-  ALL_1_daily_DESEAS_notrend[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
-  ALL_1_daily_DESEAS_notrend[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
-  ALL_1_daily_DESEAS_notrend[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+## Calculate cusum with zeroing NA
+ALL_1_daily_DESEAS_notrend[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+ALL_1_daily_DESEAS_notrend[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+ALL_1_daily_DESEAS_notrend[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
 CLEAR_1_daily_DESEAS_notrend[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
 CLEAR_1_daily_DESEAS_notrend[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
 CLEAR_1_daily_DESEAS_notrend[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
@@ -273,10 +273,10 @@ CLOUD_1_daily_DESEAS_notrend[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_
 CLOUD_1_daily_DESEAS_notrend[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
 CLOUD_1_daily_DESEAS_notrend[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
 
-## Standardized cumsum
-  ALL_1_daily_DESEAS_notrend[, GLB_att_cusumSTD    := cumsum(tidyr::replace_na((GLB_att_des    - mean(GLB_att_des   , na.rm = T)) / sd(GLB_att_des   , na.rm = T), 0))]
-  ALL_1_daily_DESEAS_notrend[, DIR_att_cusumSTD    := cumsum(tidyr::replace_na((DIR_att_des    - mean(DIR_att_des   , na.rm = T)) / sd(DIR_att_des   , na.rm = T), 0))]
-  ALL_1_daily_DESEAS_notrend[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((DIR_transp_des - mean(DIR_transp_des, na.rm = T)) / sd(DIR_transp_des, na.rm = T), 0))]
+## Standardized cusum
+ALL_1_daily_DESEAS_notrend[, GLB_att_cusumSTD    := cumsum(tidyr::replace_na((GLB_att_des    - mean(GLB_att_des   , na.rm = T)) / sd(GLB_att_des   , na.rm = T), 0))]
+ALL_1_daily_DESEAS_notrend[, DIR_att_cusumSTD    := cumsum(tidyr::replace_na((DIR_att_des    - mean(DIR_att_des   , na.rm = T)) / sd(DIR_att_des   , na.rm = T), 0))]
+ALL_1_daily_DESEAS_notrend[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((DIR_transp_des - mean(DIR_transp_des, na.rm = T)) / sd(DIR_transp_des, na.rm = T), 0))]
 CLEAR_1_daily_DESEAS_notrend[, GLB_att_cusumSTD    := cumsum(tidyr::replace_na((GLB_att_des    - mean(GLB_att_des   , na.rm = T)) / sd(GLB_att_des   , na.rm = T), 0))]
 CLEAR_1_daily_DESEAS_notrend[, DIR_att_cusumSTD    := cumsum(tidyr::replace_na((DIR_att_des    - mean(DIR_att_des   , na.rm = T)) / sd(DIR_att_des   , na.rm = T), 0))]
 CLEAR_1_daily_DESEAS_notrend[, DIR_transp_cusumSTD := cumsum(tidyr::replace_na((DIR_transp_des - mean(DIR_transp_des, na.rm = T)) / sd(DIR_transp_des, na.rm = T), 0))]
@@ -309,10 +309,10 @@ setorder(CLOUD_1_D_monthly_DESEAS, Date)
 # CLOUD_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
 # CLOUD_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
 
-## Calculate cumsum with zeroing NA
-  ALL_1_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
-  ALL_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
-  ALL_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
+## Calculate cusum with zeroing NA
+ALL_1_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
+ALL_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
+ALL_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
 CLEAR_1_D_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0))]
 CLEAR_1_D_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0))]
 CLEAR_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0))]
@@ -338,10 +338,10 @@ CLOUD_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_tran
 # vars        <- c("GLB_att", "DIR_att", "DIR_transp")
 vars        <- c("GLB_att")
 database    <- c(  "ALL_1_daily_DESEAS",
-                 "CLEAR_1_daily_DESEAS",
-                 "CLOUD_1_daily_DESEAS")
+                   "CLEAR_1_daily_DESEAS",
+                   "CLOUD_1_daily_DESEAS")
 
-#+ CumulativeDailyCumSum, echo=F, include=T, results="asis"
+#+ CumulativeDailyCuSum, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
 
@@ -408,6 +408,7 @@ for (adb in database) {
                    x.intersp = -0.5, # adjust character interspacing as you like to effect box width
                    y.intersp =  0.2, # adjust character interspacing to effect box height
                    adj = c(0, 0.5))  # adjust string position (default values used here)
+            # cex = 1.5,      # change cex if you like (not used here)
             # text.font = 2)  # bold the text if you like (not used here)
             par("mar" = c(3,4,2,1))
         }
@@ -501,13 +502,13 @@ for (adb in database) {
 
 
         gp <- ggplot(data = testdb, aes(x = year, y = Sum)) +
-              geom_col(data = testdb[Sum <= 0], fill = "red") +
-              geom_col(data = testdb[Sum >= 0], fill = "blue") +
-              ggtitle("Sum of all year values") +
-              xlab("Year")     +
-              ylab("Year Sum") +
-              theme_bw()       +
-              theme(plot.title = element_text(hjust = 0.5))
+            geom_col(data = testdb[Sum <= 0], fill = "red") +
+            geom_col(data = testdb[Sum >= 0], fill = "blue") +
+            ggtitle("Sum of all year values") +
+            xlab("Year")     +
+            ylab("Year Sum") +
+            theme_bw()       +
+            theme(plot.title = element_text(hjust = 0.5))
 
         print(gp)
 
@@ -537,10 +538,10 @@ for (adb in database) {
 # vars        <- c("GLB_att", "DIR_att", "DIR_transp")
 vars        <- c("GLB_att")
 database    <- c(  "ALL_1_daily_DESEAS_notrend",
-                 "CLEAR_1_daily_DESEAS_notrend",
-                 "CLOUD_1_daily_DESEAS_notrend")
+                   "CLEAR_1_daily_DESEAS_notrend",
+                   "CLOUD_1_daily_DESEAS_notrend")
 
-#+ CumulativeDailyCumSumNOtrend, echo=F, include=T, results="asis"
+#+ CumulativeDailyCuSumNOtrend, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
 
@@ -549,7 +550,7 @@ for (adb in database) {
 
     for (avar in vars) {
 
-        ## Plot regular cumsums
+        ## Plot regular cusums
         wcare <- c("Date", paste0(avar,"_des"), paste0(avar,"_cusum"))
         pdb   <- DB[, ..wcare]
         rm(DB)
@@ -560,21 +561,38 @@ for (adb in database) {
                             collapse = "_"))
 
         if (DRAFT == TRUE) {
-            par("mar" = c(3,4,2,1))
+            par("mar" = c(3, 4, 2, 1))
         } else {
-            par("mar" = c(3,4,0.5,0.5))
+            par("mar" = c(3, 4, 0.5, 0.5))
         }
         par(pch = 19)
 
-
+        ## scale fonts
+        ccex <- ccex_sbs
+        par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
 
         plot(1, type = "n",
              xlab = "",
              xlim = xlim, ylim = ylim,
              xaxt = "n",
-             ylab = bquote("Anomaly CUSUM with long trend removed [%]"))
-        axis.Date(1, pdb$Date)
+             yaxt = "n",
+             ylab = "")
         abline(h = 0, lty = 2, lwd = 0.8)
+
+        # x axis
+        axis.Date(1, pdb$Date)
+
+        # y axis
+        sfmt <- paste0(pretty(ylim) / 1000,"k")
+        sfmt <- sub("^0k$", "0", sfmt)
+        axis(2,
+             at     = pretty(ylim),
+             labels = sfmt,
+             las    = 2,
+             ylab   = "")
+        title(ylab = bquote("Anomaly CUSUM, trend removed [%]"),
+              line = 3)
+
 
         ## daily from other DT
         lines(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = col, lwd = 2)
@@ -716,7 +734,7 @@ for (adb in database) {
 
 ## Daily standardized cum sums plots  ------------------------------------------
 
-#+ CumulativeDailyCumSumSTD, echo=F, include=T, results="asis"
+#+ CumulativeDailyCuSumSTD, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
 
@@ -725,7 +743,7 @@ for (adb in database) {
 
     for (avar in vars) {
 
-        ## Plot Standarized cumsums
+        ## Plot Standardized cusums
         wcare <- c("Date", paste0(avar,"_des"), paste0(avar,"_cusumSTD"))
         pdb   <- DB[, ..wcare]
         rm(DB)
@@ -775,10 +793,10 @@ for (adb in database) {
 # vars        <- c("GLB_att", "DIR_att", "DIR_transp")
 vars        <- c("GLB_att")
 database    <- c(  "ALL_1_D_monthly_DESEAS",
-                 "CLEAR_1_D_monthly_DESEAS",
-                 "CLOUD_1_D_monthly_DESEAS")
+                   "CLEAR_1_D_monthly_DESEAS",
+                   "CLOUD_1_D_monthly_DESEAS")
 
-#+ CumulativeMonthlyCumSum, echo=F, include=T, results="asis"
+#+ CumulativeMonthlyCuSum, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
 
@@ -884,7 +902,7 @@ for (adb in database) {
                legend = c("Sum of positive anomaly",
                           "Sum of negative anomaly"),
                col    = c("blue", "red")
-               )
+        )
 
 
         # ylim <- c(-max(abs(testdb$Sum), na.rm = T), max(abs(testdb$Sum), na.rm = T))
@@ -928,14 +946,14 @@ for (adb in database) {
 
 ## ~ Calculate monthly sum sum by SZA ------------------------------------------
 
-## set data order before cumsum
+## set data order before cusum
 setorder(  ALL_3_monthly_DESEAS, Date)
 setorder(CLEAR_3_monthly_DESEAS, Date)
 setorder(CLOUD_3_monthly_DESEAS, Date)
 
-  ALL_3_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0)), by = .(SZA, preNoon)]
-  ALL_3_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0)), by = .(SZA, preNoon)]
-  ALL_3_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0)), by = .(SZA, preNoon)]
+ALL_3_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0)), by = .(SZA, preNoon)]
+ALL_3_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0)), by = .(SZA, preNoon)]
+ALL_3_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0)), by = .(SZA, preNoon)]
 CLEAR_3_monthly_DESEAS[, GLB_att_cusum    := cumsum(tidyr::replace_na(GLB_att_des,    0)), by = .(SZA, preNoon)]
 CLEAR_3_monthly_DESEAS[, DIR_att_cusum    := cumsum(tidyr::replace_na(DIR_att_des,    0)), by = .(SZA, preNoon)]
 CLEAR_3_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_transp_des, 0)), by = .(SZA, preNoon)]
@@ -969,10 +987,10 @@ plotpNcol   <- c(2, 3, 4, 5)
 # vars        <- c("GLB_att", "DIR_att", "DIR_transp")
 vars        <- c("GLB_att")
 database    <- c(  "ALL_3_monthly_DESEAS",
-                 "CLEAR_3_monthly_DESEAS",
-                 "CLOUD_3_monthly_DESEAS")
+                   "CLEAR_3_monthly_DESEAS",
+                   "CLOUD_3_monthly_DESEAS")
 
-#+ CumulativeMonthlySZACumSum, echo=F, include=T, results="asis"
+#+ CumulativeMonthlySZACuSum, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
 
@@ -1104,8 +1122,8 @@ plotpNcol   <- c(2, 3, 4, 5)
 # vars        <- c("GLB_att", "DIR_att", "DIR_transp")
 vars        <- c("DIR_att", "DIR_transp")
 database    <- c(  "ALL_3_monthly_DESEAS",
-                 "CLEAR_3_monthly_DESEAS",
-                 "CLOUD_3_monthly_DESEAS")
+                   "CLEAR_3_monthly_DESEAS",
+                   "CLOUD_3_monthly_DESEAS")
 
 #+  CumulativeSZASumDir, echo=F, include=T, results="asis"
 for (adb in database) {
