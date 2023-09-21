@@ -361,9 +361,9 @@ for (adb in database) {
                             collapse = "_"))
 
         if (DRAFT == TRUE) {
-            par("mar" = c(3, 4, 2,  1))
+            par("mar" = c(3, 5, 2,  1))
         } else {
-            par("mar" = c(3, 4.5, 0.5,0.5))
+            par("mar" = c(3, 5, 0.5, 0.5))
         }
         par(pch = 19)
 
@@ -391,11 +391,6 @@ for (adb in database) {
              ylab   = "")
         title(ylab = bquote("Anomaly CUSUM [%]"),
               line = 3.5)
-        # mtext(text = bquote("Anomaly CUSUM [%]"),
-        #       cex  = 1/(2/3),
-        #       side = 2,
-        #       line = 3.5)
-
 
 
         ## daily from other DT
