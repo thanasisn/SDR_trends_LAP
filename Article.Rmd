@@ -525,7 +525,11 @@ panderOptions("table.alignment.default", "center")
 pander(LT1,
        caption = paste0("\\label{tab:trendtable}Trends of daily SDR means, for different sky conditions for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". For all cases the statistical significance is above $", LTminSSig, "\\,\\%$."))
 
-# LT2 %>% rename_all( ~ str_c("{ ",.," }"))
+
+
+```
+
+```{r trendtable2, echo=F}
 x_latex <- knitr::kable(LT2,
                         format   = "latex",
                         booktabs = T,
@@ -560,16 +564,10 @@ The causes for these discrepancies haven't been investigated yet.
 
 In order to compare any features within the trends, we created another set of CUSUMs plots, by subtracting the corresponding long term trend from the SDR anomaly data, prior to the CUSUM calculation (Figure\ \ref{fig:cusumnotrend}).
 With this approach periods where the CUSUM diverge from zero can be interpreted as systematic variation of SDR, further from the climatological mean. When the Anomaly CUSUM is increasing, the added values are above the expected climatological values of SDR trend, respectively when it decreases the SDR trend is lower than the climatological trend.  
+Overall, for all- and clear-sky conditions (Figure\ \ref{fig:cusumnotrend-1} and\ \ref{fig:cusumnotrend-2}) we observe that there are periods where the anomalies diverge from the expected climatological value, that each lasts for few only years, and then diverge to the opposite site, creating a variation around zero.
+It is interesting that in the period 1993 - 2016 the anomalies of all-sky and clear- sky, have a high variability around zero. After 2016, the range of the variability is decreased at about one third of the prior period.
+Even more strong fluctuations exist for cloud-sky conditions (Figure\ \ref{fig:cusumnotrend-3}), where there are long periods with relative low variation, and few periods with very strong divergences. We can identify two very positive periods (1997 - 2005 and 2020 - 2023) and one very negative (2005 - 2010).
 
-Overall, for all- and clear-sky conditions we observe that there are periods where the anomalies diverge from the expected climatological value, that each lasts for few only years, and then diverge to the opposite site, creating a variation around zero.
-It is interesting that in the period 1993 - 2016 the anomalies of all-sky and clear sky, have a high variability around zero and after 2016, the range of the variability is about one third of the prior period.
-Even more strong fluctuations exist for cloud-sky conditions, where there are long period with relative low variation, and few periods with very strong divergences. We can identify two very positive periods (1997 - 2005 and 2020 - 2023) and one very negative (2005 - 2010).
-
-For cloud-sky .....
-
-.......
-cusums without trends?
-........
 
 
 <!--
@@ -601,28 +599,16 @@ knitr::include_graphics(c(
 
 
 
-<!--
-more about trend in relation to other trends
-Aerosols and clouds
--->
-
-
-
-
 
 ## Effects of the solar zenith angle on SDR.
 
 The solar zenith angle is a major driver of the attenuation of SDR reaching the ground, as SDR is affected by the enhancement of the radiation path in the atmosphere, especially in urban environment with human activities emitting aerosols [@Wang2021].
 In order to estimate the effect of the SZA on the SDR trends, we grouped the anomaly data in bin of $1^\circ$ SZA, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
 Although there is a seasonal variation of the minimum SZA, its possible effect has not been examined here.
-For all-sky and clear-sky conditions the brightening effect of SDR (positive trend) for large SZAs (Figures\ \ref{fig:szatrends}a and \ref{fig:szatrends}b).
+For all-sky and clear-sky conditions the brightening effect of SDR (positive trend) for large SZAs (Figures\ \ref{fig:szatrends-1} and \ref{fig:szatrends-2}).
 The trends in the morning and afternoon hours are more or less consistent with small differences which can be attributed to systematic diurnal variations of aerosols, particularly during the warm period of the year [@Wang2021].
-
-For cloud-sky conditions (Figure\ \ref{fig:szatrends}c),there is no dependence of the trends with SZA. 
-
-The trends are variable ranging within about $\pm 0.2\,\%/y$. 
-
-Between $55^\circ$ and $75^\circ$ SZA the trends are mostly negative for cloud sky conditions and are possibly associated with stronger attenuation by clouds. 
+For cloud-sky conditions (Figure\ \ref{fig:szatrends-3}), we can not discern any significant dependence of the SDR trend with SZA.
+For SZAs $16^\circ$ - $50^\circ$, the trends are ranging within about $\pm 0.2\,\%/y$, with a weak statistical significance. Between $55^\circ$ and $75^\circ$ SZA the trends are mostly negative and are possibly associated with stronger attenuation by clouds. 
 
 
 ```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$).', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
@@ -744,29 +730,6 @@ x_latex %>%
 
 <!-- \normalsize -->
 
-<!--
-## Consistency of the trends
--->
-
-<!--
-```{r cusumALL, echo=F, fig.cap="Running cumulative sum."}
-knitr::include_graphics("./images/CumulativeDailyCuSum-1.png")
-```
--->
-
-<!--
-Not showing this trend
-```{r cusumCLEAR, echo=F, fig.cap="Donditions.", include=FALSE}
-knitr::include_graphics("./images/CumulativeDailyCuSum-5.png")
-```
--->
-
-<!--
-```{r cusumCLOUD, echo=F, fig.cap="Donditions."}
-knitr::include_graphics("./images/CumulativeDailyCuSum-9.png")
-```
--->
-
 
 
 
@@ -814,7 +777,7 @@ knitr::include_graphics("./images/LongtermTrends-8.png")
 
 
 
-```{r echo = FALSE, fig.cap='Distribu.', fig.subcap=c('', '', ''), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+```{r echo = FALSE, fig.cap='SDR trend ~ SZA', fig.subcap=c('', '', ''), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics("./images/SzaTrendsSeas-1.png")
 knitr::include_graphics("./images/SzaTrendsSeas-2.png")
 knitr::include_graphics("./images/SzaTrendsSeas-3.png")

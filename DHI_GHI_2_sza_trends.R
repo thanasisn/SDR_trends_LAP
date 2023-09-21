@@ -338,11 +338,12 @@ for (avar in unique(szatrends$var)) {
             if (DRAFT == TRUE) {
                 par("mar" = c(4,   5,   2,   2))
             } else {
-                par("mar" = c(4.5, 4.5, 0.5, 0.5))
+                par("mar" = c(4, 4.5, 0.5, 0.5))
             }
 
+            ## empty plot
             plot(1, type = "n",
-                 xlab = "Solar zenith angle",
+                 xlab = "",
                  ylab = awename,
                  xlim = xlim,
                  ylim = ylim,
@@ -354,9 +355,10 @@ for (avar in unique(szatrends$var)) {
             ## x axis
             axis(1, at = seq(xlim[1], xlim[2]), labels = NA,
                       tcl = -0.25)
+            title(xlab = bquote("Solar zenith angle (SZA)"),
+                  line = 2.5)
 
-
-
+            ## zero line
             abline(h = 0, lty = 3)
 
             if (DRAFT == TRUE) {
@@ -599,7 +601,7 @@ for (ase in seasons) {
 
 
                 plot(1, type = "n",
-                     xlab = "Solar zenith angle",
+                     xlab = "",
                      ylab = awename,
                      xlim = xlim,
                      ylim = ylim,
@@ -611,7 +613,10 @@ for (ase in seasons) {
                 ## x axis
                 axis(1, at = seq(xlim[1], xlim[2]), labels = NA,
                      tcl = -0.25)
+                title(xlab = bquote("Solar zenith angle (SZA)"),
+                      line = 2.5)
 
+                ## zero line
                 abline(h = 0, lty = 3)
 
                 ## test for some plots
@@ -620,11 +625,6 @@ for (ase in seasons) {
 
                 title(paste(ase, awename, typeP, translate(avar)), cex.main = 0.8,)
 
-                # lines(pam$SZA, pam[[awe]], pch =  pch_am, col = pam$col, type = "b")
-                # lines(pam$SZA, ppm[[awe]], pch =  pch_pm, col = pam$col, type = "b")
-
-                # lines(pam$SZA, pam[[awe]], pch = pch_am, col = 2, type = "b", lwd = 1, cex = .5)
-                # lines(ppm$SZA, ppm[[awe]], pch = pch_pm, col = 3, type = "b", lwd = 1, cex = .5)
 
 
                 ## morning lines

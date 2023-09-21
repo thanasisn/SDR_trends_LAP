@@ -397,8 +397,6 @@ for (adb in database) {
              ylab   = "")
 
 
-
-
         title(ylab = bquote("Anomaly CUSUM [%]"),
               line = 3.5)
 
