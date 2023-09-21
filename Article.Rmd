@@ -558,8 +558,12 @@ Another distinct feature of the CUSUMs, is the different pattern of the cloudy-s
 The CUSUMs of the clear and the all-sky conditions exhibit similar patterns.
 The causes for these discrepancies haven't been investigated yet. 
 
-In order to compare any features within the trends, we created another set of CUSUMs plots, by subtracting the corresponding long term trend from the data, prior the CUSUM calculation (Figure\ \ref{fig:cusumnotrend}).
+In order to compare any features within the trends, we created another set of CUSUMs plots, by subtracting the corresponding long term trend from the SDR anomaly data, prior to the CUSUM calculation (Figure\ \ref{fig:cusumnotrend}).
 With this approach periods where the CUSUM diverge from zero can be interpreted as systematic variation of SDR, further from the climatological mean.
+It is interesting that for the period 1993...... diverge around zero 
+and after ~ for all-sky and clear-sky
+
+For cloud-sky .....
 
 .......
 cusums without trends?
@@ -808,53 +812,19 @@ knitr::include_graphics("./images/LongtermTrends-8.png")
 
 
 
-
-
-```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
+```{r echo = FALSE, fig.cap='Distribu.', fig.subcap=c('', '', ''), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics("./images/SzaTrendsSeas-1.png")
-```
-
-```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-2.png")
-```
-
-```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-3.png")
-```
-
-```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-4.png")
-```
-
-```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-5.png")
-```
-
-```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-6.png")
-```
-
-```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-7.png")
-```
-
-```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-8.png")
-```
-
-```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-9.png")
-```
-
-```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-10.png")
-```
-
-```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-11.png")
-```
-
-```{r  echo=F, fig.cap="Seasonal SZA", out.width='.32\\linewidth'}
 knitr::include_graphics("./images/SzaTrendsSeas-12.png")
 ```
+
 
