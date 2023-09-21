@@ -559,9 +559,11 @@ The CUSUMs of the clear and the all-sky conditions exhibit similar patterns.
 The causes for these discrepancies haven't been investigated yet. 
 
 In order to compare any features within the trends, we created another set of CUSUMs plots, by subtracting the corresponding long term trend from the SDR anomaly data, prior to the CUSUM calculation (Figure\ \ref{fig:cusumnotrend}).
-With this approach periods where the CUSUM diverge from zero can be interpreted as systematic variation of SDR, further from the climatological mean.
-It is interesting that for the period 1993...... diverge around zero 
-and after ~ for all-sky and clear-sky
+With this approach periods where the CUSUM diverge from zero can be interpreted as systematic variation of SDR, further from the climatological mean. When the Anomaly CUSUM is increasing, the added values are above the expected climatological values of SDR trend, respectively when it decreases the SDR trend is lower than the climatological trend.  
+
+Overall, for all- and clear-sky conditions we observe that there are periods where the anomalies diverge from the expected climatological value, that each lasts for few only years, and then diverge to the opposite site, creating a variation around zero.
+It is interesting that in the period 1993 - 2016 the anomalies of all-sky and clear sky, have a high variability around zero and after 2016, the range of the variability is about one third of the prior period.
+Even more strong fluctuations exist for cloud-sky conditions, where there are long period with relative low variation, and few periods with very strong divergences. We can identify two very positive periods (1997 - 2005 and 2020 - 2023) and one very negative (2005 - 2010).
 
 For cloud-sky .....
 
