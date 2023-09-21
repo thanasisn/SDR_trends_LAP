@@ -380,6 +380,12 @@ for (adb in database) {
 
         # x axis
         axis.Date(1, pdb$Date)
+        axis.Date(1,
+                  at = seq(as.Date("1993-01-01"), max(pdb$Date), by = "year"),
+                  format = "%Y",
+                  labels = NA,
+                  tcl = -0.25)
+
 
         # y axis
         sfmt <- paste0(pretty(ylim) / 1000,"k")
@@ -389,8 +395,16 @@ for (adb in database) {
              labels = sfmt,
              las    = 2,
              ylab   = "")
+
+
+
+
         title(ylab = bquote("Anomaly CUSUM [%]"),
               line = 3.5)
+
+
+
+
 
 
         ## daily from other DT
@@ -581,6 +595,11 @@ for (adb in database) {
 
         # x axis
         axis.Date(1, pdb$Date)
+        axis.Date(1,
+                  at = seq(as.Date("1993-01-01"), max(pdb$Date), by = "year"),
+                  format = "%Y",
+                  labels = NA,
+                  tcl = -0.25)
 
         # y axis
         sfmt <- paste0(pretty(ylim) / 1000,"k")

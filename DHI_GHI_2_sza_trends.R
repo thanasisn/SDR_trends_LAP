@@ -348,7 +348,14 @@ for (avar in unique(szatrends$var)) {
                  ylim = ylim,
                  yaxt = "n")
 
+            ## y axis
             axis(2, pretty(ylim), las = 2)
+
+            ## x axis
+            axis(1, at = seq(xlim[1], xlim[2]), labels = NA,
+                      tcl = -0.25)
+
+
 
             abline(h = 0, lty = 3)
 
@@ -598,7 +605,12 @@ for (ase in seasons) {
                      ylim = ylim,
                      yaxt = "n")
 
+                ## y axis
                 axis(2, pretty(ylim), las = 2)
+
+                ## x axis
+                axis(1, at = seq(xlim[1], xlim[2]), labels = NA,
+                     tcl = -0.25)
 
                 abline(h = 0, lty = 3)
 

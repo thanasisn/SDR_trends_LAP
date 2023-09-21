@@ -256,7 +256,16 @@ for (DBn in dbs) {
                  xlab     = "",
                  ylab     = bquote("Anomaly [%]")
             )
+            # y axis
             axis(2, pretty(dataset[[avar]]), las = 2 )
+
+            # x axis
+            axis.Date(1,
+                      at = seq(as.Date("1993-01-01"), max(dataset$Date), by = "year"),
+                      format = "%Y",
+                      labels = NA,
+                      tcl = -0.25)
+
 
 
             if (DRAFT == TRUE) {
@@ -1065,12 +1074,23 @@ for (avar in vars) {
             }
 
             ## x axis
-            if (i %in% c(22, 23, 24)){
+            if (i %in% c(22, 23, 24)) {
+                ## bottom row axis
                 axis(1, pretty(dataset$Year), las = 1, cex.axis = 0.8, line =  0,   labels = NA)
                 axis(1, pretty(dataset$Year), las = 1, cex.axis = 0.8, line = -0.5, tck = 0, lwd = 0)
+                ## minor ticks
+                axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
+                        tcl = -0.25)
             } else {
+                ## major ticks
                 axis(1, pretty(dataset$Year), cex.axis = 0.8, labels = NA, tck =  0.03)
                 axis(1, pretty(dataset$Year), cex.axis = 0.8, labels = NA, tck = -0.03)
+                ## minor ticks
+                axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
+                     tcl = -0.25/2)
+                axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
+                     tcl = +0.25/2)
+
             }
 
             abline(lm2)
