@@ -857,11 +857,11 @@ for (adb in database) {
 
 
         # y axis
-        sfmt <- paste0(pretty(ylim) / 1000,"k")
-        sfmt <- sub("^0k$", "0", sfmt)
+        # sfmt <- paste0(pretty(ylim) / 1000,"k")
+        # sfmt <- sub("^0k$", "0", sfmt)
         axis(2,
              at     = pretty(ylim),
-             labels = sfmt,
+             # labels = sfmt,
              las    = 2,
              ylab   = "")
 
