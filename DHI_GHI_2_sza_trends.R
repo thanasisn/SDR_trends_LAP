@@ -199,11 +199,49 @@ ccex_sbs <- 1.3
 ## __ Calculate SZA ~ Year -----------------------------------------------------
 
 #  vars <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
+
+## !! Deseasonlized values are non meaningful !!
 vars <- c("DIR_att_des", "GLB_att_des")
+
 dbs  <- c(  "ALL_2_daily_DESEAS",
           "CLEAR_2_daily_DESEAS",
           "CLOUD_2_daily_DESEAS")
 
+gather <- data.frame()
+
+for (DBn in dbs) {
+    DB <- get(DBn)
+    for (avar in vars) {
+        for (anoon in unique( DB$preNoon)) {
+            for (asza in unique( DB$SZA )) {
+
+                dataset <- DB[ SZA == asza & preNoon == anoon ]
+
+                if (sum(!is.na(dataset[[avar]])) <= 1) next()
+
+                lm1 <- lm( dataset[[avar]] ~ dataset$Date )
+
+                gather <- rbind(gather,
+                                data.frame(
+                                    linear_fit_stats(lm1),
+                                    preNoon   = anoon,
+                                    SZA       = asza,
+                                    DATA      = DBn,
+                                    var       = avar,
+                                    N         = sum(!is.na(dataset[[avar]]))
+                                ))
+
+                plot(dataset$doy, dataset[[sub("_des", "_seas", avar)]], cex = 1, pch = 1 )
+                title(main = paste("Seasonal values", DBn, asza, sub("_des", "_seas", avar)))
+            }
+        }
+    }
+}
+
+
+
+## Use the actual SDR for trends !! --------------------------------------------
+vars <- c("DIR_att", "GLB_att")
 gather <- data.frame()
 
 for (DBn in dbs) {
@@ -232,6 +270,10 @@ for (DBn in dbs) {
     }
 }
 
+
+
+
+
 #+ echo=F, include=F
 hist( gather$N[gather$N > 50], breaks = 100)
 
@@ -244,9 +286,9 @@ szatrends[, slope    := slope    * Days_of_year ]
 szatrends[, slope.sd := slope.sd * Days_of_year ]
 
 ## set some plot option for data
-szatrends[var == "DIR_att_des",    col := col_DIR_att    ]
-szatrends[var == "GLB_att_des",    col := col_GLB_att    ]
-szatrends[var == "DIR_transp_des", col := col_DIR_transp ]
+szatrends[var == "DIR_att",    col := col_DIR_att    ]
+szatrends[var == "GLB_att",    col := col_GLB_att    ]
+szatrends[var == "DIR_transp", col := col_DIR_transp ]
 szatrends[preNoon == T, pch := pch_am ]
 szatrends[preNoon == F, pch := pch_pm ]
 
@@ -262,8 +304,8 @@ szatrends[preNoon == F, pch := pch_pm ]
 
 # plot(szatrends$SZA,szatrends$N)
 
-test1 <- szatrends[DATA == "CLEAR_2_daily_DESEAS" & var == "DIR_att_des"]
-test2 <- szatrends[DATA == "CLEAR_2_daily_DESEAS" & var == "GLB_att_des"]
+test1 <- szatrends[DATA == "CLEAR_2_daily_DESEAS" & var == "DIR_att"]
+test2 <- szatrends[DATA == "CLEAR_2_daily_DESEAS" & var == "GLB_att"]
 # plot(test1$SZA, test1$N, pch = 19)
 # abline(h=50)
 # plot(test2$SZA, test2$N, pch = 19)
@@ -305,7 +347,7 @@ for (avar in unique(szatrends$var)) {
             awename <- gsub("(\\D)(\\D+)", "\\U\\1\\L\\2", sub("\\."," ", awe), perl = TRUE)
 
             ## Replace variable name
-            if (awename == "Slope") { awename <- "Anomaly Trend [%/y]" }
+            if (awename == "Slope") { awename <- "Trend [%/y]" }
 
             ## limit plot p-values
             p_lim     <- 0.05
@@ -447,6 +489,8 @@ for (avar in unique(szatrends$var)) {
 # vars        <- c("DIR_att_des", "GLB_att_des")
 vars        <- c("GLB_att_des")
 
+vars        <- c("GLB_att")
+
 
 dbs         <- c(  "ALL_2_bySeason_daily_DESEAS",
                  "CLEAR_2_bySeason_daily_DESEAS",
@@ -493,13 +537,13 @@ setorder(szatrends_seas, SZA)
 
 
 ## covert to trend per year
-szatrends_seas[, slope    := slope    * Days_of_year ]
-szatrends_seas[, slope.sd := slope.sd * Days_of_year ]
+szatrends_seas[, slope    := slope    * Days_of_year]
+szatrends_seas[, slope.sd := slope.sd * Days_of_year]
 
 ## define plot colors
-szatrends_seas[ var == "DIR_att_des",    col := col_DIR_att    ]
-szatrends_seas[ var == "GLB_att_des",    col := col_GLB_att    ]
-szatrends_seas[ var == "DIR_transp_des", col := col_DIR_transp ]
+szatrends_seas[ var == "DIR_att",    col := col_DIR_att   ]
+szatrends_seas[ var == "GLB_att",    col := col_GLB_att   ]
+szatrends_seas[ var == "DIR_transp", col := col_DIR_transp]
 szatrends_seas[ preNoon == T, pch := pch_am ]
 szatrends_seas[ preNoon == F, pch := pch_pm ]
 
@@ -518,8 +562,6 @@ szatrends_seas[ preNoon == F, pch := pch_pm ]
 # test <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "DIR_att_des" ]
 # plot(test$SZA, test$N, pch = 19)
 
-
-szatrends[ N <= 30, slope := NA]
 
 
 # test1 <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "DIR_att_des" ]
@@ -627,8 +669,8 @@ for (ase in seasons) {
                 abline(h = 0, lty = 3)
 
                 ## test for some plots
-                if (grepl("CLEAR", type, ignore.case = T)) typeP <- "Clear Sky (Deseas.)"
-                if (grepl("ALL",   type, ignore.case = T)) typeP <- "All Sky (Deseas.)"
+                if (grepl("CLEAR", type, ignore.case = T)) typeP <- "Clear Sky"
+                if (grepl("ALL",   type, ignore.case = T)) typeP <- "All Sky"
 
                 title(paste(ase, awename, typeP, translate(avar)), cex.main = 0.8,)
 
