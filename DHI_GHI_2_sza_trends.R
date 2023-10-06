@@ -437,7 +437,7 @@ for (avar in unique(szatrends$var)) {
 
 
 # vars        <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
-vars        <- c("DIR_att_des", "GLB_att_des")
+# vars        <- c("DIR_att_des", "GLB_att_des")
 vars        <- c("GLB_att_des")
 
 
