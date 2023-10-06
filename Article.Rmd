@@ -478,7 +478,7 @@ LT$slope.ConfInt_0.99 <- NULL
 LT$var                <- NULL
 setorder(LT, -slope.stat_sig)
 rownames(LT) <- NULL
-names(LT)    <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Statistical signif. [%]")
+names(LT)    <- c("Trend [%/year]", "Trend p-value", "Sky conditions", "Statistical signif. [%]")
 ## no need all are 100%
 LTminSSig <- signif(min(LT$`Statistical signif. [%]`), 4)
 # LT$`Trend statistical signif. [%]` <- NULL
@@ -487,22 +487,22 @@ LT$`Trend [%/year]` <- signif(LT$`Trend [%/year]`, 3)
 LT$`Trend p-value`  <- signif(LT$`Trend p-value`,  3)
 
 ## some vars to use later
-alltrend   <- signif(LT[`Sky condition` == "All sky cond.",    `Trend [%/year]`], 2)
-cleartrend <- signif(LT[`Sky condition` == "Clear sky cond.",  `Trend [%/year]`], 2)
-cloudtrend <- signif(LT[`Sky condition` == "Cloudy sky cond.", `Trend [%/year]`], 2)
+alltrend   <- signif(LT[`Sky conditions` == "All sky cond.",    `Trend [%/year]`], 2)
+cleartrend <- signif(LT[`Sky conditions` == "Clear sky cond.",  `Trend [%/year]`], 2)
+cloudtrend <- signif(LT[`Sky conditions` == "Cloudy sky cond.", `Trend [%/year]`], 2)
 ## rename sky conditions
-LT$`Sky condition` <- sub(" cond.", "", LT$`Sky condition`)
+LT$`Sky conditions` <- sub(" cond.", "", LT$`Sky conditions`)
 
 ## order columns
 LT1 <- LT[,c(
-      "Sky condition",
+      "Sky conditions",
       "Trend [%/year]",
       "Trend p-value"
       )]
 
 ## order columns
 LT2 <- LT[,c(
-      "Sky condition",
+      "Sky conditions",
       "Trend [%/year]",
       "Statistical signif. [%]"
       )]
@@ -511,25 +511,23 @@ LT2 <- LT[,c(
 ```
 
 We calculated the linear SDR trends, from the departures of the mean daily values from the seasonal values, and for the three sky conditions (Table\ \ref{tab:trendtable}).
-In Figure\ \ref{fig:trendALL} we present only the time series under all-sky conditions; the plots for clear-sky and cloud-sky conditions, are very similar and shown in the Appendix (Figures\ \ref{fig:trendCLEAR} and\  \ref{fig:trendCLOUD}).
+In Figure\ \ref{fig:trendALL} we present only the time series under all-sky conditions; the plots for clear-sky and cloud-sky conditions, are very similar and are shown in the Appendix (Figures\ \ref{fig:trendCLEAR} and\  \ref{fig:trendCLOUD}).
 We observe a positive trend for all-sky conditions 
-($`r alltrend`\,\%/y$), a very close but lower trend for clear-sky ($`r cleartrend`\,\%/y$) and a negative weaker trend for cloud-sky ($`r cloudtrend`\,\%/y$).
+($`r alltrend`\,\%/y$), a very close but lower trend for clear-skies ($`r cleartrend`\,\%/y$) and a negative weaker trend for cloud-skies ($`r cloudtrend`\,\%/y$).
 In the studied period, there is no significant break or change in the variability of the time series.
 Other studies for the European region report a change of the SDR slope, around 1980, a few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009]. It is interesting to note, that for the observation period, the trend of the TSI is
 $`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\,\%/y$, and thus we can not attribute any major effect on SDR trend to Solar variability.
 
 
 <!-- \footnotesize -->
+<!-- ```{r trendtable2, echo=F} -->
+<!-- panderOptions("table.alignment.default", "center") -->
+<!-- pander(LT1, -->
+<!--        caption = paste0("\\label{tab:trendtable2}Trends in SDR daily mean for different sky conditions for the period", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". For all cases the statistical significance is above $", LTminSSig, "\\,\\%$.")) -->
+<!-- ``` -->
+<!-- \normalsize -->
+
 ```{r trendtable, echo=F}
-panderOptions("table.alignment.default", "center")
-pander(LT1,
-       caption = paste0("\\label{tab:trendtable}Trends of daily SDR means, for different sky conditions for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". For all cases the statistical significance is above $", LTminSSig, "\\,\\%$."))
-
-
-
-```
-
-```{r trendtable2, echo=F}
 x_latex <- knitr::kable(LT2,
                         format   = "latex",
                         booktabs = T,
@@ -537,18 +535,16 @@ x_latex <- knitr::kable(LT2,
                         format.args = list(digits = 4),
                         linesep  = "",
                         align    = "crr",
-                        caption  = "test")
+                        caption  = paste0("\\label{tab:trendtable}Trends in SDR daily mean for different sky conditions for the period ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), "."))
 x_latex %>%
     kable_styling(
         latex_options = c("hold_position")
     )
         # position      =   "float_left"
-
 ```
-<!-- \normalsize -->
 
 
-```{r trendALL, echo=F, out.width='.70\\linewidth', fig.cap=paste0("Anomaly (\\%) of the daily all-sky SDR, relative to climatological values for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term linear trend for all-sky conditions.")}
+```{r trendALL, echo=F, out.width='.70\\linewidth', fig.cap=paste0("Anomaly (\\%) of the daily all-sky SDR, relative to climatological values for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term linear trend.")}
 knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
 
