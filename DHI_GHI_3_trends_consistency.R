@@ -338,8 +338,8 @@ CLOUD_1_D_monthly_DESEAS[, DIR_transp_cusum := cumsum(tidyr::replace_na(DIR_tran
 # vars        <- c("GLB_att", "DIR_att", "DIR_transp")
 vars        <- c("GLB_att")
 database    <- c(  "ALL_1_daily_DESEAS",
-                   "CLEAR_1_daily_DESEAS",
-                   "CLOUD_1_daily_DESEAS")
+                 "CLEAR_1_daily_DESEAS",
+                 "CLOUD_1_daily_DESEAS")
 
 #+ CumulativeDailyCuSum, echo=F, include=T, results="asis"
 for (adb in database) {
@@ -399,9 +399,6 @@ for (adb in database) {
 
         title(ylab = bquote("Anomaly CUSUM [%]"),
               line = 3.5)
-
-
-
 
 
 
@@ -810,8 +807,8 @@ for (adb in database) {
 # vars        <- c("GLB_att", "DIR_att", "DIR_transp")
 vars        <- c("GLB_att")
 database    <- c(  "ALL_1_D_monthly_DESEAS",
-                   "CLEAR_1_D_monthly_DESEAS",
-                   "CLOUD_1_D_monthly_DESEAS")
+                 "CLEAR_1_D_monthly_DESEAS",
+                 "CLOUD_1_D_monthly_DESEAS")
 
 #+ CumulativeMonthlyCuSum, echo=F, include=T, results="asis"
 for (adb in database) {
@@ -821,7 +818,8 @@ for (adb in database) {
     cat("\n#### Monthly cum sums for", translate(sub("_.*", "", adb)), "\n\n")
 
     for (avar in vars) {
-        ## get only the vars we need
+
+        ## Plot regular cusums
         wcare <- c("Date", paste0(avar,"_des"), paste0(avar,"_cusum"))
         pdb   <- DB[, ..wcare]
         rm(DB)
@@ -831,22 +829,72 @@ for (adb in database) {
                               unlist(strsplit(avar, split = "_" ))[1:2]),
                             collapse = "_"))
 
-        par("mar" = c(3,4,2,1))
+        if (DRAFT == TRUE) {
+            par("mar" = c(3, 5, 2,  1))
+        } else {
+            par("mar" = c(3, 5, 0.5, 0.5))
+        }
         par(pch = 19)
+
+        ## scale fonts
+        ccex <- ccex_sbs
+        par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
 
         plot(1, type = "n",
              xlab = "",
              xlim = xlim, ylim = ylim,
              xaxt = "n",
-             ylab = bquote("Cumulative Sum Anomaly [%]"))
+             yaxt = "n",
+             ylab = "")
+
+        # x axis
         axis.Date(1, pdb$Date)
-        abline(h = 0, lty = 2, lwd = 0.8)
+        axis.Date(1,
+                  at = seq(as.Date("1993-01-01"), max(pdb$Date), by = "year"),
+                  format = "%Y",
+                  labels = NA,
+                  tcl = -0.25)
+
+
+        # y axis
+        sfmt <- paste0(pretty(ylim) / 1000,"k")
+        sfmt <- sub("^0k$", "0", sfmt)
+        axis(2,
+             at     = pretty(ylim),
+             labels = sfmt,
+             las    = 2,
+             ylab   = "")
+
+
+        title(ylab = bquote("Anomaly CUSUM [%]"),
+              line = 3.5)
+
+
 
         ## daily from other DT
         lines(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = col, lwd = 2)
 
-        title(paste(sub("_.*","",adb), "mean monthly cumulative sum ",
-                    translate(avar) ), cex.main = 1)
+        if (DRAFT == T) {
+            title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
+                        translate(avar) ), cex.main = 1)
+        } else {
+            legend("bottomleft", 0, translate(sub("_.*","",adb)),
+                   cex   = 1.1,
+                   bty   = "n",
+                   xjust = 0.5,      # 0.5 means center adjusted
+                   yjust = 0.5,      # 0.5 means center adjusted
+                   x.intersp = -0.5, # adjust character interspacing as you like to effect box width
+                   y.intersp =  0.2, # adjust character interspacing to effect box height
+                   adj = c(0, 0.5))  # adjust string position (default values used here)
+            # cex = 1.5,      # change cex if you like (not used here)
+            # text.font = 2)  # bold the text if you like (not used here)
+            par("mar" = c(3,4,2,1))
+        }
+
+        ##  reset fonts
+        ccex <- 1
+        par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
+
 
 
         ## test plot for reference
@@ -855,14 +903,16 @@ for (adb in database) {
 
         plot(pdb$Date, pdb[[paste0(avar,"_des")]],
              ylab = bquote("Monthly Anomaly [%]"),
-             cex = 0.5,
+             cex = 0.3,
              col = col)
         abline(h = 0, lty = 2, lwd = 0.8)
         title(paste(sub("_.*","",adb), "mean monthly values ",
                     translate(avar) ), cex.main = 1)
         abline(lm1, lwd = 2)
 
-        ## runing mean
+
+
+        ## running mean
         rm <- frollmean(pdb[[paste0(avar,"_des")]], round(running_mean_window_days),
                         na.rm = TRUE, algo = "exact", align = "center")
         points(pdb$Date, rm, col = "red", cex = 0.5)
