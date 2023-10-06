@@ -407,7 +407,7 @@ for (avar in unique(szatrends$var)) {
                 # title(paste(translate(avar), awename, "for", translate(type)), cex.main =  .8 * ccex)
                 title(paste(translate(avar), "trend", "for", translate(type)), cex.main =  .8 * ccex)
             } else {
-                legend("bottom", 0, translate(type),
+                legend("bottomleft", 0, translate(type),
                        bty   = "n",
                        cex   = .8 * ccex,
                        xjust = 0.5,      # 0.5 means center adjusted
@@ -419,7 +419,12 @@ for (avar in unique(szatrends$var)) {
                 par("mar" = c(4,   5,   2,   2))
             }
 
-
+            legend("bottomright",
+                   legend = c("Morning", "Evening"),
+                   # col    = c(unique(pam$col), unique(ppm$col)),
+                   col    = c( 2,  3),
+                   pch    = c(16, 17), ncol = 2, bty = "n",
+                   cex    = ccex)
 
             ## morning lines
             lines(pam$SZA, pam[[awe]],
@@ -445,12 +450,7 @@ for (avar in unique(szatrends$var)) {
                    col = 3,
                    cex = 1)
 
-            legend("top",
-                   legend = c("Morning", "Evening"),
-                   # col    = c(unique(pam$col), unique(ppm$col)),
-                   col    = c( 2,  3),
-                   pch    = c(16, 17), ncol = 2, bty = "n",
-                   cex    = ccex)
+
 
             ccex <- 1
             par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)

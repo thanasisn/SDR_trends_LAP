@@ -1054,7 +1054,7 @@ for (avar in vars) {
                  col      = get(paste0(c("col",
                                          unlist(strsplit(avar, split = "_" ))[1:2]),
                                        collapse = "_")),
-                 cex      = .5,
+                 cex      = .6,
                  ylab     = "",
                  xlab     = "",
                  xaxt     = "n",
