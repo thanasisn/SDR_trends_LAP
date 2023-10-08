@@ -587,7 +587,7 @@ knitr::include_graphics(c(
 
 
 
-```{r cusumnotrend, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR after removing the long term trend from the daily values, for the three different sky conditions.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+```{r cusumnotrend, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR after removing the long term trend from the daily values.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics(c(
     "./images/CumulativeDailyCuSumNOtrend-1.png",    # ALL sky
     "./images/CumulativeDailyCuSumNOtrend-5.png",    # CLEAR sky
@@ -595,12 +595,12 @@ knitr::include_graphics(c(
 ```
 
 
-<!-- ```{r cusumnotrendmonthly, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR after removing the long term trend from the monthly values, for the three different sky conditions.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
-<!-- knitr::include_graphics(c( -->
-<!--     "./images/CumulativeMonthlyCuSum",    # ALL sky -->
-<!--     "./images/CumulativeMonthlyCuSumNOtrend-5.png",    # CLEAR sky -->
-<!--     "./images/CumulativeMonthlyCuSumNOtrend-9.png"))   # Cloud sky -->
-<!-- ``` -->
+```{r cusumnotrendmonthly, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR after removing the long term trend from the monthly values.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+knitr::include_graphics(c(
+    "./images/CumulativeMonthlyCuSumNOtrend-1.png",    # ALL sky
+    "./images/CumulativeMonthlyCuSumNOtrend-5.png",    # CLEAR sky
+    "./images/CumulativeMonthlyCuSumNOtrend-9.png"))   # Cloud sky
+```
 
 
 

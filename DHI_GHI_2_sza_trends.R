@@ -723,6 +723,233 @@ for (ase in seasons) {
 }
 
 
+stop()
+
+
+## __ by season in a tight grid ----------------------------------------------
+#+ SzaTrendsSeasTogether, echo=F, include=T
+{
+    vars        <- c("GLB_att_des")
+    avar        <- vars[1]
+    dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
+                       "CLEAR_1_D_bySeason_DESEAS",
+                       "CLOUD_1_D_bySeason_DESEAS")
+    Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
+
+    ## the order must be predefined to match
+    expanded <- expand.grid(Dataset = dbs, Seasons = Seasons, stringsAsFactors = FALSE)
+
+    nf <- layout(
+        matrix(1:30, ncol = 5, byrow = TRUE),
+        widths  = c(0.3,   1,1,1, 0.1),
+        heights = c(0.2, 1,1,1,1, 0.4)
+    )
+    layout.show(nf)
+
+    # 1
+    par("mar"=c(0,0,0,0))
+    plot.new()
+    # 2
+    plot.new()
+    text(x = 0.5, y = 0.5,
+         adj  = c(0.6,0.5),
+         "All skies",    cex = 0.9, font = 2)
+
+    # 3
+    plot.new()
+    text(x = 0.5, y = 0.5,
+         adj  = c(0.5,0.5),
+         "Clear skies",  cex = 0.9, font = 2)
+
+    # 4
+    plot.new()
+    text(x = 0.5, y = 0.5,
+         adj  = c(0.5,0.5),
+         "Cloudy skies", cex = 0.9, font = 2)
+
+    # 5
+    plot.new()
+
+
+
+    for (i  in 6:25) {
+
+        if (i == 6) {
+            plot.new()
+            text(x = 0.1, y = 0.5,
+                 adj  = c(0.5, 0.5),
+                 srt  = 90, "Winter", cex = 0.9, font = 2)
+        }
+        if (i == 10) {
+            plot.new()
+            text(x = 0.5, y = 0.5,
+                 adj  = c(0.5, 0.5),
+                 srt  = 90, "Winter", cex = 0.9, font = 2)
+        }
+
+        if (i == 11) {
+            plot.new()
+            text(x = 0.1, y = 0.5,
+                 adj  = c(0.5,0.5),
+                 srt  = 90, "Summer", cex = 0.9, font = 2)
+        }
+        if (i == 15) {
+            plot.new()
+            text(x = 0.5, y = 0.5,
+                 adj  = c(0.5,0.5),
+                 srt  = 90, "Summer", cex = 0.9, font = 2)
+        }
+
+
+        if (i == 16) {
+            plot.new()
+            text(x = 0.1, y = 0.5,
+                 adj  = c(0.5,0.5),
+                 srt  = 90, "Autumn", cex = 0.9, font = 2)
+        }
+        if (i == 20) {
+            plot.new()
+            text(x = 0.5, y = 0.5,
+                 adj  = c(0.5,0.5),
+                 srt  = 90, "Autumn", cex = 0.9, font = 2)
+        }
+
+
+        if (i == 21) {
+            plot.new()
+            text(x = 0.1, y = 0.5,
+                 adj  = c(0.5,0.5),
+                 srt  = 90, "Spring", cex = 0.9, font = 2)
+        }
+        if (i == 25) {
+            plot.new()
+            text(x = 0.5, y = 0.5,
+                 adj  = c(0.5,0.5),
+                 srt  = 90, "Spring", cex = 0.9, font = 2)
+        }
+
+
+        # ## actual plots
+        # if (! i %in% c(6,11,16,21,10,15,20,25)) {
+        #
+        #     kk       <- expanded[1,]
+        #     expanded <- expanded[-1, ]
+        #
+        #     DB      <- get(kk$Dataset)
+        #     dataset <- DB[ Season == kk$Seasons, ]
+        #
+        #     ## linear model counting years
+        #     lm2 <- lm(dataset[[avar]] ~ dataset$Year)
+        #
+        #     ## plot
+        #     par("mar" = c(0, 0, 0, 0))
+        #
+        #     plot(dataset$Year, dataset[[avar]],
+        #          ylim     = ylim,
+        #          pch      = 19,
+        #          col      = get(paste0(c("col",
+        #                                  unlist(strsplit(avar, split = "_" ))[1:2]),
+        #                                collapse = "_")),
+        #          cex      = .6,
+        #          ylab     = "",
+        #          xlab     = "",
+        #          xaxt     = "n",
+        #          yaxt     = "n",
+        #          cex.main = 0.9,
+        #          cex.lab  = 0.8,
+        #          cex.axis = 0.8,
+        #          mgp  = c(2, 0.5, 0)
+        #     )
+        #
+        #     ## y axis
+        #     if (i %in% c(7,12,17,22)){
+        #         axis(2, pretty(ylim), las = 2, cex.axis = 0.8)
+        #     } else {
+        #         axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck =  0.03)
+        #         axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck = -0.03)
+        #     }
+        #
+        #     ## x axis
+        #     if (i %in% c(22, 23, 24)) {
+        #         ## bottom row axis
+        #         axis(1, pretty(dataset$Year), las = 1, cex.axis = 0.8, line =  0,   labels = NA)
+        #         axis(1, pretty(dataset$Year), las = 1, cex.axis = 0.8, line = -0.5, tck = 0, lwd = 0)
+        #         ## minor ticks
+        #         axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
+        #              tcl = -0.25)
+        #     } else {
+        #         ## major ticks
+        #         axis(1, pretty(dataset$Year), cex.axis = 0.8, labels = NA, tck =  0.03)
+        #         axis(1, pretty(dataset$Year), cex.axis = 0.8, labels = NA, tck = -0.03)
+        #         ## minor ticks
+        #         axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
+        #              tcl = -0.25/2)
+        #         axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
+        #              tcl = +0.25/2)
+        #
+        #     }
+        #
+        #     abline(lm2)
+        #
+        #
+        #     ## decorations
+        #     fit <- lm2[[1]]
+        #
+        #     legend("top", lty = 1, bty = "n", lwd = 1, cex = 0.8,
+        #            inset = 0.1,
+        #            paste("Trend: ",
+        #                  if (fit[2] > 0) '+' else '-',
+        #                  signif(abs(fit[2]), 2),
+        #                  "% / year")
+        #     )
+        #
+        #     if (i %in% c(7,12,17,22)) {
+        #         mtext(text = bquote("Anomaly [%]"),
+        #               cex  = 0.6,
+        #               side = 2,
+        #               line = 2.3)
+        #     }
+        #
+        #     par("mar" = c(0,0,0,0))
+        # }
+
+    }
+
+    # 1
+    par("mar" = c(0,0,0,0))
+    plot.new()
+
+    # 2
+    plot.new()
+    text(x = 0.5, y = 0.25,
+         adj  = c(0.6,0.5),
+         "All skies",    cex = 0.9, font = 2)
+
+    # 3
+    plot.new()
+    text(x = 0.5, y = 0.25,
+         adj  = c(0.5, 0.5),
+         "Clear skies",  cex = 0.9, font = 2)
+
+    # 4
+    plot.new()
+    text(x = 0.5, y = 0.25,
+         adj  = c(0.5, 0.5),
+         "Cloudy skies", cex = 0.9, font = 2)
+
+    # 5
+    plot.new()
+
+    par(mfrow = c(1,1))
+}
+#+ echo=F, include=F
+
+
+
+
+
+
+
 
 
 
