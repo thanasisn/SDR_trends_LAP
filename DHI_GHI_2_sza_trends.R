@@ -720,7 +720,6 @@ for (ase in seasons) {
 }
 
 
-stop()
 
 
 ## __ by season in a tight grid ----------------------------------------------
@@ -853,6 +852,7 @@ stop()
 
             ## test always show zero on plots
             ylim <- range(0, szatrends_seas$slope, na.rm = T)
+            ylim <- c(-2.5, 4.5)
 
             pam  <- subdata[ preNoon == T ]
             ppm  <- subdata[ preNoon == F ]
@@ -933,24 +933,19 @@ stop()
                    cex = 1)
 
 
+            if (i %in% c(23)) {
+                legend("bottom",
+                       legend = c("Morning",                "Evening",
+                                  "Morning low stat. sig.", "Evening low stat. sig."),
+                       col    = c(2, 3),
+                       pt.cex = 1,
+                       cex    = 0.8,
+                       pch    = c(16, 17, 1, 2),
+                       ncol   = 2,
+                       bty = "n")
 
 
-            # legend("top",
-            #        legend = c("Morning", "Evening"),
-            #        # col    = c(unique(pam$col), unique(ppm$col)),
-            #        col    = c( 2,  3),
-            #        pch    = c(16, 17), ncol = 2, bty = "n",
-            #        cex    = ccex)
-
-
-            # legend("bottom",
-            #        legend = c("Morning",       "Evening"),
-            #        # col    = c(unique(pam$col), unique(ppm$col)),
-            #        col    = c(2, 3),
-            #        pch    = c(16, 17), ncol = 2, bty = "n")
-
-
-
+            }
 
 
             if (i %in% c(22, 23, 24)) {
@@ -984,19 +979,19 @@ stop()
 
     # 2
     plot.new()
-    text(x = 0.5, y = 0.25,
+    text(x = 0.5, y = 0.23,
          adj  = c(0.6,0.5),
          "All skies",    cex = 0.9, font = 2)
 
     # 3
     plot.new()
-    text(x = 0.5, y = 0.25,
+    text(x = 0.5, y = 0.23,
          adj  = c(0.5, 0.5),
          "Clear skies",  cex = 0.9, font = 2)
 
     # 4
     plot.new()
-    text(x = 0.5, y = 0.25,
+    text(x = 0.5, y = 0.23,
          adj  = c(0.5, 0.5),
          "Cloudy skies", cex = 0.9, font = 2)
 
