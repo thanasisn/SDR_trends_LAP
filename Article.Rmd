@@ -791,23 +791,23 @@ knitr::include_graphics("./images/LongtermTrends-8.png")
 
 
 
-```{r echo = FALSE, fig.cap='SDR trend ~ SZA', fig.subcap=c('', '', ''), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
-knitr::include_graphics("./images/SzaTrendsSeas-1.png")
-knitr::include_graphics("./images/SzaTrendsSeas-2.png")
-knitr::include_graphics("./images/SzaTrendsSeas-3.png")
-knitr::include_graphics("./images/SzaTrendsSeas-4.png")
-knitr::include_graphics("./images/SzaTrendsSeas-5.png")
-knitr::include_graphics("./images/SzaTrendsSeas-6.png")
-knitr::include_graphics("./images/SzaTrendsSeas-7.png")
-knitr::include_graphics("./images/SzaTrendsSeas-8.png")
-knitr::include_graphics("./images/SzaTrendsSeas-9.png")
-knitr::include_graphics("./images/SzaTrendsSeas-10.png")
-knitr::include_graphics("./images/SzaTrendsSeas-11.png")
-knitr::include_graphics("./images/SzaTrendsSeas-12.png")
-```
+<!-- ```{r echo = FALSE, fig.cap='SDR trend ~ SZA', fig.subcap=c('', '', ''), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
+<!-- knitr::include_graphics("./images/SzaTrendsSeas-1.png") -->
+<!-- knitr::include_graphics("./images/SzaTrendsSeas-2.png") -->
+<!-- knitr::include_graphics("./images/SzaTrendsSeas-3.png") -->
+<!-- knitr::include_graphics("./images/SzaTrendsSeas-4.png") -->
+<!-- knitr::include_graphics("./images/SzaTrendsSeas-5.png") -->
+<!-- knitr::include_graphics("./images/SzaTrendsSeas-6.png") -->
+<!-- knitr::include_graphics("./images/SzaTrendsSeas-7.png") -->
+<!-- knitr::include_graphics("./images/SzaTrendsSeas-8.png") -->
+<!-- knitr::include_graphics("./images/SzaTrendsSeas-9.png") -->
+<!-- knitr::include_graphics("./images/SzaTrendsSeas-10.png") -->
+<!-- knitr::include_graphics("./images/SzaTrendsSeas-11.png") -->
+<!-- knitr::include_graphics("./images/SzaTrendsSeas-12.png") -->
+<!-- ``` -->
 
 
 
-```{r echo = FALSE, fig.cap='SDR trend ~ SZA', fig.subcap=c('', '', ''), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
-knitr::include_graphics("./images/SzaTrendsSea")
+```{r echo = FALSE, fig.cap='SDR trend ~ SZA', out.width='100%'}
+knitr::include_graphics("./images/SzaTrendsSeasTogether-2.png")
 ```

@@ -678,24 +678,24 @@ for (ase in seasons) {
                       col  = 2,
                       type = "c",
                       lwd  = ccex,
-                      cex = 1)
+                      cex  = 0.8)
                 ## morning points
                 points(pam$SZA, pam[[awe]],
                        pch = pam$pch,
                        col = 2,
-                       cex = 1)
+                       cex = 0.8)
 
                 ## evening lines
                 lines(ppm$SZA, ppm[[awe]],
                       col  = 3,
                       type = "c",
                       lwd  = ccex,
-                      cex = 1)
+                      cex  = 0.8)
                 ## evening points
                 points(ppm$SZA, ppm[[awe]],
                        pch = ppm$pch,
                        col = 3,
-                       cex = 1)
+                       cex = 0.8)
 
                 # legend("top",
                 #        legend = c("Morning", "Evening"),
