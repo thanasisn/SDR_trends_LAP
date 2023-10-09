@@ -1007,13 +1007,6 @@ for (ase in seasons) {
 
 
 
-
-
-
-
-
-
-
 #' **END**
 #+ include=T, echo=F
 tac <- Sys.time()
