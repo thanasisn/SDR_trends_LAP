@@ -809,5 +809,5 @@ knitr::include_graphics("./images/SzaTrendsSeas-12.png")
 
 
 ```{r echo = FALSE, fig.cap='SDR trend ~ SZA', fig.subcap=c('', '', ''), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
-knitr::include_graphics("./images/SzaTrendsSeas-1.png")
+knitr::include_graphics("./images/SzaTrendsSea")
 ```
