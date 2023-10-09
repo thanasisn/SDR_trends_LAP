@@ -200,7 +200,7 @@ ccex_sbs <- 1.3
 
 #  vars <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
 
-## !! Deseasonlized values are non meaningful !!
+## !! Deseasonalized values are non meaningful !!
 vars <- c("DIR_att_des", "GLB_att_des")
 
 dbs  <- c(  "ALL_2_daily_DESEAS",
@@ -219,17 +219,17 @@ for (DBn in dbs) {
 
                 if (sum(!is.na(dataset[[avar]])) <= 1) next()
 
-                lm1 <- lm( dataset[[avar]] ~ dataset$Date )
-
-                gather <- rbind(gather,
-                                data.frame(
-                                    linear_fit_stats(lm1),
-                                    preNoon   = anoon,
-                                    SZA       = asza,
-                                    DATA      = DBn,
-                                    var       = avar,
-                                    N         = sum(!is.na(dataset[[avar]]))
-                                ))
+                # lm1 <- lm( dataset[[avar]] ~ dataset$Date )
+                #
+                # gather <- rbind(gather,
+                #                 data.frame(
+                #                     linear_fit_stats(lm1),
+                #                     preNoon   = anoon,
+                #                     SZA       = asza,
+                #                     DATA      = DBn,
+                #                     var       = avar,
+                #                     N         = sum(!is.na(dataset[[avar]]))
+                #                 ))
 
                 plot(dataset$doy, dataset[[sub("_des", "_seas", avar)]], cex = 1, pch = 1 )
                 title(main = paste("Seasonal values", DBn, asza, sub("_des", "_seas", avar)))
@@ -484,13 +484,10 @@ for (avar in unique(szatrends$var)) {
 
 ## __ Calculate SZA ~ Season stats  --------------------------------------------
 
-
+## !! Deseasonalized trend is meaningless for SZA !!
 # vars        <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
-# vars        <- c("DIR_att_des", "GLB_att_des")
-vars        <- c("GLB_att_des")
 
 vars        <- c("GLB_att")
-
 
 dbs         <- c(  "ALL_2_bySeason_daily_DESEAS",
                  "CLEAR_2_bySeason_daily_DESEAS",
@@ -729,11 +726,11 @@ stop()
 ## __ by season in a tight grid ----------------------------------------------
 #+ SzaTrendsSeasTogether, echo=F, include=T
 {
-    vars        <- c("GLB_att_des")
+    vars        <- c("GLB_att")
     avar        <- vars[1]
-    dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
-                       "CLEAR_1_D_bySeason_DESEAS",
-                       "CLOUD_1_D_bySeason_DESEAS")
+    dbs         <- c(  "ALL_2_bySeason_daily_DESEAS",
+                       "CLEAR_2_bySeason_daily_DESEAS",
+                       "CLOUD_2_bySeason_daily_DESEAS")
     Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 
     ## the order must be predefined to match
@@ -829,89 +826,155 @@ stop()
         }
 
 
-        # ## actual plots
-        # if (! i %in% c(6,11,16,21,10,15,20,25)) {
-        #
-        #     kk       <- expanded[1,]
-        #     expanded <- expanded[-1, ]
-        #
-        #     DB      <- get(kk$Dataset)
-        #     dataset <- DB[ Season == kk$Seasons, ]
-        #
-        #     ## linear model counting years
-        #     lm2 <- lm(dataset[[avar]] ~ dataset$Year)
-        #
-        #     ## plot
-        #     par("mar" = c(0, 0, 0, 0))
-        #
-        #     plot(dataset$Year, dataset[[avar]],
-        #          ylim     = ylim,
-        #          pch      = 19,
-        #          col      = get(paste0(c("col",
-        #                                  unlist(strsplit(avar, split = "_" ))[1:2]),
-        #                                collapse = "_")),
-        #          cex      = .6,
-        #          ylab     = "",
-        #          xlab     = "",
-        #          xaxt     = "n",
-        #          yaxt     = "n",
-        #          cex.main = 0.9,
-        #          cex.lab  = 0.8,
-        #          cex.axis = 0.8,
-        #          mgp  = c(2, 0.5, 0)
-        #     )
-        #
-        #     ## y axis
-        #     if (i %in% c(7,12,17,22)){
-        #         axis(2, pretty(ylim), las = 2, cex.axis = 0.8)
-        #     } else {
-        #         axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck =  0.03)
-        #         axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck = -0.03)
-        #     }
-        #
-        #     ## x axis
-        #     if (i %in% c(22, 23, 24)) {
-        #         ## bottom row axis
-        #         axis(1, pretty(dataset$Year), las = 1, cex.axis = 0.8, line =  0,   labels = NA)
-        #         axis(1, pretty(dataset$Year), las = 1, cex.axis = 0.8, line = -0.5, tck = 0, lwd = 0)
-        #         ## minor ticks
-        #         axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
-        #              tcl = -0.25)
-        #     } else {
-        #         ## major ticks
-        #         axis(1, pretty(dataset$Year), cex.axis = 0.8, labels = NA, tck =  0.03)
-        #         axis(1, pretty(dataset$Year), cex.axis = 0.8, labels = NA, tck = -0.03)
-        #         ## minor ticks
-        #         axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
-        #              tcl = -0.25/2)
-        #         axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
-        #              tcl = +0.25/2)
-        #
-        #     }
-        #
-        #     abline(lm2)
-        #
-        #
-        #     ## decorations
-        #     fit <- lm2[[1]]
-        #
-        #     legend("top", lty = 1, bty = "n", lwd = 1, cex = 0.8,
-        #            inset = 0.1,
-        #            paste("Trend: ",
-        #                  if (fit[2] > 0) '+' else '-',
-        #                  signif(abs(fit[2]), 2),
-        #                  "% / year")
-        #     )
-        #
-        #     if (i %in% c(7,12,17,22)) {
-        #         mtext(text = bquote("Anomaly [%]"),
-        #               cex  = 0.6,
-        #               side = 2,
-        #               line = 2.3)
-        #     }
-        #
-        #     par("mar" = c(0,0,0,0))
-        # }
+        ## actual plots
+        if (! i %in% c(6,11,16,21,10,15,20,25)) {
+
+            kk       <- expanded[1,]
+            expanded <- expanded[-1, ]
+
+            ## limit plot p-values
+            p_lim     <- 0.05
+
+            ## select All/CS  DIR/GLB/trans winter/summer
+            subdata <- szatrends_seas[ DATA   == kk$Dataset &
+                                       var    == avar &
+                                       Season == kk$Seasons, ]
+
+            ## set symbols for plotting
+            subdata[ slope.p  < p_lim & preNoon == TRUE,  pch := 16 ]
+            subdata[ slope.p >= p_lim & preNoon == TRUE,  pch :=  1 ]
+            subdata[ slope.p  < p_lim & preNoon == FALSE, pch := 17 ]
+            subdata[ slope.p >= p_lim & preNoon == FALSE, pch :=  2 ]
+
+
+            # xlim <- range( subdata$SZA,        na.rm = T )
+            ## use same axis for all
+            xlim <- range(szatrends_seas$SZA, na.rm = T)
+
+            ## test always show zero on plots
+            ylim <- range(0, szatrends_seas$slope, na.rm = T)
+
+            pam  <- subdata[ preNoon == T ]
+            ppm  <- subdata[ preNoon == F ]
+
+            ## plot
+            par("mar" = c(0, 0, 0, 0))
+
+
+            plot(1, type = "n",
+                 cex      = .6,
+                 cex.axis = 0.8,
+                 cex.lab  = 0.8,
+                 cex.main = 0.9,
+                 mgp      = c(2, 0.5, 0),
+                 xaxt     = "n",
+                 xlab     = "",
+                 xlim     = xlim,
+                 yaxt     = "n",
+                 ylab     = "",
+                 ylim     = ylim,
+            )
+
+
+            ## y axis
+            if (i %in% c(7,12,17,22)){
+                axis(2, pretty(ylim), las = 2, cex.axis = 0.8)
+            } else {
+                axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck =  0.03)
+                axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck = -0.03)
+            }
+
+
+            ## x axis
+            if (i %in% c(22, 23, 24)) {
+                ## bottom row axis
+                axis(1, seq(5, 90, 5), las = 1, cex.axis = 0.8, line =  0,   labels = NA)
+                axis(1, seq(5, 90, 5), las = 1, cex.axis = 0.8, line = -0.5, tck = 0, lwd = 0)
+                ## minor ticks
+                axis(1, at = seq(5, 90, 1), labels = NA,
+                     tcl = -0.25)
+            } else {
+                ## major ticks
+                axis(1, seq(5, 90, 5), cex.axis = 0.8, labels = NA, tck =  0.03)
+                axis(1, seq(5, 90, 5), cex.axis = 0.8, labels = NA, tck = -0.03)
+                ## minor ticks
+                axis(1, at = seq(5, 90, 1), labels = NA,
+                     tcl = -0.25/2)
+                axis(1, at = seq(5, 90, 1), labels = NA,
+                     tcl = +0.25/2)
+            }
+
+            ## zero line
+            abline(h = 0, lty = 3)
+
+
+            ## morning lines
+            lines(pam$SZA, pam[[awe]],
+                  col  = 2,
+                  type = "c",
+                  lwd  = ccex,
+                  cex = 1)
+            ## morning points
+            points(pam$SZA, pam[[awe]],
+                   pch = pam$pch,
+                   col = 2,
+                   cex = 1)
+
+            ## evening lines
+            lines(ppm$SZA, ppm[[awe]],
+                  col  = 3,
+                  type = "c",
+                  lwd  = ccex,
+                  cex = 1)
+            ## evening points
+            points(ppm$SZA, ppm[[awe]],
+                   pch = ppm$pch,
+                   col = 3,
+                   cex = 1)
+
+
+
+
+            # legend("top",
+            #        legend = c("Morning", "Evening"),
+            #        # col    = c(unique(pam$col), unique(ppm$col)),
+            #        col    = c( 2,  3),
+            #        pch    = c(16, 17), ncol = 2, bty = "n",
+            #        cex    = ccex)
+
+
+            # legend("bottom",
+            #        legend = c("Morning",       "Evening"),
+            #        # col    = c(unique(pam$col), unique(ppm$col)),
+            #        col    = c(2, 3),
+            #        pch    = c(16, 17), ncol = 2, bty = "n")
+
+
+
+
+
+            if (i %in% c(22, 23, 24)) {
+                mtext(text = bquote("Solar zenith angle (SZA)"),
+                      cex  = 0.6,
+                      side = 1,
+                      line = 1.3)
+                }
+
+
+            if (i %in% c(7,12,17,22)) {
+                mtext(text = bquote("Trend [%]"),
+                      cex  = 0.6,
+                      side = 2,
+                      line = 2.3)
+            }
+
+
+
+
+
+
+             par("mar" = c(0,0,0,0))
+        }
 
     }
 
