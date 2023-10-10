@@ -460,7 +460,6 @@ for (avar in unique(szatrends$var)) {
 
 
 
-
 ##  SZA trends for season of year  ---------------------------------------------
 
 #'
