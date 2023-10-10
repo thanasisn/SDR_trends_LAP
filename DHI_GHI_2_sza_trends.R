@@ -201,48 +201,53 @@ ccex_sbs <- 1.3
 #  vars <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
 
 ## !! Deseasonalized values are non meaningful !!
-vars <- c("DIR_att_des", "GLB_att_des")
+# vars <- c("DIR_att_des", "GLB_att_des")
+#
+# dbs  <- c(  "ALL_2_daily_DESEAS",
+#           "CLEAR_2_daily_DESEAS",
+#           "CLOUD_2_daily_DESEAS")
 
-dbs  <- c(  "ALL_2_daily_DESEAS",
-          "CLEAR_2_daily_DESEAS",
-          "CLOUD_2_daily_DESEAS")
-
-gather <- data.frame()
-
-for (DBn in dbs) {
-    DB <- get(DBn)
-    for (avar in vars) {
-        for (anoon in unique( DB$preNoon)) {
-            for (asza in unique( DB$SZA )) {
-
-                dataset <- DB[ SZA == asza & preNoon == anoon ]
-
-                if (sum(!is.na(dataset[[avar]])) <= 1) next()
-
-                # lm1 <- lm( dataset[[avar]] ~ dataset$Date )
-                #
-                # gather <- rbind(gather,
-                #                 data.frame(
-                #                     linear_fit_stats(lm1),
-                #                     preNoon   = anoon,
-                #                     SZA       = asza,
-                #                     DATA      = DBn,
-                #                     var       = avar,
-                #                     N         = sum(!is.na(dataset[[avar]]))
-                #                 ))
-
-                plot(dataset$doy, dataset[[sub("_des", "_seas", avar)]], cex = 1, pch = 1 )
-                title(main = paste("Seasonal values", DBn, asza, sub("_des", "_seas", avar)))
-            }
-        }
-    }
-}
+# gather <- data.frame()
+#
+# for (DBn in dbs) {
+#     DB <- get(DBn)
+#     for (avar in vars) {
+#         for (anoon in unique( DB$preNoon)) {
+#             for (asza in unique( DB$SZA )) {
+#
+#                 dataset <- DB[ SZA == asza & preNoon == anoon ]
+#
+#                 if (sum(!is.na(dataset[[avar]])) <= 1) next()
+#
+#                 # lm1 <- lm( dataset[[avar]] ~ dataset$Date )
+#                 #
+#                 # gather <- rbind(gather,
+#                 #                 data.frame(
+#                 #                     linear_fit_stats(lm1),
+#                 #                     preNoon   = anoon,
+#                 #                     SZA       = asza,
+#                 #                     DATA      = DBn,
+#                 #                     var       = avar,
+#                 #                     N         = sum(!is.na(dataset[[avar]]))
+#                 #                 ))
+#
+#                 plot(dataset$doy, dataset[[sub("_des", "_seas", avar)]], cex = 1, pch = 1 )
+#                 title(main = paste("Seasonal values", DBn, asza, sub("_des", "_seas", avar)))
+#             }
+#         }
+#     }
+# }
 #+ echo=F, include=F
 
 
 
 ## Use the actual SDR for trends !! --------------------------------------------
 vars <- c("DIR_att", "GLB_att")
+
+dbs  <- c(  "ALL_2_daily_mean",
+          "CLEAR_2_daily_mean",
+          "CLOUD_2_daily_mean")
+
 gather <- data.frame()
 
 for (DBn in dbs) {
@@ -456,16 +461,6 @@ for (avar in unique(szatrends$var)) {
 
 
 
-
-
-
-
-
-
-
-
-
-
 ##  SZA trends for season of year  ---------------------------------------------
 
 #'
@@ -481,9 +476,9 @@ for (avar in unique(szatrends$var)) {
 
 vars        <- c("GLB_att")
 
-dbs         <- c(  "ALL_2_bySeason_daily_DESEAS",
-                 "CLEAR_2_bySeason_daily_DESEAS",
-                 "CLOUD_2_bySeason_daily_DESEAS")
+dbs         <- c(  "ALL_2_bySeason_daily_mean",
+                 "CLEAR_2_bySeason_daily_mean",
+                 "CLOUD_2_bySeason_daily_mean")
 seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 gather_seas <- data.frame()
 
@@ -537,7 +532,6 @@ szatrends_seas[ preNoon == T, pch := pch_am ]
 szatrends_seas[ preNoon == F, pch := pch_pm ]
 
 
-
 # hist(szatrends_seas[DATA == dbs[1],N],  breaks = 100)
 # hist(szatrends_seas[DATA == dbs[2],N],  breaks = 100)
 # hist(szatrends_seas[DATA == dbs[3],N],  breaks = 100)
@@ -557,10 +551,6 @@ szatrends_seas[ preNoon == F, pch := pch_pm ]
 # test2 <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "GLB_att_des" ]
 # plot(test1$SZA, test1$N, pch = 19)
 # plot(test2$SZA, test2$N, pch = 19)
-
-# szatrends[ var == "GLB_att_des"    & N <= 300, slope := NA ]
-# szatrends[ var == "DIR_att_des"    & N <=  50, slope := NA ]
-# szatrends[ var == "DIR_transp_des" & N <=  50, slope := NA ]
 
 
 
@@ -663,8 +653,6 @@ for (ase in seasons) {
 
                 title(paste(ase, awename, typeP, translate(avar)), cex.main = 0.8,)
 
-
-
                 ## morning lines
                 lines(pam$SZA, pam[[awe]],
                       col  = 2,
@@ -713,15 +701,14 @@ for (ase in seasons) {
 
 
 
-
 ## __ by season in a tight grid ----------------------------------------------
 #+ SzaTrendsSeasTogether, echo=F, include=T
 {
     vars        <- c("GLB_att")
     avar        <- vars[1]
-    dbs         <- c(  "ALL_2_bySeason_daily_DESEAS",
-                       "CLEAR_2_bySeason_daily_DESEAS",
-                       "CLOUD_2_bySeason_daily_DESEAS")
+    dbs         <- c(  "ALL_2_bySeason_daily_mean",
+                       "CLEAR_2_bySeason_daily_mean",
+                       "CLOUD_2_bySeason_daily_mean")
     Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 
     ## the order must be predefined to match
@@ -757,8 +744,6 @@ for (ase in seasons) {
 
     # 5
     plot.new()
-
-
 
     for (i  in 6:25) {
 
@@ -935,8 +920,6 @@ for (ase in seasons) {
                        pch    = c(16, 17, 1, 2),
                        ncol   = 2,
                        bty = "n")
-
-
             }
 
 
@@ -954,10 +937,6 @@ for (ase in seasons) {
                       side = 2,
                       line = 2.3)
             }
-
-
-
-
 
 
              par("mar" = c(0,0,0,0))
@@ -993,9 +972,6 @@ for (ase in seasons) {
     par(mfrow = c(1,1))
 }
 #+ echo=F, include=F
-
-
-
 
 
 
