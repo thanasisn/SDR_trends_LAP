@@ -548,8 +548,7 @@ x_latex %>%
 knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
 
-
-Although the trends suggest that raw data have a homogeneous behavior, using plots of the cumulative sum (CUSUM) of the computed anomalies, we can reveal some structure within the trends and some differences between the sky conditions [@Regier2019]. 
+Although the year-to-year variability of the anomalies in Figure \ref{fig:trendALL} shows a rather homogeneous behavior, plots of the cumulative sums (CUSUM) of the anomalies can reveal structures which are different for the three sky conditions [@Regier2019]. 
 On all three plots on Figure\ \ref{fig:cusum}, we observe a downward part at the start of the period until about 2000, an almost steady part until about 2016 for all-sky and clear-sky conditions (Figures\ \ref{fig:cusum-1}, \ref{fig:cusum-2}) and until 2009 for cloud-sky conditions (Figure\ \ref{fig:cusum-3}), and finally, a steep upward part until the present.
 For a uniform trend, we would expect the cumulative sums of the anomalies to have a symmetric 'V' shape.
 This would indicate that the anomalies are evenly distributed around the climatological mean.
@@ -788,24 +787,6 @@ knitr::include_graphics("./images/LongtermTrends-5.png")
 ```{r trendCLOUD, echo=F, fig.cap=paste0("Anomaly (\\%) of the daily cloud-sky SDR, relative to climatological values for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term linear trend for cloud-sky conditions.")}
 knitr::include_graphics("./images/LongtermTrends-8.png")
 ```
-
-
-
-<!-- ```{r echo = FALSE, fig.cap='SDR trend ~ SZA', fig.subcap=c('', '', ''), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
-<!-- knitr::include_graphics("./images/SzaTrendsSeas-1.png") -->
-<!-- knitr::include_graphics("./images/SzaTrendsSeas-2.png") -->
-<!-- knitr::include_graphics("./images/SzaTrendsSeas-3.png") -->
-<!-- knitr::include_graphics("./images/SzaTrendsSeas-4.png") -->
-<!-- knitr::include_graphics("./images/SzaTrendsSeas-5.png") -->
-<!-- knitr::include_graphics("./images/SzaTrendsSeas-6.png") -->
-<!-- knitr::include_graphics("./images/SzaTrendsSeas-7.png") -->
-<!-- knitr::include_graphics("./images/SzaTrendsSeas-8.png") -->
-<!-- knitr::include_graphics("./images/SzaTrendsSeas-9.png") -->
-<!-- knitr::include_graphics("./images/SzaTrendsSeas-10.png") -->
-<!-- knitr::include_graphics("./images/SzaTrendsSeas-11.png") -->
-<!-- knitr::include_graphics("./images/SzaTrendsSeas-12.png") -->
-<!-- ``` -->
-
 
 
 ```{r echo = FALSE, fig.cap='SDR trend ~ SZA', out.width='100%'}
