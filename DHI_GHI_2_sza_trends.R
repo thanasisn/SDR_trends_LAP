@@ -237,6 +237,7 @@ for (DBn in dbs) {
         }
     }
 }
+#+ echo=F, include=F
 
 
 
@@ -271,12 +272,6 @@ for (DBn in dbs) {
 }
 
 
-
-
-
-#+ echo=F, include=F
-hist( gather$N[gather$N > 50], breaks = 100)
-
 szatrends <- data.table(gather)
 setorder(szatrends, SZA)
 
@@ -304,16 +299,13 @@ szatrends[preNoon == F, pch := pch_pm ]
 
 # plot(szatrends$SZA,szatrends$N)
 
-test1 <- szatrends[DATA == "CLEAR_2_daily_DESEAS" & var == "DIR_att"]
-test2 <- szatrends[DATA == "CLEAR_2_daily_DESEAS" & var == "GLB_att"]
+# test1 <- szatrends[DATA == "CLEAR_2_daily_DESEAS" & var == "DIR_att"]
+# test2 <- szatrends[DATA == "CLEAR_2_daily_DESEAS" & var == "GLB_att"]
 # plot(test1$SZA, test1$N, pch = 19)
 # abline(h=50)
 # plot(test2$SZA, test2$N, pch = 19)
 # abline(h=300)
 
-# szatrends[ var == "GLB_att_des"    & N <= 300, slope := NA ]
-# szatrends[ var == "DIR_att_des"    & N <=  50, slope := NA ]
-# szatrends[ var == "DIR_transp_des" & N <=  50, slope := NA ]
 
 
 
