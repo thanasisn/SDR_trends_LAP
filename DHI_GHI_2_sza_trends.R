@@ -243,6 +243,7 @@ ccex_sbs <- 1.3
 
 ## Use the actual SDR for trends !! --------------------------------------------
 vars <- c("DIR_att", "GLB_att")
+vars <- c("GLB_att")
 
 dbs  <- c(  "ALL_2_daily_mean",
           "CLEAR_2_daily_mean",
@@ -286,9 +287,9 @@ szatrends[, slope    := slope    * Days_of_year ]
 szatrends[, slope.sd := slope.sd * Days_of_year ]
 
 ## set some plot option for data
-szatrends[var == "DIR_att",    col := col_DIR_att    ]
-szatrends[var == "GLB_att",    col := col_GLB_att    ]
-szatrends[var == "DIR_transp", col := col_DIR_transp ]
+# szatrends[var == "DIR_att",    col := col_DIR_att    ]
+# szatrends[var == "GLB_att",    col := col_GLB_att    ]
+# szatrends[var == "DIR_transp", col := col_DIR_transp ]
 szatrends[preNoon == T, pch := pch_am ]
 szatrends[preNoon == F, pch := pch_pm ]
 
@@ -321,11 +322,14 @@ wecare <- grep("^slope|^N",  names(szatrends), ignore.case = T, value = T)
 wecare <- grep("^slope\\.t", wecare, ignore.case = T, value = T, invert = T)
 wecare <- grep("slope\\.sd", wecare, ignore.case = T, value = T, invert = T)
 
+vars <- c("GLB_att")
+
+
 ## TODO separate plots by direct global
 
 #+ SzaTrends, echo=F, include=T, results = "asis"
 ## DIR - GLB - transp
-for (avar in unique(szatrends$var)) {
+for (avar in vars) {
     ## ALL - CS
     for (type in unique(szatrends$DATA)) {
 
@@ -446,8 +450,6 @@ for (avar in unique(szatrends$var)) {
                    pch = ppm$pch,
                    col = 3,
                    cex = 1)
-
-
 
             ccex <- 1
             par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
@@ -804,6 +806,8 @@ for (ase in seasons) {
         ## actual plots
         if (! i %in% c(6,11,16,21,10,15,20,25)) {
 
+            par("mar"=c(0,0,0,0))
+
             kk       <- expanded[1,]
             expanded <- expanded[-1, ]
 
@@ -834,7 +838,7 @@ for (ase in seasons) {
             ppm  <- subdata[ preNoon == F ]
 
             ## plot
-            par("mar" = c(0, 0, 0, 0))
+            par("mar" = c(0, 0, 0.3, 0.3))
 
 
             plot(1, type = "n",
@@ -931,7 +935,7 @@ for (ase in seasons) {
 
 
             if (i %in% c(7,12,17,22)) {
-                mtext(text = bquote("Trend [%]"),
+                mtext(text = bquote("Trend [%/y]"),
                       cex  = 0.6,
                       side = 2,
                       line = 2.3)
