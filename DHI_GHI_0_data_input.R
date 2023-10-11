@@ -1088,7 +1088,7 @@ if (havetorun) {
                      DIR_att_N     = sum(!is.na(DIR_att))  ),
                  by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                         Date    = Day,
-                        preNoon = preNoon  ) ]
+                        preNoon = preNoon ) ]
 
     CLEAR_2_daily_mean <-
         DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
