@@ -65,7 +65,7 @@ havetorun <- !file.exists(common_data) |
     file.mtime(data_procsess_fl) > file.mtime(common_data)
 
 if (havetorun) {
-    cat(paste("\n !! (Re)Create environment and data input ->", common_data),"\n")
+    cat(paste("\n !! Create environment and data input ->", common_data),"\n")
 
     #_  Get data from Clear sky id data  ---------------------------------------
     input_files <- list.files(path       = CLEARdir,
@@ -203,7 +203,9 @@ if (havetorun) {
 
     #__  Keep data characterized as 'good' by Radiation Quality control v13 ----
     if (D_13) {
-        keepQF <- c("good","Possible Direct Obstruction (23)","Biology Building (22)")
+        keepQF <- c("good",
+                    "Possible Direct Obstruction (23)",
+                    "Biology Building (22)")
         DATA[!QCF_DIR %in% keepQF, wattDIR := NA]
         DATA[!QCF_DIR %in% keepQF, wattHOR := NA]
         DATA[!QCF_GLB %in% keepQF, wattGLB := NA]
@@ -254,19 +256,28 @@ if (havetorun) {
     # DATA$wattDIR_1au <- DATA$wattDIR_1au / cosde(DATA$SZA)
 
 
-    ## Calculate Bouguer atmospheric transparency
+    #_ Calculate Bouguer atmospheric transparency  -----------------------------
     ## Changes in solar radiation and their influence on temperature trend in Estonia 1955 2007_Russak2009.pdf
     DATA[, DIR_transp := ( wattDIR_1au / tsi_1au_comb ) ^ ( 1 / cosde(SZA) ) ]
-
 
     ## fix noon just in case
     DATA[Azimuth <= 180 , preNoon := TRUE ]
     DATA[Azimuth >  180 , preNoon := FALSE]
 
-    ## drop some data
-    DATA[, wattDIR_1au := NULL]
-    DATA[, wattGLB_1au := NULL]
-    DATA[, wattHOR_1au := NULL]
+    #_  DROP SOME DATA  --------------------------------------------------------
+    DATA[, wattDIR_1au        := NULL]
+    DATA[, wattGLB_1au        := NULL]
+    DATA[, wattHOR_1au        := NULL]
+    DATA[, DiffuseFraction_kd := NULL]
+    DATA[, Elevat             := NULL]
+    DATA[, ClearnessIndex_kt  := NULL]
+
+    rm.cols.DT(DATA, "QCv9*")
+    rm.cols.DT(DATA, "*Clim_lim")
+    rm.cols.DT(DATA, "QCF_*")
+
+
+stop()
 
     #  Split data to Clear Sky, non Clear sky and cloud sky data  --------------
     ## Method based and adapted from: Identification of Periods of Clear Sky Irradiance in Time Series of GHI Measurements _Matthew J. Reno and Clifford W. Hansen_.
@@ -1072,14 +1083,23 @@ if (havetorun) {
     # ..................................................................... ----
     ####  2. Long term by SZA  -------------------------------------------------
 
+    data.frame(DATA_all$SZA)
+
 
     ## SZA test
-    DATA_all[, .(GLB_att       = mean(GLB_att,    na.rm = T),
-                 GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                 GLB_att_N     = sum(!is.na(GLB_att))),
-             by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
-                    Date    = Day,
-                    preNoon = preNoon ) ]
+    test_all <- DATA_all[, .(GLB_att       = mean(GLB_att,    na.rm = T),
+                             GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                             GLB_att_N     = sum(!is.na(GLB_att))),
+                         by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                                Date    = Day,
+                                preNoon = preNoon ) ]
+
+    test_all_year <- DATA_all[, .(GLB_att       = mean(GLB_att,    na.rm = T),
+                                  GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                                  GLB_att_N     = sum(!is.na(GLB_att))),
+                              by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                                     Year    = year(Day),
+                                     preNoon = preNoon ) ]
 
 
     stop()
