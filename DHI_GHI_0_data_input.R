@@ -1082,9 +1082,10 @@ if (havetorun) {
     # ..................................................................... ----
     ####  2. Long term by SZA  -------------------------------------------------
 
-    data.frame(DATA_all$SZA)
+    # data.frame(DATA_all$SZA,
+    #            (DATA_all$SZA - SZA_BIN / 2 ) %/% SZA_BIN)
 
-stop()
+
     ## SZA test
     test_all <- DATA_all[, .(GLB_att       = mean(GLB_att,    na.rm = T),
                              GLB_att_sd    = sd(  GLB_att,    na.rm = T),
@@ -1100,6 +1101,14 @@ stop()
                                      Year    = year(Day),
                                      preNoon = preNoon ) ]
 
+
+    for (asza in unique(test_all_year$SZA)) {
+        for (pday in unique(test_all_year$preNoon)) {
+            subdata <- test_all_year[SZA == asza & preNoon == pday]
+
+            lm(subdata$Year ~ subdata$)
+        }
+    }
 
     stop()
 
