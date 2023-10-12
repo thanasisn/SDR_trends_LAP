@@ -268,16 +268,15 @@ if (havetorun) {
     DATA[, wattDIR_1au        := NULL]
     DATA[, wattGLB_1au        := NULL]
     DATA[, wattHOR_1au        := NULL]
-    DATA[, DiffuseFraction_kd := NULL]
+    DATA[, DiffuseFraction_Kd := NULL]
     DATA[, Elevat             := NULL]
-    DATA[, ClearnessIndex_kt  := NULL]
+    DATA[, Clearness_Kt       := NULL]
 
     rm.cols.DT(DATA, "QCv9*")
     rm.cols.DT(DATA, "*Clim_lim")
     rm.cols.DT(DATA, "QCF_*")
+    rm.cols.DT(DATA, "VIL_*")
 
-
-stop()
 
     #  Split data to Clear Sky, non Clear sky and cloud sky data  --------------
     ## Method based and adapted from: Identification of Periods of Clear Sky Irradiance in Time Series of GHI Measurements _Matthew J. Reno and Clifford W. Hansen_.
@@ -1085,7 +1084,7 @@ stop()
 
     data.frame(DATA_all$SZA)
 
-
+stop()
     ## SZA test
     test_all <- DATA_all[, .(GLB_att       = mean(GLB_att,    na.rm = T),
                              GLB_att_sd    = sd(  GLB_att,    na.rm = T),
