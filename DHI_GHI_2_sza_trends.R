@@ -272,6 +272,7 @@ for (DBn in dbs) {
                                     var       = avar,
                                     N         = sum(!is.na(dataset[[avar]]))
                                 ))
+                stop()
             }
         }
     }
