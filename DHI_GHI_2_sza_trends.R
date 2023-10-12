@@ -271,8 +271,8 @@ for (DBn in dbs) {
                                     DATA      = DBn,
                                     var       = avar,
                                     N         = sum(!is.na(dataset[[avar]]))
-                                ))
-                stop()
+                                )
+                )
             }
         }
     }

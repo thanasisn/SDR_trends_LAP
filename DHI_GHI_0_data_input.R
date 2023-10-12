@@ -1072,6 +1072,22 @@ if (havetorun) {
     # ..................................................................... ----
     ####  2. Long term by SZA  -------------------------------------------------
 
+
+    ## SZA test
+    DATA_all[, .(GLB_att       = mean(GLB_att,    na.rm = T),
+                 GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                 GLB_att_N     = sum(!is.na(GLB_att))),
+             by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                    Date    = Day,
+                    preNoon = preNoon ) ]
+
+
+    stop()
+
+
+
+
+
     ## Daily SZA means ---------------------------------------------------------
     ALL_2_daily_mean <-
         DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
