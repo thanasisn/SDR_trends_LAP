@@ -180,7 +180,8 @@ if (havetorun) {
     DATA[Elevat < MIN_ELEVA, wattHOR_sds := NA ]
 
     ## show included data
-    plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])
+    ## FIXME there is som error in Azimuth/Elevation angles see plot!!
+    # plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])
 
     #__  Bais paper obstacle filter  -------------------------------------------
     DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattDIR     := NA ]
@@ -191,7 +192,7 @@ if (havetorun) {
     DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattHOR_sds := NA ]
 
     ## show included data
-    plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])
+    # plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])
 
 
     ## Filter min elevation
@@ -1102,15 +1103,35 @@ if (havetorun) {
                                      preNoon = preNoon ) ]
 
 
+    gather <- data.table()
     for (asza in unique(test_all_year$SZA)) {
         for (pday in unique(test_all_year$preNoon)) {
             subdata <- test_all_year[SZA == asza & preNoon == pday]
-
-            lm(subdata$Year ~ subdata$)
+            ll1     <- coefficients(lm(Year ~ GLB_att, data = subdata))
+            gather  <- rbind(gather,
+                             data.frame(t(ll1),
+                                        SZA = asza,
+                                        preNoon = pday)
+            )
         }
     }
+    plot(gather$SZA, gather$GLB_att)
 
-    stop()
+
+    gather <- data.table()
+    for (asza in unique(test_all$SZA)) {
+        for (pday in unique(test_all$preNoon)) {
+            subdata <- test_all[SZA == asza & preNoon == pday]
+            ll1     <- coefficients(lm(Date ~ GLB_att, data = subdata))
+            gather  <- rbind(gather,
+                             data.frame(t(ll1),
+                                        SZA = asza,
+                                        preNoon = pday)
+            )
+        }
+    }
+    plot(gather$SZA, gather$GLB_att)
+
 
 
 
