@@ -1155,6 +1155,24 @@ if (havetorun) {
                         Date    = Day,
                         preNoon = preNoon ) ]
 
+
+
+
+    gather <- data.table()
+    for (asza in unique(ALL_2_daily_mean$SZA)) {
+        for (pday in unique(ALL_2_daily_mean$preNoon)) {
+            subdata <- ALL_2_daily_mean[SZA == asza & preNoon == pday]
+            ll1     <- coefficients(lm(Year ~ GLB_att, data = subdata))
+            gather  <- rbind(gather,
+                             data.frame(t(ll1),
+                                        SZA = asza,
+                                        preNoon = pday)
+            )
+        }
+    }
+    plot(gather$SZA, gather$GLB_att)
+stop()
+
     CLEAR_2_daily_mean <-
         DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                        HOR_att       = mean(HOR_att,    na.rm = T),
