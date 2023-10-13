@@ -1087,26 +1087,77 @@ if (havetorun) {
     #            (DATA_all$SZA - SZA_BIN / 2 ) %/% SZA_BIN)
 
 
-    ## SZA test
-    test_all <- DATA_all[, .(GLB_att       = mean(GLB_att,    na.rm = T),
-                             GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                             GLB_att_N     = sum(!is.na(GLB_att))),
-                         by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
-                                Date    = Day,
-                                preNoon = preNoon ) ]
+    # ## SZA test
+    # test_all <- DATA_all[, .(GLB_att       = mean(GLB_att,    na.rm = T),
+    #                          GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+    #                          GLB_att_N     = sum(!is.na(GLB_att))),
+    #                      by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+    #                             Date    = Day,
+    #                             preNoon = preNoon ) ]
+    #
+    # test_all_year <- DATA_all[, .(GLB_att       = mean(GLB_att,    na.rm = T),
+    #                               GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+    #                               GLB_att_N     = sum(!is.na(GLB_att))),
+    #                           by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+    #                                  Year    = year(Day),
+    #                                  preNoon = preNoon ) ]
+    #
+    #
+    # gather <- data.table()
+    # for (asza in unique(test_all_year$SZA)) {
+    #     for (pday in unique(test_all_year$preNoon)) {
+    #         subdata <- test_all_year[SZA == asza & preNoon == pday]
+    #         ll1     <- coefficients(lm(Year ~ GLB_att, data = subdata))
+    #         gather  <- rbind(gather,
+    #                          data.frame(t(ll1),
+    #                                     SZA = asza,
+    #                                     preNoon = pday)
+    #         )
+    #     }
+    # }
+    # plot(gather$SZA, gather$GLB_att)
+    #
+    #
+    # gather <- data.table()
+    # for (asza in unique(test_all$SZA)) {
+    #     for (pday in unique(test_all$preNoon)) {
+    #         subdata <- test_all[SZA == asza & preNoon == pday]
+    #         ll1     <- coefficients(lm(Date ~ GLB_att, data = subdata))
+    #         gather  <- rbind(gather,
+    #                          data.frame(t(ll1),
+    #                                     SZA = asza,
+    #                                     preNoon = pday)
+    #         )
+    #     }
+    # }
+    # plot(gather$SZA, gather$GLB_att)
 
-    test_all_year <- DATA_all[, .(GLB_att       = mean(GLB_att,    na.rm = T),
-                                  GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                                  GLB_att_N     = sum(!is.na(GLB_att))),
-                              by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
-                                     Year    = year(Day),
-                                     preNoon = preNoon ) ]
+
+
+
+    ## Yearly SZA means --------------------------------------------------------
+    ALL_2_yearly_mean <-
+        DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                     HOR_att       = mean(HOR_att,    na.rm = T),
+                     GLB_att       = mean(GLB_att,    na.rm = T),
+                     DIR_transp    = mean(DIR_transp, na.rm = T),
+                     DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                     HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                     GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                     DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                     GLB_att_N     = sum(!is.na(GLB_att)),
+                     HOR_att_N     = sum(!is.na(HOR_att)),
+                     DIR_att_N     = sum(!is.na(DIR_att))  ),
+                 by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                        Year    = year(Date),
+                        preNoon = preNoon ) ]
+
 
 
     gather <- data.table()
-    for (asza in unique(test_all_year$SZA)) {
-        for (pday in unique(test_all_year$preNoon)) {
-            subdata <- test_all_year[SZA == asza & preNoon == pday]
+    for (asza in unique(ALL_2_yearly_mean$SZA)) {
+        for (pday in unique(ALL_2_yearly_mean$preNoon)) {
+            subdata <- ALL_2_yearly_mean[SZA == asza & preNoon == pday]
             ll1     <- coefficients(lm(Year ~ GLB_att, data = subdata))
             gather  <- rbind(gather,
                              data.frame(t(ll1),
@@ -1118,22 +1169,37 @@ if (havetorun) {
     plot(gather$SZA, gather$GLB_att)
 
 
-    gather <- data.table()
-    for (asza in unique(test_all$SZA)) {
-        for (pday in unique(test_all$preNoon)) {
-            subdata <- test_all[SZA == asza & preNoon == pday]
-            ll1     <- coefficients(lm(Date ~ GLB_att, data = subdata))
-            gather  <- rbind(gather,
-                             data.frame(t(ll1),
-                                        SZA = asza,
-                                        preNoon = pday)
-            )
-        }
-    }
-    plot(gather$SZA, gather$GLB_att)
+    CLEAR_2_yearly_mean <-
+        DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                       HOR_att       = mean(HOR_att,    na.rm = T),
+                       GLB_att       = mean(GLB_att,    na.rm = T),
+                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                       HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                       GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       GLB_att_N     = sum(!is.na(GLB_att)),
+                       HOR_att_N     = sum(!is.na(HOR_att)),
+                       DIR_att_N     = sum(!is.na(DIR_att))  ),
+                   by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                          Year    = year(Date),
+                          preNoon = preNoon ) ]
 
-
-
+    CLOUD_2_yearly_mean <-
+        DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                       HOR_att       = mean(HOR_att,    na.rm = T),
+                       GLB_att       = mean(GLB_att,    na.rm = T),
+                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                       HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                       GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       GLB_att_N     = sum(!is.na(GLB_att)),
+                       HOR_att_N     = sum(!is.na(HOR_att)),
+                       DIR_att_N     = sum(!is.na(DIR_att))  ),
+                   by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                          Year    = year(Date),
+                          preNoon = preNoon ) ]
 
 
 
@@ -1155,39 +1221,6 @@ if (havetorun) {
                         Date    = Day,
                         preNoon = preNoon ) ]
 
-    ALL_2_yearly_mean <-
-        DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
-                     HOR_att       = mean(HOR_att,    na.rm = T),
-                     GLB_att       = mean(GLB_att,    na.rm = T),
-                     DIR_transp    = mean(DIR_transp, na.rm = T),
-                     DIR_att_sd    = sd(  DIR_att,    na.rm = T),
-                     HOR_att_sd    = sd(  HOR_att,    na.rm = T),
-                     GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                     DIR_transp_sd = sd(  DIR_transp, na.rm = T),
-                     GLB_att_N     = sum(!is.na(GLB_att)),
-                     HOR_att_N     = sum(!is.na(HOR_att)),
-                     DIR_att_N     = sum(!is.na(DIR_att))  ),
-                 by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
-                        Year    = year(Day),
-                        preNoon = preNoon ) ]
-
-
-
-    gather <- data.table()
-    for (asza in unique(ALL_2_daily_mean$SZA)) {
-        for (pday in unique(ALL_2_daily_mean$preNoon)) {
-            subdata <- ALL_2_daily_mean[SZA == asza & preNoon == pday]
-            ll1     <- coefficients(lm(Date ~ GLB_att, data = subdata))
-            gather  <- rbind(gather,
-                             data.frame(t(ll1),
-                                        SZA = asza,
-                                        preNoon = pday)
-            )
-        }
-    }
-    plot(gather$SZA, gather$GLB_att)
-
-
     CLEAR_2_daily_mean <-
         DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                        HOR_att       = mean(HOR_att,    na.rm = T),
@@ -1203,22 +1236,6 @@ if (havetorun) {
                        DIR_att_N     = sum(!is.na(DIR_att))  ),
                    by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                           Date    = Day,
-                          preNoon = preNoon ) ]
-
-    CLEAR_2_yearly_mean <-
-        DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
-                       HOR_att       = mean(HOR_att,    na.rm = T),
-                       GLB_att       = mean(GLB_att,    na.rm = T),
-                       DIR_transp    = mean(DIR_transp, na.rm = T),
-                       DIR_att_sd    = sd(  DIR_att,    na.rm = T),
-                       HOR_att_sd    = sd(  HOR_att,    na.rm = T),
-                       GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
-                       GLB_att_N     = sum(!is.na(GLB_att)),
-                       HOR_att_N     = sum(!is.na(HOR_att)),
-                       DIR_att_N     = sum(!is.na(DIR_att))  ),
-                   by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
-                          Year    = year(Day),
                           preNoon = preNoon ) ]
 
     CLOUD_2_daily_mean <-
@@ -1238,7 +1255,62 @@ if (havetorun) {
                           Date    = Day,
                           preNoon = preNoon ) ]
 
-    CLOUD_2_yearly_mean <-
+
+    ## Monthly SZA means -------------------------------------------------------
+    ALL_2_monthly_mean <-
+        DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                     HOR_att       = mean(HOR_att,    na.rm = T),
+                     GLB_att       = mean(GLB_att,    na.rm = T),
+                     DIR_transp    = mean(DIR_transp, na.rm = T),
+                     DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                     HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                     GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                     DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                     GLB_att_N     = sum(!is.na(GLB_att)),
+                     HOR_att_N     = sum(!is.na(HOR_att)),
+                     DIR_att_N     = sum(!is.na(DIR_att))  ),
+                 by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                        Year    = year(Date),
+                        Month   = month(Date),
+                        preNoon = preNoon ) ]
+    ALL_2_monthly_mean[, Date := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
+
+
+    gather <- data.table()
+    for (asza in unique(ALL_2_monthly_mean$SZA)) {
+        for (pday in unique(ALL_2_monthly_mean$preNoon)) {
+            subdata <- ALL_2_monthly_mean[SZA == asza & preNoon == pday]
+            ll1     <- coefficients(lm(Date ~ GLB_att, data = subdata))
+            gather  <- rbind(gather,
+                             data.frame(t(ll1),
+                                        SZA = asza,
+                                        preNoon = pday)
+            )
+        }
+    }
+    plot(gather$SZA, gather$GLB_att)
+
+
+    CLEAR_2_monthly_mean <-
+        DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                       HOR_att       = mean(HOR_att,    na.rm = T),
+                       GLB_att       = mean(GLB_att,    na.rm = T),
+                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                       HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                       GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       GLB_att_N     = sum(!is.na(GLB_att)),
+                       HOR_att_N     = sum(!is.na(HOR_att)),
+                       DIR_att_N     = sum(!is.na(DIR_att))  ),
+                   by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                          Year    = year(Date),
+                          Month   = month(Date),
+                          preNoon = preNoon ) ]
+    CLEAR_2_monthly_mean[, Date := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
+
+
+    CLOUD_2_monthly_mean <-
         DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                        HOR_att       = mean(HOR_att,    na.rm = T),
                        GLB_att       = mean(GLB_att,    na.rm = T),
@@ -1251,8 +1323,11 @@ if (havetorun) {
                        HOR_att_N     = sum(!is.na(HOR_att)),
                        DIR_att_N     = sum(!is.na(DIR_att))  ),
                    by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
-                          Year    = year(Day),
+                          Year    = year(Date),
+                          Month   = month(Date),
                           preNoon = preNoon ) ]
+    CLOUD_2_monthly_mean[, Date := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
+
 
 
 
@@ -1457,6 +1532,12 @@ if (havetorun) {
                           Yqrt    = season_Yqrt)]
 
 
+
+
+
+
+
+
     ## Flag seasons using quarters
       ALL_2_bySeason_daily_mean[Yqrt %% 1 == 0   , Season := "Winter"]
       ALL_2_bySeason_daily_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
@@ -1608,7 +1689,7 @@ if (havetorun) {
     #                           HOR_att_N_seas     = sum(!is.na(HOR_att)),
     #                           DIR_att_N_seas     = sum(!is.na(DIR_att)) ),
     #                        by = .(doy, SZA, preNoon)]
-
+    #
     # CLOUD_2_daily_seas <-
     #     CLOUD_2_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
     #                           HOR_att_seas       = mean(HOR_att,    na.rm = T),
@@ -1909,20 +1990,20 @@ if (havetorun) {
 
     ## _ Seasonal anomaly by SZA and period of day -----------------------------
 
-      ALL_3_monthly_DESEAS <- merge(  ALL_3_monthly_mean,   ALL_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
+    ALL_3_monthly_DESEAS <- merge(  ALL_3_monthly_mean,   ALL_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
     CLEAR_3_monthly_DESEAS <- merge(CLEAR_3_monthly_mean, CLEAR_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
     CLOUD_3_monthly_DESEAS <- merge(CLOUD_3_monthly_mean, CLOUD_3_monthly_seas, by = c("Month", "SZA", "preNoon"), all = T)
 
     ## _ forget data
     rm(  ALL_3_monthly_mean,   ALL_3_monthly_seas,
-       CLEAR_3_monthly_mean, CLEAR_3_monthly_seas,
-       CLOUD_3_monthly_mean, CLOUD_3_monthly_seas)
+         CLEAR_3_monthly_mean, CLEAR_3_monthly_seas,
+         CLOUD_3_monthly_mean, CLOUD_3_monthly_seas)
 
     ## Using the % departure from seasonal values
 
-      ALL_3_monthly_DESEAS[, DIR_att_des    := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-      ALL_3_monthly_DESEAS[, GLB_att_des    := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-      ALL_3_monthly_DESEAS[, DIR_transp_des := 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+    ALL_3_monthly_DESEAS[, DIR_att_des    := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+    ALL_3_monthly_DESEAS[, GLB_att_des    := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+    ALL_3_monthly_DESEAS[, DIR_transp_des := 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
     CLEAR_3_monthly_DESEAS[, DIR_att_des    := 100 * (DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
     CLEAR_3_monthly_DESEAS[, GLB_att_des    := 100 * (GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
     CLEAR_3_monthly_DESEAS[, DIR_transp_des := 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
@@ -1931,13 +2012,13 @@ if (havetorun) {
     CLOUD_3_monthly_DESEAS[, DIR_transp_des := 100 * (DIR_transp - DIR_transp_seas) / DIR_transp_seas]
 
     ## create a nice data
-      ALL_3_monthly_DESEAS[, Date := as.Date(paste(Year, Month, 1), format = "%Y %m %d")]
+    ALL_3_monthly_DESEAS[, Date := as.Date(paste(Year, Month, 1), format = "%Y %m %d")]
     CLEAR_3_monthly_DESEAS[, Date := as.Date(paste(Year, Month, 1), format = "%Y %m %d")]
     CLOUD_3_monthly_DESEAS[, Date := as.Date(paste(Year, Month, 1), format = "%Y %m %d")]
 
     ## change rest of flags names
-      ALL_3_monthly_DESEAS[preNoon == TRUE,  preNoon := "am"]
-      ALL_3_monthly_DESEAS[preNoon == FALSE, preNoon := "pm"]
+    ALL_3_monthly_DESEAS[preNoon == TRUE,  preNoon := "am"]
+    ALL_3_monthly_DESEAS[preNoon == FALSE, preNoon := "pm"]
     CLEAR_3_monthly_DESEAS[preNoon == TRUE,  preNoon := "am"]
     CLEAR_3_monthly_DESEAS[preNoon == FALSE, preNoon := "pm"]
     CLOUD_3_monthly_DESEAS[preNoon == TRUE,  preNoon := "am"]
@@ -1953,8 +2034,8 @@ if (havetorun) {
     # ..................................................................... ----
     ##  Save the whole work space  ---------------------------------------------
     # if (!TEST) {
-        save(list = ls(all = TRUE), file = common_data)
-        cat("\nSaved workspace:", common_data, "\n\n")
+    save(list = ls(all = TRUE), file = common_data)
+    cat("\nSaved workspace:", common_data, "\n\n")
     # }
 } else {
     cat(paste("\n\nLoad environment and data from: ", common_data,"\n\n"))

@@ -51,6 +51,10 @@ header-includes:
    # - \usepackage{subfig}
    - \usepackage{subcaption}
 output: 
+  rticles::elsevier_article:
+    keep_tex:         no
+    citation_package: natbib
+  bookdown::word_document2: default
   bookdown::pdf_document2:
     number_sections:  no
     fig_caption:      yes
@@ -68,10 +72,6 @@ output:
     colorlinks:       yes
     urlcolor:         blue
     biblio-style:     apalike
-  bookdown::word_document2: default
-  rticles::elsevier_article:
-    keep_tex:         no
-    citation_package: natbib
 # date:           "`r format(Sys.time(), '%F')`"
 ---
 
@@ -563,12 +563,12 @@ From 1997 to mid-2000s CUSUMs are increasing, likely due to a continuous decreas
 The following stable period spans for about 15 years up to 2021 when CUSUMs start increasing again.
 
 
-```{r cusum, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
-knitr::include_graphics(c(
-    "./images/CumulativeDailyCuSum-1.png",    # ALL sky
-    "./images/CumulativeDailyCuSum-5.png",    # CLEAR sky
-    "./images/CumulativeDailyCuSum-9.png"))   # Cloud sky
-```
+<!-- ```{r cusum, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
+<!-- knitr::include_graphics(c( -->
+<!--     "./images/CumulativeDailyCuSum-1.png",    # ALL sky -->
+<!--     "./images/CumulativeDailyCuSum-5.png",    # CLEAR sky -->
+<!--     "./images/CumulativeDailyCuSum-9.png"))   # Cloud sky -->
+<!-- ``` -->
 
 ```{r cusummonth, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics(c(
@@ -578,13 +578,12 @@ knitr::include_graphics(c(
 ```
 
 
-
-```{r cusumnotrend, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR after removing the long term trend from the daily values.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
-knitr::include_graphics(c(
-    "./images/CumulativeDailyCuSumNOtrend-1.png",    # ALL sky
-    "./images/CumulativeDailyCuSumNOtrend-5.png",    # CLEAR sky
-    "./images/CumulativeDailyCuSumNOtrend-9.png"))   # Cloud sky
-```
+<!-- ```{r cusumnotrend, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR after removing the long term trend from the daily values.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
+<!-- knitr::include_graphics(c( -->
+<!--     "./images/CumulativeDailyCuSumNOtrend-1.png",    # ALL sky -->
+<!--     "./images/CumulativeDailyCuSumNOtrend-5.png",    # CLEAR sky -->
+<!--     "./images/CumulativeDailyCuSumNOtrend-9.png"))   # Cloud sky -->
+<!-- ``` -->
 
 
 ```{r cusumnotrendmonthly, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR after removing the long term trend from the monthly values.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
