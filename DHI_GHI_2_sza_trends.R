@@ -279,6 +279,31 @@ for (DBn in dbs) {
 }
 
 
+gather2 <- data.table()
+for (asza in unique(ALL_2_daily_mean$SZA)) {
+    for (pday in unique(ALL_2_daily_mean$preNoon)) {
+        subdata <- ALL_2_daily_mean[SZA == asza & preNoon == pday]
+
+        llm1    <- lm(GLB_att ~ Date, data = subdata)
+
+        ll1     <- coefficients(llm1)
+        plot(subdata$Date, subdata$GLB_att)
+
+        abline(llm1, col = 2)
+
+        gather2 <- rbind(gather2,
+                         data.frame(t(ll1),
+                                    SZA = asza,
+                                    preNoon = pday)
+        )
+    }
+}
+plot(gather2$SZA, gather2$GLB_att)
+
+stop()
+
+
+
 szatrends <- data.table(gather)
 setorder(szatrends, SZA)
 

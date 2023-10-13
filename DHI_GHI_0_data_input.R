@@ -1155,6 +1155,21 @@ if (havetorun) {
                         Date    = Day,
                         preNoon = preNoon ) ]
 
+    ALL_2_yearly_mean <-
+        DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                     HOR_att       = mean(HOR_att,    na.rm = T),
+                     GLB_att       = mean(GLB_att,    na.rm = T),
+                     DIR_transp    = mean(DIR_transp, na.rm = T),
+                     DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                     HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                     GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                     DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                     GLB_att_N     = sum(!is.na(GLB_att)),
+                     HOR_att_N     = sum(!is.na(HOR_att)),
+                     DIR_att_N     = sum(!is.na(DIR_att))  ),
+                 by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                        Year    = year(Day),
+                        preNoon = preNoon ) ]
 
 
 
@@ -1162,7 +1177,7 @@ if (havetorun) {
     for (asza in unique(ALL_2_daily_mean$SZA)) {
         for (pday in unique(ALL_2_daily_mean$preNoon)) {
             subdata <- ALL_2_daily_mean[SZA == asza & preNoon == pday]
-            ll1     <- coefficients(lm(Year ~ GLB_att, data = subdata))
+            ll1     <- coefficients(lm(Date ~ GLB_att, data = subdata))
             gather  <- rbind(gather,
                              data.frame(t(ll1),
                                         SZA = asza,
@@ -1171,7 +1186,7 @@ if (havetorun) {
         }
     }
     plot(gather$SZA, gather$GLB_att)
-stop()
+
 
     CLEAR_2_daily_mean <-
         DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
@@ -1190,6 +1205,22 @@ stop()
                           Date    = Day,
                           preNoon = preNoon ) ]
 
+    CLEAR_2_yearly_mean <-
+        DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                       HOR_att       = mean(HOR_att,    na.rm = T),
+                       GLB_att       = mean(GLB_att,    na.rm = T),
+                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                       HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                       GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       GLB_att_N     = sum(!is.na(GLB_att)),
+                       HOR_att_N     = sum(!is.na(HOR_att)),
+                       DIR_att_N     = sum(!is.na(DIR_att))  ),
+                   by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                          Year    = year(Day),
+                          preNoon = preNoon ) ]
+
     CLOUD_2_daily_mean <-
         DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                        HOR_att       = mean(HOR_att,    na.rm = T),
@@ -1206,6 +1237,24 @@ stop()
                    by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
                           Date    = Day,
                           preNoon = preNoon ) ]
+
+    CLOUD_2_yearly_mean <-
+        DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                       HOR_att       = mean(HOR_att,    na.rm = T),
+                       GLB_att       = mean(GLB_att,    na.rm = T),
+                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                       HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                       GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       GLB_att_N     = sum(!is.na(GLB_att)),
+                       HOR_att_N     = sum(!is.na(HOR_att)),
+                       DIR_att_N     = sum(!is.na(DIR_att))  ),
+                   by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                          Year    = year(Day),
+                          preNoon = preNoon ) ]
+
+
 
     ## _ Margin of error calculation for confidence interval -------------------
     conf_param  <- 1 - ( 1 - SZA_confidence_limit ) / 2
@@ -1356,6 +1405,58 @@ stop()
                           Yqrt    = season_Yqrt)]
 
 
+    ALL_2_bySeason_yearly_mean <-
+        DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                     HOR_att       = mean(HOR_att,    na.rm = T),
+                     GLB_att       = mean(GLB_att,    na.rm = T),
+                     DIR_transp    = mean(DIR_transp, na.rm = T),
+                     DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                     HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                     GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                     DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                     GLB_att_N     = sum(!is.na(GLB_att)),
+                     HOR_att_N     = sum(!is.na(HOR_att)),
+                     DIR_att_N     = sum(!is.na(DIR_att))  ),
+                 by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                        Year    = year(Day),
+                        preNoon = preNoon,
+                        Yqrt    = season_Yqrt)]
+
+    CLEAR_2_bySeason_yearly_mean <-
+        DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                       HOR_att       = mean(HOR_att,    na.rm = T),
+                       GLB_att       = mean(GLB_att,    na.rm = T),
+                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                       HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                       GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       GLB_att_N     = sum(!is.na(GLB_att)),
+                       HOR_att_N     = sum(!is.na(HOR_att)),
+                       DIR_att_N     = sum(!is.na(DIR_att))  ),
+                   by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                          Year    = year(Day),
+                          preNoon = preNoon,
+                          Yqrt    = season_Yqrt)]
+
+    CLOUD_2_bySeason_yearly_mean <-
+        DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
+                       HOR_att       = mean(HOR_att,    na.rm = T),
+                       GLB_att       = mean(GLB_att,    na.rm = T),
+                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       DIR_att_sd    = sd(  DIR_att,    na.rm = T),
+                       HOR_att_sd    = sd(  HOR_att,    na.rm = T),
+                       GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       GLB_att_N     = sum(!is.na(GLB_att)),
+                       HOR_att_N     = sum(!is.na(HOR_att)),
+                       DIR_att_N     = sum(!is.na(DIR_att))  ),
+                   by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                          Year    = year(Day),
+                          preNoon = preNoon,
+                          Yqrt    = season_Yqrt)]
+
+
     ## Flag seasons using quarters
       ALL_2_bySeason_daily_mean[Yqrt %% 1 == 0   , Season := "Winter"]
       ALL_2_bySeason_daily_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
@@ -1369,6 +1470,19 @@ stop()
     CLOUD_2_bySeason_daily_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
     CLOUD_2_bySeason_daily_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
     CLOUD_2_bySeason_daily_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
+
+      ALL_2_bySeason_yealy_mean[Yqrt %% 1 == 0   , Season := "Winter"]
+      ALL_2_bySeason_yealy_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
+      ALL_2_bySeason_yealy_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
+      ALL_2_bySeason_yealy_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
+    CLEAR_2_bySeason_yealy_mean[Yqrt %% 1 == 0   , Season := "Winter"]
+    CLEAR_2_bySeason_yealy_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
+    CLEAR_2_bySeason_yealy_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
+    CLEAR_2_bySeason_yealy_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
+    CLOUD_2_bySeason_yealy_mean[Yqrt %% 1 == 0   , Season := "Winter"]
+    CLOUD_2_bySeason_yealy_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
+    CLOUD_2_bySeason_yealy_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
+    CLOUD_2_bySeason_yealy_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
 
 
 
