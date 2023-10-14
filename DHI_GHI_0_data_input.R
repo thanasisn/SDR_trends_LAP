@@ -1173,7 +1173,8 @@ if (havetorun) {
                               stringsAsFactors = F)
     source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
 
-    SZA_slope <- data.table()
+    SZA_slope     <- data.table()
+    SZA_slope_inv <- data.table()
 
     for (ii in 1:nrow(gridsearch)) {
         dd      <- gridsearch[ii,]
@@ -1202,6 +1203,11 @@ if (havetorun) {
         lmM <- linear_fit_stats(lm(as.numeric(Date) ~ GLB_att, data = DMonthly))
         lmY <- linear_fit_stats(lm(as.numeric(Year) ~ GLB_att, data = DYearly))
 
+        lmD_inv <- linear_fit_stats(lm(GLB_att ~ as.numeric(Date), data = DDaily))
+        lmM_inv <- linear_fit_stats(lm(GLB_att ~ as.numeric(Date), data = DMonthly))
+        lmY_inv <- linear_fit_stats(lm(GLB_att ~ as.numeric(Year), data = DYearly))
+
+
         SZA_slope <-
             rbind(SZA_slope,
                   data.frame(lmD,
@@ -1223,8 +1229,30 @@ if (havetorun) {
                              DATA    = dd$dbs,
                              aggr    = "Yearly"))
 
+        SZA_slope_inv <-
+            rbind(SZA_slope_inv,
+                  data.frame(lmD_inv,
+                             lm_N    = sum(!is.na(DDaily$GLB_att)),
+                             SZA     = dd$SZA,
+                             preNoon = dd$preNoon,
+                             DATA    = dd$dbs,
+                             aggr    = "Daily"),
+                  data.frame(lmM_inv,
+                             lm_N    = sum(!is.na(DMonthly$GLB_att)),
+                             SZA     = dd$SZA,
+                             preNoon = dd$preNoon,
+                             DATA    = dd$dbs,
+                             aggr    = "Monthly"),
+                  data.frame(lmY_inv,
+                             lm_N    = sum(!is.na(DYearly$GLB_att)),
+                             SZA     = dd$SZA,
+                             preNoon = dd$preNoon,
+                             DATA    = dd$dbs,
+                             aggr    = "Yearly"))
+
     }
 
+    #_ One way -----------------------------------------------------------------
     SZA_slope[aggr == "Yearly",
               slopePC := slope  ]
 
@@ -1234,24 +1262,11 @@ if (havetorun) {
     SZA_slope[aggr %in% c("Monthly"),
               slopePC := (100 * slope / Days_of_year) / 12 ]
 
-
-    SZA_slope[ SZA > 70, slopePC := NA]
+    # SZA_slope[ SZA > 70, slopePC := NA]
     # SZA_slope[ slope.p > 0.1, slopePC := NA]
 
     for (aDATA in unique( SZA_slope$DATA )) {
         for (aAggr in unique( SZA_slope$aggr )) {
-
-            pp <- SZA_slope[DATA == aDATA & aggr == aAggr]
-
-            plot(pp$SZA, pp$slopePC )
-            title(paste(aDATA, aAggr))
-
-        }
-    }
-
-    for (aDATA in unique( SZA_slope$DATA )) {
-        for (aAggr in  c("Daily", "Monthly")) {
-
             pp <- SZA_slope[DATA == aDATA & aggr == aAggr]
 
             plot(pp$SZA, pp$slopePC )
@@ -1261,28 +1276,51 @@ if (havetorun) {
     }
 
 
+    # for (aDATA in unique( SZA_slope$DATA )) {
+    #     for (aAggr in  c("Daily", "Monthly")) {
+    #         pp <- SZA_slope[DATA == aDATA & aggr == aAggr]
+    #         plot(pp$SZA, pp$slopePC )
+    #         title(paste(aDATA, aAggr))
+    #
+    #     }
+    # }
+    #
+    # for (aDATA in unique( SZA_slope$DATA )) {
+    #     for (aAggr in c("Daily", "Monthly")) {
+    #         pp <- SZA_slope[DATA == aDATA & aggr == aAggr]
+    #
+    #         plot(pp$SZA, 100 * pp$slope / Days_of_year )
+    #         title(paste(aDATA, aAggr))
+    #
+    #     }
+    # }
+    #
+    # for (aDATA in unique( SZA_slope$DATA )) {
+    #     for (aAggr in c("Yearly")) {
+    #         pp <- SZA_slope[DATA == aDATA & aggr == aAggr]
+    #
+    #         plot(pp$SZA, 100 * pp$slope )
+    #         title(paste(aDATA, aAggr))
+    #
+    #     }
+    # }
 
-    for (aDATA in unique( SZA_slope$DATA )) {
-        for (aAggr in c("Daily", "Monthly")) {
+    #_ Inverted way ------------------------------------------------------------
 
-            pp <- SZA_slope[DATA == aDATA & aggr == aAggr]
 
-            plot(pp$SZA, 100 * pp$slope / Days_of_year )
+
+
+    for (aDATA in unique( SZA_slope_inv$DATA )) {
+        for (aAggr in unique( SZA_slope_inv$aggr )) {
+            pp <- SZA_slope_inv[DATA == aDATA & aggr == aAggr]
+
+            plot(pp$SZA, pp$slope )
             title(paste(aDATA, aAggr))
 
         }
     }
 
-    for (aDATA in unique( SZA_slope$DATA )) {
-        for (aAggr in c("Yearly")) {
 
-            pp <- SZA_slope[DATA == aDATA & aggr == aAggr]
-
-            plot(pp$SZA, 100 * pp$slope )
-            title(paste(aDATA, aAggr))
-
-        }
-    }
 
 
 
@@ -1705,18 +1743,18 @@ if (havetorun) {
     CLOUD_2_bySeason_daily_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
     CLOUD_2_bySeason_daily_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
 
-      ALL_2_bySeason_yealy_mean[Yqrt %% 1 == 0   , Season := "Winter"]
-      ALL_2_bySeason_yealy_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
-      ALL_2_bySeason_yealy_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
-      ALL_2_bySeason_yealy_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
-    CLEAR_2_bySeason_yealy_mean[Yqrt %% 1 == 0   , Season := "Winter"]
-    CLEAR_2_bySeason_yealy_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
-    CLEAR_2_bySeason_yealy_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
-    CLEAR_2_bySeason_yealy_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
-    CLOUD_2_bySeason_yealy_mean[Yqrt %% 1 == 0   , Season := "Winter"]
-    CLOUD_2_bySeason_yealy_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
-    CLOUD_2_bySeason_yealy_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
-    CLOUD_2_bySeason_yealy_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
+      ALL_2_bySeason_yearly_mean[Yqrt %% 1 == 0   , Season := "Winter"]
+      ALL_2_bySeason_yearly_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
+      ALL_2_bySeason_yearly_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
+      ALL_2_bySeason_yearly_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
+    CLEAR_2_bySeason_yearly_mean[Yqrt %% 1 == 0   , Season := "Winter"]
+    CLEAR_2_bySeason_yearly_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
+    CLEAR_2_bySeason_yearly_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
+    CLEAR_2_bySeason_yearly_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
+    CLOUD_2_bySeason_yearly_mean[Yqrt %% 1 == 0   , Season := "Winter"]
+    CLOUD_2_bySeason_yearly_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
+    CLOUD_2_bySeason_yearly_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
+    CLOUD_2_bySeason_yearly_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
 
 
 
