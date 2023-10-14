@@ -1087,52 +1087,60 @@ if (havetorun) {
     #            (DATA_all$SZA - SZA_BIN / 2 ) %/% SZA_BIN)
 
 
-    # ## SZA test
-    # test_all <- DATA_all[, .(GLB_att       = mean(GLB_att,    na.rm = T),
-    #                          GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-    #                          GLB_att_N     = sum(!is.na(GLB_att))),
-    #                      by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
-    #                             Date    = Day,
-    #                             preNoon = preNoon ) ]
-    #
-    # test_all_year <- DATA_all[, .(GLB_att       = mean(GLB_att,    na.rm = T),
-    #                               GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-    #                               GLB_att_N     = sum(!is.na(GLB_att))),
-    #                           by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
-    #                                  Year    = year(Day),
-    #                                  preNoon = preNoon ) ]
-    #
-    #
-    # gather <- data.table()
-    # for (asza in unique(test_all_year$SZA)) {
-    #     for (pday in unique(test_all_year$preNoon)) {
-    #         subdata <- test_all_year[SZA == asza & preNoon == pday]
-    #         ll1     <- coefficients(lm(Year ~ GLB_att, data = subdata))
-    #         gather  <- rbind(gather,
-    #                          data.frame(t(ll1),
-    #                                     SZA = asza,
-    #                                     preNoon = pday)
-    #         )
-    #     }
-    # }
-    # plot(gather$SZA, gather$GLB_att)
-    #
-    #
-    # gather <- data.table()
-    # for (asza in unique(test_all$SZA)) {
-    #     for (pday in unique(test_all$preNoon)) {
-    #         subdata <- test_all[SZA == asza & preNoon == pday]
-    #         ll1     <- coefficients(lm(Date ~ GLB_att, data = subdata))
-    #         gather  <- rbind(gather,
-    #                          data.frame(t(ll1),
-    #                                     SZA = asza,
-    #                                     preNoon = pday)
-    #         )
-    #     }
-    # }
-    # plot(gather$SZA, gather$GLB_att)
+    ## SZA test
+    test_all <- DATA_all[, .(GLB_att       = mean(GLB_att,    na.rm = T),
+                             GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                             GLB_att_N     = sum(!is.na(GLB_att))),
+                         by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                                Date    = as.Date(Date),
+                                preNoon = preNoon ) ]
+
+    test_all_year <- DATA_all[, .(GLB_att       = mean(GLB_att,    na.rm = T),
+                                  GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                                  GLB_att_N     = sum(!is.na(GLB_att))),
+                              by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                                     Year    = year(Date),
+                                     preNoon = preNoon ) ]
+
+    test_all_monthly <- DATA_all[, .(GLB_att       = mean(GLB_att,    na.rm = T),
+                                     GLB_att_sd    = sd(  GLB_att,    na.rm = T),
+                                     GLB_att_N     = sum(!is.na(GLB_att))),
+                                 by = .(SZA     = (SZA - SZA_BIN / 2 ) %/% SZA_BIN,
+                                        Year    = year(Date),
+                                        Month   = month(Date),
+                                        preNoon = preNoon ) ]
+    test_all_monthly
+
+    gather <- data.table()
+    for (asza in unique(test_all_year$SZA)) {
+        for (pday in unique(test_all_year$preNoon)) {
+            subdata <- test_all_year[SZA == asza & preNoon == pday]
+            ll1     <- coefficients(lm(Year ~ GLB_att, data = subdata))
+            gather  <- rbind(gather,
+                             data.frame(t(ll1),
+                                        SZA = asza,
+                                        preNoon = pday)
+            )
+        }
+    }
+    plot(gather$SZA, gather$GLB_att)
 
 
+    gather <- data.table()
+    for (asza in unique(test_all$SZA)) {
+        for (pday in unique(test_all$preNoon)) {
+            subdata <- test_all[SZA == asza & preNoon == pday]
+            ll1     <- coefficients(lm(Date ~ GLB_att, data = subdata))
+            gather  <- rbind(gather,
+                             data.frame(t(ll1),
+                                        SZA = asza,
+                                        preNoon = pday)
+            )
+        }
+    }
+    plot(gather$SZA, gather$GLB_att)
+
+stop()
 
 
     ## Yearly SZA means --------------------------------------------------------

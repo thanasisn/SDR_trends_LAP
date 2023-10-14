@@ -283,13 +283,12 @@ gather2 <- data.table()
 for (asza in unique(ALL_2_daily_mean$SZA)) {
     for (pday in unique(ALL_2_daily_mean$preNoon)) {
         subdata <- ALL_2_daily_mean[SZA == asza & preNoon == pday]
-
         llm1    <- lm(GLB_att ~ Date, data = subdata)
-
         ll1     <- coefficients(llm1)
-        plot(subdata$Date, subdata$GLB_att)
 
+        plot(subdata$Date, subdata$GLB_att)
         abline(llm1, col = 2)
+        title(paste("Daily mean", asza, pday))
 
         gather2 <- rbind(gather2,
                          data.frame(t(ll1),
@@ -298,7 +297,53 @@ for (asza in unique(ALL_2_daily_mean$SZA)) {
         )
     }
 }
-plot(gather2$SZA, gather2$GLB_att)
+plot(gather2$SZA, gather2$Date)
+
+gather3 <- data.table()
+for (asza in unique(ALL_2_monthly_mean$SZA)) {
+    for (pday in unique(ALL_2_monthly_mean$preNoon)) {
+        subdata <- ALL_2_monthly_mean[SZA == asza & preNoon == pday]
+        llm1    <- lm(GLB_att ~ Date, data = subdata)
+        ll1     <- coefficients(llm1)
+
+        plot(subdata$Date, subdata$GLB_att)
+        abline(llm1, col = 2)
+        title(paste("Monthly mean", asza, pday))
+
+        gather3 <- rbind(gather3,
+                         data.frame(t(ll1),
+                                    SZA = asza,
+                                    preNoon = pday)
+        )
+    }
+}
+plot(gather3$SZA, gather3$Date)
+
+
+gather4 <- data.table()
+for (asza in unique(ALL_2_yearly_mean$SZA)) {
+    for (pday in unique(ALL_2_yearly_mean$preNoon)) {
+        subdata <- ALL_2_yearly_mean[SZA == asza & preNoon == pday]
+        llm1    <- lm(GLB_att ~ Year, data = subdata)
+        ll1     <- coefficients(llm1)
+
+        plot(subdata$Year, subdata$GLB_att)
+        abline(llm1, col = 2)
+        title(paste("Yearly mean", asza, pday))
+
+        gather4 <- rbind(gather4,
+                         data.frame(t(ll1),
+                                    SZA = asza,
+                                    preNoon = pday)
+        )
+    }
+}
+plot(gather4$SZA, gather4$Year)
+
+
+
+
+
 
 stop()
 
