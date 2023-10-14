@@ -1109,38 +1109,123 @@ if (havetorun) {
                                         Year    = year(Date),
                                         Month   = month(Date),
                                         preNoon = preNoon ) ]
-    test_all_monthly
+    test_all_monthly[, Date := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
 
-    gather <- data.table()
+    gather1 <- data.table()
     for (asza in unique(test_all_year$SZA)) {
         for (pday in unique(test_all_year$preNoon)) {
             subdata <- test_all_year[SZA == asza & preNoon == pday]
-            ll1     <- coefficients(lm(Year ~ GLB_att, data = subdata))
-            gather  <- rbind(gather,
+            ll1     <- coefficients(lm(as.numeric(Year) ~ GLB_att, data = subdata))
+            gather1  <- rbind(gather1,
                              data.frame(t(ll1),
                                         SZA = asza,
                                         preNoon = pday)
             )
         }
     }
-    plot(gather$SZA, gather$GLB_att)
+    plot(gather1$SZA, gather1$GLB_att)
 
 
-    gather <- data.table()
+    gather2 <- data.table()
     for (asza in unique(test_all$SZA)) {
         for (pday in unique(test_all$preNoon)) {
             subdata <- test_all[SZA == asza & preNoon == pday]
-            ll1     <- coefficients(lm(Date ~ GLB_att, data = subdata))
-            gather  <- rbind(gather,
+            ll1     <- coefficients(lm(as.numeric(Date) ~ GLB_att, data = subdata))
+            gather2  <- rbind(gather2,
                              data.frame(t(ll1),
                                         SZA = asza,
                                         preNoon = pday)
             )
         }
     }
-    plot(gather$SZA, gather$GLB_att)
+    plot(gather2$SZA, gather2$GLB_att)
 
-stop()
+
+    gather3 <- data.table()
+    for (asza in unique(test_all$SZA)) {
+        for (pday in unique(test_all_monthly$preNoon)) {
+            subdata <- test_all_monthly[SZA == asza & preNoon == pday]
+            ll1     <- coefficients(lm(as.numeric(Date) ~ GLB_att, data = subdata))
+            gather3  <- rbind(gather3,
+                              data.frame(t(ll1),
+                                         SZA = asza,
+                                         preNoon = pday)
+            )
+        }
+    }
+    plot(gather3$SZA, gather3$GLB_att)
+
+
+    ## SZA trends new approach -------------------------------------------------
+
+    ## create bin id
+    DATA_all[,   SZAbin := (SZA - SZA_BIN / 2 ) %/% SZA_BIN ]
+    DATA_Clear[, SZAbin := (SZA - SZA_BIN / 2 ) %/% SZA_BIN ]
+    DATA_Cloud[, SZAbin := (SZA - SZA_BIN / 2 ) %/% SZA_BIN ]
+
+
+    datadbs  <- c("DATA_all", "DATA_Clear", "DATA_Cloud")
+    szabins  <- unique(DATA_all$SZAbin)
+    dayparts <- unique(DATA_all$preNoon)
+    gridsearch <- expand.grid(dbs     = datadbs,
+                              SZA     = szabins,
+                              preNoon = dayparts,
+                             stringsAsFactors = F)
+    source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
+
+
+    SZA_slope <- data.table()
+
+    for (ii in 1:nrow(gridsearch)) {
+        dd      <- gridsearch[ii,]
+        DB      <- get(dd$dbs)
+        subdata <- DB[SZAbin == dd$SZA & preNoon == dd$preNoon]
+
+        DDaily <- subdata[, .(GLB_att   = mean(GLB_att, na.rm = T),
+                              GLB_att_N = sum(!is.na(GLB_att)) ),
+                          by = .(Date = as.Date(Date))]
+
+        DMonthly <- subdata[, .(GLB_att   = mean(GLB_att, na.rm = T),
+                                GLB_att_N = sum(!is.na(GLB_att)) ),
+                            by = .(Year  = year(Date),
+                                   Month = month(Date))]
+        DMonthly[, Date := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
+
+        DYearly <- subdata[, .(GLB_att   = mean(GLB_att, na.rm = T),
+                               GLB_att_N = sum(!is.na(GLB_att)) ),
+                           by = .(Year = year(Date))]
+
+
+        lmD <- linear_fit_stats(lm(as.numeric(Date) ~ GLB_att, data = DDaily))
+        lmM <- linear_fit_stats(lm(as.numeric(Date) ~ GLB_att, data = DMonthly))
+        lmY <- linear_fit_stats(lm(as.numeric(Year) ~ GLB_att, data = DYearly))
+
+        SZA_slope <-
+            rbind(SZA_slope,
+                  data.frame(lmD,
+                             lm_N    = sum(!is.na(DDaily$GLB_att)),
+                             SZA     = dd$SZA,
+                             preNoon = dd$preNoon,
+                             DATA    = dd$dbs,
+                             aggr    = "Daily"),
+                  data.frame(lmM,
+                             lm_N    = sum(!is.na(DMonthly$GLB_att)),
+                             SZA     = dd$SZA,
+                             preNoon = dd$preNoon,
+                             DATA    = dd$dbs,
+                             aggr    = "Monthly"),
+                  data.frame(lmY,
+                             lm_N    = sum(!is.na(DYearly$GLB_att)),
+                             SZA     = dd$SZA,
+                             preNoon = dd$preNoon,
+                             DATA    = dd$dbs,
+                             aggr    = "Yearly"))
+
+    }
+
+
+
+    stop()
 
 
     ## Yearly SZA means --------------------------------------------------------
