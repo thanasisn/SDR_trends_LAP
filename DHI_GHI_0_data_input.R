@@ -1164,15 +1164,14 @@ if (havetorun) {
     DATA_Cloud[, SZAbin := (SZA - SZA_BIN / 2 ) %/% SZA_BIN ]
 
 
-    datadbs  <- c("DATA_all", "DATA_Clear", "DATA_Cloud")
-    szabins  <- unique(DATA_all$SZAbin)
-    dayparts <- unique(DATA_all$preNoon)
+    datadbs    <- c("DATA_all", "DATA_Clear", "DATA_Cloud")
+    szabins    <- unique(DATA_all$SZAbin)
+    dayparts   <- unique(DATA_all$preNoon)
     gridsearch <- expand.grid(dbs     = datadbs,
                               SZA     = szabins,
                               preNoon = dayparts,
-                             stringsAsFactors = F)
+                              stringsAsFactors = F)
     source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
-
 
     SZA_slope <- data.table()
 
@@ -1195,6 +1194,9 @@ if (havetorun) {
                                GLB_att_N = sum(!is.na(GLB_att)) ),
                            by = .(Year = year(Date))]
 
+        as.numeric(DDaily$Date)
+        as.numeric(DMonthly$Date)
+        as.numeric(DYearly$Year)
 
         lmD <- linear_fit_stats(lm(as.numeric(Date) ~ GLB_att, data = DDaily))
         lmM <- linear_fit_stats(lm(as.numeric(Date) ~ GLB_att, data = DMonthly))
@@ -1222,6 +1224,66 @@ if (havetorun) {
                              aggr    = "Yearly"))
 
     }
+
+    SZA_slope[aggr == "Yearly",
+              slopePC := slope  ]
+
+    SZA_slope[aggr %in% c("Daily"),
+              slopePC := 100 * slope / Days_of_year ]
+
+    SZA_slope[aggr %in% c("Monthly"),
+              slopePC := (100 * slope / Days_of_year) / 12 ]
+
+
+    SZA_slope[ SZA > 70, slopePC := NA]
+    # SZA_slope[ slope.p > 0.1, slopePC := NA]
+
+    for (aDATA in unique( SZA_slope$DATA )) {
+        for (aAggr in unique( SZA_slope$aggr )) {
+
+            pp <- SZA_slope[DATA == aDATA & aggr == aAggr]
+
+            plot(pp$SZA, pp$slopePC )
+            title(paste(aDATA, aAggr))
+
+        }
+    }
+
+    for (aDATA in unique( SZA_slope$DATA )) {
+        for (aAggr in  c("Daily", "Monthly")) {
+
+            pp <- SZA_slope[DATA == aDATA & aggr == aAggr]
+
+            plot(pp$SZA, pp$slopePC )
+            title(paste(aDATA, aAggr))
+
+        }
+    }
+
+
+
+    for (aDATA in unique( SZA_slope$DATA )) {
+        for (aAggr in c("Daily", "Monthly")) {
+
+            pp <- SZA_slope[DATA == aDATA & aggr == aAggr]
+
+            plot(pp$SZA, 100 * pp$slope / Days_of_year )
+            title(paste(aDATA, aAggr))
+
+        }
+    }
+
+    for (aDATA in unique( SZA_slope$DATA )) {
+        for (aAggr in c("Yearly")) {
+
+            pp <- SZA_slope[DATA == aDATA & aggr == aAggr]
+
+            plot(pp$SZA, 100 * pp$slope )
+            title(paste(aDATA, aAggr))
+
+        }
+    }
+
 
 
 
