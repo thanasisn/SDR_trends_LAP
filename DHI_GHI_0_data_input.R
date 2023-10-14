@@ -1287,8 +1287,6 @@ if (havetorun) {
 
 
 
-    stop()
-
 
     ## Yearly SZA means --------------------------------------------------------
     ALL_2_yearly_mean <-
