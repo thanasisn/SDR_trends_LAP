@@ -261,7 +261,8 @@ for (DBn in dbs) {
 
                 if (sum(!is.na(dataset[[avar]])) <= 1) next()
 
-                lm1 <- lm( dataset[[avar]] ~ dataset$Date )
+                # lm1 <- lm( dataset[[avar]] ~ dataset$Date )
+                lm1 <- lm( dataset$Date ~ dataset[[avar]] )
 
                 gather <- rbind(gather,
                                 data.frame(
@@ -394,7 +395,7 @@ wecare <- grep("^slope\\.t", wecare, ignore.case = T, value = T, invert = T)
 wecare <- grep("slope\\.sd", wecare, ignore.case = T, value = T, invert = T)
 
 vars <- c("GLB_att")
-
+wecare <- "GLB_att"
 
 ## TODO separate plots by direct global
 
