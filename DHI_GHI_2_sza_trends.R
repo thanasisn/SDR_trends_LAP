@@ -261,8 +261,11 @@ for (DBn in dbs) {
 
                 if (sum(!is.na(dataset[[avar]])) <= 1) next()
 
-                # lm1 <- lm( dataset[[avar]] ~ dataset$Date )
-                lm1 <- lm( dataset$Date ~ dataset[[avar]] )
+                lm1 <- lm( dataset[[avar]] ~ dataset$Date )
+                # lm1 <- lm( as.numeric(dataset$Date) ~ dataset[[avar]] )
+
+                plot(dataset$Date, dataset[[avar]])
+                abline(lm1, col = 2)
 
                 gather <- rbind(gather,
                                 data.frame(
@@ -280,73 +283,68 @@ for (DBn in dbs) {
 }
 
 
-gather2 <- data.table()
-for (asza in unique(ALL_2_daily_mean$SZA)) {
-    for (pday in unique(ALL_2_daily_mean$preNoon)) {
-        subdata <- ALL_2_daily_mean[SZA == asza & preNoon == pday]
-        llm1    <- lm(GLB_att ~ Date, data = subdata)
-        ll1     <- coefficients(llm1)
-
-        plot(subdata$Date, subdata$GLB_att)
-        abline(llm1, col = 2)
-        title(paste("Daily mean", asza, pday))
-
-        gather2 <- rbind(gather2,
-                         data.frame(t(ll1),
-                                    SZA = asza,
-                                    preNoon = pday)
-        )
-    }
-}
-plot(gather2$SZA, gather2$Date)
-
-gather3 <- data.table()
-for (asza in unique(ALL_2_monthly_mean$SZA)) {
-    for (pday in unique(ALL_2_monthly_mean$preNoon)) {
-        subdata <- ALL_2_monthly_mean[SZA == asza & preNoon == pday]
-        llm1    <- lm(GLB_att ~ Date, data = subdata)
-        ll1     <- coefficients(llm1)
-
-        plot(subdata$Date, subdata$GLB_att)
-        abline(llm1, col = 2)
-        title(paste("Monthly mean", asza, pday))
-
-        gather3 <- rbind(gather3,
-                         data.frame(t(ll1),
-                                    SZA = asza,
-                                    preNoon = pday)
-        )
-    }
-}
-plot(gather3$SZA, gather3$Date)
-
-
-gather4 <- data.table()
-for (asza in unique(ALL_2_yearly_mean$SZA)) {
-    for (pday in unique(ALL_2_yearly_mean$preNoon)) {
-        subdata <- ALL_2_yearly_mean[SZA == asza & preNoon == pday]
-        llm1    <- lm(GLB_att ~ Year, data = subdata)
-        ll1     <- coefficients(llm1)
-
-        plot(subdata$Year, subdata$GLB_att)
-        abline(llm1, col = 2)
-        title(paste("Yearly mean", asza, pday))
-
-        gather4 <- rbind(gather4,
-                         data.frame(t(ll1),
-                                    SZA = asza,
-                                    preNoon = pday)
-        )
-    }
-}
-plot(gather4$SZA, gather4$Year)
-
-
-
-
-
-
-stop()
+# gather2 <- data.table()
+# for (asza in unique(ALL_2_daily_mean$SZA)) {
+#     for (pday in unique(ALL_2_daily_mean$preNoon)) {
+#         subdata <- ALL_2_daily_mean[SZA == asza & preNoon == pday]
+#         if (sum(!is.na(subdata$GLB_att)) <= 1) next()
+#
+#         llm1    <- lm(GLB_att ~ Date, data = subdata)
+#         ll1     <- coefficients(llm1)
+#
+#         plot(subdata$Date, subdata$GLB_att)
+#         abline(llm1, col = 2)
+#         title(paste("Daily mean", asza, pday))
+#
+#         gather2 <- rbind(gather2,
+#                          data.frame(t(ll1),
+#                                     SZA = asza,
+#                                     preNoon = pday)
+#         )
+#     }
+# }
+# plot(gather2$SZA, gather2$Date)
+#
+# gather3 <- data.table()
+# for (asza in unique(ALL_2_monthly_mean$SZA)) {
+#     for (pday in unique(ALL_2_monthly_mean$preNoon)) {
+#         subdata <- ALL_2_monthly_mean[SZA == asza & preNoon == pday]
+#         llm1    <- lm(GLB_att ~ Date, data = subdata)
+#         ll1     <- coefficients(llm1)
+#
+#         plot(subdata$Date, subdata$GLB_att)
+#         abline(llm1, col = 2)
+#         title(paste("Monthly mean", asza, pday))
+#
+#         gather3 <- rbind(gather3,
+#                          data.frame(t(ll1),
+#                                     SZA = asza,
+#                                     preNoon = pday)
+#         )
+#     }
+# }
+# plot(gather3$SZA, gather3$Date)
+#
+#
+# gather4 <- data.table()
+# for (asza in unique(ALL_2_yearly_mean$SZA)) {
+#     for (pday in unique(ALL_2_yearly_mean$preNoon)) {
+#         subdata <- ALL_2_yearly_mean[SZA == asza & preNoon == pday]
+#         llm1    <- lm(GLB_att ~ Year, data = subdata)
+#         ll1     <- coefficients(llm1)
+#
+#         plot(subdata$Year, subdata$GLB_att)
+#         abline(llm1, col = 2)
+#         title(paste("Yearly mean", asza, pday))
+#
+#         gather4 <- rbind(gather4,
+#                          data.frame(t(ll1),
+#                                     SZA = asza,
+#                                     preNoon = pday)
+#         )
+#     }
+# }
+# plot(gather4$SZA, gather4$Year)
 
 
 
@@ -354,9 +352,28 @@ szatrends <- data.table(gather)
 setorder(szatrends, SZA)
 
 
+
+for (aDATA in unique( szatrends$DATA )) {
+        pp <- szatrends[DATA == aDATA ]
+
+        plot(pp$SZA, 100 * pp$slope / Days_of_year)
+        title(paste(aDATA, mean(100 * pp$slope / Days_of_year, na.rm = T), median(100 * pp$slope / Days_of_year, na.rm = T) ))
+
+    }
+}
+
+
+
+
+
 ## covert to trend per year
-szatrends[, slope    := slope    * Days_of_year ]
-szatrends[, slope.sd := slope.sd * Days_of_year ]
+# szatrends[, slope    := slope    * Days_of_year ]
+# szatrends[, slope.sd := slope.sd * Days_of_year ]
+
+szatrends[, slope    := 100 * slope    / Days_of_year ]
+szatrends[, slope.sd := 100 * slope.sd / Days_of_year ]
+
+
 
 ## set some plot option for data
 # szatrends[var == "DIR_att",    col := col_DIR_att    ]
@@ -395,7 +412,6 @@ wecare <- grep("^slope\\.t", wecare, ignore.case = T, value = T, invert = T)
 wecare <- grep("slope\\.sd", wecare, ignore.case = T, value = T, invert = T)
 
 vars <- c("GLB_att")
-wecare <- "GLB_att"
 
 ## TODO separate plots by direct global
 
@@ -492,7 +508,7 @@ for (avar in vars) {
                 par("mar" = c(4,   5,   2,   2))
             }
 
-            legend("bottomright",
+            legend("topleft",
                    legend = c("Morning", "Evening"),
                    # col    = c(unique(pam$col), unique(ppm$col)),
                    col    = c( 2,  3),
@@ -569,7 +585,8 @@ for (DBn in dbs) {
 
                     if (sum(!is.na(dataset[[avar]])) <= 1) next()
 
-                    lm1 <- lm(dataset[[avar]] ~ dataset$Date)
+                    # lm1 <- lm(dataset[[avar]] ~ dataset$Date)
+                    lm1 <- lm( as.numeric(dataset$Date) ~ dataset[[avar]] )
 
                     gather_seas <- rbind(gather_seas,
                                     data.frame(
@@ -594,8 +611,12 @@ setorder(szatrends_seas, SZA)
 
 
 ## covert to trend per year
-szatrends_seas[, slope    := slope    * Days_of_year]
-szatrends_seas[, slope.sd := slope.sd * Days_of_year]
+# szatrends_seas[, slope    := slope    * Days_of_year]
+# szatrends_seas[, slope.sd := slope.sd * Days_of_year]
+
+szatrends_seas[, slope    := 100 * slope    / Days_of_year]
+szatrends_seas[, slope.sd := 100 * slope.sd / Days_of_year]
+
 
 ## define plot colors
 szatrends_seas[ var == "DIR_att",    col := col_DIR_att   ]
@@ -904,7 +925,10 @@ for (ase in seasons) {
 
             ## test always show zero on plots
             ylim <- range(0, szatrends_seas$slope, na.rm = T)
-            ylim <- c(-2.5, 4.5)
+            # ylim <- c(-2.5, 4.5)
+
+            ylim <- range(szatrends_seas[slope.p < p_lim & SZA < 75, slope] , na.rm = T)
+
 
             pam  <- subdata[ preNoon == T ]
             ppm  <- subdata[ preNoon == F ]
@@ -985,16 +1009,29 @@ for (ase in seasons) {
                    cex = 1)
 
 
-            if (i %in% c(23)) {
-                legend("bottom",
+            if (i %in% c(7)) {
+                # legend("top",
+                #        legend = c("Morning low stat. sig.", "Evening low stat. sig.",
+                #                   "Morning",                "Evening"),
+                #        col    = c(2, 3),
+                #        pt.cex = 1,
+                #        cex    = 0.8,
+                #        pch    = c(1, 2, 16, 17),
+                #        ncol   = 2,
+                #        bty = "n")
+                legend("topleft",
                        legend = c("Morning",                "Evening",
                                   "Morning low stat. sig.", "Evening low stat. sig."),
                        col    = c(2, 3),
                        pt.cex = 1,
                        cex    = 0.8,
                        pch    = c(16, 17, 1, 2),
-                       ncol   = 2,
+                       ncol   = 1,
                        bty = "n")
+
+
+
+
             }
 
 
