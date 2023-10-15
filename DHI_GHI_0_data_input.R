@@ -1195,9 +1195,7 @@ if (havetorun) {
                                GLB_att_N = sum(!is.na(GLB_att)) ),
                            by = .(Year = year(Date))]
 
-        as.numeric(DDaily$Date)
-        as.numeric(DMonthly$Date)
-        as.numeric(DYearly$Year)
+
 
         lmD <- linear_fit_stats(lm(as.numeric(Date) ~ GLB_att, data = DDaily))
         lmM <- linear_fit_stats(lm(as.numeric(Date) ~ GLB_att, data = DMonthly))
@@ -1206,6 +1204,26 @@ if (havetorun) {
         lmD_inv <- linear_fit_stats(lm(GLB_att ~ as.numeric(Date), data = DDaily))
         lmM_inv <- linear_fit_stats(lm(GLB_att ~ as.numeric(Date), data = DMonthly))
         lmY_inv <- linear_fit_stats(lm(GLB_att ~ as.numeric(Year), data = DYearly))
+
+
+
+        ##plots
+        plot(DDaily$Date, DDaily$GLB_att)
+        abline(lm(as.numeric(Date) ~ GLB_att, data = DDaily),   col = "red"  )
+        abline(lm(GLB_att ~ as.numeric(Date), data = DDaily),   col = "green")
+
+        plot(DMonthly$Date, DMonthly$GLB_att)
+        abline(lm(as.numeric(Date) ~ GLB_att, data = DMonthly), col = "red"  )
+        abline(lm(GLB_att ~ as.numeric(Date), data = DMonthly), col = "green")
+
+        plot(DYearly$Year, DYearly$GLB_att)
+        abline(lm(as.numeric(Year) ~ GLB_att, data = DYearly),  col = "red"  )
+        abline(lm(GLB_att ~ as.numeric(Year), data = DYearly),  col = "green")
+
+
+
+
+        stop("DD")
 
 
         SZA_slope <-
