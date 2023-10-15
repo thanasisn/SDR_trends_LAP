@@ -281,20 +281,9 @@ for (DBn in dbs) {
         }
     }
 }
-gather    <- data.table(gather)
 szatrends <- data.table(gather)
 setorder(szatrends, SZA)
 
-
-for (adata in unique(gather$DATA)) {
-    subd <- gather[DATA == adata]
-    plot(subd$SZA, subd$slope)
-}
-
-for (adata in unique(gather$DATA)) {
-    subd <- gather[DATA == adata]
-    plot(subd$SZA, 100 * subd$slope / Days_of_year)
-}
 
 
 gather2 <- data.table()
