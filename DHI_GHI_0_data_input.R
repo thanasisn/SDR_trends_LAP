@@ -1205,25 +1205,28 @@ if (havetorun) {
         lmM_inv <- linear_fit_stats(lm(GLB_att ~ as.numeric(Date), data = DMonthly))
         lmY_inv <- linear_fit_stats(lm(GLB_att ~ as.numeric(Year), data = DYearly))
 
-        # ##plots
-        # plot(DDaily$Date, DDaily$GLB_att)
+        ##plots
+        plot(DDaily$Date, DDaily$GLB_att)
+        title("Daily")
         # abline(lm(as.numeric(Date) ~ GLB_att, data = DDaily),   col = "red"  )
-        # abline(lm(GLB_att ~ as.numeric(Date), data = DDaily),   col = "green")
-        # abline(a = lmD_inv$intercept,
-        #        b = lmD_inv$slope, col = "blue")
-        #
-        # plot(DMonthly$Date, DMonthly$GLB_att)
+        abline(lm(GLB_att ~ as.numeric(Date), data = DDaily),   col = "green")
+        abline(a = lmD_inv$intercept,
+               b = lmD_inv$slope, col = "blue", lty = 3)
+
+        plot(DMonthly$Date, DMonthly$GLB_att)
+        title("Monthly")
         # abline(lm(as.numeric(Date) ~ GLB_att, data = DMonthly), col = "red"  )
-        # abline(lm(GLB_att ~ as.numeric(Date), data = DMonthly), col = "green")
-        # abline(a = lmM_inv$intercept,
-        #        b = lmM_inv$slope, col = "blue")
+        abline(lm(GLB_att ~ as.numeric(Date), data = DMonthly), col = "green")
+        abline(a = lmM_inv$intercept,
+               b = lmM_inv$slope, col = "blue", lty = 3)
         #
         #
-        # plot(DYearly$Year, DYearly$GLB_att)
+        plot(DYearly$Year, DYearly$GLB_att)
+        title("Yearly")
         # abline(lm(as.numeric(Year) ~ GLB_att, data = DYearly),  col = "red"  )
-        # abline(lm(GLB_att ~ as.numeric(Year), data = DYearly),  col = "green")
-        # abline(a = lmY_inv$intercept,
-        #        b = lmY_inv$slope, col = "blue")
+        abline(lm(GLB_att ~ as.numeric(Year), data = DYearly),  col = "green")
+        abline(a = lmY_inv$intercept,
+               b = lmY_inv$slope, col = "blue", lty = 3)
 
 
 
