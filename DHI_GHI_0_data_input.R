@@ -1195,39 +1195,58 @@ if (havetorun) {
                                GLB_att_N = sum(!is.na(GLB_att)) ),
                            by = .(Year = year(Date))]
 
-        as.numeric(DDaily$Date)
-        as.numeric(DMonthly$Date)
-        as.numeric(DYearly$Year)
 
-        lmD <- linear_fit_stats(lm(as.numeric(Date) ~ GLB_att, data = DDaily))
-        lmM <- linear_fit_stats(lm(as.numeric(Date) ~ GLB_att, data = DMonthly))
-        lmY <- linear_fit_stats(lm(as.numeric(Year) ~ GLB_att, data = DYearly))
+
+        # lmD <- linear_fit_stats(lm(as.numeric(Date) ~ GLB_att, data = DDaily))
+        # lmM <- linear_fit_stats(lm(as.numeric(Date) ~ GLB_att, data = DMonthly))
+        # lmY <- linear_fit_stats(lm(as.numeric(Year) ~ GLB_att, data = DYearly))
 
         lmD_inv <- linear_fit_stats(lm(GLB_att ~ as.numeric(Date), data = DDaily))
         lmM_inv <- linear_fit_stats(lm(GLB_att ~ as.numeric(Date), data = DMonthly))
         lmY_inv <- linear_fit_stats(lm(GLB_att ~ as.numeric(Year), data = DYearly))
 
+        # ##plots
+        # plot(DDaily$Date, DDaily$GLB_att)
+        # abline(lm(as.numeric(Date) ~ GLB_att, data = DDaily),   col = "red"  )
+        # abline(lm(GLB_att ~ as.numeric(Date), data = DDaily),   col = "green")
+        # abline(a = lmD_inv$intercept,
+        #        b = lmD_inv$slope, col = "blue")
+        #
+        # plot(DMonthly$Date, DMonthly$GLB_att)
+        # abline(lm(as.numeric(Date) ~ GLB_att, data = DMonthly), col = "red"  )
+        # abline(lm(GLB_att ~ as.numeric(Date), data = DMonthly), col = "green")
+        # abline(a = lmM_inv$intercept,
+        #        b = lmM_inv$slope, col = "blue")
+        #
+        #
+        # plot(DYearly$Year, DYearly$GLB_att)
+        # abline(lm(as.numeric(Year) ~ GLB_att, data = DYearly),  col = "red"  )
+        # abline(lm(GLB_att ~ as.numeric(Year), data = DYearly),  col = "green")
+        # abline(a = lmY_inv$intercept,
+        #        b = lmY_inv$slope, col = "blue")
 
-        SZA_slope <-
-            rbind(SZA_slope,
-                  data.frame(lmD,
-                             lm_N    = sum(!is.na(DDaily$GLB_att)),
-                             SZA     = dd$SZA,
-                             preNoon = dd$preNoon,
-                             DATA    = dd$dbs,
-                             aggr    = "Daily"),
-                  data.frame(lmM,
-                             lm_N    = sum(!is.na(DMonthly$GLB_att)),
-                             SZA     = dd$SZA,
-                             preNoon = dd$preNoon,
-                             DATA    = dd$dbs,
-                             aggr    = "Monthly"),
-                  data.frame(lmY,
-                             lm_N    = sum(!is.na(DYearly$GLB_att)),
-                             SZA     = dd$SZA,
-                             preNoon = dd$preNoon,
-                             DATA    = dd$dbs,
-                             aggr    = "Yearly"))
+
+
+        # SZA_slope <-
+        #     rbind(SZA_slope,
+        #           data.frame(lmD,
+        #                      lm_N    = sum(!is.na(DDaily$GLB_att)),
+        #                      SZA     = dd$SZA,
+        #                      preNoon = dd$preNoon,
+        #                      DATA    = dd$dbs,
+        #                      aggr    = "Daily"),
+        #           data.frame(lmM,
+        #                      lm_N    = sum(!is.na(DMonthly$GLB_att)),
+        #                      SZA     = dd$SZA,
+        #                      preNoon = dd$preNoon,
+        #                      DATA    = dd$dbs,
+        #                      aggr    = "Monthly"),
+        #           data.frame(lmY,
+        #                      lm_N    = sum(!is.na(DYearly$GLB_att)),
+        #                      SZA     = dd$SZA,
+        #                      preNoon = dd$preNoon,
+        #                      DATA    = dd$dbs,
+        #                      aggr    = "Yearly"))
 
         SZA_slope_inv <-
             rbind(SZA_slope_inv,
@@ -1253,27 +1272,31 @@ if (havetorun) {
     }
 
     #_ One way -----------------------------------------------------------------
-    SZA_slope[aggr == "Yearly",
-              slopePC := slope  ]
 
-    SZA_slope[aggr %in% c("Daily"),
-              slopePC := 100 * slope / Days_of_year ]
+    ## This should be wrong!!!
 
-    SZA_slope[aggr %in% c("Monthly"),
-              slopePC := (100 * slope / Days_of_year) / 12 ]
+    # SZA_slope[aggr == "Yearly",
+    #           slopePC := slope  ]
+    #
+    # SZA_slope[aggr %in% c("Daily"),
+    #           slopePC := 100 * slope / Days_of_year ]
+    #
+    # SZA_slope[aggr %in% c("Monthly"),
+    #           slopePC := (100 * slope / Days_of_year) / 12 ]
+    #
+    # # SZA_slope[ SZA > 70, slopePC := NA]
+    # # SZA_slope[ slope.p > 0.1, slopePC := NA]
+    #
+    # for (aDATA in unique( SZA_slope$DATA )) {
+    #     for (aAggr in unique( SZA_slope$aggr )) {
+    #         pp <- SZA_slope[DATA == aDATA & aggr == aAggr]
+    #
+    #         plot(pp$SZA, pp$slopePC )
+    #         title(paste(aDATA, aAggr))
+    #
+    #     }
+    # }
 
-    # SZA_slope[ SZA > 70, slopePC := NA]
-    # SZA_slope[ slope.p > 0.1, slopePC := NA]
-
-    for (aDATA in unique( SZA_slope$DATA )) {
-        for (aAggr in unique( SZA_slope$aggr )) {
-            pp <- SZA_slope[DATA == aDATA & aggr == aAggr]
-
-            plot(pp$SZA, pp$slopePC )
-            title(paste(aDATA, aAggr))
-
-        }
-    }
 
 
     # for (aDATA in unique( SZA_slope$DATA )) {
@@ -1314,7 +1337,7 @@ if (havetorun) {
         for (aAggr in unique( SZA_slope_inv$aggr )) {
             pp <- SZA_slope_inv[DATA == aDATA & aggr == aAggr]
 
-            plot(pp$SZA, pp$slope )
+            plot(pp$SZA, pp$slope)
             title(paste(aDATA, aAggr))
 
         }
@@ -1331,11 +1354,11 @@ if (havetorun) {
         DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                      HOR_att       = mean(HOR_att,    na.rm = T),
                      GLB_att       = mean(GLB_att,    na.rm = T),
-                     DIR_transp    = mean(DIR_transp, na.rm = T),
+                     # DIR_transp    = mean(DIR_transp, na.rm = T),
                      DIR_att_sd    = sd(  DIR_att,    na.rm = T),
                      HOR_att_sd    = sd(  HOR_att,    na.rm = T),
                      GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                     DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                     # DIR_transp_sd = sd(  DIR_transp, na.rm = T),
                      GLB_att_N     = sum(!is.na(GLB_att)),
                      HOR_att_N     = sum(!is.na(HOR_att)),
                      DIR_att_N     = sum(!is.na(DIR_att))  ),
@@ -1364,11 +1387,11 @@ if (havetorun) {
         DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                        HOR_att       = mean(HOR_att,    na.rm = T),
                        GLB_att       = mean(GLB_att,    na.rm = T),
-                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       # DIR_transp    = mean(DIR_transp, na.rm = T),
                        DIR_att_sd    = sd(  DIR_att,    na.rm = T),
                        HOR_att_sd    = sd(  HOR_att,    na.rm = T),
                        GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       # DIR_transp_sd = sd(  DIR_transp, na.rm = T),
                        GLB_att_N     = sum(!is.na(GLB_att)),
                        HOR_att_N     = sum(!is.na(HOR_att)),
                        DIR_att_N     = sum(!is.na(DIR_att))  ),
@@ -1380,11 +1403,11 @@ if (havetorun) {
         DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                        HOR_att       = mean(HOR_att,    na.rm = T),
                        GLB_att       = mean(GLB_att,    na.rm = T),
-                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       # DIR_transp    = mean(DIR_transp, na.rm = T),
                        DIR_att_sd    = sd(  DIR_att,    na.rm = T),
                        HOR_att_sd    = sd(  HOR_att,    na.rm = T),
                        GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       # DIR_transp_sd = sd(  DIR_transp, na.rm = T),
                        GLB_att_N     = sum(!is.na(GLB_att)),
                        HOR_att_N     = sum(!is.na(HOR_att)),
                        DIR_att_N     = sum(!is.na(DIR_att))  ),
@@ -1399,11 +1422,11 @@ if (havetorun) {
         DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                      HOR_att       = mean(HOR_att,    na.rm = T),
                      GLB_att       = mean(GLB_att,    na.rm = T),
-                     DIR_transp    = mean(DIR_transp, na.rm = T),
+                     # DIR_transp    = mean(DIR_transp, na.rm = T),
                      DIR_att_sd    = sd(  DIR_att,    na.rm = T),
                      HOR_att_sd    = sd(  HOR_att,    na.rm = T),
                      GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                     DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                     # DIR_transp_sd = sd(  DIR_transp, na.rm = T),
                      doy           = yday(Date),
                      GLB_att_N     = sum(!is.na(GLB_att)),
                      HOR_att_N     = sum(!is.na(HOR_att)),
@@ -1416,11 +1439,11 @@ if (havetorun) {
         DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                        HOR_att       = mean(HOR_att,    na.rm = T),
                        GLB_att       = mean(GLB_att,    na.rm = T),
-                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       # DIR_transp    = mean(DIR_transp, na.rm = T),
                        DIR_att_sd    = sd(  DIR_att,    na.rm = T),
                        HOR_att_sd    = sd(  HOR_att,    na.rm = T),
                        GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       # DIR_transp_sd = sd(  DIR_transp, na.rm = T),
                        doy           = yday(Date),
                        GLB_att_N     = sum(!is.na(GLB_att)),
                        HOR_att_N     = sum(!is.na(HOR_att)),
@@ -1433,11 +1456,11 @@ if (havetorun) {
         DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                        HOR_att       = mean(HOR_att,    na.rm = T),
                        GLB_att       = mean(GLB_att,    na.rm = T),
-                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       # DIR_transp    = mean(DIR_transp, na.rm = T),
                        DIR_att_sd    = sd(  DIR_att,    na.rm = T),
                        HOR_att_sd    = sd(  HOR_att,    na.rm = T),
                        GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       # DIR_transp_sd = sd(  DIR_transp, na.rm = T),
                        doy           = yday(Date),
                        GLB_att_N     = sum(!is.na(GLB_att)),
                        HOR_att_N     = sum(!is.na(HOR_att)),
@@ -1452,11 +1475,11 @@ if (havetorun) {
         DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                      HOR_att       = mean(HOR_att,    na.rm = T),
                      GLB_att       = mean(GLB_att,    na.rm = T),
-                     DIR_transp    = mean(DIR_transp, na.rm = T),
+                     # DIR_transp    = mean(DIR_transp, na.rm = T),
                      DIR_att_sd    = sd(  DIR_att,    na.rm = T),
                      HOR_att_sd    = sd(  HOR_att,    na.rm = T),
                      GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                     DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                     # DIR_transp_sd = sd(  DIR_transp, na.rm = T),
                      GLB_att_N     = sum(!is.na(GLB_att)),
                      HOR_att_N     = sum(!is.na(HOR_att)),
                      DIR_att_N     = sum(!is.na(DIR_att))  ),
@@ -1486,11 +1509,11 @@ if (havetorun) {
         DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                        HOR_att       = mean(HOR_att,    na.rm = T),
                        GLB_att       = mean(GLB_att,    na.rm = T),
-                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       # DIR_transp    = mean(DIR_transp, na.rm = T),
                        DIR_att_sd    = sd(  DIR_att,    na.rm = T),
                        HOR_att_sd    = sd(  HOR_att,    na.rm = T),
                        GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       # DIR_transp_sd = sd(  DIR_transp, na.rm = T),
                        GLB_att_N     = sum(!is.na(GLB_att)),
                        HOR_att_N     = sum(!is.na(HOR_att)),
                        DIR_att_N     = sum(!is.na(DIR_att))  ),
@@ -1505,11 +1528,11 @@ if (havetorun) {
         DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                        HOR_att       = mean(HOR_att,    na.rm = T),
                        GLB_att       = mean(GLB_att,    na.rm = T),
-                       DIR_transp    = mean(DIR_transp, na.rm = T),
+                       # DIR_transp    = mean(DIR_transp, na.rm = T),
                        DIR_att_sd    = sd(  DIR_att,    na.rm = T),
                        HOR_att_sd    = sd(  HOR_att,    na.rm = T),
                        GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                       DIR_transp_sd = sd(  DIR_transp, na.rm = T),
+                       # DIR_transp_sd = sd(  DIR_transp, na.rm = T),
                        GLB_att_N     = sum(!is.na(GLB_att)),
                        HOR_att_N     = sum(!is.na(HOR_att)),
                        DIR_att_N     = sum(!is.na(DIR_att))  ),
@@ -1528,56 +1551,56 @@ if (havetorun) {
         ALL_2_daily_mean[,   DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
         ALL_2_daily_mean[,   HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
         ALL_2_daily_mean[,   GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
-        ALL_2_daily_mean[,   DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
+        # ALL_2_daily_mean[,   DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
         CLEAR_2_daily_mean[, DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
         CLEAR_2_daily_mean[, HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
         CLEAR_2_daily_mean[, GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
-        CLEAR_2_daily_mean[, DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
+        # CLEAR_2_daily_mean[, DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
         CLOUD_2_daily_mean[, DIR_att_EM   := qt(conf_param,df=DIR_att_N -1) * DIR_att_sd    / sqrt(DIR_att_N)]
         CLOUD_2_daily_mean[, HOR_att_EM   := qt(conf_param,df=HOR_att_N -1) * HOR_att_sd    / sqrt(HOR_att_N)]
         CLOUD_2_daily_mean[, GLB_att_EM   := qt(conf_param,df=GLB_att_N -1) * GLB_att_sd    / sqrt(GLB_att_N)]
-        CLOUD_2_daily_mean[, DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
+        # CLOUD_2_daily_mean[, DIR_transp_EM:= qt(conf_param,df=DIR_att_N -1) * DIR_transp_sd / sqrt(DIR_att_N)]
     })
 
     ## _ Exclude means with less than SZA_aggregation_N_lim data points --------
     ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_att       := NA ]
     ALL_2_daily_mean[   HOR_att_N <= SZA_aggregation_N_lim, HOR_att       := NA ]
     ALL_2_daily_mean[   GLB_att_N <= SZA_aggregation_N_lim, GLB_att       := NA ]
-    ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_transp    := NA ]
+    # ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_transp    := NA ]
     ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_att_sd    := NA ]
     ALL_2_daily_mean[   HOR_att_N <= SZA_aggregation_N_lim, HOR_att_sd    := NA ]
     ALL_2_daily_mean[   GLB_att_N <= SZA_aggregation_N_lim, GLB_att_sd    := NA ]
-    ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_sd := NA ]
+    # ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_sd := NA ]
     ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_att_EM    := NA ]
     ALL_2_daily_mean[   HOR_att_N <= SZA_aggregation_N_lim, HOR_att_EM    := NA ]
     ALL_2_daily_mean[   GLB_att_N <= SZA_aggregation_N_lim, GLB_att_EM    := NA ]
-    ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
+    # ALL_2_daily_mean[   DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
 
     CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att       := NA ]
     CLEAR_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att       := NA ]
     CLEAR_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att       := NA ]
-    CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp    := NA ]
+    # CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp    := NA ]
     CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att_sd    := NA ]
     CLEAR_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att_sd    := NA ]
     CLEAR_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att_sd    := NA ]
-    CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_sd := NA ]
+    # CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_sd := NA ]
     CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att_EM    := NA ]
     CLEAR_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att_EM    := NA ]
     CLEAR_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att_EM    := NA ]
-    CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
+    # CLEAR_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
 
     CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att       := NA ]
     CLOUD_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att       := NA ]
     CLOUD_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att       := NA ]
-    CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp    := NA ]
+    # CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp    := NA ]
     CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att_sd    := NA ]
     CLOUD_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att_sd    := NA ]
     CLOUD_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att_sd    := NA ]
-    CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_sd := NA ]
+    # CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_sd := NA ]
     CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_att_EM    := NA ]
     CLOUD_2_daily_mean[ HOR_att_N <= SZA_aggregation_N_lim, HOR_att_EM    := NA ]
     CLOUD_2_daily_mean[ GLB_att_N <= SZA_aggregation_N_lim, GLB_att_EM    := NA ]
-    CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
+    # CLOUD_2_daily_mean[ DIR_att_N <= SZA_aggregation_N_lim, DIR_transp_EM := NA ]
 
 
     ## Season of year SZA daily  -----------------------------------------------
