@@ -1165,6 +1165,8 @@ if (havetorun) {
 
 
     datadbs    <- c("DATA_all", "DATA_Clear", "DATA_Cloud")
+    datadbs    <- c("DATA_all")
+
     szabins    <- unique(DATA_all$SZAbin)
     dayparts   <- unique(DATA_all$preNoon)
     gridsearch <- expand.grid(dbs     = datadbs,
@@ -1205,14 +1207,14 @@ if (havetorun) {
 
         ##plots
         plot(DDaily$Date, DDaily$GLB_att)
-        title(paste("Daily", dd$dbs))
+        title(paste("Daily", dd$dbs, dd$SZA))
         # abline(lm(as.numeric(Date) ~ GLB_att, data = DDaily),   col = "red"  )
         abline(lm(GLB_att ~ as.numeric(Date), data = DDaily),   col = "green")
         abline(a = lmD_inv$intercept,
                b = lmD_inv$slope, col = "blue", lty = 3)
 
         plot(DMonthly$Date, DMonthly$GLB_att)
-        title(paste("Monthly", dd$dbs))
+        title(paste("Monthly", dd$dbs, dd$SZA))
         # abline(lm(as.numeric(Date) ~ GLB_att, data = DMonthly), col = "red"  )
         abline(lm(GLB_att ~ as.numeric(Date), data = DMonthly), col = "green")
         abline(a = lmM_inv$intercept,
@@ -1220,7 +1222,7 @@ if (havetorun) {
         #
         #
         plot(DYearly$Year, DYearly$GLB_att)
-        title(paste("Yearly", dd$dbs))
+        title(paste("Yearly", dd$dbs, dd$SZA))
         # abline(lm(as.numeric(Year) ~ GLB_att, data = DYearly),  col = "red"  )
         abline(lm(GLB_att ~ as.numeric(Year), data = DYearly),  col = "green")
         abline(a = lmY_inv$intercept,
@@ -1347,7 +1349,6 @@ if (havetorun) {
 
 
 
-stop()
 
 
     ## Yearly SZA means --------------------------------------------------------
