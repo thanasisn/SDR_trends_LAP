@@ -210,7 +210,6 @@ rm(data_list)
 #+ LongtermTrends, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
 vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att")
-# dbs  <- c("ALL_1_daily_DEseas")
 
 dbs         <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
@@ -320,10 +319,10 @@ for (DBn in dbs) {
 
 
 
+
 #+ LongtermTrendsRuMe, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
 vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att")
-# dbs  <- c("ALL_1_daily_DEseas")
 
 dbs         <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
@@ -354,7 +353,6 @@ for (DBn in dbs) {
                             ))
 
             par("mar" = c(3, 4, 2, 1))
-
 
             ## plot data
             plot(dataset$Date, dataset[[avar]],
@@ -413,6 +411,67 @@ for (DBn in dbs) {
 #+ echo=F, include=F
 
 
+#+ LongtermSeasonal, echo=F, include=T, results="asis"
+# vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
+vars <- c("DIR_att_seas", "GLB_att_seas")
+
+dbs         <- c(  "ALL_1_daily_DESEAS",
+                   "CLEAR_1_daily_DESEAS",
+                   "CLOUD_1_daily_DESEAS")
+rmw_days <- 15
+
+for (DBn in dbs) {
+    DB <- get(DBn)
+    cat("\n\\newpage\n")
+    cat("\n#### Climatology on", translate(DBn), "data with", rmw_days, "d running mean\n\n" )
+
+    for (avar in vars) {
+        dataset <- DB
+        dataset <- unique(dataset[, .( doy, get(avar))])
+        setorder(dataset, doy)
+
+        if (all(is.na(dataset$V2))) next()
+
+        par("mar" = c(3, 4, 2, 1))
+
+        ## plot data
+        plot(dataset$doy, dataset$V2,
+             pch  = ".",
+             col  = get(paste0(c("col",
+                                 unlist(strsplit(avar, split = "_"))[1:2]),
+                               collapse = "_")),
+             cex      = 2,
+             main     = paste("Climatology", translate(DBn), translate(avar)),
+             cex.main = 0.8,
+             yaxt     = "n",
+             xlab     = "",
+             ylab     = bquote("SDR")
+        )
+        axis(2, pretty(dataset$V2), las = 2 )
+
+
+
+        ## Running mean
+        rm <- frollmean(dataset$V2,
+                        15,
+                        na.rm = TRUE,
+                        algo  = "exact",
+                        align = "center")
+
+        # points(dataset$Date, rm, col = "red", cex = 0.5)
+        lines(dataset$doy, rm, col = "red", lwd = 1.5)
+
+        ## LOESS curve
+        vec <- !is.na(dataset$V2)
+        FTSE.lo3 <- loess.as(dataset$doy[vec], dataset$V2[vec],
+                             degree = 1,
+                             criterion = LOESS_CRITERIO, user.span = NULL, plot = F)
+        FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$doy)
+        lines(dataset$doy, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
+
+    }
+}
+#+ echo=F, include=F
 
 
 

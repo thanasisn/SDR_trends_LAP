@@ -181,73 +181,23 @@ ccex_sbs <- 1.3
 
 
 
-
-
-
-
-
-##  SZA trends for all year  ---------------------------------------------------
+##  Daily SZA trends for all year  ---------------------------------------------------
 
 #'
 #' \FloatBarrier
 #'
-#' ## Plot of SZA trends
+#' ## Daily SZA trends
 #'
 #+ echo=F, include=F
 
 
 ## __ Calculate SZA ~ Year -----------------------------------------------------
 
-#  vars <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
+vars <- c("DIR_att_des", "GLB_att_des")
 
-## !! Deseasonalized values are non meaningful !!
-# vars <- c("DIR_att_des", "GLB_att_des")
-#
-# dbs  <- c(  "ALL_2_daily_DESEAS",
-#           "CLEAR_2_daily_DESEAS",
-#           "CLOUD_2_daily_DESEAS")
-
-# gather <- data.frame()
-#
-# for (DBn in dbs) {
-#     DB <- get(DBn)
-#     for (avar in vars) {
-#         for (anoon in unique( DB$preNoon)) {
-#             for (asza in unique( DB$SZA )) {
-#
-#                 dataset <- DB[ SZA == asza & preNoon == anoon ]
-#
-#                 if (sum(!is.na(dataset[[avar]])) <= 1) next()
-#
-#                 # lm1 <- lm( dataset[[avar]] ~ dataset$Date )
-#                 #
-#                 # gather <- rbind(gather,
-#                 #                 data.frame(
-#                 #                     linear_fit_stats(lm1),
-#                 #                     preNoon   = anoon,
-#                 #                     SZA       = asza,
-#                 #                     DATA      = DBn,
-#                 #                     var       = avar,
-#                 #                     N         = sum(!is.na(dataset[[avar]]))
-#                 #                 ))
-#
-#                 plot(dataset$doy, dataset[[sub("_des", "_seas", avar)]], cex = 1, pch = 1 )
-#                 title(main = paste("Seasonal values", DBn, asza, sub("_des", "_seas", avar)))
-#             }
-#         }
-#     }
-# }
-#+ echo=F, include=F
-
-
-
-## Use the actual SDR for trends !! --------------------------------------------
-vars <- c("DIR_att", "GLB_att")
-vars <- c("GLB_att")
-
-dbs  <- c(  "ALL_2_daily_mean",
-          "CLEAR_2_daily_mean",
-          "CLOUD_2_daily_mean")
+dbs  <- c(  "ALL_2_daily_DESEAS",
+          "CLEAR_2_daily_DESEAS",
+          "CLOUD_2_daily_DESEAS")
 
 gather <- data.frame()
 
@@ -261,64 +211,108 @@ for (DBn in dbs) {
 
                 if (sum(!is.na(dataset[[avar]])) <= 1) next()
 
-                lm1 <- lm( dataset[[avar]] ~ as.numeric(dataset$Date) )
-                # lm1 <- lm( as.numeric(dataset$Date) ~ dataset[[avar]] )
-
-                plot(dataset$Date, dataset[[avar]])
-                abline(lm1, col = 2)
+                lm1 <- lm( dataset[[avar]] ~ dataset$Date )
 
                 gather <- rbind(gather,
                                 data.frame(
                                     linear_fit_stats(lm1),
-                                    preNoon   = anoon,
-                                    SZA       = asza,
-                                    DATA      = DBn,
-                                    var       = avar,
-                                    N         = sum(!is.na(dataset[[avar]]))
-                                )
-                )
+                                    preNoon = anoon,
+                                    SZA     = asza,
+                                    DATA    = DBn,
+                                    var     = avar,
+                                    N       = sum(!is.na(dataset[[avar]]))
+                                ))
+
+                plot(dataset$doy, dataset[[sub("_des", "_seas", avar)]], cex = 1, pch = 1 )
+                title(main = paste("Seasonal values", DBn, asza, sub("_des", "_seas", avar)))
             }
         }
     }
 }
+#+ echo=F, include=F
 gather    <- data.table(gather)
 szatrends <- data.table(gather)
 setorder(szatrends, SZA)
 
 
-for (adata in unique(gather$DATA)) {
-    subd <- gather[DATA == adata]
-    plot(subd$SZA, subd$slope)
-}
 
-for (adata in unique(gather$DATA)) {
-    subd <- gather[DATA == adata]
-    plot(subd$SZA, 100 * subd$slope / Days_of_year)
-}
-
-
-gather2 <- data.table()
-for (asza in unique(ALL_2_daily_mean$SZA)) {
-    for (pday in unique(ALL_2_daily_mean$preNoon)) {
-        subdata <- ALL_2_daily_mean[SZA == asza & preNoon == pday]
-        if (sum(!is.na(subdata$GLB_att)) <= 1) next()
-
-        llm1    <- lm(GLB_att ~ Date, data = subdata)
-        # llm1    <- lm(GLB_att ~ Date, data = subdata)
-        ll1     <- coefficients(llm1)
-
-        plot(subdata$Date, subdata$GLB_att)
-        abline(llm1, col = 2)
-        title(paste("Daily mean", asza, pday))
-
-        gather2 <- rbind(gather2,
-                         data.frame(t(ll1),
-                                    SZA = asza,
-                                    preNoon = pday)
-        )
-    }
-}
-plot(gather2$SZA, gather2$Date)
+# ## Use the actual SDR for trends !! --------------------------------------------
+# vars <- c("DIR_att", "GLB_att")
+# vars <- c("GLB_att")
+#
+# dbs  <- c(  "ALL_2_daily_mean",
+#           "CLEAR_2_daily_mean",
+#           "CLOUD_2_daily_mean")
+#
+# gather <- data.frame()
+#
+# for (DBn in dbs) {
+#     DB <- get(DBn)
+#     for (avar in vars) {
+#         for (anoon in unique( DB$preNoon)) {
+#             for (asza in unique( DB$SZA )) {
+#
+#                 dataset <- DB[ SZA == asza & preNoon == anoon ]
+#
+#                 if (sum(!is.na(dataset[[avar]])) <= 1) next()
+#
+#                 lm1 <- lm( dataset[[avar]] ~ as.numeric(dataset$Date) )
+#                 # lm1 <- lm( as.numeric(dataset$Date) ~ dataset[[avar]] )
+#
+#                 plot(dataset$Date, dataset[[avar]])
+#                 abline(lm1, col = 2)
+#
+#                 gather <- rbind(gather,
+#                                 data.frame(
+#                                     linear_fit_stats(lm1),
+#                                     preNoon   = anoon,
+#                                     SZA       = asza,
+#                                     DATA      = DBn,
+#                                     var       = avar,
+#                                     N         = sum(!is.na(dataset[[avar]]))
+#                                 )
+#                 )
+#             }
+#         }
+#     }
+# }
+# gather    <- data.table(gather)
+# szatrends <- data.table(gather)
+# setorder(szatrends, SZA)
+#
+#
+# for (adata in unique(gather$DATA)) {
+#     subd <- gather[DATA == adata]
+#     plot(subd$SZA, subd$slope)
+# }
+#
+# for (adata in unique(gather$DATA)) {
+#     subd <- gather[DATA == adata]
+#     plot(subd$SZA, 100 * subd$slope / Days_of_year)
+# }
+#
+# gather2 <- data.table()
+# for (asza in unique(ALL_2_daily_mean$SZA)) {
+#     for (pday in unique(ALL_2_daily_mean$preNoon)) {
+#         subdata <- ALL_2_daily_mean[SZA == asza & preNoon == pday]
+#         if (sum(!is.na(subdata$GLB_att)) <= 1) next()
+#
+#         llm1    <- lm(GLB_att ~ Date, data = subdata)
+#         # llm1    <- lm(GLB_att ~ Date, data = subdata)
+#         ll1     <- coefficients(llm1)
+#
+#         plot(subdata$Date, subdata$GLB_att)
+#         abline(llm1, col = 2)
+#         title(paste("Daily mean", asza, pday))
+#
+#         gather2 <- rbind(gather2,
+#                          data.frame(t(ll1),
+#                                     SZA = asza,
+#                                     preNoon = pday)
+#         )
+#     }
+# }
+# plot(gather2$SZA, gather2$Date)
 #
 # gather3 <- data.table()
 # for (asza in unique(ALL_2_monthly_mean$SZA)) {
@@ -340,52 +334,46 @@ plot(gather2$SZA, gather2$Date)
 # }
 # plot(gather3$SZA, gather3$Date)
 #
-
-gather4 <- data.table()
-for (asza in unique(ALL_2_yearly_mean$SZA)) {
-    for (pday in unique(ALL_2_yearly_mean$preNoon)) {
-        subdata <- ALL_2_yearly_mean[SZA == asza & preNoon == pday]
-
-        llm1    <- lm(GLB_att ~ Year, data = subdata)
-        ll1     <- coefficients(llm1)
-
-        plot(subdata$Year, subdata$GLB_att)
-        abline(llm1, col = 2)
-        title(paste("Yearly mean", asza, pday))
-
-        gather4 <- rbind(gather4,
-                         data.frame(t(ll1),
-                                    SZA = asza,
-                                    preNoon = pday)
-        )
-    }
-}
-plot(gather4$SZA, gather4$Year)
-
-
-
-
-
-
-for (aDATA in unique( szatrends$DATA )) {
-        pp <- szatrends[DATA == aDATA ]
-
-        plot(pp$SZA, pp$slope * Days_of_year)
-        title(paste(aDATA, mean(100 * pp$slope / Days_of_year, na.rm = T), median(100 * pp$slope / Days_of_year, na.rm = T) ))
-
-}
-
+#
+# gather4 <- data.table()
+# for (asza in unique(ALL_2_yearly_mean$SZA)) {
+#     for (pday in unique(ALL_2_yearly_mean$preNoon)) {
+#         subdata <- ALL_2_yearly_mean[SZA == asza & preNoon == pday]
+#
+#         llm1    <- lm(GLB_att ~ Year, data = subdata)
+#         ll1     <- coefficients(llm1)
+#
+#         plot(subdata$Year, subdata$GLB_att)
+#         abline(llm1, col = 2)
+#         title(paste("Yearly mean", asza, pday))
+#
+#         gather4 <- rbind(gather4,
+#                          data.frame(t(ll1),
+#                                     SZA = asza,
+#                                     preNoon = pday)
+#         )
+#     }
+# }
+# plot(gather4$SZA, gather4$Year)
+#
+# for (aDATA in unique( szatrends$DATA )) {
+#         pp <- szatrends[DATA == aDATA ]
+#
+#         plot(pp$SZA, pp$slope * Days_of_year)
+#         title(paste(aDATA, mean(100 * pp$slope / Days_of_year, na.rm = T), median(100 * pp$slope / Days_of_year, na.rm = T) ))
+#
+# }
 
 
 
 
 ## covert to trend per year
-# szatrends[, slope    := slope    * Days_of_year ]
-# szatrends[, slope.sd := slope.sd * Days_of_year ]
+szatrends[, slope    := slope    * Days_of_year ]
+szatrends[, slope.sd := slope.sd * Days_of_year ]
 
-szatrends[, slope    := 100 * slope    / Days_of_year ]
-szatrends[, slope.sd := 100 * slope.sd / Days_of_year ]
-
+## For raw values
+# szatrends[, slope    := 100 * slope    / Days_of_year ]
+# szatrends[, slope.sd := 100 * slope.sd / Days_of_year ]
 
 
 ## set some plot option for data
@@ -424,7 +412,7 @@ wecare <- grep("^slope|^N",  names(szatrends), ignore.case = T, value = T)
 wecare <- grep("^slope\\.t", wecare, ignore.case = T, value = T, invert = T)
 wecare <- grep("slope\\.sd", wecare, ignore.case = T, value = T, invert = T)
 
-vars <- c("GLB_att")
+vars <- c("GLB_att_des")
 
 ## TODO separate plots by direct global
 
@@ -563,6 +551,17 @@ for (avar in vars) {
 
 
 
+
+## TODO
+## monthly plot
+## seasonal plot
+
+
+
+
+
+
+
 ##  SZA trends for season of year  ---------------------------------------------
 
 #'
@@ -576,11 +575,11 @@ for (avar in vars) {
 ## !! Deseasonalized trend is meaningless for SZA !!
 # vars        <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
 
-vars        <- c("GLB_att")
+vars        <- c("GLB_att_des")
 
-dbs         <- c(  "ALL_2_bySeason_daily_mean",
-                 "CLEAR_2_bySeason_daily_mean",
-                 "CLOUD_2_bySeason_daily_mean")
+dbs         <- c(  "ALL_2_bySeason_daily_DESEAS",
+                 "CLEAR_2_bySeason_daily_DESEAS",
+                 "CLOUD_2_bySeason_daily_DESEAS")
 seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 gather_seas <- data.frame()
 
@@ -624,17 +623,17 @@ setorder(szatrends_seas, SZA)
 
 
 ## covert to trend per year
-# szatrends_seas[, slope    := slope    * Days_of_year]
-# szatrends_seas[, slope.sd := slope.sd * Days_of_year]
+szatrends_seas[, slope    := slope    * Days_of_year]
+szatrends_seas[, slope.sd := slope.sd * Days_of_year]
 
-szatrends_seas[, slope    := 100 * slope    / Days_of_year]
-szatrends_seas[, slope.sd := 100 * slope.sd / Days_of_year]
+# szatrends_seas[, slope    := 100 * slope    / Days_of_year]
+# szatrends_seas[, slope.sd := 100 * slope.sd / Days_of_year]
 
 
 ## define plot colors
-szatrends_seas[ var == "DIR_att",    col := col_DIR_att   ]
-szatrends_seas[ var == "GLB_att",    col := col_GLB_att   ]
-szatrends_seas[ var == "DIR_transp", col := col_DIR_transp]
+szatrends_seas[ var == "DIR_att_des", col := col_DIR_att   ]
+szatrends_seas[ var == "GLB_att_des", col := col_GLB_att   ]
+szatrends_seas[ var == "DIR_transp",  col := col_DIR_transp]
 szatrends_seas[ preNoon == T, pch := pch_am ]
 szatrends_seas[ preNoon == F, pch := pch_pm ]
 
@@ -811,11 +810,11 @@ for (ase in seasons) {
 ## __ by season in a tight grid ----------------------------------------------
 #+ SzaTrendsSeasTogether, echo=F, include=T
 {
-    vars        <- c("GLB_att")
+    vars        <- c("GLB_att_des")
     avar        <- vars[1]
-    dbs         <- c(  "ALL_2_bySeason_daily_mean",
-                       "CLEAR_2_bySeason_daily_mean",
-                       "CLOUD_2_bySeason_daily_mean")
+    dbs         <- c(  "ALL_2_bySeason_daily_DESEAS",
+                     "CLEAR_2_bySeason_daily_DESEAS",
+                     "CLOUD_2_bySeason_daily_DESEAS")
     Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
 
     ## the order must be predefined to match
@@ -940,7 +939,7 @@ for (ase in seasons) {
             ylim <- range(0, szatrends_seas$slope, na.rm = T)
             # ylim <- c(-2.5, 4.5)
 
-            ylim <- range(szatrends_seas[slope.p < p_lim & SZA < 75, slope] , na.rm = T)
+            # ylim <- range(szatrends_seas[slope.p < p_lim & SZA < 75, slope] , na.rm = T)
 
 
             pam  <- subdata[ preNoon == T ]
