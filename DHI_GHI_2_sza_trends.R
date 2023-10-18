@@ -193,7 +193,7 @@ ccex_sbs <- 1.3
 
 ## __ Calculate SZA ~ Date -----------------------------------------------------
 
-vars <- c("DIR_att_des", "GLB_att_des")
+vars <- c("GLB_att_des")
 
 dbs  <- c(  "ALL_2_daily_DESEAS",
           "CLEAR_2_daily_DESEAS",
@@ -233,6 +233,7 @@ for (DBn in dbs) {
 gather    <- data.table(gather)
 szatrends <- data.table(gather)
 setorder(szatrends, SZA)
+
 
 
 
@@ -387,7 +388,6 @@ vars <- c("GLB_att_des")
 ## TODO separate plots by direct global
 
 #+ SzaTrends, echo=F, include=T, results = "asis"
-## DIR - GLB - transp
 for (avar in vars) {
     ## ALL - CS
     for (type in unique(szatrends$DATA)) {
@@ -423,7 +423,6 @@ for (avar in vars) {
             subdata[ slope.p >= p_lim & preNoon == TRUE,  pch :=  1 ]
             subdata[ slope.p  < p_lim & preNoon == FALSE, pch := 17 ]
             subdata[ slope.p >= p_lim & preNoon == FALSE, pch :=  2 ]
-
 
             ## plot only under accepted p-value limit
             # subdata <- subdata[ slope.p < p_lim, ]
@@ -521,10 +520,74 @@ for (avar in vars) {
 
 
 
+# __ Plot daily climatology --------------------------------------------------
+#+ SzaClimaMonthly, echo=F, include=T, results = "asis"
+vars <- c("GLB_att_seas")
+
+dbs  <- c(  "ALL_2_daily_DESEAS",
+          "CLEAR_2_daily_DESEAS",
+          "CLOUD_2_daily_DESEAS")
+
+for (DBn in dbs) {
+    DB <- get(DBn)
+
+    cat("\n\\newpage\n\n")
+    cat("\n#### Daily SZA Climatology", translate(type), translate(avar), "\n\n")
+
+    for (avar in vars) {
+        for (asza in sort(unique( DB$SZA ))) {
+
+            par("mar" = c(4, 4, 2, 2))
+
+            dataset <- DB[ SZA == asza ]
+            ## get only one season
+            dataset <- dataset[!duplicated(dataset[ , c("SZA", "doy", "preNoon")]), ]
+
+            if (sum(!is.na(dataset[[avar]])) <= 1) next()
+
+            ylim <- range(0, DB[[avar]], na.rm = T)
+            xlim <- range(DB$doy)
+
+            pam  <- dataset[preNoon == TRUE ]
+            ppm  <- dataset[preNoon == FALSE]
+
+            ## empty plot
+            plot(1, type = "n",
+                 xlab = "",
+                 ylab = avar,
+                 xlim = xlim,
+                 ylim = ylim)
+
+            ## morning lines
+            points(pam$doy, pam[[avar]],
+                   col  = 2,
+                   pch  = pam$pch,
+                   cex  = 3)
+
+            points(ppm$doy, ppm[[avar]],
+                   col  = 3,
+                   pch  = ppm$pch,
+                   cex  = 3)
+
+            title(main = paste("Seasonal ", DBn, asza, sub("_des", "_seas", avar)))
+
+            legend("top",
+                   legend = c("Morning", "Evening"),
+                   col    = c( 2,  3),
+                   pch    = c(16, 17), ncol = 2, bty = "n",
+                   cex    = ccex)
+
+        }
+    }
+}
+
+
+
+
 
 ## TODO
 ## monthly plot
-## seasonal plot
+## monthly seasonal plot
 
 
 
@@ -607,7 +670,6 @@ vars <- c("GLB_att_des")
 ## TODO separate plots by direct global
 
 #+ SzaTrendsMonthly, echo=F, include=T, results = "asis"
-## DIR - GLB - transp
 for (avar in vars) {
     ## ALL - CS
     for (type in unique(szatrends_M$DATA)) {
@@ -736,6 +798,68 @@ for (avar in vars) {
             cat("\n\n")
         }
         par(mfrow = c(1, 1)) ## just reset layout
+    }
+}
+
+
+# __ Plot Monthly climatology --------------------------------------------------
+#+ SzaClimaMonthly, echo=F, include=T, results = "asis"
+vars <- c("GLB_att_seas")
+
+dbs  <- c(  "ALL_2_monthly_DESEAS",
+            "CLEAR_2_monthly_DESEAS",
+            "CLOUD_2_monthly_DESEAS")
+
+for (DBn in dbs) {
+    DB <- get(DBn)
+
+    cat("\n\\newpage\n\n")
+    cat("\n#### Monthly SZA Climatology", translate(type), translate(avar), "\n\n")
+
+    for (avar in vars) {
+        for (asza in sort(unique( DB$SZA ))) {
+
+            par("mar" = c(4, 4, 2, 2))
+
+            dataset <- DB[ SZA == asza ]
+            ## get only one season
+            dataset <- dataset[!duplicated(dataset[ , c("SZA", "Month", "preNoon")]), ]
+
+            if (sum(!is.na(dataset[[avar]])) <= 1) next()
+
+            ylim <- range(0, DB[[avar]], na.rm = T)
+            xlim <- range(1:12)
+
+            pam  <- dataset[preNoon == TRUE ]
+            ppm  <- dataset[preNoon == FALSE]
+
+            ## empty plot
+            plot(1, type = "n",
+                 xlab = "",
+                 ylab = avar,
+                 xlim = xlim,
+                 ylim = ylim)
+
+            ## morning lines
+            points(pam$Month, pam[[avar]],
+                   col  = 2,
+                   pch  = pam$pch,
+                   cex  = 3)
+
+            points(ppm$Month, ppm[[avar]],
+                   col  = 3,
+                   pch  = ppm$pch,
+                   cex  = 3)
+
+            title(main = paste("Seasonal ", DBn, asza, sub("_des", "_seas", avar)))
+
+            legend("bottom",
+                   legend = c("Morning", "Evening"),
+                   col    = c( 2,  3),
+                   pch    = c(16, 17), ncol = 2, bty = "n",
+                   cex    = ccex)
+
+        }
     }
 }
 
@@ -1241,9 +1365,6 @@ for (ase in seasons) {
                        ncol   = 1,
                        bty = "n")
 
-
-
-
             }
 
 
@@ -1298,6 +1419,547 @@ for (ase in seasons) {
 #+ echo=F, include=F
 
 
+
+
+
+
+
+
+
+## ## TODO
+##
+##
+##
+##
+## ##  SZA trends for season of year from monthly -----------------------------------
+##
+## #'
+## #' ## Plot of SZA trends for each season of year from monthly
+## #'
+## #+ echo=F, include=F
+##
+##
+## ## __ Calculate SZA ~ Season stats  --------------------------------------------
+##
+## # vars        <- c("DIR_att_des", "GLB_att_des", "DIR_transp_des")
+## vars        <- c("GLB_att_des")
+##
+## dbs         <- c(  "ALL_2_bySeason_monthly_DESEAS",
+##                  "CLEAR_2_bySeason_monthly_DESEAS",
+##                  "CLOUD_2_bySeason_monthly_DESEAS")
+## seasons     <- c("Winter", "Spring", "Summer", "Autumn")
+## gather_seas <- data.frame()
+##
+## for (DBn in dbs) {
+##     DB <- get(DBn)
+##
+##     stopifnot( !any(is.na(DB$Season)) )
+##
+##     for (ase in seasons) {
+##         for (avar in vars) {
+##             for (anoon in unique( DB$preNoon)) {
+##                 for (asza in unique( DB$SZA )) {
+##
+##                     dataset <- DB[ SZA == asza & preNoon == anoon & Season == ase ]
+##
+##                     if (sum(!is.na(dataset[[avar]])) <= 1) next()
+##
+##                     lm1 <- lm(dataset[[avar]] ~ dataset$Date)
+##
+##                     gather_seas <- rbind(gather_seas,
+##                                          data.frame(
+##                                              linear_fit_stats(lm1),
+##                                              preNoon   = anoon,
+##                                              SZA       = asza,
+##                                              DATA      = DBn,
+##                                              var       = avar,
+##                                              Season    = ase,
+##                                              N         = sum(!is.na(dataset[[avar]]))
+##                                          ))
+##                 }
+##             }
+##         }
+##     }
+## }
+## #+ echo=F, include=F
+## hist(gather_seas$N[gather_seas$N > 50], breaks = 100)
+##
+## szatrends_seas <- data.table(gather_seas)
+## setorder(szatrends_seas, SZA)
+##
+##
+## ## covert to trend per year
+## szatrends_seas[, slope    := slope    * Days_of_year]
+## szatrends_seas[, slope.sd := slope.sd * Days_of_year]
+##
+## # szatrends_seas[, slope    := 100 * slope    / Days_of_year]
+## # szatrends_seas[, slope.sd := 100 * slope.sd / Days_of_year]
+##
+##
+## ## define plot colors
+## szatrends_seas[ var == "DIR_att_des", col := col_DIR_att   ]
+## szatrends_seas[ var == "GLB_att_des", col := col_GLB_att   ]
+## szatrends_seas[ var == "DIR_transp",  col := col_DIR_transp]
+## szatrends_seas[ preNoon == T, pch := pch_am ]
+## szatrends_seas[ preNoon == F, pch := pch_pm ]
+##
+##
+## # hist(szatrends_seas[DATA == dbs[1],N],  breaks = 100)
+## # hist(szatrends_seas[DATA == dbs[2],N],  breaks = 100)
+## # hist(szatrends_seas[DATA == dbs[3],N],  breaks = 100)
+## # hist(szatrends_seas[var  == vars[1],N], breaks = 100)
+## # hist(szatrends_seas[var  == vars[2],N], breaks = 100)
+##
+## # szatrends_seas <- szatrends_seas[ N > 50]
+##
+## # plot(szatrends_seas$SZA, szatrends_seas$N)
+##
+## # test <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "DIR_att_des" ]
+## # plot(test$SZA, test$N, pch = 19)
+##
+##
+##
+## # test1 <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "DIR_att_des" ]
+## # test2 <- szatrends_seas[ DATA == "CLEAR_2_bySeason_daily_DESEAS" & var == "GLB_att_des" ]
+## # plot(test1$SZA, test1$N, pch = 19)
+## # plot(test2$SZA, test2$N, pch = 19)
+##
+##
+##
+##
+## ## __ Plot SZA ~ Season stats  -------------------------------------------------
+##
+## ## stats vars to plot
+## wecare <- grep( "^slope|^N", names(szatrends_seas), ignore.case = T, value = T)
+## wecare <- grep("^slope\\.t", wecare, ignore.case = T, value = T, invert = T)
+## wecare <- grep("slope\\.sd", wecare, ignore.case = T, value = T, invert = T)
+##
+## wecare <- "slope"
+##
+## # FIGURESGRID <- TRUE
+##
+## #+ SzaTrendsSeas, echo=F, include=T, results = "asis"
+## ## Winter - Summer ....
+## for (ase in seasons) {
+##     ## ALL - Clear sky
+##     for (type in unique(szatrends_seas$DATA)) {
+##         ## DIR - GLB - transp
+##         for (avar in unique(szatrends_seas$var)) {
+##
+##             cat("\n\\newpage\n\n")
+##             cat(paste("###",ase, translate(type), translate(avar),"\n\n"))
+##
+##             ## plot in a grid
+##             if (FIGURESGRID) {
+##                 par(mfrow = c(ceiling(length(wecare)/2), 2))
+##             }
+##
+##
+##             ## statistic variable
+##             for (awe in wecare) {
+##                 awename <- gsub("(\\D)(\\D+)", "\\U\\1\\L\\2", sub("\\."," ", awe), perl = TRUE)
+##
+##                 par("mar" = c(4,4,1,0))
+##
+##                 ## limit plot p-values
+##                 p_lim     <- 0.05
+##
+##                 ## select All/CS  DIR/GLB/trans winter/summer
+##                 subdata <- szatrends_seas[ DATA   == type &
+##                                                var    == avar &
+##                                                Season == ase    , ]
+##
+##                 ## set symbols for plotting
+##                 subdata[ slope.p  < p_lim & preNoon == TRUE,  pch := 16 ]
+##                 subdata[ slope.p >= p_lim & preNoon == TRUE,  pch :=  1 ]
+##                 subdata[ slope.p  < p_lim & preNoon == FALSE, pch := 17 ]
+##                 subdata[ slope.p >= p_lim & preNoon == FALSE, pch :=  2 ]
+##
+##
+##                 # xlim <- range( subdata$SZA,        na.rm = T )
+##                 ## use same axis for all
+##                 xlim <- range(szatrends_seas$SZA, na.rm = T)
+##                 ylim <- range(subdata[[awe]],     na.rm = T)
+##
+##                 ## test always show zero on plots
+##                 ylim <- range(0, subdata[[awe]], na.rm = T)
+##
+##
+##                 pam  <- subdata[ preNoon == T ]
+##                 ppm  <- subdata[ preNoon == F ]
+##
+##
+##                 ccex <- ccex_sbs
+##                 par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
+##
+##                 if (DRAFT == TRUE) {
+##                     par("mar" = c(4,   5,   2,   2))
+##                 } else {
+##                     par("mar" = c(4.5, 4.5, 0.5, 0.5))
+##                 }
+##
+##
+##                 plot(1, type = "n",
+##                      xlab = "",
+##                      ylab = awename,
+##                      xlim = xlim,
+##                      ylim = ylim,
+##                      yaxt = "n")
+##
+##                 ## y axis
+##                 axis(2, pretty(ylim), las = 2)
+##
+##                 ## x axis
+##                 axis(1, at = seq(xlim[1], xlim[2]), labels = NA,
+##                      tcl = -0.25)
+##                 title(xlab = bquote("Solar zenith angle (SZA)"),
+##                       line = 2.5)
+##
+##                 ## zero line
+##                 abline(h = 0, lty = 3)
+##
+##                 ## test for some plots
+##                 if (grepl("CLEAR", type, ignore.case = T)) typeP <- "Clear Sky"
+##                 if (grepl("ALL",   type, ignore.case = T)) typeP <- "All Sky"
+##
+##                 title(paste(ase, awename, typeP, translate(avar)), cex.main = 0.8,)
+##
+##                 ## morning lines
+##                 lines(pam$SZA, pam[[awe]],
+##                       col  = 2,
+##                       type = "c",
+##                       lwd  = ccex,
+##                       cex  = 0.8)
+##                 ## morning points
+##                 points(pam$SZA, pam[[awe]],
+##                        pch = pam$pch,
+##                        col = 2,
+##                        cex = 0.8)
+##
+##                 ## evening lines
+##                 lines(ppm$SZA, ppm[[awe]],
+##                       col  = 3,
+##                       type = "c",
+##                       lwd  = ccex,
+##                       cex  = 0.8)
+##                 ## evening points
+##                 points(ppm$SZA, ppm[[awe]],
+##                        pch = ppm$pch,
+##                        col = 3,
+##                        cex = 0.8)
+##
+##                 # legend("top",
+##                 #        legend = c("Morning", "Evening"),
+##                 #        # col    = c(unique(pam$col), unique(ppm$col)),
+##                 #        col    = c( 2,  3),
+##                 #        pch    = c(16, 17), ncol = 2, bty = "n",
+##                 #        cex    = ccex)
+##
+##                 ## reset fonts
+##                 ccex <- 1
+##                 par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
+##
+##                 legend("bottom",
+##                        legend = c("Morning",       "Evening"),
+##                        # col    = c(unique(pam$col), unique(ppm$col)),
+##                        col    = c(2, 3),
+##                        pch    = c(16, 17), ncol = 2, bty = "n")
+##             }
+##             par(mfrow = c(1, 1)) ## just reset layout
+##         }
+##     }
+## }
+##
+##
+##
+## ## __ by season in a tight grid ----------------------------------------------
+## #+ SzaTrendsSeasTogether, echo=F, include=T
+## {
+##     vars        <- c("GLB_att_des")
+##     avar        <- vars[1]
+##     dbs         <- c(  "ALL_2_bySeason_daily_DESEAS",
+##                        "CLEAR_2_bySeason_daily_DESEAS",
+##                        "CLOUD_2_bySeason_daily_DESEAS")
+##     Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
+##
+##     ## the order must be predefined to match
+##     expanded <- expand.grid(Dataset = dbs, Seasons = Seasons, stringsAsFactors = FALSE)
+##
+##     nf <- layout(
+##         matrix(1:30, ncol = 5, byrow = TRUE),
+##         widths  = c(0.3,   1,1,1, 0.1),
+##         heights = c(0.2, 1,1,1,1, 0.5)
+##     )
+##     layout.show(nf)
+##
+##     # 1
+##     par("mar"=c(0,0,0,0))
+##     plot.new()
+##     # 2
+##     plot.new()
+##     text(x = 0.5, y = 0.5,
+##          adj  = c(0.6,0.5),
+##          "All skies",    cex = 0.9, font = 2)
+##
+##     # 3
+##     plot.new()
+##     text(x = 0.5, y = 0.5,
+##          adj  = c(0.5,0.5),
+##          "Clear skies",  cex = 0.9, font = 2)
+##
+##     # 4
+##     plot.new()
+##     text(x = 0.5, y = 0.5,
+##          adj  = c(0.5,0.5),
+##          "Cloudy skies", cex = 0.9, font = 2)
+##
+##     # 5
+##     plot.new()
+##
+##     for (i  in 6:25) {
+##
+##         if (i == 6) {
+##             plot.new()
+##             text(x = 0.1, y = 0.5,
+##                  adj  = c(0.5, 0.5),
+##                  srt  = 90, "Winter", cex = 0.9, font = 2)
+##         }
+##         if (i == 10) {
+##             plot.new()
+##             text(x = 0.5, y = 0.5,
+##                  adj  = c(0.5, 0.5),
+##                  srt  = 90, "Winter", cex = 0.9, font = 2)
+##         }
+##
+##         if (i == 11) {
+##             plot.new()
+##             text(x = 0.1, y = 0.5,
+##                  adj  = c(0.5,0.5),
+##                  srt  = 90, "Summer", cex = 0.9, font = 2)
+##         }
+##         if (i == 15) {
+##             plot.new()
+##             text(x = 0.5, y = 0.5,
+##                  adj  = c(0.5,0.5),
+##                  srt  = 90, "Summer", cex = 0.9, font = 2)
+##         }
+##
+##
+##         if (i == 16) {
+##             plot.new()
+##             text(x = 0.1, y = 0.5,
+##                  adj  = c(0.5,0.5),
+##                  srt  = 90, "Autumn", cex = 0.9, font = 2)
+##         }
+##         if (i == 20) {
+##             plot.new()
+##             text(x = 0.5, y = 0.5,
+##                  adj  = c(0.5,0.5),
+##                  srt  = 90, "Autumn", cex = 0.9, font = 2)
+##         }
+##
+##
+##         if (i == 21) {
+##             plot.new()
+##             text(x = 0.1, y = 0.5,
+##                  adj  = c(0.5,0.5),
+##                  srt  = 90, "Spring", cex = 0.9, font = 2)
+##         }
+##         if (i == 25) {
+##             plot.new()
+##             text(x = 0.5, y = 0.5,
+##                  adj  = c(0.5,0.5),
+##                  srt  = 90, "Spring", cex = 0.9, font = 2)
+##         }
+##
+##
+##         ## actual plots
+##         if (! i %in% c(6,11,16,21,10,15,20,25)) {
+##
+##             par("mar"=c(0,0,0,0))
+##
+##             kk       <- expanded[1,]
+##             expanded <- expanded[-1, ]
+##
+##             ## limit plot p-values
+##             p_lim     <- 0.05
+##
+##             ## select All/CS  DIR/GLB/trans winter/summer
+##             subdata <- szatrends_seas[ DATA   == kk$Dataset &
+##                                            var    == avar &
+##                                            Season == kk$Seasons, ]
+##
+##             ## set symbols for plotting
+##             subdata[ slope.p  < p_lim & preNoon == TRUE,  pch := 16 ]
+##             subdata[ slope.p >= p_lim & preNoon == TRUE,  pch :=  1 ]
+##             subdata[ slope.p  < p_lim & preNoon == FALSE, pch := 17 ]
+##             subdata[ slope.p >= p_lim & preNoon == FALSE, pch :=  2 ]
+##
+##
+##             # xlim <- range( subdata$SZA,        na.rm = T )
+##             ## use same axis for all
+##             xlim <- range(szatrends_seas$SZA, na.rm = T)
+##
+##             ## test always show zero on plots
+##             ylim <- range(0, szatrends_seas$slope, na.rm = T)
+##             # ylim <- c(-2.5, 4.5)
+##
+##             ylim <- range(szatrends_seas[slope.p < p_lim & SZA < 75, slope] , na.rm = T)
+##
+##
+##             pam  <- subdata[ preNoon == T ]
+##             ppm  <- subdata[ preNoon == F ]
+##
+##             ## plot
+##             par("mar" = c(0, 0, 0.3, 0.3))
+##
+##
+##             plot(1, type = "n",
+##                  cex      = .6,
+##                  cex.axis = 0.8,
+##                  cex.lab  = 0.8,
+##                  cex.main = 0.9,
+##                  mgp      = c(2, 0.5, 0),
+##                  xaxt     = "n",
+##                  xlab     = "",
+##                  xlim     = xlim,
+##                  yaxt     = "n",
+##                  ylab     = "",
+##                  ylim     = ylim,
+##             )
+##
+##
+##             ## y axis
+##             if (i %in% c(7,12,17,22)){
+##                 axis(2, pretty(ylim), las = 2, cex.axis = 0.8)
+##             } else {
+##                 axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck =  0.03)
+##                 axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck = -0.03)
+##             }
+##
+##
+##             ## x axis
+##             if (i %in% c(22, 23, 24)) {
+##                 ## bottom row axis
+##                 axis(1, seq(5, 90, 5), las = 1, cex.axis = 0.8, line =  0,   labels = NA)
+##                 axis(1, seq(5, 90, 5), las = 1, cex.axis = 0.8, line = -0.5, tck = 0, lwd = 0)
+##                 ## minor ticks
+##                 axis(1, at = seq(5, 90, 1), labels = NA,
+##                      tcl = -0.25)
+##             } else {
+##                 ## major ticks
+##                 axis(1, seq(5, 90, 5), cex.axis = 0.8, labels = NA, tck =  0.03)
+##                 axis(1, seq(5, 90, 5), cex.axis = 0.8, labels = NA, tck = -0.03)
+##                 ## minor ticks
+##                 axis(1, at = seq(5, 90, 1), labels = NA,
+##                      tcl = -0.25/2)
+##                 axis(1, at = seq(5, 90, 1), labels = NA,
+##                      tcl = +0.25/2)
+##             }
+##
+##             ## zero line
+##             abline(h = 0, lty = 3)
+##
+##
+##             ## morning lines
+##             lines(pam$SZA, pam[[awe]],
+##                   col  = 2,
+##                   type = "c",
+##                   lwd  = ccex,
+##                   cex = 1)
+##             ## morning points
+##             points(pam$SZA, pam[[awe]],
+##                    pch = pam$pch,
+##                    col = 2,
+##                    cex = 1)
+##
+##             ## evening lines
+##             lines(ppm$SZA, ppm[[awe]],
+##                   col  = 3,
+##                   type = "c",
+##                   lwd  = ccex,
+##                   cex = 1)
+##             ## evening points
+##             points(ppm$SZA, ppm[[awe]],
+##                    pch = ppm$pch,
+##                    col = 3,
+##                    cex = 1)
+##
+##
+##             if (i %in% c(7)) {
+##                 # legend("top",
+##                 #        legend = c("Morning low stat. sig.", "Evening low stat. sig.",
+##                 #                   "Morning",                "Evening"),
+##                 #        col    = c(2, 3),
+##                 #        pt.cex = 1,
+##                 #        cex    = 0.8,
+##                 #        pch    = c(1, 2, 16, 17),
+##                 #        ncol   = 2,
+##                 #        bty = "n")
+##                 legend("topleft",
+##                        legend = c("Morning",                "Evening",
+##                                   "Morning low stat. sig.", "Evening low stat. sig."),
+##                        col    = c(2, 3),
+##                        pt.cex = 1,
+##                        cex    = 0.8,
+##                        pch    = c(16, 17, 1, 2),
+##                        ncol   = 1,
+##                        bty = "n")
+##
+##             }
+##
+##
+##             if (i %in% c(22, 23, 24)) {
+##                 mtext(text = bquote("Solar zenith angle (SZA)"),
+##                       cex  = 0.6,
+##                       side = 1,
+##                       line = 1.3)
+##             }
+##
+##
+##             if (i %in% c(7,12,17,22)) {
+##                 mtext(text = bquote("Trend [%/y]"),
+##                       cex  = 0.6,
+##                       side = 2,
+##                       line = 2.3)
+##             }
+##
+##
+##             par("mar" = c(0,0,0,0))
+##         }
+##
+##     }
+##
+##     # 1
+##     par("mar" = c(0,0,0,0))
+##     plot.new()
+##
+##     # 2
+##     plot.new()
+##     text(x = 0.5, y = 0.23,
+##          adj  = c(0.6,0.5),
+##          "All skies",    cex = 0.9, font = 2)
+##
+##     # 3
+##     plot.new()
+##     text(x = 0.5, y = 0.23,
+##          adj  = c(0.5, 0.5),
+##          "Clear skies",  cex = 0.9, font = 2)
+##
+##     # 4
+##     plot.new()
+##     text(x = 0.5, y = 0.23,
+##          adj  = c(0.5, 0.5),
+##          "Cloudy skies", cex = 0.9, font = 2)
+##
+##     # 5
+##     plot.new()
+##
+##     par(mfrow = c(1,1))
+## }
+## #+ echo=F, include=F
+##
+##
 
 #' **END**
 #+ include=T, echo=F
