@@ -51,7 +51,7 @@ common_data_14           <- "./data/common_data_14.Rda"
 common_data_14_2         <- "./data/common_data_14_2.Rda"
 variables_fl             <- "./DHI_GHI_0_variables.R"
 data_procsess_fl         <- "./DHI_GHI_0_data_input.R"
-raw_input_data           <- "./data/Raw_Input.Rda"
+raw_input_data           <- "./data/Raw_Input.Rds"
 
 #### colors ####
 col_DIR_att              <- "#2166ac"
