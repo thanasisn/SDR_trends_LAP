@@ -145,8 +145,9 @@ if (havetorun) {
         test <- DATA[duplicated(DATA$Date) | duplicated(DATA$Date, fromLast = TRUE)]
         cat("\nThere are ", nrow(test), " duplicate dates remaining!\n")
 
+        ## FIXME do we still need this?
         ## this is used by old scripts
-        setorder(DATA,Date)
+        setorder(DATA, Date)
         myRtools::write_RDS(object = DATA, file = CS_file, clean = TRUE)
     } else {
         DATA <- readRDS(CS_file)
@@ -348,8 +349,8 @@ if (havetorun) {
         saveRDS(DATA, file = raw_input_data, compress = "xz")
         cat("\nSaved raw input data:", raw_input_data, "\n\n")
     }
-} else {
-    cat(paste("\n\nLoad raw input data: ", raw_input_data,"\n\n"))
-    readRDS(file = raw_input_data)
+# } else {
+#     cat(paste("\n\nLoad raw input data: ", raw_input_data,"\n\n"))
+#     readRDS(file = raw_input_data)
 }
 

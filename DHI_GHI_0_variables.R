@@ -52,6 +52,9 @@ common_data_14_2         <- "./data/common_data_14_2.Rda"
 variables_fl             <- "./DHI_GHI_0_variables.R"
 data_procsess_fl         <- "./DHI_GHI_0_data_input.R"
 raw_input_data           <- "./data/Raw_Input.Rds"
+I1_longterm              <- "./data/Input_1_longterm_trends.Rda"
+I2_szatrend              <- "./data/Input_2_sza_trends.Rda"
+I3_trendsconsist         <- "./data/Input_3_trends_consist.Rda"
 
 #### colors ####
 col_DIR_att              <- "#2166ac"
