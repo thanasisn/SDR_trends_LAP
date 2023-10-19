@@ -618,9 +618,9 @@ Between $55^\circ$ and $75^\circ$ SZA the trends for the period before noon are 
 
 
 ```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$).', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
-knitr::include_graphics("./images/SzaTrends-1.png")
-knitr::include_graphics("./images/SzaTrends-4.png" )
-knitr::include_graphics("./images/SzaTrends-7.png")
+knitr::include_graphics("./images/SzaTrends-13.png")
+knitr::include_graphics("./images/SzaTrends-17.png" )
+knitr::include_graphics("./images/SzaTrends-21.png")
 ```
 
 
