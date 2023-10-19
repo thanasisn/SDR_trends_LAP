@@ -1,6 +1,13 @@
 
-
-## Prepare raw data for use in the paper
+#  Prepare raw data for use in the paper ---------------------------------------
+#
+#  This collects raw data and prepare it for SDR trend analysis.
+#  It uses the data output of ClearSky algorithm.
+#  It caches the raw data in order to reuse it in different states of analyses.
+#  Creates:
+#    - Clear_Sky_##.Rds
+#    - Raw_Input.Rds
+#
 
 ## to force a rebuild of the dataset remove stored
 # file.remove(common_data)
@@ -24,7 +31,7 @@ D_14_2 <- TRUE
 TEST <- TRUE
 TEST <- FALSE
 
-if (TEST) {
+if (TEST == TRUE) {
     warning("Running in TEST mode!!")
 }
 
@@ -57,7 +64,7 @@ dir.create("./images",           showWarnings = FALSE)
 dir.create("./runtime",          showWarnings = FALSE)
 
 
-#_  Check if we need to run data production  -----------------------------------
+##_  Check if we need to run data export  --------------------------------------
 havetorun <- !file.exists(common_data) |
     file.mtime(CS_file)          > file.mtime(common_data) |
     file.mtime(variables_fl)     > file.mtime(common_data) |
@@ -67,19 +74,21 @@ havetorun <- !file.exists(common_data) |
 if (havetorun) {
     cat(paste("\n !! Create raw input data ->", raw_input_data),"\n")
 
-    #_  Get data from Clear sky id data  ---------------------------------------
+    ##_  Get data from Clear sky id data  --------------------------------------
     input_files <- list.files(path       = CLEARdir,
                               pattern    = inpatern,
                               full.names = T )
     input_files <- grep("_stats_", input_files, value = TRUE, invert = TRUE)
 
-    if (TEST) {
+    if (TEST == TRUE) {
         warning("\nTEST MODE IS ACTIVE!!\n\n")
         input_files <- sample(input_files, 2)
     }
 
-    if (TEST | !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
-        cat(paste("Load data from Clear Sky process from original\n"))
+    cat(paste("\n    Will read", length(input_files), "input files\n"))
+
+    if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
+        cat(paste("\n    Load data from Clear Sky process from original\n\n"))
         DATA <- data.table()
         for (af in input_files) {
             cat("READING:", af, "\n")
@@ -144,7 +153,7 @@ if (havetorun) {
     }
 
 
-    ## __ Skip data ranges for CM-21 --------------------------------------------
+    ##_  Skip data ranges for CM-21  -------------------------------------------
     for (as in nrow(SKIP_cm21)) {
         skip <- SKIP_cm21[as,]
         DATA[ Date >= skip$From & Date <= skip$Until, wattGLB    := NA ]
@@ -162,16 +171,16 @@ if (havetorun) {
     # vec1$Diff <- c(0,diff(vec1$Sign))
     # vec1[which(vec1$Diff != 0), ]
 
-    #  Select data for this project  -------------------------------------------
+    #   Select data for this project  ------------------------------------------
 
-    #__  Set date range to use  ------------------------------------------------
+    ##_  Set date range to use  ------------------------------------------------
     DATA <- DATA[Date < LAST_DAY ]
     DATA <- DATA[Date > FIRST_DAY]
 
-    #__  Keep daylight only  ---------------------------------------------------
+    ##_  Keep daylight only  ---------------------------------------------------
     DATA <- DATA[Elevat >= 0, ]
 
-    #__  Exclude low Sun elevation  --------------------------------------------
+    ##_  Exclude low Sun elevation  --------------------------------------------
     DATA[Elevat < MIN_ELEVA, wattDIR     := NA ]
     DATA[Elevat < MIN_ELEVA, wattDIR_sds := NA ]
     DATA[Elevat < MIN_ELEVA, wattGLB     := NA ]
@@ -180,10 +189,10 @@ if (havetorun) {
     DATA[Elevat < MIN_ELEVA, wattHOR_sds := NA ]
 
     ## show included data
-    ## FIXME there is som error in Azimuth/Elevation angles see plot!!
+    ## FIXME there is some error in Azimuth/Elevation angles see plot!!
     # plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])
 
-    #__  Bais paper obstacle filter  -------------------------------------------
+    ##_  Bais paper obstacle filter  -------------------------------------------
     DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattDIR     := NA ]
     DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattDIR_sds := NA ]
     DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattGLB     := NA ]
@@ -197,11 +206,8 @@ if (havetorun) {
     ## Filter min elevation
     # DATA <- DATA[Elevat >= MIN_ELEVA, ]
 
-    ## Bais paper obstacle filter
-    # DATA <- DATA[!(Azimuth > 35 & Azimuth < 120 & Elevat < 10)]
 
-
-    #__  Keep data characterized as 'good' by Radiation Quality control v13 ----
+    ##_  Keep data characterized as 'good' by Radiation Quality control v13 ----
     if (D_13) {
         keepQF <- c("good",
                     "Possible Direct Obstruction (23)",
@@ -211,20 +217,20 @@ if (havetorun) {
         DATA[!QCF_GLB %in% keepQF, wattGLB := NA]
     }
 
-    #__  Keep data characterized as 'TRUE' by Radiation Quality control v14 ----
+    ##_  Keep data characterized as 'TRUE' by Radiation Quality control v14 ----
     if (D_14 | D_14_2) {
         DATA[QCF_DIR == FALSE, wattDIR := NA]
         DATA[QCF_DIR == FALSE, wattHOR := NA]
         DATA[QCF_GLB == FALSE, wattGLB := NA]
     }
 
-    #__  Count daylight length  ------------------------------------------------
+    ##_  Count daylight length  ------------------------------------------------
     DATA[, DayLength := .N, by = Day]
 
-    #__  DROP MISSING RECORDS!! ------------------------------------------------
+    ##_  DROP MISSING RECORDS!! ------------------------------------------------
     DATA <- DATA[ !(is.na(wattDIR) & is.na(wattGLB)) ]
 
-    #__  Info for TIS time span source used  -----------------------------------
+    ##_  Info for TIS time span source used  -----------------------------------
     TSI_info <- DATA[, .(Start = min(Date),
                          End   = max(Date)), by = TSI_Source]
     myRtools::write_dat(object = TSI_info,
@@ -235,17 +241,17 @@ if (havetorun) {
 
     #  Data preparation  -------------------------------------------------------
 
-    #_  Move measurements to mean earth distance  ------------------------------
+    ##_  Move measurements to mean earth distance  -----------------------------
     DATA[, wattDIR_1au := wattDIR * (sun_dist ^ 2)]
     DATA[, wattGLB_1au := wattGLB * (sun_dist ^ 2)]
     DATA[, wattHOR_1au := wattHOR * (sun_dist ^ 2)]
 
-    #_  Relative to actual TSI at 1au variable representation
+    ##_  Relative to actual TSI at 1au variable representation
     # DATA[ , DIR_att := wattDIR_1au / tsi_1au_comb ]
     # DATA[ , GLB_att := wattGLB_1au / tsi_1au_comb ]
     # DATA[ , HOR_att := wattHOR_1au / tsi_1au_comb ]
 
-    ## Use original variable representation for conviniance
+    ## !! Replace original variable representation for convenience !!
     DATA[, DIR_att := wattDIR_1au]
     DATA[, GLB_att := wattGLB_1au]
     DATA[, HOR_att := wattHOR_1au]
@@ -256,7 +262,7 @@ if (havetorun) {
     # DATA$wattDIR_1au <- DATA$wattDIR_1au / cosde(DATA$SZA)
 
 
-    #_ Calculate Bouguer atmospheric transparency  -----------------------------
+    ##_  Calculate Bouguer atmospheric transparency  ---------------------------
     ## Changes in solar radiation and their influence on temperature trend in Estonia 1955 2007_Russak2009.pdf
     DATA[, DIR_transp := ( wattDIR_1au / tsi_1au_comb ) ^ ( 1 / cosde(SZA) ) ]
 
@@ -264,13 +270,23 @@ if (havetorun) {
     DATA[Azimuth <= 180 , preNoon := TRUE ]
     DATA[Azimuth >  180 , preNoon := FALSE]
 
-    #_  DROP SOME DATA  --------------------------------------------------------
+    ##_  DROP SOME DATA  -------------------------------------------------------
+    DATA[, CS_ref_HOR         := NULL]
+    DATA[, ClearnessIndex_kt  := NULL]
+    DATA[, Clearness_Kt       := NULL]
+    DATA[, ClrSW              := NULL]
+    DATA[, ClrSW_ref2         := NULL]
+    DATA[, DIF_HOR            := NULL]
+    DATA[, DiffuseFraction_Kd := NULL]
+    DATA[, DiffuseFraction_kd := NULL]
+    DATA[, Direct_max         := NULL]
+    DATA[, Elevat             := NULL]
+    DATA[, Glo_max_ref        := NULL]
+    DATA[, Global_max         := NULL]
+    DATA[, RaylDIFF           := NULL]
     DATA[, wattDIR_1au        := NULL]
     DATA[, wattGLB_1au        := NULL]
     DATA[, wattHOR_1au        := NULL]
-    DATA[, DiffuseFraction_Kd := NULL]
-    DATA[, Elevat             := NULL]
-    DATA[, Clearness_Kt       := NULL]
 
     rm.cols.DT(DATA, "QCv9*")
     rm.cols.DT(DATA, "*Clim_lim")
@@ -278,10 +294,11 @@ if (havetorun) {
     rm.cols.DT(DATA, "VIL_*")
 
 
-    #  Split data to Clear Sky, non Clear sky and cloud sky data  --------------
-    ## Method based and adapted from: Identification of Periods of Clear Sky Irradiance in Time Series of GHI Measurements _Matthew J. Reno and Clifford W. Hansen_.
-
     #  GLB Representation filtering  -------------------------------------------
+    #
+    #  Remove days with too few data, as they can not be representative of a
+    #  normal day.
+    #
     temp <- DATA[!is.na(GLB_att),
                  .(Day_N = .N,
                    DayLim = max(DayLength) * All_daily_ratio_lim),
@@ -301,54 +318,38 @@ if (havetorun) {
 
     DATA <- DATA[Day %in% all_days_to_keep ]
 
-    # __ Drop some data --------------------------------------------------------
-    DATA[, CS_ref_HOR := NULL]
-    DATA[, RaylDIFF   := NULL]
-    DATA[, Direct_max := NULL]
-    DATA[, Global_max := NULL]
 
+    #  Split data to Clear Sky, non Clear sky and cloud sky data  --------------
+    #
+    #  Method based and adapted from: Identification of Periods of Clear Sky
+    #  Irradiance in Time Series of GHI Measurements _Matthew J. Reno and
+    #  Clifford W. Hansen.
+    #
+    #  For this paper we use only flags derived from CM-21.
+    #
 
-
-
-stop("list data to sasvw")
-
-
-    #__  ALL data  -------------------------------------------------------------
-    DATA_all   <- DATA
-
-    ## use only cm21 flags for trends
+    ##_ Select only CM-21 flags for trends -------------------------------------
     wecare     <- grep("CSflag_", names(DATA), value = T)
     wecare     <- grep("_11", wecare, invert = T, value = T)
 
-    #__  CLEAR data  -----------------------------------------------------------
-    DATA_Clear <- DATA[rowSums(DATA[, ..wecare ], na.rm = T) == 0,]
-
-    #__  CLOUD data  -----------------------------------------------------------
-    DATA_Cloud <- DATA[rowSums(DATA[, ..wecare ], na.rm = T) != 0,]
-
-    ## old flags usage
-    # DATA_Clear <- DATA_all[ CSflag == 0 ]
-    rm(DATA)
-    gc()
+    ##_ Set flag for sky conditions --------------------------------------------
+    DATA[rowSums(DATA[, ..wecare ], na.rm = T) == 0, TYPE := "Clear"]
+    DATA[rowSums(DATA[, ..wecare ], na.rm = T) != 0, TYPE := "Cloud"]
 
     ## remove unused columns
-    rm.cols.DT(DATA_all,   "CSflag_*")
-    rm.cols.DT(DATA_Clear, "CSflag_*")
-    rm.cols.DT(DATA_Cloud, "CSflag_*")
+    rm.cols.DT(DATA,   "CSflag_*")
 
-    ls(pattern = "DATA_*")
 
-    # ..................................................................... ----
-    ##  Save raw input data  ---------------------------------------------------
-    # if (!TEST) {
-    save(list = ls(pattern = "DATA_*"), file = raw_input_data)
-    cat("\nSaved raw input data:", raw_input_data, "\n\n")
-    # }
+    ## legacy flags usage
+    # DATA_Clear <- DATA_all[ CSflag == 0 ]
+
+    #  Save raw input data  ----------------------------------------------------
+    if (TEST == FALSE) {
+        saveRDS(DATA, file = raw_input_data, compress = "xz")
+        cat("\nSaved raw input data:", raw_input_data, "\n\n")
+    }
 } else {
-    cat(paste("\n\nLoad raw input: ", raw_input_data,"\n\n"))
-    load(file = raw_input_data)
+    cat(paste("\n\nLoad raw input data: ", raw_input_data,"\n\n"))
+    readRDS(file = raw_input_data)
 }
-
-
-# ......................................................................... ----
 
