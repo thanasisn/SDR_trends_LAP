@@ -617,12 +617,16 @@ For SZAs $16^\circ$ - $50^\circ$, the trends range within about $\pm 0.2\,\%/y$,
 Between $55^\circ$ and $75^\circ$ SZA the trends for the period before noon are larger and negative, possibly associated with stronger attenuation by clouds under oblique incidence angles.
 
 
-```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$).', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
-knitr::include_graphics("./images/SzaTrends-13.png")
-knitr::include_graphics("./images/SzaTrends-17.png" )
-knitr::include_graphics("./images/SzaTrends-21.png")
+```{r szatrends, echo = FALSE, fig.cap='*** Daily *** Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$).', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+knitr::include_graphics("./images/SzaTrends-1.png")
+knitr::include_graphics("./images/SzaTrends-4.png" )
+knitr::include_graphics("./images/SzaTrends-7.png")
 ```
-
+```{r szatrendsmonthly, echo = FALSE, fig.cap='*** Montlhly *** Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$).', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+knitr::include_graphics("./images/SzaTrendsMonthly-1.png")
+knitr::include_graphics("./images/SzaTrendsMonthly-4.png" )
+knitr::include_graphics("./images/SzaTrendsMonthly-7.png")
+```
 
 
 ## Long term trends by season of year
@@ -678,6 +682,10 @@ During spring and summer the statistical significance is very low and the actual
 ```{r seasonalALL, echo=F, fig.cap="SDR trends by season of the year for the three sky conditions. Each point is a monthly mean calculated from daily means. The vertical scale is common for all graphs, each column of graphs corresponds to a sky condition and each row to a season of the year.", out.width="100%"}
 knitr::include_graphics("./images/SeasonalTrendsTogether3-2.png")
 ```
+
+
+
+
 
 
 <!-- ```{r seasonalALL, echo=F, fig.cap="Trends by season for all-sky condition. Displays monthly means of daily means."} -->
@@ -783,6 +791,12 @@ knitr::include_graphics("./images/LongtermTrends-8.png")
 ```
 
 
-```{r echo = FALSE, fig.cap='SDR trend ~ SZA', out.width='100%'}
+```{r echo = FALSE, fig.cap='*** Daily *** SDR trend ~ SZA', out.width='100%'}
 knitr::include_graphics("./images/SzaTrendsSeasTogether-2.png")
+```
+
+
+
+```{r echo = FALSE, fig.cap='*** Montly *** SDR trend ~ SZA', out.width='100%'}
+knitr::include_graphics("./images/SzaTrendsSeasTogetherMonthly-2.png")
 ```
