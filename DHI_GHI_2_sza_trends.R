@@ -89,6 +89,26 @@ source("~/CODE/FUNCTIONS/R/data.R")
 ## __ Source initial scripts ---------------------------------------------------
 source("./DHI_GHI_0_data_input.R")
 source("./DHI_GHI_0_variables.R")
+
+## check previous steps
+if (! file.exists(I2_szatrend) |
+    file.mtime(I2_szatrend) < file.mtime("./DHI_GHI_0_variables.R") |
+    file.mtime(I2_szatrend) < file.mtime("./DHI_GHI_00_raw_data.R") |
+    file.mtime(I2_szatrend) < file.mtime("./DHI_GHI_02_Input_szatrends.R") )
+{
+    # source("./DHI_GHI_02_Input_szatrends.R")
+    tryCatch(source("./DHI_GHI_02_Input_szatrends.R"), exit=function(cond) {
+        message( conditionMessage(cond) )
+    })
+    dummy <- gc()
+}
+
+## check current steps
+# TODO (done by make)
+
+## load data
+load(I2_szatrend)
+
 tic <- Sys.time()
 
 ## notification function

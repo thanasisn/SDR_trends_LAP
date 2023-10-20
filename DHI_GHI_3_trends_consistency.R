@@ -91,6 +91,8 @@ source("./DHI_GHI_0_data_input.R")
 source("./DHI_GHI_0_variables.R")
 tic <- Sys.time()
 
+load(I1_longterm)
+
 ## notification function
 options(error = function() {
     if (interactive()) {

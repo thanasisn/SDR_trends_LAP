@@ -110,17 +110,6 @@ $(RUNT): $(RMD)
 
 
 
-TARGET := DHI_GHI_2_sza_trends_b
-RMD    := $(TARGET).R
-PDF    := $(TARGET).pdf
-RUNT   := ./runtime/$(TARGET).pdf
-
-p2b: $(PDF)
-$(PDF): $(RMD)
-	@echo "Building: $@"
-	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
-	@-touch Article.Rmd
-
 
 
 ###   3. DHI_GHI_trends_consistency  #################################
