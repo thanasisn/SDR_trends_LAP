@@ -124,7 +124,9 @@ ccex_sbs <- 1.3
 #'
 #' ### Data info
 #'
-#' Time data span `r range(ALL_1_daily_DESEAS$Date)`
+
+# Time data span `r range(ALL_1_daily_DESEAS$Date)`
+
 #'
 #' Where is a **running mean the window is `r running_mean_window_days` days** or
 #' `r running_mean_window_days / Days_of_year` years.
