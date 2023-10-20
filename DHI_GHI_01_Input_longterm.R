@@ -28,7 +28,7 @@ if (
     cat(paste("\n Have to create Long term proccessed data\n\n"))
 } else {
     cat(paste("\n Long term proccessed data are ready\n\n"))
-    stop("Normal to exit here")
+    stop("Normal to exit here ")
 }
 
 ##  Load raw data  -------------------------------------------------------------
@@ -799,6 +799,7 @@ gc()
 # QHD_cloud[ !is.na(GLB_att), .N ]
 
 
+# ......................................................................... ----
 ##  Save data ------------------------------------------------------------------
 save(file = I1_longterm, list = ls(pattern = "^ALL_|^CLEAR_|^CLOUD_"))
 cat(paste("\n Long term proccessed data saved", I1_longterm, "\n\n"))
