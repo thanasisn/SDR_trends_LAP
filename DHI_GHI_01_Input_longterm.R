@@ -34,6 +34,7 @@ if (
     cond = structure(list(message = "Long term proccessed data are already done"),
                      class = c("exit", "condition"))
     signalCondition(cond)
+    stop("Normal to exit here")
 }
 
 ##  Load raw data  -------------------------------------------------------------
