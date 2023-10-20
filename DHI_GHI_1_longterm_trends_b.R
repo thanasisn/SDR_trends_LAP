@@ -98,6 +98,7 @@ if (! file.exists(I1_longterm) |
     file.mtime(I1_longterm) < file.mtime("./DHI_GHI_01_Input_longterm.R") )
 {
     source("./DHI_GHI_01_Input_longterm.R")
+    gc()
 }
 
 ## check current steps

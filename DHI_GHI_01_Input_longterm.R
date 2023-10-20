@@ -20,6 +20,7 @@ if (
     file.mtime(raw_input_data) < file.mtime("./DHI_GHI_00_raw_data.R")
 ) {
     source("./DHI_GHI_00_raw_data.R")
+    gc()
 }
 
 ## check current steps
@@ -803,5 +804,5 @@ gc()
 
 # ......................................................................... ----
 ##  Save data ------------------------------------------------------------------
-save(file = I1_longterm, list = ls(pattern = "^ALL_|^CLEAR_|^CLOUD_"))
+save(file = I1_longterm, list = ls(pattern = "^ALL_1_|^CLEAR_1_|^CLOUD_1_"))
 cat(paste("\n Long term proccessed data saved", I1_longterm, "\n\n"))
