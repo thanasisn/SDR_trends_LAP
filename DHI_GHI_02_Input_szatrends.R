@@ -1257,5 +1257,7 @@ CLOUD_2_bySeason_monthly_DESEAS[, GLB_att_des   := 100 * (GLB_att    - GLB_att_s
 
 # ......................................................................... ----
 ##  Save data ------------------------------------------------------------------
-save(file = I2_szatrend, list = ls(pattern = "^ALL_2_|^CLEAR_2_|^CLOUD_2_"))
+save(file = I2_szatrend,
+     list = ls(pattern = "^ALL_2_|^CLEAR_2_|^CLOUD_2_"),
+     compress = "xz")
 cat(paste("\n SZA trends proccessed data saved", I2_szatrend, "\n\n"))
