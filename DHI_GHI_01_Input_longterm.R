@@ -13,6 +13,7 @@ source("./DHI_GHI_0_variables.R")
 
 
 ##  Prepare raw data if needed  ------------------------------------------------
+## check previous steps
 if (
     file.exists(raw_input_data) == FALSE |
     file.mtime(raw_input_data) < file.mtime("./DHI_GHI_0_variables.R") |
@@ -21,6 +22,7 @@ if (
     source("./DHI_GHI_00_raw_data.R")
 }
 
+## check current steps
 if (
     file.exists(I1_longterm) == FALSE |
     file.mtime(I1_longterm) < file.mtime("./DHI_GHI_01_Input_longterm.R")
