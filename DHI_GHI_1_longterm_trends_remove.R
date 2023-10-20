@@ -90,27 +90,7 @@ source("~/CODE/FUNCTIONS/R/data.R")
 source("./DHI_GHI_0_data_input.R")
 source("./DHI_GHI_0_variables.R")
 source("~/CODE/R_myRtools/myRtools/R/write_.R")
-
-## check previous steps
-if (! file.exists(I1_longterm) |
-    file.mtime(I1_longterm) < file.mtime("./DHI_GHI_0_variables.R") |
-    file.mtime(I1_longterm) < file.mtime("./DHI_GHI_00_raw_data.R") |
-    file.mtime(I1_longterm) < file.mtime("./DHI_GHI_01_Input_longterm.R") )
-{
-    source("./DHI_GHI_01_Input_longterm.R")
-    gc()
-}
-
-## check current steps
-# TODO (done by make)
-
-
 tic <- Sys.time()
-
-
-
-
-
 
 ## notification function
 options(error = function() {

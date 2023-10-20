@@ -20,7 +20,7 @@ if (
     file.mtime(raw_input_data) < file.mtime("./DHI_GHI_00_raw_data.R")
 ) {
     source("./DHI_GHI_00_raw_data.R")
-    gc()
+    dummy <- gc()
 }
 
 ## check current steps
@@ -100,7 +100,7 @@ CLOUD_1_daily_mean <-
                   DIR_att_N     = sum(!is.na(DIR_att))),
                by = .( Date = Day ) ]
 
-## _ Margin of error for confidence interval -------------------------------
+## _ Margin of error for confidence interval -----------------------------------
 conf_param  <- 1 - ( 1 - Daily_confidence_limit ) / 2
 suppressWarnings({
     ALL_1_daily_mean[,   DIR_att_EM    := qt(conf_param,df=DIR_att_N - 1) * DIR_att_sd    / sqrt(DIR_att_N)]
@@ -117,7 +117,7 @@ suppressWarnings({
     CLOUD_1_daily_mean[, DIR_transp_EM := qt(conf_param,df=DIR_att_N - 1) * DIR_transp_sd / sqrt(DIR_att_N)]
 })
 
-## _ Exclude means with less than Daily_aggregation_N_lim data points ------
+## _ Exclude means with less than Daily_aggregation_N_lim data points ----------
 ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_att       := NA]
 ALL_1_daily_mean[   GLB_att_N <= Daily_aggregation_N_lim, GLB_att       := NA]
 ALL_1_daily_mean[   HOR_att_N <= Daily_aggregation_N_lim, HOR_att       := NA]
@@ -158,7 +158,7 @@ CLOUD_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att_EM    := NA]
 CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_EM := NA]
 
 
-## _ Daily seasonal values from daily --------------------------------------
+## _ Daily seasonal values from daily ------------------------------------------
 ALL_1_daily_seas <-
     ALL_1_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
                         GLB_att_seas       = mean(GLB_att,    na.rm = T),
@@ -203,7 +203,7 @@ CLOUD_1_daily_seas <-
 
 
 
-## _ Margin of error for confidence interval on seasonal data --------------
+## _ Margin of error for confidence interval on seasonal data ------------------
 conf_param  <- 1 - ( 1 - Daily_confidence_limit ) / 2
 suppressWarnings({
     ALL_1_daily_seas[,  DIR_att_EM_seas   :=qt(conf_param,df=DIR_att_N_seas-1)*DIR_att_sd_seas   /sqrt(DIR_att_N_seas)]
@@ -221,7 +221,7 @@ suppressWarnings({
 })
 
 
-## _ Daily de-seasonal anomaly ---------------------------------------------
+## _ Daily de-seasonal anomaly -------------------------------------------------
 
 ALL_1_daily_DESEAS <- merge(  ALL_1_daily_mean,   ALL_1_daily_seas, by = "doy", all = T)
 CLEAR_1_daily_DESEAS <- merge(CLEAR_1_daily_mean, CLEAR_1_daily_seas, by = "doy", all = T)
@@ -266,7 +266,7 @@ CLOUD_1_daily_mean <-
 
 
 
-## Monthly means from daily means ------------------------------------------
+## Monthly means from daily means ----------------------------------------------
 
 ALL_1_monthly_daily_mean <-
     ALL_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
@@ -318,7 +318,7 @@ CLOUD_1_monthly_daily_mean <-
 
 
 
-## _ Exclude means with less than Monthly_aggegation_N_lim data points -----
+## _ Exclude means with less than Monthly_aggegation_N_lim data points ---------
 ALL_1_monthly_daily_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_att       := NA]
 ALL_1_monthly_daily_mean[   HOR_att_N <= Monthly_aggegation_N_lim, HOR_att       := NA]
 ALL_1_monthly_daily_mean[   GLB_att_N <= Monthly_aggegation_N_lim, GLB_att       := NA]
@@ -360,7 +360,7 @@ CLOUD_1_monthly_daily_mean[ DIR_att_N <= Monthly_aggegation_N_lim/2, DIR_transp_
 
 
 
-## _ Seasonal monthly daily values -----------------------------------------
+## _ Seasonal monthly daily values ---------------------------------------------
 
 ALL_1_monthly_daily_seas <-
     ALL_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
@@ -403,7 +403,7 @@ CLOUD_1_monthly_daily_seas <-
 
 
 
-## _ Monthly daily de-seasonal anomaly -------------------------------------
+## _ Monthly daily de-seasonal anomaly -----------------------------------------
 
 ALL_1_D_monthly_DESEAS <- merge(  ALL_1_monthly_daily_mean,   ALL_1_monthly_daily_seas, by = "Month", all = T)
 CLEAR_1_D_monthly_DESEAS <- merge(CLEAR_1_monthly_daily_mean, CLEAR_1_monthly_daily_seas, by = "Month", all = T)
@@ -445,7 +445,7 @@ CLOUD_1_D_monthly_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) /
 
 
 
-## Season of year daily aggregation ----------------------------------------
+## Season of year daily aggregation --------------------------------------------
 
 ## Quarter of year with one month shift to include December in the next years winter
 ALL_1_daily_mean[, season_Yqrt := as.yearqtr(as.yearmon(paste(year(Date), month(Date), sep = "-")) + 1/12)]
@@ -467,7 +467,7 @@ CLOUD_1_daily_mean[season_Yqrt %% 1 == 0.50, Season := "Summer"]
 CLOUD_1_daily_mean[season_Yqrt %% 1 == 0.75, Season := "Autumn"]
 
 
-## _ Create variables by season from daily means ---------------------------
+## _ Create variables by season from daily means -------------------------------
 ALL_1_bySeason_daily_mean <-
     ALL_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
                         GLB_att    = mean(GLB_att,    na.rm = T),
@@ -536,7 +536,7 @@ CLOUD_1_bySeason_daily_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
 
 
 
-## _ Seasonal by season daily values ---------------------------------------
+## _ Seasonal by season daily values -------------------------------------------
 
 ALL_1_bySeason_daily_seas <-
     ALL_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
@@ -579,7 +579,7 @@ CLOUD_1_bySeason_daily_seas <-
 
 
 
-## _ De-seasonal by season daily mean  -------------------------------------
+## _ De-seasonal by season daily mean  -----------------------------------------
 
 ALL_1_D_bySeason_DESEAS <- merge(  ALL_1_bySeason_daily_mean,   ALL_1_bySeason_daily_seas, by = "Season", all = T)
 CLEAR_1_D_bySeason_DESEAS <- merge(CLEAR_1_bySeason_daily_mean, CLEAR_1_bySeason_daily_seas, by = "Season", all = T)

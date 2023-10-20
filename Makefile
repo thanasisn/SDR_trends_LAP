@@ -78,9 +78,8 @@ $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.pdf' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
-	#@echo "Building: $(SLIDY)"
+	@#echo "Building: $(SLIDY)"
 	#-Rscript -e "rmarkdown::render('$?', output_format='rmarkdown::html_document', output_file='$(SLIDY)')"
-	#@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
 	@#mkdir -p                   "$(presentation)/figures/"
 	@#-cp -u "./figures/"*".dat" "$(presentation)/figures/"
 	@#setsid evince    $@ &
@@ -92,24 +91,6 @@ $(RUNT): $(RMD)
 	-Rscript $?
 	#@mkdir -p                        "$(presentation)/figures/"
 	#@cp -u "./figures/"*".dat"       "$(presentation)/figures/"
-
-TARGET := DHI_GHI_1_longterm_trends_b
-RMD    := $(TARGET).R
-PDF    := $(TARGET).pdf
-RUNT   := ./runtime/$(TARGET).pdf
-
-p1b: $(PDF)
-$(PDF): $(RMD)
-	@echo "Building: $@"
-	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
-	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.pdf' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
-	@#mkdir -p                   "$(presentation)/figures/"
-	@#-cp -u "./figures/"*".dat" "$(presentation)/figures/"
-	@#setsid evince    $@ &
-	@-rsync -a "$@" ${LIBRARY}
-	@-touch Article.Rmd
-
-
 
 
 ###   2. DHI_GHI_sza_trends  #########################################
@@ -124,7 +105,6 @@ $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.pdf' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
-	@#-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*.*' "$(basename $?)_files" "$(presentation)/images"
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
 	@-touch Article.Rmd
@@ -132,6 +112,19 @@ $(PDF): $(RMD)
 r2: $(RUNT)
 $(RUNT): $(RMD)
 	-Rscript $?
+
+
+
+TARGET := DHI_GHI_2_sza_trends_b
+RMD    := $(TARGET).R
+PDF    := $(TARGET).pdf
+RUNT   := ./runtime/$(TARGET).pdf
+
+p2b: $(PDF)
+$(PDF): $(RMD)
+	@echo "Building: $@"
+	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
+	@-touch Article.Rmd
 
 
 
