@@ -31,7 +31,9 @@ if (
     cat(paste("\n Have to create Long term proccessed data\n\n"))
 } else {
     cat(paste("\n Long term proccessed data are ready\n\n"))
-    stop("Normal to exit here ")
+    cond = structure(list(message = "Long term proccessed data are already done"),
+                     class = c("exit", "condition"))
+    signalCondition(cond)
 }
 
 ##  Load raw data  -------------------------------------------------------------

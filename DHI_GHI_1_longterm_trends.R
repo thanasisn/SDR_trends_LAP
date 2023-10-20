@@ -97,13 +97,18 @@ if (! file.exists(I1_longterm) |
     file.mtime(I1_longterm) < file.mtime("./DHI_GHI_00_raw_data.R") |
     file.mtime(I1_longterm) < file.mtime("./DHI_GHI_01_Input_longterm.R") )
 {
-    source("./DHI_GHI_01_Input_longterm.R")
+    # source("./DHI_GHI_01_Input_longterm.R")
+    tryCatch(source("./DHI_GHI_01_Input_longterm.R"), exit=function(cond) {
+        message( conditionMessage(cond) )
+    })
     dummy <- gc()
 }
 
+## load data
+load(I1_longterm)
+
 ## check current steps
 # TODO (done by make)
-
 
 tic <- Sys.time()
 

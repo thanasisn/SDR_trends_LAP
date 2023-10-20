@@ -31,6 +31,9 @@ if (
     cat(paste("\n Have to create SZA trends proccessed data\n\n"))
 } else {
     cat(paste("\n SZA trends proccessed data are ready\n\n"))
+    cond = structure(list(message = "SZA trends proccessed data are ready"),
+                     class = c("exit", "condition"))
+    signalCondition(cond)
     stop("Normal to exit here ")
 }
 

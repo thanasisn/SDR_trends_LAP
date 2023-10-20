@@ -1819,7 +1819,7 @@ if (havetorun) {
     # ..................................................................... ----
     ##  Save the whole work space  ---------------------------------------------
     # if (!TEST) {
-    save(list = ls(all = TRUE), file = common_data)
+    save(list = ls(all = TRUE), file = common_data, compress = "xz")
     cat("\nSaved workspace:", common_data, "\n\n")
     # }
 } else {
