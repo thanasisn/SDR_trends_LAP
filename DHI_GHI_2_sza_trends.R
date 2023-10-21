@@ -1147,7 +1147,7 @@ setorder(test, N)
 
     nf <- layout(
         matrix(1:30, ncol = 5, byrow = TRUE),
-        widths  = c(0.3,   1,1,1, 0.05),
+        widths  = c(0.25,   1,1,1, 0.05),
         heights = c(0.1, 1,1,1,1, 0.5)
     )
     layout.show(nf)
@@ -1157,19 +1157,19 @@ setorder(test, N)
     plot.new()
     # 2
     plot.new()
-    text(x = 0.5, y = 0.4,
+    text(x = 0.5, y = 0.3,
          adj  = c(0.5, 0.5),
          "All skies",    cex = 0.9, font = 2)
 
     # 3
     plot.new()
-    text(x = 0.5, y = 0.5,
+    text(x = 0.5, y = 0.3,
          adj  = c(0.5, 0.5),
          "Clear skies",  cex = 0.9, font = 2)
 
     # 4
     plot.new()
-    text(x = 0.5, y = 0.5,
+    text(x = 0.5, y = 0.3,
          adj  = c(0.5, 0.5),
          "Cloudy skies", cex = 0.9, font = 2)
 
@@ -1180,7 +1180,7 @@ setorder(test, N)
 
         if (i == 6) {
             plot.new()
-            text(x = 0.1, y = 0.5,
+            text(x = 0.15, y = 0.5,
                  adj  = c(0.5, 0.5),
                  srt  = 90, "Winter", cex = 0.9, font = 2)
         }
@@ -1193,13 +1193,13 @@ setorder(test, N)
 
         if (i == 11) {
             plot.new()
-            text(x = 0.1, y = 0.5,
+            text(x = 0.15, y = 0.5,
                  adj  = c(0.5, 0.5),
                  srt  = 90, "Summer", cex = 0.9, font = 2)
         }
         if (i == 15) {
             plot.new()
-            text(x = 0.5, y = 0.5,
+            text(x = 0.3, y = 0.5,
                  adj  = c(0.5, 0.5),
                  srt  = 90, "Summer", cex = 0.9, font = 2)
         }
@@ -1207,13 +1207,13 @@ setorder(test, N)
 
         if (i == 16) {
             plot.new()
-            text(x = 0.1, y = 0.5,
+            text(x = 0.15, y = 0.5,
                  adj  = c(0.5, 0.5),
                  srt  = 90, "Autumn", cex = 0.9, font = 2)
         }
         if (i == 20) {
             plot.new()
-            text(x = 0.5, y = 0.5,
+            text(x = 0.3, y = 0.5,
                  adj  = c(0.5, 0.5),
                  srt  = 90, "Autumn", cex = 0.9, font = 2)
         }
@@ -1221,13 +1221,13 @@ setorder(test, N)
 
         if (i == 21) {
             plot.new()
-            text(x = 0.1, y = 0.5,
+            text(x = 0.15, y = 0.5,
                  adj  = c(0.5, 0.5),
                  srt  = 90, "Spring", cex = 0.9, font = 2)
         }
         if (i == 25) {
             plot.new()
-            text(x = 0.5, y = 0.5,
+            text(x = 0.3 , y = 0.5,
                  adj  = c(0.5, 0.5),
                  srt  = 90, "Spring", cex = 0.9, font = 2)
         }
@@ -1424,8 +1424,6 @@ setorder(test, N)
     par(mfrow = c(1,1))
 }
 #+ echo=F, include=F
-
-
 
 
 
