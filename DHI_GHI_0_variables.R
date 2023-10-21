@@ -70,7 +70,7 @@ col_tsi1au_att           <- "#e3e300"
 # Days_of_year             <- 365.25   ## Mean Julian year
 Days_of_year              <- 365.2425 ## Mean Gregorian calendar year
 pch_am                    <-   1
-pch_pm                    <-   4
+pch_pm                    <-   2
 pch_ampm                  <-  13 ## try 10
 pch_daily                 <-  19
 running_mean_window_years <-   5

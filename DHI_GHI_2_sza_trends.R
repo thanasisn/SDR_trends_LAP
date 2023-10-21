@@ -87,7 +87,7 @@ source("~/CODE/FUNCTIONS/R/data.R")
 
 
 ## __ Source initial scripts ---------------------------------------------------
-source("./DHI_GHI_0_data_input.R")
+# source("./DHI_GHI_0_data_input.R")
 source("./DHI_GHI_0_variables.R")
 
 ## check previous steps
@@ -97,7 +97,7 @@ if (! file.exists(I2_szatrend) |
     file.mtime(I2_szatrend) < file.mtime("./DHI_GHI_02_Input_szatrends.R") )
 {
     # source("./DHI_GHI_02_Input_szatrends.R")
-    tryCatch(source("./DHI_GHI_02_Input_szatrends.R"), exit=function(cond) {
+    tryCatch(source("./DHI_GHI_02_Input_szatrends.R"), exit = function(cond) {
         message( conditionMessage(cond) )
     })
     dummy <- gc()
@@ -931,6 +931,10 @@ setorder(szatrends_seas, SZA)
 hist(gather_seas$N[gather_seas$N > 50], breaks = 100)
 
 
+
+
+
+
 ##__ Covert to trend per year --------------------------------------------------
 szatrends_seas[, slope    := slope    * Days_of_year]
 szatrends_seas[, slope.sd := slope.sd * Days_of_year]
@@ -1115,7 +1119,14 @@ for (ase in seasons) {
 
 
 
-## __ by season in a tight grid ----------------------------------------------
+## __ by season daily in tight grid --------------------------------------------
+
+
+test <- szatrends_seas[DATA == "ALL_2_bySeason_daily_DESEAS" & Season == "Winter"]
+
+setorder(test, N)
+
+
 
 #'
 #' ### Grid of SZA trends for each season of year from daily
@@ -1231,7 +1242,9 @@ for (ase in seasons) {
             expanded <- expanded[-1, ]
 
             ## limit plot p-values
-            p_lim     <- 0.05
+            p_lim    <- 0.05
+            N_lim    <- 85
+
 
             ## select All/CS  DIR/GLB/trans winter/summer
             subdata <- szatrends_seas[ DATA   == kk$Dataset &
@@ -1241,8 +1254,11 @@ for (ase in seasons) {
             ## set symbols for plotting
             subdata[ slope.p  < p_lim & preNoon == TRUE,  pch := 16 ]
             subdata[ slope.p >= p_lim & preNoon == TRUE,  pch :=  1 ]
+            subdata[ N       <= N_lim & preNoon == TRUE,  pch :=  1 ]
+
             subdata[ slope.p  < p_lim & preNoon == FALSE, pch := 17 ]
             subdata[ slope.p >= p_lim & preNoon == FALSE, pch :=  2 ]
+            subdata[ N       <= N_lim & preNoon == FALSE, pch :=  2 ]
 
 
             # xlim <- range( subdata$SZA,        na.rm = T )
@@ -1253,7 +1269,8 @@ for (ase in seasons) {
             ylim <- range(0, szatrends_seas$slope, na.rm = T)
             # ylim <- c(-2.5, 4.5)
 
-            ylim <- range(szatrends_seas[slope.p < p_lim & SZA < 75, slope] , na.rm = T)
+            # ylim <- range(szatrends_seas[slope.p < p_lim & SZA < 75 , slope] , na.rm = T)
+            ylim <- range(szatrends_seas[slope.p < p_lim & N > N_lim , slope], na.rm = T)
 
 
             pam  <- subdata[ preNoon == T ]
