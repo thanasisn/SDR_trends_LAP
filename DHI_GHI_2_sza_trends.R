@@ -1147,8 +1147,8 @@ setorder(test, N)
 
     nf <- layout(
         matrix(1:30, ncol = 5, byrow = TRUE),
-        widths  = c(0.3,   1,1,1, 0.1),
-        heights = c(0.15, 1,1,1,1, 0.5)
+        widths  = c(0.3,   1,1,1, 0.05),
+        heights = c(0.1, 1,1,1,1, 0.5)
     )
     layout.show(nf)
 
@@ -1157,8 +1157,8 @@ setorder(test, N)
     plot.new()
     # 2
     plot.new()
-    text(x = 0.5, y = 0.5,
-         adj  = c(0.6, 0.5),
+    text(x = 0.5, y = 0.4,
+         adj  = c(0.5, 0.5),
          "All skies",    cex = 0.9, font = 2)
 
     # 3
@@ -1186,7 +1186,7 @@ setorder(test, N)
         }
         if (i == 10) {
             plot.new()
-            text(x = 0.5, y = 0.5,
+            text(x = 0.3, y = 0.5,
                  adj  = c(0.5, 0.5),
                  srt  = 90, "Winter", cex = 0.9, font = 2)
         }
