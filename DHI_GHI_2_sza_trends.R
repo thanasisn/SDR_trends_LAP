@@ -1276,10 +1276,8 @@ setorder(test, N)
             pam  <- subdata[ preNoon == T ]
             ppm  <- subdata[ preNoon == F ]
 
-            ## plot
+            ## empty plot
             par("mar" = c(0, 0, 0.5, 0.5))
-
-
             plot(1, type = "n",
                  cex      = .6,
                  cex.axis = 0.8,
@@ -1294,7 +1292,6 @@ setorder(test, N)
                  ylim     = ylim,
             )
 
-
             ## y axis
             if (i %in% c(7,12,17,22)){
                 axis(2, pretty(ylim), las = 2, cex.axis = 0.8)
@@ -1302,7 +1299,6 @@ setorder(test, N)
                 # axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck =  0.03)
                 axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck = -0.03)
             }
-
 
             ## x axis
             if (i %in% c(22, 23, 24)) {
@@ -1325,7 +1321,6 @@ setorder(test, N)
 
             ## zero line
             abline(h = 0, lty = 3)
-
 
             ## morning lines
             lines(pam$SZA, pam[[awe]],
@@ -1351,7 +1346,7 @@ setorder(test, N)
                    col = 3,
                    cex = 1)
 
-
+            ## legend on any of the plots
             if (i %in% c(7)) {
                 # legend("top",
                 #        legend = c("Morning low stat. sig.", "Evening low stat. sig.",
@@ -1374,7 +1369,7 @@ setorder(test, N)
 
             }
 
-
+            ## x labels
             if (i %in% c(22, 23, 24)) {
                 mtext(text = bquote("Solar zenith angle (SZA)"),
                       cex  = 0.6,
@@ -1383,17 +1378,16 @@ setorder(test, N)
                 }
 
 
+            ## y labels
             if (i %in% c(7,12,17,22)) {
                 mtext(text = bquote("Trend [%/y]"),
                       cex  = 0.6,
                       side = 2,
                       line = 2.3)
             }
-
-
-             par("mar" = c(0,0,0,0))
+            ## set all to zero margin
+            par("mar" = c(0,0,0,0))
         }
-
     }
 
     # 1
