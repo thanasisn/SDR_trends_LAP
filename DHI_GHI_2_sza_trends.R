@@ -1180,7 +1180,7 @@ setorder(test, N)
 
         if (i == 6) {
             plot.new()
-            text(x = 0.2, y = 0.5,
+            text(x = 0.05, y = 0.5,
                  adj  = c(0.5, 0.5),
                  srt  = 90, "Winter", cex = 0.9, font = 2)
         }
@@ -1193,7 +1193,7 @@ setorder(test, N)
 
         if (i == 11) {
             plot.new()
-            text(x = 0.15, y = 0.5,
+            text(x = 0.07, y = 0.5,
                  adj  = c(0.5, 0.5),
                  srt  = 90, "Summer", cex = 0.9, font = 2)
         }
@@ -1207,7 +1207,7 @@ setorder(test, N)
 
         if (i == 16) {
             plot.new()
-            text(x = 0.15, y = 0.5,
+            text(x = 0.08, y = 0.5,
                  adj  = c(0.5, 0.5),
                  srt  = 90, "Autumn", cex = 0.9, font = 2)
         }
