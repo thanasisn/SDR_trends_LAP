@@ -1030,6 +1030,7 @@ for (avar in vars) {
         widths  = c(0.25,   1,1,1, 0.05),
         heights = c(0.1, 1,1,1,1, 0.3)
     )
+    ## an empty layout
     layout.show(nf)
 
     # 1
@@ -1060,7 +1061,7 @@ for (avar in vars) {
 
         if (i == 6) {
             plot.new()
-            text(x = 0.1, y = 0.5,
+            text(x = 0.05, y = 0.5,
                  adj  = c(0.5, 0.5),
                  srt  = 90, "Winter", cex = 0.9, font = 2)
         }
@@ -1073,7 +1074,7 @@ for (avar in vars) {
 
         if (i == 11) {
             plot.new()
-            text(x = 0.1, y = 0.5,
+            text(x = 0.05, y = 0.5,
                  adj  = c(0.5,0.5),
                  srt  = 90, "Summer", cex = 0.9, font = 2)
         }
@@ -1087,7 +1088,7 @@ for (avar in vars) {
 
         if (i == 16) {
             plot.new()
-            text(x = 0.1, y = 0.5,
+            text(x = 0.05, y = 0.5,
                  adj  = c(0.5,0.5),
                  srt  = 90, "Autumn", cex = 0.9, font = 2)
         }
@@ -1101,7 +1102,7 @@ for (avar in vars) {
 
         if (i == 21) {
             plot.new()
-            text(x = 0.1, y = 0.5,
+            text(x = 0.05, y = 0.5,
                  adj  = c(0.5,0.5),
                  srt  = 90, "Spring", cex = 0.9, font = 2)
         }
@@ -1147,16 +1148,14 @@ for (avar in vars) {
 
             ## y axis
             if (i %in% c(7,12,17,22)){
-                axis(2, pretty(ylim), las = 2, cex.axis = 0.8)
+                axis(2, pretty(ylim), las = 2,  cex.axis = 0.8)
                 ## minor ticks
-                axis(2, at = seq(-100, 100, by = 5), labels = NA,
-                     tcl = -0.25)
+                axis(2, seq(-100, 100, by = 5), cex.axis = 0.8, labels = NA, tcl = -0.25)
             } else {
                 # axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck =  0.03)
                 axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck = -0.03)
                 ## minor ticks
-                axis(2, at = seq(-100, 100, by = 5), labels = NA,
-                     tcl = -0.25/2)
+                axis(2, seq(-100, 100, by = 5), labels = NA, tcl = -0.25/2)
             }
 
             ## x axis
@@ -1170,10 +1169,9 @@ for (avar in vars) {
             } else {
                 ## major ticks
                 # axis(1, pretty(dataset$Year), cex.axis = 0.8, labels = NA, tck =  0.03)
-                axis(1, pretty(dataset$Year), cex.axis = 0.8, labels = NA, tck = -0.03)
+                axis(1, pretty(dataset$Year),                cex.axis = 0.8, labels = NA, tck = -0.04)
                 ## minor ticks
-                axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
-                     tcl = -0.25/2)
+                axis(1, seq(1993, year(Sys.time()), by = 1), cex.axis = 0.8, labels = NA, tcl = -0.3/2)
                 # axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
                 #      tcl = +0.25/2)
             }

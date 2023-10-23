@@ -1138,7 +1138,7 @@ for (ase in seasons) {
 
     nf <- layout(
         matrix(1:30, ncol = 5, byrow = TRUE),
-        widths  = c(0.3,   1,1,1, 0.05),
+        widths  = c(0.25,   1,1,1, 0.05),
         heights = c(0.1,  1,1,1,1, 0.5 )
     )
     layout.show(nf)
