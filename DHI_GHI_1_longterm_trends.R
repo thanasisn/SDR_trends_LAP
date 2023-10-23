@@ -107,9 +107,6 @@ if (! file.exists(I1_longterm) |
 ## load data
 load(I1_longterm)
 
-## check current steps
-# TODO (done by make)
-
 tic <- Sys.time()
 
 ## notification function
@@ -1008,6 +1005,11 @@ for (avar in vars) {
 #+ echo=F, include=F
 
 
+#'
+#' ### Grid of trends for each season of year from daily
+#'
+#+ echo=F, include=F
+
 ## ____ by season in a tight grid ----------------------------------------------
 #+ SeasonalTrendsTogether3, echo=F, include=T
 {
@@ -1023,13 +1025,13 @@ for (avar in vars) {
 
     nf <- layout(
         matrix(1:30, ncol = 5, byrow = TRUE),
-        widths  = c(0.3,   1,1,1, 0.1),
-        heights = c(0.2, 1,1,1,1, 0.4)
+        widths  = c(0.25,   1,1,1, 0.05),
+        heights = c(0.1,  1,1,1,1, 0.5 )
     )
     layout.show(nf)
 
     # 1
-    par("mar"=c(0,0,0,0))
+    par("mar" = c(0, 0, 0, 0))
     plot.new()
     # 2
     plot.new()
@@ -1051,8 +1053,6 @@ for (avar in vars) {
 
     # 5
     plot.new()
-
-
 
     for (i  in 6:25) {
 
@@ -1194,7 +1194,6 @@ for (avar in vars) {
 
             par("mar" = c(0,0,0,0))
         }
-
     }
 
     # 1

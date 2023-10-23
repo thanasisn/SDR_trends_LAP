@@ -103,9 +103,6 @@ if (! file.exists(I2_szatrend) |
     dummy <- gc()
 }
 
-## check current steps
-# TODO (done by make)
-
 ## load data
 load(I2_szatrend)
 
@@ -1148,7 +1145,7 @@ setorder(test, N)
     nf <- layout(
         matrix(1:30, ncol = 5, byrow = TRUE),
         widths  = c(0.25,   1,1,1, 0.05),
-        heights = c(0.1, 1,1,1,1, 0.5)
+        heights = c(0.1,  1,1,1,1, 0.5 )
     )
     layout.show(nf)
 
@@ -1238,7 +1235,7 @@ setorder(test, N)
 
             par("mar" = c(0,0,0,0))
 
-            kk       <- expanded[1,]
+            kk       <- expanded[ 1, ]
             expanded <- expanded[-1, ]
 
             ## limit plot p-values
@@ -1819,7 +1816,6 @@ for (ase in seasons) {
                  ylab     = "",
                  ylim     = ylim,
             )
-
 
             ## y axis
             if (i %in% c(7,12,17,22)){
