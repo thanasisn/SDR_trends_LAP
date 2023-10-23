@@ -1208,19 +1208,19 @@ for (avar in vars) {
 
     # 2
     plot.new()
-    text(x = 0.5, y = 0.25,
-         adj  = c(0.6,0.5),
+    text(x = 0.5, y = 0.15,
+         adj  = c(0.5, 0.5),
          "All skies",    cex = 0.9, font = 2)
 
     # 3
     plot.new()
-    text(x = 0.5, y = 0.25,
+    text(x = 0.5, y = 0.15,
          adj  = c(0.5, 0.5),
          "Clear skies",  cex = 0.9, font = 2)
 
     # 4
     plot.new()
-    text(x = 0.5, y = 0.25,
+    text(x = 0.5, y = 0.15,
          adj  = c(0.5, 0.5),
          "Cloudy skies", cex = 0.9, font = 2)
 
