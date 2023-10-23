@@ -815,8 +815,8 @@ for (avar in vars) {
 
     nf <- layout(
         matrix(1:30, ncol = 5, byrow = TRUE),
-        widths  = c(0.2,   1,1,1, 0.1),
-        heights = c(0.1, 1,1,1,1, 0.24)
+        widths  = c(0.25,   1,1,1, 0.05),
+        heights = c(0.1,  1,1,1,1, 0.5)
     )
     layout.show(nf)
 
@@ -825,9 +825,9 @@ for (avar in vars) {
     plot.new()
     # 2
     plot.new()
-    text(x = 0.6, y = 0.4,
-         adj  = c(0.6,0.5),
-         "All sky cond.",    cex = 0.9, font = 2)
+    text(x = 0.5, y = 0.3,
+         adj  = c(0.5, 0.5),
+         "All skies",    cex = 0.9, font = 2)
 
     # 3
     plot.new()
@@ -1005,12 +1005,14 @@ for (avar in vars) {
 #+ echo=F, include=F
 
 
+
+## ____ by season in a tight grid ----------------------------------------------
+
 #'
 #' ### Grid of trends for each season of year from daily
 #'
 #+ echo=F, include=F
 
-## ____ by season in a tight grid ----------------------------------------------
 #+ SeasonalTrendsTogether3, echo=F, include=T
 {
     vars        <- c("GLB_att_des")
@@ -1026,29 +1028,29 @@ for (avar in vars) {
     nf <- layout(
         matrix(1:30, ncol = 5, byrow = TRUE),
         widths  = c(0.25,   1,1,1, 0.05),
-        heights = c(0.1,  1,1,1,1, 0.5 )
+        heights = c(0.1, 1,1,1,1, 0.3)
     )
     layout.show(nf)
 
     # 1
-    par("mar" = c(0, 0, 0, 0))
+    par("mar"=c(0,0,0,0))
     plot.new()
     # 2
     plot.new()
-    text(x = 0.5, y = 0.5,
-         adj  = c(0.6,0.5),
+    text(x = 0.5, y = 0.3,
+         adj  = c(0.5, 0.5),
          "All skies",    cex = 0.9, font = 2)
 
     # 3
     plot.new()
-    text(x = 0.5, y = 0.5,
-         adj  = c(0.5,0.5),
+    text(x = 0.5, y = 0.3,
+         adj  = c(0.5, 0.5),
          "Clear skies",  cex = 0.9, font = 2)
 
     # 4
     plot.new()
-    text(x = 0.5, y = 0.5,
-         adj  = c(0.5,0.5),
+    text(x = 0.5, y = 0.3,
+         adj  = c(0.5, 0.5),
          "Cloudy skies", cex = 0.9, font = 2)
 
     # 5
@@ -1064,7 +1066,7 @@ for (avar in vars) {
         }
         if (i == 10) {
             plot.new()
-            text(x = 0.5, y = 0.5,
+            text(x = 0.25, y = 0.5,
                  adj  = c(0.5, 0.5),
                  srt  = 90, "Winter", cex = 0.9, font = 2)
         }
@@ -1077,7 +1079,7 @@ for (avar in vars) {
         }
         if (i == 15) {
             plot.new()
-            text(x = 0.5, y = 0.5,
+            text(x = 0.25, y = 0.5,
                  adj  = c(0.5,0.5),
                  srt  = 90, "Summer", cex = 0.9, font = 2)
         }
@@ -1091,7 +1093,7 @@ for (avar in vars) {
         }
         if (i == 20) {
             plot.new()
-            text(x = 0.5, y = 0.5,
+            text(x = 0.25, y = 0.5,
                  adj  = c(0.5,0.5),
                  srt  = 90, "Autumn", cex = 0.9, font = 2)
         }
@@ -1105,7 +1107,7 @@ for (avar in vars) {
         }
         if (i == 25) {
             plot.new()
-            text(x = 0.5, y = 0.5,
+            text(x = 0.25, y = 0.5,
                  adj  = c(0.5,0.5),
                  srt  = 90, "Spring", cex = 0.9, font = 2)
         }
@@ -1124,7 +1126,7 @@ for (avar in vars) {
             lm2 <- lm(dataset[[avar]] ~ dataset$Year)
 
             ## plot
-            par("mar" = c(0, 0, 0, 0))
+            par("mar" = c(0, 0, 0.5, 0.5))
 
             plot(dataset$Year, dataset[[avar]],
                  ylim     = ylim,
@@ -1146,9 +1148,15 @@ for (avar in vars) {
             ## y axis
             if (i %in% c(7,12,17,22)){
                 axis(2, pretty(ylim), las = 2, cex.axis = 0.8)
+                ## minor ticks
+                axis(2, at = seq(-100, 100, by = 5), labels = NA,
+                     tcl = -0.25)
             } else {
-                axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck =  0.03)
+                # axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck =  0.03)
                 axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck = -0.03)
+                ## minor ticks
+                axis(2, at = seq(-100, 100, by = 5), labels = NA,
+                     tcl = -0.25/2)
             }
 
             ## x axis
@@ -1161,14 +1169,13 @@ for (avar in vars) {
                         tcl = -0.25)
             } else {
                 ## major ticks
-                axis(1, pretty(dataset$Year), cex.axis = 0.8, labels = NA, tck =  0.03)
+                # axis(1, pretty(dataset$Year), cex.axis = 0.8, labels = NA, tck =  0.03)
                 axis(1, pretty(dataset$Year), cex.axis = 0.8, labels = NA, tck = -0.03)
                 ## minor ticks
                 axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
                      tcl = -0.25/2)
-                axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
-                     tcl = +0.25/2)
-
+                # axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
+                #      tcl = +0.25/2)
             }
 
             abline(lm2)
@@ -1194,6 +1201,7 @@ for (avar in vars) {
 
             par("mar" = c(0,0,0,0))
         }
+
     }
 
     # 1
