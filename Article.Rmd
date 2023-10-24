@@ -612,13 +612,13 @@ The solar zenith angle is a major driver of the attenuation of SDR reaching the 
 In order to estimate the effect of the SZA on the SDR trends, we grouped the anomaly data in bins of $1^\circ$ SZA, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
 Although there is a seasonal variation of the minimum SZA, its possible effect has not been examined here.
 For all-sky and clear-sky conditions the brightening effect of SDR (positive trend) is stronger for large SZAs (Figures\ \ref{fig:szatrends-1} and \ref{fig:szatrends-2}).
-The trends in the morning and afternoon hours are more or less consistent with small differences which can be attributed to systematic diurnal variations of aerosols, particularly during the warm period of the year [@Wang2021].
+The trends in the morning and afternoon hours are more or less consistent with small differences, which can be attributed to systematic diurnal variations of aerosols, particularly during the warm period of the year [@Wang2021].
 For cloud-sky conditions (Figure\ \ref{fig:szatrends-3}), we can not discern any significant dependence of the SDR trend with SZA.
 For SZAs $16^\circ$ - $50^\circ$, the trends range within about $\pm 0.2\,\%/y$, with a weak statistical significance.
-Between $55^\circ$ and $75^\circ$ SZA the trends for the period before noon are larger and negative, possibly associated with stronger attenuation by clouds under oblique incidence angles.
+Between $50^\circ$ and $75^\circ$ SZA the trends for the period before noon are stronger and negative, possibly associated with stronger attenuation by clouds under oblique incidence angles.
 
 
-```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$).', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$), the trends were computed with SZA bins of $1^\\circ$ for each day, before and after local noon.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics("./images/SzaTrends-1.png")
 knitr::include_graphics("./images/SzaTrends-4.png" )
 knitr::include_graphics("./images/SzaTrends-7.png")
@@ -667,13 +667,13 @@ spp$`Sky condition` <- sub(" cond.", "", spp$`Sky condition`)
 ```
 
 
-Similar to the long term trends discussed above, we have calculated the trend of the anomalies for the three different sky conditions and for each season of the year, using the corresponding mean monthly values
+Similar to the long term trends discussed above, we have calculated the trend of the anomalies for the three different sky conditions, and for each season of the year, using the corresponding mean monthly values
 (Figure\ \ref{fig:seasonalALL} and Table\ \ref{tab:trendseasontable}).
 For all-sky conditions the trend in SDR in winter is the largest
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$),
 followed by the trend in autumn
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$,
-close to the long term trend) both statistically significant above the $99\,\%$ confidence level. 
+value similar to the long term trend) both statistically significant above the $99\,\%$ confidence level. 
 In spring and summer, the trends are much smaller and less statistical significant.
 These seasonal differences indicate a possible relation of the trends to clouds during winter and autumn.
 For clear-skies, the trend in winter is $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear sky"], 2)`\,\%/y$, larger than for all-skies ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$), which is another indication of increasing cloud thickness. 
