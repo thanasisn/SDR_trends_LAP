@@ -545,10 +545,13 @@ x_latex %>%
 knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
 
-Although the year-to-year variability of the anomalies in Figure \ref{fig:trendALL} shows a rather homogeneous behavior, plots of the cumulative sums (CUSUM) of the anomalies can reveal structures which are different for the three sky conditions [@Regier2019]. 
-On all three plots on Figure\ \ref{fig:cusum}, we observe a downward part at the start of the period until about 2000, an almost steady part until about 2016 for all-sky and clear-sky conditions (Figures\ \ref{fig:cusum-1}, \ref{fig:cusum-2}) and until 2009 for cloud-sky conditions (Figure\ \ref{fig:cusum-3}), and finally, a steep upward part until the present.
-For a uniform trend, we would expect the cumulative sums of the anomalies to have a symmetric 'V' shape.
-This would indicate that the anomalies are evenly distributed around the climatological mean.
+Although the year-to-year variability of the anomalies (Figure \ref{fig:trendALL} and Figures \ref{fig:trendCLEAR}, \ref{fig:trendCLOUD} on Appendix), shows a rather homogeneous behavior, plots of the cumulative sums (CUSUM) of the anomalies can reveal different structures within all the three sky conditions [@Regier2019]. 
+In the cases of all-sky and clear-sky (Figures \ref{fig:cusummonth-1} and \ref{fig:cusummonth-2}), we observe three macroscopic periods.
+A downward part from the start until about 2005, an relative steady part until about 2016 and finally, a steep upward part until the present.
+For cloud-sky (Figure\ \ref{fig:cusummonth-3}), we have a different sequence, it begins with a relative steady part until 1997, followed by a upward part until 2005, a long decline until 2020, with a small positive slope until the present.
+For a uniform trend, we would expect the CUSUMs of the anomalies to have a symmetric 'V' shape.
+This would indicate that the anomalies are evenly distributed around the climatological mean, and for a positive uniform trend, the first half to be below and the other half above the climatological mean.
+
 In our case, for all sky conditions, we observe periods where the CUSUMs remain relative steady, roughly around the middle of the study dataset.
 Another distinct feature of the CUSUMs, is the different pattern of the cloudy-sky dataset which peaks around the middle of the period.
 The CUSUMs of the clear and the all-sky conditions exhibit similar patterns.
@@ -571,7 +574,7 @@ The following stable period spans for about 15 years up to 2021 when CUSUMs star
 <!--     "./images/CumulativeDailyCuSum-9.png"))   # Cloud sky -->
 <!-- ``` -->
 
-```{r cusummonth, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+```{r cusummonth, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics(c(
     "./images/CumulativeMonthlyCuSum-1.png",    # ALL sky
     "./images/CumulativeMonthlyCuSum-5.png",    # CLEAR sky
@@ -610,7 +613,7 @@ knitr::include_graphics(c(
 
 The solar zenith angle is a major driver of the attenuation of SDR reaching the ground, as SDR is affected by the enhancement of the radiation path in the atmosphere, especially in urban environment with human activities emitting aerosols [@Wang2021].
 In order to estimate the effect of the SZA on the SDR trends, we grouped the anomaly data in bins of $1^\circ$ SZA, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
-Although there is a seasonal variation of the minimum SZA, its possible effect has not been examined here.
+Although there are seasonal variation of the minimum SZA (see Appendix, Figure\ \ref{fig:SZAtrendSeason}), these dependencies would not be further examined here.
 For all-sky and clear-sky conditions the brightening effect of SDR (positive trend) is stronger for large SZAs (Figures\ \ref{fig:szatrends-1} and \ref{fig:szatrends-2}).
 The trends in the morning and afternoon hours are more or less consistent with small differences, which can be attributed to systematic diurnal variations of aerosols, particularly during the warm period of the year [@Wang2021].
 For cloud-sky conditions (Figure\ \ref{fig:szatrends-3}), we can not discern any significant dependence of the SDR trend with SZA.
@@ -677,7 +680,7 @@ value similar to the long term trend) both statistically significant above the $
 In spring and summer, the trends are much smaller and less statistical significant.
 These seasonal differences indicate a possible relation of the trends to clouds during winter and autumn.
 For clear-skies, the trend in winter is $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear sky"], 2)`\,\%/y$, larger than for all-skies ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$), which is another indication of increasing cloud thickness. 
-Moreover, the trends under clear- and cloud-sky conditions are almost complementary to each other, particularly for winter and autumn.
+Moreover, the trends under clear- and cloud-sky conditions are almost complementary to each other, particularly for winter and autumn, where the signal is stronger.
 During spring and summer the statistical significance is very low and the actual trend too small for a meaningful comparison.
 
 
@@ -793,7 +796,7 @@ knitr::include_graphics("./images/LongtermTrends-8.png")
 ```
 
 
-```{r echo = FALSE, fig.cap='SDR trend ~ SZA', out.width='100%'}
+```{r SZAtrendSeason, echo = FALSE, fig.cap='SDR trend ~ SZA', out.width='100%'}
 knitr::include_graphics("./images/SzaTrendsSeasTogether-2.png")
 ```
 
