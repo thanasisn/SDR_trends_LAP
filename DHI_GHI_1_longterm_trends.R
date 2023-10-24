@@ -359,6 +359,9 @@ for (DBn in dbs) {
 
             ## linear model by day step
             lm1 <- lm(dataset[[avar]] ~ dataset$Date)
+names(dataset)
+
+sub("des","_N", avar)
 
             ## capture lm for table
             gather <- rbind(gather,
@@ -368,7 +371,7 @@ for (DBn in dbs) {
                                 var       = avar,
                                 N         = sum(!is.na(dataset[[avar]]))
                             ))
-
+stop()
             par("mar" = c(3, 4, 2, 1))
 
             ## plot data
@@ -514,7 +517,6 @@ pprint[, slope.stat_sig := 100 * (1 - slope.p)]
 pprint[, slope.t        := NULL]
 pprint[, Rsqrd          := NULL]
 pprint[, RsqrdAdj       := NULL]
-pprint[, N              := NULL]
 
 saveRDS(pprint,
         "./figures/tbl_longterm_trends.Rds")

@@ -124,6 +124,9 @@ suppressWarnings({
 ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_att       := NA]
 ALL_1_daily_mean[   GLB_att_N <= Daily_aggregation_N_lim, GLB_att       := NA]
 ALL_1_daily_mean[   HOR_att_N <= Daily_aggregation_N_lim, HOR_att       := NA]
+ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_att_N     := NA]
+ALL_1_daily_mean[   GLB_att_N <= Daily_aggregation_N_lim, GLB_att_N     := NA]
+ALL_1_daily_mean[   HOR_att_N <= Daily_aggregation_N_lim, HOR_att_N     := NA]
 ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_transp    := NA]
 ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_att_sd    := NA]
 ALL_1_daily_mean[   GLB_att_N <= Daily_aggregation_N_lim, GLB_att_sd    := NA]
@@ -137,6 +140,9 @@ ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_EM := NA]
 CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att       := NA]
 CLEAR_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att       := NA]
 CLEAR_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att       := NA]
+CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att_N     := NA]
+CLEAR_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att_N     := NA]
+CLEAR_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att_N     := NA]
 CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp    := NA]
 CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att_sd    := NA]
 CLEAR_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att_sd    := NA]
@@ -150,6 +156,9 @@ CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_EM := NA]
 CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att       := NA]
 CLOUD_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att       := NA]
 CLOUD_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att       := NA]
+CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att_N     := NA]
+CLOUD_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att_N     := NA]
+CLOUD_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att_N     := NA]
 CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp    := NA]
 CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att_sd    := NA]
 CLOUD_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att_sd    := NA]
@@ -171,6 +180,9 @@ ALL_1_daily_seas <-
                         HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
                         GLB_att_sd_seas    = sd(  GLB_att,    na.rm = T),
                         DIR_transp_sd_seas = sd(  DIR_transp, na.rm = T),
+                        DIR_att_N_obs      = sum( DIR_att_N,  na.rm = T),
+                        GLB_att_N_obs      = sum( GLB_att_N,  na.rm = T),
+                        HOR_att_N_obs      = sum( HOR_att_N,  na.rm = T),
                         GLB_att_N_seas     = sum(!is.na(GLB_att)),
                         HOR_att_N_seas     = sum(!is.na(HOR_att)),
                         DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
@@ -185,6 +197,9 @@ CLEAR_1_daily_seas <-
                           HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
                           GLB_att_sd_seas    = sd(  GLB_att,    na.rm = T),
                           DIR_transp_sd_seas = sd(  DIR_transp, na.rm = T),
+                          DIR_att_N_obs      = sum( DIR_att_N,  na.rm = T),
+                          GLB_att_N_obs      = sum( GLB_att_N,  na.rm = T),
+                          HOR_att_N_obs      = sum( HOR_att_N,  na.rm = T),
                           GLB_att_N_seas     = sum(!is.na(GLB_att)),
                           HOR_att_N_seas     = sum(!is.na(HOR_att)),
                           DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
@@ -199,6 +214,9 @@ CLOUD_1_daily_seas <-
                           HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
                           GLB_att_sd_seas    = sd(  GLB_att,    na.rm = T),
                           DIR_transp_sd_seas = sd(  DIR_transp, na.rm = T),
+                          DIR_att_N_obs      = sum( DIR_att_N,  na.rm = T),
+                          GLB_att_N_obs      = sum( GLB_att_N,  na.rm = T),
+                          HOR_att_N_obs      = sum( HOR_att_N,  na.rm = T),
                           GLB_att_N_seas     = sum(!is.na(GLB_att)),
                           HOR_att_N_seas     = sum(!is.na(HOR_att)),
                           DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
