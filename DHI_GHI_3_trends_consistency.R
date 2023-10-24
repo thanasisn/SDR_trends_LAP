@@ -91,7 +91,27 @@ source("./DHI_GHI_0_data_input.R")
 source("./DHI_GHI_0_variables.R")
 tic <- Sys.time()
 
+## use data from 1
+## check previous steps
+if (! file.exists(I1_longterm) |
+    file.mtime(I1_longterm) < file.mtime("./DHI_GHI_0_variables.R") |
+    file.mtime(I1_longterm) < file.mtime("./DHI_GHI_00_raw_data.R") |
+    file.mtime(I1_longterm) < file.mtime("./DHI_GHI_01_Input_longterm.R") )
+{
+    # source("./DHI_GHI_01_Input_longterm.R")
+    tryCatch(source("./DHI_GHI_01_Input_longterm.R"), exit=function(cond) {
+        message( conditionMessage(cond) )
+    })
+    dummy <- gc()
+}
+
+## load data
 load(I1_longterm)
+
+
+
+
+
 
 ## notification function
 options(error = function() {
@@ -939,7 +959,6 @@ for (adb in database) {
              # labels = sfmt,
              las    = 2,
              ylab   = "")
-
 
         title(ylab = bquote("Anomaly CUSUM [%]"),
               line = 3.5)

@@ -564,23 +564,6 @@ In our case, there is more complex evolution of the phenomenon.
 Another distinct feature of the CUSUMs, is the different pattern of the cloudy-sky dataset which peaks around the middle of the period.
 Although, it seems to exist a complementary relation to the CUSUMs of the clear- and all-sky cases, we can not assert that clouds are the main drive for this relation, due to the great difference in the number of observational data between the datasets (Table\ \ref{tab:trendtable}).
 
-In order to investigate more any features within the trends, we created another set of CUSUMs plots, by subtracting the corresponding long term trend from the SDR anomaly data, prior to the CUSUM calculation (Figure\ \ref{fig:cusumnotrendmonthly}).
-With this approach periods when the CUSUMs diverge from zero can be interpreted as systematic variation of SDR from the climatological mean. When the CUSUM is increasing, the added values are above the climatological values of SDR trend and vice versa.
-Overall, for all- and clear-sky conditions (Figure\ \ref{fig:cusumnotrendmonthly-1} and\ \ref{fig:cusumnotrendmonthly-2}) we observe periods when the anomalies diverge from the climatological value, each lasting for several years. 
-The pattern for the all sky and clear sky conditions is very similar, suggesting prevalence in clear skies over Thessaloniki.
-It is interesting that in the period 1993 - 2016 the anomalies of all-sky and clear- sky, have a high variability around zero. After 2016, the range of the variability is decreased at about one third of the prior period.
-For cloud-sky conditions (Figure\ \ref{fig:cusumnotrend-3}) the period 1997-2008 is dominated by positive CUSUMs suggesting a reduced effect of clouds on SDR.
-From 1997 to mid-2000s CUSUMs are increasing, likely due to a continuous decrease in the thickness of clouds, followed by a period of rapid increase (within 3 years) in cloud optical thickness lasting up to 2008. 
-The following stable period spans for about 15 years up to 2021 when CUSUMs start increasing again.
-
-
-<!-- ```{r cusum, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
-<!-- knitr::include_graphics(c( -->
-<!--     "./images/CumulativeDailyCuSum-1.png",    # ALL sky -->
-<!--     "./images/CumulativeDailyCuSum-5.png",    # CLEAR sky -->
-<!--     "./images/CumulativeDailyCuSum-9.png"))   # Cloud sky -->
-<!-- ``` -->
-
 ```{r cusummonth, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics(c(
     "./images/CumulativeMonthlyCuSum-1.png",    # ALL sky
@@ -588,13 +571,14 @@ knitr::include_graphics(c(
     "./images/CumulativeMonthlyCuSum-9.png"))   # Cloud sky
 ```
 
-
-<!-- ```{r cusumnotrend, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR after removing the long term trend from the daily values.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
-<!-- knitr::include_graphics(c( -->
-<!--     "./images/CumulativeDailyCuSumNOtrend-1.png",    # ALL sky -->
-<!--     "./images/CumulativeDailyCuSumNOtrend-5.png",    # CLEAR sky -->
-<!--     "./images/CumulativeDailyCuSumNOtrend-9.png"))   # Cloud sky -->
-<!-- ``` -->
+In order to investigate more the features within the trends, we created another set of CUSUMs plots, by subtracting the corresponding long term trend from the SDR anomaly data, prior to the CUSUM calculation (Figure\ \ref{fig:cusumnotrendmonthly}).
+With this approach periods when the CUSUMs diverge from zero can be interpreted as systematic variation of SDR from the climatological mean. When the CUSUM is increasing, the added values are above the climatological values of SDR trend and vice versa.
+Overall, for all- and clear-sky conditions (Figure\ \ref{fig:cusumnotrendmonthly-1} and\ \ref{fig:cusumnotrendmonthly-2}) we observe periods when the anomalies diverge from the climatological value, each lasting for several years. 
+The pattern for the all sky and clear sky conditions is very similar, suggesting prevalence in clear skies over Thessaloniki.
+It is interesting that in the period 1993 - 2016 the anomalies of all-sky and clear- sky, have a high variability around zero. After 2016, the range of the variability is decreased at about one third of the prior period.
+For cloud-sky conditions (Figure\ \ref{fig:cusumnotrend-3}) the period 1997-2008 is dominated by positive CUSUMs suggesting a reduced effect of clouds on SDR.
+From 1997 to mid-2000s CUSUMs are increasing, likely due to a continuous decrease in the thickness of clouds, followed by a period of rapid increase (within 3 years) in cloud optical thickness lasting up to 2008. 
+The following stable period spans for about 15 years up to 2021 when CUSUMs start increasing again.
 
 
 ```{r cusumnotrendmonthly, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR after removing the long term trend from the monthly values.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
@@ -605,6 +589,19 @@ knitr::include_graphics(c(
 ```
 
 
+<!-- ```{r cusum, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
+<!-- knitr::include_graphics(c( -->
+<!--     "./images/CumulativeDailyCuSum-1.png",    # ALL sky -->
+<!--     "./images/CumulativeDailyCuSum-5.png",    # CLEAR sky -->
+<!--     "./images/CumulativeDailyCuSum-9.png"))   # Cloud sky -->
+<!-- ``` -->
+
+<!-- ```{r cusumnotrend, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR after removing the long term trend from the daily values.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
+<!-- knitr::include_graphics(c( -->
+<!--     "./images/CumulativeDailyCuSumNOtrend-1.png",    # ALL sky -->
+<!--     "./images/CumulativeDailyCuSumNOtrend-5.png",    # CLEAR sky -->
+<!--     "./images/CumulativeDailyCuSumNOtrend-9.png"))   # Cloud sky -->
+<!-- ``` -->
 
 <!-- ```{r cusumSTD, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
 <!-- knitr::include_graphics(c( -->
@@ -612,7 +609,6 @@ knitr::include_graphics(c(
 <!--     "./images/CumulativeDailyCuSumSTD-2.png",    # CLEAR sky -->
 <!--     "./images/CumulativeDailyCuSumSTD-3.png"))   # Cloud sky -->
 <!-- ``` -->
-
 
 
 

@@ -326,7 +326,7 @@ for (DBn in dbs) {
                    paste("Trend: ",
                          if (fit[2] > 0) "+" else "-",
                          signif(abs(fit[2]) * Days_of_year, 3),
-                         "% per year")
+                         "%/y")
             )
 
     }
@@ -421,7 +421,7 @@ for (DBn in dbs) {
                    paste("Trend: ",
                          if (fit[2] > 0) "+" else "-",
                          signif(abs(fit[2]) * Days_of_year, 3),
-                         "% per year")
+                         "%/y")
             )
 
     }
@@ -1187,7 +1187,7 @@ for (avar in vars) {
                    paste("Trend: ",
                          if (fit[2] > 0) '+' else '-',
                          signif(abs(fit[2]), 2),
-                         "% / year")
+                         "%/y")
             )
 
             if (i %in% c(7,12,17,22)) {
