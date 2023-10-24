@@ -276,6 +276,8 @@ TSI$slope.sd           <- NULL
 TSI$slope.ConfInt_0.95 <- NULL
 TSI$slope.ConfInt_0.99 <- NULL
 TSI$var                <- NULL
+TSI$N                  <- NULL
+TSI$Obs                <- NULL
 setorder(TSI, -slope.stat_sig)
 rownames(TSI) <- NULL
 names(TSI) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Trend statistical signif. [%]")
@@ -473,9 +475,14 @@ LT$slope.sd           <- NULL
 LT$slope.ConfInt_0.95 <- NULL
 LT$slope.ConfInt_0.99 <- NULL
 LT$var                <- NULL
+LT$N                  <- NULL
 setorder(LT, -slope.stat_sig)
 rownames(LT) <- NULL
-names(LT)    <- c("Trend [%/year]", "Trend p-value", "Sky conditions", "Statistical signif. [%]")
+names(LT)    <- c("Trend [%/year]", 
+                  "Trend p-value", 
+                  "Sky conditions",
+                  "Observations",
+                  "Statistical signif. [%]")
 ## no need all are 100%
 LTminSSig <- signif(min(LT$`Statistical signif. [%]`), 4)
 # LT$`Trend statistical signif. [%]` <- NULL
@@ -494,14 +501,16 @@ LT$`Sky conditions` <- sub(" cond.", "", LT$`Sky conditions`)
 LT1 <- LT[,c(
       "Sky conditions",
       "Trend [%/year]",
-      "Trend p-value"
+      "Trend p-value",
+      "Observations"
       )]
 
 ## order columns
 LT2 <- LT[,c(
       "Sky conditions",
       "Trend [%/year]",
-      "Statistical signif. [%]"
+      "Statistical signif. [%]",
+      "Observations"
       )]
 
 
@@ -550,16 +559,14 @@ In the cases of all-sky and clear-sky (Figures \ref{fig:cusummonth-1} and \ref{f
 A downward part from the start until about 2005, an relative steady part until about 2016 and finally, a steep upward part until the present.
 For cloud-sky (Figure\ \ref{fig:cusummonth-3}), we have a different sequence, it begins with a relative steady part until 1997, followed by a upward part until 2005, a long decline until 2020, with a small positive slope until the present.
 For a uniform trend, we would expect the CUSUMs of the anomalies to have a symmetric 'V' shape.
-This would indicate that the anomalies are evenly distributed around the climatological mean, and for a positive uniform trend, the first half to be below and the other half above the climatological mean.
-In our case, for all-skies and clear-skies, we observe periods where the CUSUMs remain relative steady, roughly around the middle of the study dataset. This is an indication that the whole brightening phenomenon has not a smooth development over time.
-
+This would indicate that the anomalies are evenly distributed around the climatological mean, and for a positive uniform trend, the first half to be below and the other half above the climatological mean. 
+In our case, there is more complex evolution of the phenomenon.
 Another distinct feature of the CUSUMs, is the different pattern of the cloudy-sky dataset which peaks around the middle of the period.
-The CUSUMs of the clear and the all-sky conditions exhibit similar patterns.
-The causes for these discrepancies haven't been investigated yet. 
+Although, it seems to exist a complementary relation to the CUSUMs of the clear- and all-sky cases, we can not assert that clouds are the main drive for this relation, due to the great difference in the number of observational data between the datasets (Table\ \ref{tab:trendtable}).
 
-In order to compare any features within the trends, we created another set of CUSUMs plots, by subtracting the corresponding long term trend from the SDR anomaly data, prior to the CUSUM calculation (Figure\ \ref{fig:cusumnotrend}).
+In order to investigate more any features within the trends, we created another set of CUSUMs plots, by subtracting the corresponding long term trend from the SDR anomaly data, prior to the CUSUM calculation (Figure\ \ref{fig:cusumnotrendmonthly}).
 With this approach periods when the CUSUMs diverge from zero can be interpreted as systematic variation of SDR from the climatological mean. When the CUSUM is increasing, the added values are above the climatological values of SDR trend and vice versa.
-Overall, for all- and clear-sky conditions (Figure\ \ref{fig:cusumnotrend-1} and\ \ref{fig:cusumnotrend-2}) we observe periods when the anomalies diverge from the climatological value, each lasting for several years. 
+Overall, for all- and clear-sky conditions (Figure\ \ref{fig:cusumnotrendmonthly-1} and\ \ref{fig:cusumnotrendmonthly-2}) we observe periods when the anomalies diverge from the climatological value, each lasting for several years. 
 The pattern for the all sky and clear sky conditions is very similar, suggesting prevalence in clear skies over Thessaloniki.
 It is interesting that in the period 1993 - 2016 the anomalies of all-sky and clear- sky, have a high variability around zero. After 2016, the range of the variability is decreased at about one third of the prior period.
 For cloud-sky conditions (Figure\ \ref{fig:cusumnotrend-3}) the period 1997-2008 is dominated by positive CUSUMs suggesting a reduced effect of clouds on SDR.
@@ -765,8 +772,12 @@ We have calculated the effect of TSI variability to be a negligible factor in SD
 Unfortunately, there is no available data for this period for the aerosols, in order to estimate their effect on SDR, which is the most probable main cause.
 The attenuation of SDR by aerosols over Europe have been proposed as major factor by @Wild2021.
 The dimming effect of SDR under cloud-sky condition ($`r cloudtrend`\,\%/y$), shows that clouds can also attenuate the amount of SDR reaching the ground, and changes on their occurrences can effect the net energy balance.
-Because we have no adequate data to investigate long term changes of cloud formation in the region, we can not infer if the SDR trend we observe under cloud-sky is biased by changes in clouds and local climate.
+Because we have no adequate data to investigate the long term changes of cloud formation in the region, we can not infer if the SDR trend we observe under cloud-sky is biased by changes in clouds and local climate.
 The observed brightening of SDR over Thessaloniki; is dependent on SZA (higher SZA, have stronger brightening trends). And also, with the seasons of the year, where Winter and Autumn show a significant strong trend, in contrast to Spring and Summer.
+
+<!-- to conclutions? -->
+In the CUSUMs for all-skies and clear-skies, we observed periods where the CUSUMs remain relative steady, 
+<!-- roughly around the middle of the study dataset,--> with a steep decline previous to that, and a steep incline after. This is an indication that the whole brightening phenomenon does not have a smooth development over time.
 
 
 Our findings are in agreement with other researchers for the region.

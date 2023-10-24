@@ -1,18 +1,18 @@
 slope ;  slope.sd ;  slope.p ;  DATA ;  Season ;  var ;  slope.stat_sig
  2.90515052 ;  2.18356322 ;  0.240815310 ;  All sky cond. ;  Winter ;  Dir. Beam Irrad. ;  75.91847
--1.68863825 ;  0.77274736 ;  0.071542665 ;  All sky cond. ;  Spring ;  Dir. Beam Irrad. ;  92.84573
+-1.66113501 ;  0.76701088 ;  0.073494014 ;  All sky cond. ;  Spring ;  Dir. Beam Irrad. ;  92.65060
  0.73359659 ;  1.24505564 ;  0.581335317 ;  All sky cond. ;  Summer ;  Dir. Beam Irrad. ;  41.86647
  1.13568414 ;  3.13491819 ;  0.731959105 ;  All sky cond. ;  Autumn ;  Dir. Beam Irrad. ;  26.80409
  0.68629111 ;  0.19197782 ;  0.001296916 ;  All sky cond. ;  Winter ;  SDR ;  99.87031
- 0.13921254 ;  0.10704133 ;  0.203653437 ;  All sky cond. ;  Spring ;  SDR ;  79.63466
+ 0.14459364 ;  0.10578791 ;  0.182183406 ;  All sky cond. ;  Spring ;  SDR ;  81.78166
  0.12039900 ;  0.07213944 ;  0.106267519 ;  All sky cond. ;  Summer ;  SDR ;  89.37325
  0.43066927 ;  0.14689804 ;  0.006645793 ;  All sky cond. ;  Autumn ;  SDR ;  99.33542
  2.61672230 ;  2.30657371 ;  0.308042575 ;  Clear sky cond. ;  Winter ;  Dir. Beam Irrad. ;  69.19574
--2.29990987 ;  0.81819462 ;  0.030717465 ;  Clear sky cond. ;  Spring ;  Dir. Beam Irrad. ;  96.92825
+-2.27466592 ;  0.81308054 ;  0.031263089 ;  Clear sky cond. ;  Spring ;  Dir. Beam Irrad. ;  96.87369
  0.46987402 ;  1.15555621 ;  0.701106331 ;  Clear sky cond. ;  Summer ;  Dir. Beam Irrad. ;  29.88937
  1.52693580 ;  3.27683939 ;  0.660825378 ;  Clear sky cond. ;  Autumn ;  Dir. Beam Irrad. ;  33.91746
  0.82582855 ;  0.19759247 ;  0.000259254 ;  Clear sky cond. ;  Winter ;  SDR ;  99.97407
- 0.05609434 ;  0.12139683 ;  0.647476116 ;  Clear sky cond. ;  Spring ;  SDR ;  35.25239
+ 0.06130285 ;  0.12031281 ;  0.614237307 ;  Clear sky cond. ;  Spring ;  SDR ;  38.57627
 -0.03071467 ;  0.09186507 ;  0.740610416 ;  Clear sky cond. ;  Summer ;  SDR ;  25.93896
  0.36670922 ;  0.15856723 ;  0.028309194 ;  Clear sky cond. ;  Autumn ;  SDR ;  97.16908
  6.08211439 ;  2.39365988 ;  0.051835279 ;  Cloudy sky cond. ;  Winter ;  Dir. Beam Irrad. ;  94.81647

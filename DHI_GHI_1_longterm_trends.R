@@ -87,7 +87,7 @@ source("~/CODE/FUNCTIONS/R/data.R")
 
 
 ## __ Source initial scripts ---------------------------------------------------
-source("./DHI_GHI_0_data_input.R")
+# source("./DHI_GHI_0_data_input.R")
 source("./DHI_GHI_0_variables.R")
 source("~/CODE/R_myRtools/myRtools/R/write_.R")
 
@@ -359,9 +359,6 @@ for (DBn in dbs) {
 
             ## linear model by day step
             lm1 <- lm(dataset[[avar]] ~ dataset$Date)
-names(dataset)
-
-sub("des","_N", avar)
 
             ## capture lm for table
             gather <- rbind(gather,
@@ -369,9 +366,10 @@ sub("des","_N", avar)
                                 linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
                                 DATA      = DBn,
                                 var       = avar,
-                                N         = sum(!is.na(dataset[[avar]]))
+                                N         = sum(!is.na(dataset[[avar]])),
+                                Obs       = sum(dataset[[sub("_des","_N", avar)]], na.rm = TRUE)
                             ))
-stop()
+
             par("mar" = c(3, 4, 2, 1))
 
             ## plot data
