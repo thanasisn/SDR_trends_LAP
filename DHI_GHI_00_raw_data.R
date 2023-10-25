@@ -16,6 +16,7 @@ require(data.table)
 require(zoo)
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
+source("~/CODE/R_myRtools/myRtools/R/write_.R")
 source("./DHI_GHI_0_variables.R")
 
 #  Run data construction  ------------------------------------------------------
@@ -148,7 +149,7 @@ if (havetorun) {
         ## FIXME do we still need this?
         ## this is used by old scripts
         setorder(DATA, Date)
-        myRtools::write_RDS(object = DATA, file = CS_file, clean = TRUE)
+        write_RDS(object = DATA, file = CS_file, clean = TRUE)
     } else {
         DATA <- readRDS(CS_file)
     }
@@ -234,7 +235,7 @@ if (havetorun) {
     ##_  Info for TIS time span source used  -----------------------------------
     TSI_info <- DATA[, .(Start = min(Date),
                          End   = max(Date)), by = TSI_Source]
-    myRtools::write_dat(object = TSI_info,
+    write_dat(object = TSI_info,
                         file   = "./figures/tbl_tsi_info.dat",
                         clean  = TRUE)
     rm(TSI_info)
