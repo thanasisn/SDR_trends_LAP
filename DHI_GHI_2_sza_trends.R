@@ -1314,29 +1314,31 @@ for (ase in seasons) {
             ## zero line
             abline(h = 0, lty = 3)
 
+            ccex <- .6
+
             ## morning lines
             lines(pam$SZA, pam[[awe]],
                   col  = 2,
                   type = "c",
-                  lwd  = ccex,
-                  cex = 1)
+                  lwd  = 1,
+                  cex  = ccex)
             ## morning points
             points(pam$SZA, pam[[awe]],
                    pch = pam$pch,
                    col = 2,
-                   cex = 1)
+                   cex = ccex)
 
             ## evening lines
             lines(ppm$SZA, ppm[[awe]],
                   col  = 3,
                   type = "c",
-                  lwd  = ccex,
-                  cex = 1)
+                  lwd  = 1,
+                  cex  = ccex)
             ## evening points
             points(ppm$SZA, ppm[[awe]],
                    pch = ppm$pch,
                    col = 3,
-                   cex = 1)
+                   cex = ccex)
 
             ## legend on any of the plots
             if (i %in% c(7)) {
@@ -1358,7 +1360,6 @@ for (ase in seasons) {
                        pch    = c(16, 17, 1, 2),
                        ncol   = 1,
                        bty = "n")
-
             }
 
             ## x labels
@@ -1407,7 +1408,7 @@ for (ase in seasons) {
     # 5
     plot.new()
 
-    par(mfrow = c(1,1))
+    par(mfrow = c(1, 1))
 }
 #+ echo=F, include=F
 
