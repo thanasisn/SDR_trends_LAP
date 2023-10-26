@@ -1314,7 +1314,7 @@ for (ase in seasons) {
             ## zero line
             abline(h = 0, lty = 3)
 
-            ccex <- .6
+            ccex <- .8
 
             ## morning lines
             lines(pam$SZA, pam[[awe]],
