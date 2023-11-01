@@ -51,9 +51,7 @@ header-includes:
    # - \usepackage{subfig}
    - \usepackage{subcaption}
 output: 
-  rticles::elsevier_article:
-    keep_tex:         no
-    citation_package: natbib
+  rticles::mdpi_article: default
   bookdown::word_document2: default
   bookdown::pdf_document2:
     number_sections:  no
@@ -475,13 +473,14 @@ LT$slope.sd           <- NULL
 LT$slope.ConfInt_0.95 <- NULL
 LT$slope.ConfInt_0.99 <- NULL
 LT$var                <- NULL
-LT$N                  <- NULL
+# LT$N                  <- NULL
+LT$Obs                <- NULL
 setorder(LT, -slope.stat_sig)
 rownames(LT) <- NULL
 names(LT)    <- c("Trend [%/year]", 
                   "Trend p-value", 
                   "Sky conditions",
-                  "Observations",
+                  "Days",
                   "Statistical signif. [%]")
 ## no need all are 100%
 LTminSSig <- signif(min(LT$`Statistical signif. [%]`), 4)
@@ -502,7 +501,7 @@ LT1 <- LT[,c(
       "Sky conditions",
       "Trend [%/year]",
       "Trend p-value",
-      "Observations"
+      "Days"
       )]
 
 ## order columns
@@ -510,11 +509,8 @@ LT2 <- LT[,c(
       "Sky conditions",
       "Trend [%/year]",
       "Statistical signif. [%]",
-      "Observations"
+      "Days"
       )]
-
-stop("Observations to days of data!!")
-
 ```
 
 We calculated the linear SDR trends, from the departures of the mean daily values from the seasonal values, and for the three sky conditions (Table\ \ref{tab:trendtable}).
