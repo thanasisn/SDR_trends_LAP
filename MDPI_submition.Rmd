@@ -408,14 +408,7 @@ Example of a theorem:
 Example text of a theorem
 :::
 
-The text continues here. Proofs must be formatted as follows:
 
-Example of a proof:
-
-::: {.proof latex="[Proof of Theorem1]"}
-Text of the proof. Note that the phrase ``of Theorem 1'' is optional if it is 
-clear which theorem is being referred to.
-:::
 
 The text continues here.
 
