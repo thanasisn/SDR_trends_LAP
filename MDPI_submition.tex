@@ -264,6 +264,244 @@ the identification of clear-/cloud-sky instances
 period 1993 to 2023, under different sky conditions (all-sky, clear-sky
 and cloud-sky).
 
+\hypertarget{observational-data-and-methodology.}{%
+\section{Observational data and
+methodology.}\label{observational-data-and-methodology.}}
+
+The SDR data were measured with a Kipp \& Zonen CM-21 pyranometer
+operating continuously at the Laboratory of Atmospheric Physics of the
+Aristotle University of Thessaloniki (\(40^\circ\,38'\,\)N,
+\(22^\circ\,57'\,\)E, \(80\,\)m~a.s.l.) in the period from 1993-04-13 to
+2023-04-13. The monitoring site is located near the city centre, and we
+expect to be affected by the urban environment. During the study period,
+the pyranometer has been independently calibrated three times at the
+Meteorologisches Observatorium Lindenberg, DWD, when it was verified the
+stability of the instrument to within better than \(0.7\%\) relative to
+the initial calibration by the manufacturer. Along with SDR, the direct
+beam radiation (DNI) was also measured by a collocated Kipp \& Zonen
+CHP-1 pyrheliometer, for the period 2016-04-01 to 2023-04-13. Although,
+we have performed a similar analysis to the DNI data the results are not
+presented here, as they lack the appropriate statistical significance,
+due to the sorter duration of the data. However, the DNI data were used
+as auxiliary data, in the clear sky identification algorithm (CSid),
+which is discussed later, for the selection of the appropriate
+thresholds. It is noted that despite the capability of the CSid
+algorithm to use the DNI as a characterization parameter, we haven't
+utilized it here, to avoid any selection bias, due to unequal length of
+the two datasets. There are four distinct steps in the creation of the
+dataset analysed here: a)~the acquisition of radiation measurements from
+the sensors, b)~the data quality check, c)~the identification of ``clear
+sky'' conditions from the radiometric data, and d)~the aggregation of
+data and trend analysis.
+
+For the acquisition of radiometric data, the signal of the pyranometer
+is sampled with a rate of \(1\,\text{Hz}\). The mean and the standard
+deviation of these samples are recorded every minute. The measurements
+are corrected for the zero offset (``dark signal'' in volts). The ``dark
+signal'' is calculated by averaging all measurements recorded for a
+period of \(3\,\text{h}\), before (morning) or after (evening) the Sun
+reaches an elevation angle of \(-10^\circ\). The signal is converted to
+irradiance using a ramped value of the instrument's sensitivity between
+calibrations.
+
+A manual screening was performed, to remove inconsistent and erroneous
+recordings that can occur stochastically or systematically, during the
+continuous operation of the instruments. The manual screening is aided
+by a radiation data quality assurance procedure, adjusted for the site,
+which is based on the methods of Long and
+Shi~\citetext{\citeyear{Long2008a}; \citeyear{Long2006}}. Thus,
+problematic recordings have been excluded from further processing.
+Although it is impossible to detect all false data, the large number of
+available data, and the aggregation scheme we used, ensures the good
+quality of the radiometric measurements used in this study.
+
+In order to be able to estimate the effect of the sky condition on the
+long term variability of SDR, we created three datasets, by
+characterizing each one-minute measurement with a corresponding sky
+condition (i.e., all-sky, clear-sky and cloudy-sky). To identify the
+clear-sky conditions we used a method proposed by \citet{Long2000} and
+by \citet{Reno2016}, which was adapted and configured for the site, as
+the authors suggest.
+
+We have to note, that the definition of what constitutes as clear or
+cloudy sky, has some subjectivity, in any method of characterization. As
+a result, the details of the definition are site specific, it relies on
+a combination of thresholds and comparisons with ideal actinometric
+models and statistical analysis on different signal metrics. The CSid
+algorithm was calibrated with the main focus, to identify the presence
+of clouds on the sky dome. Although the fine-tuning of the procedure,
+few marginal cases exist, that have been identified manually as false
+positive or false negative but cannot affect the final results of the
+study.
+
+For completeness, we will provide below a brief overview of the clear
+sky identification algorithm (CSid), along with the site specific
+thresholds. To calculate the reference clear sky
+\(\text{SDR}_\text{CSref}\) we used the \(\text{SDR}_\text{Haurwitz}\)
+derived by the radiation model of \citet{Haurwitz1945}, adjusted for our
+site with a factor \(a\) (Eq.~\ref{eq:ahau}), resulted by an iterative
+optimization process, as described by \citet{Long2000} and
+\citet{Reno2016}. The target of the optimization was the minimization of
+a function \(f(a)\) (Eq.~\ref{eq:minf}) and was accomplished with the
+algorithmic function ``optimise'', which is an implementation based on
+the work of \citet{Brent1973}, from the library ``stats'' of the R
+programming language \citep{RCT2023}. The optimization and the selection
+of the clear sky reference model, was performed on SDR observations for
+the period 2016 - 2021. During the optimization, eight simple clear sky
+radiation models were tested (Daneshyar-Paltridge-Proctor,
+Kasten-Czeplak, Haurwitz, Berger-Duffie, Adnot-Bourges-Campana-Gicquel,
+Robledo-Soler, Kasten and Ineichen-Perez), with a wide range of factors.
+These models are described in more details by \citet{Reno2012} and
+evaluated by \citet{Reno2016}. We found, that Haurwitz's model, adjusted
+with the factor \(a = 0.965\) yields one of the lowest root mean squared
+errors (RMSE), while the procedure, manages to characterize the majority
+of the data. Thus, our clear sky reference is derived by the
+Eq.~\ref{eq:ahau}.
+
+\begin{equation}
+f(a) = \frac{1}{n}\sum_{i=1}^{n} ( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i} )^2 \label{eq:minf}
+\end{equation} where: \(n\) is the total number of daylight records,
+\(\text{SDR}_{\text{CSid},i}\) are the records identified as clear sky
+by CSid, \(a\) is a hypothetical adjustment factor, and
+\(\text{SDR}_{\text{testCSref},i}\) is any of the tested clear sky
+radiation models.
+
+\begin{equation}
+\text{SDR}_\text{CSref} = a \times \text{SDR}_\text{Haurwitz} = 0.965 \times 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.057}{\cos(\theta)} \right) \label{eq:ahau}
+\end{equation} where: \(\text{SDR}_\text{CSref}\) is the reference clear
+sky SDR, in \(\text{w}\,\text{m}^{-2}\) and \(\theta\) is the solar
+zenith angle (SZA).
+
+The criteria that were used to identify whether a measurement was taken
+under clear-sky conditions are presented below. A data point is flagged
+as ``clear-sky'' if all criteria are satisfied, otherwise it is
+considered to be ``cloud-sky''. Each criterion was applied for a running
+window of \(11\) consecutive one-minute measurements, and the
+characterization is assigned to the central value of the window. Each
+parameter, was calculated both from the observations and the reference
+clear sky model, for each comparison. The allowable range of variation
+is defined by the model-derived value of the parameter multiplied by a
+factor plus an offset. The factors and the offsets were determined
+empirically, by manual inspecting each filters performance on selected
+days, and adjusting them accordingly, during an iterative process.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\tightlist
+\item
+  Mean of the measured \(\overline{\text{SDR}}_i\) (Eq.
+  \ref{eq:MeanVIP}). \begin{equation}
+  0.91 \times \overline{\text{SDR}}_{\text{CSref},i} - 20
+  < \overline{\text{SDR}}_i <
+  1.095 \times \overline{\text{SDR}}_{\text{CSref},i} + 30
+  \label{eq:MeanVIP}
+  \end{equation}
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Maximum measured value \(M_{\text{}}\) (Eq.~\ref{eq:MaxVIP}).
+  \begin{equation}
+  1 \times M_{\text{CSref},i} - 75
+  < M_{\text{}i} <
+  1 \times M_{\text{CSref},i} + 75
+  \label{eq:MaxVIP}
+  \end{equation}
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Length \(L_i\) of the sequential line segments, connecting the points
+  of the \(11\) SDR values (Eq. \ref{eq:VILeq}). \begin{equation}
+  L_i = \sum_{i=1}^{n-1}\sqrt{\left ( \text{SDR}_{i+1} - \text{SDR}_{i}\right )^2 + \left ( t_{i+1} - t_i \right )^2}
+  \label{eq:VILeq}
+  \end{equation} \begin{equation}
+  1 \times L_{\text{CSref},i} - 5 < L_i < 1.3 \times L_{\text{CSref},i} + 13
+  \label{eq:VILcr}
+  \end{equation} where: \(t_i\) is the time each SDR measurement has
+  been measured
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Standard deviation \(\sigma_i\) of the slope (\(s_i\)) between the
+  \(11\) sequential points, normalized by the mean
+  \(\overline{\text{SDR}}_i\) (Eq.~\ref{eq:VCT1}). \begin{gather}
+    \sigma_i = \frac {\sqrt{\frac{1}{n-1} \sum_{i=1}^{n-1} \left( s_i - \bar{s} \right)^2}} {\overline{\text{SDR}}_i} \label{eq:VCT1} \\
+    s_i = \frac{\text{SDR}_{i+1} - \text{SDR}_{i}}{t_{i+1} - t_i},\;\;   \bar{s} = \frac{1}{n-1} \sum_{i=1}^{n-1} s_i,\;\;\forall i \in \left \{ 1, 2, \ldots, n-1 \right \}\;\;
+  \end{gather} For this criterion, \(\sigma_i\) should be below a
+  certain threshold (Eq.~\ref{eq:VCTcr}): \begin{equation}
+    \sigma_i < \ensuremath{1.1\times 10^{-4}} \label{eq:VCTcr}
+  \end{equation}
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Maximum difference \(X_i\) between the change in measured irradiance
+  and the change in clear sky irradiance over each measurement interval.
+  \begin{gather}
+    X_i = \max{\left \{ \left | x_i - x_{\text{CSref},i} \right | \right \}} \label{eq:VSM3} \\
+    x_i = \text{SDR}_{i+1} - \text{SDR}_{i} \forall i \in \left \{ 1, 2, \ldots, n-1 \right \} \label{eq:VSM1} \\
+    x_{\text{CSref},i} = \text{SDR}_{\text{CSref},i+1} - \text{SDR}_{\text{CSref},i} \forall i \in \left \{ 1, 2, \ldots, n-1 \right \} \label{eq:VSM2}
+  \end{gather} For this criterion, \(X_i\) should be below a certain
+  threshold (Eq.~\ref{eq:VSMcr}): \begin{equation}
+    X_i < 7.5 \label{eq:VSMcr}
+  \end{equation}
+\end{enumerate}
+
+Due to a significant measurement uncertainty near the horizon, we have
+to exclude all measurements with SZA greater than \(85^\circ\).
+Moreover, due to some obstructions around the site (hills and
+buildings), we excluded data with Azimuth angle between \(35^\circ\) and
+\(120^\circ\) with SZA greater than \(80^\circ\). On the latter
+instances, Sun is systematically, not visible by the instrument's
+location. To make the measurements comparable throughout the dataset, we
+adjusted all one-minute radiometric values to the mean Sun - Earth
+distance. Subsequently, we made all measurements relative to the Total
+Solar Irradiance (TSI) at \(1\,\text{au}\), in order to compensate for
+the Sun's intensity variability, using a time series of satellite TSI
+observations. The TSI data we use are part of the ``NOAA Climate Data
+Record of Total Solar Irradiance'' dataset \citep{Coddington2005}. Where
+the initial daily values, were interpolated to match with the time step
+of our measurements. The final dataset contains \(6589967\) one-minute
+measurements, of which, \(84.2\%\) were identified as under clear-sky
+conditions and subsequently \(15.8\%\) as under cloud-sky conditions.
+
+In order to investigate the SDR trends, we implemented an appropriate
+aggregation scheme to the 1-minute data to derive a series in coarser
+timescale. To preserve the representativeness of the data we used the
+following criteria: a) for the daily mean values we accept days with
+more than 50\% of the daytime measurements, present and valid, b)
+monthly values were computed from daily means only when at least 20 days
+were available. To create the daily and monthly climatological means, we
+averaged the data based on the day of year and calendar month,
+respectively. For the seasonal means we averaged the mean daily values
+in each season (Winter: December - February, Spring: March - May, etc.).
+Finally, each data set was deseasonalized by subtracting the
+corresponding climatological annual cycle (daily or monthly) from the
+actual data. To estimate SZA contribution to the SDR trends, the
+one-minute data were aggregated in \(1^\circ\) SZA bins, separately for
+the morning and afternoon hours, and then were deseasonalized as
+mentioned above.
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+\hypertarget{long-term-sdr-trends}{%
+\subsection{Long-term SDR trends}\label{long-term-sdr-trends}}
+
 \hypertarget{version}{%
 \section{Version}\label{version}}
 
@@ -279,82 +517,6 @@ submission, that you're using the most recent .cls, .tex and .bst files
 \hypertarget{journal-specific-yaml-variables}{%
 \subsection{Journal Specific YAML
 variables}\label{journal-specific-yaml-variables}}
-
-\startlandscape
-
-\begin{longtable}[t]{llllllll}
-\caption{\label{tab:mdpinames}MDPI journal names.}\\
-\toprule
-acoustics & biomedinformatics & dentistry & galaxies & jcp & metabolites & philosophies & socsci\\
-actuators & biomimetics & dermato & games & jcs & metals & photochem & software\\
-addictions & biomolecules & dermatopathology & gases & jcto & meteorology & photonics & soilsystems\\
-admsci & biophysica & designs & gastroent & jdb & methane & phycology & solar\\
-adolescents & biosensors & devices & gastrointestdisord & jeta & metrology & physchem & solids\\
-\addlinespace
-aerobiology & biotech & diabetology & gels & jfb & micro & physics & spectroscj\\
-aerospace & birds & diagnostics & genealogy & jfmk & microarrays & physiologia & sports\\
-agriculture & bloods & dietetics & genes & jimaging & microbiolres & plants & standards\\
-agriengineering & blsf & digital & geographies & jintelligence & micromachines & plasma & stats\\
-agrochemicals & brainsci & disabilities & geohazards & jlpea & microorganisms & platforms & std\\
-\addlinespace
-agronomy & breath & diseases & geomatics & jmmp & microplastics & pollutants & stresses\\
-ai & buildings & diversity & geosciences & jmp & minerals & polymers & surfaces\\
-air & businesses & dna & geotechnics & jmse & mining & polysaccharides & surgeries\\
-algorithms & cancers & drones & geriatrics & jne & modelling & poultry & suschem\\
-allergies & carbon & dynamics & grasses & jnt & molbank & powders & sustainability\\
-\addlinespace
-alloys & cardiogenetics & earth & gucdd & jof & molecules & preprints & symmetry\\
-analytica & catalysts & ebj & hazardousmatters & joitmc & mps & proceedings & synbio\\
-analytics & cells & ecologies & healthcare & jor & msf & processes & systems\\
-anatomia & ceramics & econometrics & hearts & journalmedia & mti & prosthesis & targets\\
-animals & challenges & economies & hemato & jox & muscles & proteomes & taxonomy\\
-\addlinespace
-antibiotics & chemengineering & education & hematolrep & jpm & nanoenergyadv & psf & technologies\\
-antibodies & chemistry & ejihpe & heritage & jrfm & nanomanufacturing & psych & telecom\\
-antioxidants & chemosensors & electricity & higheredu & jsan & nanomaterials & psychiatryint & test\\
-applbiosci & chemproc & electrochem & highthroughput & jtaer & ncrna & psychoactives & textiles\\
-appliedchem & children & electronicmat & histories & jvd & ndt & publications & thalassrep\\
-\addlinespace
-appliedmath & chips & electronics & horticulturae & jzbg & network & quantumrep & thermo\\
-applmech & cimb & encyclopedia & hospitals & kidneydial & neuroglia & quaternary & tomography\\
-applmicrobiol & civileng & endocrines & humanities & kinasesphosphatases & neurolint & qubs & tourismhosp\\
-applnano & cleantechnol & energies & humans & knowledge & neurosci & radiation & toxics\\
-applsci & climate & eng & hydrobiology & land & nitrogen & reactions & toxins\\
-\addlinespace
-aquacj & clinpract & engproc & hydrogen & languages & notspecified & receptors & transplantology\\
-architecture & clockssleep & entomology & hydrology & laws & nri & recycling & transportation\\
-arm & cmd & entropy & hygiene & life & nursrep & regeneration & traumacare\\
-arthropoda & coasts & environments & idr & liquids & nutraceuticals & religions & traumas\\
-arts & coatings & environsciproc & ijerph & literature & nutrients & remotesensing & tropicalmed\\
-\addlinespace
-asc & colloids & epidemiologia & ijfs & livers & obesities & reports & universe\\
-asi & colorants & epigenomes & ijgi & logics & oceans & reprodmed & urbansci\\
-astronomy & commodities & est & ijms & logistics & ohbm & resources & uro\\
-atmosphere & compounds & fermentation & ijns & lubricants & onco & rheumato & vaccines\\
-atoms & computation & fibers & ijpb & lymphatics & oncopathology & risks & vehicles\\
-\addlinespace
-audiolres & computers & fintech & ijtm & machines & optics & robotics & venereology\\
-automation & condensedmatter & fire & ijtpp & macromol & oral & ruminants & vetsci\\
-axioms & conservation & fishes & ime & magnetism & organics & safety & vibration\\
-bacteria & constrmater & fluids & immuno & magnetochemistry & organoids & sci & virtualworlds\\
-batteries & cosmetics & foods & informatics & make & osteology & scipharm & viruses\\
-\addlinespace
-bdcc & covid & forecasting & information & marinedrugs & oxygen & sclerosis & vision\\
-behavsci & crops & forensicsci & infrastructures & materials & parasites & seeds & waste\\
-beverages & cryptography & forests & inorganics & materproc & parasitologia & sensors & water\\
-biochem & crystals & foundations & insects & mathematics & particles & separations & wem\\
-bioengineering & csmf & fractalfract & instruments & mca & pathogens & sexes & wevj\\
-\addlinespace
-biologics & ctn & fuels & inventions & measurements & pathophysiology & signals & wind\\
-biology & curroncol & future & iot & medicina & pediatrrep & sinusitis & women\\
-biomass & cyber & futureinternet & j & medicines & pharmaceuticals & skins & world\\
-biomechanics & dairy & futurepharmacol & jal & medsci & pharmaceutics & smartcities & youth\\
-biomed & data & futurephys & jcdd & membranes & pharmacoepidemiology & sna & zoonoticdis\\
-\addlinespace
-biomedicines & ddc & futuretransp & jcm & merits & pharmacy & societies & \\
-\bottomrule
-\end{longtable}
-\finishlandscape
 
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
@@ -401,8 +563,8 @@ Interventionary studies involving animals or humans, and other studies
 require ethical approval must list the authority that provided approval
 and the corresponding ethical approval code.
 
-\hypertarget{results}{%
-\section{Results}\label{results}}
+\hypertarget{results-1}{%
+\section{Results}\label{results-1}}
 
 This section may be divided by subheadings. It should provide a concise
 and precise description of the experimental results, their
@@ -560,12 +722,6 @@ context possible. Future research directions may also be highlighted.
 
 This section is not mandatory, but can be added to the manuscript if the
 discussion is unusually long or complex.
-
-\hypertarget{patents}{%
-\section{Patents}\label{patents}}
-
-This section is not mandatory, but may be added if there are patents
-resulting from the work reported in this manuscript.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
