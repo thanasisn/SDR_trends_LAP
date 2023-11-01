@@ -513,6 +513,7 @@ LT2 <- LT[,c(
       "Observations"
       )]
 
+stop("Observations to days of data!!")
 
 ```
 
@@ -541,7 +542,7 @@ x_latex <- knitr::kable(LT2,
                         format.args = list(digits = 4),
                         linesep  = "",
                         align    = "crr",
-                        caption  = paste0("\\label{tab:trendtable}Trends in SDR daily mean for different sky conditions for the period ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), "."))
+                        caption  = paste0("\\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), "."))
 x_latex %>%
     kable_styling(
         latex_options = c("hold_position")
