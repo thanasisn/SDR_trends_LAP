@@ -18,21 +18,24 @@ LIBRARY      = ~/LIBRARY/REPORTS/
 
 
 
-### Article
-## using rstudio pandoc
-TARGET = Article
+### MDPI Article
+TARGET = MDPI_submition
 RMD    = $(TARGET).Rmd
 PDF    = $(TARGET).pdf
+DOC    = $(TARGET).docx
 Ap2: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
 	@#-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
-	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='rticles::elsevier_article', output_file='$@', clean = TRUE)" 
+	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='rticles::mdpi_article', output_file='$@', clean = TRUE)" 
+	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', clean = TRUE, output_format='bookdown::word_document2', output_file='MDPI_submition.docx')"
+	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@', clean = TRUE, output_file='MDPI_article.pdf')"
 	@# echo "Changed:  $?"
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
 
 
+## simple default pdf
 TARGET = Article
 RMD    = $(TARGET).Rmd
 PDF    = $(TARGET)_A.pdf 
@@ -58,7 +61,6 @@ Apv: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', clean = TRUE, output_format='bookdown::pdf_document2', output_file='Article_A$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).pdf')"
-	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', clean = TRUE, output_format='rticles::elsevier_article', output_file='Article_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).pdf')"
 	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', clean = TRUE, output_format='bookdown::word_document2', output_file='Article_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).docx')"
 	-mkdir -p "Build_$(shell echo $$(($$(cat $(BLD_FILE)) + 1)))"
 	-cp 'Article.Rmd' 'Article_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).Rmd'

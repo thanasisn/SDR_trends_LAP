@@ -70,7 +70,6 @@ output:
     colorlinks:       yes
     urlcolor:         blue
     biblio-style:     apalike
-# date:           "`r format(Sys.time(), '%F')`"
 ---
 
 
@@ -118,12 +117,9 @@ suppressMessages(
 )
 ```
 
-<!-- use SDR for GHI -->
 
 # Introduction.
 
-<!-- something about aerosols: bais mail -->
-<!-- something about clouds: bais mail -->
 <!--
 Η εισαγωγή είναι εντάξει. Ίσως θα μπορούσες να βάλεις στη 2η
 παράγραφο ακόμη 2-3 σειρές για τις τάσεις του αεροζόλ και των νεφών
@@ -173,8 +169,6 @@ et al 2012).
 
 
 ...... cloud formation occurrences and constitution nuclei. cite .....
-p>        "  Too hard to vim
-
 
 #Wild2012 : simplify interaction nice graph
 

@@ -133,6 +133,7 @@ output:
   rticles::mdpi_article:
     extra_dependencies:  longtable
     keep_tex:            yes
+    
 ---
 
 # Version
@@ -144,6 +145,7 @@ using the most recent .cls, .tex and .bst files
 (available [here](http://www.mdpi.com/authors/latex)).
 
 # Article Header Information
+
 
 
 
