@@ -126,7 +126,7 @@ abbreviations:
     long: Three letter acronym
   - short: SDR 
     long: Solar downward radiation
-bibliography: references.bib
+bibliography: manualreferences.bib
 appendix:     appendix.tex
 endnotes:     false
 output: 
