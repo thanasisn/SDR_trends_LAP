@@ -502,6 +502,115 @@ mentioned above.
 \hypertarget{long-term-sdr-trends}{%
 \subsection{Long-term SDR trends}\label{long-term-sdr-trends}}
 
+We calculated the linear SDR trends, from the departures of the mean
+daily values from the seasonal values, and for the three sky conditions
+(Table~\ref{tab:trendtable}). In Figure~\ref{fig:trendALL} we present
+only the time series under all-sky conditions; the plots for clear-sky
+and cloud-sky conditions, are very similar and are shown in the Appendix
+(Figures~\ref{fig:trendCLEAR} and~ \ref{fig:trendCLOUD}). We observe a
+positive trend for all-sky conditions (\(0.38\,\%/y\)), a very close but
+lower trend for clear-skies (\(0.35\,\%/y\)) and a negative weaker trend
+for cloud-skies (\(-0.28\,\%/y\)). In the studied period, there is no
+significant break or change in the variability of the time series. Other
+studies for the European region report a change of the SDR slope, around
+1980, a few years before the start of our records
+\citep{Wild2021, Yuan2021, Ohmura2009}. It is interesting to note, that
+for the observation period, the trend of the TSI is \(-2e-04\,\%/y\),
+and thus we can not attribute any major effect on SDR trend to Solar
+variability.
+
+\begin{table}[!h]
+
+\caption{\label{tab:trendtable}\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period 1993 - 2023.}
+\centering
+\begin{tabular}[t]{crrc}
+\toprule
+Sky conditions & Trend [\%/year] & Statistical signif. [\%] & Days\\
+\midrule
+All sky & 0.376 & 100.00 & 10256\\
+Clear sky & 0.349 & 100.00 & 10256\\
+Cloudy sky & -0.276 & 99.97 & 5067\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[h!]
+
+{\centering \includegraphics[width=.70\linewidth]{./images/LongtermTrends-2} 
+
+}
+
+\caption{Anomaly (\%) of the daily all-sky SDR, relative to climatological values for 1993 - 2023. The black line shows the long term linear trend.}\label{fig:trendALL}
+\end{figure}
+
+Although the year-to-year variability of the anomalies (Figure
+\ref{fig:trendALL} and Figures \ref{fig:trendCLEAR},
+\ref{fig:trendCLOUD} on Appendix), shows a rather homogeneous behavior,
+plots of the cumulative sums (CUSUM) of the anomalies can reveal
+different structures within all the three sky conditions
+\citep{Regier2019}. In the cases of all-sky and clear-sky (Figures
+\ref{fig:cusummonth-1} and \ref{fig:cusummonth-2}), we observe three
+macroscopic periods. A downward part from the start until about 2005, an
+relative steady part until about 2016 and finally, a steep upward part
+until the present. For cloud-sky (Figure~\ref{fig:cusummonth-3}), we
+have a different sequence, it begins with a relative steady part until
+1997, followed by a upward part until 2005, a long decline until 2020,
+with a small positive slope until the present. For a uniform trend, we
+would expect the CUSUMs of the anomalies to have a symmetric `V' shape.
+This would indicate that the anomalies are evenly distributed around the
+climatological mean, and for a positive uniform trend, the first half to
+be below and the other half above the climatological mean. In our case,
+there is more complex evolution of the phenomenon. Another distinct
+feature of the CUSUMs, is the different pattern of the cloudy-sky
+dataset which peaks around the middle of the period. Although, it seems
+to exist a complementary relation to the CUSUMs of the clear- and
+all-sky cases, we can not assert that clouds are the main drive for this
+relation, due to the great difference in the number of observational
+data between the datasets (Table~\ref{tab:trendtable}).
+
+\begin{figure}[h!]
+
+{\centering \subfloat[All-skies.\label{fig:cusummonth-1}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-1} }\subfloat[Clear-skies.\label{fig:cusummonth-2}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-5} }\subfloat[Cloud-skies.\label{fig:cusummonth-3}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-9} }
+
+}
+
+\caption{Running cumulative sum plots of the monthly SDR.}\label{fig:cusummonth}
+\end{figure}
+
+In order to investigate more, the features within the trends, we created
+another set of CUSUMs plots by subtracting the corresponding long term
+trend from the SDR anomaly data, prior to the CUSUM calculation
+(Figure~\ref{fig:cusumnotrendmonthly}). With this approach periods when
+the CUSUMs diverge from zero can be interpreted as systematic variation
+of SDR from the climatological mean. When the CUSUM is increasing, the
+added values are above the climatological values of SDR trend and vice
+versa. Overall, for all- and clear-sky conditions
+(Figure~\ref{fig:cusumnotrendmonthly-1}
+and~\ref{fig:cusumnotrendmonthly-2}) we observe periods when the
+anomalies diverge from the climatological value, each lasting for
+several years. The pattern for the all-sky and clear-sky conditions is
+very similar, suggesting prevalence in clear skies over Thessaloniki. It
+is interesting that in the period 1993 - 2016 the anomalies of all-sky
+and clear-sky, have a high variability around zero. After 2016, the
+range of the variability is decreased at about one third of the prior
+period. For cloud-sky conditions
+(Figure~\ref{fig:cusumnotrendmonthly-3}) the period 1997 - 2008 is
+dominated by positive CUSUMs suggesting a reduced effect of clouds on
+SDR. From 1997 to mid-2000s CUSUMs are increasing, likely due to a
+continuous decrease in the thickness of clouds, followed by a period of
+rapid increase (within 3 years) in cloud optical thickness lasting up to
+2008. The following stable period spans for about 15 years up to 2021
+when CUSUMs start increasing again.
+
+\begin{figure}[h!]
+
+{\centering \subfloat[All-skies.\label{fig:cusumnotrendmonthly-1}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-1} }\subfloat[Clear-skies.\label{fig:cusumnotrendmonthly-2}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-5} }\subfloat[Cloud-skies.\label{fig:cusumnotrendmonthly-3}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-9} }
+
+}
+
+\caption{Running cumulative sum plots of the monthly SDR after removing the long term trend from the monthly values.}\label{fig:cusumnotrendmonthly}
+\end{figure}
+
 \hypertarget{version}{%
 \section{Version}\label{version}}
 
@@ -517,6 +626,20 @@ submission, that you're using the most recent .cls, .tex and .bst files
 \hypertarget{journal-specific-yaml-variables}{%
 \subsection{Journal Specific YAML
 variables}\label{journal-specific-yaml-variables}}
+
+\startlandscape
+
+\begin{longtable}[t]{llllllll}
+\caption{\label{tab:mdpinames}MDPI journal names.}\\
+\toprule
+acoustics & aerobiology & agronomy & jmse & jor & jsan & wind & \\
+actuators & aerospace & ai & jne & journalmedia & jtaer & women & \\
+addictions & agriculture & air & jnt & jox & jvd & world & \\
+admsci & agriengineering & algorithms & jof & jpm & wem & youth & \\
+adolescents & agrochemicals & jmp & joitmc & jrfm & wevj & zoonoticdis & \\
+\bottomrule
+\end{longtable}
+\finishlandscape
 
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}

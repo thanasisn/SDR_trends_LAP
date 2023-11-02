@@ -342,7 +342,16 @@ TSIslopeAll <- TSI[`Sky condition` == "All sky cond."]
 
 <!-- # Detection of clear periods in GHI measurements for SDR trends. -->
 
-For completeness, we will provide below a brief overview of the clear sky identification algorithm (CSid), along with the site specific thresholds.
+For completeness, we will provide below a brief overview of the 
+<!--
+[....Csid term is referenced above....]{.comment-start id="0" author="A N"
+date="2023-07-15T20:00:52Z"} 
+-->
+clear sky identification algorithm (CSid),
+<!--
+[]{.comment-end id="0"} 
+-->
+along with the site specific thresholds.
 To calculate the reference clear sky
 $\text{SDR}_\text{CSref}$ we used the $\text{SDR}_\text{Haurwitz}$ derived by
 the radiation model of @Haurwitz1945, adjusted for our site with a
@@ -374,12 +383,28 @@ where: $n$ is the total number of daylight records, $\text{SDR}_{\text{CSid},i}$
 where: $\text{SDR}_\text{CSref}$ is the reference clear sky SDR, in $\text{w}\,\text{m}^{-2}$ and $\theta$ is the solar zenith angle (SZA).
 
 
-The criteria that were used to identify whether a measurement was taken under clear-sky conditions are presented below.
-A data point is flagged as "clear-sky" if all criteria are satisfied, otherwise it is considered to be "cloud-sky".
-Each criterion was applied for a running window of $`r nt`$ consecutive one-minute measurements, and the characterization is assigned to the central value of the window.
-Each parameter, was calculated both from the observations and the reference clear sky model, for each comparison.
-The allowable range of variation is defined by the model-derived value of the parameter multiplied by a factor plus an offset. 
-The factors and the offsets were determined empirically, by manual inspecting each filters performance on selected days, and adjusting them accordingly, during an iterative process.
+The criteria that were used to identify whether a measurement was taken
+under clear-sky conditions are presented below.
+A data point is flagged
+as "clear-sky" if all criteria are satisfied, otherwise it is considered to be "cloud-sky".
+Each criterion was applied
+for a running window of $`r nt`$ consecutive one-minute measurements, and
+the characterization is assigned to the central value of the window.
+Each parameter, was calculated both from the observations and the
+reference clear sky model, for each comparison.
+The allowable range of variation is defined by the
+model-derived value of the parameter multiplied by a factor plus an
+offset. 
+<!--[.... .expanded the description ....]{.comment-start id="4"
+author="A N" date="2023-07-15T22:48:13Z"}
+-->
+The factors and the offsets were
+determined empirically, by manual inspecting each filters performance on
+selected days, and adjusting them accordingly, during an iterative
+process.
+<!--[[]{.comment-end id="4"}]{.insertion author="A N"
+date="2023-07-15T22:48:13Z"}
+-->
 
 <!-- 1. MeanVIP -->
 <!-- ### Mean value of irradiance during the time period. -->
@@ -494,10 +519,127 @@ To estimate SZA contribution to the SDR trends, the one-minute data were aggrega
 
 ## Long-term SDR trends
 
+```{r echo=F, eval=TRUE}
+LT <- data.table(read.csv("./figures/tbl_longterm_trends.dat",
+               strip.white = TRUE,
+               sep = ";",
+               header = TRUE))
+LT <- LT[grep("SDR", LT$var), ]
+LT$slope.sd           <- NULL
+LT$slope.ConfInt_0.95 <- NULL
+LT$slope.ConfInt_0.99 <- NULL
+LT$var                <- NULL
+# LT$N                  <- NULL
+LT$Obs                <- NULL
+setorder(LT, -slope.stat_sig)
+rownames(LT) <- NULL
+names(LT)    <- c("Trend [%/year]", 
+                  "Trend p-value", 
+                  "Sky conditions",
+                  "Days",
+                  "Statistical signif. [%]")
+## no need all are 100%
+LTminSSig <- signif(min(LT$`Statistical signif. [%]`), 4)
+# LT$`Trend statistical signif. [%]` <- NULL
+## numeric precision
+LT$`Trend [%/year]` <- signif(LT$`Trend [%/year]`, 3)
+LT$`Trend p-value`  <- signif(LT$`Trend p-value`,  3)
+
+## some vars to use later
+alltrend   <- signif(LT[`Sky conditions` == "All sky cond.",    `Trend [%/year]`], 2)
+cleartrend <- signif(LT[`Sky conditions` == "Clear sky cond.",  `Trend [%/year]`], 2)
+cloudtrend <- signif(LT[`Sky conditions` == "Cloudy sky cond.", `Trend [%/year]`], 2)
+## rename sky conditions
+LT$`Sky conditions` <- sub(" cond.", "", LT$`Sky conditions`)
+
+## order columns
+LT1 <- LT[,c(
+      "Sky conditions",
+      "Trend [%/year]",
+      "Trend p-value",
+      "Days"
+      )]
+
+## order columns
+LT2 <- LT[,c(
+      "Sky conditions",
+      "Trend [%/year]",
+      "Statistical signif. [%]",
+      "Days"
+      )]
+```
+
+We calculated the linear SDR trends, from the departures of the mean daily values from the seasonal values, and for the three sky conditions (Table\ \ref{tab:trendtable}).
+In Figure\ \ref{fig:trendALL} we present only the time series under all-sky conditions; the plots for clear-sky and cloud-sky conditions, are very similar and are shown in the Appendix (Figures\ \ref{fig:trendCLEAR} and\  \ref{fig:trendCLOUD}).
+We observe a positive trend for all-sky conditions 
+($`r alltrend`\,\%/y$), a very close but lower trend for clear-skies ($`r cleartrend`\,\%/y$) and a negative weaker trend for cloud-skies ($`r cloudtrend`\,\%/y$).
+In the studied period, there is no significant break or change in the variability of the time series.
+Other studies for the European region report a change of the SDR slope, around 1980, a few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009]. It is interesting to note, that for the observation period, the trend of the TSI is
+$`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\,\%/y$, and thus we can not attribute any major effect on SDR trend to Solar variability.
 
 
+<!-- \footnotesize -->
+<!-- ```{r trendtable2, echo=F} -->
+<!-- panderOptions("table.alignment.default", "center") -->
+<!-- pander(LT1, -->
+<!--        caption = paste0("\\label{tab:trendtable2}Trends in SDR daily mean for different sky conditions for the period", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". For all cases the statistical significance is above $", LTminSSig, "\\,\\%$.")) -->
+<!-- ``` -->
+<!-- \normalsize -->
+
+```{r trendtable, echo=F}
+x_latex <- knitr::kable(LT2,
+                        format   = "latex",
+                        booktabs = T,
+                        escape   = T,
+                        format.args = list(digits = 4),
+                        linesep  = "",
+                        align    = "crr",
+                        caption  = paste0("\\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), "."))
+x_latex %>%
+    kable_styling(
+        latex_options = c("hold_position")
+    )
+        # position      =   "float_left"
+```
 
 
+```{r trendALL, echo=F, out.width='.70\\linewidth', fig.cap=paste0("Anomaly (\\%) of the daily all-sky SDR, relative to climatological values for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term linear trend.")}
+knitr::include_graphics("./images/LongtermTrends-2.png")
+```
+
+Although the year-to-year variability of the anomalies (Figure \ref{fig:trendALL} and Figures \ref{fig:trendCLEAR}, \ref{fig:trendCLOUD} on Appendix), shows a rather homogeneous behavior, plots of the cumulative sums (CUSUM) of the anomalies can reveal different structures within all the three sky conditions [@Regier2019]. 
+In the cases of all-sky and clear-sky (Figures \ref{fig:cusummonth-1} and \ref{fig:cusummonth-2}), we observe three macroscopic periods.
+A downward part from the start until about 2005, an relative steady part until about 2016 and finally, a steep upward part until the present.
+For cloud-sky (Figure\ \ref{fig:cusummonth-3}), we have a different sequence, it begins with a relative steady part until 1997, followed by a upward part until 2005, a long decline until 2020, with a small positive slope until the present.
+For a uniform trend, we would expect the CUSUMs of the anomalies to have a symmetric 'V' shape.
+This would indicate that the anomalies are evenly distributed around the climatological mean, and for a positive uniform trend, the first half to be below and the other half above the climatological mean. 
+In our case, there is more complex evolution of the phenomenon.
+Another distinct feature of the CUSUMs, is the different pattern of the cloudy-sky dataset which peaks around the middle of the period.
+Although, it seems to exist a complementary relation to the CUSUMs of the clear- and all-sky cases, we can not assert that clouds are the main drive for this relation, due to the great difference in the number of observational data between the datasets (Table\ \ref{tab:trendtable}).
+
+```{r cusummonth, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+knitr::include_graphics(c(
+    "./images/CumulativeMonthlyCuSum-1.png",    # ALL sky
+    "./images/CumulativeMonthlyCuSum-5.png",    # CLEAR sky
+    "./images/CumulativeMonthlyCuSum-9.png"))   # Cloud sky
+```
+
+In order to investigate more, the features within the trends, we created another set of CUSUMs plots by subtracting the corresponding long term trend from the SDR anomaly data, prior to the CUSUM calculation (Figure\ \ref{fig:cusumnotrendmonthly}).
+With this approach periods when the CUSUMs diverge from zero can be interpreted as systematic variation of SDR from the climatological mean. When the CUSUM is increasing, the added values are above the climatological values of SDR trend and vice versa.
+Overall, for all- and clear-sky conditions (Figure\ \ref{fig:cusumnotrendmonthly-1} and\ \ref{fig:cusumnotrendmonthly-2}) we observe periods when the anomalies diverge from the climatological value, each lasting for several years. 
+The pattern for the all-sky and clear-sky conditions is very similar, suggesting prevalence in clear skies over Thessaloniki.
+It is interesting that in the period 1993 - 2016 the anomalies of all-sky and clear-sky, have a high variability around zero. After 2016, the range of the variability is decreased at about one third of the prior period.
+For cloud-sky conditions (Figure\ \ref{fig:cusumnotrendmonthly-3}) the period 1997 - 2008 is dominated by positive CUSUMs suggesting a reduced effect of clouds on SDR.
+From 1997 to mid-2000s CUSUMs are increasing, likely due to a continuous decrease in the thickness of clouds, followed by a period of rapid increase (within 3 years) in cloud optical thickness lasting up to 2008. 
+The following stable period spans for about 15 years up to 2021 when CUSUMs start increasing again.
+
+
+```{r cusumnotrendmonthly, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR after removing the long term trend from the monthly values.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+knitr::include_graphics(c(
+    "./images/CumulativeMonthlyCuSumNOtrend-1.png",    # ALL sky
+    "./images/CumulativeMonthlyCuSumNOtrend-5.png",    # CLEAR sky
+    "./images/CumulativeMonthlyCuSumNOtrend-9.png"))   # Cloud sky
+```
 
 # Version
 
@@ -515,6 +657,20 @@ using the most recent .cls, .tex and .bst files
 ## Journal Specific YAML variables
 
 
+
+\startlandscape
+```{r, mdpinames, echo=FALSE, results='asis'}
+mdpi_journals <- "acoustics, actuators, addictions, admsci, adolescents, aerobiology, aerospace, agriculture, agriengineering, agrochemicals, agronomy, ai, air, algorithms,  jmp, jmse, jne, jnt, jof, joitmc, jor, journalmedia, jox, jpm, jrfm, jsan, jtaer, jvd,  wem, wevj, wind, women, world, youth, zoonoticdis"
+
+knitr::kable(rticles::string_to_table(mdpi_journals, 8),
+             col.names = NULL,
+             format = "latex",
+             booktabs = TRUE, 
+             caption = "MDPI journal names.",
+             longtable = TRUE)
+
+```
+\finishlandscape
 
 
 
