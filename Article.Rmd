@@ -34,7 +34,7 @@ abstract: |
   The shortwave downward solar irradiance (SDR) is an important factor that drives climate processes, production and can affect all living organisms.
   While monitoring the long term variability, there are observations of upward and downward SDR trends on different locations around the world for different time periods.
   Periods of positive tredns are refered as brightening periods and with negative tredns as dimming periods.
-  We studied 29 years of CHP1 data from Thessaloniki, Greece, under three sky conditions (clear sky, cloudy sky and all sky conditions), applying a cloud sky identification algorithm.
+  We studied 29 years of CM-21 data from Thessaloniki, Greece, under three sky conditions (clear sky, cloudy sky and all sky conditions), applying a cloud sky identification algorithm.
   We found a positive trend for all-sky and clear-sky conditions, and also, investigated the consistency of those trends, the effect of the solar zenith angle, and the variation of the trends for the seasons of the year.
   We indentified that there are some anomalies in the long term SDR trends, for all sky conditions.
 keywords: 
@@ -47,6 +47,15 @@ classoption:     preprint, 3p, authoryear
 bibliography:    Mainreferences.bib
 linenumbers:     false
 numbersections:  true
+abbreviations:
+  - short: DNI
+    long: Direct beam/normal irradiance
+  - short: CSid
+    long: Clear sky identification algorithm
+  - short: CUSUM
+    long: Cumulative sum
+  - short: SDR 
+    long: Solar downward radiation
 header-includes:
    # - \usepackage{subfig}
    - \usepackage{subcaption}
@@ -304,20 +313,16 @@ We found, that Haurwitz's model, adjusted with the factor $a = `r signif(alpha,3
 while the procedure, manages to characterize the majority of the data.
 <!--[]{.comment-end id="3"}--> 
 Thus, our clear sky reference is derived by the Eq.\ \ref{eq:ahau}.
-
 <!-- cost fuction -->
 \begin{equation}
 f(a) = \frac{1}{n}\sum_{i=1}^{n} ( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i} )^2 \label{eq:minf}
 \end{equation}
 where: $n$ is the total number of daylight records, $\text{SDR}_{\text{CSid},i}$ are the records identified as clear sky by CSid, $a$ is a hypothetical adjustment factor, and $\text{SDR}_{\text{testCSref},i}$ is any of the tested clear sky radiation models.
-
-
 <!-- adjusted Haurwitz -->
 \begin{equation}
 \text{SDR}_\text{CSref} = a \times \text{SDR}_\text{Haurwitz} = `r signif(alpha,3)` \times 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.057}{\cos(\theta)} \right) \label{eq:ahau}
 \end{equation}
 where: $\text{SDR}_\text{CSref}$ is the reference clear sky SDR, in $\text{w}\,\text{m}^{-2}$ and $\theta$ is the solar zenith angle (SZA).
-
 
 The criteria that were used to identify whether a measurement was taken
 under clear-sky conditions are presented below.
@@ -341,10 +346,8 @@ process.
 <!--[[]{.comment-end id="4"}]{.insertion author="A N"
 date="2023-07-15T22:48:13Z"}
 -->
-
 <!-- 1. MeanVIP -->
 <!-- ### Mean value of irradiance during the time period. -->
-
 <!--a) Mean of the measured $\overline{\text{SDR}}_i$ = \text{mean}_{n=i-5}^{n=i+5}[\text{SDR}_{n}]$ and running mean of the reference $\overline{\text{SDR}}_{\text{CSref},i}$ = \text{mean}_{n=i-5}^{n=i+5}[\text{SDR}_{\text{CSref},n}]$ (Eq. \ref{eq:MeanVIP}).-->
 
 a) Mean of the measured $\overline{\text{SDR}}_i$ (Eq. \ref{eq:MeanVIP}).
@@ -354,13 +357,9 @@ a) Mean of the measured $\overline{\text{SDR}}_i$ (Eq. \ref{eq:MeanVIP}).
 `r 1 + CS_ref_rm_VIP_RelUpp` \times \overline{\text{SDR}}_{\text{CSref},i} + `r CS_ref_rm_VIP_UppOff`
 \label{eq:MeanVIP}
 \end{equation}
-
-
 <!-- 2. MaxVIP -->
 <!-- ### Max value of irradiance during the time period. -->
-
 <!-- The running max measured value $M_{\text{SDR},i} = \max_{n=i-5}^{n=i+5}[\text{SDR}_{n}]$, is compared to a similar constructed value from the reference $M_{CSrefi} = \max_{n=i-5}^{n=i+5}[\text{SDR}_{\text{CSref},n}]$ (Eq.\ \ref{eq:MaxVIP}). -->
-
 b) Maximum measured value $M_{\text{}}$ (Eq.\ \ref{eq:MaxVIP}).
 \begin{equation}
 `r MaxVIP_fct` \times M_{\text{CSref},i} - `r MaxVIP_off_low`
@@ -368,7 +367,6 @@ b) Maximum measured value $M_{\text{}}$ (Eq.\ \ref{eq:MaxVIP}).
 `r MaxVIP_fct` \times M_{\text{CSref},i} + `r MaxVIP_off_upp`
 \label{eq:MaxVIP}
 \end{equation}
-
 <!-- 3. VIL -->
 <!-- ### Variability in irradiance by line length. -->
 c) Length $L_i$ of the sequential line segments, connecting the points of the $`r nt`$ SDR values (Eq. \ref{eq:VILeq}).
@@ -381,10 +379,8 @@ L_i = \sum_{i=1}^{n-1}\sqrt{\left ( \text{SDR}_{i+1} - \text{SDR}_{i}\right )^2 
 \label{eq:VILcr}
 \end{equation}
 where: $t_i$ is the time each SDR measurement has been measured
-
 <!-- 4. VCT -->
 <!-- ### Variance of Changes in the Time series. -->
-
 <!-- Standard deviation of rate of change in irradiance. -->
 d) Standard deviation $\sigma_i$ of the slope ($s_i$) between the $`r nt`$ sequential points, normalized by the mean $\overline{\text{SDR}}_i$ (Eq.\ \ref{eq:VCT1}).
 <!-- \begin{gather}
@@ -399,10 +395,8 @@ For this criterion, $\sigma_i$ should be below a certain threshold (Eq.\ \ref{eq
 \begin{equation}
   \sigma_i < `r offVCT` \label{eq:VCTcr}
 \end{equation}
-
 <!-- 5. VSM -->
 <!-- ### Variability in the Shape of the irradiance Measurements. -->
-
 e) Maximum difference $X_i$ between the change in measured irradiance and the change in clear sky irradiance over each measurement interval.
 \begin{gather}
   X_i = \max{\left \{ \left | x_i - x_{\text{CSref},i} \right | \right \}} \label{eq:VSM3} \\
@@ -413,7 +407,6 @@ For this criterion, $X_i$ should be below a certain threshold (Eq.\ \ref{eq:VSMc
 \begin{equation}
   X_i < `r offVSM` \label{eq:VSMcr}
 \end{equation}
-
 
 <!-- ### Data selection -->
 Due to a significant measurement uncertainty near the horizon, we have to exclude all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$. 
@@ -472,7 +465,7 @@ rownames(LT) <- NULL
 names(LT)    <- c("Trend [%/year]", 
                   "Trend p-value", 
                   "Sky conditions",
-                  "Days",
+                  "Days with data",
                   "Statistical signif. [%]")
 ## no need all are 100%
 LTminSSig <- signif(min(LT$`Statistical signif. [%]`), 4)
@@ -493,7 +486,7 @@ LT1 <- LT[,c(
       "Sky conditions",
       "Trend [%/year]",
       "Trend p-value",
-      "Days"
+      "Days with data"
       )]
 
 ## order columns
@@ -501,7 +494,7 @@ LT2 <- LT[,c(
       "Sky conditions",
       "Trend [%/year]",
       "Statistical signif. [%]",
-      "Days"
+      "Days with data"
       )]
 ```
 
@@ -511,7 +504,7 @@ We observe a positive trend for all-sky conditions
 ($`r alltrend`\,\%/y$), a very close but lower trend for clear-skies ($`r cleartrend`\,\%/y$) and a negative weaker trend for cloud-skies ($`r cloudtrend`\,\%/y$).
 In the studied period, there is no significant break or change in the variability of the time series.
 Other studies for the European region report a change of the SDR slope, around 1980, a few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009]. It is interesting to note, that for the observation period, the trend of the TSI is
-$`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\,\%/y$, and thus we can not attribute any major effect on SDR trend to Solar variability.
+$`r format(TSIslopeAll[1,1], scientific = F, digits = 2)`\,\%/y$, and thus we can not attribute any major effect on SDR trend to Solar variability.
 
 
 <!-- \footnotesize -->
@@ -524,18 +517,24 @@ $`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\,\%/y$, and thus we ca
 
 ```{r trendtable, echo=F}
 x_latex <- knitr::kable(LT2,
-                        format   = "latex",
-                        booktabs = T,
-                        escape   = T,
+                        format      = "latex",
+                        booktabs    = TRUE,
+                        escape      = TRUE,
                         format.args = list(digits = 4),
-                        linesep  = "",
-                        align    = "crr",
-                        caption  = paste0("\\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), "."))
-x_latex %>%
-    kable_styling(
-        latex_options = c("hold_position")
-    )
-        # position      =   "float_left"
+                        linesep     = "",
+                        align       = "crrr",
+                        centering   = FALSE,
+                        table.envir = "table",
+                        position    = "H",
+                        caption     = paste0("Trends in SDR daily means for different sky conditions for the period ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), "."))
+
+# x_latex %>%
+#     kable_styling(
+#         latex_options = c("hold_position")
+#     )
+x_latex %>% 
+    kable_styling(full_width = TRUE) %>%
+    column_spec(1, width = "8em")
 ```
 
 
@@ -716,21 +715,29 @@ rownames(spp) <- NULL
 
 ## use kable
 x_latex <- knitr::kable(spp,
-                        format   = "latex",
-                        booktabs = T,
-                        escape   = T,
+                        format      = "latex",
+                        booktabs    = TRUE,
+                        escape      = TRUE,
                         # format.args = list(digits = 3),
-                        linesep  = "",
-                        align    = "ccrr",
-                        caption  = "\\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.")
+                        linesep     = "",
+                        align       = "ccrr",
+                        centering   = FALSE,
+                        table.envir = "table",
+                        # position    = "H",
+                        caption  = "SDR linear trends of monthly anomalies for each season of the year.")
+
+# x_latex %>%
+#     collapse_rows(columns = 1, valign = "middle", latex_hline = "custom") %>%
+#     kable_styling(latex_options = c("striped",
+#                                     "hold_position")
+#     )
 
 x_latex %>%
     collapse_rows(columns = 1, valign = "middle", latex_hline = "custom") %>%
-    kable_styling(latex_options = c("striped",
-                                    "hold_position")
-    )
-
-# position = "float_left"
+    kable_styling(latex_options = c('striped', 'hold_position'), full_width = TRUE) %>%
+    # kable_styling(full_width = T) %>%
+    # kable_styling("striped")      %>%
+    column_spec(1, width = "8em")
 
 ```
 <!-- \normalsize -->

@@ -40,7 +40,7 @@ abstract: |
   The shortwave downward solar irradiance (SDR) is an important factor that drives climate processes, production and can affect all living organisms.
   While monitoring the long term variability, there are observations of upward and downward SDR trends on different locations around the world for different time periods.
   Periods of positive tredns are refered as brightening periods and with negative tredns as dimming periods.
-  We studied 29 years of CHP1 data from Thessaloniki, Greece, under three sky conditions (clear sky, cloudy sky and all sky conditions), applying a cloud sky identification algorithm.
+  We studied 29 years of CM-21 data from Thessaloniki, Greece, under three sky conditions (clear sky, cloudy sky and all sky conditions), applying a cloud sky identification algorithm.
   We found a positive trend for all-sky and clear-sky conditions, and also, investigated the consistency of those trends, the effect of the solar zenith angle, and the variation of the trends for the seasons of the year.
   We indentified that there are some anomalies in the long term SDR trends, for all sky conditions.
 # back matter
@@ -118,14 +118,17 @@ supplementary: |
  The following supporting information can be downloaded at:  
  \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title.
 abbreviations:
-  - short: MDPI
-    long: Multidisciplinary Digital Publishing Institute
-  - short: DOAJ
-    long: Directory of open access journals
-  - short: TLA
-    long: Three letter acronym
+  - short: DNI
+    long: Direct beam/normal irradiance
+  - short: CSid
+    long: Clear sky identification algorithm
+  - short: CUSUM
+    long: Cumulative sum
   - short: SDR 
     long: Solar downward radiation
+  - short: SZA
+    long: Solar zenith angle
+
 header-includes:
    # - \usepackage{subfig}
    - \usepackage{subcaption}
@@ -563,7 +566,7 @@ We observe a positive trend for all-sky conditions
 ($`r alltrend`\,\%/y$), a very close but lower trend for clear-skies ($`r cleartrend`\,\%/y$) and a negative weaker trend for cloud-skies ($`r cloudtrend`\,\%/y$).
 In the studied period, there is no significant break or change in the variability of the time series.
 Other studies for the European region report a change of the SDR slope, around 1980, a few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009]. It is interesting to note, that for the observation period, the trend of the TSI is
-$`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\,\%/y$, and thus we can not attribute any major effect on SDR trend to Solar variability.
+$`r format(TSIslopeAll[1,1], scientific = F, digits = 2)`\,\%/y$, and thus we can not attribute any major effect on SDR trend to Solar variability.
 
 
 <!-- \footnotesize -->
@@ -776,7 +779,7 @@ rownames(spp) <- NULL
 x_latex <- knitr::kable(spp,
                         format      = "latex",
                         booktabs    = TRUE,
-                        escape      = T,
+                        escape      = TRUE,
                         # format.args = list(digits = 3),
                         linesep     = "",
                         align       = "ccrr",
@@ -784,6 +787,12 @@ x_latex <- knitr::kable(spp,
                         table.envir = "table",
                         # position    = "H",
                         caption  = "SDR linear trends of monthly anomalies for each season of the year.")
+
+# x_latex %>%
+#     collapse_rows(columns = 1, valign = "middle", latex_hline = "custom") %>%
+#     kable_styling(latex_options = c("striped",
+#                                     "hold_position")
+#     )
 
 x_latex %>%
     collapse_rows(columns = 1, valign = "middle", latex_hline = "custom") %>%

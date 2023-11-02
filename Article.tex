@@ -346,25 +346,17 @@ evaluated by \citet{Reno2016}. We found, that Haurwitz's model, adjusted
 with the factor \(a = 0.965\) yields one of the lowest root mean squared
 errors (RMSE), while the procedure, manages to characterize the majority
 of the data. Thus, our clear sky reference is derived by the
-Eq.~\ref{eq:ahau}.
-
-\begin{equation}
+Eq.~\ref{eq:ahau}. \begin{equation}
 f(a) = \frac{1}{n}\sum_{i=1}^{n} ( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i} )^2 \label{eq:minf}
-\end{equation}
-
-where: \(n\) is the total number of daylight records,
+\end{equation} where: \(n\) is the total number of daylight records,
 \(\text{SDR}_{\text{CSid},i}\) are the records identified as clear sky
 by CSid, \(a\) is a hypothetical adjustment factor, and
 \(\text{SDR}_{\text{testCSref},i}\) is any of the tested clear sky
-radiation models.
-
-\begin{equation}
+radiation models. \begin{equation}
 \text{SDR}_\text{CSref} = a \times \text{SDR}_\text{Haurwitz} = 0.965 \times 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.057}{\cos(\theta)} \right) \label{eq:ahau}
-\end{equation}
-
-where: \(\text{SDR}_\text{CSref}\) is the reference clear sky SDR, in
-\(\text{w}\,\text{m}^{-2}\) and \(\theta\) is the solar zenith angle
-(SZA).
+\end{equation} where: \(\text{SDR}_\text{CSref}\) is the reference clear
+sky SDR, in \(\text{w}\,\text{m}^{-2}\) and \(\theta\) is the solar
+zenith angle (SZA).
 
 The criteria that were used to identify whether a measurement was taken
 under clear-sky conditions are presented below. A data point is flagged
@@ -390,12 +382,6 @@ days, and adjusting them accordingly, during an iterative process.
   1.095 \times \overline{\text{SDR}}_{\text{CSref},i} + 30
   \label{eq:MeanVIP}
   \end{equation}
-\end{enumerate}
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi})}
-\setcounter{enumi}{1}
-\tightlist
 \item
   Maximum measured value \(M_{\text{}}\) (Eq.~\ref{eq:MaxVIP}).
   \begin{equation}
@@ -404,12 +390,6 @@ days, and adjusting them accordingly, during an iterative process.
   1 \times M_{\text{CSref},i} + 75
   \label{eq:MaxVIP}
   \end{equation}
-\end{enumerate}
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi})}
-\setcounter{enumi}{2}
-\tightlist
 \item
   Length \(L_i\) of the sequential line segments, connecting the points
   of the \(11\) SDR values (Eq. \ref{eq:VILeq}). \begin{equation}
@@ -420,12 +400,6 @@ days, and adjusting them accordingly, during an iterative process.
   \label{eq:VILcr}
   \end{equation} where: \(t_i\) is the time each SDR measurement has
   been measured
-\end{enumerate}
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi})}
-\setcounter{enumi}{3}
-\tightlist
 \item
   Standard deviation \(\sigma_i\) of the slope (\(s_i\)) between the
   \(11\) sequential points, normalized by the mean
@@ -436,12 +410,6 @@ days, and adjusting them accordingly, during an iterative process.
   certain threshold (Eq.~\ref{eq:VCTcr}): \begin{equation}
     \sigma_i < \ensuremath{1.1\times 10^{-4}} \label{eq:VCTcr}
   \end{equation}
-\end{enumerate}
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi})}
-\setcounter{enumi}{4}
-\tightlist
 \item
   Maximum difference \(X_i\) between the change in measured irradiance
   and the change in clear sky irradiance over each measurement interval.
@@ -509,23 +477,22 @@ significant break or change in the variability of the time series. Other
 studies for the European region report a change of the SDR slope, around
 1980, a few years before the start of our records
 \citep{Wild2021, Yuan2021, Ohmura2009}. It is interesting to note, that
-for the observation period, the trend of the TSI is \(-2e-04\,\%/y\),
+for the observation period, the trend of the TSI is \(-0.0002\,\%/y\),
 and thus we can not attribute any major effect on SDR trend to Solar
 variability.
 
-\begin{table}[!h]
+\begin{table}[H]
 
-\caption{\label{tab:trendtable}\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period 1993 - 2023.}
-\centering
-\begin{tabular}[t]{crrc}
+\caption{\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period 1993 - 2023.}
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
 \toprule
-Sky conditions & Trend [\%/year] & Statistical signif. [\%] & Days\\
+Sky conditions & Trend [\%/year] & Statistical signif. [\%] & Days with data\\
 \midrule
 All sky & 0.376 & 100.00 & 10256\\
 Clear sky & 0.349 & 100.00 & 10256\\
 Cloudy sky & -0.276 & 99.97 & 5067\\
 \bottomrule
-\end{tabular}
+\end{tabu}
 \end{table}
 
 \begin{figure}[h!]
@@ -673,11 +640,14 @@ actual trend too small for a meaningful comparison.
 \caption{SDR trends by season of the year for the three sky conditions. Each point is a monthly mean calculated from daily means. The vertical scale is common for all graphs, each column of graphs corresponds to a sky condition and each row to a season of the year.}\label{fig:seasonalALL}
 \end{figure}
 
+\begin{verbatim}
+Usually it is recommended to use column_spec before collapse_rows, especially in LaTeX, to get a desired result. 
+\end{verbatim}
+
 \begin{table}[!h]
 
-\caption{\label{tab:trendseasontable}\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.}
-\centering
-\begin{tabular}[t]{ccrr}
+\caption{\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.}
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X}
 \toprule
 Sky condition & Season & Trend [\%/year] & Statistical signif. [\%]\\
 \midrule
@@ -705,7 +675,7 @@ Sky condition & Season & Trend [\%/year] & Statistical signif. [\%]\\
 
 \multirow{-4}{*}{\centering\arraybackslash Cloudy sky} & Autumn & -0.4000 & 89.5\\
 \bottomrule
-\end{tabular}
+\end{tabu}
 \end{table}
 
 \hypertarget{conclusions}{%
@@ -778,7 +748,7 @@ extent of SDR attenuation by each factor.
 
 }
 
-\caption{Seasonla distribution of the SDR's long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$), the trends were computed with SZA bins of $1^\circ$ for each day, before and after local noon, all graphs have the same scale. Bins with $p<0.005$ or with less than 85 data points may be missing from the view.}\label{fig:SZAtrendSeason}
+\caption{Seasonal distribution of the SDR's long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$), the trends were computed with SZA bins of $1^\circ$ for each day, before and after local noon, all graphs have the same scale. Bins with $p<0.005$ or with less than 85 data points may be missing from the view.}\label{fig:SZAtrendSeason}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
