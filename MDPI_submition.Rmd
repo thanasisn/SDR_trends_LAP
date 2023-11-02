@@ -540,7 +540,7 @@ rownames(LT) <- NULL
 names(LT)    <- c("Trend [%/year]", 
                   "Trend p-value", 
                   "Sky conditions",
-                  "Days",
+                  "Days with data",
                   "Statistical signif. [%]")
 ## no need all are 100%
 LTminSSig <- signif(min(LT$`Statistical signif. [%]`), 4)
@@ -561,7 +561,7 @@ LT1 <- LT[,c(
       "Sky conditions",
       "Trend [%/year]",
       "Trend p-value",
-      "Days"
+      "Days with data"
       )]
 
 ## order columns
@@ -569,7 +569,7 @@ LT2 <- LT[,c(
       "Sky conditions",
       "Trend [%/year]",
       "Statistical signif. [%]",
-      "Days"
+      "Days with data"
       )]
 ```
 
@@ -592,18 +592,24 @@ $`r format(TSIslopeAll[1,1], scientific = T, digits = 2)`\,\%/y$, and thus we ca
 
 ```{r trendtable, echo=F}
 x_latex <- knitr::kable(LT2,
-                        format   = "latex",
-                        booktabs = T,
-                        escape   = T,
+                        format      = "latex",
+                        booktabs    = TRUE,
+                        escape      = TRUE,
                         format.args = list(digits = 4),
-                        linesep  = "",
-                        align    = "crr",
-                        caption  = paste0("\\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), "."))
-x_latex %>%
-    kable_styling(
-        latex_options = c("hold_position")
-    )
-        # position      =   "float_left"
+                        linesep     = "",
+                        align       = "crrr",
+                        centering   = FALSE,
+                        table.envir = "table",
+                        position    = "H",
+                        caption     = paste0("\\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), "."))
+
+# x_latex %>%
+#     kable_styling(
+#         latex_options = c("hold_position")
+#     )
+x_latex %>% 
+    kable_styling(full_width = TRUE) %>%
+    column_spec(1, width = "8em")
 ```
 
 
@@ -621,9 +627,6 @@ In our case, there is more complex evolution of the phenomenon.
 Another distinct feature of the CUSUMs, is the different pattern of the cloudy-sky dataset which peaks around the middle of the period.
 Although, it seems to exist a complementary relation to the CUSUMs of the clear- and all-sky cases, we can not assert that clouds are the main drive for this relation, due to the great difference in the number of observational data between the datasets (Table\ \ref{tab:trendtable}).
 
-
-
-
 ```{r cusummonth, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics(c(
     "./images/CumulativeMonthlyCuSum-1.png",    # ALL sky
@@ -631,123 +634,227 @@ knitr::include_graphics(c(
     "./images/CumulativeMonthlyCuSum-9.png"))   # Cloud sky
 ```
 
+In order to investigate more, the features within the trends, we created another set of CUSUMs plots by subtracting the corresponding long term trend from the SDR anomaly data, prior to the CUSUM calculation (Figure\ \ref{fig:cusumnotrendmonthly}).
+With this approach periods when the CUSUMs diverge from zero can be interpreted as systematic variation of SDR from the climatological mean. When the CUSUM is increasing, the added values are above the climatological values of SDR trend and vice versa.
+Overall, for all- and clear-sky conditions (Figure\ \ref{fig:cusumnotrendmonthly-1} and\ \ref{fig:cusumnotrendmonthly-2}) we observe periods when the anomalies diverge from the climatological value, each lasting for several years. 
+The pattern for the all-sky and clear-sky conditions is very similar, suggesting prevalence in clear skies over Thessaloniki.
+It is interesting that in the period 1993 - 2016 the anomalies of all-sky and clear-sky, have a high variability around zero. After 2016, the range of the variability is decreased at about one third of the prior period.
+For cloud-sky conditions (Figure\ \ref{fig:cusumnotrendmonthly-3}) the period 1997 - 2008 is dominated by positive CUSUMs suggesting a reduced effect of clouds on SDR.
+From 1997 to mid-2000s CUSUMs are increasing, likely due to a continuous decrease in the thickness of clouds, followed by a period of rapid increase (within 3 years) in cloud optical thickness lasting up to 2008. 
+The following stable period spans for about 15 years up to 2021 when CUSUMs start increasing again.
+
+
+```{r cusumnotrendmonthly, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR after removing the long term trend from the monthly values.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+knitr::include_graphics(c(
+    "./images/CumulativeMonthlyCuSumNOtrend-1.png",    # ALL sky
+    "./images/CumulativeMonthlyCuSumNOtrend-5.png",    # CLEAR sky
+    "./images/CumulativeMonthlyCuSumNOtrend-9.png"))   # Cloud sky
+```
+
+
+<!-- ```{r cusum, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
+<!-- knitr::include_graphics(c( -->
+<!--     "./images/CumulativeDailyCuSum-1.png",    # ALL sky -->
+<!--     "./images/CumulativeDailyCuSum-5.png",    # CLEAR sky -->
+<!--     "./images/CumulativeDailyCuSum-9.png"))   # Cloud sky -->
+<!-- ``` -->
+
+<!-- ```{r cusumnotrend, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR after removing the long term trend from the daily values.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
+<!-- knitr::include_graphics(c( -->
+<!--     "./images/CumulativeDailyCuSumNOtrend-1.png",    # ALL sky -->
+<!--     "./images/CumulativeDailyCuSumNOtrend-5.png",    # CLEAR sky -->
+<!--     "./images/CumulativeDailyCuSumNOtrend-9.png"))   # Cloud sky -->
+<!-- ``` -->
+
+<!-- ```{r cusumSTD, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
+<!-- knitr::include_graphics(c( -->
+<!--     "./images/CumulativeDailyCuSumSTD-1.png",    # ALL sky -->
+<!--     "./images/CumulativeDailyCuSumSTD-2.png",    # CLEAR sky -->
+<!--     "./images/CumulativeDailyCuSumSTD-3.png"))   # Cloud sky -->
+<!-- ``` -->
 
 
 
+## Effects of the solar zenith angle on SDR.
+
+The solar zenith angle is a major driver of the attenuation of SDR reaching the ground, as SDR is affected by the enhancement of the radiation path in the atmosphere, especially in urban environment with human activities emitting aerosols [@Wang2021].
+In order to estimate the effect of the SZA on the SDR trends, we grouped the anomaly data in bins of $1^\circ$ SZA, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
+Although there are seasonal dependencies of the minimum SZA (see Appendix, Figure\ \ref{fig:SZAtrendSeason}), these dependencies would not be further examined here.
+For all-sky and clear-sky conditions the brightening effect of SDR (positive trend) is stronger for large SZAs (Figures\ \ref{fig:szatrends-1} and \ref{fig:szatrends-2}).
+The trends in the morning and afternoon hours are more or less consistent with small differences, which can be attributed to systematic diurnal variations of aerosols, particularly during the warm period of the year [@Wang2021].
+For cloud-sky conditions (Figure\ \ref{fig:szatrends-3}), we can not discern any significant dependence of the SDR trend with SZA.
+For SZAs $16^\circ$ - $50^\circ$, the trends range within about $\pm 0.2\,\%/y$, with a weak statistical significance.
+Between $50^\circ$ and $75^\circ$ SZA the trends for the period before noon are stronger and negative, possibly associated with stronger attenuation by clouds under oblique incidence angles.
 
 
-# Version
+```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$), the trends were computed with SZA bins of $1^\\circ$ for each day, before and after local noon.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+knitr::include_graphics("./images/SzaTrends-1.png")
+knitr::include_graphics("./images/SzaTrends-4.png" )
+knitr::include_graphics("./images/SzaTrends-7.png")
+```
 
-This Rmd-skeleton uses the mdpi Latex template published 2023-03-25. 
-However, the official template gets more frequently updated than the **rticles**
-package. Therefore, please make sure prior to paper submission, that you're 
-using the most recent .cls, .tex and .bst files 
-(available [here](http://www.mdpi.com/authors/latex)).
-
-# Article Header Information
-
-
-
-
-## Journal Specific YAML variables
+<!-- ```{r szatrendsmonthly, echo = FALSE, fig.cap='*** Montlhly *** Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$).', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
+<!-- knitr::include_graphics("./images/SzaTrendsMonthly-1.png") -->
+<!-- knitr::include_graphics("./images/SzaTrendsMonthly-4.png" ) -->
+<!-- knitr::include_graphics("./images/SzaTrendsMonthly-7.png") -->
+<!-- ``` -->
 
 
+## Long term trends by season of year
 
-\startlandscape
-```{r, mdpinames, echo=FALSE, results='asis'}
-mdpi_journals <- "acoustics, actuators, addictions, admsci, adolescents, aerobiology, aerospace, agriculture, agriengineering, agrochemicals, agronomy, ai, air, algorithms,  jmp, jmse, jne, jnt, jof, joitmc, jor, journalmedia, jox, jpm, jrfm, jsan, jtaer, jvd,  wem, wevj, wind, women, world, youth, zoonoticdis"
+```{r echo=F, eval=TRUE}
+## Prepare table and data
+spp <- read.csv("./figures/tbl_longterm_trends_season.dat",
+               strip.white = TRUE,
+               sep         = ";",
+               header      = TRUE)
+spp <- spp[grep("SDR" ,spp$var), ]
+spp$slope.sd           <- NULL
+spp$slope.ConfInt_0.95 <- NULL
+spp$slope.ConfInt_0.99 <- NULL
+spp$var                <- NULL
+rownames(spp)          <- NULL
+names(spp) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Season", "Statistical signif. [%]")
+## order by season
+target    <- c("Winter", "Spring", "Summer", "Autumn")
+new_order <- sapply(target, function(x,spp){which(spp$Season == x)}, spp = spp)
+spp        <- spp[new_order,]
+## order by sky condition
+spp <- spp[order(spp$`Sky condition`),]
 
-knitr::kable(rticles::string_to_table(mdpi_journals, 8),
-             col.names = NULL,
-             format = "latex",
-             booktabs = TRUE, 
-             caption = "MDPI journal names.",
-             longtable = TRUE)
+# ## put all sky first
+# A  <- which(spp$`Sky condition` == "All sky cond.")
+# B  <- which(spp$`Sky condition` != "All sky cond.")
+# spp <- spp[c(A,B),]
+## numeric precision
+spp$`Trend [%/year]`          <- signif(spp$`Trend [%/year]`, 3)
+spp$`Trend p-value`           <- signif(spp$`Trend p-value`,  3)
+spp$`Statistical signif. [%]` <- signif(spp$`Statistical signif. [%]`,  3)
+
+## rename sky conditions
+spp$`Sky condition` <- sub(" cond.", "", spp$`Sky condition`)
+```
+
+
+Similar to the long term trends discussed above, we have calculated the trend of the anomalies for the three different sky conditions, and for each season of the year, using the corresponding mean monthly values
+(Figure\ \ref{fig:seasonalALL} and Table\ \ref{tab:trendseasontable}).
+For all-sky conditions the trend in SDR in winter is the largest
+($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$),
+followed by the trend in autumn
+($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$,
+value similar to the long term trend) both statistically significant above the $99\,\%$ confidence level. 
+In spring and summer, the trends are much smaller and less statistical significant.
+These seasonal differences indicate a possible relation of the trends to clouds during winter and autumn.
+For clear-skies, the trend in winter is $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear sky"], 2)`\,\%/y$, larger than for all-skies ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$), which is another indication of increasing cloud thickness. 
+Moreover, the trends under clear- and cloud-sky conditions are almost complementary to each other, particularly for winter and autumn, where the signal is stronger.
+During spring and summer the statistical significance is very low and the actual trend too small for a meaningful comparison.
+
+
+```{r seasonalALL, echo=F, fig.cap="SDR trends by season of the year for the three sky conditions. Each point is a monthly mean calculated from daily means. The vertical scale is common for all graphs, each column of graphs corresponds to a sky condition and each row to a season of the year.", out.width="100%"}
+knitr::include_graphics("./images/SeasonalTrendsTogether3-2.png")
+```
+
+<!-- ```{r seasonalALL, echo=F, fig.cap="Trends by season for all-sky condition. Displays monthly means of daily means."} -->
+<!-- knitr::include_graphics("./images/SeasonalTrends-1.png") -->
+<!-- ``` -->
+
+<!-- ```{r seasonalCLEAR, echo=F, fig.cap="Trends by season for clear-sky condition. Displays monthly means of daily means."} -->
+<!-- knitr::include_graphics("./images/SeasonalTrends-2.png") -->
+<!-- ``` -->
+
+<!-- ```{r seasonalCLOUD, echo=F, fig.cap="Trends by season for Cloudy-sky condition. Displays monthly means of daily means."} -->
+<!-- knitr::include_graphics("./images/SeasonalTrends-3.png") -->
+<!-- ``` -->
+
+
+
+<!-- \footnotesize -->
+
+```{r trendseasontable, echo=F}
+## arrange columns
+spp <- spp[,c(
+      "Sky condition",
+      "Season",
+      "Trend [%/year]", 
+      # "Trend p-value", 
+      "Statistical signif. [%]"
+      )]
+
+rownames(spp) <- NULL
+# panderOptions("table.alignment.default", "left")
+# panderOptions("table.alignment.default", "center")
+# pander(spp,
+#        justify = c('center', 'right', 'right', 'center'),
+#        split.table = Inf,
+#        caption = "\\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.")
+
+## use kable
+x_latex <- knitr::kable(spp,
+                        format   = "latex",
+                        booktabs = T,
+                        escape   = T,
+                        # format.args = list(digits = 3),
+                        linesep  = "",
+                        align    = "ccrr",
+                        caption  = "\\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.")
+
+x_latex %>%
+    collapse_rows(columns = 1, valign = "middle", latex_hline = "custom") %>%
+    kable_styling(latex_options = c("striped",
+                                    "hold_position")
+    )
+
+# position = "float_left"
 
 ```
-\finishlandscape
+<!-- \normalsize -->
+
+
+
+# Conclusions
+
+We demonstrate that in the period 
+`r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is a brightening trend of SDR for all-sky conditions ($`r alltrend`\,\%/y$).
+On a previous study [@Bais2013], for the period 1993 - 2011 the trend was found to be $0.33\,\%/y$.
+The increase of this trend, indicates that the phenomenon and probably the causes, are still occurring.
+Accordingly, we found a similar trend for clear-sky conditions ($`r cleartrend`\,\%/y$) that further supports that the brightening can be independent of the cloud occurrences, although, cloud formation can also attenuate SDR.
+We have calculated the effect of TSI variability to be a negligible factor in SDR variability.
+Unfortunately, there is no available data for this period for the aerosols, in order to directly estimate their effect on SDR, which is the most probable main cause.
+The attenuation of SDR by aerosols over Europe have been proposed as major factor by @Wild2021.
+The dimming effect of SDR under cloud-sky condition ($`r cloudtrend`\,\%/y$), shows that clouds can also attenuate the amount of SDR reaching the ground, and changes on their occurrences can effect the net energy balance.
+Because we have no adequate data to investigate the long term changes of cloud formation in the region, we can not infer if the SDR trend we observe under cloud-sky is biased by changes in clouds and local climate.
+The observed brightening of SDR over Thessaloniki; is dependent on SZA (higher SZA, have stronger brightening trends), and also, with the seasons of the year, where Winter and Autumn show a significant strong trend, in contrast to Spring and Summer.
+<!-- to conclutions? -->
+Using CUSUMs of the trends for all- and clear-skies, we observed periods where the CUSUMs remain relative steady, 
+<!-- roughly around the middle of the study dataset,--> with a steep decline previous to that, and a steep incline after. This is an indication that the whole brightening phenomenon does not follow a smooth development over time.
+
+
+Our findings are in agreement with other researchers for the region.
+Future observations from the collocated pyrheliometer, may provide us with the means to further investigate the variability of Solar radiation at ground level in Thessaloniki. 
+Also, more data (cloud occurrence, aerosols, atmospheric water vapour, etc.), will help us to determine the extent of SDR attenuation by each factor. 
+
+<!--
+similar results with Evidence for Clear‐Sky Dimming and Brightening in Central Europe_Wild2021.pdf
+include in discussion
+-->
 
 
 
 
-# Introduction
+--------------------
 
-The introduction should briefly place the study in a broad context and highlight
-why it is important. It should define the purpose of the work and its
-significance. The current state of the research field should be reviewed
-carefully and key publications cited. Please highlight controversial and
-diverging hypotheses when necessary. Finally, briefly mention the main aim of
-the work and highlight the principal conclusions. As far as possible, please
-keep the introduction comprehensible to scientists outside your particular
-field of research. Citing a journal paper [@bertrand-krajewski_distribution_1998;
-@leutnant_stormwater_2016]. And now citing a book reference @gujer_systems_2008.
-Some MDPI journals use Chicago and others use APA, this template should choose
-the correct citation format for you once you specify the journal in the YAML
-header.
+<!-- ## Figures, Tables and Schemes -->
 
-To use endnotes, change `endnotes: true` in the YAML header, then use
-`\endnote{This is an endnote.}`.
+<!-- All figures and tables should be cited in the main text as Figure \ref{fig:fig1},  -->
+<!-- \ref{tab:tab1}, etc. To get cross-reference to figure generated by R chunks  -->
+<!-- include the `\\label{}` tag in the `fig.cap` attribute of the R chunk:  -->
+<!-- `fig.cap = "Fancy Caption\\label{fig:plot}"`. -->
 
-
-# Materials and Methods
-
-Materials and Methods should be described with sufficient details to allow 
-others to replicate and build on published results. Please note that publication 
-of your manuscript implicates that you must make all materials, data, computer 
-code, and protocols associated with the publication available to readers. Please
-disclose at the submission stage any restrictions on the availability of 
-materials or information. New methods and protocols should be described in 
-detail while well-established methods can be briefly described and appropriately
-cited.
-
-Research manuscripts reporting large datasets that are deposited in a publicly 
-available database should specify where the data have been deposited and provide
-the relevant accession numbers. If the accession numbers have not yet been
-obtained at the time of submission, please state that they will be provided
-during review. They must be provided prior to publication.
-
-Interventionary studies involving animals or humans, and other studies require
-ethical approval must list the authority that provided approval and the
-corresponding ethical approval code.
-
-# Results
-
-This section may be divided by subheadings. It should provide a concise and
-precise description of the experimental results, their interpretation as well
-as the experimental conclusions that can be drawn.
-
-## Subsection Heading Here
-
-Subsection text here.
-
-### Subsubsection Heading Here
-
-Bulleted lists look like this:
-
-* First bullet
-* Second bullet
-* Third bullet
-
-Numbered lists can be added as follows:
-
-1. First item
-2. Second item
-3. Third item
-
-The text continues here.
-
-## Figures, Tables and Schemes
-
-All figures and tables should be cited in the main text as Figure \ref{fig:fig1}, 
-\ref{tab:tab1}, etc. To get cross-reference to figure generated by R chunks 
-include the `\\label{}` tag in the `fig.cap` attribute of the R chunk: 
-`fig.cap = "Fancy Caption\\label{fig:plot}"`.
-
-```{r fig1, echo=FALSE, fig.width=3, fig.cap="A figure added with a code chunk.\\label{fig:fig1}"}
-x = rnorm(10)
-y = rnorm(10)
-plot(x, y)
-```
+<!-- ```{r fig1, echo=FALSE, fig.width=3, fig.cap="A figure added with a code chunk.\\label{fig:fig1}"} -->
+<!-- x = rnorm(10) -->
+<!-- y = rnorm(10) -->
+<!-- plot(x, y) -->
+<!-- ``` -->
 
 
 When making tables using `kable`, it is suggested to use
@@ -756,36 +863,14 @@ to ensure table numbering and compatibility with the mdpi
 document class.
 
 ```{r tab1, echo=FALSE}
-knitr::kable(mtcars[1:5, 1:3], format = "latex", 
+knitr::kable(mtcars[1:5, 1:3], 
+             format = "latex", 
              booktabs = TRUE, 
              caption = "This is a table caption. Tables should be placed in the 
              main text near to the first time they are~cited.", 
              align = 'ccc', centering = FALSE,
              table.envir = "table", position = "H")
 ```
-
-
-
-For a very wide table, landscape layouts are allowed.
-
-
-\startlandscape
-
-```{r tab2, echo=FALSE}
-df <- data.frame(`Title 1` = c("Entry 1", "Entry 2"),
-                 `Title 2` = c("Data", "Data"),
-                 `Title 3` = c("Data", "Data"),
-                 `Title 4` = c("This cell has some longer content that runs over
-                               two lines",
-                               "Data"))
-knitr::kable(df, format = "latex", 
-             booktabs = TRUE, 
-             caption = "This is a very wide table", 
-             align = 'ccc', centering = FALSE,
-             table.envir = "table", position = "H")
-```
-
-\finishlandscape
 
 ## Formatting of Mathematical Components
 
@@ -808,27 +893,7 @@ equations as regular text.
 If the documentclass option "submit" is chosen, please insert a blank line before and after any math environment (equation and eqnarray environments). This ensures correct linenumbering. The blank line should be removed when the documentclass option is changed to "accept" because the text following an equation should not be a new paragraph.
 ```
 
-This is the example 2 of equation:
 
-\begin{adjustwidth}{-\extralength}{0cm}
-\begin{equation}
-a = b + c + d + e + f + g + h + i + j + k + l + m + n + o + p + q + r + s + t + 
-u + v + w + x + y + z
-\end{equation}
-\end{adjustwidth}
-
-Theorem-type environments (including propositions, lemmas, corollaries etc.) 
-can be formatted as follows:
-
-Example of a theorem:
-
-::: {.Theorem latex=true}
-Example text of a theorem
-:::
-
-
-
-The text continues here.
 
 # Discussion
 

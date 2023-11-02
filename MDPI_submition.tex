@@ -521,19 +521,18 @@ for the observation period, the trend of the TSI is \(-2e-04\,\%/y\),
 and thus we can not attribute any major effect on SDR trend to Solar
 variability.
 
-\begin{table}[!h]
+\begin{table}[H]
 
 \caption{\label{tab:trendtable}\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period 1993 - 2023.}
-\centering
-\begin{tabular}[t]{crrc}
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
 \toprule
-Sky conditions & Trend [\%/year] & Statistical signif. [\%] & Days\\
+Sky conditions & Trend [\%/year] & Statistical signif. [\%] & Days with data\\
 \midrule
 All sky & 0.376 & 100.00 & 10256\\
 Clear sky & 0.349 & 100.00 & 10256\\
 Cloudy sky & -0.276 & 99.97 & 5067\\
 \bottomrule
-\end{tabular}
+\end{tabu}
 \end{table}
 
 \begin{figure}[h!]
@@ -579,144 +578,182 @@ data between the datasets (Table~\ref{tab:trendtable}).
 \caption{Running cumulative sum plots of the monthly SDR.}\label{fig:cusummonth}
 \end{figure}
 
-\hypertarget{version}{%
-\section{Version}\label{version}}
-
-This Rmd-skeleton uses the mdpi Latex template published 2023-03-25.
-However, the official template gets more frequently updated than the
-\textbf{rticles} package. Therefore, please make sure prior to paper
-submission, that you're using the most recent .cls, .tex and .bst files
-(available \href{http://www.mdpi.com/authors/latex}{here}).
-
-\hypertarget{article-header-information}{%
-\section{Article Header Information}\label{article-header-information}}
-
-\hypertarget{journal-specific-yaml-variables}{%
-\subsection{Journal Specific YAML
-variables}\label{journal-specific-yaml-variables}}
-
-\startlandscape
-
-\begin{longtable}[t]{llllllll}
-\caption{\label{tab:mdpinames}MDPI journal names.}\\
-\toprule
-acoustics & aerobiology & agronomy & jmse & jor & jsan & wind & \\
-actuators & aerospace & ai & jne & journalmedia & jtaer & women & \\
-addictions & agriculture & air & jnt & jox & jvd & world & \\
-admsci & agriengineering & algorithms & jof & jpm & wem & youth & \\
-adolescents & agrochemicals & jmp & joitmc & jrfm & wevj & zoonoticdis & \\
-\bottomrule
-\end{longtable}
-\finishlandscape
-
-\hypertarget{introduction}{%
-\section{Introduction}\label{introduction}}
-
-The introduction should briefly place the study in a broad context and
-highlight why it is important. It should define the purpose of the work
-and its significance. The current state of the research field should be
-reviewed carefully and key publications cited. Please highlight
-controversial and diverging hypotheses when necessary. Finally, briefly
-mention the main aim of the work and highlight the principal
-conclusions. As far as possible, please keep the introduction
-comprehensible to scientists outside your particular field of research.
-Citing a journal paper
-\citep{bertrand-krajewski_distribution_1998, leutnant_stormwater_2016}.
-And now citing a book reference \citet{gujer_systems_2008}. Some MDPI
-journals use Chicago and others use APA, this template should choose the
-correct citation format for you once you specify the journal in the YAML
-header.
-
-To use endnotes, change \texttt{endnotes:\ true} in the YAML header,
-then use \texttt{\textbackslash{}endnote\{This\ is\ an\ endnote.\}}.
-
-\hypertarget{materials-and-methods}{%
-\section{Materials and Methods}\label{materials-and-methods}}
-
-Materials and Methods should be described with sufficient details to
-allow others to replicate and build on published results. Please note
-that publication of your manuscript implicates that you must make all
-materials, data, computer code, and protocols associated with the
-publication available to readers. Please disclose at the submission
-stage any restrictions on the availability of materials or information.
-New methods and protocols should be described in detail while
-well-established methods can be briefly described and appropriately
-cited.
-
-Research manuscripts reporting large datasets that are deposited in a
-publicly available database should specify where the data have been
-deposited and provide the relevant accession numbers. If the accession
-numbers have not yet been obtained at the time of submission, please
-state that they will be provided during review. They must be provided
-prior to publication.
-
-Interventionary studies involving animals or humans, and other studies
-require ethical approval must list the authority that provided approval
-and the corresponding ethical approval code.
-
-\hypertarget{results-1}{%
-\section{Results}\label{results-1}}
-
-This section may be divided by subheadings. It should provide a concise
-and precise description of the experimental results, their
-interpretation as well as the experimental conclusions that can be
-drawn.
-
-\hypertarget{subsection-heading-here}{%
-\subsection{Subsection Heading Here}\label{subsection-heading-here}}
-
-Subsection text here.
-
-\hypertarget{subsubsection-heading-here}{%
-\subsubsection{Subsubsection Heading
-Here}\label{subsubsection-heading-here}}
-
-Bulleted lists look like this:
-
-\begin{itemize}
-\tightlist
-\item
-  First bullet
-\item
-  Second bullet
-\item
-  Third bullet
-\end{itemize}
-
-Numbered lists can be added as follows:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  First item
-\item
-  Second item
-\item
-  Third item
-\end{enumerate}
-
-The text continues here.
-
-\hypertarget{figures-tables-and-schemes}{%
-\subsection{Figures, Tables and
-Schemes}\label{figures-tables-and-schemes}}
-
-All figures and tables should be cited in the main text as Figure
-\ref{fig:fig1}, \ref{tab:tab1}, etc. To get cross-reference to figure
-generated by R chunks include the
-\texttt{\textbackslash{}\textbackslash{}label\{\}} tag in the
-\texttt{fig.cap} attribute of the R chunk:
-\texttt{fig.cap\ =\ "Fancy\ Caption\textbackslash{}\textbackslash{}label\{fig:plot\}"}.
+In order to investigate more, the features within the trends, we created
+another set of CUSUMs plots by subtracting the corresponding long term
+trend from the SDR anomaly data, prior to the CUSUM calculation
+(Figure~\ref{fig:cusumnotrendmonthly}). With this approach periods when
+the CUSUMs diverge from zero can be interpreted as systematic variation
+of SDR from the climatological mean. When the CUSUM is increasing, the
+added values are above the climatological values of SDR trend and vice
+versa. Overall, for all- and clear-sky conditions
+(Figure~\ref{fig:cusumnotrendmonthly-1}
+and~\ref{fig:cusumnotrendmonthly-2}) we observe periods when the
+anomalies diverge from the climatological value, each lasting for
+several years. The pattern for the all-sky and clear-sky conditions is
+very similar, suggesting prevalence in clear skies over Thessaloniki. It
+is interesting that in the period 1993 - 2016 the anomalies of all-sky
+and clear-sky, have a high variability around zero. After 2016, the
+range of the variability is decreased at about one third of the prior
+period. For cloud-sky conditions
+(Figure~\ref{fig:cusumnotrendmonthly-3}) the period 1997 - 2008 is
+dominated by positive CUSUMs suggesting a reduced effect of clouds on
+SDR. From 1997 to mid-2000s CUSUMs are increasing, likely due to a
+continuous decrease in the thickness of clouds, followed by a period of
+rapid increase (within 3 years) in cloud optical thickness lasting up to
+2008. The following stable period spans for about 15 years up to 2021
+when CUSUMs start increasing again.
 
 \begin{figure}[h!]
 
-{\centering \includegraphics[width=0.7\linewidth]{MDPI_submition_files/figure-latex/fig1-1} 
+{\centering \subfloat[All-skies.\label{fig:cusumnotrendmonthly-1}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-1} }\subfloat[Clear-skies.\label{fig:cusumnotrendmonthly-2}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-5} }\subfloat[Cloud-skies.\label{fig:cusumnotrendmonthly-3}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-9} }
 
 }
 
-\caption{A figure added with a code chunk.\label{fig:fig1}}\label{fig:fig1}
+\caption{Running cumulative sum plots of the monthly SDR after removing the long term trend from the monthly values.}\label{fig:cusumnotrendmonthly}
 \end{figure}
+
+\hypertarget{effects-of-the-solar-zenith-angle-on-sdr.}{%
+\subsection{Effects of the solar zenith angle on
+SDR.}\label{effects-of-the-solar-zenith-angle-on-sdr.}}
+
+The solar zenith angle is a major driver of the attenuation of SDR
+reaching the ground, as SDR is affected by the enhancement of the
+radiation path in the atmosphere, especially in urban environment with
+human activities emitting aerosols \citep{Wang2021}. In order to
+estimate the effect of the SZA on the SDR trends, we grouped the anomaly
+data in bins of \(1^\circ\) SZA, and calculated the overall trend for
+each bin before noon and after noon (Figure~\ref{fig:szatrends}).
+Although there are seasonal dependencies of the minimum SZA (see
+Appendix, Figure~\ref{fig:SZAtrendSeason}), these dependencies would not
+be further examined here. For all-sky and clear-sky conditions the
+brightening effect of SDR (positive trend) is stronger for large SZAs
+(Figures~\ref{fig:szatrends-1} and \ref{fig:szatrends-2}). The trends in
+the morning and afternoon hours are more or less consistent with small
+differences, which can be attributed to systematic diurnal variations of
+aerosols, particularly during the warm period of the year
+\citep{Wang2021}. For cloud-sky conditions
+(Figure~\ref{fig:szatrends-3}), we can not discern any significant
+dependence of the SDR trend with SZA. For SZAs \(16^\circ\) -
+\(50^\circ\), the trends range within about \(\pm 0.2\,\%/y\), with a
+weak statistical significance. Between \(50^\circ\) and \(75^\circ\) SZA
+the trends for the period before noon are stronger and negative,
+possibly associated with stronger attenuation by clouds under oblique
+incidence angles.
+
+\begin{figure}[h!]
+
+{\centering \subfloat[All-sky conditions.\label{fig:szatrends-1}]{\includegraphics[width=.32\linewidth]{./images/SzaTrends-1} }\subfloat[Clear-sky conditions.\label{fig:szatrends-2}]{\includegraphics[width=.32\linewidth]{./images/SzaTrends-4} }\subfloat[Cloud-sky conditions.\label{fig:szatrends-3}]{\includegraphics[width=.32\linewidth]{./images/SzaTrends-7} }
+
+}
+
+\caption{Distribution of the SDR's long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$), the trends were computed with SZA bins of $1^\circ$ for each day, before and after local noon.}\label{fig:szatrends}
+\end{figure}
+
+\hypertarget{long-term-trends-by-season-of-year}{%
+\subsection{Long term trends by season of
+year}\label{long-term-trends-by-season-of-year}}
+
+Similar to the long term trends discussed above, we have calculated the
+trend of the anomalies for the three different sky conditions, and for
+each season of the year, using the corresponding mean monthly values
+(Figure~\ref{fig:seasonalALL} and Table~\ref{tab:trendseasontable}). For
+all-sky conditions the trend in SDR in winter is the largest
+(\(0.69\,\%/y\)), followed by the trend in autumn (\(0.43\,\%/y\), value
+similar to the long term trend) both statistically significant above the
+\(99\,\%\) confidence level. In spring and summer, the trends are much
+smaller and less statistical significant. These seasonal differences
+indicate a possible relation of the trends to clouds during winter and
+autumn. For clear-skies, the trend in winter is \(0.83\,\%/y\), larger
+than for all-skies (\(0.69\,\%/y\)), which is another indication of
+increasing cloud thickness. Moreover, the trends under clear- and
+cloud-sky conditions are almost complementary to each other,
+particularly for winter and autumn, where the signal is stronger. During
+spring and summer the statistical significance is very low and the
+actual trend too small for a meaningful comparison.
+
+\begin{figure}[h!]
+
+{\centering \includegraphics[width=1\linewidth]{./images/SeasonalTrendsTogether3-2} 
+
+}
+
+\caption{SDR trends by season of the year for the three sky conditions. Each point is a monthly mean calculated from daily means. The vertical scale is common for all graphs, each column of graphs corresponds to a sky condition and each row to a season of the year.}\label{fig:seasonalALL}
+\end{figure}
+
+\begin{table}[!h]
+
+\caption{\label{tab:trendseasontable}\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.}
+\centering
+\begin{tabular}[t]{ccrr}
+\toprule
+Sky condition & Season & Trend [\%/year] & Statistical signif. [\%]\\
+\midrule
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.6860} & \cellcolor{gray!6}{99.9}\\
+
+ & Spring & 0.1450 & 81.8\\
+
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{0.1200} & \cellcolor{gray!6}{89.4}\\
+
+\multirow{-4}{*}{\centering\arraybackslash All sky} & Autumn & 0.4310 & 99.3\\
+\cmidrule{1-4}
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.8260} & \cellcolor{gray!6}{100.0}\\
+
+ & Spring & 0.0613 & 38.6\\
+
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{-0.0307} & \cellcolor{gray!6}{25.9}\\
+
+\multirow{-4}{*}{\centering\arraybackslash Clear sky} & Autumn & 0.3670 & 97.2\\
+\cmidrule{1-4}
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{-0.8820} & \cellcolor{gray!6}{98.9}\\
+
+ & Spring & -0.0991 & 37.2\\
+
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{0.0444} & \cellcolor{gray!6}{21.5}\\
+
+\multirow{-4}{*}{\centering\arraybackslash Cloudy sky} & Autumn & -0.4000 & 89.5\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\hypertarget{conclusions}{%
+\section{Conclusions}\label{conclusions}}
+
+We demonstrate that in the period 1993 - 2023, there is a brightening
+trend of SDR for all-sky conditions (\(0.38\,\%/y\)). On a previous
+study \citep{Bais2013}, for the period 1993 - 2011 the trend was found
+to be \(0.33\,\%/y\). The increase of this trend, indicates that the
+phenomenon and probably the causes, are still occurring. Accordingly, we
+found a similar trend for clear-sky conditions (\(0.35\,\%/y\)) that
+further supports that the brightening can be independent of the cloud
+occurrences, although, cloud formation can also attenuate SDR. We have
+calculated the effect of TSI variability to be a negligible factor in
+SDR variability. Unfortunately, there is no available data for this
+period for the aerosols, in order to directly estimate their effect on
+SDR, which is the most probable main cause. The attenuation of SDR by
+aerosols over Europe have been proposed as major factor by
+\citet{Wild2021}. The dimming effect of SDR under cloud-sky condition
+(\(-0.28\,\%/y\)), shows that clouds can also attenuate the amount of
+SDR reaching the ground, and changes on their occurrences can effect the
+net energy balance. Because we have no adequate data to investigate the
+long term changes of cloud formation in the region, we can not infer if
+the SDR trend we observe under cloud-sky is biased by changes in clouds
+and local climate. The observed brightening of SDR over Thessaloniki; is
+dependent on SZA (higher SZA, have stronger brightening trends), and
+also, with the seasons of the year, where Winter and Autumn show a
+significant strong trend, in contrast to Spring and Summer. Using CUSUMs
+of the trends for all- and clear-skies, we observed periods where the
+CUSUMs remain relative steady, with a steep decline previous to that,
+and a steep incline after. This is an indication that the whole
+brightening phenomenon does not follow a smooth development over time.
+
+Our findings are in agreement with other researchers for the region.
+Future observations from the collocated pyrheliometer, may provide us
+with the means to further investigate the variability of Solar radiation
+at ground level in Thessaloniki. Also, more data (cloud occurrence,
+aerosols, atmospheric water vapour, etc.), will help us to determine the
+extent of SDR attenuation by each factor.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 When making tables using \texttt{kable}, it is suggested to use the
 \texttt{format="latex"} and \texttt{tabl.envir="table"} arguments to
@@ -739,26 +776,6 @@ Hornet Sportabout & 18.7 & 8 & 360\\
 \end{tabular}
 \end{table}
 
-For a very wide table, landscape layouts are allowed.
-
-\startlandscape
-
-\begin{table}[H]
-
-\caption{\label{tab:tab2}This is a very wide table}
-\begin{tabular}[t]{cccc}
-\toprule
-Title.1 & Title.2 & Title.3 & Title.4\\
-\midrule
-Entry 1 & Data & Data & This cell has some longer content that runs over
-                               two lines\\
-Entry 2 & Data & Data & Data\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\finishlandscape
-
 \hypertarget{formatting-of-mathematical-components}{%
 \subsection{Formatting of Mathematical
 Components}\label{formatting-of-mathematical-components}}
@@ -778,27 +795,6 @@ a = 1,
 
 the text following an equation need not be a new paragraph. Please
 punctuate equations as regular text.
-
-This is the example 2 of equation:
-
-\begin{adjustwidth}{-\extralength}{0cm}
-\begin{equation}
-a = b + c + d + e + f + g + h + i + j + k + l + m + n + o + p + q + r + s + t + 
-u + v + w + x + y + z
-\end{equation}
-\end{adjustwidth}
-
-Theorem-type environments (including propositions, lemmas, corollaries
-etc.) can be formatted as follows:
-
-Example of a theorem:
-
-\begin{Theorem}
-Example text of a theorem
-
-\end{Theorem}
-
-The text continues here.
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
