@@ -40,12 +40,13 @@ simplesummary: |
   A Simple summary goes here.
 
 abstract: |
-  The shortwave downward solar irradiance (SDR) is an important factor that drives climate processes, production and can affect all living organisms.
-  While monitoring the long term variability, there are observations of upward and downward SDR trends on different locations around the world for different time periods.
-  Periods of positive tredns are refered as brightening periods and with negative tredns as dimming periods.
-  We studied 29 years of CM-21 data from Thessaloniki, Greece, under three sky conditions (clear sky, cloudy sky and all sky conditions), applying a cloud sky identification algorithm.
-  We found a positive trend for all-sky and clear-sky conditions, and also, investigated the consistency of those trends, the effect of the solar zenith angle, and the variation of the trends for the seasons of the year.
-  We indentified that there are some anomalies in the long term SDR trends, for all sky conditions.
+  The shortwave downward solar irradiance (SDR) is an important factor that drives climate processes, production and can affect all living organisms. 
+  Observations of SDR at different locations around the world with different environmental characteristics have been used to investigate its long-term variability and trends at different time scales. 
+  Periods of positive trends are referred as brightening periods and of negative trends as dimming periods. 
+  Here we studied 29 years of pyranometer data in Thessaloniki, Greece, under three types of sky conditions (clear sky, cloudy sky and all sky). 
+  The clear-sky data were identified by applying a cloud screening algorithm. We found a positive trend of $0.38\,\%/\text{year}$ for all-sky, $0.35\,\%/\text{year}$ for clear-sky conditions, and $-0.28\,\%/\text{year}$ for cloudy conditions. 
+  We have also investigated the consistency of these trends, the effect of the solar zenith angle, and their seasonal variability. 
+  Finally, we identified some anomalies in the long term SDR trends for all sky conditions.
 
 # back matter
 keywords: |
@@ -237,12 +238,12 @@ suppressMessages(
 -->
 
 
-The shortwave downward solar irradiance (SDR) at Earth's surface play a significant role, on its climate.
-Changes of the SDR can be related to changes on Earth's energy budget, the mechanisms of climate change, and water and carbon cycle [@Wild2009].
-Can also affect, solar and agricultural production, and all living organisms.
+The shortwave downward solar irradiance (SDR) at Earth's surface plays a significant role, on its climate.
+Changes of the SDR can be related to changes on Earth's energy budget, the mechanisms of climate change, and water and carbon cycles [@Wild2009].
+It can also affect solar and agricultural production, and all living organisms.
 Studies of SDR variability, have identified some distinct SDR trends on different regions of the world on different time periods.
 The term 'brightening' is generally used to describe periods of positive SDR trend, and 'dimming' for negative trend.
-There are many cases on the long term records of irradiance, showing a systematic change of SDR's trend slope, occurring roughly at the last decades of the 20th century.
+There are many cases in the long term records of irradiance, showing a systematic change of SDR's trend slope, occurring roughly at the last decades of the 20th century.
 <!-- Trends china -->
 On multiple station in China, a dimming period was reported until about 2000, followed by a brightening period [@Yang2021]. 
 <!-- Trends Europe Brazil -->
@@ -302,7 +303,7 @@ to
 <!-- \mbox{ -->
 `r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
 <!-- }. -->
-Although, we have performed a similar analysis to the DNI data the results are not presented here, as they lack the appropriate statistical significance, due to the sorter duration of the data. 
+Although, we have performed a similar analysis to the DNI data, the results are not presented here, as they lack the appropriate statistical significance, due to the sorter duration of the data. 
 However, the DNI data were used as auxiliary data, in the clear sky identification algorithm (CSid), which is discussed later, for the selection of the appropriate thresholds.
 It is noted that despite the capability of the CSid algorithm to use the DNI as a characterization parameter, we haven't utilized it here, to avoid any selection bias, due to unequal length of the two datasets. 
 There are four distinct steps in the creation of the dataset analysed here:
@@ -340,15 +341,15 @@ A manual screening was performed, to remove inconsistent and erroneous recording
 The manual screening is aided by a radiation data quality assurance procedure, adjusted for the site, which is based on the methods of 
 Long and Shi\ [-@Long2008a; -@Long2006].
 Thus, problematic recordings have been excluded from further processing. 
-Although it is impossible to detect all false data, the large number of available data, and the aggregation scheme we used, ensures the good quality of the radiometric measurements used in this study.
+Although it is impossible to detect all false data, the large number of available data, and the aggregation scheme we used, ensures the good quality of the radiation measurements used in this study.
 
 <!-- c) Clear sky identification -->
-In order to be able to estimate the effect of the sky condition on the long term variability of SDR, we created three datasets, by characterizing each one-minute measurement with a corresponding sky condition (i.e., all-sky, clear-sky and cloudy-sky).
+In order to be able to estimate the effect of the sky conditions on the long term variability of SDR, we created three datasets, by characterizing each one-minute measurement with a corresponding sky condition (i.e., all-sky, clear-sky and cloudy-sky).
 To identify the clear-sky conditions we used a method proposed by
 @Long2000
 and by
 @Reno2016,
-which was adapted and configured for the site, as the authors suggest.
+which were adapted and configured for the site, as the authors suggest.
 
 <!-- CS subjectivity -->
 We have to note, that the definition of what constitutes as clear or cloudy sky, has some subjectivity, in any method of characterization.
@@ -829,10 +830,12 @@ x_latex <- knitr::kable(spp,
 #                                     "hold_position")
 #     )
 
+suppressMessages(
 x_latex %>%
     collapse_rows(columns = 1, valign = "middle", latex_hline = "custom")           %>%
     kable_styling(latex_options = c('striped', 'hold_position'), full_width = TRUE) %>%
-    column_spec(1, width = "8em")                                         
+    column_spec(1, width = "8em")
+)
 
 ```
 <!-- \normalsize -->
