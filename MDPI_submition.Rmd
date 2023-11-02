@@ -383,7 +383,6 @@ where: $n$ is the total number of daylight records, $\text{SDR}_{\text{CSid},i}$
 \end{equation}
 where: $\text{SDR}_\text{CSref}$ is the reference clear sky SDR, in $\text{w}\,\text{m}^{-2}$ and $\theta$ is the solar zenith angle (SZA).
 
-
 The criteria that were used to identify whether a measurement was taken
 under clear-sky conditions are presented below.
 A data point is flagged
@@ -417,13 +416,9 @@ a) Mean of the measured $\overline{\text{SDR}}_i$ (Eq. \ref{eq:MeanVIP}).
 `r 1 + CS_ref_rm_VIP_RelUpp` \times \overline{\text{SDR}}_{\text{CSref},i} + `r CS_ref_rm_VIP_UppOff`
 \label{eq:MeanVIP}
 \end{equation}
-
-
 <!-- 2. MaxVIP -->
 <!-- ### Max value of irradiance during the time period. -->
-
 <!-- The running max measured value $M_{\text{SDR},i} = \max_{n=i-5}^{n=i+5}[\text{SDR}_{n}]$, is compared to a similar constructed value from the reference $M_{CSrefi} = \max_{n=i-5}^{n=i+5}[\text{SDR}_{\text{CSref},n}]$ (Eq.\ \ref{eq:MaxVIP}). -->
-
 b) Maximum measured value $M_{\text{}}$ (Eq.\ \ref{eq:MaxVIP}).
 \begin{equation}
 `r MaxVIP_fct` \times M_{\text{CSref},i} - `r MaxVIP_off_low`
@@ -431,7 +426,6 @@ b) Maximum measured value $M_{\text{}}$ (Eq.\ \ref{eq:MaxVIP}).
 `r MaxVIP_fct` \times M_{\text{CSref},i} + `r MaxVIP_off_upp`
 \label{eq:MaxVIP}
 \end{equation}
-
 <!-- 3. VIL -->
 <!-- ### Variability in irradiance by line length. -->
 c) Length $L_i$ of the sequential line segments, connecting the points of the $`r nt`$ SDR values (Eq. \ref{eq:VILeq}).
@@ -444,10 +438,8 @@ L_i = \sum_{i=1}^{n-1}\sqrt{\left ( \text{SDR}_{i+1} - \text{SDR}_{i}\right )^2 
 \label{eq:VILcr}
 \end{equation}
 where: $t_i$ is the time each SDR measurement has been measured
-
 <!-- 4. VCT -->
 <!-- ### Variance of Changes in the Time series. -->
-
 <!-- Standard deviation of rate of change in irradiance. -->
 d) Standard deviation $\sigma_i$ of the slope ($s_i$) between the $`r nt`$ sequential points, normalized by the mean $\overline{\text{SDR}}_i$ (Eq.\ \ref{eq:VCT1}).
 <!-- \begin{gather}
@@ -462,10 +454,8 @@ For this criterion, $\sigma_i$ should be below a certain threshold (Eq.\ \ref{eq
 \begin{equation}
   \sigma_i < `r offVCT` \label{eq:VCTcr}
 \end{equation}
-
 <!-- 5. VSM -->
 <!-- ### Variability in the Shape of the irradiance Measurements. -->
-
 e) Maximum difference $X_i$ between the change in measured irradiance and the change in clear sky irradiance over each measurement interval.
 \begin{gather}
   X_i = \max{\left \{ \left | x_i - x_{\text{CSref},i} \right | \right \}} \label{eq:VSM3} \\
@@ -476,7 +466,6 @@ For this criterion, $X_i$ should be below a certain threshold (Eq.\ \ref{eq:VSMc
 \begin{equation}
   X_i < `r offVSM` \label{eq:VSMcr}
 \end{equation}
-
 
 <!-- ### Data selection -->
 Due to a significant measurement uncertainty near the horizon, we have to exclude all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$. 
@@ -596,7 +585,7 @@ x_latex <- knitr::kable(LT2,
                         centering   = FALSE,
                         table.envir = "table",
                         position    = "H",
-                        caption     = paste0("\\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), "."))
+                        caption     = paste0("Trends in SDR daily means for different sky conditions for the period ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), "."))
 
 # x_latex %>%
 #     kable_styling(
@@ -794,7 +783,7 @@ x_latex <- knitr::kable(spp,
                         centering   = FALSE,
                         table.envir = "table",
                         # position    = "H",
-                        caption  = "\\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.")
+                        caption  = "SDR linear trends of monthly anomalies for each season of the year.")
 
 x_latex %>%
     collapse_rows(columns = 1, valign = "middle", latex_hline = "custom") %>%
@@ -868,21 +857,21 @@ include in discussion
 <!--              table.envir = "table", position = "H") -->
 <!-- ``` -->
 
-## Formatting of Mathematical Components
+<!-- ## Formatting of Mathematical Components -->
 
 
-If you want numbered equations use Latex and wrap in the equation environment:
+<!-- If you want numbered equations use Latex and wrap in the equation environment: -->
 
-\begin{equation}
-a = 1,
-\end{equation}
+<!-- \begin{equation} -->
+<!-- a = 1, -->
+<!-- \end{equation} -->
 
-the text following an equation need not be a new paragraph. Please punctuate 
-equations as regular text.
+<!-- the text following an equation need not be a new paragraph. Please punctuate  -->
+<!-- equations as regular text. -->
 
-```{comment}
-If the documentclass option "submit" is chosen, please insert a blank line before and after any math environment (equation and eqnarray environments). This ensures correct linenumbering. The blank line should be removed when the documentclass option is changed to "accept" because the text following an equation should not be a new paragraph.
-```
+<!-- ```{comment} -->
+<!-- If the documentclass option "submit" is chosen, please insert a blank line before and after any math environment (equation and eqnarray environments). This ensures correct linenumbering. The blank line should be removed when the documentclass option is changed to "accept" because the text following an equation should not be a new paragraph. -->
+<!-- ``` -->
 
 
 

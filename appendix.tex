@@ -1,10 +1,41 @@
 %% optional
-\appendixtitles{no} %Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
-\appendixsections{multiple} %Leave argument "multiple" if there are multiple sections. Then a counter is printed ("Appendix A"). If there is only one appendix section then change the argument to "one" and no counter is printed ("Appendix").
+\appendixtitles{yes} %Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
+\appendixsections{one} %Leave argument "multiple" if there are multiple sections. Then a counter is printed ("Appendix A"). If there is only one appendix section then change the argument to "one" and no counter is printed ("Appendix").
 \appendix
-\section{}
-\subsection{}
-The appendix is an optional section that can contain details and data supplemental to the main text. For example, explanations of experimental details that would disrupt the flow of the main text, but nonetheless remain crucial to understanding and reproducing the research shown; figures of replicates for experiments of which representative data is shown in the main text can be added here if brief, or as Supplementary data. Mathematical proofs of results not central to the paper can be added as an appendix.
+% \section{}
 
-\section{}
-All appendix sections must be cited in the main text. In the appendixes, Figures, Tables, etc. should be labeled starting with `A', e.g., Figure A1, Figure A2, etc.
+% copy output from Article.tex
+
+\begin{figure}[h!]
+
+{\centering \includegraphics[width=0.7\linewidth]{./images/LongtermTrends-5}
+
+}
+
+\caption{Anomaly (\%) of the daily clear-sky SDR, relative to climatological values for1993 - 2023. The black line shows the long term linear trend for clear-sky conditions.}\label{fig:trendCLEAR}
+\end{figure}
+
+\begin{figure}[h!]
+
+{\centering \includegraphics[width=0.7\linewidth]{./images/LongtermTrends-8}
+
+}
+
+\caption{Anomaly (\%) of the daily cloud-sky SDR, relative to climatological values for 1993 - 2023. The black line shows the long term linear trend for cloud-sky conditions.}\label{fig:trendCLOUD}
+\end{figure}
+
+\begin{figure}[h!]
+
+{\centering \includegraphics[width=1\linewidth]{./images/SzaTrendsSeasTogether-2}
+
+}
+
+\caption{Seasonla distribution of the SDR's long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$), the trends were computed with SZA bins of $1^\circ$ for each day, before and after local noon, all graphs have the same scale. Bins with $p<0.005$ or with less than 85 data points may be missing from the view.}\label{fig:SZAtrendSeason}
+\end{figure}
+
+
+% \subsection{}
+% The appendix is an optional section that can contain details and data supplemental to the main text. For example, explanations of experimental details that would disrupt the flow of the main text, but nonetheless remain crucial to understanding and reproducing the research shown; figures of replicates for experiments of which representative data is shown in the main text can be added here if brief, or as Supplementary data. Mathematical proofs of results not central to the paper can be added as an appendix.
+%
+% \section{}
+% All appendix sections must be cited in the main text. In the appendixes, Figures, Tables, etc. should be labeled starting with `A', e.g., Figure A1, Figure A2, etc.
