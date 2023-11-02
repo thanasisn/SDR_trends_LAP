@@ -201,6 +201,8 @@ the subject discipline.).}
 
 
 
+\usepackage{subcaption}
+\captionsetup[sub]{position=bottom, labelfont={bf, small, stretch=1.17}, labelsep=space, textfont={small, stretch=1.5}, aboveskip=6pt,  belowskip=6pt, singlelinecheck=off, justification=justified}
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage{array}
@@ -575,40 +577,6 @@ data between the datasets (Table~\ref{tab:trendtable}).
 }
 
 \caption{Running cumulative sum plots of the monthly SDR.}\label{fig:cusummonth}
-\end{figure}
-
-In order to investigate more, the features within the trends, we created
-another set of CUSUMs plots by subtracting the corresponding long term
-trend from the SDR anomaly data, prior to the CUSUM calculation
-(Figure~\ref{fig:cusumnotrendmonthly}). With this approach periods when
-the CUSUMs diverge from zero can be interpreted as systematic variation
-of SDR from the climatological mean. When the CUSUM is increasing, the
-added values are above the climatological values of SDR trend and vice
-versa. Overall, for all- and clear-sky conditions
-(Figure~\ref{fig:cusumnotrendmonthly-1}
-and~\ref{fig:cusumnotrendmonthly-2}) we observe periods when the
-anomalies diverge from the climatological value, each lasting for
-several years. The pattern for the all-sky and clear-sky conditions is
-very similar, suggesting prevalence in clear skies over Thessaloniki. It
-is interesting that in the period 1993 - 2016 the anomalies of all-sky
-and clear-sky, have a high variability around zero. After 2016, the
-range of the variability is decreased at about one third of the prior
-period. For cloud-sky conditions
-(Figure~\ref{fig:cusumnotrendmonthly-3}) the period 1997 - 2008 is
-dominated by positive CUSUMs suggesting a reduced effect of clouds on
-SDR. From 1997 to mid-2000s CUSUMs are increasing, likely due to a
-continuous decrease in the thickness of clouds, followed by a period of
-rapid increase (within 3 years) in cloud optical thickness lasting up to
-2008. The following stable period spans for about 15 years up to 2021
-when CUSUMs start increasing again.
-
-\begin{figure}[h!]
-
-{\centering \subfloat[All-skies.\label{fig:cusumnotrendmonthly-1}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-1} }\subfloat[Clear-skies.\label{fig:cusumnotrendmonthly-2}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-5} }\subfloat[Cloud-skies.\label{fig:cusumnotrendmonthly-3}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-9} }
-
-}
-
-\caption{Running cumulative sum plots of the monthly SDR after removing the long term trend from the monthly values.}\label{fig:cusumnotrendmonthly}
 \end{figure}
 
 \hypertarget{version}{%
