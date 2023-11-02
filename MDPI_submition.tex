@@ -358,17 +358,13 @@ evaluated by \citet{Reno2016}. We found, that Haurwitz's model, adjusted
 with the factor \(a = 0.965\) yields one of the lowest root mean squared
 errors (RMSE), while the procedure, manages to characterize the majority
 of the data. Thus, our clear sky reference is derived by the
-Eq.~\ref{eq:ahau}.
-
-\begin{equation}
+Eq.~\ref{eq:ahau}. \begin{equation}
 f(a) = \frac{1}{n}\sum_{i=1}^{n} ( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i} )^2 \label{eq:minf}
 \end{equation} where: \(n\) is the total number of daylight records,
 \(\text{SDR}_{\text{CSid},i}\) are the records identified as clear sky
 by CSid, \(a\) is a hypothetical adjustment factor, and
 \(\text{SDR}_{\text{testCSref},i}\) is any of the tested clear sky
-radiation models.
-
-\begin{equation}
+radiation models. \begin{equation}
 \text{SDR}_\text{CSref} = a \times \text{SDR}_\text{Haurwitz} = 0.965 \times 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.057}{\cos(\theta)} \right) \label{eq:ahau}
 \end{equation} where: \(\text{SDR}_\text{CSref}\) is the reference clear
 sky SDR, in \(\text{w}\,\text{m}^{-2}\) and \(\theta\) is the solar
@@ -680,11 +676,14 @@ actual trend too small for a meaningful comparison.
 \caption{SDR trends by season of the year for the three sky conditions. Each point is a monthly mean calculated from daily means. The vertical scale is common for all graphs, each column of graphs corresponds to a sky condition and each row to a season of the year.}\label{fig:seasonalALL}
 \end{figure}
 
+\begin{verbatim}
+Usually it is recommended to use column_spec before collapse_rows, especially in LaTeX, to get a desired result. 
+\end{verbatim}
+
 \begin{table}[!h]
 
 \caption{\label{tab:trendseasontable}\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.}
-\centering
-\begin{tabular}[t]{ccrr}
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X}
 \toprule
 Sky condition & Season & Trend [\%/year] & Statistical signif. [\%]\\
 \midrule
@@ -712,7 +711,7 @@ Sky condition & Season & Trend [\%/year] & Statistical signif. [\%]\\
 
 \multirow{-4}{*}{\centering\arraybackslash Cloudy sky} & Autumn & -0.4000 & 89.5\\
 \bottomrule
-\end{tabular}
+\end{tabu}
 \end{table}
 
 \hypertarget{conclusions}{%
@@ -755,36 +754,9 @@ extent of SDR attenuation by each factor.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-When making tables using \texttt{kable}, it is suggested to use the
-\texttt{format="latex"} and \texttt{tabl.envir="table"} arguments to
-ensure table numbering and compatibility with the mdpi document class.
-
-\begin{table}[H]
-
-\caption{\label{tab:tab1}This is a table caption. Tables should be placed in the 
-             main text near to the first time they are~cited.}
-\begin{tabular}[t]{lccc}
-\toprule
-  & mpg & cyl & disp\\
-\midrule
-Mazda RX4 & 21.0 & 6 & 160\\
-Mazda RX4 Wag & 21.0 & 6 & 160\\
-Datsun 710 & 22.8 & 4 & 108\\
-Hornet 4 Drive & 21.4 & 6 & 258\\
-Hornet Sportabout & 18.7 & 8 & 360\\
-\bottomrule
-\end{tabular}
-\end{table}
-
 \hypertarget{formatting-of-mathematical-components}{%
 \subsection{Formatting of Mathematical
 Components}\label{formatting-of-mathematical-components}}
-
-This is an example of an equation:
-
-\[
-a = 1.
-\]
 
 If you want numbered equations use Latex and wrap in the equation
 environment:

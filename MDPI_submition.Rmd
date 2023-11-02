@@ -372,14 +372,11 @@ We found, that Haurwitz's model, adjusted with the factor $a = `r signif(alpha,3
 while the procedure, manages to characterize the majority of the data.
 <!--[]{.comment-end id="3"}--> 
 Thus, our clear sky reference is derived by the Eq.\ \ref{eq:ahau}.
-
 <!-- cost fuction -->
 \begin{equation}
 f(a) = \frac{1}{n}\sum_{i=1}^{n} ( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i} )^2 \label{eq:minf}
 \end{equation}
 where: $n$ is the total number of daylight records, $\text{SDR}_{\text{CSid},i}$ are the records identified as clear sky by CSid, $a$ is a hypothetical adjustment factor, and $\text{SDR}_{\text{testCSref},i}$ is any of the tested clear sky radiation models.
-
-
 <!-- adjusted Haurwitz -->
 \begin{equation}
 \text{SDR}_\text{CSref} = a \times \text{SDR}_\text{Haurwitz} = `r signif(alpha,3)` \times 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.057}{\cos(\theta)} \right) \label{eq:ahau}
@@ -409,10 +406,8 @@ process.
 <!--[[]{.comment-end id="4"}]{.insertion author="A N"
 date="2023-07-15T22:48:13Z"}
 -->
-
 <!-- 1. MeanVIP -->
 <!-- ### Mean value of irradiance during the time period. -->
-
 <!--a) Mean of the measured $\overline{\text{SDR}}_i$ = \text{mean}_{n=i-5}^{n=i+5}[\text{SDR}_{n}]$ and running mean of the reference $\overline{\text{SDR}}_{\text{CSref},i}$ = \text{mean}_{n=i-5}^{n=i+5}[\text{SDR}_{\text{CSref},n}]$ (Eq. \ref{eq:MeanVIP}).-->
 
 a) Mean of the measured $\overline{\text{SDR}}_i$ (Eq. \ref{eq:MeanVIP}).
@@ -790,21 +785,23 @@ rownames(spp) <- NULL
 
 ## use kable
 x_latex <- knitr::kable(spp,
-                        format   = "latex",
-                        booktabs = T,
-                        escape   = T,
+                        format      = "latex",
+                        booktabs    = TRUE,
+                        escape      = T,
                         # format.args = list(digits = 3),
-                        linesep  = "",
-                        align    = "ccrr",
+                        linesep     = "",
+                        align       = "ccrr",
+                        centering   = FALSE,
+                        table.envir = "table",
+                        # position    = "H",
                         caption  = "\\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.")
 
 x_latex %>%
     collapse_rows(columns = 1, valign = "middle", latex_hline = "custom") %>%
-    kable_styling(latex_options = c("striped",
-                                    "hold_position")
-    )
-
-# position = "float_left"
+    kable_styling(latex_options = c('striped', 'hold_position'), full_width = TRUE) %>%
+    # kable_styling(full_width = T) %>%
+    # kable_styling("striped")      %>%
+    column_spec(1, width = "8em")
 
 ```
 <!-- \normalsize -->
@@ -856,29 +853,23 @@ include in discussion
 <!-- plot(x, y) -->
 <!-- ``` -->
 
+<!-- When making tables using `kable`, it is suggested to use -->
+<!-- the `format="latex"` and `tabl.envir="table"` arguments -->
+<!-- to ensure table numbering and compatibility with the mdpi -->
+<!-- document class. -->
 
-When making tables using `kable`, it is suggested to use
-the `format="latex"` and `tabl.envir="table"` arguments
-to ensure table numbering and compatibility with the mdpi
-document class.
-
-```{r tab1, echo=FALSE}
-knitr::kable(mtcars[1:5, 1:3], 
-             format = "latex", 
-             booktabs = TRUE, 
-             caption = "This is a table caption. Tables should be placed in the 
-             main text near to the first time they are~cited.", 
-             align = 'ccc', centering = FALSE,
-             table.envir = "table", position = "H")
-```
+<!-- ```{r tab1, echo=FALSE} -->
+<!-- knitr::kable(mtcars[1:5, 1:3],  -->
+<!--              format = "latex",  -->
+<!--              booktabs = TRUE,  -->
+<!--              caption = "This is a table caption. Tables should be placed in the  -->
+<!--              main text near to the first time they are~cited.",  -->
+<!--              align = 'ccc', centering = FALSE, -->
+<!--              table.envir = "table", position = "H") -->
+<!-- ``` -->
 
 ## Formatting of Mathematical Components
 
-This is an example of an equation:
-
-$$
-a = 1.
-$$
 
 If you want numbered equations use Latex and wrap in the equation environment:
 
