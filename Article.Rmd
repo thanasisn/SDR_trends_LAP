@@ -30,6 +30,7 @@ address:
 #     text:         "This is the first author footnote."
 #   - code:         2
 #     text:         "Another author footnote."
+
 abstract: |
   The shortwave downward solar irradiance (SDR) is an important factor that drives climate processes, production and can affect all living organisms.
   While monitoring the long term variability, there are observations of upward and downward SDR trends on different locations around the world for different time periods.
@@ -37,10 +38,34 @@ abstract: |
   We studied 29 years of CM-21 data from Thessaloniki, Greece, under three sky conditions (clear sky, cloudy sky and all sky conditions), applying a cloud sky identification algorithm.
   We found a positive trend for all-sky and clear-sky conditions, and also, investigated the consistency of those trends, the effect of the solar zenith angle, and the variation of the trends for the seasons of the year.
   We indentified that there are some anomalies in the long term SDR trends, for all sky conditions.
-keywords: 
-  - GHI
-  - SDR
-  - Solar Brigthening/Dimming
+
+# back matter
+keywords: |
+  GHI; SDR; Solar Brigthening/Dimming.
+## list three to ten pertinent keywords specific to the article, yet reasonably common within the subject discipline
+
+acknowledgement: |
+  All sources of funding of the study should be disclosed. Please clearly 
+  indicate grants that you have received in support of your research work. 
+  Clearly state if you received funds for covering the costs to publish in open 
+  access.
+
+authorcontributions: |
+  For research articles with several authors, a short paragraph specifying their 
+  individual contributions must be provided. The following statements should be 
+  used ``X.X. and Y.Y. conceive and designed the experiments; X.X. performed the 
+  experiments; X.X. and Y.Y. analyzed the data; W.W. contributed 
+  reagents/materials/analysis tools; Y.Y. wrote the paper.'' Authorship must be
+  limited to those who have contributed substantially to the work reported.
+
+funding: |
+  Please add: ``This research received no external funding'' or ``This research 
+  was funded by NAME OF FUNDER grant number XXX.'' and  and ``The APC was funded 
+  by XXX''. Check carefully that the details given are accurate and use the 
+  standard spelling of funding agency names at 
+  \url{https://search.crossref.org/funding}, any errors may affect your future 
+  funding.
+
 journal:         "An awesome journal"
 date:            "`r Sys.Date()`"
 classoption:     preprint, 3p, authoryear
@@ -56,11 +81,17 @@ abbreviations:
     long: Cumulative sum
   - short: SDR 
     long: Solar downward radiation
+  - short: SZA
+    long: Solar zenith angle
+
 header-includes:
    # - \usepackage{subfig}
    - \usepackage{subcaption}
+
 output: 
-  rticles::mdpi_article: default
+  rticles::mdpi_article:
+    extra_dependencies:  longtable 
+    keep_tex:            yes
   bookdown::word_document2: default
   bookdown::pdf_document2:
     number_sections:  no
@@ -733,11 +764,11 @@ x_latex <- knitr::kable(spp,
 #     )
 
 x_latex %>%
+    column_spec(1, width = "8em")                                         %>%
     collapse_rows(columns = 1, valign = "middle", latex_hline = "custom") %>%
-    kable_styling(latex_options = c('striped', 'hold_position'), full_width = TRUE) %>%
+    kable_styling(latex_options = c('striped', 'hold_position'), full_width = TRUE)
     # kable_styling(full_width = T) %>%
     # kable_styling("striped")      %>%
-    column_spec(1, width = "8em")
 
 ```
 <!-- \normalsize -->

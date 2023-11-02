@@ -1,5 +1,5 @@
 ---
-title: Full title of the paper (Capitalized)
+title:     "Trends of SDR in Thessaloniki"
 author:
   - name:  Athanasios Natsis
     affil: 1,* # \ddagger
@@ -29,13 +29,16 @@ authorcitation: |
 correspondence: |
   natsisphysicist@gmail.com;
 #   Tel.: +XX-000-00-0000.
+
 # document options
 journal: applsci
 type:    article
 status:  submit
+
 # front matter
 simplesummary: |
   A Simple summary goes here.
+
 abstract: |
   The shortwave downward solar irradiance (SDR) is an important factor that drives climate processes, production and can affect all living organisms.
   While monitoring the long term variability, there are observations of upward and downward SDR trends on different locations around the world for different time periods.
@@ -43,15 +46,18 @@ abstract: |
   We studied 29 years of CM-21 data from Thessaloniki, Greece, under three sky conditions (clear sky, cloudy sky and all sky conditions), applying a cloud sky identification algorithm.
   We found a positive trend for all-sky and clear-sky conditions, and also, investigated the consistency of those trends, the effect of the solar zenith angle, and the variation of the trends for the seasons of the year.
   We indentified that there are some anomalies in the long term SDR trends, for all sky conditions.
+
 # back matter
 keywords: |
-  GHI; SDR; Solar Brigthening/Dimming (list three to ten pertinent keywords specific 
-  to the article, yet reasonably common within the subject discipline.).
+  GHI; SDR; Solar Brigthening/Dimming.
+## list three to ten pertinent keywords specific to the article, yet reasonably common within the subject discipline
+
 acknowledgement: |
   All sources of funding of the study should be disclosed. Please clearly 
   indicate grants that you have received in support of your research work. 
   Clearly state if you received funds for covering the costs to publish in open 
   access.
+
 authorcontributions: |
   For research articles with several authors, a short paragraph specifying their 
   individual contributions must be provided. The following statements should be 
@@ -59,6 +65,7 @@ authorcontributions: |
   experiments; X.X. and Y.Y. analyzed the data; W.W. contributed 
   reagents/materials/analysis tools; Y.Y. wrote the paper.'' Authorship must be
   limited to those who have contributed substantially to the work reported.
+
 funding: |
   Please add: ``This research received no external funding'' or ``This research 
   was funded by NAME OF FUNDER grant number XXX.'' and  and ``The APC was funded 
@@ -66,20 +73,22 @@ funding: |
   standard spelling of funding agency names at 
   \url{https://search.crossref.org/funding}, any errors may affect your future 
   funding.
-institutionalreview: |
-  In this section, you should add the Institutional Review Board Statement and 
-  approval number, if relevant to your study. You might choose to exclude 
-  this statement if the study did not require ethical approval. Please note 
-  that the Editorial Office might ask you for further information. Please add 
-  “The study was conducted in accordance with the Declaration of Helsinki, 
-  and approved by the Institutional Review Board (or Ethics Committee) of 
-  NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies 
-  involving humans. OR “The animal study protocol was approved by the 
-  Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE 
-  (protocol code XXX and date of approval).” for studies involving animals. 
-  OR “Ethical review and approval were waived for this study due to REASON 
-  (please provide a detailed justification).” OR “Not applicable” for
-   studies not involving humans or animals.
+
+# institutionalreview: |
+#   In this section, you should add the Institutional Review Board Statement and 
+#   approval number, if relevant to your study. You might choose to exclude 
+#   this statement if the study did not require ethical approval. Please note 
+#   that the Editorial Office might ask you for further information. Please add 
+#   “The study was conducted in accordance with the Declaration of Helsinki, 
+#   and approved by the Institutional Review Board (or Ethics Committee) of 
+#   NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies 
+#   involving humans. OR “The animal study protocol was approved by the 
+#   Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE 
+#   (protocol code XXX and date of approval).” for studies involving animals. 
+#   OR “Ethical review and approval were waived for this study due to REASON 
+#   (please provide a detailed justification).” OR “Not applicable” for
+#    studies not involving humans or animals.
+
 # informedconsent: |
 #   Any research article describing a study involving humans should contain this 
 #   statement. Please add ``Informed consent was obtained from all subjects 
@@ -92,6 +101,7 @@ institutionalreview: |
 #   patients who can be identified (including by the patients themselves). Please 
 #   state ``Written informed consent has been obtained from the patient(s) to 
 #   publish this paper'' if applicable.
+
 dataavailability: |
   We encourage all authors of articles published in MDPI journals to share 
   their research data. In this section, please provide details regarding where 
@@ -101,22 +111,26 @@ dataavailability: |
   re-strictions, a statement is still required. Suggested Data Availability 
   Statements are available in section “MDPI Research Data Policies” at 
   \url{https://www.mdpi.com/ethics}.
-conflictsofinterest: |
-  Declare conflicts of interest or state 'The authors declare no conflict of 
-  interest.' Authors must identify and declare any personal circumstances or
-  interest that may be perceived as inappropriately influencing the
-  representation or interpretation of reported research results. Any role of the
-  funding sponsors in the design of the study; in the collection, analyses or 
-  interpretation of data in the writing of the manuscript, or in the decision to 
-  publish the results must be declared in this section. If there is no role, 
-  please state 'The founding sponsors had no role in the design of the study; 
-  in the collection, analyses, or interpretation of data; in the writing of the 
-  manuscript, an in the decision to publish the results'.
+
+# conflictsofinterest: |
+#   Declare conflicts of interest or state 'The authors declare no conflict of 
+#   interest.' Authors must identify and declare any personal circumstances or
+#   interest that may be perceived as inappropriately influencing the
+#   representation or interpretation of reported research results. Any role of the
+#   funding sponsors in the design of the study; in the collection, analyses or 
+#   interpretation of data in the writing of the manuscript, or in the decision to 
+#   publish the results must be declared in this section. If there is no role, 
+#   please state 'The founding sponsors had no role in the design of the study; 
+#   in the collection, analyses, or interpretation of data; in the writing of the 
+#   manuscript, an in the decision to publish the results'.
+
 # sampleavailability: |
 #   Samples of the compounds ...... are available from the authors.
+
 supplementary: |
  The following supporting information can be downloaded at:  
  \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title.
+
 abbreviations:
   - short: DNI
     long: Direct beam/normal irradiance
@@ -133,14 +147,35 @@ header-includes:
    # - \usepackage{subfig}
    - \usepackage{subcaption}
    - \captionsetup[sub]{position=bottom, labelfont={bf, small, stretch=1.17}, labelsep=space, textfont={small, stretch=1.5}, aboveskip=6pt,  belowskip=6pt, singlelinecheck=off, justification=justified} 
+
 bibliography: manualreferences.bib
+
 appendix:     appendix.tex
+
 endnotes:     false
+
 output: 
   rticles::mdpi_article:
     extra_dependencies:  longtable 
     keep_tex:            yes
-    
+  bookdown::word_document2: default
+  bookdown::pdf_document2:
+    number_sections:  no
+    fig_caption:      yes
+    keep_tex:         no
+    latex_engine:     xelatex
+    toc:              no
+    toc_depth:        4
+    fig_width:        7
+    fig_height:       4.5
+    documentclass:    article
+    classoption:      a4paper,oneside
+    fontsize:         12pt
+    geometry:         "left=0.75in,right=0.75in,top=0.75in,bottom=0.75in"
+    link-citations:   yes
+    colorlinks:       yes
+    urlcolor:         blue
+    biblio-style:     apalike
 ---
 
 
@@ -795,11 +830,9 @@ x_latex <- knitr::kable(spp,
 #     )
 
 x_latex %>%
-    collapse_rows(columns = 1, valign = "middle", latex_hline = "custom") %>%
+    collapse_rows(columns = 1, valign = "middle", latex_hline = "custom")           %>%
     kable_styling(latex_options = c('striped', 'hold_position'), full_width = TRUE) %>%
-    # kable_styling(full_width = T) %>%
-    # kable_styling("striped")      %>%
-    column_spec(1, width = "8em")
+    column_spec(1, width = "8em")                                         
 
 ```
 <!-- \normalsize -->
