@@ -387,15 +387,11 @@ TSIslopeAll <- TSI[`Sky condition` == "All sky cond."]
 <!-- # Detection of clear periods in GHI measurements for SDR trends. -->
 
 For completeness, we will provide below a brief overview of the clear sky identification algorithm (CSid), along with the site specific thresholds.
-To calculate the reference clear sky
-$\text{SDR}_\text{CSref}$ we used the $\text{SDR}_\text{Haurwitz}$ derived by
-the radiation model of @Haurwitz1945, adjusted for our site with a
-factor $a$ (Eq.\ \ref{eq:ahau}), resulted by an iterative optimization process, as described
-by @Long2000 and @Reno2016.
+To calculate the reference clear sky $\text{SDR}_\text{CSref}$ we used the $\text{SDR}_\text{Haurwitz}$ derived by the radiation model of @Haurwitz1945, adjusted for our site with a factor $a$ (Eq.\ \ref{eq:ahau}), resulted by an iterative optimization process, as described by @Long2000 and @Reno2016.
 The target of the optimization was the minimization of a function $f(a)$ (Eq.\ \ref{eq:minf}) and
 was accomplished with the algorithmic function "optimise", which is an implementation based on the work of @Brent1973, from the library "stats" of the R programming language [@RCT2023]. 
 The optimization and the selection of the clear sky reference model, was performed on SDR observations for the period 2016 - 2021.
-During the optimization, eight simple clear sky radiation models were tested (Daneshyar-Paltridge-Proctor, Kasten-Czeplak, Haurwitz, Berger-Duffie, Adnot-Bourges-Campana-Gicquel, Robledo-Soler, Kasten and Ineichen-Perez), with a wide range of factors.
+During the optimization, eight simple clear sky radiation models were tested (namely, Daneshyar-Paltridge-Proctor, Kasten-Czeplak, Haurwitz, Berger-Duffie, Adnot-Bourges-Campana-Gicquel, Robledo-Soler, Kasten and Ineichen-Perez), with a wide range of factors.
 These models are described in more details by @Reno2012 and evaluated by @Reno2016.
 We found, that Haurwitz's model, adjusted with the factor $a = `r signif(alpha,3)`$ yields one of the lowest root mean squared errors (RMSE), 
 <!--[....rephrased....]{.comment-start id="3" author="A N" date="2023-07-15T20:32:50Z"}-->
