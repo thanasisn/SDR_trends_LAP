@@ -370,7 +370,7 @@ by CSid, \(a\) is a hypothetical adjustment factor, and
 radiation models. \begin{equation}
 \text{SDR}_\text{CSref} = a \times \text{SDR}_\text{Haurwitz} = 0.965 \times 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.057}{\cos(\theta)} \right) \label{eq:ahau}
 \end{equation} where: \(\text{SDR}_\text{CSref}\) is the reference clear
-sky SDR, in \(\text{w}\,\text{m}^{-2}\) and \(\theta\) is the solar
+sky SDR, in \(\text{W}\,\text{m}^{-2}\) and \(\theta\) is the solar
 zenith angle (SZA).
 
 The criteria that were used to identify whether a measurement was taken
@@ -383,8 +383,9 @@ parameter, was calculated both from the observations and the reference
 clear sky model, for each comparison. The allowable range of variation
 is defined by the model-derived value of the parameter multiplied by a
 factor plus an offset. The factors and the offsets were determined
-empirically, by manual inspecting each filters performance on selected
-days, and adjusting them accordingly, during an iterative process.
+empirically, by manually inspecting each filter's performance on
+selected days and adjusting them accordingly during an iterative
+process. The criteria are:
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -392,17 +393,17 @@ days, and adjusting them accordingly, during an iterative process.
 \item
   Mean of the measured \(\overline{\text{SDR}}_i\) (Eq.
   \ref{eq:MeanVIP}). \begin{equation}
-  0.91 \times \overline{\text{SDR}}_{\text{CSref},i} - 20
+  0.91 \times \overline{\text{SDR}}_{\text{CSref},i} - 20\,Wm^{-2}
   < \overline{\text{SDR}}_i <
-  1.095 \times \overline{\text{SDR}}_{\text{CSref},i} + 30
+  1.095 \times \overline{\text{SDR}}_{\text{CSref},i} + 30\,Wm^{-2}
   \label{eq:MeanVIP}
   \end{equation}
 \item
-  Maximum measured value \(M_{\text{}}\) (Eq.~\ref{eq:MaxVIP}).
+  Maximum measured value \(M_{i}\) (Eq.~\ref{eq:MaxVIP}).
   \begin{equation}
-  1 \times M_{\text{CSref},i} - 75
-  < M_{\text{}i} <
-  1 \times M_{\text{CSref},i} + 75
+  1 \times M_{\text{CSref},i} - 75\,Wm^{-2}
+  < M_{i} <
+  1 \times M_{\text{CSref},i} + 75\,Wm^{-2}
   \label{eq:MaxVIP}
   \end{equation}
 \item
@@ -413,8 +414,8 @@ days, and adjusting them accordingly, during an iterative process.
   \end{equation} \begin{equation}
   1 \times L_{\text{CSref},i} - 5 < L_i < 1.3 \times L_{\text{CSref},i} + 13
   \label{eq:VILcr}
-  \end{equation} where: \(t_i\) is the time each SDR measurement has
-  been measured
+  \end{equation} where: \(t_i\) is the time stamp of each SDR
+  measurement.
 \item
   Standard deviation \(\sigma_i\) of the slope (\(s_i\)) between the
   \(11\) sequential points, normalized by the mean
@@ -438,37 +439,37 @@ days, and adjusting them accordingly, during an iterative process.
   \end{equation}
 \end{enumerate}
 
-Due to a significant measurement uncertainty near the horizon, we have
-to exclude all measurements with SZA greater than \(85^\circ\).
-Moreover, due to some obstructions around the site (hills and
-buildings), we excluded data with Azimuth angle between \(35^\circ\) and
-\(120^\circ\) with SZA greater than \(80^\circ\). On the latter
-instances, Sun is systematically, not visible by the instrument's
+Due to the significant measurement uncertainty when the Sun is near the
+horizon, we have excluded all measurements with SZA greater than
+\(85^\circ\). Moreover, due to some obstructions around the site (hills
+and buildings), we excluded data with azimuth angle between \(35^\circ\)
+and \(120^\circ\) with SZA greater than \(80^\circ\). On the latter
+instances, Sun is systematically not visible from the instrument's
 location. To make the measurements comparable throughout the dataset, we
 adjusted all one-minute radiometric values to the mean Sun - Earth
 distance. Subsequently, we made all measurements relative to the Total
 Solar Irradiance (TSI) at \(1\,\text{au}\), in order to compensate for
 the Sun's intensity variability, using a time series of satellite TSI
-observations. The TSI data we use are part of the ``NOAA Climate Data
-Record of Total Solar Irradiance'' dataset \citep{Coddington2005}. Where
-the initial daily values, were interpolated to match with the time step
-of our measurements. The final dataset contains \(6589967\) one-minute
+observations. The TSI data we used are part of the ``NOAA Climate Data
+Record of Total Solar Irradiance'' dataset \citep{Coddington2005}. The
+initial daily values of this dataset were interpolated to match the time
+step of our measurements. In the final dataset \(6589967\) one-minute
 measurements, of which, \(84.2\%\) were identified as under clear-sky
-conditions and subsequently \(15.8\%\) as under cloud-sky conditions.
+conditions and \(15.8\%\) as under cloud-sky conditions.
 
 In order to investigate the SDR trends, we implemented an appropriate
 aggregation scheme to the 1-minute data to derive a series in coarser
-timescale. To preserve the representativeness of the data we used the
+time-scales. To preserve the representativeness of the data we used the
 following criteria: a) for the daily mean values we accept days with
-more than 50\% of the daytime measurements, present and valid, b)
-monthly values were computed from daily means only when at least 20 days
-were available. To create the daily and monthly climatological means, we
+more than 50\% of the daytime measurements present and valid, b) monthly
+values were computed from daily means only when at least 20 days were
+available. To create the daily and monthly climatological means, we
 averaged the data based on the day of year and calendar month,
 respectively. For the seasonal means we averaged the mean daily values
 in each season (Winter: December - February, Spring: March - May, etc.).
 Finally, each data set was deseasonalized by subtracting the
 corresponding climatological annual cycle (daily or monthly) from the
-actual data. To estimate SZA contribution to the SDR trends, the
+actual data. To estimate the SZA effect on the SDR trends, the
 one-minute data were aggregated in \(1^\circ\) SZA bins, separately for
 the morning and afternoon hours, and then were deseasonalized as
 mentioned above.
