@@ -479,7 +479,7 @@ e) Maximum difference $X_i$ between the change in measured irradiance and the ch
 \end{gather}
 For this criterion, $X_i$ should be below a certain threshold (Eq.\ \ref{eq:VSMcr}):
 \begin{equation}
-  X_i < `r offVSM` \label{eq:VSMcr}
+  X_i < `r offVSM`\,Wm^{-2} \label{eq:VSMcr}
 \end{equation}
 
 <!-- ### Data selection -->
@@ -494,10 +494,9 @@ Subsequently, we made all measurements relative to the Total Solar Irradiance (T
 The TSI data we used are part of the "NOAA Climate Data Record of Total Solar Irradiance" dataset [@Coddington2005]. 
 The initial daily values of this dataset were interpolated to match the time step of our measurements. 
 In the final dataset
-$`r SDR_N_All`$
-one-minute measurements, of which, 
+<!-- $`r SDR_N_All`$ -->
 $`r signif(100 * SDR_N_Clear / SDR_N_All, 3)`\%$
-were identified as under clear-sky conditions and
+of the data were identified as under clear-sky conditions and
 $`r signif(100 * SDR_N_Cloud / SDR_N_All, 3)`\%$
 as under cloud-sky conditions.
 <!-- The TSI data we use, is a combination of data from NOAA [@Coddington2005] (for `r as.Date(TSIinfo[TSI_Source == "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source == "NOAA", End])`) and adjusted data from @LASP2023 (for `r as.Date(TSIinfo[TSI_Source != "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source != "NOAA", End])`).-->

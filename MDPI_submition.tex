@@ -435,7 +435,7 @@ process. The criteria are:
     x_{\text{CSref},i} = \text{SDR}_{\text{CSref},i+1} - \text{SDR}_{\text{CSref},i} \forall i \in \left \{ 1, 2, \ldots, n-1 \right \} \label{eq:VSM2}
   \end{gather} For this criterion, \(X_i\) should be below a certain
   threshold (Eq.~\ref{eq:VSMcr}): \begin{equation}
-    X_i < 7.5 \label{eq:VSMcr}
+    X_i < 7.5\,Wm^{-2} \label{eq:VSMcr}
   \end{equation}
 \end{enumerate}
 
@@ -453,9 +453,9 @@ the Sun's intensity variability, using a time series of satellite TSI
 observations. The TSI data we used are part of the ``NOAA Climate Data
 Record of Total Solar Irradiance'' dataset \citep{Coddington2005}. The
 initial daily values of this dataset were interpolated to match the time
-step of our measurements. In the final dataset \(6589967\) one-minute
-measurements, of which, \(84.2\%\) were identified as under clear-sky
-conditions and \(15.8\%\) as under cloud-sky conditions.
+step of our measurements. In the final dataset \(84.2\%\) of the data
+were identified as under clear-sky conditions and \(15.8\%\) as under
+cloud-sky conditions.
 
 In order to investigate the SDR trends, we implemented an appropriate
 aggregation scheme to the 1-minute data to derive a series in coarser
