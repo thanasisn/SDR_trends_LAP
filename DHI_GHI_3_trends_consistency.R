@@ -1122,7 +1122,7 @@ database    <- c(  "ALL_1_D_monthly_DESEAS_notrend",
                    "CLEAR_1_D_monthly_DESEAS_notrend",
                    "CLOUD_1_D_monthly_DESEAS_notrend")
 
-#+ CumulativeMonthlyCuSumNOtrend, echo=F, include=T, results="asis"
+#+ CumulativeMonthlyCuSumNOtrend, echo=F, include=T, results="asis", fig.asp = 3
 for (adb in database) {
     DB  <- get(adb)
 
@@ -1144,9 +1144,11 @@ for (adb in database) {
         if (DRAFT == TRUE) {
             par("mar" = c(3, 5, 2,  1))
         } else {
-            par("mar" = c(3, 5, 3.2, 0.5))
+            par("mar" = c(3, 5, 3.4, 0.5))
+            par("mar" = c(3, 5, 0.5, 0.5))
         }
         par(pch = 19)
+
 
         ## scale fonts
         ccex <- ccex_sbs
