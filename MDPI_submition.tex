@@ -202,7 +202,7 @@ all sky conditions.}
 
 
 \usepackage{subcaption}
-\captionsetup[sub]{position=bottom, labelfont={bf, small, stretch=1.17}, labelsep=space, textfont={small, stretch=1.5}, aboveskip=6pt,  belowskip=6pt, singlelinecheck=off, justification=justified}
+\captionsetup[sub]{position=bottom, labelfont={bf, small, stretch=1.17}, labelsep=space, textfont={small, stretch=1.17}, aboveskip=6pt,  belowskip=-6pt, singlelinecheck=off, justification=justified}
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage{array}
@@ -521,28 +521,29 @@ Cloudy sky & -0.276 & 99.97 & 5067\\
 
 Although the year-to-year variability of the anomalies (Figure
 \ref{fig:trendALL} and Figures \ref{fig:trendCLEAR},
-\ref{fig:trendCLOUD} in Appendix), shows a rather homogeneous behavior,
-plots of the cumulative sums (CUSUM) of the anomalies can reveal
-different structures within all the three sky conditions
-\citep{Regier2019}. In the cases of all-sky and clear-sky (Figures
+\ref{fig:trendCLOUD} in Appendix), shows a rather homogeneous behaviour,
+plots of the cumulative sums (CUSUM) \citep{Regier2019} of the anomalies
+can reveal different structures in the records of all three sky
+conditions. In the cases of all-sky and clear-sky conditions (Figures
 \ref{fig:cusummonth-1} and \ref{fig:cusummonth-2}), we observe three
-macroscopic periods. A downward part from the start until about 2005, an
-relative steady part until about 2016 and finally, a steep upward part
-until the present. For cloud-sky (Figure~\ref{fig:cusummonth-3}), we
-have a different sequence, it begins with a relative steady part until
-1997, followed by a upward part until 2005, a long decline until 2020,
-with a small positive slope until the present. For a uniform trend, we
-would expect the CUSUMs of the anomalies to have a symmetric `V' shape.
-This would indicate that the anomalies are evenly distributed around the
-climatological mean, and for a positive uniform trend, the first half to
-be below and the other half above the climatological mean. In our case,
-there is more complex evolution of the phenomenon. Another distinct
-feature of the CUSUMs, is the different pattern of the cloudy-sky
-dataset which peaks around the middle of the period. Although, it seems
-to exist a complementary relation to the CUSUMs of the clear- and
-all-sky cases, we can not assert that clouds are the main drive for this
-relation, due to the great difference in the number of observational
-data between the datasets (Table~\ref{tab:trendtable}).
+macroscopic periods. A downward part from the start until about 2005, a
+relatively steady part until about 2016 and, finally, a steep upward
+part until the present. For cloud-sky (Figure~\ref{fig:cusummonth-3}),
+we have a different pattern; it begins with a relatively steady part
+until 1997, followed by an upward part until 2005, and a long decline
+until 2020, with a small positive slope until the present. For a uniform
+trend, we would expect the CUSUMs of the anomalies to have a symmetric
+`V' shape. This would indicate that the anomalies are evenly distributed
+around the climatological mean, and for a positive uniform trend, the
+first half to be below and the other half above the climatological mean.
+In our case, there is a more complex evolution of the anomalies. Another
+distinct feature of the CUSUMs, is the different pattern of the
+cloudy-sky dataset which peaks around the middle of the period.
+Although, there seems to exist a complementary relation to the CUSUMs of
+the clear- and all-sky cases, we can not assert that clouds are the main
+driver for this relation due to the great difference in the number of
+observational data between the two datasets
+(Table~\ref{tab:trendtable}).
 
 \begin{figure}[h!]
 
@@ -553,15 +554,15 @@ data between the datasets (Table~\ref{tab:trendtable}).
 \caption{Running cumulative sum plots of the monthly SDR.}\label{fig:cusummonth}
 \end{figure}
 
-In order to investigate more, the features within the trends, we created
-another set of CUSUMs plots by subtracting the corresponding long term
+In order to investigate further the features of the CUSUMs, we created
+another set of CUSUM plots by subtracting the corresponding long term
 trend from the SDR anomaly data, prior to the CUSUM calculation
 (Figure~\ref{fig:cusumnotrendmonthly}). With this approach periods when
-the CUSUMs diverge from zero can be interpreted as systematic variation
-of SDR from the climatological mean. When the CUSUM is increasing, the
-added values are above the climatological values of SDR trend and vice
-versa. Overall, for all- and clear-sky conditions
-(Figure~\ref{fig:cusumnotrendmonthly-1}
+the CUSUMs diverge from zero can be interpreted as a systematic
+variation of SDR from the climatological mean. When the CUSUM is
+increasing, the added values are above the climatological values of the
+SDR trend and vice versa. Overall, for all- and clear-sky conditions
+(Figures~\ref{fig:cusumnotrendmonthly-1}
 and~\ref{fig:cusumnotrendmonthly-2}) we observe periods when the
 anomalies diverge from the climatological value, each lasting for
 several years. The pattern for the all-sky and clear-sky conditions is
@@ -749,8 +750,7 @@ discussion is unusually long or complex.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% optional
 \supplementary{The following supporting information can be downloaded
-at:\\
-\linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1:
+at: \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1:
 title.}
 
 % Only for the journal Methods and Protocols:
@@ -766,13 +766,7 @@ analyzed the data; W.W. contributed reagents/materials/analysis tools;
 Y.Y. wrote the paper.'\,' Authorship must be limited to those who have
 contributed substantially to the work reported.}
 
-\funding{Please add:
-\texttt{This\ research\ received\ no\ external\ funding\textquotesingle{}\textquotesingle{}\ or}This
-research was funded by NAME OF FUNDER grant number XXX.'\,' and and
-``The APC was funded by XXX'\,'. Check carefully that the details given
-are accurate and use the standard spelling of funding agency names at
-\url{https://search.crossref.org/funding}, any errors may affect your
-future funding.}
+\funding{This research received no external funding.}
 
 
 

@@ -32,12 +32,12 @@ address:
 #     text:         "Another author footnote."
 
 abstract: |
-  The shortwave downward solar irradiance (SDR) is an important factor that drives climate processes, production and can affect all living organisms. 
-  Observations of SDR at different locations around the world with different environmental characteristics have been used to investigate its long-term variability and trends at different time scales. 
-  Periods of positive trends are referred as brightening periods and of negative trends as dimming periods. 
-  Here we studied 29 years of pyranometer data in Thessaloniki, Greece, under three types of sky conditions (clear sky, cloudy sky and all sky). 
-  The clear-sky data were identified by applying a cloud screening algorithm. We found a positive trend of $0.38\,\%/\text{year}$ for all-sky, $0.35\,\%/\text{year}$ for clear-sky conditions, and $-0.28\,\%/\text{year}$ for cloudy conditions. 
-  We have also investigated the consistency of these trends, the effect of the solar zenith angle, and their seasonal variability. 
+  The shortwave downward solar irradiance (SDR) is an important factor that drives climate processes, production and can affect all living organisms.
+  Observations of SDR at different locations around the world with different environmental characteristics have been used to investigate its long-term variability and trends at different time scales.
+  Periods of positive trends are referred as brightening periods and of negative trends as dimming periods.
+  Here we studied 29 years of pyranometer data in Thessaloniki, Greece, under three types of sky conditions (clear sky, cloudy sky and all sky).
+  The clear-sky data were identified by applying a cloud screening algorithm. We found a positive trend of $0.38\,\%/\text{year}$ for all-sky, $0.35\,\%/\text{year}$ for clear-sky conditions, and $-0.28\,\%/\text{year}$ for cloudy conditions.
+  We have also investigated the consistency of these trends, the effect of the solar zenith angle, and their seasonal variability.
   Finally, we identified some anomalies in the long term SDR trends for all sky conditions.
 
 # back matter
@@ -46,26 +46,21 @@ keywords: |
 ## list three to ten pertinent keywords specific to the article, yet reasonably common within the subject discipline
 
 acknowledgement: |
-  All sources of funding of the study should be disclosed. Please clearly 
-  indicate grants that you have received in support of your research work. 
-  Clearly state if you received funds for covering the costs to publish in open 
+  All sources of funding of the study should be disclosed. Please clearly
+  indicate grants that you have received in support of your research work.
+  Clearly state if you received funds for covering the costs to publish in open
   access.
 
 authorcontributions: |
-  For research articles with several authors, a short paragraph specifying their 
-  individual contributions must be provided. The following statements should be 
-  used ``X.X. and Y.Y. conceive and designed the experiments; X.X. performed the 
-  experiments; X.X. and Y.Y. analyzed the data; W.W. contributed 
+  For research articles with several authors, a short paragraph specifying their
+  individual contributions must be provided. The following statements should be
+  used ``X.X. and Y.Y. conceive and designed the experiments; X.X. performed the
+  experiments; X.X. and Y.Y. analyzed the data; W.W. contributed
   reagents/materials/analysis tools; Y.Y. wrote the paper.'' Authorship must be
   limited to those who have contributed substantially to the work reported.
 
 funding: |
-  Please add: ``This research received no external funding'' or ``This research 
-  was funded by NAME OF FUNDER grant number XXX.'' and  and ``The APC was funded 
-  by XXX''. Check carefully that the details given are accurate and use the 
-  standard spelling of funding agency names at 
-  \url{https://search.crossref.org/funding}, any errors may affect your future 
-  funding.
+  This research received no external funding.
 
 journal:         "An awesome journal"
 date:            "`r Sys.Date()`"
@@ -88,10 +83,11 @@ abbreviations:
 header-includes:
    # - \usepackage{subfig}
    - \usepackage{subcaption}
+   - \captionsetup[sub]{position=bottom, labelfont={bf, small, stretch=1.17}, labelsep=space, textfont={small, stretch=1.17}, aboveskip=6pt,  belowskip=-6pt, singlelinecheck=off, justification=justified}
 
 output: 
   rticles::mdpi_article:
-    extra_dependencies:  longtable 
+    extra_dependencies:  longtable
     keep_tex:            yes
   bookdown::word_document2: default
   bookdown::pdf_document2:
@@ -119,7 +115,7 @@ output:
 suppressMessages(
     res <- rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools')
 )
-## document configurations 
+## document configurations
 knitr::opts_chunk$set(comment    = ""      )
 # knitr::opts_chunk$set(dev        = "pdf"   )
 knitr::opts_chunk$set(out.width  = "70%"   )
@@ -179,13 +175,13 @@ Studies of SDR variability, have identified some distinct SDR trends on differen
 The term 'brightening' is generally used to describe periods of positive SDR trend, and 'dimming' for negative trend.
 There are many cases in the long term records of irradiance, showing a systematic change in the magnitude of the trend, occurring roughly in the last decades of the 20th century.
 <!-- Trends china -->
-On multiple stations in China, a dimming period was reported until about 2000, followed by a brightening period [@Yang2021]. 
+On multiple stations in China, a dimming period was reported until about 2000, followed by a brightening period [@Yang2021].
 <!-- Trends Europe Brazil -->
 A similar pattern was identified, with the breaking point around 1980, for stations in Central Europe [@Wild2021] and Brazil [@Yamasoe2021].
 <!-- Trends Global -->
 On global scale, an artificial Intelligence aided spatial analysis on continental level with data from multiple stations reach similar conclusions for these regions and for the global trend [@Yuan2021].
 
-There is a consensus among researchers that the major factor affecting the variability of SDR attenuation is the interactions of solar radiation with atmospheric aerosols and clouds. 
+There is a consensus among researchers that the major factor affecting the variability of SDR attenuation is the interactions of solar radiation with atmospheric aerosols and clouds.
 Those interactions, among other factors, have been analysed with models [@Li2016; @Samset2018], showing the existence of feedback mechanisms between the two.
 Similar findings have been shown in observational data [@Schwarz2020; @Ohvril2009; @Zerefos2009; @Xia2007 and references therein].
 <!-- Sun variability: should cite that there is no significant trend found Wild2021 -->
@@ -207,20 +203,18 @@ growth of clouds with respect to their coverage and
 optical thickness, depending on the levels of pollution
 and the associated amounts of aerosols as postulated
 in a conceptual framework (Wild 2009a, 2012, Yang
-et al 2012). 
-
+et al 2012).
 
 ...... cloud formation occurrences and constitution nuclei. cite .....
 
 #Wild2012 : simplify interaction nice graph
-
 -->
 
 # Observational data and methodology.
 
-The SDR data were measured with a Kipp & Zonen CM-21 pyranometer operating continuously at the Laboratory of Atmospheric Physics of the Aristotle University of Thessaloniki 
+The SDR data were measured with a Kipp & Zonen CM-21 pyranometer operating continuously at the Laboratory of Atmospheric Physics of the Aristotle University of Thessaloniki
 ($40^\circ\,38'\,$N, $22^\circ\,57'\,$E, $80\,$m\ a.s.l.)
-in the period from 
+in the period from
 <!-- \mbox{ -->
 `r min(ALL_1_daily_DESEAS$Date)`
 <!-- } -->
@@ -228,8 +222,8 @@ to
 <!-- \mbox{ -->
 `r max(ALL_1_daily_DESEAS$Date)`.
 <!-- }. -->
-The monitoring site is located near the city centre, and we expect to be affected by the urban environment. 
-During the study period, the pyranometer has been independently calibrated three times at the Meteorologisches Observatorium Lindenberg, DWD, when it was verified the stability of the instrument to within better than $0.7\%$ relative to the initial calibration by the manufacturer. 
+The monitoring site is located near the city centre, and we expect to be affected by the urban environment.
+During the study period, the pyranometer has been independently calibrated three times at the Meteorologisches Observatorium Lindenberg, DWD, when it was verified the stability of the instrument to within better than $0.7\%$ relative to the initial calibration by the manufacturer.
 Along with SDR, the direct beam radiation (DNI) was also measured by a collocated Kipp & Zonen CHP-1 pyrheliometer, for the period
 <!-- \mbox{ -->
 `r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`
@@ -238,13 +232,13 @@ to
 <!-- \mbox{ -->
 `r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
 <!-- }. -->
-Although, we have performed a similar analysis to the DNI data, the results are not presented here, as they lack the appropriate statistical significance, due to the sorter duration of the data. 
+Although, we have performed a similar analysis to the DNI data, the results are not presented here, as they lack the appropriate statistical significance, due to the sorter duration of the data.
 However, the DNI data were used as auxiliary data, in the clear sky identification algorithm (CSid), which is discussed later, for the selection of the appropriate thresholds.
-It is noted that despite the capability of the CSid algorithm to use the DNI as a characterization parameter, we haven't utilized it here, to avoid any selection bias, due to unequal length of the two datasets. 
+It is noted that despite the capability of the CSid algorithm to use the DNI as a characterization parameter, we haven't utilized it here, to avoid any selection bias, due to unequal length of the two datasets.
 There are four distinct steps in the creation of the dataset analysed here:
 a)\ the acquisition of radiation measurements from the sensors,
 b)\ the data quality check,
-c)\ the identification of "clear sky" conditions from the radiometric data, and 
+c)\ the identification of "clear sky" conditions from the radiometric data, and
 d)\ the aggregation of data and trend analysis.
 
 
@@ -252,7 +246,7 @@ d)\ the aggregation of data and trend analysis.
 The horizon is clear of obstructions except for the azimuth angles between 35 and 120 where obstacles of up to 10 elevation block the direct irradiance in the morning for SZA larger than 80.  These data points were excluded from the analysis, as
 -->
 
-<!-- Zerefos 
+<!-- Zerefos
 Northern Greece has been selected because it is well known to be located at the crossroads of aerosols and various pollutants pathways originating in central and Eastern
 Europe (Lelieveld et al., 2002; Zerefos et al., 2002). Thessa-
 loniki, the major city in northern Greece, lies along the exit of air
@@ -265,17 +259,17 @@ ern Europe to the Mediterranean (Zerefos et. al., 2002). On the
 For the acquisition of radiometric data, the signal of the pyranometer is sampled with a rate of $1\,\text{Hz}$.
 The mean and the standard deviation of these samples are recorded every minute.
 The measurements are corrected for the zero offset ("dark signal" in volts).
-The "dark signal" is calculated by averaging all measurements recorded for a period of 
-$3\,\text{h}$, 
+The "dark signal" is calculated by averaging all measurements recorded for a period of
+$3\,\text{h}$,
 before (morning) or after (evening) the Sun reaches an elevation angle of
 $-10^\circ$.
 The signal is converted to irradiance using a ramped value of the instrument’s sensitivity between calibrations.
 
 <!-- b) Radiation data quality check -->
 A manual screening was performed, to remove inconsistent and erroneous recordings that can occur stochastically or systematically, during the continuous operation of the instruments.
-The manual screening is aided by a radiation data quality assurance procedure, adjusted for the site, which is based on the methods of 
+The manual screening is aided by a radiation data quality assurance procedure, adjusted for the site, which is based on the methods of
 Long and Shi\ [-@Long2008a; -@Long2006].
-Thus, problematic recordings have been excluded from further processing. 
+Thus, problematic recordings have been excluded from further processing.
 Although it is impossible to detect all false data, the large number of available data, and the aggregation scheme we used, ensures the good quality of the radiation measurements used in this study.
 
 <!-- c) Clear sky identification -->
@@ -321,20 +315,12 @@ TSIslopeAll <- TSI[`Sky condition` == "All sky cond."]
 <!-- # Detection of clear periods in GHI measurements for SDR trends. -->
 
 For completeness, we will provide below a brief overview of the clear sky identification algorithm (CSid), along with the site specific thresholds.
-To calculate the reference clear sky
-$\text{SDR}_\text{CSref}$ we used the $\text{SDR}_\text{Haurwitz}$ derived by
-the radiation model of @Haurwitz1945, adjusted for our site with a
-factor $a$ (Eq.\ \ref{eq:ahau}), resulted by an iterative optimization process, as described
-by @Long2000 and @Reno2016.
-The target of the optimization was the minimization of a function $f(a)$ (Eq.\ \ref{eq:minf}) and
-was accomplished with the algorithmic function "optimise", which is an implementation based on the work of @Brent1973, from the library "stats" of the R programming language [@RCT2023]. 
+To calculate the reference clear sky $\text{SDR}_\text{CSref}$ we used the $\text{SDR}_\text{Haurwitz}$ derived by the radiation model of @Haurwitz1945, adjusted for our site with a factor $a$ (Eq.\ \ref{eq:ahau}), resulted by an iterative optimization process, as described by @Long2000 and @Reno2016.
+The target of the optimization was the minimization of a function $f(a)$ (Eq.\ \ref{eq:minf}) and was accomplished with the algorithmic function "optimise", which is an implementation based on the work of @Brent1973, from the library "stats" of the R programming language [@RCT2023].
 The optimization and the selection of the clear sky reference model, was performed on SDR observations for the period 2016 - 2021.
-During the optimization, eight simple clear sky radiation models were tested (Daneshyar-Paltridge-Proctor, Kasten-Czeplak, Haurwitz, Berger-Duffie, Adnot-Bourges-Campana-Gicquel, Robledo-Soler, Kasten and Ineichen-Perez), with a wide range of factors.
+During the optimization, eight simple clear sky radiation models were tested (namely, Daneshyar-Paltridge-Proctor, Kasten-Czeplak, Haurwitz, Berger-Duffie, Adnot-Bourges-Campana-Gicquel, Robledo-Soler, Kasten and Ineichen-Perez), with a wide range of factors.
 These models are described in more details by @Reno2012 and evaluated by @Reno2016.
-We found, that Haurwitz's model, adjusted with the factor $a = `r signif(alpha,3)`$ yields one of the lowest root mean squared errors (RMSE), 
-<!--[....rephrased....]{.comment-start id="3" author="A N" date="2023-07-15T20:32:50Z"}-->
-while the procedure, manages to characterize the majority of the data.
-<!--[]{.comment-end id="3"}--> 
+We found, that Haurwitz's model, adjusted with the factor $a = `r signif(alpha,3)`$ yields one of the lowest root mean squared errors (RMSE), while the procedure, manages to characterize the majority of the data.
 Thus, our clear sky reference is derived by the Eq.\ \ref{eq:ahau}.
 <!-- cost fuction -->
 \begin{equation}
@@ -351,7 +337,7 @@ The criteria that were used to identify whether a measurement was taken under cl
 A data point is flagged as "clear-sky" if all criteria are satisfied, otherwise it is considered to be "cloud-sky".
 Each criterion was applied for a running window of $`r nt`$ consecutive one-minute measurements, and the characterization is assigned to the central value of the window.
 Each parameter, was calculated both from the observations and the reference clear sky model, for each comparison.
-The allowable range of variation is defined by the model-derived value of the parameter multiplied by a factor plus an offset. 
+The allowable range of variation is defined by the model-derived value of the parameter multiplied by a factor plus an offset.
 The factors and the offsets were determined empirically, by manually inspecting each filter's performance on selected days and adjusting them accordingly during an iterative process.
 The criteria are:
 <!-- 1. MeanVIP -->
@@ -413,32 +399,31 @@ e) Maximum difference $X_i$ between the change in measured irradiance and the ch
 \end{gather}
 For this criterion, $X_i$ should be below a certain threshold (Eq.\ \ref{eq:VSMcr}):
 \begin{equation}
-  X_i < `r offVSM` \label{eq:VSMcr}
+  X_i < `r offVSM`\,Wm^{-2} \label{eq:VSMcr}
 \end{equation}
 
 <!-- ### Data selection -->
-Due to the significant measurement uncertainty when the Sun is near the horizon, we have excluded all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$. 
-Moreover, due to some obstructions around the site (hills and buildings), we excluded data with azimuth angle between 
+Due to the significant measurement uncertainty when the Sun is near the horizon, we have excluded all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$.
+Moreover, due to some obstructions around the site (hills and buildings), we excluded data with azimuth angle between
 $35^\circ$ and $120^\circ$ with SZA greater than $80^\circ$.
 On the latter instances, Sun is systematically not visible from the instrument's location.
 <!-- 1au -->
 To make the measurements comparable throughout the dataset, we adjusted all one-minute radiometric values to the mean Sun - Earth distance.
 <!-- TSI -->
 Subsequently, we made all measurements relative to the Total Solar Irradiance (TSI) at $1\,\text{au}$, in order to compensate for the Sun's intensity variability, using a time series of satellite TSI observations.
-The TSI data we used are part of the "NOAA Climate Data Record of Total Solar Irradiance" dataset [@Coddington2005]. 
-The initial daily values of this dataset were interpolated to match the time step of our measurements. 
+The TSI data we used are part of the "NOAA Climate Data Record of Total Solar Irradiance" dataset [@Coddington2005].
+The initial daily values of this dataset were interpolated to match the time step of our measurements.
 In the final dataset
-$`r SDR_N_All`$
-one-minute measurements, of which, 
+<!-- $`r SDR_N_All`$ -->
 $`r signif(100 * SDR_N_Clear / SDR_N_All, 3)`\%$
-were identified as under clear-sky conditions and
+of the data were identified as under clear-sky conditions and
 $`r signif(100 * SDR_N_Cloud / SDR_N_All, 3)`\%$
 as under cloud-sky conditions.
 <!-- The TSI data we use, is a combination of data from NOAA [@Coddington2005] (for `r as.Date(TSIinfo[TSI_Source == "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source == "NOAA", End])`) and adjusted data from @LASP2023 (for `r as.Date(TSIinfo[TSI_Source != "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source != "NOAA", End])`).-->
 
 <!-- aggregation -->
 In order to investigate the SDR trends, we implemented an appropriate aggregation scheme to the 1-minute data to derive a series in coarser time-scales.
-To preserve the representativeness of the data we used the following criteria: 
+To preserve the representativeness of the data we used the following criteria:
 <!-- a) for daily mean values we exclude days with less than `r Daily_aggregation_N_lim` valid data points, -->
 a) for the daily mean values we accept days with more than `r 100 * All_daily_ratio_lim`% of the daytime measurements present and valid,
 b) monthly values were computed from daily means
@@ -470,8 +455,8 @@ LT$var                <- NULL
 LT$Obs                <- NULL
 setorder(LT, -slope.stat_sig)
 rownames(LT) <- NULL
-names(LT)    <- c("Trend [%/year]", 
-                  "Trend p-value", 
+names(LT)    <- c("Trend [%/year]",
+                  "Trend p-value",
                   "Sky conditions",
                   "Days with data",
                   "Statistical signif. [%]")
@@ -506,13 +491,15 @@ LT2 <- LT[,c(
       )]
 ```
 
-We calculated the linear SDR trends, from the departures of the mean daily values from the seasonal values, and for the three sky conditions (Table\ \ref{tab:trendtable}).
+We calculated the linear SDR trends, from the departures of the mean daily values from the daily climatology and for the three sky conditions (Table\ \ref{tab:trendtable}).
 In Figure\ \ref{fig:trendALL} we present only the time series under all-sky conditions; the plots for clear-sky and cloud-sky conditions, are very similar and are shown in the Appendix (Figures\ \ref{fig:trendCLEAR} and\  \ref{fig:trendCLOUD}).
-We observe a positive trend for all-sky conditions 
-($`r alltrend`\,\%/y$), a very close but lower trend for clear-skies ($`r cleartrend`\,\%/y$) and a negative weaker trend for cloud-skies ($`r cloudtrend`\,\%/y$).
+We observe a positive trend for all-sky conditions
+($`r alltrend`\,\%/y$), a very close but smaller trend for clear-skies ($`r cleartrend`\,\%/y$) and a negative weaker trend for cloudy-skies ($`r cloudtrend`\,\%/y$).
 In the studied period, there is no significant break or change in the variability of the time series.
-Other studies for the European region report a change of the SDR slope, around 1980, a few years before the start of our records [@Wild2021; @Yuan2021; @Ohmura2009]. It is interesting to note, that for the observation period, the trend of the TSI is
-$`r format(TSIslopeAll[1,1], scientific = F, digits = 2)`\,\%/y$, and thus we can not attribute any major effect on SDR trend to Solar variability.
+Other studies for the European region reported a change of the SDR slope, around 1980 [@Wild2021; @Yuan2021; @Ohmura2009], a few years before the start of our records.
+It is interesting to note, that for the observations period, the trend of the TSI is
+$`r format(TSIslopeAll[1,1], scientific = F, digits = 2)`\,\%/y$,
+and thus we can not attribute any major effect on SDR trend to Solar variability.
 
 
 <!-- \footnotesize -->
@@ -540,7 +527,7 @@ x_latex <- knitr::kable(LT2,
 #     kable_styling(
 #         latex_options = c("hold_position")
 #     )
-x_latex %>% 
+x_latex %>%
     kable_styling(full_width = TRUE) %>%
     column_spec(1, width = "8em")
 ```
@@ -550,15 +537,15 @@ x_latex %>%
 knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
 
-Although the year-to-year variability of the anomalies (Figure \ref{fig:trendALL} and Figures \ref{fig:trendCLEAR}, \ref{fig:trendCLOUD} on Appendix), shows a rather homogeneous behavior, plots of the cumulative sums (CUSUM) of the anomalies can reveal different structures within all the three sky conditions [@Regier2019]. 
-In the cases of all-sky and clear-sky (Figures \ref{fig:cusummonth-1} and \ref{fig:cusummonth-2}), we observe three macroscopic periods.
-A downward part from the start until about 2005, an relative steady part until about 2016 and finally, a steep upward part until the present.
-For cloud-sky (Figure\ \ref{fig:cusummonth-3}), we have a different sequence, it begins with a relative steady part until 1997, followed by a upward part until 2005, a long decline until 2020, with a small positive slope until the present.
+Although the year-to-year variability of the anomalies (Figure \ref{fig:trendALL} and Figures \ref{fig:trendCLEAR}, \ref{fig:trendCLOUD} in Appendix), shows a rather homogeneous behaviour, plots of the cumulative sums (CUSUM) [@Regier2019] of the anomalies can reveal different structures in the records of all three sky conditions.
+In the cases of all-sky and clear-sky conditions (Figures \ref{fig:cusummonth-1} and \ref{fig:cusummonth-2}), we observe three macroscopic periods.
+A downward part from the start until about 2005, a relatively steady part until about 2016 and, finally, a steep upward part until the present.
+For cloud-sky (Figure\ \ref{fig:cusummonth-3}), we have a different pattern; it begins with a relatively steady part until 1997, followed by an upward part until 2005, and a long decline until 2020, with a small positive slope until the present.
 For a uniform trend, we would expect the CUSUMs of the anomalies to have a symmetric 'V' shape.
-This would indicate that the anomalies are evenly distributed around the climatological mean, and for a positive uniform trend, the first half to be below and the other half above the climatological mean. 
-In our case, there is more complex evolution of the phenomenon.
+This would indicate that the anomalies are evenly distributed around the climatological mean, and for a positive uniform trend, the first half to be below and the other half above the climatological mean.
+In our case, there is a more complex evolution of the anomalies.
 Another distinct feature of the CUSUMs, is the different pattern of the cloudy-sky dataset which peaks around the middle of the period.
-Although, it seems to exist a complementary relation to the CUSUMs of the clear- and all-sky cases, we can not assert that clouds are the main drive for this relation, due to the great difference in the number of observational data between the datasets (Table\ \ref{tab:trendtable}).
+Although, there seems to exist a complementary relation to the CUSUMs of the clear- and all-sky cases, we can not assert that clouds are the main driver for this relation due to the great difference in the number of observational data between the two datasets (Table\ \ref{tab:trendtable}).
 
 ```{r cusummonth, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics(c(
@@ -567,13 +554,14 @@ knitr::include_graphics(c(
     "./images/CumulativeMonthlyCuSum-9.png"))   # Cloud sky
 ```
 
-In order to investigate more, the features within the trends, we created another set of CUSUMs plots by subtracting the corresponding long term trend from the SDR anomaly data, prior to the CUSUM calculation (Figure\ \ref{fig:cusumnotrendmonthly}).
-With this approach periods when the CUSUMs diverge from zero can be interpreted as systematic variation of SDR from the climatological mean. When the CUSUM is increasing, the added values are above the climatological values of SDR trend and vice versa.
-Overall, for all- and clear-sky conditions (Figure\ \ref{fig:cusumnotrendmonthly-1} and\ \ref{fig:cusumnotrendmonthly-2}) we observe periods when the anomalies diverge from the climatological value, each lasting for several years. 
+In order to investigate further the features of the CUSUMs, we created another set of CUSUM plots by subtracting the corresponding long term trend from the SDR anomaly data, prior to the CUSUM calculation (Figure\ \ref{fig:cusumnotrendmonthly}).
+With this approach periods when the CUSUMs diverge from zero can be interpreted as a systematic variation of SDR from the climatological mean. 
+When the CUSUM is increasing, the added values are above the climatological values of the SDR trend and vice versa.
+Overall, for all- and clear-sky conditions (Figures\ \ref{fig:cusumnotrendmonthly-1} and\ \ref{fig:cusumnotrendmonthly-2}) we observe periods when the anomalies diverge from the climatological value, each lasting for several years.
 The pattern for the all-sky and clear-sky conditions is very similar, suggesting prevalence in clear skies over Thessaloniki.
 It is interesting that in the period 1993 - 2016 the anomalies of all-sky and clear-sky, have a high variability around zero. After 2016, the range of the variability is decreased at about one third of the prior period.
 For cloud-sky conditions (Figure\ \ref{fig:cusumnotrendmonthly-3}) the period 1997 - 2008 is dominated by positive CUSUMs suggesting a reduced effect of clouds on SDR.
-From 1997 to mid-2000s CUSUMs are increasing, likely due to a continuous decrease in the thickness of clouds, followed by a period of rapid increase (within 3 years) in cloud optical thickness lasting up to 2008. 
+From 1997 to mid-2000s CUSUMs are increasing, likely due to a continuous decrease in the thickness of clouds, followed by a period of rapid increase (within 3 years) in cloud optical thickness lasting up to 2008.
 The following stable period spans for about 15 years up to 2021 when CUSUMs start increasing again.
 
 
@@ -610,12 +598,12 @@ knitr::include_graphics(c(
 
 ## Effects of the solar zenith angle on SDR.
 
-The solar zenith angle is a major driver of the attenuation of SDR reaching the ground, as SDR is affected by the enhancement of the radiation path in the atmosphere, especially in urban environment with human activities emitting aerosols [@Wang2021].
+The solar zenith angle is a major factor of SDR reaching the ground, due to the enhancement of the radiation path in the atmosphere, especially in urban environments with human activities emitting aerosols [@Wang2021].
 In order to estimate the effect of the SZA on the SDR trends, we grouped the anomaly data in bins of $1^\circ$ SZA, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
 Although there are seasonal dependencies of the minimum SZA (see Appendix, Figure\ \ref{fig:SZAtrendSeason}), these dependencies would not be further examined here.
 For all-sky and clear-sky conditions the brightening effect of SDR (positive trend) is stronger for large SZAs (Figures\ \ref{fig:szatrends-1} and \ref{fig:szatrends-2}).
 The trends in the morning and afternoon hours are more or less consistent with small differences, which can be attributed to systematic diurnal variations of aerosols, particularly during the warm period of the year [@Wang2021].
-For cloud-sky conditions (Figure\ \ref{fig:szatrends-3}), we can not discern any significant dependence of the SDR trend with SZA.
+For cloudy-sky conditions (Figure\ \ref{fig:szatrends-3}), we can not discern any significant dependence of the SDR trend with SZA.
 For SZAs $16^\circ$ - $50^\circ$, the trends range within about $\pm 0.2\,\%/y$, with a weak statistical significance.
 Between $50^\circ$ and $75^\circ$ SZA the trends for the period before noon are stronger and negative, possibly associated with stronger attenuation by clouds under oblique incidence angles.
 
@@ -669,16 +657,16 @@ spp$`Sky condition` <- sub(" cond.", "", spp$`Sky condition`)
 ```
 
 
-Similar to the long term trends discussed above, we have calculated the trend of the anomalies for the three different sky conditions, and for each season of the year, using the corresponding mean monthly values
+Similarly to the long term trends discussed above, we have calculated the trend of the anomalies for the three different sky conditions, and for each season of the year, using the corresponding mean monthly values
 (Figure\ \ref{fig:seasonalALL} and Table\ \ref{tab:trendseasontable}).
 For all-sky conditions the trend in SDR in winter is the largest
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$),
 followed by the trend in autumn
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$,
-value similar to the long term trend) both statistically significant above the $99\,\%$ confidence level. 
-In spring and summer, the trends are much smaller and less statistical significant.
-These seasonal differences indicate a possible relation of the trends to clouds during winter and autumn.
-For clear-skies, the trend in winter is $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear sky"], 2)`\,\%/y$, larger than for all-skies ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$), which is another indication of increasing cloud thickness. 
+a value close to the long term trend) both statistically significant above the $99\,\%$ confidence level.
+In spring and summer, the trends are much smaller and of lesser statistical significance.
+These seasonal differences indicate a possible relation of the trends in SDR to trends of clouds during winter and autumn.
+For clear-skies, the trend in winter is $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear sky"], 2)`\,\%/y$, larger than for all-skies ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$), which is another indication of increasing cloud thickness.
 Moreover, the trends under clear- and cloud-sky conditions are almost complementary to each other, particularly for winter and autumn, where the signal is stronger.
 During spring and summer the statistical significance is very low and the actual trend too small for a meaningful comparison.
 
@@ -708,8 +696,8 @@ knitr::include_graphics("./images/SeasonalTrendsTogether3-2.png")
 spp <- spp[,c(
       "Sky condition",
       "Season",
-      "Trend [%/year]", 
-      # "Trend p-value", 
+      "Trend [%/year]",
+      # "Trend p-value",
       "Statistical signif. [%]"
       )]
 
@@ -754,7 +742,7 @@ x_latex %>%
 
 # Conclusions
 
-We demonstrate that in the period 
+We demonstrate that in the period
 `r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is a brightening trend of SDR for all-sky conditions ($`r alltrend`\,\%/y$).
 On a previous study [@Bais2013], for the period 1993 - 2011 the trend was found to be $0.33\,\%/y$.
 The increase of this trend, indicates that the phenomenon and probably the causes, are still occurring.
@@ -766,13 +754,13 @@ The dimming effect of SDR under cloud-sky condition ($`r cloudtrend`\,\%/y$), sh
 Because we have no adequate data to investigate the long term changes of cloud formation in the region, we can not infer if the SDR trend we observe under cloud-sky is biased by changes in clouds and local climate.
 The observed brightening of SDR over Thessaloniki; is dependent on SZA (higher SZA, have stronger brightening trends), and also, with the seasons of the year, where Winter and Autumn show a significant strong trend, in contrast to Spring and Summer.
 <!-- to conclutions? -->
-Using CUSUMs of the trends for all- and clear-skies, we observed periods where the CUSUMs remain relative steady, 
+Using CUSUMs of the trends for all- and clear-skies, we observed periods where the CUSUMs remain relative steady,
 <!-- roughly around the middle of the study dataset,--> with a steep decline previous to that, and a steep incline after. This is an indication that the whole brightening phenomenon does not follow a smooth development over time.
 
 
 Our findings are in agreement with other researchers for the region.
-Future observations from the collocated pyrheliometer, may provide us with the means to further investigate the variability of Solar radiation at ground level in Thessaloniki. 
-Also, more data (cloud occurrence, aerosols, atmospheric water vapour, etc.), will help us to determine the extent of SDR attenuation by each factor. 
+Future observations from the collocated pyrheliometer, may provide us with the means to further investigate the variability of Solar radiation at ground level in Thessaloniki.
+Also, more data (cloud occurrence, aerosols, atmospheric water vapour, etc.), will help us to determine the extent of SDR attenuation by each factor.
 
 <!--
 similar results with Evidence for Clear‐Sky Dimming and Brightening in Central Europe_Wild2021.pdf

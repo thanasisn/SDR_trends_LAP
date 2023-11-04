@@ -1141,18 +1141,17 @@ for (adb in database) {
                               unlist(strsplit(avar, split = "_" ))[1:2]),
                             collapse = "_"))
 
-        # if (DRAFT == TRUE) {
-        #     par("mar" = c(3, 5, 2,  1))
-        # } else {
-        #     par("mar" = c(3, 5, 1, 0.5))
-        # }
+        if (DRAFT == TRUE) {
+            par("mar" = c(3, 5, 2,  1))
+        } else {
+            par("mar" = c(3, 5, 3.4, 0.5))
+        }
         par(pch = 19)
 
         ## scale fonts
         ccex <- ccex_sbs
         par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
 
-        par("mar" = c(3, 5, 1.7, 0.5))
         plot(1, type = "n",
              xlab = "",
              xlim = xlim, ylim = ylim,
