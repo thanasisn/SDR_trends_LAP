@@ -1122,7 +1122,7 @@ database    <- c(  "ALL_1_D_monthly_DESEAS_notrend",
                    "CLEAR_1_D_monthly_DESEAS_notrend",
                    "CLOUD_1_D_monthly_DESEAS_notrend")
 
-#+ CumulativeMonthlyCuSumNOtrend, echo=F, include=T, results="asis", fig.asp = 3
+#+ CumulativeMonthlyCuSumNOtrend, echo=F, include=T, results="asis", fig.height = 7, fig.width = 7
 for (adb in database) {
     DB  <- get(adb)
 
@@ -1153,6 +1153,12 @@ for (adb in database) {
         ## scale fonts
         ccex <- ccex_sbs
         par(cex.lab = ccex, cex.axis = ccex, cex.main = ccex, cex = ccex)
+
+        options(repr.plot.width  = 7,
+                repr.plot.height = 7)
+        knitr::opts_chunk$set(dev = 'pdf')
+        knitr::opts_chunk$set(fig.height = 7)
+        knitr::opts_chunk$set(fig.width = 7)
 
         plot(1, type = "n",
              xlab = "",
