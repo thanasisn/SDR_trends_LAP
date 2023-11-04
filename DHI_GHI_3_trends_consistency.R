@@ -1144,7 +1144,7 @@ for (adb in database) {
         if (DRAFT == TRUE) {
             par("mar" = c(3, 5, 2,  1))
         } else {
-            par("mar" = c(3, 5, 3.4, 0.5))
+            par("mar" = c(3, 5, 3.2, 0.5))
         }
         par(pch = 19)
 

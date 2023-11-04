@@ -635,9 +635,9 @@ With this approach periods when the CUSUMs diverge from zero can be interpreted 
 When the CUSUM is increasing, the added values are above the climatological values of the SDR trend and vice versa.
 Overall, for all- and clear-sky conditions (Figures\ \ref{fig:cusumnotrendmonthly-1} and\ \ref{fig:cusumnotrendmonthly-2}) we observe periods when the anomalies diverge from the climatological value, each lasting for several years.
 The pattern in both datasets is very similar, suggesting prevalence in clear skies over Thessaloniki.
-It is interesting that in the period 1993 - 2016 the anomalies have a high variability around zero. After 2016, the range of the variability is decreased at about one third of the prior period.
-For cloud-sky conditions (Figure\ \ref{fig:cusumnotrendmonthly-3}) the period 1997 - 2008 is dominated by positive CUSUMs suggesting a reduced effect of clouds on SDR.
-From 1997 to mid-2000s CUSUMs are increasing, likely due to a continuous decrease in the thickness of clouds, followed by a period of rapid increase (within 3 years) in cloud optical thickness lasting up to 2008.
+It is interesting that in the period 1993 - 2016 the anomalies have a high variability around zero, while after 2016, the range of the variability is decreased to about one third of the prior period.
+For cloudy-sky conditions (Figure\ \ref{fig:cusumnotrendmonthly-3}) the period 1997 - 2008 is dominated by positive CUSUMs, suggesting a reduced effect of clouds on SDR.
+From 1997 to mid-2000s CUSUMs are increasing, likely due to a continuous decrease in the optical thickness of clouds, followed by a period of rapid increase (within 3 years) in cloud optical thickness lasting up to 2008.
 The following stable period spans for about 15 years up to 2021 when CUSUMs start increasing again.
 
 
@@ -742,12 +742,12 @@ followed by the trend in autumn
 a value close to the long term trend) both statistically significant above the $99\,\%$ confidence level.
 In spring and summer, the trends are much smaller and of lesser statistical significance.
 These seasonal differences indicate a possible relation of the trends in SDR to trends of clouds during winter and autumn.
-For clear-skies, the trend in winter is $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear sky"], 2)`\,\%/y$, larger than for all-skies ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$), which is another indication of increasing cloud thickness.
-Moreover, the trends under clear- and cloud-sky conditions are almost complementary to each other, particularly for winter and autumn, where the signal is stronger.
+For clear-skies, the trend in winter is $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear sky"], 2)`\,\%/y$, larger than for all-skies ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$), which is another indication of a decreasing trend in cloud optical thickness.
+Moreover, the trends under clear- and cloudy-sky conditions are almost complementary to each other, particularly for winter and autumn, where the signal is stronger.
 During spring and summer the statistical significance is very low and the actual trend too small for a meaningful comparison.
 
 
-```{r seasonalALL, echo=F, fig.cap="SDR trends by season of the year for the three sky conditions. Each point is a monthly mean calculated from daily means. The vertical scale is common for all graphs, each column of graphs corresponds to a sky condition and each row to a season of the year.", out.width="100%"}
+```{r seasonalALL, echo=F, fig.cap="Linear trends (black lines) of monthly mean SDR season (columns of graphs) for the three sky conditions (rows of graphs). The vertical scale is common for all graphs.", out.width="100%"}
 knitr::include_graphics("./images/SeasonalTrendsTogether3-2.png")
 ```
 
@@ -818,7 +818,7 @@ x_latex %>%
 
 # Conclusions
 
-We demonstrate that in the period
+We have demonstrated that in the period
 `r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is a brightening trend of SDR for all-sky conditions ($`r alltrend`\,\%/y$).
 On a previous study [@Bais2013], for the period 1993 - 2011 the trend was found to be $0.33\,\%/y$.
 The increase of this trend, indicates that the phenomenon and probably the causes, are still occurring.
