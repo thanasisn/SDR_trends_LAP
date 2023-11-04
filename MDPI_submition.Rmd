@@ -317,7 +317,6 @@ b)\ the data quality check,
 c)\ the identification of "clear sky" conditions from the radiometric data, and
 d)\ the aggregation of data and trend analysis.
 
-
 <!--
 The horizon is clear of obstructions except for the azimuth angles between 35 and 120 where obstacles of up to 10 elevation block the direct irradiance in the morning for SZA larger than 80.  These data points were excluded from the analysis, as
 -->

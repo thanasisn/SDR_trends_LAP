@@ -853,7 +853,7 @@ CLOUD_1_D_monthly_DESEAS_notrend[, DIR_transp_cusum := cumsum(tidyr::replace_na(
 
 
 
-## MONTHLY daily SUSUM plots ---------------------------------------------------
+## MONTHLY daily CUSUM plots ---------------------------------------------------
 
 #'
 #' \newpage
@@ -960,109 +960,109 @@ for (adb in database) {
 
 
 
-##;        ## test plot for reference
-##;        ## linear model
-##;        lm1 <- lm(pdb[[paste0(avar,"_des")]] ~ pdb$Date)
-##;
-##;        plot(pdb$Date, pdb[[paste0(avar,"_des")]],
-##;             ylab = bquote("Monthly Anomaly [%]"),
-##;             cex = 0.3,
-##;             col = col)
-##;        abline(h = 0, lty = 2, lwd = 0.8)
-##;        title(paste(sub("_.*","",adb), "mean monthly values ",
-##;                    translate(avar) ), cex.main = 1)
-##;        abline(lm1, lwd = 2)
-##;
-##;
-##;
-##;        ## running mean
-##;        rm <- frollmean(pdb[[paste0(avar,"_des")]], round(running_mean_window_days),
-##;                        na.rm = TRUE, algo = "exact", align = "center")
-##;        points(pdb$Date, rm, col = "red", cex = 0.5)
-##;
-##;
-##;        ## LOESS curve
-##;        vec <- !is.na(pdb[[paste0(avar,"_des")]])
-##;        FTSE.lo3 <- loess.as(pdb$Date[vec], pdb[[paste0(avar,"_des")]][vec],
-##;                             degree = 1,
-##;                             criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
-##;        FTSE.lo.predict3 <- predict(FTSE.lo3, pdb$Date)
-##;        lines(pdb$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
-##;
-##;
-##;        ## decorations
-##;        fit <- lm1[[1]]
-##;        legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
-##;               paste("Trend: ",
-##;                     if (fit[2] > 0) "+" else "-",
-##;                     signif(abs(fit[2]) * Days_of_year, 3),
-##;                     "% per year")
-##;        )
-##;
-##;
-##;        cat("\n\\newpage\n")
-##;        cat("\n\\footnotesize\n")
-##;        # cat("\n\\small\n")
-##;
-##;        testdb <-
-##;            merge(
-##;                merge(
-##;                    merge(
-##;                        merge(
-##;                            pdb[get(paste0(avar,"_des")) > 0, .(PositiveSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)],
-##;                            pdb[get(paste0(avar,"_des")) < 0, .(NegativeSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
-##;                        pdb[get(paste0(avar,"_des")) > 0, .(PositiveMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
-##;                    pdb[get(paste0(avar,"_des")) < 0, .(NegativeMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]
-##;                ),
-##;                pdb[ , .(Sum = sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date) ]
-##;            )
-##;
-##;        cat(pander(testdb))
-##;        cat("\n\\normalsize\n")
-##;
-##;
-##;        ylim <- range(testdb$PositiveSum, -testdb$NegativeSum)
-##;        plot( testdb$year,  testdb$PositiveSum, type = "l", col = "blue", ylim = ylim)
-##;        lines(testdb$year, -testdb$NegativeSum, type = "l", col = "red")
-##;        title("Sum of negative and positive values by year")
-##;
-##;        legend("top", ncol = 2, bty = "n",
-##;               lty = 1, pch = NA, cex = 0.7,
-##;               legend = c("Sum of positive anomaly",
-##;                          "Sum of negative anomaly"),
-##;               col    = c("blue", "red")
-##;        )
-##;
-##;
-##;        # ylim <- c(-max(abs(testdb$Sum), na.rm = T), max(abs(testdb$Sum), na.rm = T))
-##;        # plot( testdb$year,  testdb$Sum, type = "l", col = "black", ylim = ylim)
-##;        # abline(h = 0, lty = 2, lwd = 0.8)
-##;        # title("Sum of all yearly values")
-##;
-##;        # polygon(
-##;        #     c(min(testdb$year), testdb$year , max(testdb$year)) ,
-##;        #     c(min(testdb$Sum) , testdb$Sum , min(testdb$Sum)) ,
-##;        #     col=rgb(0.2,0.1,0.5,0.2) , border=F
-##;        # )
-##;
-##;
-##;        gp <- ggplot(data = testdb, aes(x = year, y = Sum)) +
-##;            geom_col(data = testdb[Sum <= 0], fill = "red") +
-##;            geom_col(data = testdb[Sum >= 0], fill = "blue") +
-##;            ggtitle("Sum of all year values") +
-##;            xlab("Year")     +
-##;            ylab("Year Sum") +
-##;            theme_bw()       +
-##;            theme(plot.title = element_text(hjust = 0.5))
-##;
-##;        print(gp)
-##;
-##;        # hist(pdb$GLB_att_cusum)
-##;        # hist(pdb$GLB_att_des)
-##;        # sum(pdb[ GLB_att_des > 0, GLB_att_des ])
-##;        # sum(pdb[ , GLB_att_des ], na.rm = T)
-##;        # tail(pdb[ , GLB_att_cusum ])
-##;        # pdb[ , sum(get(paste0(avar,"_des")), na.rm = T), by = year(Date) ]
+        ## test plot for reference
+        ## linear model
+        lm1 <- lm(pdb[[paste0(avar,"_des")]] ~ pdb$Date)
+
+        plot(pdb$Date, pdb[[paste0(avar,"_des")]],
+             ylab = bquote("Monthly Anomaly [%]"),
+             cex = 0.3,
+             col = col)
+        abline(h = 0, lty = 2, lwd = 0.8)
+        title(paste(sub("_.*","",adb), "mean monthly values ",
+                    translate(avar) ), cex.main = 1)
+        abline(lm1, lwd = 2)
+
+
+
+        ## running mean
+        rm <- frollmean(pdb[[paste0(avar,"_des")]], round(running_mean_window_days),
+                        na.rm = TRUE, algo = "exact", align = "center")
+        points(pdb$Date, rm, col = "red", cex = 0.5)
+
+
+        ## LOESS curve
+        vec <- !is.na(pdb[[paste0(avar,"_des")]])
+        FTSE.lo3 <- loess.as(pdb$Date[vec], pdb[[paste0(avar,"_des")]][vec],
+                             degree = 1,
+                             criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
+        FTSE.lo.predict3 <- predict(FTSE.lo3, pdb$Date)
+        lines(pdb$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
+
+
+        ## decorations
+        fit <- lm1[[1]]
+        legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
+               paste("Trend: ",
+                     if (fit[2] > 0) "+" else "-",
+                     signif(abs(fit[2]) * Days_of_year, 3),
+                     "% per year")
+        )
+
+
+        cat("\n\\newpage\n")
+        cat("\n\\footnotesize\n")
+        # cat("\n\\small\n")
+
+        testdb <-
+            merge(
+                merge(
+                    merge(
+                        merge(
+                            pdb[get(paste0(avar,"_des")) > 0, .(PositiveSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)],
+                            pdb[get(paste0(avar,"_des")) < 0, .(NegativeSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+                        pdb[get(paste0(avar,"_des")) > 0, .(PositiveMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+                    pdb[get(paste0(avar,"_des")) < 0, .(NegativeMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]
+                ),
+                pdb[ , .(Sum = sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date) ]
+            )
+
+        cat(pander(testdb))
+        cat("\n\\normalsize\n")
+
+
+        ylim <- range(testdb$PositiveSum, -testdb$NegativeSum)
+        plot( testdb$year,  testdb$PositiveSum, type = "l", col = "blue", ylim = ylim)
+        lines(testdb$year, -testdb$NegativeSum, type = "l", col = "red")
+        title("Sum of negative and positive values by year")
+
+        legend("top", ncol = 2, bty = "n",
+               lty = 1, pch = NA, cex = 0.7,
+               legend = c("Sum of positive anomaly",
+                          "Sum of negative anomaly"),
+               col    = c("blue", "red")
+        )
+
+
+        # ylim <- c(-max(abs(testdb$Sum), na.rm = T), max(abs(testdb$Sum), na.rm = T))
+        # plot( testdb$year,  testdb$Sum, type = "l", col = "black", ylim = ylim)
+        # abline(h = 0, lty = 2, lwd = 0.8)
+        # title("Sum of all yearly values")
+
+        # polygon(
+        #     c(min(testdb$year), testdb$year , max(testdb$year)) ,
+        #     c(min(testdb$Sum) , testdb$Sum , min(testdb$Sum)) ,
+        #     col=rgb(0.2,0.1,0.5,0.2) , border=F
+        # )
+
+
+        gp <- ggplot(data = testdb, aes(x = year, y = Sum)) +
+            geom_col(data = testdb[Sum <= 0], fill = "red") +
+            geom_col(data = testdb[Sum >= 0], fill = "blue") +
+            ggtitle("Sum of all year values") +
+            xlab("Year")     +
+            ylab("Year Sum") +
+            theme_bw()       +
+            theme(plot.title = element_text(hjust = 0.5))
+
+        print(gp)
+
+        # hist(pdb$GLB_att_cusum)
+        # hist(pdb$GLB_att_des)
+        # sum(pdb[ GLB_att_des > 0, GLB_att_des ])
+        # sum(pdb[ , GLB_att_des ], na.rm = T)
+        # tail(pdb[ , GLB_att_cusum ])
+        # pdb[ , sum(get(paste0(avar,"_des")), na.rm = T), by = year(Date) ]
     }
 }
  #'
@@ -1073,7 +1073,6 @@ for (adb in database) {
 
 ## __ Monthly CUSUM without trend ----------------------------------------------
 
-#'
 #' \newpage
 #' \FloatBarrier
 #'
@@ -1086,11 +1085,11 @@ for (adb in database) {
 
 # vars        <- c("GLB_att", "DIR_att", "DIR_transp")
 vars        <- c("GLB_att")
-database    <- c(  "ALL_1_D_monthly_DESEAS_notrend",
-                   "CLEAR_1_D_monthly_DESEAS_notrend",
-                   "CLOUD_1_D_monthly_DESEAS_notrend")
+database    <- c("ALL_1_D_monthly_DESEAS_notrend",
+                 "CLEAR_1_D_monthly_DESEAS_notrend",
+                 "CLOUD_1_D_monthly_DESEAS_notrend")
 
-#+ CumulativeMonthlyCuSumNOtrend, echo=F, include=T, results="asis", fig.height = 6, fig.width = 7
+#+ CumulativeMonthlyCuSumNOtrend, echo=F, include=T, results="asis", fig.height = 5.5, fig.width = 7
 for (adb in database) {
     DB  <- get(adb)
 
@@ -1113,7 +1112,7 @@ for (adb in database) {
             par("mar" = c(3, 5, 2,  1))
         } else {
             par("mar" = c(3, 5, 3.4, 0.5))
-            par("mar" = c(3, 5, 0.5, 0.5))
+            par("mar" = c(3, 5, 0, 0.5))
         }
         par(pch = 19)
 
@@ -1185,113 +1184,111 @@ for (adb in database) {
 
 
 
-##;         ## test plot for reference
-##;         ## linear model
-##;         lm1 <- lm(pdb[[paste0(avar,"_des")]] ~ pdb$Date)
-##;
-##;         plot(pdb$Date, pdb[[paste0(avar,"_des")]],
-##;              ylab = bquote("Monthly Anomaly, trend removed [%]"),
-##;              cex = 0.3,
-##;              col = col)
-##;         abline(h = 0, lty = 2, lwd = 0.8)
-##;         title(paste(sub("_.*","",adb), "mean monthly values ",
-##;                     translate(avar) ), cex.main = 1)
-##;         abline(lm1, lwd = 2)
-##;
-##;
-##;
-##;         ## running mean
-##;         rm <- frollmean(pdb[[paste0(avar,"_des")]], round(running_mean_window_days),
-##;                         na.rm = TRUE, algo = "exact", align = "center")
-##;         points(pdb$Date, rm, col = "red", cex = 0.5)
-##;
-##;
-##;         ## LOESS curve
-##;         vec <- !is.na(pdb[[paste0(avar,"_des")]])
-##;         FTSE.lo3 <- loess.as(pdb$Date[vec], pdb[[paste0(avar,"_des")]][vec],
-##;                              degree = 1,
-##;                              criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
-##;         FTSE.lo.predict3 <- predict(FTSE.lo3, pdb$Date)
-##;         lines(pdb$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
-##;
-##;
-##;
-##;         ## decorations
-##;         fit <- lm1[[1]]
-##;         legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
-##;                paste("Trend: ",
-##;                      if (fit[2] > 0) "+" else "-",
-##;                      signif(abs(fit[2]) * Days_of_year, 3),
-##;                      "% per year")
-##;         )
-##;
-##;
-##;         cat("\n\\newpage\n")
-##;         cat("\n\\footnotesize\n")
-##;         # cat("\n\\small\n")
-##;
-##;         testdb <-
-##;             merge(
-##;                 merge(
-##;                     merge(
-##;                         merge(
-##;                             pdb[get(paste0(avar,"_des")) > 0, .(PositiveSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)],
-##;                             pdb[get(paste0(avar,"_des")) < 0, .(NegativeSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
-##;                         pdb[get(paste0(avar,"_des")) > 0, .(PositiveMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
-##;                     pdb[get(paste0(avar,"_des")) < 0, .(NegativeMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]
-##;                 ),
-##;                 pdb[ , .(Sum = sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date) ]
-##;             )
-##;
-##;         cat(pander(testdb))
-##;         cat("\n\\normalsize\n")
-##;
-##;
-##;         ylim <- range(testdb$PositiveSum, -testdb$NegativeSum)
-##;         plot( testdb$year,  testdb$PositiveSum, type = "l", col = "blue", ylim = ylim)
-##;         lines(testdb$year, -testdb$NegativeSum, type = "l", col = "red")
-##;         title("Sum of negative and positive values by year")
-##;
-##;         legend("top", ncol = 2, bty = "n",
-##;                lty = 1, pch = NA, cex = 0.7,
-##;                legend = c("Sum of positive anomaly",
-##;                           "Sum of negative anomaly"),
-##;                col    = c("blue", "red")
-##;         )
-##;
-##;
-##;         # ylim <- c(-max(abs(testdb$Sum), na.rm = T), max(abs(testdb$Sum), na.rm = T))
-##;         # plot( testdb$year,  testdb$Sum, type = "l", col = "black", ylim = ylim)
-##;         # abline(h = 0, lty = 2, lwd = 0.8)
-##;         # title("Sum of all yearly values")
-##;
-##;         # polygon(
-##;         #     c(min(testdb$year), testdb$year , max(testdb$year)) ,
-##;         #     c(min(testdb$Sum) , testdb$Sum , min(testdb$Sum)) ,
-##;         #     col=rgb(0.2,0.1,0.5,0.2) , border=F
-##;         # )
-##;
-##;
-##;         gp <- ggplot(data = testdb, aes(x = year, y = Sum)) +
-##;             geom_col(data = testdb[Sum <= 0], fill = "red") +
-##;             geom_col(data = testdb[Sum >= 0], fill = "blue") +
-##;             ggtitle("Sum of all year values") +
-##;             xlab("Year")     +
-##;             ylab("Year Sum") +
-##;             theme_bw()       +
-##;             theme(plot.title = element_text(hjust = 0.5))
-##;
-##;         print(gp)
-##;
-##;         # hist(pdb$GLB_att_cusum)
-##;         # hist(pdb$GLB_att_des)
-##;         # sum(pdb[ GLB_att_des > 0, GLB_att_des ])
-##;         # sum(pdb[ , GLB_att_des ], na.rm = T)
-##;         # tail(pdb[ , GLB_att_cusum ])
-##;         # pdb[ , sum(get(paste0(avar,"_des")), na.rm = T), by = year(Date) ]
+        ## test plot for reference
+        ## linear model
+        lm1 <- lm(pdb[[paste0(avar,"_des")]] ~ pdb$Date)
+
+        plot(pdb$Date, pdb[[paste0(avar,"_des")]],
+             ylab = bquote("Monthly Anomaly, trend removed [%]"),
+             cex = 0.3,
+             col = col)
+        abline(h = 0, lty = 2, lwd = 0.8)
+        title(paste(sub("_.*","",adb), "mean monthly values ",
+                    translate(avar) ), cex.main = 1)
+        abline(lm1, lwd = 2)
+
+
+
+        ## running mean
+        rm <- frollmean(pdb[[paste0(avar,"_des")]], round(running_mean_window_days),
+                        na.rm = TRUE, algo = "exact", align = "center")
+        points(pdb$Date, rm, col = "red", cex = 0.5)
+
+
+        ## LOESS curve
+        vec <- !is.na(pdb[[paste0(avar,"_des")]])
+        FTSE.lo3 <- loess.as(pdb$Date[vec], pdb[[paste0(avar,"_des")]][vec],
+                             degree = 1,
+                             criterion = c("aicc", "gcv")[2], user.span = NULL, plot = F)
+        FTSE.lo.predict3 <- predict(FTSE.lo3, pdb$Date)
+        lines(pdb$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
+
+
+
+        ## decorations
+        fit <- lm1[[1]]
+        legend('top', lty = 1, bty = "n", lwd = 2, cex = 1,
+               paste("Trend: ",
+                     if (fit[2] > 0) "+" else "-",
+                     signif(abs(fit[2]) * Days_of_year, 3),
+                     "% per year")
+        )
+
+        cat("\n\\newpage\n")
+        cat("\n\\footnotesize\n")
+        # cat("\n\\small\n")
+
+        testdb <-
+            merge(
+                merge(
+                    merge(
+                        merge(
+                            pdb[get(paste0(avar,"_des")) > 0, .(PositiveSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)],
+                            pdb[get(paste0(avar,"_des")) < 0, .(NegativeSum  =  sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+                        pdb[get(paste0(avar,"_des")) > 0, .(PositiveMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]),
+                    pdb[get(paste0(avar,"_des")) < 0, .(NegativeMean = mean(get(paste0(avar,"_des")), na.rm = T)), by = year(Date)]
+                ),
+                pdb[ , .(Sum = sum(get(paste0(avar,"_des")), na.rm = T)), by = year(Date) ]
+            )
+
+        cat(pander(testdb))
+        cat("\n\\normalsize\n")
+
+
+        ylim <- range(testdb$PositiveSum, -testdb$NegativeSum)
+        plot( testdb$year,  testdb$PositiveSum, type = "l", col = "blue", ylim = ylim)
+        lines(testdb$year, -testdb$NegativeSum, type = "l", col = "red")
+        title("Sum of negative and positive values by year")
+
+        legend("top", ncol = 2, bty = "n",
+               lty = 1, pch = NA, cex = 0.7,
+               legend = c("Sum of positive anomaly",
+                          "Sum of negative anomaly"),
+               col    = c("blue", "red")
+        )
+
+
+        # ylim <- c(-max(abs(testdb$Sum), na.rm = T), max(abs(testdb$Sum), na.rm = T))
+        # plot( testdb$year,  testdb$Sum, type = "l", col = "black", ylim = ylim)
+        # abline(h = 0, lty = 2, lwd = 0.8)
+        # title("Sum of all yearly values")
+
+        # polygon(
+        #     c(min(testdb$year), testdb$year , max(testdb$year)) ,
+        #     c(min(testdb$Sum) , testdb$Sum , min(testdb$Sum)) ,
+        #     col=rgb(0.2,0.1,0.5,0.2) , border=F
+        # )
+
+
+        gp <- ggplot(data = testdb, aes(x = year, y = Sum)) +
+            geom_col(data = testdb[Sum <= 0], fill = "red") +
+            geom_col(data = testdb[Sum >= 0], fill = "blue") +
+            ggtitle("Sum of all year values") +
+            xlab("Year")     +
+            ylab("Year Sum") +
+            theme_bw()       +
+            theme(plot.title = element_text(hjust = 0.5))
+
+        print(gp)
+
+        # hist(pdb$GLB_att_cusum)
+        # hist(pdb$GLB_att_des)
+        # sum(pdb[ GLB_att_des > 0, GLB_att_des ])
+        # sum(pdb[ , GLB_att_des ], na.rm = T)
+        # tail(pdb[ , GLB_att_cusum ])
+        # pdb[ , sum(get(paste0(avar,"_des")), na.rm = T), by = year(Date) ]
     }
 }
-#'
 #+ echo=F, include=T
 
 
