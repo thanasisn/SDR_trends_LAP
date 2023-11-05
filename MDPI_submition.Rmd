@@ -825,16 +825,21 @@ Accordingly, we found a similar trend for clear-sky conditions ($`r cleartrend`\
 We have calculated the effect of TSI variability to be a negligible factor in SDR variability.
 Unfortunately, there is no available data for this period for the aerosols, in order to directly estimate their effect on SDR, which is the most probable main cause.
 The attenuation of SDR by aerosols over Europe have been proposed as major factor by @Wild2021.
-The dimming effect of SDR under cloud-sky condition ($`r cloudtrend`\,\%/y$), shows that clouds can also attenuate the amount of SDR reaching the ground, and changes on their occurrences can effect the net energy balance.
-Because we have no adequate data to investigate the long term changes of cloud formation in the region, we can not infer if the SDR trend we observe under cloud-sky is biased by changes in clouds and local climate.
+The dimming effect on SDR under cloudy-sky conditions ($`r cloudtrend`\,\%/y$),suggests that cloud optical thickness is decreasing during this period.
+Because we have no adequate data to investigate the long term changes of cloud thickness in the region, we can not verify if the negative SDR trend we observe under under cloudy-skies can be attributed solely to changes in clouds.
 
 The observed brightening on SDR over Thessaloniki is dependent on SZA (larger SZAs lead to stronger brightening).
-The trend is also dependent on season, with winter showing the strongest statistically significant trend, in contrast to spring and summer.
-Our findings are in agreement with other studies for the region.
-
-$`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$
+The trend is also dependent on season, with winter showing the strongest statistically significant trend of
+$`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`$
+and
 $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear sky"], 2)`\,\%/y$
-
+for all- and clear-skies, respectively, in contrast to spring and summer.
+The trends for autumn are also significant but smaller (
+$`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All sky"], 2)`$
+and
+$`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "Clear sky"], 2)`\,\%/y$
+for all- and clear-skies, respectively).
+Our findings are in agreement with other studies for the region.
 
 Using the CUSUMs of the monthly departures for all- and clear-skies, we observed periods where the CUSUMs remain relatively stable, with a steep decline before and a steep increase after. 
 This is an indication that the whole brightening effect does not follow a smooth development over time.
