@@ -819,7 +819,7 @@ x_latex %>%
 
 We have demonstrated that in the period
 `r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is positive trend in SDR of for all-sky conditions ($`r alltrend`\,\%/y$).
-Α previous study [@Bais2013] for the period 1993 - 2011 the trend was found to be $0.33\,\%/y$.
+A previous study [@Bais2013] for the period 1993 - 2011 the trend was found to be $0.33\,\%/y$.
 The increase of this trend, indicates that the phenomenon and probably the causes, are still occurring.
 Accordingly, we found a similar trend for clear-sky conditions ($`r cleartrend`\,\%/y$) that further supports that the brightening can be independent of the cloud occurrences, although, cloud formation can also attenuate SDR.
 We have calculated the effect of TSI variability to be a negligible factor in SDR variability.
