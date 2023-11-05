@@ -36,8 +36,8 @@ type:    article
 status:  submit
 
 # front matter
-simplesummary: |
-  A Simple summary goes here.
+# simplesummary: |
+#   A Simple summary goes here.
 
 abstract: |
   The shortwave downward solar irradiance (SDR) is an important factor that drives climate processes, production and can affect all living organisms.
@@ -50,7 +50,7 @@ abstract: |
 
 # back matter
 keywords: |
-  GHI; SDR; Solar Brigthening/Dimming.
+  GHI; SDR; Solar Brigthening/Dimming, aerosols, clouds.
 ## list three to ten pertinent keywords specific to the article, yet reasonably common within the subject discipline
 
 acknowledgement: |
@@ -818,15 +818,15 @@ x_latex %>%
 # Conclusions
 
 We have demonstrated that in the period
-`r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is positive trend in SDR of for all-sky conditions ($`r alltrend`\,\%/y$).
-A previous study [@Bais2013] for the period 1993 - 2011 the trend was found to be $0.33\,\%/y$.
-The increase of this trend, indicates that the phenomenon and probably the causes, are still occurring.
-Accordingly, we found a similar trend for clear-sky conditions ($`r cleartrend`\,\%/y$) that further supports that the brightening can be independent of the cloud occurrences, although, cloud formation can also attenuate SDR.
-We have calculated the effect of TSI variability to be a negligible factor in SDR variability.
-Unfortunately, there is no available data for this period for the aerosols, in order to directly estimate their effect on SDR, which is the most probable main cause.
+`r paste(year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)))`, there is a positive trend in SDR of ($`r alltrend`\,\%/y$) (brightening) (positive trend) in Thessaloniki, Greece, under all-sky conditions.
+A previous study [@Bais2013] for the period 1993 - 2011 found also a positive trend of $0.33\,\%/y$.
+The increase of this trend indicates that the brightening of SDR continues and is probably caused by continuing decreases in aerosol optical depth and the optical thickness of clouds over the area.
+Moreover, we found a similar trend under clear-sky conditions ($`r cleartrend`\,\%/y$) that further supports the assumption that the brightening is caused mainly by decreasing aerosols.
+Unfortunately, for the entire period there is no available data for the aerosols, in order to quantify their effect on SDR. 
+However, @Siomos2020 have shown that aerosol optical depth over Thessaloniki is decreasing constantly at least up to 2018.
 The attenuation of SDR by aerosols over Europe have been proposed as major factor by @Wild2021.
-The dimming effect on SDR under cloudy-sky conditions ($`r cloudtrend`\,\%/y$),suggests that cloud optical thickness is decreasing during this period.
-Because we have no adequate data to investigate the long term changes of cloud thickness in the region, we can not verify if the negative SDR trend we observe under under cloudy-skies can be attributed solely to changes in clouds.
+The dimming effect on SDR under cloudy-sky conditions ($`r cloudtrend`\,\%/y$), suggests that cloud optical thickness is decreasing during this period.
+Because we have no adequate data to investigate the long term changes of cloud thickness in the region, we cannot verify if the negative SDR trend we observe under under cloudy-skies can be attributed solely to changes in clouds.
 
 The observed brightening on SDR over Thessaloniki is dependent on SZA (larger SZAs lead to stronger brightening).
 The trend is also dependent on season, with winter showing the strongest statistically significant trend of
