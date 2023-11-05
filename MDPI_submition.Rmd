@@ -12,7 +12,7 @@ affiliation:
       Aristotle University of Thessaloniki -
       Laboratory of Atmospheric Physics,
       Campus Box 149, 54124 Thessaloniki, Greece
-    email: natsisphysicist@gmail.com
+    email: natsisphysicist@gmail.com (A.N.); abais@auth.gr (A.B.)
   - num: 2
     address: |
       Your department
