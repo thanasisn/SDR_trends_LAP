@@ -53,18 +53,25 @@ $(PDF): $(RMD)
 
 ## Article pdf with build number
 ## using rstudio pandoc
-TARGET = Article
+TARGET = MDPI_submission
 RMD    = $(TARGET).Rmd
 PDF    = $(TARGET)_B$(shell cat $(BLD_FILE)).pdf
 SLIDY  = $(TARGET).html
 Apv: $(PDF)
 $(PDF): $(RMD)
 	@echo "Building: $@"
-	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', clean = TRUE, output_format='bookdown::pdf_document2', output_file='Article_A$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).pdf')"
-	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', clean = TRUE, output_format='bookdown::word_document2', output_file='Article_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).docx')"
+	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', clean = TRUE, output_format='rticles::mdpi_article', output_file='MDPI_submission_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).pdf')"
+	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', clean = TRUE, output_format='bookdown::word_document2', output_file='MDPI_submission_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).docx')"
 	-mkdir -p "Build_$(shell echo $$(($$(cat $(BLD_FILE)) + 1)))"
-	-cp 'Article.Rmd' 'Article_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).Rmd'
+	-cp 'MDPI_submission.Rmd' 'MDPI_submission_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).Rmd'
+	-cp '*_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).*' "Build_$(shell echo $$(($$(cat $(BLD_FILE)) + 1)))"
 	$(call buildver)
+
+
+
+
+
+
 
 
 
