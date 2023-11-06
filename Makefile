@@ -28,8 +28,6 @@ $(PDF): $(RMD)
 	@echo "Building: $@"
 	@#-Rscript -e "rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='rticles::mdpi_article', output_file='$@', clean = TRUE)" 
-	@#-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', clean = TRUE, output_format='bookdown::word_document2', output_file='MDPI_submition.docx')"
-	@#-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2', clean = TRUE, output_file='MDPI_article.pdf')"
 	@# echo "Changed:  $?"
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
@@ -64,7 +62,9 @@ $(PDF): $(RMD)
 	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', clean = TRUE, output_format='bookdown::word_document2', output_file='MDPI_submission_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).docx')"
 	-mkdir -p "Build_$(shell echo $$(($$(cat $(BLD_FILE)) + 1)))"
 	-cp 'MDPI_submission.Rmd' 'MDPI_submission_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).Rmd'
-	-cp '*_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).*' "Build_$(shell echo $$(($$(cat $(BLD_FILE)) + 1)))"
+	-mv *_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).* "Build_$(shell echo $$(($$(cat $(BLD_FILE)) + 1)))"
+	-chmod 0444 Build_$(shell echo $$(($$(cat $(BLD_FILE)) + 1)))/*_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).*
+	## increase counter
 	$(call buildver)
 
 
