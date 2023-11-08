@@ -19,7 +19,7 @@ LIBRARY      = ~/LIBRARY/REPORTS/
 
 
 ### MDPI Article
-TARGET = MDPI_submition
+TARGET = MDPI_submission
 RMD    = $(TARGET).Rmd
 PDF    = $(TARGET).pdf
 DOC    = $(TARGET).docx

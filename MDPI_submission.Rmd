@@ -1,5 +1,5 @@
 ---
-title:     "Trends of SDR in Thessaloniki"
+title:     "Trends from 30-year observations of downward solar irradiance in Thessaloniki, Greece"
 author:
   - name:  Athanasios Natsis
     affil: 1,* # \ddagger
@@ -43,7 +43,7 @@ abstract: |
   The shortwave downward solar irradiance (SDR) is an important factor that drives climate processes, production and can affect all living organisms.
   Observations of SDR at different locations around the world with different environmental characteristics have been used to investigate its long-term variability and trends at different time scales.
   Periods of positive trends are referred as brightening periods and of negative trends as dimming periods.
-  Here we studied 29 years of pyranometer data in Thessaloniki, Greece, under three types of sky conditions (clear sky, cloudy sky and all sky).
+  Here we studied 30 years of pyranometer data in Thessaloniki, Greece, under three types of sky conditions (clear sky, cloudy sky and all sky).
   The clear-sky data were identified by applying a cloud screening algorithm. We found a positive trend of $0.38\,\%/\text{year}$ for all-sky, $0.35\,\%/\text{year}$ for clear-sky conditions, and $-0.28\,\%/\text{year}$ for cloudy conditions.
   We have also investigated the consistency of these trends, the effect of the solar zenith angle, and their seasonal variability.
   Finally, we identified some anomalies in the long term SDR trends for all sky conditions.
@@ -397,6 +397,7 @@ The target of the optimization was the minimization of a function $f(a)$ (Eq.\ \
 f(a) = \frac{1}{n}\sum_{i=1}^{n} ( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i} )^2 \label{eq:minf}
 \end{equation}
 where: $n$ is the total number of daylight records, $\text{SDR}_{\text{CSid},i}$ are the records identified as clear sky by CSid, $a$ is a hypothetical adjustment factor, and $\text{SDR}_{\text{testCSref},i}$ is any of the tested clear sky radiation models.
+
 The optimization and the selection of the clear sky reference model, was performed on SDR observations for the period 2016 - 2021.
 During the optimization, eight simple clear sky radiation models were tested (namely, Daneshyar-Paltridge-Proctor, Kasten-Czeplak, Haurwitz, Berger-Duffie, Adnot-Bourges-Campana-Gicquel, Robledo-Soler, Kasten and Ineichen-Perez), with a wide range of factors.
 These models are described in more details by @Reno2012 and evaluated by @Reno2016.
@@ -622,7 +623,7 @@ In our case, there is a more complex evolution of the anomalies.
 Another distinct feature of the CUSUMs, is the different pattern of the cloudy-sky dataset which peaks around the middle of the period.
 Although, there seems to exist a complementary relation to the CUSUMs of the clear- and all-sky cases, we can not assert that clouds are the main driver for this relation due to the great difference in the number of observational data between the two datasets (Table\ \ref{tab:trendtable}).
 
-```{r cusummonth, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+```{r cusummonth, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR.', fig.subcap=c('All skies.', 'Clear skies.', 'Cloudy skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics(c(
     "./images/CumulativeMonthlyCuSum-1.png",    # ALL sky
     "./images/CumulativeMonthlyCuSum-5.png",    # CLEAR sky
@@ -640,7 +641,7 @@ From 1997 to mid-2000s CUSUMs are increasing, likely due to a continuous decreas
 The following stable period spans for about 15 years up to 2021 when CUSUMs start increasing again.
 
 
-```{r cusumnotrendmonthly, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR after removing the long term trend from the monthly values.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+```{r cusumnotrendmonthly, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR after removing the long term trend from the monthly values.', fig.subcap=c('All skies.', 'Clear skies.', 'Cloudy skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics(c(
     "./images/CumulativeMonthlyCuSumNOtrend-1.png",    # ALL sky
     "./images/CumulativeMonthlyCuSumNOtrend-5.png",    # CLEAR sky
@@ -683,7 +684,7 @@ For SZAs $16^\circ$ - $50^\circ$, the trends range within about $\pm 0.2\,\%/y$,
 Between $50^\circ$ and $75^\circ$ SZA the trends for the period before noon are stronger and negative, possibly associated with stronger attenuation by clouds under oblique incidence angles.
 
 
-```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$), the trends were computed with SZA bins of $1^\\circ$ for each day, before and after local noon.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$), the trends were computed with SZA bins of $1^\\circ$ for each day, before and after local noon.', fig.subcap=c('All skies.', 'Clear skies.', 'Cloudy skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics("./images/SzaTrends-1.png")
 knitr::include_graphics("./images/SzaTrends-4.png" )
 knitr::include_graphics("./images/SzaTrends-7.png")
