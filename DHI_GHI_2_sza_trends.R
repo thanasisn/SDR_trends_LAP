@@ -403,7 +403,9 @@ vars <- c("GLB_att_des")
 #+ SzaTrends, echo=F, include=T, results = "asis"
 for (avar in vars) {
     ## ALL - CS
+    lec <- 0
     for (type in unique(szatrends$DATA)) {
+        lec <- lec + 1
 
         cat("\n\\newpage\n\n")
         cat("\n#### ", translate(type), translate(avar) , "from daily\n\n")
@@ -479,7 +481,8 @@ for (avar in vars) {
                 # title(paste(translate(avar), awename, "for", translate(type)), cex.main =  .8 * ccex)
                 title(paste(translate(avar), "trend", "for", translate(type)), cex.main =  .8 * ccex)
             } else {
-                legend("bottomleft", 0, translate(type),
+                # translate(type)
+                legend("bottomright", 0, paste0("(", letters[lec], ")"),
                        bty   = "n",
                        cex   = .8 * ccex,
                        xjust = 0.5,      # 0.5 means center adjusted

@@ -872,10 +872,12 @@ vars        <- c("GLB_att")
 database    <- c(  "ALL_1_D_monthly_DESEAS",
                  "CLEAR_1_D_monthly_DESEAS",
                  "CLOUD_1_D_monthly_DESEAS")
+lec         <- 0
 
 #+ CumulativeMonthlyCuSum, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
+    lec <- lec + 1
 
     cat("\n\\newpage\n")
     cat("\n#### Monthly cum sums for", translate(sub("_.*", "", adb)), "\n\n")
@@ -942,16 +944,17 @@ for (adb in database) {
                         translate(avar) ), cex.main = 1)
         } else {
             ## tag the corner
-            # legend("bottomleft", 0, translate(sub("_.*","",adb)),
-            #        cex   = 1.1,
-            #        bty   = "n",
-            #        xjust = 0.5,      # 0.5 means center adjusted
-            #        yjust = 0.5,      # 0.5 means center adjusted
-            #        x.intersp = -0.5, # adjust character interspacing as you like to effect box width
-            #        y.intersp =  0.2, # adjust character interspacing to effect box height
-            #        adj = c(0, 0.5))  # adjust string position (default values used here)
-            # # cex = 1.5,      # change cex if you like (not used here)
-            # # text.font = 2)  # bold the text if you like (not used here)
+            ## translate(sub("_.*","",adb))
+            legend("bottomleft", 0, paste0("(",letters[lec],")"),
+                   cex   = 1.1,
+                   bty   = "n",
+                   xjust = 0.5,      # 0.5 means center adjusted
+                   yjust = 0.5,      # 0.5 means center adjusted
+                   x.intersp = -0.5, # adjust character interspacing as you like to effect box width
+                   y.intersp =  0.2, # adjust character interspacing to effect box height
+                   adj = c(0, 0.5))  # adjust string position (default values used here)
+            # cex = 1.5,      # change cex if you like (not used here)
+            # text.font = 2)  # bold the text if you like (not used here)
             par("mar" = c(3,4,2,1))
         }
 
@@ -1089,11 +1092,13 @@ vars        <- c("GLB_att")
 database    <- c("ALL_1_D_monthly_DESEAS_notrend",
                  "CLEAR_1_D_monthly_DESEAS_notrend",
                  "CLOUD_1_D_monthly_DESEAS_notrend")
+lec          <- 0
 
 #+ CumulativeMonthlyCuSumNOtrend, echo=F, include=T, results="asis"
 # , fig.height = 5.5, fig.width = 7
 for (adb in database) {
     DB  <- get(adb)
+    lec <- lec + 1
 
     cat("\n\\newpage\n")
     cat("\n#### Monthly cum sums for", translate(sub("_.*", "", adb)), "\n\n")
@@ -1167,17 +1172,19 @@ for (adb in database) {
             title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
                         translate(avar) ), cex.main = 1)
         } else {
+            letters[lec]
             ## tag plot with type
-            # legend("bottomleft", 0, translate(sub("_.*","",adb)),
-            #        cex   = 1.1,
-            #        bty   = "n",
-            #        xjust = 0.5,      # 0.5 means center adjusted
-            #        yjust = 0.5,      # 0.5 means center adjusted
-            #        x.intersp = -0.5, # adjust character interspacing as you like to effect box width
-            #        y.intersp =  0.2, # adjust character interspacing to effect box height
-            #        adj = c(0, 0.5))  # adjust string position (default values used here)
-            # # cex = 1.5,      # change cex if you like (not used here)
-            # # text.font = 2)  # bold the text if you like (not used here)
+            ## translate(sub("_.*","",adb))
+            legend("bottomleft", 0, paste0("(",letters[lec],")"),
+                   cex   = 1.1,
+                   bty   = "n",
+                   xjust = 0.5,      # 0.5 means center adjusted
+                   yjust = 0.5,      # 0.5 means center adjusted
+                   x.intersp = -0.5, # adjust character interspacing as you like to effect box width
+                   y.intersp =  0.2, # adjust character interspacing to effect box height
+                   adj = c(0, 0.5))  # adjust string position (default values used here)
+            # cex = 1.5,      # change cex if you like (not used here)
+            # text.font = 2)  # bold the text if you like (not used here)
             par("mar" = c(3,4,2,1))
         }
 
