@@ -1135,6 +1135,7 @@ for (ase in seasons) {
                      "CLEAR_2_bySeason_daily_DESEAS",
                      "CLOUD_2_bySeason_daily_DESEAS")
     Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
+    lec         <- 0
 
     ## the order must be predefined to match
     expanded <- expand.grid(Dataset = dbs, Seasons = Seasons, stringsAsFactors = FALSE)
@@ -1230,6 +1231,7 @@ for (ase in seasons) {
         ## actual plots
         if (! i %in% c(6,11,16,21,10,15,20,25)) {
 
+            lec <- lec + 1
             par("mar" = c(0,0,0,0))
 
             kk       <- expanded[ 1, ]
@@ -1342,6 +1344,17 @@ for (ase in seasons) {
                    pch = ppm$pch,
                    col = 3,
                    cex = ccex)
+
+            ## tag plots with letters
+            legend("bottomleft", 0, paste0("(",letters[lec],")"),
+                   cex   = 1.1,
+                   bty   = "n",
+                   xjust = 0.5,      # 0.5 means center adjusted
+                   yjust = 0.5,      # 0.5 means center adjusted
+                   x.intersp = -0.5, # adjust character interspacing as you like to effect box width
+                   y.intersp =  0.2, # adjust character interspacing to effect box height
+                   adj = c(0, 0.5))  # adjust string position (default values used here)
+
 
             ## legend on any of the plots
             if (i %in% c(7)) {

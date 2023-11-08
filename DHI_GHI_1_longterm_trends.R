@@ -1021,6 +1021,7 @@ for (avar in vars) {
                        "CLEAR_1_D_bySeason_DESEAS",
                        "CLOUD_1_D_bySeason_DESEAS")
     Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
+    lec         <- 0
 
     ## the order must be predefined to match
     expanded <- expand.grid(Dataset = dbs, Seasons = Seasons, stringsAsFactors = FALSE)
@@ -1116,7 +1117,7 @@ for (avar in vars) {
 
         ## actual plots
         if (! i %in% c(6,11,16,21,10,15,20,25)) {
-
+            lec      <- lec + 1
             kk       <- expanded[1,]
             expanded <- expanded[-1, ]
 
@@ -1189,6 +1190,19 @@ for (avar in vars) {
                          signif(abs(fit[2]), 2),
                          "%/y")
             )
+
+
+            ## tag plots with letters
+            legend("bottomright", 0, paste0("(",letters[lec],")"),
+                   cex   = 1.1,
+                   bty   = "n",
+                   xjust = 0.5,      # 0.5 means center adjusted
+                   yjust = 0.5,      # 0.5 means center adjusted
+                   x.intersp = -0.5, # adjust character interspacing as you like to effect box width
+                   y.intersp =  0.2, # adjust character interspacing to effect box height
+                   adj = c(0, 0.5))  # adjust string position (default values used here)
+
+
 
             if (i %in% c(7,12,17,22)) {
                 mtext(text = bquote("Anomalies [%]"),
