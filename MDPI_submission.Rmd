@@ -179,7 +179,6 @@ output:
 ---
 
 
-
 ```{r echo=F, include=T, warning=FALSE, message=FALSE}
 suppressMessages(
     res <- rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools')
