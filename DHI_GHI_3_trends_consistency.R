@@ -1167,16 +1167,17 @@ for (adb in database) {
             title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
                         translate(avar) ), cex.main = 1)
         } else {
-            legend("bottomleft", 0, translate(sub("_.*","",adb)),
-                   cex   = 1.1,
-                   bty   = "n",
-                   xjust = 0.5,      # 0.5 means center adjusted
-                   yjust = 0.5,      # 0.5 means center adjusted
-                   x.intersp = -0.5, # adjust character interspacing as you like to effect box width
-                   y.intersp =  0.2, # adjust character interspacing to effect box height
-                   adj = c(0, 0.5))  # adjust string position (default values used here)
-            # cex = 1.5,      # change cex if you like (not used here)
-            # text.font = 2)  # bold the text if you like (not used here)
+            ## tag plot with type
+            # legend("bottomleft", 0, translate(sub("_.*","",adb)),
+            #        cex   = 1.1,
+            #        bty   = "n",
+            #        xjust = 0.5,      # 0.5 means center adjusted
+            #        yjust = 0.5,      # 0.5 means center adjusted
+            #        x.intersp = -0.5, # adjust character interspacing as you like to effect box width
+            #        y.intersp =  0.2, # adjust character interspacing to effect box height
+            #        adj = c(0, 0.5))  # adjust string position (default values used here)
+            # # cex = 1.5,      # change cex if you like (not used here)
+            # # text.font = 2)  # bold the text if you like (not used here)
             par("mar" = c(3,4,2,1))
         }
 
