@@ -1191,7 +1191,7 @@ for (avar in vars) {
             )
 
             if (i %in% c(7,12,17,22)) {
-                mtext(text = bquote("Anomaly [%]"),
+                mtext(text = bquote("Anomalies [%]"),
                       cex  = 0.6,
                       side = 2,
                       line = 2.3)

@@ -46,11 +46,11 @@ abstract: |
   Here we studied 30 years of pyranometer data in Thessaloniki, Greece, under three types of sky conditions (clear sky, cloudy sky and all sky).
   The clear-sky data were identified by applying a cloud screening algorithm. We found a positive trend of $0.38\,\%/\text{year}$ for all-sky, $0.35\,\%/\text{year}$ for clear-sky conditions, and $-0.28\,\%/\text{year}$ for cloudy conditions.
   We have also investigated the consistency of these trends, the effect of the solar zenith angle, and their seasonal variability.
-  Finally, we identified some anomalies in the long term SDR trends for all sky conditions.
+  Finally, we identified some anomalies in the long term SDR trends for all sky conditions by examining the cumulative sums of monthly anomalies from the climatological mean.
 
 # back matter
 keywords: |
-  GHI; SDR; Solar Brigthening/Dimming, aerosols, clouds.
+  GHI; SDR; solar radiation; Solar Brigthening/Dimming; aerosols; clouds.
 ## list three to ten pertinent keywords specific to the article, yet reasonably common within the subject discipline
 
 acknowledgement: |
@@ -624,7 +624,7 @@ In our case, there is a more complex evolution of the anomalies.
 Another distinct feature of the CUSUMs, is the different pattern of the cloudy-sky dataset which peaks around the middle of the period.
 Although, there seems to exist a complementary relation to the CUSUMs of the clear- and all-sky cases, we can not assert that clouds are the main driver for this relation due to the great difference in the number of observational data between the two datasets (Table\ \ref{tab:trendtable}).
 
-```{r cusummonth, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR.', fig.subcap=c('All skies.', 'Clear skies.', 'Cloudy skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+```{r cusummonth, echo = FALSE, fig.cap='Cumulative sum plots of the monthly SDR anomalies in (%) for different sky conditions.', fig.subcap=c('All skies.', 'Clear skies.', 'Cloudy skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics(c(
     "./images/CumulativeMonthlyCuSum-1.png",    # ALL sky
     "./images/CumulativeMonthlyCuSum-5.png",    # CLEAR sky
@@ -642,7 +642,7 @@ From 1997 to mid-2000s CUSUMs are increasing, likely due to a continuous decreas
 The following stable period spans for about 15 years up to 2021 when CUSUMs start increasing again.
 
 
-```{r cusumnotrendmonthly, echo = FALSE, fig.cap='Running cumulative sum plots of the monthly SDR after removing the long term trend from the monthly values.', fig.subcap=c('All skies.', 'Clear skies.', 'Cloudy skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+```{r cusumnotrendmonthly, echo = FALSE, fig.cap='Cumulative sum plots of monthly SDR anomalies in (%) for different sky conditions after removing the long-term linear trend.', fig.subcap=c('All skies.', 'Clear skies.', 'Cloudy skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics(c(
     "./images/CumulativeMonthlyCuSumNOtrend-1.png",    # ALL sky
     "./images/CumulativeMonthlyCuSumNOtrend-5.png",    # CLEAR sky
@@ -685,9 +685,9 @@ For SZAs $16^\circ$ - $50^\circ$, the trends range within about $\pm 0.2\,\%/y$,
 Between $50^\circ$ and $75^\circ$ SZA the trends for the period before noon are stronger and negative, possibly associated with stronger attenuation by clouds under oblique incidence angles.
 
 
-```{r szatrends, echo = FALSE, fig.cap='Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$), the trends were computed with SZA bins of $1^\\circ$ for each day, before and after local noon.', fig.subcap=c('All skies.', 'Clear skies.', 'Cloudy skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
+```{r szatrends, echo = FALSE, fig.cap='Long term trends of SDR as a function of SZA separately form morning and afternoon periods. Solid shapes  represent statistically significant trends ($p < 0.005$).', fig.subcap=c('All skies.', 'Clear skies.', 'Cloudy skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3}
 knitr::include_graphics("./images/SzaTrends-1.png")
-knitr::include_graphics("./images/SzaTrends-4.png" )
+knitr::include_graphics("./images/SzaTrends-4.png")
 knitr::include_graphics("./images/SzaTrends-7.png")
 ```
 
@@ -698,7 +698,7 @@ knitr::include_graphics("./images/SzaTrends-7.png")
 <!-- ``` -->
 
 
-## Long term trends by season of year
+## Long term trends by season
 
 ```{r echo=F, eval=TRUE}
 ## Prepare table and data
@@ -748,7 +748,7 @@ Moreover, the trends under clear- and cloudy-sky conditions are almost complemen
 During spring and summer the statistical significance is very low and the actual trend too small for a meaningful comparison.
 
 
-```{r seasonalALL, echo=F, fig.cap="Linear trends (black lines) of monthly mean SDR season (columns of graphs) for the three sky conditions (rows of graphs). The vertical scale is common for all graphs.", out.width="100%"}
+```{r seasonalALL, echo=F, fig.cap="Linear trends (black lines) of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots).", out.width="100%"}
 knitr::include_graphics("./images/SeasonalTrendsTogether3-2.png")
 ```
 
