@@ -896,6 +896,7 @@ for (adb in database) {
             par("mar" = c(3, 5, 2,  1))
         } else {
             par("mar" = c(3, 5, 0.5, 0.5))
+            par("mar" = c(3, 5, 0, 1))
         }
         par(pch = 19)
 
@@ -928,7 +929,7 @@ for (adb in database) {
              las    = 2,
              ylab   = "")
 
-        title(ylab = bquote("Anomaly CUSUM [%]"),
+        title(ylab = bquote("CUSUM of anomalies [%]"),
               line = 3.5)
 
 
@@ -940,16 +941,17 @@ for (adb in database) {
             title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
                         translate(avar) ), cex.main = 1)
         } else {
-            legend("bottomleft", 0, translate(sub("_.*","",adb)),
-                   cex   = 1.1,
-                   bty   = "n",
-                   xjust = 0.5,      # 0.5 means center adjusted
-                   yjust = 0.5,      # 0.5 means center adjusted
-                   x.intersp = -0.5, # adjust character interspacing as you like to effect box width
-                   y.intersp =  0.2, # adjust character interspacing to effect box height
-                   adj = c(0, 0.5))  # adjust string position (default values used here)
-            # cex = 1.5,      # change cex if you like (not used here)
-            # text.font = 2)  # bold the text if you like (not used here)
+            ## tag the corner
+            # legend("bottomleft", 0, translate(sub("_.*","",adb)),
+            #        cex   = 1.1,
+            #        bty   = "n",
+            #        xjust = 0.5,      # 0.5 means center adjusted
+            #        yjust = 0.5,      # 0.5 means center adjusted
+            #        x.intersp = -0.5, # adjust character interspacing as you like to effect box width
+            #        y.intersp =  0.2, # adjust character interspacing to effect box height
+            #        adj = c(0, 0.5))  # adjust string position (default values used here)
+            # # cex = 1.5,      # change cex if you like (not used here)
+            # # text.font = 2)  # bold the text if you like (not used here)
             par("mar" = c(3,4,2,1))
         }
 
@@ -1088,7 +1090,8 @@ database    <- c("ALL_1_D_monthly_DESEAS_notrend",
                  "CLEAR_1_D_monthly_DESEAS_notrend",
                  "CLOUD_1_D_monthly_DESEAS_notrend")
 
-#+ CumulativeMonthlyCuSumNOtrend, echo=F, include=T, results="asis", fig.height = 5.5, fig.width = 7
+#+ CumulativeMonthlyCuSumNOtrend, echo=F, include=T, results="asis"
+# , fig.height = 5.5, fig.width = 7
 for (adb in database) {
     DB  <- get(adb)
 
@@ -1110,7 +1113,7 @@ for (adb in database) {
         if (DRAFT == TRUE) {
             par("mar" = c(3, 5, 2,  1))
         } else {
-            par("mar" = c(3, 5, 3.4, 0.5))
+            # par("mar" = c(3, 5, 3.4, 0.5))
             par("mar" = c(3, 5, 0, 0.5))
         }
         par(pch = 19)
@@ -1151,7 +1154,7 @@ for (adb in database) {
              # labels = sfmt,
              las    = 2,
              ylab   = "")
-        title(ylab = bquote("Anomaly CUSUM, trend removed [%]"),
+        title(ylab = bquote("CUSUM of anomalies [%]"),
               line = 3.5)
 
 

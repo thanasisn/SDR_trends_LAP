@@ -270,7 +270,7 @@ for (DBn in dbs) {
                  cex.main = 0.8,
                  yaxt     = "n",
                  xlab     = "",
-                 ylab     = bquote("Anomaly [%]")
+                 ylab     = bquote("Anomalies [%]")
             )
             # y axis
             axis(2, pretty(dataset[[avar]]), las = 2 )
@@ -383,7 +383,7 @@ for (DBn in dbs) {
                  cex.main = 0.8,
                  yaxt     = "n",
                  xlab     = "",
-                 ylab     = bquote("Anomaly [%]")
+                 ylab     = bquote("Anomalies [%]")
             )
             axis(2, pretty(dataset[[avar]]), las = 2 )
 

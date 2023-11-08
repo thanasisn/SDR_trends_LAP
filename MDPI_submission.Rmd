@@ -265,7 +265,7 @@ Similar findings have been shown in observational data [@Schwarz2020; @Ohvril200
 Due to the significant spatial and temporal variability of the trends, and the contributing factors, there is a constant need to monitor and investigate SDR in different sites in order to estimate the degree of variability,  and its relation to the local conditions.
 In this study, we examine the trends of SDR, using ground-based measurements at Thessaloniki, Greece, for the period `r year(min(ALL_1_daily_DESEAS$Date))` to `r year(max(ALL_1_daily_DESEAS$Date))`, as derived from a CM-21 pyranometer.
 <!-- goals -->
-We reevaluated and extended the dataset used by @Bais2013, we applied a different algorithm for the identification of clear-/cloud-sky instances [@Reno2016; @Reno2012a], and we derived the SDR trends for the period `r year(min(ALL_1_daily_DESEAS$Date))` to `r year(max(ALL_1_daily_DESEAS$Date))`, under different sky conditions (all-sky, clear-sky and cloud-sky).
+We reevaluated and extended the dataset used by @Bais2013, we applied a different algorithm for the identification of clear-/cloud-sky instances [@Reno2016; @Reno2012a], and we derived the SDR trends for the period of study, under different sky conditions (all-sky, clear-sky and cloud-sky).
 Finally, we investigated the dependence of the trends on solar zenith angle and season.
 
 
@@ -587,6 +587,7 @@ and thus we can not attribute any major effect on SDR trend to Solar variability
 <!-- \normalsize -->
 
 ```{r trendtable, echo=F}
+LT2$`Sky conditions` <- sub(" sky", " skies", LT2$`Sky conditions`)
 x_latex <- knitr::kable(LT2,
                         format      = "latex",
                         booktabs    = TRUE,
@@ -609,7 +610,7 @@ x_latex %>%
 ```
 
 
-```{r trendALL, echo=F, out.width='.70\\linewidth', fig.cap=paste0("Anomaly (\\%) of the daily all-sky SDR, relative to climatological values for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term linear trend.")}
+```{r trendALL, echo=F, out.width='.70\\linewidth', fig.cap=paste0("Anomalies (\\%) of the daily all-sky SDR, relative to climatological values for ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line shows the long term linear trend.")}
 knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
 
@@ -776,8 +777,11 @@ spp <- spp[,c(
       # "Trend p-value",
       "Statistical signif. [%]"
       )]
+spp2 <- spp
+## rename conditions
+spp2$`Sky condition` <- sub(" sky", " skies", spp2$`Sky condition`)
 
-rownames(spp) <- NULL
+rownames(spp2) <- NULL
 # panderOptions("table.alignment.default", "left")
 # panderOptions("table.alignment.default", "center")
 # pander(spp,
@@ -786,7 +790,7 @@ rownames(spp) <- NULL
 #        caption = "\\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.")
 
 ## use kable
-x_latex <- knitr::kable(spp,
+x_latex <- knitr::kable(spp2,
                         format      = "latex",
                         booktabs    = TRUE,
                         escape      = TRUE,
