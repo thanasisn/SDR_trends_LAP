@@ -1346,7 +1346,7 @@ for (ase in seasons) {
                    cex = ccex)
 
             ## tag plots with letters
-            legend("bottomleft", 0, paste0("(",letters[lec],")"),
+            legend("bottomright", 0, paste0("(",letters[lec],")"),
                    cex   = 1.1,
                    bty   = "n",
                    xjust = 0.5,      # 0.5 means center adjusted
