@@ -14,7 +14,7 @@ TARGET="$3"
 
 [ ! -f "$SOURCE" ] && echo && echo "NOT A FILE $SOURCE"   && exit 1
 [ ! -d "$REPO"   ] && echo && echo "NOT A FOLDER $REPO"   && exit 1
-[ ! -d "$TARGET" ] && echo && echo "NOT A FOLDER $TARGET" && exit 1
+# [ ! -d "$TARGET" ] && echo && echo "NOT A FOLDER $TARGET" && exit 1
 
 mkdir -p "$TARGET/$REPO"
 
@@ -32,7 +32,8 @@ sed -e :a -re 's/<!--.*?-->//g;/<!--/N;//ba' "$SOURCE" |
         cp -v "$line"* "$TARGET/$REPO"
     done
 
-cp -v  "$SOURCE"       "$TARGET"
-cp -vr "./Definitions" "$TARGET"
+cp -vu  "$SOURCE"                 "$TARGET"
+cp -vu  "./manualreferences.bib"  "$TARGET"
+cp -vur "./Definitions"           "$TARGET"
 
 exit 0 

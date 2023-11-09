@@ -106,7 +106,7 @@ funding: |
 #   publish this paper'' if applicable.
 
 dataavailability: |
-  Data as daily sums are available through the WRDC database \url{http://http://wrdc.mgo.rssi.ru}.
+  Data as daily sums are available through the WRDC database \url{http://wrdc.mgo.rssi.ru}.
   One minute data are available on request from the corresponding author. The data are not publicly available for protection against unmonitored commercial use.
 
 # conflictsofinterest: |
