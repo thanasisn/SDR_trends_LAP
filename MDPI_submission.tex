@@ -552,12 +552,17 @@ observational data between the two datasets
 (Table~\ref{tab:trendtable}).
 
 \begin{figure}[h!]
-
-{\centering \subfloat[All skies.\label{fig:cusummonth-1}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-1} }\subfloat[Clear skies.\label{fig:cusummonth-2}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-5} }\subfloat[Cloudy skies.\label{fig:cusummonth-3}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-9} }
-
-}
-
+    \begin{adjustwidth}{-\extralength}{0cm}
+        {\centering 
+        \subfloat[All skies.\label{fig:cusummonth-1}]
+            {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-1}}\hfill
+        \subfloat[Clear skies.\label{fig:cusummonth-2}]
+            {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-5}}\hfill
+        \subfloat[Cloudy skies.\label{fig:cusummonth-3}]
+            {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-9}}\hfill
+        }
 \caption{Cumulative sum plots of the monthly SDR anomalies in (\%) for different sky conditions.}\label{fig:cusummonth}
+\end{adjustwidth}
 \end{figure}
 
 In order to investigate further the features of the CUSUMs, we created
@@ -585,12 +590,17 @@ lasting up to 2008. The following stable period spans for about 15 years
 up to 2021 when CUSUMs start increasing again.
 
 \begin{figure}[h!]
-
-{\centering \subfloat[All skies.\label{fig:cusumnotrendmonthly-1}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-1} }\subfloat[Clear skies.\label{fig:cusumnotrendmonthly-2}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-5} }\subfloat[Cloudy skies.\label{fig:cusumnotrendmonthly-3}]{\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-9} }
-
-}
-
+    \begin{adjustwidth}{-\extralength}{0cm}
+        {\centering 
+            \subfloat[All skies.\label{fig:cusumnotrendmonthly-1}]
+                {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-1} }\hfill
+            \subfloat[Clear skies.\label{fig:cusumnotrendmonthly-2}]
+                {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-5} }\hfill
+            \subfloat[Cloudy skies.\label{fig:cusumnotrendmonthly-3}]
+                {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-9} }
+        }
 \caption{Cumulative sum plots of monthly SDR anomalies in (\%) for different sky conditions after removing the long-term linear trend.}\label{fig:cusumnotrendmonthly}
+\end{adjustwidth}
 \end{figure}
 
 \hypertarget{effects-of-the-solar-zenith-angle-on-sdr.}{%
@@ -619,6 +629,17 @@ weak statistical significance. Between \(50^\circ\) and \(75^\circ\) SZA
 the trends for the period before noon are stronger and negative,
 possibly associated with stronger attenuation by clouds under oblique
 incidence angles.
+
+\begin{figure}[h!]
+    \begin{adjustwidth}{-\extralength}{0cm}
+
+{\centering \subfloat[All skies.\label{fig:szatrends-1}]{\includegraphics[width=.32\linewidth]{./images/SzaTrends-1} }\subfloat[Clear skies.\label{fig:szatrends-2}]{\includegraphics[width=.32\linewidth]{./images/SzaTrends-4} }\subfloat[Cloudy skies.\label{fig:szatrends-3}]{\includegraphics[width=.32\linewidth]{./images/SzaTrends-7} }
+
+}
+
+\caption{Long term trends of SDR as a function of SZA separately form morning and afternoon periods. Solid shapes  represent statistically significant trends ($p < 0.005$).}\label{fig:szatrends}
+\end{adjustwidth}
+\end{figure}
 
 \begin{figure}[h!]
 
