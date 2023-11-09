@@ -6,6 +6,9 @@ author:
     orcid: 0000-0002-5199-4119
   - name: Alkiviadis Bais
     affil: 1 #, \dagger, # \ddagger
+  - name: Alkiviadis Bais
+    affil: 1 #, \dagger, # \ddagger
+
 affiliation:
   - num: 1
     address: |
@@ -45,7 +48,10 @@ abstract: |
   Periods of positive trends are referred as brightening periods and of negative trends as dimming periods.
   Here we studied 30 years of pyranometer data in Thessaloniki, Greece, under three types of sky conditions (clear sky, cloudy sky and all sky).
   The clear-sky data were identified by applying a cloud screening algorithm. We found a positive trend of $0.38\,\%/\text{year}$ for all-sky, $0.35\,\%/\text{year}$ for clear-sky conditions, and $-0.28\,\%/\text{year}$ for cloudy conditions.
-  We have also investigated the consistency of these trends, the effect of the solar zenith angle, and their seasonal variability.
+  We have also investigated the consistency of these trends, their seasonal variability, and the effect of the solar zenith angle. 
+  We have found that for all-sky and clear-sky conditions the SDR trend is positive in winter (0.7 and 0.8 %/y, respectively) and autumn (~0.4 %/y), while under cloudy skies the trend is negative (-0.9 %/y in winter and -0.4 %/y in autumn). 
+  In spring and summer the trend is very close to zero, irrespective of sky conditions. 
+  The SDR trend is increasing with increasing solar zenith angle, except under cloudy skies where the trend is highly variable and close to zero.
   Finally, we identified some anomalies in the long term SDR trends for all sky conditions by examining the cumulative sums of monthly anomalies from the climatological mean.
 
 # back matter
