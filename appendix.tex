@@ -1,22 +1,38 @@
 
-% \renewcommand\thefigure{\thesection.\arabic{figure}} %% my
-\renewcommand\thefigure{\thesection.\arabic{figure}}
+% % \renewcommand\thefigure{\thesection.\arabic{figure}} %% my
+% % \renewcommand\thefigure{\thesection.\arabic{figure}}
+%
+% %% From R rticle MDPI template
+% %% optional
+% \appendixtitles{no} %Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
+% \appendixsections{one} %Leave argument "multiple" if there are multiple sections. Then a counter is printed ("Appendix A"). If there is only one appendix section then change the argument to "one" and no counter is printed ("Appendix").
+%
+% % \appendix
+% % \section{}
+%
+% \appendix
+% \setcounter{secnumdepth}{0}
+% \section{Appendix}
+%
+% \setcounter{figure}{0}    %% my
 
-%% optional
-\appendixtitles{no} %Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
-\appendixsections{one} %Leave argument "multiple" if there are multiple sections. Then a counter is printed ("Appendix A"). If there is only one appendix section then change the argument to "one" and no counter is printed ("Appendix").
+
+
+%% From raw MDPI template
+%% Optional
+\appendixtitles{no} % Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
+\appendixstart
 \appendix
-\section{}
+\section[\appendixname~\thesection]{}
 
-\setcounter{figure}{0}    %% my
 
-% \subsection{}
 
 % copy output from Rmd
 
 \begin{figure}[h!]
     {\centering
         \includegraphics[width=0.7\linewidth]{./images/LongtermTrends-5}
+
     }
     \caption{Anomalies (\%) of the daily clear-sky SDR, relative to climatological values for1993 - 2023. The black line shows the long term linear trend for clear-sky conditions.}\label{fig:trendCLEAR}
 \end{figure}
@@ -48,21 +64,6 @@
 \end{figure}
 
 
-% \begin{figure}
-%     \begin{adjustwidth}{-\extralength}{0cm}
-%         \centering
-%         \includegraphics[width=1.0\fulllength]{./images/SzaTrendsSeasTogether-2}
-%     \end{adjustwidth}
-%     \caption{This figure will be full-page.\label{fig:panoramic}}
-% \end{figure}
-%
-% \begin{figure}
-%     \begin{adjustwidth}{-\extralength}{0cm}
-%         \centering
-%         \includegraphics[width=1.0\linewidth]{./images/SzaTrendsSeasTogether-2}
-%     \end{adjustwidth}
-%     \caption{This figure will be full-page.\label{fig:panodramic}}
-% \end{figure}
 
 
 \FloatBarrier
