@@ -2,10 +2,10 @@
 title:     "Trends from 30-year observations of downward solar irradiance in Thessaloniki, Greece"
 author:
   - name:  Athanasios Natsis
-    affil: 1,* # \ddagger
+    affil: 1 # \ddagger
     orcid: 0000-0002-5199-4119
   - name: Alkiviadis Bais
-    affil: 1 #, \dagger, # \ddagger
+    affil: 1,* #, \dagger, # \ddagger
   - name: Charikleia Meleti
     affil: 1 #, \dagger, # \ddagger
 
@@ -15,7 +15,7 @@ affiliation:
       Aristotle University of Thessaloniki -
       Laboratory of Atmospheric Physics,
       Campus Box 149, 54124 Thessaloniki, Greece
-#    email: natsisphysicist@gmail.com (A.N.); abais@auth.gr (A.B.); meleti@auth.gr (C.M.)
+    email: natsisphysicist@gmail.com (A.N.); abais@auth.gr (A.B.); meleti@auth.gr (C.M.)
   # - num: 2
   #   address: |
   #     Your department
@@ -30,7 +30,8 @@ authorcitation: |
 # secondnote: |
 #   These authors contributed equally to this work.
 correspondence: |
-  natsisphysicist@gmail.com;
+  abais@auth.gr
+# natsisphysicist@gmail.com;
 #   Tel.: +XX-000-00-0000.
 
 # document options
