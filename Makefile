@@ -142,8 +142,9 @@ $(RUNT): $(RMD)
 	-Rscript $?
 
 gather:
-	./gather_include.sh ./appendix.tex        images SUBMISSION
-	./gather_include.sh ./MDPI_submission.tex images SUBMISSION
+	./gather_include.sh ./appendix.tex        images  SUBMISSION
+	./gather_include.sh ./MDPI_submission.tex images  SUBMISSION
+	cp ./manualreferences.bib                         SUBMISSION
 
 clean_cache:
 	rm -f -r ./Article_cache
