@@ -27,7 +27,7 @@ D_15   <- TRUE
 TEST <- TRUE
 TEST <- FALSE
 
-if (TEST) {
+if (TEST == TRUE) {
     warning("Running in TEST mode!!")
 }
 
@@ -83,7 +83,7 @@ if (havetorun) {
                               full.names = T )
     input_files <- grep("_stats_", input_files, value = TRUE, invert = TRUE)
 
-    if (TEST) {
+    if (TEST == TRUE) {
         warning("\nTEST MODE IS ACTIVE!!\n\n")
         input_files <- sample(input_files, 2)
     }
@@ -204,7 +204,6 @@ if (havetorun) {
     ## show included data
     # plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])
 
-
     ## Filter min elevation
     # DATA <- DATA[Elevat >= MIN_ELEVA, ]
 
@@ -223,7 +222,7 @@ if (havetorun) {
     }
 
     #__  Keep data characterized as 'TRUE' by Radiation Quality control v14 ----
-    if (D_14 | D_14_2) {
+    if (D_14 | D_14_2 | D_15) {
         DATA[QCF_DIR == FALSE, wattDIR := NA]
         DATA[QCF_DIR == FALSE, wattHOR := NA]
         DATA[QCF_GLB == FALSE, wattGLB := NA]

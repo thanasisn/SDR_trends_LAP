@@ -200,7 +200,8 @@ library(data.table)
 library(kableExtra)
 library(dplyr)
 ## load data from trends analysis
-load("./data/common_data_14_2.Rda")
+source("./DHI_GHI_00_raw_data.R")
+load(common_data)
 load("./data/Input_1_longterm_trends.Rda")
 ## number of measurements for each dataset
 SDR_N_All   <- sum(  ALL_1_daily_DESEAS[,GLB_att_N])

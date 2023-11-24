@@ -21,13 +21,17 @@ source("./DHI_GHI_0_variables.R")
 
 #  Run data construction  ------------------------------------------------------
 
+# _ Set Importan variables for all the project  --------------------------------
+
 D_14_2 <- FALSE
 D_14   <- FALSE
 D_13   <- FALSE
+D_15   <- FALSE
 
-D_14_2 <- TRUE
+# D_14_2 <- TRUE
 # D_14   <- TRUE
 # D_13   <- TRUE
+D_15   <- TRUE
 
 TEST <- TRUE
 TEST <- FALSE
@@ -42,6 +46,13 @@ if (D_14_2) {
     common_data <- common_data_14_2
     CS_file     <- CS_file_14_2
     inpatern    <- "Clear_sky_id_Reno-Hansen_apply_v14_2_[0-9]{4}.Rds"
+}
+
+## Test for missing data
+if (D_15) {
+    common_data <- common_data_15
+    CS_file     <- CS_file_15
+    inpatern    <- "Clear_sky_id_Reno-Hansen_apply_v15_[0-9]{4}.Rds"
 }
 
 ## new implementation with corrected limits
@@ -63,6 +74,7 @@ dir.create(dirname(common_data), showWarnings = FALSE)
 dir.create("./figures",          showWarnings = FALSE)
 dir.create("./images",           showWarnings = FALSE)
 dir.create("./runtime",          showWarnings = FALSE)
+
 
 
 ##_  Check if we need to run data export  --------------------------------------
@@ -155,7 +167,7 @@ if (havetorun) {
     }
 
 
-    ##_  Skip data ranges for CM-21  -------------------------------------------
+    ## __ Skip data ranges for CM-21 --------------------------------------------
     for (as in nrow(SKIP_cm21)) {
         skip <- SKIP_cm21[as,]
         DATA[ Date >= skip$From & Date <= skip$Until, wattGLB    := NA ]
@@ -219,8 +231,8 @@ if (havetorun) {
         DATA[!QCF_GLB %in% keepQF, wattGLB := NA]
     }
 
-    ##_  Keep data characterized as 'TRUE' by Radiation Quality control v14 ----
-    if (D_14 | D_14_2) {
+    #__  Keep data characterized as 'TRUE' by Radiation Quality control v14 ----
+    if (D_14 | D_14_2 | D_15) {
         DATA[QCF_DIR == FALSE, wattDIR := NA]
         DATA[QCF_DIR == FALSE, wattHOR := NA]
         DATA[QCF_GLB == FALSE, wattGLB := NA]
