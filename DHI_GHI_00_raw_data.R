@@ -28,10 +28,10 @@ D_14   <- FALSE
 D_13   <- FALSE
 D_15   <- FALSE
 
-# D_14_2 <- TRUE
+D_14_2 <- TRUE
 # D_14   <- TRUE
 # D_13   <- TRUE
-D_15   <- TRUE
+# D_15   <- TRUE
 
 TEST <- TRUE
 TEST <- FALSE
