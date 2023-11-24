@@ -468,9 +468,9 @@ the Sun's intensity variability, using a time series of satellite TSI
 observations. The TSI data we used are part of the ``NOAA Climate Data
 Record of Total Solar Irradiance'' dataset \citep{Coddington2005}. The
 initial daily values of this dataset were interpolated to match the time
-step of our measurements. In the final dataset \(40\%\) of the data were
-identified as under clear-sky conditions and \(60\%\) as under cloud-sky
-conditions.
+step of our measurements. In the final dataset \(84.2\%\) of the data
+were identified as under clear-sky conditions and \(15.8\%\) as under
+cloud-sky conditions.
 
 In order to investigate the SDR trends, we implemented an appropriate
 aggregation scheme to the 1-minute data to derive a series in coarser
@@ -502,8 +502,8 @@ only the time series under all-sky conditions; the plots for clear-sky
 and cloud-sky conditions, are very similar and are shown in the Appendix
 (Figures~\ref{fig:trendCLEAR} and~ \ref{fig:trendCLOUD}). We observe a
 positive trend for all-sky conditions (\(0.38\,\%/y\)), a very close but
-smaller trend for clear-skies (\(0.16\,\%/y\)) and a negative weaker
-trend for cloudy-skies (\(0.022\,\%/y\)). In the studied period, there
+smaller trend for clear-skies (\(0.35\,\%/y\)) and a negative weaker
+trend for cloudy-skies (\(-0.28\,\%/y\)). In the studied period, there
 is no significant break or change in the variability of the time series.
 Other studies for the European region reported a change of the SDR
 slope, around 1980 \citep{Wild2021, Yuan2021, Ohmura2009}, a few years
@@ -518,9 +518,9 @@ we can not attribute any major effect on SDR trend to Solar variability.
 \toprule
 Sky conditions & Trend [\%/year] & Statistical signif. [\%] & Days with data\\
 \midrule
-All skies & 0.3760 & 100.00 & 10256\\
-Clear skies & 0.1650 & 100.00 & 7995\\
-Cloudy skies & 0.0225 & 32.57 & 10226\\
+All skies & 0.376 & 100.00 & 10256\\
+Clear skies & 0.349 & 100.00 & 10256\\
+Cloudy skies & -0.276 & 99.97 & 5067\\
 \bottomrule
 \end{tabu}
 \end{table}
@@ -668,7 +668,7 @@ the \(99\,\%\) confidence level. In spring and summer, the trends are
 much smaller and of lesser statistical significance. These seasonal
 differences indicate a possible relation of the trends in SDR to trends
 of clouds during winter and autumn. For clear-skies, the trend in winter
-is \(0.7\,\%/y\), larger than for all-skies (\(0.69\,\%/y\)), which is
+is \(0.83\,\%/y\), larger than for all-skies (\(0.69\,\%/y\)), which is
 another indication of a decreasing trend in cloud optical thickness.
 Moreover, the trends under clear- and cloudy-sky conditions are almost
 complementary to each other, particularly for winter and autumn, where
@@ -692,29 +692,29 @@ comparison.
 \toprule
 Sky condition & Season & Trend [\%/year] & Statistical signif. [\%]\\
 \midrule
-\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.686000} & \cellcolor{gray!6}{99.900}\\
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.6860} & \cellcolor{gray!6}{99.9}\\
 
- & Spring & 0.145000 & 81.800\\
+ & Spring & 0.1450 & 81.8\\
 
-\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{0.120000} & \cellcolor{gray!6}{89.400}\\
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{0.1200} & \cellcolor{gray!6}{89.4}\\
 
-\multirow{-4}{*}{\centering\arraybackslash All skies} & Autumn & 0.431000 & 99.300\\
+\multirow{-4}{*}{\centering\arraybackslash All skies} & Autumn & 0.4310 & 99.3\\
 \cmidrule{1-4}
-\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.700000} & \cellcolor{gray!6}{100.000}\\
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.8260} & \cellcolor{gray!6}{100.0}\\
 
- & Spring & 0.000266 & 0.153\\
+ & Spring & 0.0613 & 38.6\\
 
-\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{-0.172000} & \cellcolor{gray!6}{98.500}\\
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{-0.0307} & \cellcolor{gray!6}{25.9}\\
 
-\multirow{-4}{*}{\centering\arraybackslash Clear skies} & Autumn & 0.131000 & 74.000\\
+\multirow{-4}{*}{\centering\arraybackslash Clear skies} & Autumn & 0.3670 & 97.2\\
 \cmidrule{1-4}
-\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.074600} & \cellcolor{gray!6}{32.300}\\
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{-0.8820} & \cellcolor{gray!6}{98.9}\\
 
- & Spring & 0.046000 & 26.200\\
+ & Spring & -0.0991 & 37.2\\
 
-\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{-0.038900} & \cellcolor{gray!6}{26.200}\\
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{0.0444} & \cellcolor{gray!6}{21.5}\\
 
-\multirow{-4}{*}{\centering\arraybackslash Cloudy skies} & Autumn & -0.049000 & 23.300\\
+\multirow{-4}{*}{\centering\arraybackslash Cloudy skies} & Autumn & -0.4000 & 89.5\\
 \bottomrule
 \end{tabu}
 \end{table}
@@ -730,14 +730,14 @@ of \(0.33\,\%/y\). The increase of this trend indicates that the
 brightening of SDR continues and is probably caused by continuing
 decreases in aerosol optical depth and the optical thickness of clouds
 over the area. Moreover, we found a similar trend under clear-sky
-conditions (\(0.16\,\%/y\)) that further supports the assumption that
+conditions (\(0.35\,\%/y\)) that further supports the assumption that
 the brightening is caused mainly by decreasing aerosols. Unfortunately,
 for the entire period there is no available data for the aerosols, in
 order to quantify their effect on SDR. However, \citet{Siomos2020} have
 shown that aerosol optical depth over Thessaloniki is decreasing
 constantly at least up to 2018. The attenuation of SDR by aerosols over
 Europe have been proposed as major factor by \citet{Wild2021}. The
-dimming effect on SDR under cloudy-sky conditions (\(0.022\,\%/y\)),
+dimming effect on SDR under cloudy-sky conditions (\(-0.28\,\%/y\)),
 suggests that cloud optical thickness is decreasing during this period.
 Because we have no adequate data to investigate the long term changes of
 cloud thickness in the region, we cannot verify if the negative SDR
@@ -747,9 +747,9 @@ changes in clouds.
 The observed brightening on SDR over Thessaloniki is dependent on SZA
 (larger SZAs lead to stronger brightening). The trend is also dependent
 on season, with winter showing the strongest statistically significant
-trend of \(0.69\) and \(0.7\,\%/y\) for all- and clear-skies,
+trend of \(0.69\) and \(0.83\,\%/y\) for all- and clear-skies,
 respectively, in contrast to spring and summer. The trends for autumn
-are also significant but smaller ( \(0.43\) and \(0.13\,\%/y\) for all-
+are also significant but smaller ( \(0.43\) and \(0.37\,\%/y\) for all-
 and clear-skies, respectively). Our findings are in agreement with other
 studies for the region.
 
