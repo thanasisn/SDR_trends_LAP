@@ -1,4 +1,8 @@
 
+# Plots add r R^2 and intervali
+
+http://www.sthda.com/english/wiki/correlation-test-between-two-variables-in-r
+
 # Representation?
 
 Filter just all-sky 

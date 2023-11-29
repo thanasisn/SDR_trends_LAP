@@ -358,8 +358,14 @@ for (DBn in dbs) {
             if (all(is.na(dataset[[avar]]))) next()
 
             ## linear model by day step
-            lm1 <- lm(dataset[[avar]] ~ dataset$Date)
+            lm1  <- lm(dataset[[avar]] ~ dataset$Date)
 
+            cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
+
+
+            data.frame(cor1)
+
+            stop("D")
             ## capture lm for table
             gather <- rbind(gather,
                             data.frame(
@@ -1543,3 +1549,7 @@ write_dat(pprint,
 tac <- Sys.time()
 cat(sprintf("%s %s@%s %s %f mins\n\n", Sys.time(), Sys.info()["login"],
             Sys.info()["nodename"], basename(Script.Name), difftime(tac,tic,units = "mins")))
+if (interactive() & difftime(tac, tic, units = "sec") > 30) {
+    system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
+    system(paste("notify-send -u normal -t 30000 ", Script.Name, " 'R script ended'"))
+}
