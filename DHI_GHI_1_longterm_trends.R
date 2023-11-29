@@ -536,6 +536,12 @@ pprint <- pprint[ , ..wecare]
 pprint[, DATA               := translate(DATA)                  ]
 pprint[, var                := translate(var)                   ]
 
+pprint$cor.data_name   <- NULL
+pprint$cor.null_value  <- NULL
+pprint$cor.method      <- NULL
+pprint$cor.alternative <- NULL
+pprint$cor.p           <- NULL
+
 
 
 # \scriptsize
@@ -1320,6 +1326,12 @@ pprint[, slope.ConfInt_0.99 := NULL               ]
 pprint[, slope.ConfInt_0.95 := NULL               ]
 pprint[, DATA               := translate(DATA)    ]
 pprint[, var                := translate(var)     ]
+
+pprint$cor.data_name   <- NULL
+pprint$cor.null_value  <- NULL
+pprint$cor.method      <- NULL
+pprint$cor.alternative <- NULL
+pprint$cor.p           <- NULL
 
 setorder(pprint, DATA, var)
 
