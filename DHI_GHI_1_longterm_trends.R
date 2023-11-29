@@ -82,6 +82,7 @@ panderOptions("table.split.table",        120   )
 ## Functions from `https://github.com/thanasisn/IStillBreakStuff/tree/main/FUNCTIONS/R`
 source("~/CODE/FUNCTIONS/R/sumNA.R")
 source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
+source("~/CODE/FUNCTIONS/R/cor_test_stats.R")
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 
@@ -246,11 +247,14 @@ for (DBn in dbs) {
 
             ## linear model by day step
             lm1 <- lm(dataset[[avar]] ~ dataset$Date)
+            ## correlation test
+            cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
             ## capture lm for table
             gather <- rbind(gather,
                             data.frame(
                                 linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
+                                cor_test_stats(cor1),
                                 DATA      = DBn,
                                 var       = avar,
                                 N         = sum(!is.na(dataset[[avar]]))
@@ -359,22 +363,20 @@ for (DBn in dbs) {
 
             ## linear model by day step
             lm1  <- lm(dataset[[avar]] ~ dataset$Date)
-
+            ## correlation test
             cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
-
-            data.frame(cor1)
-
-            stop("D")
             ## capture lm for table
             gather <- rbind(gather,
                             data.frame(
                                 linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
+                                cor_test_stats(cor1),
                                 DATA      = DBn,
                                 var       = avar,
                                 N         = sum(!is.na(dataset[[avar]])),
                                 Obs       = sum(dataset[[sub("_des","_N", avar)]], na.rm = TRUE)
-                            ))
+                            )
+            )
 
             par("mar" = c(3, 4, 2, 1))
 
@@ -1276,13 +1278,16 @@ for (DBn in dbs) {
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
 
             ## linear model counting years
-            lm2 <- lm( dataset[[avar]] ~ dataset$Year )
+            lm2 <- lm(dataset[[avar]] ~ dataset$Year)
+            ## correlation test
+            cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Year), method = 'pearson')
 
             ## gather stats
             gather_seas <- rbind(gather_seas,
                                  data.frame(
                                      linear_fit_stats(lm2,
                                                       confidence_interval = Daily_confidence_limit),
+                                     cor_test_stats(cor1),
                                      DATA   = DBn,
                                      Season = ase,
                                      var    = avar,
@@ -1388,7 +1393,7 @@ for (DBn in dbs) {
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
 
             ## linear model counting years
-            lm2 <- lm( dataset[[avar]] ~ dataset$Year )
+            lm2 <- lm(dataset[[avar]] ~ dataset$Year)
 
             ## plot
             par("mar" = c(2, 3.4, 2, 0.5))
@@ -1483,13 +1488,16 @@ for (DBn in dbs) {
             if (sum(!is.na(dataset[[avar]])) <= 1) next()
 
             ## linear model counting years
-            lm2  <- lm( dataset[[avar]] ~ dataset$Year )
+            lm2 <- lm(dataset[[avar]] ~ dataset$Year)
+            ## correlation test
+            cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
             ## gather stats
             gather_seas <- rbind(gather_seas,
                                  data.frame(
                                      linear_fit_stats(lm2,
                                                       confidence_interval = Daily_confidence_limit),
+                                     cor_test_stats(cor1),
                                      DATA      = DBn,
                                      Month     = ase,
                                      var       = avar,
