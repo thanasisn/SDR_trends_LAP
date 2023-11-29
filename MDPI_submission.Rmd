@@ -379,6 +379,8 @@ TSI$slope.ConfInt_0.99 <- NULL
 TSI$var                <- NULL
 TSI$N                  <- NULL
 TSI$Obs                <- NULL
+TSI$Rsqrd              <- NULL
+TSI$RsqrdAdj           <- NULL
 
 TSI$cor.null_value     <- NULL
 TSI$cor.alternative    <- NULL
@@ -541,6 +543,15 @@ LT$var                <- NULL
 LT$Obs                <- NULL
 setorder(LT, -slope.stat_sig)
 rownames(LT) <- NULL
+
+
+LT$cor.df           <- NULL
+LT$cor.null_value   <- NULL
+LT$cor.alternative  <- NULL
+LT$cor.method       <- NULL
+LT$cor.data_name    <- NULL
+LT$cor.p            <- NULL
+
 
 
 names(LT)    <- c("Trend [%/year]",

@@ -47,6 +47,16 @@ DATA_Clear[, TYPE := NULL]
 DATA_Cloud[, TYPE := NULL]
 
 
+DATA_all[,.N]
+DATA_Clear[,.N]
+DATA_Cloud[,.N]
+
+DATA_all[,length(unique(as.Date(Date)))]
+DATA_Clear[,length(unique(as.Date(Date)))]
+DATA_Cloud[,length(unique(as.Date(Date)))]
+
+
+
 # ......................................................................... ----
 ##  1. long-term  --------------------------------------------------------------
 
@@ -102,6 +112,8 @@ CLOUD_1_daily_mean <-
                   HOR_att_N     = sum(!is.na(HOR_att)),
                   DIR_att_N     = sum(!is.na(DIR_att))),
                by = .( Date = Day ) ]
+
+
 
 ## _ Margin of error for confidence interval -----------------------------------
 conf_param  <- 1 - ( 1 - Daily_confidence_limit ) / 2
