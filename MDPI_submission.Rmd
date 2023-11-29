@@ -379,6 +379,17 @@ TSI$slope.ConfInt_0.99 <- NULL
 TSI$var                <- NULL
 TSI$N                  <- NULL
 TSI$Obs                <- NULL
+
+TSI$cor.null_value     <- NULL
+TSI$cor.alternative    <- NULL
+TSI$cor.method         <- NULL
+TSI$cor.data_name      <- NULL
+TSI$cor.p              <- NULL
+care <- grep("^cor\\.", names(TSI), value = T )
+for (an in care) {
+    TSI[, (an) := NULL ]
+}
+
 setorder(TSI, -slope.stat_sig)
 rownames(TSI) <- NULL
 names(TSI) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Trend statistical signif. [%]")
