@@ -385,7 +385,8 @@ TSI$cor.alternative    <- NULL
 TSI$cor.method         <- NULL
 TSI$cor.data_name      <- NULL
 TSI$cor.p              <- NULL
-care <- grep("^cor\\.", names(TSI), value = T )
+TSI$conf.level         <- NULL
+care <- grep("^cor\\.", names(TSI), value = T)
 for (an in care) {
     TSI[, (an) := NULL ]
 }
