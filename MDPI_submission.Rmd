@@ -544,50 +544,55 @@ LT$Obs                <- NULL
 setorder(LT, -slope.stat_sig)
 rownames(LT) <- NULL
 
-
 LT$cor.df           <- NULL
 LT$cor.null_value   <- NULL
 LT$cor.alternative  <- NULL
 LT$cor.method       <- NULL
 LT$cor.data_name    <- NULL
 LT$cor.p            <- NULL
-
-
-
-names(LT)    <- c("Trend [%/year]",
-                  "Trend p-value",
-                  "Sky conditions",
-                  "Days with data",
-                  "Statistical signif. [%]")
-## no need all are 100%
-LTminSSig <- signif(min(LT$`Statistical signif. [%]`), 4)
-# LT$`Trend statistical signif. [%]` <- NULL
-## numeric precision
-LT$`Trend [%/year]` <- signif(LT$`Trend [%/year]`, 3)
-LT$`Trend p-value`  <- signif(LT$`Trend p-value`,  3)
+LT$conf.level       <- NULL
 
 ## some vars to use later
-alltrend   <- signif(LT[`Sky conditions` == "All sky cond.",    `Trend [%/year]`], 2)
-cleartrend <- signif(LT[`Sky conditions` == "Clear sky cond.",  `Trend [%/year]`], 2)
-cloudtrend <- signif(LT[`Sky conditions` == "Cloudy sky cond.", `Trend [%/year]`], 2)
+alltrend   <- signif(LT[DATA == "All sky cond.",    slope], 2)
+cleartrend <- signif(LT[DATA == "Clear sky cond.",  slope], 2)
+cloudtrend <- signif(LT[DATA == "Cloudy sky cond.", slope], 2)
+LTminSSig  <- signif(min(LT$slope.stat_sig), 4)
+
+## numeric precision of table
+LT$slope    <- signif(LT$slope,   3)
+LT$slope.p  <- signif(LT$slope.p, 3)
 ## rename sky conditions
-LT$`Sky conditions` <- sub(" cond.", "", LT$`Sky conditions`)
+LT$DATA <- sub(" cond.", "", LT$DATA)
+
+
+# 
+# names(LT)    <- c("Trend [%/year]",
+#                   "Trend p-value",
+#                   "Sky conditions",
+#                   "Days with data",
+#                   "Statistical signif. [%]")
+
+## no need all are 100%
+
+# LT$`Trend statistical signif. [%]` <- NULL
+
 
 ## order columns
-LT1 <- LT[,c(
-      "Sky conditions",
-      "Trend [%/year]",
-      "Trend p-value",
-      "Days with data"
-      )]
+# LT1 <- LT[,c(
+#       "Sky conditions",
+#       "Trend [%/year]",
+#       "Trend p-value",
+#       "Days with data"
+#       )]
 
 ## order columns
-LT2 <- LT[,c(
-      "Sky conditions",
-      "Trend [%/year]",
-      "Statistical signif. [%]",
-      "Days with data"
-      )]
+# LT2 <- LT[,c(
+#       "Sky conditions",
+#       "Trend [%/year]",
+#       "Statistical signif. [%]",
+#       "Days with data"
+#       )]
+LT2 <- LT
 ```
 
 We calculated the linear SDR trends, from the departures of the mean daily values from the daily climatology and for the three sky conditions (Table\ \ref{tab:trendtable}).
@@ -779,26 +784,43 @@ spp$slope.sd           <- NULL
 spp$slope.ConfInt_0.95 <- NULL
 spp$slope.ConfInt_0.99 <- NULL
 spp$var                <- NULL
+
+spp$cor.df             <- NULL
+spp$cor.null_value     <- NULL
+spp$cor.alternative    <- NULL
+spp$cor.method         <- NULL
+spp$cor.data_name      <- NULL
+spp$cor.p              <- NULL
+spp$conf.level         <- NULL
+
+
 rownames(spp)          <- NULL
-names(spp) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Season", "Statistical signif. [%]")
+
 ## order by season
 target    <- c("Winter", "Spring", "Summer", "Autumn")
 new_order <- sapply(target, function(x, spp){which(spp$Season == x)}, spp = spp)
-spp        <- spp[new_order,]
+spp       <- spp[new_order,]
 ## order by sky condition
-spp <- spp[order(spp$`Sky condition`),]
+spp <- spp[order(spp$DATA), ]
+
+## numeric precision
+spp$slope          <- signif(spp$slope,          3)
+spp$slope.p        <- signif(spp$slope.p,        3)
+spp$slope.stat_sig <- signif(spp$slope.stat_sig, 3)
+
+
+## rename sky conditions
+spp$DATA <- sub(" cond.", "", spp$DATA)
+## rename conditions
+spp$DATA <- sub(" sky", " skies", spp$DATA)
+
+# names(spp) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Season", "Statistical signif. [%]")
 
 # ## put all sky first
 # A  <- which(spp$`Sky condition` == "All sky cond.")
 # B  <- which(spp$`Sky condition` != "All sky cond.")
 # spp <- spp[c(A,B),]
-## numeric precision
-spp$`Trend [%/year]`          <- signif(spp$`Trend [%/year]`, 3)
-spp$`Trend p-value`           <- signif(spp$`Trend p-value`,  3)
-spp$`Statistical signif. [%]` <- signif(spp$`Statistical signif. [%]`,  3)
 
-## rename sky conditions
-spp$`Sky condition` <- sub(" cond.", "", spp$`Sky condition`)
 ```
 
 
@@ -847,16 +869,16 @@ During spring and summer the statistical significance is very low and the actual
 
 ```{r trendseasontable, echo=F}
 ## arrange columns
-spp <- spp[,c(
-      "Sky condition",
-      "Season",
-      "Trend [%/year]",
-      # "Trend p-value",
-      "Statistical signif. [%]"
-      )]
+# spp <- spp[,c(
+#       "Sky condition",
+#       "Season",
+#       "Trend [%/year]",
+#       # "Trend p-value",
+#       "Statistical signif. [%]"
+#       )]
+
 spp2 <- spp
-## rename conditions
-spp2$`Sky condition` <- sub(" sky", " skies", spp2$`Sky condition`)
+
 
 rownames(spp2) <- NULL
 # panderOptions("table.alignment.default", "left")
