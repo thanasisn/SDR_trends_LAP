@@ -551,6 +551,9 @@ LT$cor.method       <- NULL
 LT$cor.data_name    <- NULL
 LT$cor.p            <- NULL
 LT$conf.level       <- NULL
+LT$cor.conf_int_1   <- NULL
+LT$cor.conf_int_2   <- NULL
+
 
 ## some vars to use later
 alltrend   <- signif(LT[DATA == "All sky cond.",    slope], 2)
@@ -563,7 +566,7 @@ LT$slope    <- signif(LT$slope,   3)
 LT$slope.p  <- signif(LT$slope.p, 3)
 ## rename sky conditions
 LT$DATA <- sub(" cond.", "", LT$DATA)
-
+LT$DATA <- sub(" sky", " skies", LT$DATA)
 
 # 
 # names(LT)    <- c("Trend [%/year]",
@@ -615,7 +618,7 @@ and thus we can not attribute any major effect on SDR trend to Solar variability
 <!-- \normalsize -->
 
 ```{r trendtable, echo=F}
-LT2$`Sky conditions` <- sub(" sky", " skies", LT2$`Sky conditions`)
+
 x_latex <- knitr::kable(LT2,
                         format      = "latex",
                         booktabs    = TRUE,
@@ -792,7 +795,8 @@ spp$cor.method         <- NULL
 spp$cor.data_name      <- NULL
 spp$cor.p              <- NULL
 spp$conf.level         <- NULL
-
+spp$cor.conf_int_1     <- NULL
+spp$cor.conf_int_2     <- NULL
 
 rownames(spp)          <- NULL
 
@@ -814,6 +818,9 @@ spp$DATA <- sub(" cond.", "", spp$DATA)
 ## rename conditions
 spp$DATA <- sub(" sky", " skies", spp$DATA)
 
+spp <- rename(spp, "Trend [%/year]" = slope)
+spp <- rename(spp, "Sky condition"  = DATA )
+
 # names(spp) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Season", "Statistical signif. [%]")
 
 # ## put all sky first
@@ -827,13 +834,13 @@ spp$DATA <- sub(" sky", " skies", spp$DATA)
 Similarly to the long term trends discussed above, we have calculated the trend of the anomalies for the three different sky conditions, and for each season of the year, using the corresponding mean monthly values
 (Figure\ \ref{fig:seasonalALL} and Table\ \ref{tab:trendseasontable}).
 For all-sky conditions the trend in SDR in winter is the largest
-($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$),
+($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All skies"], 2)`\,\%/y$),
 followed by the trend in autumn
-($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$,
+($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All skies"], 2)`\,\%/y$,
 a value close to the long term trend) both statistically significant above the $99\,\%$ confidence level.
 In spring and summer, the trends are much smaller and of lesser statistical significance.
 These seasonal differences indicate a possible relation of the trends in SDR to trends of clouds during winter and autumn.
-For clear-skies, the trend in winter is $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear sky"], 2)`\,\%/y$, larger than for all-skies ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`\,\%/y$), which is another indication of a decreasing trend in cloud optical thickness.
+For clear-skies, the trend in winter is $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear skies"], 2)`\,\%/y$, larger than for all-skies ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All skies"], 2)`\,\%/y$), which is another indication of a decreasing trend in cloud optical thickness.
 Moreover, the trends under clear- and cloudy-sky conditions are almost complementary to each other, particularly for winter and autumn, where the signal is stronger.
 During spring and summer the statistical significance is very low and the actual trend too small for a meaningful comparison.
 
@@ -865,9 +872,10 @@ During spring and summer the statistical significance is very low and the actual
 
 
 
-<!-- \footnotesize -->
+
 
 ```{r trendseasontable, echo=F}
+
 ## arrange columns
 # spp <- spp[,c(
 #       "Sky condition",
@@ -915,7 +923,7 @@ x_latex %>%
 )
 
 ```
-<!-- \normalsize -->
+
 
 
 
@@ -934,14 +942,14 @@ Because we have no adequate data to investigate the long term changes of cloud t
 
 The observed brightening on SDR over Thessaloniki is dependent on SZA (larger SZAs lead to stronger brightening).
 The trend is also dependent on season, with winter showing the strongest statistically significant trend of
-$`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All sky"], 2)`$
+$`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All skies"], 2)`$
 and
-$`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear sky"], 2)`\,\%/y$
+$`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear skies"], 2)`\,\%/y$
 for all- and clear-skies, respectively, in contrast to spring and summer.
 The trends for autumn are also significant but smaller (
-$`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All sky"], 2)`$
+$`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All skies"], 2)`$
 and
-$`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "Clear sky"], 2)`\,\%/y$
+$`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "Clear skies"], 2)`\,\%/y$
 for all- and clear-skies, respectively).
 Our findings are in agreement with other studies for the region.
 

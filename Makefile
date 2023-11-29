@@ -6,8 +6,8 @@ SHELL = /bin/bash
 
 all:       clean_all pdf rtim
 render:    pdf rtim
-Ap:        Ap1 Ap2
-pdf:       p1 p2 p3 Ap1
+Ap:        Ap2
+pdf:       p1 p2 p3 Ap2
 rtim:      r1 r2 r3
 clean_all: clean_cache clean_data clean_pdfs
 
@@ -30,6 +30,8 @@ $(PDF): $(RMD)
 	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='rticles::mdpi_article', output_file='$@', clean = TRUE)" 
 	@# echo "Changed:  $?"
 	@#setsid evince    $@ &
+	-latexdiff ./SUBMISSION_01/MDPI_submission.tex ./MDPI_submission.tex > ./MDPI_submission_edits.tex
+	-pdflatex -interaction=nonstopmode ./MDPI_submission_edits.tex
 	@-rsync -a "$@" ${LIBRARY}
 
 
