@@ -541,6 +541,8 @@ LT$var                <- NULL
 LT$Obs                <- NULL
 setorder(LT, -slope.stat_sig)
 rownames(LT) <- NULL
+
+
 names(LT)    <- c("Trend [%/year]",
                   "Trend p-value",
                   "Sky conditions",

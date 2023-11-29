@@ -521,8 +521,8 @@ pprint <- gather[ , ..wecare]
 
 pprint[, slope.stat_sig := 100 * (1 - slope.p)]
 pprint[, slope.t        := NULL]
-pprint[, Rsqrd          := NULL]
-pprint[, RsqrdAdj       := NULL]
+# pprint[, Rsqrd          := NULL]
+# pprint[, RsqrdAdj       := NULL]
 
 saveRDS(pprint,
         "./figures/tbl_longterm_trends.Rds")
