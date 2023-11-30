@@ -88,7 +88,7 @@ SZA_confidence_limit      <-   0.99
 Monthly_confidence_limit  <-   0.99
 
 # Daily_aggregation_N_lim   <-  60 * 3 # minutes in a day
-Daily_aggregation_N_lim   <-  0        # replaced with relative daylight filter
+Daily_aggregation_N_lim   <-   0        # replaced with relative daylight filter
 Monthly_aggegation_N_lim  <-  20
 SZA_aggregation_N_lim     <-   4
 
@@ -96,7 +96,9 @@ All_daily_ratio_lim       <- 0.5
 Clear_daily_ratio_lim     <- 0.5
 Cloud_daily_ratio_lim     <- 0.5
 
-
+FIBais_Az_1               <-  58
+FIBais_Az_2               <- 120
+FIBais_Elev               <-  12
 
 ## extra skip ranges for this work
 SKIP_cm21 <- matrix(

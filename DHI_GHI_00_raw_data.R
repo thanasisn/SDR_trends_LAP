@@ -206,13 +206,13 @@ if (havetorun) {
     ## FIXME there is some error in Azimuth/Elevation angles see plot!!
     # plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])
 
-    ##_  Bais paper obstacle filter  -------------------------------------------
-    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattDIR     := NA ]
-    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattDIR_sds := NA ]
-    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattGLB     := NA ]
-    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattGLB_sds := NA ]
-    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattHOR     := NA ]
-    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattHOR_sds := NA ]
+    #__  Bais paper obstacle filter  -------------------------------------------
+    DATA[Azimuth > FIBais_Az_1 & Azimuth < FIBais_Az_2 & Elevat < FIBais_Elev, wattDIR     := NA]
+    DATA[Azimuth > FIBais_Az_1 & Azimuth < FIBais_Az_2 & Elevat < FIBais_Elev, wattDIR_sds := NA]
+    DATA[Azimuth > FIBais_Az_1 & Azimuth < FIBais_Az_2 & Elevat < FIBais_Elev, wattGLB     := NA]
+    DATA[Azimuth > FIBais_Az_1 & Azimuth < FIBais_Az_2 & Elevat < FIBais_Elev, wattGLB_sds := NA]
+    DATA[Azimuth > FIBais_Az_1 & Azimuth < FIBais_Az_2 & Elevat < FIBais_Elev, wattHOR     := NA]
+    DATA[Azimuth > FIBais_Az_1 & Azimuth < FIBais_Az_2 & Elevat < FIBais_Elev, wattHOR_sds := NA]
 
     ## show included data
     # plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])

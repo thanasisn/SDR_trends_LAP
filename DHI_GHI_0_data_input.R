@@ -14,6 +14,8 @@ source("./DHI_GHI_0_variables.R")
 
 #  Run data construction  ------------------------------------------------------
 
+# _ Set Importan variables for all the project  --------------------------------
+
 D_14_2 <- FALSE
 D_14   <- FALSE
 D_13   <- FALSE
@@ -77,7 +79,7 @@ havetorun <- !file.exists(common_data) |
 if (havetorun) {
     cat(paste("\n !! Create environment and data input ->", common_data),"\n")
 
-    #_  Get data from Clear sky id data  ---------------------------------------
+    ##_  Get data from Clear sky id data  --------------------------------------
     input_files <- list.files(path       = CLEARdir,
                               pattern    = inpatern,
                               full.names = T )
@@ -172,34 +174,34 @@ if (havetorun) {
     # vec1$Diff <- c(0,diff(vec1$Sign))
     # vec1[which(vec1$Diff != 0), ]
 
-    #  Select data for this project  -------------------------------------------
+    #   Select data for this project  ------------------------------------------
 
-    #__  Set date range to use  ------------------------------------------------
+    ##_  Set date range to use  ------------------------------------------------
     DATA <- DATA[Date < LAST_DAY ]
     DATA <- DATA[Date > FIRST_DAY]
 
-    #__  Keep daylight only  ---------------------------------------------------
+    ##_  Keep daylight only  ---------------------------------------------------
     DATA <- DATA[Elevat >= 0, ]
 
-    #__  Exclude low Sun elevation  --------------------------------------------
-    DATA[Elevat < MIN_ELEVA, wattDIR     := NA ]
-    DATA[Elevat < MIN_ELEVA, wattDIR_sds := NA ]
-    DATA[Elevat < MIN_ELEVA, wattGLB     := NA ]
-    DATA[Elevat < MIN_ELEVA, wattGLB_sds := NA ]
-    DATA[Elevat < MIN_ELEVA, wattHOR     := NA ]
-    DATA[Elevat < MIN_ELEVA, wattHOR_sds := NA ]
+    ##_  Exclude low Sun elevation  --------------------------------------------
+    DATA[Elevat < MIN_ELEVA, wattDIR     := NA]
+    DATA[Elevat < MIN_ELEVA, wattDIR_sds := NA]
+    DATA[Elevat < MIN_ELEVA, wattGLB     := NA]
+    DATA[Elevat < MIN_ELEVA, wattGLB_sds := NA]
+    DATA[Elevat < MIN_ELEVA, wattHOR     := NA]
+    DATA[Elevat < MIN_ELEVA, wattHOR_sds := NA]
 
     ## show included data
     ## FIXME there is som error in Azimuth/Elevation angles see plot!!
     # plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])
 
     #__  Bais paper obstacle filter  -------------------------------------------
-    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattDIR     := NA ]
-    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattDIR_sds := NA ]
-    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattGLB     := NA ]
-    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattGLB_sds := NA ]
-    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattHOR     := NA ]
-    DATA[Azimuth > 35 & Azimuth < 120 & Elevat < 10, wattHOR_sds := NA ]
+    DATA[Azimuth > FIBais_Az_1 & Azimuth < FIBais_Az_2 & Elevat < FIBais_Elev, wattDIR     := NA]
+    DATA[Azimuth > FIBais_Az_1 & Azimuth < FIBais_Az_2 & Elevat < FIBais_Elev, wattDIR_sds := NA]
+    DATA[Azimuth > FIBais_Az_1 & Azimuth < FIBais_Az_2 & Elevat < FIBais_Elev, wattGLB     := NA]
+    DATA[Azimuth > FIBais_Az_1 & Azimuth < FIBais_Az_2 & Elevat < FIBais_Elev, wattGLB_sds := NA]
+    DATA[Azimuth > FIBais_Az_1 & Azimuth < FIBais_Az_2 & Elevat < FIBais_Elev, wattHOR     := NA]
+    DATA[Azimuth > FIBais_Az_1 & Azimuth < FIBais_Az_2 & Elevat < FIBais_Elev, wattHOR_sds := NA]
 
     ## show included data
     # plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])
@@ -207,11 +209,8 @@ if (havetorun) {
     ## Filter min elevation
     # DATA <- DATA[Elevat >= MIN_ELEVA, ]
 
-    ## Bais paper obstacle filter
-    # DATA <- DATA[!(Azimuth > 35 & Azimuth < 120 & Elevat < 10)]
 
-
-    #__  Keep data characterized as 'good' by Radiation Quality control v13 ----
+    ##_  Keep data characterized as 'good' by Radiation Quality control v13 ----
     if (D_13) {
         keepQF <- c("good",
                     "Possible Direct Obstruction (23)",
@@ -228,13 +227,13 @@ if (havetorun) {
         DATA[QCF_GLB == FALSE, wattGLB := NA]
     }
 
-    #__  Count daylight length  ------------------------------------------------
+    ##_  Count daylight length  ------------------------------------------------
     DATA[, DayLength := .N, by = Day]
 
-    #__  DROP MISSING RECORDS!! ------------------------------------------------
+    ##_  DROP MISSING RECORDS!! ------------------------------------------------
     DATA <- DATA[ !(is.na(wattDIR) & is.na(wattGLB)) ]
 
-    #__  Info for TIS time span source used  -----------------------------------
+    ##_  Info for TIS time span source used  -----------------------------------
     TSI_info <- DATA[, .(Start = min(Date),
                          End   = max(Date)), by = TSI_Source]
     write_dat(object = TSI_info,
@@ -245,17 +244,17 @@ if (havetorun) {
 
     #  Data preparation  -------------------------------------------------------
 
-    #_  Move measurements to mean earth distance  ------------------------------
+    ##_  Move measurements to mean earth distance  -----------------------------
     DATA[, wattDIR_1au := wattDIR * (sun_dist ^ 2)]
     DATA[, wattGLB_1au := wattGLB * (sun_dist ^ 2)]
     DATA[, wattHOR_1au := wattHOR * (sun_dist ^ 2)]
 
-    #_  Relative to actual TSI at 1au variable representation
+    ##_  Relative to actual TSI at 1au variable representation
     # DATA[ , DIR_att := wattDIR_1au / tsi_1au_comb ]
     # DATA[ , GLB_att := wattGLB_1au / tsi_1au_comb ]
     # DATA[ , HOR_att := wattHOR_1au / tsi_1au_comb ]
 
-    ## Use original variable representation for conviniance
+    ## !! Replace original variable representation for convenience !!
     DATA[, DIR_att := wattDIR_1au]
     DATA[, GLB_att := wattGLB_1au]
     DATA[, HOR_att := wattHOR_1au]
@@ -266,7 +265,7 @@ if (havetorun) {
     # DATA$wattDIR_1au <- DATA$wattDIR_1au / cosde(DATA$SZA)
 
 
-    #_ Calculate Bouguer atmospheric transparency  -----------------------------
+    ##_  Calculate Bouguer atmospheric transparency  ---------------------------
     ## Changes in solar radiation and their influence on temperature trend in Estonia 1955 2007_Russak2009.pdf
     DATA[, DIR_transp := ( wattDIR_1au / tsi_1au_comb ) ^ ( 1 / cosde(SZA) ) ]
 
@@ -292,6 +291,10 @@ if (havetorun) {
     ## Method based and adapted from: Identification of Periods of Clear Sky Irradiance in Time Series of GHI Measurements _Matthew J. Reno and Clifford W. Hansen_.
 
     #  GLB Representation filtering  -------------------------------------------
+    #
+    #  Remove days with too few data, as they can not be representative of a
+    #  normal day.
+    #
     temp <- DATA[!is.na(GLB_att),
                  .(Day_N = .N,
                    DayLim = max(DayLength) * All_daily_ratio_lim),
