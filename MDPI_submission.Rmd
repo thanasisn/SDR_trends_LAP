@@ -228,9 +228,9 @@ suppressMessages(
 )
 
 
-knit_hooks$set(extrawide = function(before, options, envir) {
+knitr::knit_hooks$set(extrawide = function(before, options, envir) {
     if (before) {
-        return("\\begin{adjustwidth}{-\extralength}{0cm}")
+        return("\\begin{adjustwidth}{-\\extralength}{0cm}")
     } 
     
     if (!before) {
