@@ -226,6 +226,30 @@ suppressMessages(
         workingdir   = "./"
     )
 )
+
+
+knit_hooks$set(extrawide = function(before, options, envir) {
+    if (before) {
+        return("\\begin{adjustwidth}{-\extralength}{0cm}")
+    } 
+    
+    if (!before) {
+        return("\\end{adjustwidth}")
+    }
+    
+    # else {
+    #     
+    #     output <- vector(mode = "character", length = options$fig.num + 1)
+    #     
+    #     for (i in 1:options$fig.num) {
+    #         output[i] <- sprintf("\\includegraphics{%s}", fig_path(number = i))
+    #     }
+    #     
+    #     output[i+1] <- "\\end{adjustwidth}"
+    #     return(paste(output, collapse = ""))
+    # }
+})
+
 ```
 
 
@@ -382,11 +406,11 @@ TSI$Obs                <- NULL
 TSI$Rsqrd              <- NULL
 TSI$RsqrdAdj           <- NULL
 
-TSI$cor.null_value     <- NULL
-TSI$cor.alternative    <- NULL
-TSI$cor.method         <- NULL
-TSI$cor.data_name      <- NULL
-TSI$cor.p              <- NULL
+# TSI$cor.null_value     <- NULL
+# TSI$cor.alternative    <- NULL
+# TSI$cor.method         <- NULL
+# TSI$cor.data_name      <- NULL
+# TSI$cor.p              <- NULL
 TSI$conf.level         <- NULL
 care <- grep("^cor\\.", names(TSI), value = T)
 for (an in care) {
@@ -545,11 +569,11 @@ setorder(LT, -slope.stat_sig)
 rownames(LT) <- NULL
 
 LT$cor.df           <- NULL
-LT$cor.null_value   <- NULL
-LT$cor.alternative  <- NULL
-LT$cor.method       <- NULL
-LT$cor.data_name    <- NULL
-LT$cor.p            <- NULL
+# LT$cor.null_value   <- NULL
+# LT$cor.alternative  <- NULL
+# LT$cor.method       <- NULL
+# LT$cor.data_name    <- NULL
+# LT$cor.p            <- NULL
 LT$conf.level       <- NULL
 LT$cor.conf_int_1   <- NULL
 LT$cor.conf_int_2   <- NULL
