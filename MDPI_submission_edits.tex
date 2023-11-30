@@ -1,7 +1,7 @@
 %  LaTeX support: latex@mdpi.com
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL ./SUBMISSION_01/MDPI_submission.tex   Sun Nov 12 17:31:09 2023
-%DIF ADD ./MDPI_submission.tex                 Wed Nov 29 22:25:16 2023
+%DIF ADD ./MDPI_submission.tex                 Thu Nov 30 05:11:29 2023
 %  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
 
 %=================================================================
@@ -392,7 +392,42 @@ the sky. Despite the fine-tuning of the procedure, a few marginal cases
 exist, that have been identified manually as false positive or false
 negative but cannot affect the final results of the study.
 
-For completeness, we will provide below a brief overview of the clear
+\DIFaddbegin \DIFmodbegin
+\begin{DIFverbatim}[alsolanguage=DIFcode]
+%DIF > Warning in set(x, j = name, value = value): Column 'cor.null_value' does not
+%DIF > exist to remove
+\end{DIFverbatim}
+\DIFmodend
+
+\DIFmodbegin
+\begin{DIFverbatim}[alsolanguage=DIFcode]
+%DIF > Warning in set(x, j = name, value = value): Column 'cor.alternative' does not
+%DIF > exist to remove
+\end{DIFverbatim}
+\DIFmodend
+
+\DIFmodbegin
+\begin{DIFverbatim}[alsolanguage=DIFcode]
+%DIF > Warning in set(x, j = name, value = value): Column 'cor.method' does not exist
+%DIF > to remove
+\end{DIFverbatim}
+\DIFmodend
+
+\DIFmodbegin
+\begin{DIFverbatim}[alsolanguage=DIFcode]
+%DIF > Warning in set(x, j = name, value = value): Column 'cor.data_name' does not
+%DIF > exist to remove
+\end{DIFverbatim}
+\DIFmodend
+
+\DIFmodbegin
+\begin{DIFverbatim}[alsolanguage=DIFcode]
+%DIF > Warning in set(x, j = name, value = value): Column 'cor.p' does not exist to
+%DIF > remove
+\end{DIFverbatim}
+\DIFmodend
+
+\DIFaddend For completeness, we will provide below a brief overview of the clear
 sky identification algorithm (CSid), along with the site specific
 thresholds. To calculate the reference clear sky
 \(\text{SDR}_\text{CSref}\) we used the \(\text{SDR}_\text{Haurwitz}\)
@@ -535,7 +570,42 @@ mentioned above.
 \hypertarget{long-term-sdr-trends}{%
 \subsection{Long-term SDR trends}\label{long-term-sdr-trends}}
 
-We calculated the linear SDR trends, from the departures of the mean
+\DIFaddbegin \DIFmodbegin
+\begin{DIFverbatim}[alsolanguage=DIFcode]
+%DIF > Warning in set(x, j = name, value = value): Column 'cor.null_value' does not
+%DIF > exist to remove
+\end{DIFverbatim}
+\DIFmodend
+
+\DIFmodbegin
+\begin{DIFverbatim}[alsolanguage=DIFcode]
+%DIF > Warning in set(x, j = name, value = value): Column 'cor.alternative' does not
+%DIF > exist to remove
+\end{DIFverbatim}
+\DIFmodend
+
+\DIFmodbegin
+\begin{DIFverbatim}[alsolanguage=DIFcode]
+%DIF > Warning in set(x, j = name, value = value): Column 'cor.method' does not exist
+%DIF > to remove
+\end{DIFverbatim}
+\DIFmodend
+
+\DIFmodbegin
+\begin{DIFverbatim}[alsolanguage=DIFcode]
+%DIF > Warning in set(x, j = name, value = value): Column 'cor.data_name' does not
+%DIF > exist to remove
+\end{DIFverbatim}
+\DIFmodend
+
+\DIFmodbegin
+\begin{DIFverbatim}[alsolanguage=DIFcode]
+%DIF > Warning in set(x, j = name, value = value): Column 'cor.p' does not exist to
+%DIF > remove
+\end{DIFverbatim}
+\DIFmodend
+
+\DIFaddend We calculated the linear SDR trends, from the departures of the mean
 daily values from the daily climatology and for the three sky conditions
 (Table~\ref{tab:trendtable}). In Figure~\ref{fig:trendALL} we present
 only the time series under all-sky conditions; the plots for clear-sky
@@ -735,81 +805,81 @@ comparison.
 \begin{table}[!h]
 
 \caption{\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.}
-\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X\DIFaddbeginFL \DIFaddFL{>}{\centering}\DIFaddFL{X>}{\centering}\DIFaddFL{X>}{\raggedleft}\DIFaddFL{X}\DIFaddendFL }
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X\DIFaddbeginFL \DIFaddFL{>}{\centering}\DIFaddFL{X>}{\centering}\DIFaddFL{X>}{\raggedleft}\DIFaddFL{X>}{\raggedleft}\DIFaddFL{X>}{\centering}\DIFaddFL{X}\DIFaddendFL }
 \toprule
 \DIFdelbeginFL \DIFdelFL{Sky condition }%DIFDELCMD < & %%%
 \DIFdelFL{Season }%DIFDELCMD < & %%%
 \DIFdelendFL Trend [\%/year] & \DIFdelbeginFL \DIFdelFL{Statistical signif.}%DIFDELCMD < [%%%
 \DIFdelFL{\%}%DIFDELCMD < ]%%%
-\DIFdelendFL \DIFaddbeginFL \DIFaddFL{slope.p }& \DIFaddFL{cor.t }& \DIFaddFL{cor.esimate }& \DIFaddFL{Sky condition }& \DIFaddFL{Season }& \DIFaddFL{slope.stat\_sig}\DIFaddendFL \\
+\DIFdelendFL \DIFaddbeginFL \DIFaddFL{slope.p }& \DIFaddFL{Rsqrd }& \DIFaddFL{RsqrdAdj }& \DIFaddFL{cor.t }& \DIFaddFL{cor.esimate }& \DIFaddFL{Sky condition }& \DIFaddFL{Season }& \DIFaddFL{slope.stat\_sig}\DIFaddendFL \\
 \midrule
 \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{} %%%
 \DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.6860} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{Winter} %%%
 \DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.001300} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{0.6860} %%%
-\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{3.5748458} & \cellcolor{gray!6}{0.5598043} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Winter} \DIFaddendFL & \cellcolor{gray!6}{99.9}\\
+\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.3133809} & \cellcolor{gray!6}{0.2888588} & \cellcolor{gray!6}{3.5748458} & \cellcolor{gray!6}{0.5598043} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Winter} \DIFaddendFL & \cellcolor{gray!6}{99.9}\\
 \DIFdelbeginFL %DIFDELCMD < 
 
 %DIFDELCMD <  %%%
-\DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
-\DIFaddFL{0.1450 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Spring }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.182000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{0.1450 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{1.3668258 }& \DIFaddFL{0.2460126 }& \DIFaddFL{All skies }& \DIFaddFL{Spring }\DIFaddendFL & 81.8\\
+\DIFdelendFL \DIFaddbeginFL \cmidrule{1-9}
+\DIFaddFL{0.1450 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Spring }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.182000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{0.1450 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0605222 }& \DIFaddFL{0.0281264 }& \DIFaddFL{1.3668258 }& \DIFaddFL{0.2460126 }& \DIFaddFL{All skies }& \DIFaddFL{Spring }\DIFaddendFL & 81.8\\
 \DIFdelbeginFL %DIFDELCMD < 
 
 %DIFDELCMD < \cellcolor{gray!6}{} %%%
-\DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
+\DIFdelendFL \DIFaddbeginFL \cmidrule{1-9}
 \cellcolor{gray!6}{0.1200} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{Summer} %%%
 \DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.106000} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{0.1200} %%%
-\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{1.6689762} & \cellcolor{gray!6}{0.3007995} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Summer} \DIFaddendFL & \cellcolor{gray!6}{89.4}\\
+\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.0904804} & \cellcolor{gray!6}{0.0579975} & \cellcolor{gray!6}{1.6689762} & \cellcolor{gray!6}{0.3007995} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Summer} \DIFaddendFL & \cellcolor{gray!6}{89.4}\\
 \DIFdelbeginFL %DIFDELCMD < 
 
 %DIFDELCMD < \multirow{-4}{*}{\centering\arraybackslash All skies} %%%
-\DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
-\DIFaddFL{0.4310 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Autumn }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.006650 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{0.4310 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{2.9317564 }& \DIFaddFL{0.4846362 }& \DIFaddFL{All skies }& \DIFaddFL{Autumn }\DIFaddendFL & 99.3\\
+\DIFdelendFL \DIFaddbeginFL \cmidrule{1-9}
+\DIFaddFL{0.4310 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Autumn }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.006650 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{0.4310 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.2348722 }& \DIFaddFL{0.2075462 }& \DIFaddFL{2.9317564 }& \DIFaddFL{0.4846362 }& \DIFaddFL{All skies }& \DIFaddFL{Autumn }\DIFaddendFL & 99.3\\
 \DIFdelbeginFL %DIFDELCMD < \cmidrule{1-4}
 %DIFDELCMD < \cellcolor{gray!6}{} %%%
-\DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
+\DIFdelendFL \DIFaddbeginFL \cmidrule{1-9}
 \cellcolor{gray!6}{0.8260} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{Winter} %%%
 \DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.000259} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{0.8260} %%%
-\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{4.1794536} & \cellcolor{gray!6}{0.6198226} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Winter} \DIFaddendFL & \cellcolor{gray!6}{100.0}\\
+\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.3841800} & \cellcolor{gray!6}{0.3621864} & \cellcolor{gray!6}{4.1794536} & \cellcolor{gray!6}{0.6198226} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Winter} \DIFaddendFL & \cellcolor{gray!6}{100.0}\\
 \DIFdelbeginFL %DIFDELCMD < 
 
 %DIFDELCMD <  %%%
-\DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
-\DIFaddFL{0.0613 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Spring }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.614000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{0.0613 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.5095289 }& \DIFaddFL{0.0941964 }& \DIFaddFL{Clear skies }& \DIFaddFL{Spring }\DIFaddendFL & 38.6\\
+\DIFdelendFL \DIFaddbeginFL \cmidrule{1-9}
+\DIFaddFL{0.0613 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Spring }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.614000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{0.0613 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0088730 }& \DIFaddFL{-0.0253038 }& \DIFaddFL{0.5095289 }& \DIFaddFL{0.0941964 }& \DIFaddFL{Clear skies }& \DIFaddFL{Spring }\DIFaddendFL & 38.6\\
 \DIFdelbeginFL %DIFDELCMD < 
 
 %DIFDELCMD < \cellcolor{gray!6}{} %%%
-\DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
+\DIFdelendFL \DIFaddbeginFL \cmidrule{1-9}
 \cellcolor{gray!6}{-0.0307} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{Summer} %%%
 \DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.741000} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{-0.0307} %%%
-\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{-0.3343454} & \cellcolor{gray!6}{-0.0630596} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Summer} \DIFaddendFL & \cellcolor{gray!6}{25.9}\\
+\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.0039765} & \cellcolor{gray!6}{-0.0315958} & \cellcolor{gray!6}{-0.3343454} & \cellcolor{gray!6}{-0.0630596} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Summer} \DIFaddendFL & \cellcolor{gray!6}{25.9}\\
 \DIFdelbeginFL %DIFDELCMD < 
 
 %DIFDELCMD < \multirow{-4}{*}{\centering\arraybackslash Clear skies} %%%
-\DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
-\DIFaddFL{0.3670 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Autumn }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.028300 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{0.3670 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{2.3126418 }& \DIFaddFL{0.4004713 }& \DIFaddFL{Clear skies }& \DIFaddFL{Autumn }\DIFaddendFL & 97.2\\
+\DIFdelendFL \DIFaddbeginFL \cmidrule{1-9}
+\DIFaddFL{0.3670 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Autumn }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.028300 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{0.3670 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.1603773 }& \DIFaddFL{0.1303908 }& \DIFaddFL{2.3126418 }& \DIFaddFL{0.4004713 }& \DIFaddFL{Clear skies }& \DIFaddFL{Autumn }\DIFaddendFL & 97.2\\
 \DIFdelbeginFL %DIFDELCMD < \cmidrule{1-4}
 %DIFDELCMD < \cellcolor{gray!6}{} %%%
-\DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
+\DIFdelendFL \DIFaddbeginFL \cmidrule{1-9}
 \cellcolor{gray!6}{-0.8820} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{Winter} %%%
 \DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.011100} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{-0.8820} %%%
-\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{-2.7197359} & \cellcolor{gray!6}{-0.4571342} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Winter} \DIFaddendFL & \cellcolor{gray!6}{98.9}\\
+\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.2089717} & \cellcolor{gray!6}{0.1807207} & \cellcolor{gray!6}{-2.7197359} & \cellcolor{gray!6}{-0.4571342} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Winter} \DIFaddendFL & \cellcolor{gray!6}{98.9}\\
 \DIFdelbeginFL %DIFDELCMD < 
 
 %DIFDELCMD <  %%%
-\DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
-\DIFaddFL{-0.0991 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Spring }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.628000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{-0.0991 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{-0.4892643 }& \DIFaddFL{-0.0904814 }& \DIFaddFL{Cloudy skies }& \DIFaddFL{Spring }\DIFaddendFL & 37.2\\
+\DIFdelendFL \DIFaddbeginFL \cmidrule{1-9}
+\DIFaddFL{-0.0991 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Spring }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.628000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{-0.0991 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0081869 }& \DIFaddFL{-0.0260136 }& \DIFaddFL{-0.4892643 }& \DIFaddFL{-0.0904814 }& \DIFaddFL{Cloudy skies }& \DIFaddFL{Spring }\DIFaddendFL & 37.2\\
 \DIFdelbeginFL %DIFDELCMD < 
 
 %DIFDELCMD < \cellcolor{gray!6}{} %%%
-\DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
+\DIFdelendFL \DIFaddbeginFL \cmidrule{1-9}
 \cellcolor{gray!6}{0.0444} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{Summer} %%%
 \DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.785000} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{0.0444} %%%
-\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.2750824} & \cellcolor{gray!6}{0.0519156} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Summer} \DIFaddendFL & \cellcolor{gray!6}{21.5}\\
+\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.0026952} & \cellcolor{gray!6}{-0.0329228} & \cellcolor{gray!6}{0.2750824} & \cellcolor{gray!6}{0.0519156} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Summer} \DIFaddendFL & \cellcolor{gray!6}{21.5}\\
 \DIFdelbeginFL %DIFDELCMD < 
 
 %DIFDELCMD < \multirow{-4}{*}{\centering\arraybackslash Cloudy skies} %%%
-\DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
-\DIFaddFL{-0.4000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Autumn }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.105000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{-0.4000 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{-1.6769099 }& \DIFaddFL{-0.3020992 }& \DIFaddFL{Cloudy skies }& \DIFaddFL{Autumn }\DIFaddendFL & 89.5\\
+\DIFdelendFL \DIFaddbeginFL \cmidrule{1-9}
+\DIFaddFL{-0.4000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Autumn }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.105000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{-0.4000 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0912639 }& \DIFaddFL{0.0588091 }& \DIFaddFL{-1.6769099 }& \DIFaddFL{-0.3020992 }& \DIFaddFL{Cloudy skies }& \DIFaddFL{Autumn }\DIFaddendFL & 89.5\\
 \bottomrule
 \end{tabu}
 \end{table}
