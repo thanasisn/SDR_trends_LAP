@@ -21,7 +21,7 @@ source("./DHI_GHI_0_variables.R")
 
 #  Run data construction  ------------------------------------------------------
 
-# _ Set Importan variables for all the project  --------------------------------
+# _ Set Important variables for all the project  -------------------------------
 
 D_14_2 <- FALSE
 D_14   <- FALSE
@@ -275,6 +275,10 @@ if (havetorun) {
     rm.cols.DT(DATA, "*Clim_lim")
     rm.cols.DT(DATA, "QCF_*")
     rm.cols.DT(DATA, "VIL_*")
+
+
+    #  Split data to Clear Sky, non Clear sky and cloud sky data  --------------
+    ## Method based and adapted from: Identification of Periods of Clear Sky Irradiance in Time Series of GHI Measurements _Matthew J. Reno and Clifford W. Hansen_.
 
     #  GLB Representation filtering  -------------------------------------------
     #

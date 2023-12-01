@@ -14,7 +14,7 @@ source("./DHI_GHI_0_variables.R")
 
 #  Run data construction  ------------------------------------------------------
 
-# _ Set Importan variables for all the project  --------------------------------
+# _ Set Important variables for all the project  -------------------------------
 
 D_14_2 <- FALSE
 D_14   <- FALSE
@@ -32,7 +32,6 @@ TEST <- FALSE
 if (TEST == TRUE) {
     warning("Running in TEST mode!!")
 }
-
 
 ## new new implementation with corrected limits
 if (D_14_2) {
@@ -55,12 +54,6 @@ if (D_14) {
     inpatern    <- "Clear_sky_id_Reno-Hansen_apply_v14_[0-9]{4}.Rds"
 }
 
-## old implementation with corrected limits
-if (D_13) {
-    common_data <- common_data_13
-    CS_file     <- CS_file_13
-    inpatern    <- "Clear_Sky_[0-9]{4}.Rds"
-}
 
 ## create local folders
 dir.create(dirname(common_data), showWarnings = FALSE)
@@ -69,7 +62,7 @@ dir.create("./images",           showWarnings = FALSE)
 dir.create("./runtime",          showWarnings = FALSE)
 
 
-#_  Check if we need to run data production  -----------------------------------
+##_  Check if we need to run data export  --------------------------------------
 havetorun <- !file.exists(common_data) |
     file.mtime(CS_file)          > file.mtime(common_data) |
     file.mtime(variables_fl)     > file.mtime(common_data) |
@@ -90,8 +83,10 @@ if (havetorun) {
         input_files <- sample(input_files, 2)
     }
 
-    if (TEST | !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
-        cat(paste("Load data from Clear Sky process from original\n"))
+    cat(paste("\n    Will read", length(input_files), "input files\n"))
+
+    if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
+        cat(paste("\n    Load data from Clear Sky process from original\n\n"))
         DATA <- data.table()
         for (af in input_files) {
             cat("READING:", af, "\n")
@@ -125,8 +120,8 @@ if (havetorun) {
             DATA <- rbind(temp, DATA, fill = TRUE)
             rm(temp)
         }
-        DATA <- unique(DATA)
-        gc()
+        DATA  <- unique(DATA)
+        dummy <- gc()
 
         ## TODO warn duplicate dates
         if (sum(duplicated(DATA$Date)) > 0) {
@@ -148,8 +143,9 @@ if (havetorun) {
         test <- DATA[duplicated(DATA$Date) | duplicated(DATA$Date, fromLast = TRUE)]
         cat("\nThere are ", nrow(test), " duplicate dates remaining!\n")
 
-        ## this is used by old scripts
-        setorder(DATA,Date)
+        ## FIXME do we still need this?
+        ## this may be used by old scripts
+        setorder(DATA, Date)
         write_RDS(object = DATA, file = CS_file, clean = TRUE)
     } else {
         DATA <- readRDS(CS_file)
@@ -162,17 +158,6 @@ if (havetorun) {
         DATA[ Date >= skip$From & Date <= skip$Until, wattGLB    := NA ]
         DATA[ Date >= skip$From & Date <= skip$Until, wattGLB_SD := NA ]
     }
-    # DATA[ Date >= skip$From & Date <= skip$Until, wattGLB]
-
-    # ## Sunset and sunrise
-    # hist(DATA[ Elevat < 5, Elevat ])
-    # which(diff(sign(DATA$Elevat))!=0)
-    #
-    # vec1      <- data.frame(Sign = sign(DATA$Elevat),
-    #                         Date = DATA$Date,
-    #                         Elev = DATA$Elevat)
-    # vec1$Diff <- c(0,diff(vec1$Sign))
-    # vec1[which(vec1$Diff != 0), ]
 
     #   Select data for this project  ------------------------------------------
 
@@ -192,7 +177,7 @@ if (havetorun) {
     DATA[Elevat < MIN_ELEVA, wattHOR_sds := NA]
 
     ## show included data
-    ## FIXME there is som error in Azimuth/Elevation angles see plot!!
+    ## FIXME there is some error in Azimuth/Elevation angles see plot!!
     # plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])
 
     #__  Bais paper obstacle filter  -------------------------------------------
@@ -206,10 +191,6 @@ if (havetorun) {
     ## show included data
     # plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])
 
-    ## Filter min elevation
-    # DATA <- DATA[Elevat >= MIN_ELEVA, ]
-
-
     ##_  Keep data characterized as 'good' by Radiation Quality control v13 ----
     if (D_13) {
         keepQF <- c("good",
@@ -220,7 +201,7 @@ if (havetorun) {
         DATA[!QCF_GLB %in% keepQF, wattGLB := NA]
     }
 
-    #__  Keep data characterized as 'TRUE' by Radiation Quality control v14 ----
+    ##_  Keep data characterized as 'TRUE' by Radiation Quality control v14 ----
     if (D_14 | D_14_2 | D_15) {
         DATA[QCF_DIR == FALSE, wattDIR := NA]
         DATA[QCF_DIR == FALSE, wattHOR := NA]
@@ -241,7 +222,6 @@ if (havetorun) {
                         clean  = TRUE)
     rm(TSI_info)
 
-
     #  Data preparation  -------------------------------------------------------
 
     ##_  Move measurements to mean earth distance  -----------------------------
@@ -249,12 +229,7 @@ if (havetorun) {
     DATA[, wattGLB_1au := wattGLB * (sun_dist ^ 2)]
     DATA[, wattHOR_1au := wattHOR * (sun_dist ^ 2)]
 
-    ##_  Relative to actual TSI at 1au variable representation
-    # DATA[ , DIR_att := wattDIR_1au / tsi_1au_comb ]
-    # DATA[ , GLB_att := wattGLB_1au / tsi_1au_comb ]
-    # DATA[ , HOR_att := wattHOR_1au / tsi_1au_comb ]
-
-    ## !! Replace original variable representation for convenience !!
+    ##_ !! Replace original variable representation for convenience !! ---------
     DATA[, DIR_att := wattDIR_1au]
     DATA[, GLB_att := wattGLB_1au]
     DATA[, HOR_att := wattHOR_1au]
@@ -263,7 +238,6 @@ if (havetorun) {
     ## Aerosol direct effects on global solar shortwave irradiance at high mountainous station Musala Bulgaria_Nojarov2021.pdf
     # DATA$wattGLB_1au <- DATA$wattGLB_1au / cosde(DATA$SZA)
     # DATA$wattDIR_1au <- DATA$wattDIR_1au / cosde(DATA$SZA)
-
 
     ##_  Calculate Bouguer atmospheric transparency  ---------------------------
     ## Changes in solar radiation and their influence on temperature trend in Estonia 1955 2007_Russak2009.pdf
@@ -314,6 +288,14 @@ if (havetorun) {
 
     DATA <- DATA[Day %in% all_days_to_keep ]
 
+    #  Split data to Clear Sky, non Clear sky and cloud sky data  --------------
+    #
+    #  Method based and adapted from: Identification of Periods of Clear Sky
+    #  Irradiance in Time Series of GHI Measurements _Matthew J. Reno and
+    #  Clifford W. Hansen.
+    #
+    #  For this paper we use only flags derived from CM-21.
+    #
 
     #__  ALL data  -------------------------------------------------------------
     DATA_all   <- DATA
