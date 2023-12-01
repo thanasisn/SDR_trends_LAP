@@ -14,6 +14,7 @@
 
 require(data.table)
 require(zoo)
+require(arrow)
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 source("~/CODE/R_myRtools/myRtools/R/write_.R")
@@ -175,7 +176,17 @@ if (havetorun) {
     DATA <- DATA[Elevat >= 0, ]
 
     ##_  Count daylight length  ------------------------------------------------
-    DATA[, DayLength := .N, by = Day]
+    # DATA[, DayLength := .N, by = Day]
+
+    MM <- data.table(
+        read_parquet("/home/athan/DATA/Broad_Band/Broad_Band_DB_metadata.parquet")
+    )
+    MM <- MM[, daylength, day]
+    DATA <- merge(DATA, MM, by.x = "Day", by.y = "day")
+    names(DATA)[names(DATA) == "daylength"] <- "DayLength"
+    rm(MM)
+
+
 
     ##_  Exclude low Sun elevation  --------------------------------------------
     DATA[Elevat < MIN_ELEVA, wattDIR     := NA]

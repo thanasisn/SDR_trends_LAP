@@ -52,17 +52,8 @@ DATA_Clear[,length(unique(as.Date(Date)))]
 DATA_Cloud[,length(unique(as.Date(Date)))]
 
 
-library(arrow)
 
-## read data and insert into DATA
-## move to previoys step
 
-MM <- data.table(
-    read_parquet("/home/athan/DATA/Broad_Band/Broad_Band_DB_metadata.parquet")
-)
-MM <- MM[, daylength, day]
-
-plot( yday(MM$day), MM$daylength)
 
 ## replace day lengh
 
