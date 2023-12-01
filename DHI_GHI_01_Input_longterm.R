@@ -57,7 +57,16 @@ library(arrow)
 ## read data and insert into DATA
 ## move to previoys step
 
-read_parquet("/home/athan/DATA/Broad_Band/Broad_Band_DB_metadata.parquet")
+MM <- data.table(
+    read_parquet("/home/athan/DATA/Broad_Band/Broad_Band_DB_metadata.parquet")
+)
+MM <- MM[, daylength, day]
+
+plot( yday(MM$day), MM$daylength)
+
+## replace day lengh
+
+
 
 stop()
 
