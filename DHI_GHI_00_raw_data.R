@@ -26,12 +26,10 @@ Script.Name <- "./DHI_GHI_00_raw_data.R"
 
 D_14_2 <- FALSE
 D_14   <- FALSE
-D_13   <- FALSE
 D_15   <- FALSE
 
 D_14_2 <- TRUE
 # D_14   <- TRUE
-# D_13   <- TRUE
 # D_15   <- TRUE
 
 TEST <- TRUE
@@ -93,7 +91,7 @@ if (havetorun) {
 
     cat(paste("\n    Will read", length(input_files), "input files\n"))
 
-    if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
+    # if ( !file.exists(CS_file) | max(file.mtime(input_files)) > file.mtime(CS_file)) {
         cat(paste("\n    Load data from Clear Sky process from original\n\n"))
         DATA <- data.table()
         for (af in input_files) {
@@ -153,11 +151,11 @@ if (havetorun) {
 
         ## FIXME do we still need this?
         ## this may be used by old scripts
-        setorder(DATA, Date)
-        write_RDS(object = DATA, file = CS_file, clean = TRUE)
-    } else {
-        DATA <- readRDS(CS_file)
-    }
+    #     setorder(DATA, Date)
+    #     write_RDS(object = DATA, file = CS_file, clean = TRUE)
+    # } else {
+    #     DATA <- readRDS(CS_file)
+    # }
 
 
     ## __ Skip data ranges for CM-21 --------------------------------------------
@@ -201,16 +199,6 @@ if (havetorun) {
 
     ## show included data
     # plot(DATA[ !is.na(wattGLB) ,Elevat, Azimuth])
-
-    ##_  Keep data characterized as 'good' by Radiation Quality control v13 ----
-    if (D_13) {
-        keepQF <- c("good",
-                    "Possible Direct Obstruction (23)",
-                    "Biology Building (22)")
-        DATA[!QCF_DIR %in% keepQF, wattDIR := NA]
-        DATA[!QCF_DIR %in% keepQF, wattHOR := NA]
-        DATA[!QCF_GLB %in% keepQF, wattGLB := NA]
-    }
 
     ##_  Keep data characterized as 'TRUE' by Radiation Quality control v14 ----
     if (D_14 | D_14_2 | D_15) {

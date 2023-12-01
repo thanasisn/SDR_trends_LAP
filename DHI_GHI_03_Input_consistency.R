@@ -52,7 +52,7 @@ DATA_Cloud[, TYPE := NULL]
 # ......................................................................... ----
 ####  3. Consistency of trends  ################################################
 
-## _ Monthly means by SZA prenoon month ----------------------------------------
+## _ Monthly means by SZA prenoon month  ---------------------------------------
 
 ## Will create values for am, pm, and daily
 
@@ -175,7 +175,7 @@ CLOUD_3_monthly_mean <- data.table(rbind(data.frame(CLOUD_3_monthly_meanB),
 rm(CLOUD_3_monthly_meanA, CLOUD_3_monthly_meanB)
 CLOUD_3_monthly_mean[, Date := as.Date(paste(Year, Month, 1), "%Y %m %d") ]
 
-## _ Margin of error calculation -----------------------------------------------
+## _ Margin of error calculation  ----------------------------------------------
 conf_param  <- 1 - ( 1 - Monthly_confidence_limit ) / 2
 suppressWarnings({
     ALL_3_monthly_mean[,  DIR_att_EM   :=qt(conf_param,df=DIR_att_N -1)* DIR_att_sd   /sqrt(DIR_att_N)]

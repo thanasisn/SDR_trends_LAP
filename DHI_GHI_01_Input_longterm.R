@@ -122,6 +122,7 @@ range(CLOUD_1_daily_mean[, GLB_att_N / DayLength], breaks = 100)
 
 range(CLEAR_1_daily_mean[, GLB_att_N / DayLength], breaks = 100)
 
+DATA_all$Daylength
 
 test <- DATA_Clear[, sum(!is.na(GLB_att)) / max(DayLength) ,
                   by = Day]

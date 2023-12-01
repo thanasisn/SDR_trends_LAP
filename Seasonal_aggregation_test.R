@@ -3,7 +3,7 @@
 library(data.table)
 
 
-## Create dummy data
+## Create dummy data  ----------------------------------------------------------
 START <- as.POSIXct("1993-11-01", tz = "UTC")
 END   <- as.POSIXct("1995-11-01", tz = "UTC")
 
