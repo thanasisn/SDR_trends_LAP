@@ -18,6 +18,7 @@ source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 source("~/CODE/R_myRtools/myRtools/R/write_.R")
 source("./DHI_GHI_0_variables.R")
+Script.Name <- "./DHI_GHI_00_raw_data.R"
 
 #  Run data construction  ------------------------------------------------------
 
