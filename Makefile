@@ -90,7 +90,7 @@ $(PDF): $(RMD)
 	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', output_format='bookdown::pdf_document2', output_file='$@')"
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.pdf' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
 	@-rsync -a "$@" ${LIBRARY}
-	@-touch Article.Rmd
+	@-touch MDPI_submission.Rmd 
 
 r1: $(RUNT)
 $(RUNT): $(RMD)
@@ -113,7 +113,7 @@ $(PDF): $(RMD)
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.pdf' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
-	@-touch Article.Rmd
+	@-touch MDPI_submission.Rmd
 
 r2: $(RUNT)
 $(RUNT): $(RMD)
@@ -137,7 +137,7 @@ $(PDF): $(RMD)
 	@-rsync -a --prune-empty-dirs --exclude 'unnamed-chunk*' --include '*.pdf' --include '*.png' ./DHI_GHI_*/figure-latex/ ./images
 	@#setsid evince    $@ &
 	@-rsync -a "$@" ${LIBRARY}
-	@-touch Article.Rmd
+	@-touch MDPI_submission.Rmd
 
 r3: $(RUNT)
 $(RUNT): $(RMD)

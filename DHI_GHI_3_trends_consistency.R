@@ -52,8 +52,6 @@ knitr::opts_chunk$set(dev        = c("pdf", "png"))
 knitr::opts_chunk$set(out.width  = "100%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
 knitr::opts_chunk$set(cache      =  FALSE   )  ## !! breaks calculations
-# knitr::opts_chunk$set(fig.pos    = '!h'    )
-warning("Don't use cache it breaks computations")
 
 #+ include=F, echo=F
 ## __ Set environment ----------------------------------------------------------
@@ -66,14 +64,12 @@ if (!interactive()) {
     filelock::lock(paste0("./runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
-
 #+ echo=F, include=T
 library(data.table, quietly = TRUE, warn.conflicts = FALSE)
 library(pander,     quietly = TRUE, warn.conflicts = FALSE)
 library(lubridate,  quietly = TRUE, warn.conflicts = FALSE)
 library(ggplot2,    quietly = TRUE, warn.conflicts = FALSE)
 library(fANCOVA,    quietly = TRUE, warn.conflicts = FALSE)
-
 
 panderOptions("table.alignment.default", "right")
 panderOptions("table.split.table",        120   )
@@ -85,20 +81,31 @@ source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 
-
 ## __ Source initial scripts ---------------------------------------------------
 # source("./DHI_GHI_0_data_input.R")
 source("./DHI_GHI_0_variables.R")
 
 ## This use data from 1 !!!
 ## check previous steps
-if (! file.exists(I1_longterm) |
+if (!file.exists(I1_longterm) |
     file.mtime(I1_longterm) < file.mtime("./DHI_GHI_0_variables.R") |
     file.mtime(I1_longterm) < file.mtime("./DHI_GHI_00_raw_data.R") |
-    file.mtime(I1_longterm) < file.mtime("./DHI_GHI_01_Input_longterm.R") )
+    file.mtime(I1_longterm) < file.mtime("./DHI_GHI_01_Input_longterm.R"))
 {
     # source("./DHI_GHI_01_Input_longterm.R")
-    tryCatch(source("./DHI_GHI_01_Input_longterm.R"), exit=function(cond) {
+    tryCatch(source("./DHI_GHI_01_Input_longterm.R"), exit = function(cond) {
+        message( conditionMessage(cond) )
+    })
+    dummy <- gc()
+}
+
+if (!file.exists(I3_trendsconsist) |
+    file.mtime(I3_trendsconsist) < file.mtime("./DHI_GHI_0_variables.R") |
+    file.mtime(I3_trendsconsist) < file.mtime("./DHI_GHI_00_raw_data.R") |
+    file.mtime(I3_trendsconsist) < file.mtime("./DHI_GHI_03_Input_consistency.R"))
+{
+    # source("./DHI_GHI_01_Input_longterm.R")
+    tryCatch(source("./DHI_GHI_03_Input_consistency.R"), exit = function(cond) {
         message( conditionMessage(cond) )
     })
     dummy <- gc()
@@ -106,6 +113,7 @@ if (! file.exists(I1_longterm) |
 
 ## load data
 load(I1_longterm)
+load(I3_trendsconsist)
 
 tic <- Sys.time()
 
@@ -115,7 +123,6 @@ options(error = function() {
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
         system(paste("notify-send -u normal -t 30000 ", Script.Name, " 'An error occurred!'"))
     }
-    traceback()
 })
 
 ## __ Flags --------------------------------------------------------------------

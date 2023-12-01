@@ -25,8 +25,8 @@ if (
 
 ## check current steps
 if (
-    file.exists(I2_szatrend) == FALSE |
-    file.mtime(I2_szatrend) < file.mtime("./DHI_GHI_03_Input_consistency.R")
+    file.exists(I3_trendsconsist) == FALSE |
+    file.mtime(I3_trendsconsist) < file.mtime("./DHI_GHI_03_Input_consistency.R")
 ) {
     cat(paste("\n Have to create trends consistency data\n\n"))
 } else {
