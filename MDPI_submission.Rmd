@@ -201,7 +201,7 @@ library(kableExtra)
 library(dplyr)
 ## load data from trends analysis
 source("./DHI_GHI_00_raw_data.R")
-load(common_data)
+# load(common_data)
 load("./data/Input_1_longterm_trends.Rda")
 ## number of measurements for each dataset
 SDR_N_All   <- sum(  ALL_1_daily_DESEAS[,GLB_att_N])
@@ -356,10 +356,7 @@ ern Europe to the Mediterranean (Zerefos et. al., 2002). On the
 For the acquisition of radiometric data, the signal of the pyranometer is sampled with a rate of $1\,\text{Hz}$.
 The mean and the standard deviation of these samples are recorded every minute.
 The measurements are corrected for the zero offset ("dark signal" in volts).
-The "dark signal" is calculated by averaging all measurements recorded for a period of
-$3\,\text{h}$,
-before (morning) or after (evening) the Sun reaches an elevation angle of
-$-10^\circ$.
+The "dark signal" is calculated by averaging all measurements recorded for a period of $3\,\text{h}$, before (morning) or after (evening) the Sun reaches an elevation angle of $-10^\circ$.
 The signal is converted to irradiance using a ramped value of the instrument’s sensitivity between calibrations.
 
 <!-- b) Radiation data quality check -->
@@ -517,7 +514,7 @@ For this criterion, $X_i$ should be below a certain threshold (Eq.\ \ref{eq:VSMc
 <!-- ### Data selection -->
 Due to the significant measurement uncertainty when the Sun is near the horizon, we have excluded all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$.
 Moreover, due to some obstructions around the site (hills and buildings), we excluded data with azimuth angle between
-$35^\circ$ and $120^\circ$ with SZA greater than $80^\circ$.
+$`r FIBais_Az_1`^\circ$ and $`r FIBais_Az_2`^\circ$ with SZA greater than $`r 90 -  FIBais_Elev`^\circ$.
 On the latter instances, Sun is systematically not visible from the instrument's location.
 <!-- 1au -->
 To make the measurements comparable throughout the dataset, we adjusted all one-minute radiometric values to the mean Sun - Earth distance.
@@ -528,7 +525,7 @@ The initial daily values of this dataset were interpolated to match the time ste
 In the final dataset
 <!-- $`r SDR_N_All`$ -->
 $`r signif(100 * SDR_N_Clear / SDR_N_All, 3)`\%$
-of the data were identified as under clear-sky conditions and
+of the 1-min data were identified as under clear-sky conditions and
 $`r signif(100 * SDR_N_Cloud / SDR_N_All, 3)`\%$
 as under cloud-sky conditions.
 <!-- The TSI data we use, is a combination of data from NOAA [@Coddington2005] (for `r as.Date(TSIinfo[TSI_Source == "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source == "NOAA", End])`) and adjusted data from @LASP2023 (for `r as.Date(TSIinfo[TSI_Source != "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source != "NOAA", End])`).-->

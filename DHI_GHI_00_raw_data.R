@@ -63,17 +63,18 @@ if (D_14) {
 
 
 ## create local folders
-dir.create(dirname(common_data), showWarnings = FALSE)
-dir.create("./figures",          showWarnings = FALSE)
-dir.create("./images",           showWarnings = FALSE)
-dir.create("./runtime",          showWarnings = FALSE)
+dir.create("./data",    showWarnings = FALSE)
+dir.create("./figures", showWarnings = FALSE)
+dir.create("./images",  showWarnings = FALSE)
+dir.create("./runtime", showWarnings = FALSE)
 
 
 ##_  Check if we need to run data export  --------------------------------------
-havetorun <- !file.exists(common_data) |
-    file.mtime(CS_file)          > file.mtime(common_data) |
-    file.mtime(variables_fl)     > file.mtime(common_data) |
-    file.mtime("./DHI_GHI_00_raw_data.R") > file.mtime(common_data)
+havetorun <- !file.exists(raw_input_data) |
+    file.mtime(CS_file)          > file.mtime(raw_input_data) |
+    file.mtime(variables_fl)     > file.mtime(raw_input_data) |
+    file.mtime("./DHI_GHI_00_raw_data.R") > file.mtime(raw_input_data)
+
 
 if (havetorun) {
     cat(paste("\n !! Create raw input data ->", raw_input_data),"\n")
