@@ -2,15 +2,12 @@
 
 ## Data input for this paper
 
-## to force a rebuild of the dataset remove stored
-# file.remove(common_data)
-
 require(data.table)
 require(zoo)
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 source("./DHI_GHI_0_variables.R")
-
+Script.Name <- "DHI_GHI_01_Input_longterm.R"
 
 ##  Prepare raw data if needed  ------------------------------------------------
 ## check previous steps
@@ -46,7 +43,6 @@ DATA_all  [, TYPE := NULL]
 DATA_Clear[, TYPE := NULL]
 DATA_Cloud[, TYPE := NULL]
 
-
 DATA_all[,.N]
 DATA_Clear[,.N]
 DATA_Cloud[,.N]
@@ -55,6 +51,15 @@ DATA_all[,length(unique(as.Date(Date)))]
 DATA_Clear[,length(unique(as.Date(Date)))]
 DATA_Cloud[,length(unique(as.Date(Date)))]
 
+
+library(arrow)
+
+## read data and insert into DATA
+## move to previoys step
+
+read_parquet("/home/athan/DATA/Broad_Band/Broad_Band_DB_metadata.parquet")
+
+stop()
 
 
 # ......................................................................... ----
@@ -118,11 +123,19 @@ CLOUD_1_daily_mean <-
                by = .( Date = Day ) ]
 
 
+stop()
 range(CLOUD_1_daily_mean[, GLB_att_N / DayLength], breaks = 100)
 
 range(CLEAR_1_daily_mean[, GLB_att_N / DayLength], breaks = 100)
 
-DATA_all$Daylength
+hist(DATA_all$DayLength)
+plot(DATA_all[, DayLength, yday(Date)])
+
+DATA_all[DayLength < 500]
+
+plot(DATA_all[, max(DayLength), by = yday(Date)])
+plot(DATA_all[, min(DayLength), by = yday(Date)])
+
 
 test <- DATA_Clear[, sum(!is.na(GLB_att)) / max(DayLength) ,
                   by = Day]
@@ -138,7 +151,7 @@ hist(test$V1)
 stop()
 
 
-## _ Margin of error for confidence interval -----------------------------------
+## _ Margin of error for confidence interval  ----------------------------------
 conf_param  <- 1 - ( 1 - Daily_confidence_limit ) / 2
 suppressWarnings({
     ALL_1_daily_mean[,   DIR_att_EM    := qt(conf_param,df=DIR_att_N - 1) * DIR_att_sd    / sqrt(DIR_att_N)]
