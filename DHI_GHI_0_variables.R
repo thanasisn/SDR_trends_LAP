@@ -93,8 +93,8 @@ Monthly_aggegation_N_lim  <-  20
 SZA_aggregation_N_lim     <-   4
 
 All_daily_ratio_lim       <- 0.5
-Clear_daily_ratio_lim     <- 0.5
-Cloud_daily_ratio_lim     <- 0.5
+Clear_daily_ratio_lim     <- 0.3
+Cloud_daily_ratio_lim     <- 0.3
 
 FIBais_Az_1               <-  58
 FIBais_Az_2               <- 120
