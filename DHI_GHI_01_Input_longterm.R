@@ -73,12 +73,13 @@ ALL_1_daily_mean <-
                 HOR_att_sd    = sd(  HOR_att,      na.rm = T),
                 DIR_transp_sd = sd(  DIR_transp,   na.rm = T),
                 tsi1au_att_sd = sd(  tsi_1au_comb, na.rm = T),
-                Daylenth      = dlllllllllll ,
+                DayLength     = max(DayLength),
                 doy           = yday(Date),
                 GLB_att_N     = sum(!is.na(GLB_att)),
                 HOR_att_N     = sum(!is.na(HOR_att)),
                 DIR_att_N     = sum(!is.na(DIR_att))),
              by = .( Date = Day ) ]
+
 
 CLEAR_1_daily_mean <-
     DATA_Clear[,.(DIR_att       = mean(DIR_att,      na.rm = T),
@@ -91,6 +92,7 @@ CLEAR_1_daily_mean <-
                   HOR_att_sd    = sd(  HOR_att,      na.rm = T),
                   DIR_transp_sd = sd(  DIR_transp,   na.rm = T),
                   tsi1au_att_sd = sd(  tsi_1au_comb, na.rm = T),
+                  DayLength     = max(DayLength),
                   doy           = yday(Date),
                   GLB_att_N     = sum(!is.na(GLB_att)),
                   HOR_att_N     = sum(!is.na(HOR_att)),
@@ -108,6 +110,7 @@ CLOUD_1_daily_mean <-
                   HOR_att_sd    = sd(  HOR_att,      na.rm = T),
                   DIR_transp_sd = sd(  DIR_transp,   na.rm = T),
                   tsi1au_att_sd = sd(  tsi_1au_comb, na.rm = T),
+                  DayLength     = max(DayLength),
                   doy           = yday(Date),
                   GLB_att_N     = sum(!is.na(GLB_att)),
                   HOR_att_N     = sum(!is.na(HOR_att)),
@@ -115,6 +118,18 @@ CLOUD_1_daily_mean <-
                by = .( Date = Day ) ]
 
 
+range(CLOUD_1_daily_mean[, GLB_att_N / DayLength], breaks = 100)
+
+test <- DATA_Clear[, sum(!is.na(GLB_att)) / max(DayLength) ,
+                  by = Day]
+
+
+
+test <- DATA_Cloud[, sum(!is.na(GLB_att)),
+                   by = Day]
+
+
+hist(test$V1)
 
 stop()
 
@@ -845,3 +860,7 @@ save(file = I1_longterm,
      list = ls(pattern = "^ALL_1_|^CLEAR_1_|^CLOUD_1_"),
      compress = "xz")
 cat(paste("\n Long term proccessed data saved", I1_longterm, "\n\n"))
+
+
+system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
+system(paste("notify-send -u normal -t 30000 ", Script.Name, " 'FINISHED'"))

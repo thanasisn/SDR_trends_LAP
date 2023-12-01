@@ -114,7 +114,7 @@ tic <- Sys.time()
 options(error = function() {
     if (interactive()) {
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
-        system("notify-send -u normal -t 30000 'R session' 'An error occurred!'")
+        system(paste("notify-send -u normal -t 30000 ", Script.Name, " 'An error occurred!'"))
     }
     traceback()
 })

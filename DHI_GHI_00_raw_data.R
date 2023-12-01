@@ -175,6 +175,9 @@ if (havetorun) {
     ##_  Keep daylight only  ---------------------------------------------------
     DATA <- DATA[Elevat >= 0, ]
 
+    ##_  Count daylight length  ------------------------------------------------
+    DATA[, DayLength := .N, by = Day]
+
     ##_  Exclude low Sun elevation  --------------------------------------------
     DATA[Elevat < MIN_ELEVA, wattDIR     := NA]
     DATA[Elevat < MIN_ELEVA, wattDIR_sds := NA]
@@ -214,9 +217,6 @@ if (havetorun) {
         DATA[QCF_DIR == FALSE, wattHOR := NA]
         DATA[QCF_GLB == FALSE, wattGLB := NA]
     }
-
-    ##_  Count daylight length  ------------------------------------------------
-    DATA[, DayLength := .N, by = Day]
 
     ##_  DROP MISSING RECORDS!! ------------------------------------------------
     DATA <- DATA[ !(is.na(wattDIR) & is.na(wattGLB)) ]
@@ -332,3 +332,5 @@ if (havetorun) {
     }
 }
 
+system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
+system(paste("notify-send -u normal -t 30000 ", Script.Name, " 'FINISHED'"))
