@@ -87,11 +87,10 @@ source("~/CODE/FUNCTIONS/R/data.R")
 
 
 ## __ Source initial scripts ---------------------------------------------------
-source("./DHI_GHI_0_data_input.R")
+# source("./DHI_GHI_0_data_input.R")
 source("./DHI_GHI_0_variables.R")
-tic <- Sys.time()
 
-## use data from 1
+## This use data from 1 !!!
 ## check previous steps
 if (! file.exists(I1_longterm) |
     file.mtime(I1_longterm) < file.mtime("./DHI_GHI_0_variables.R") |
@@ -108,16 +107,13 @@ if (! file.exists(I1_longterm) |
 ## load data
 load(I1_longterm)
 
-
-
-
-
+tic <- Sys.time()
 
 ## notification function
 options(error = function() {
     if (interactive()) {
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
-        system("notify-send -u normal -t 30000 'R session' 'An error occurred!'")
+        system(paste("notify-send -u normal -t 30000 ", Script.Name, " 'An error occurred!'"))
     }
     traceback()
 })
