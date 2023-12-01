@@ -73,6 +73,7 @@ ALL_1_daily_mean <-
                 HOR_att_sd    = sd(  HOR_att,      na.rm = T),
                 DIR_transp_sd = sd(  DIR_transp,   na.rm = T),
                 tsi1au_att_sd = sd(  tsi_1au_comb, na.rm = T),
+                Daylenth      = dlllllllllll
                 doy           = yday(Date),
                 GLB_att_N     = sum(!is.na(GLB_att)),
                 HOR_att_N     = sum(!is.na(HOR_att)),
@@ -113,6 +114,9 @@ CLOUD_1_daily_mean <-
                   DIR_att_N     = sum(!is.na(DIR_att))),
                by = .( Date = Day ) ]
 
+
+
+stop()
 
 
 ## _ Margin of error for confidence interval -----------------------------------

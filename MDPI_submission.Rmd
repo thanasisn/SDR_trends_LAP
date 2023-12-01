@@ -525,7 +525,7 @@ The initial daily values of this dataset were interpolated to match the time ste
 In the final dataset
 <!-- $`r SDR_N_All`$ -->
 $`r signif(100 * SDR_N_Clear / SDR_N_All, 3)`\%$
-of the 1-min data were identified as under clear-sky conditions and
+of the 1-minute data were identified as under clear-sky conditions and
 $`r signif(100 * SDR_N_Cloud / SDR_N_All, 3)`\%$
 as under cloud-sky conditions.
 <!-- The TSI data we use, is a combination of data from NOAA [@Coddington2005] (for `r as.Date(TSIinfo[TSI_Source == "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source == "NOAA", End])`) and adjusted data from @LASP2023 (for `r as.Date(TSIinfo[TSI_Source != "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source != "NOAA", End])`).-->
