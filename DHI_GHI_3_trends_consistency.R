@@ -174,7 +174,8 @@ by_var     <- c("Date", "SZA")
 for (i in data_list) {
     ## get data and y vars to plot
     Dplot  <- get(i)
-    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = T)
+    # wecare <- grep("HOR|GLB|DIR", names(Dplot), value = T)
+    wecare <- grep("GLB|DIR", names(Dplot), value = T)
     ## loop existing x vars
     for (xvar in names(Dplot)[names(Dplot) %in% by_var]) {
         for (yvar in wecare) {
@@ -197,7 +198,8 @@ for (i in data_list) {
 for (i in data_list) {
     ## get data and y vars to plot
     Dplot  <- get(i)
-    wecare <- grep("HOR|GLB|DIR", names(Dplot), value = TRUE)
+    # wecare <- grep("HOR|GLB|DIR", names(Dplot), value = TRUE)
+    wecare <- grep("GLB|DIR", names(Dplot), value = TRUE)
     for (yvar in wecare) {
         if (!yvar %in% names(Dplot)) next()
         if (all(is.na(Dplot[[yvar]]))) next()
