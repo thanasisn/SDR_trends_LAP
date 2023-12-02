@@ -52,8 +52,7 @@ knitr::opts_chunk$set(dev        = c("pdf", "png"))
 knitr::opts_chunk$set(out.width  = "100%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
 knitr::opts_chunk$set(cache      =  FALSE   )  ## !! breaks calculations
-# knitr::opts_chunk$set(fig.pos    = '!h'    )
-warning("Don't use cache it breaks computations")
+knitr::opts_chunk$set(fig.pos    = '!h'     )
 
 #+ include=F, echo=F
 ## __ Set environment ----------------------------------------------------------
@@ -348,7 +347,7 @@ vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att")
 dbs         <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
                  "CLOUD_1_daily_DESEAS")
-## gather trends
+##  Gather daily trends  -------------------------------------------------------
 gather <- data.frame()
 
 for (DBn in dbs) {
@@ -501,10 +500,7 @@ for (DBn in dbs) {
 
 
 
-
-
-
-## __ Trends table  ------------------------------------------------------------
+## __ Daily trends table  ------------------------------------------------------
 #'
 #' \newpage
 #'
@@ -542,12 +538,6 @@ pprint$cor.method      <- NULL
 pprint$cor.alternative <- NULL
 pprint$cor.p           <- NULL
 
-
-
-# \scriptsize
-# \footnotesize
-# \small
-
 #+ echo=F, include=T
 #' \scriptsize
 #+ echo=F, include=T
@@ -557,6 +547,7 @@ pander(pprint,
 #' \normalsize
 #+ echo=F, include=T
 
+## __ Store Daily trends table for use  ----------------------------------------
 write_dat(pprint,
           "./figures/tbl_longterm_trends.dat",
           clean = TRUE)

@@ -53,15 +53,6 @@ DATA_Cloud[,length(unique(as.Date(Date)))]
 
 
 
-
-
-## replace day lengh
-
-
-
-stop()
-
-
 # ......................................................................... ----
 ##  1. long-term  --------------------------------------------------------------
 
@@ -123,32 +114,22 @@ CLOUD_1_daily_mean <-
                by = .( Date = Day ) ]
 
 
-stop()
-range(CLOUD_1_daily_mean[, GLB_att_N / DayLength], breaks = 100)
 
-range(CLEAR_1_daily_mean[, GLB_att_N / DayLength], breaks = 100)
+## _ Exclude days with few data for Clear and cloud  ---------------------------
+hist(CLEAR_1_daily_mean[, GLB_att_N / DayLength], breaks = 100)
+abline(v = Clear_daily_ratio_lim, col = "red")
 
-hist(DATA_all$DayLength)
-plot(DATA_all[, DayLength, yday(Date)])
+CLEAR_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att    := NA]
+CLEAR_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att_N  := NA]
+CLEAR_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att_sd := NA]
 
-DATA_all[DayLength < 500]
+hist(CLOUD_1_daily_mean[, GLB_att_N / DayLength], breaks = 100)
+abline(v = Cloud_daily_ratio_lim, col = "red")
 
-plot(DATA_all[, max(DayLength), by = yday(Date)])
-plot(DATA_all[, min(DayLength), by = yday(Date)])
+CLOUD_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att    := NA]
+CLOUD_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att_N  := NA]
+CLOUD_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att_sd := NA]
 
-
-test <- DATA_Clear[, sum(!is.na(GLB_att)) / max(DayLength) ,
-                  by = Day]
-
-
-
-test <- DATA_Cloud[, sum(!is.na(GLB_att)),
-                   by = Day]
-
-
-hist(test$V1)
-
-stop()
 
 
 ## _ Margin of error for confidence interval  ----------------------------------
@@ -168,54 +149,7 @@ suppressWarnings({
     CLOUD_1_daily_mean[, DIR_transp_EM := qt(conf_param,df=DIR_att_N - 1) * DIR_transp_sd / sqrt(DIR_att_N)]
 })
 
-## _ Exclude means with less than Daily_aggregation_N_lim data points ----------
-ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_att       := NA]
-ALL_1_daily_mean[   GLB_att_N <= Daily_aggregation_N_lim, GLB_att       := NA]
-ALL_1_daily_mean[   HOR_att_N <= Daily_aggregation_N_lim, HOR_att       := NA]
-ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_att_N     := NA]
-ALL_1_daily_mean[   GLB_att_N <= Daily_aggregation_N_lim, GLB_att_N     := NA]
-ALL_1_daily_mean[   HOR_att_N <= Daily_aggregation_N_lim, HOR_att_N     := NA]
-ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_transp    := NA]
-ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_att_sd    := NA]
-ALL_1_daily_mean[   GLB_att_N <= Daily_aggregation_N_lim, GLB_att_sd    := NA]
-ALL_1_daily_mean[   HOR_att_N <= Daily_aggregation_N_lim, HOR_att_sd    := NA]
-ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_sd := NA]
-ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_att_EM    := NA]
-ALL_1_daily_mean[   GLB_att_N <= Daily_aggregation_N_lim, GLB_att_EM    := NA]
-ALL_1_daily_mean[   HOR_att_N <= Daily_aggregation_N_lim, HOR_att_EM    := NA]
-ALL_1_daily_mean[   DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_EM := NA]
 
-CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att       := NA]
-CLEAR_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att       := NA]
-CLEAR_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att       := NA]
-CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att_N     := NA]
-CLEAR_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att_N     := NA]
-CLEAR_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att_N     := NA]
-CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp    := NA]
-CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att_sd    := NA]
-CLEAR_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att_sd    := NA]
-CLEAR_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att_sd    := NA]
-CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_sd := NA]
-CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att_EM    := NA]
-CLEAR_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att_EM    := NA]
-CLEAR_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att_EM    := NA]
-CLEAR_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_EM := NA]
-
-CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att       := NA]
-CLOUD_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att       := NA]
-CLOUD_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att       := NA]
-CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att_N     := NA]
-CLOUD_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att_N     := NA]
-CLOUD_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att_N     := NA]
-CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp    := NA]
-CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att_sd    := NA]
-CLOUD_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att_sd    := NA]
-CLOUD_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att_sd    := NA]
-CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_sd := NA]
-CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_att_EM    := NA]
-CLOUD_1_daily_mean[ GLB_att_N <= Daily_aggregation_N_lim, GLB_att_EM    := NA]
-CLOUD_1_daily_mean[ HOR_att_N <= Daily_aggregation_N_lim, HOR_att_EM    := NA]
-CLOUD_1_daily_mean[ DIR_att_N <= Daily_aggregation_N_lim, DIR_transp_EM := NA]
 
 
 ## _ Daily seasonal values from daily ------------------------------------------
