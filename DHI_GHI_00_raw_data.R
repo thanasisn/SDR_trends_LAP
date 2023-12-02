@@ -330,7 +330,6 @@ if (havetorun) {
         saveRDS(DATA, file = raw_input_data, compress = "xz")
         cat("\nSaved raw input data:", raw_input_data, "\n\n")
     }
+    system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
+    system(paste("notify-send -u normal -t 30000 ", Script.Name, " 'FINISHED'"))
 }
-
-system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
-system(paste("notify-send -u normal -t 30000 ", Script.Name, " 'FINISHED'"))

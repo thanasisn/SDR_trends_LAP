@@ -52,6 +52,7 @@ knitr::opts_chunk$set(dev        = c("pdf", "png"))
 knitr::opts_chunk$set(out.width  = "100%"   )
 knitr::opts_chunk$set(fig.align  = "center" )
 knitr::opts_chunk$set(cache      =  FALSE   )  ## !! breaks calculations
+knitr::opts_chunk$set(fig.pos    = '!h'     )
 
 #+ include=F, echo=F
 ## __ Set environment ----------------------------------------------------------
@@ -64,12 +65,14 @@ if (!interactive()) {
     filelock::lock(paste0("./runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
 }
 
+
 #+ echo=F, include=T
 library(data.table, quietly = TRUE, warn.conflicts = FALSE)
 library(pander,     quietly = TRUE, warn.conflicts = FALSE)
 library(lubridate,  quietly = TRUE, warn.conflicts = FALSE)
 library(ggplot2,    quietly = TRUE, warn.conflicts = FALSE)
 library(fANCOVA,    quietly = TRUE, warn.conflicts = FALSE)
+
 
 panderOptions("table.alignment.default", "right")
 panderOptions("table.split.table",        120   )
@@ -81,12 +84,19 @@ source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 
+
 ## __ Source initial scripts ---------------------------------------------------
-# source("./DHI_GHI_0_data_input.R")
 source("./DHI_GHI_0_variables.R")
 
-## This use data from 1 !!!
-## check previous steps
+## notification function
+options(error = function() {
+    if (interactive()) {
+        system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
+        system(paste("notify-send -u normal -t 30000 ", Script.Name, " 'An error occurred!'"))
+    }
+})
+
+
 if (!file.exists(I1_longterm) |
     file.mtime(I1_longterm) < file.mtime("./DHI_GHI_0_variables.R") |
     file.mtime(I1_longterm) < file.mtime("./DHI_GHI_00_raw_data.R") |
@@ -117,13 +127,6 @@ load(I3_trendsconsist)
 
 tic <- Sys.time()
 
-## notification function
-options(error = function() {
-    if (interactive()) {
-        system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
-        system(paste("notify-send -u normal -t 30000 ", Script.Name, " 'An error occurred!'"))
-    }
-})
 
 ## __ Flags --------------------------------------------------------------------
 
@@ -146,12 +149,6 @@ ccex_sbs <- 1.3
 #+ echo=F, include=T
 #'
 #' ## 3. Consistency of trends
-#'
-#' ### Data info
-#'
-
-# Time data span `r range(ALL_1_daily_DESEAS$Date)`
-
 #'
 #' Where is a **running mean the window is `r running_mean_window_days` days** or
 #' `r running_mean_window_days / Days_of_year` years.
@@ -225,23 +222,11 @@ setorder(  ALL_1_daily_DESEAS, Date)
 setorder(CLEAR_1_daily_DESEAS, Date)
 setorder(CLOUD_1_daily_DESEAS, Date)
 
-## with NAs in place
-#   ALL_1_daily_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des),    0, GLB_att_des))    + GLB_att_des*0    ]
-#   ALL_1_daily_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
-#   ALL_1_daily_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
-# CLEAR_1_daily_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des),    0, GLB_att_des))    + GLB_att_des*0    ]
-# CLEAR_1_daily_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
-# CLEAR_1_daily_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
-# CLOUD_1_daily_DESEAS[, GLB_att_cusum    := cumsum(ifelse(is.na(GLB_att_des),    0, GLB_att_des))    + GLB_att_des*0    ]
-# CLOUD_1_daily_DESEAS[, DIR_att_cusum    := cumsum(ifelse(is.na(DIR_att_des),    0, DIR_att_des))    + DIR_att_des*0    ]
-# CLOUD_1_daily_DESEAS[, DIR_transp_cusum := cumsum(ifelse(is.na(DIR_transp_des), 0, DIR_transp_des)) + DIR_transp_des*0 ]
-
-
 
 
 ## Remove trends before cumulative sum !! --------------------------------------
 #'
-#' Create new data sets with the long term removed
+#' ## Create new data sets with the long term removed
 #'
 #+ echo=F, include=T
 

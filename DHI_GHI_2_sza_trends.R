@@ -86,7 +86,6 @@ source("~/CODE/FUNCTIONS/R/data.R")
 
 
 ## __ Source initial scripts ---------------------------------------------------
-# source("./DHI_GHI_0_data_input.R")
 source("./DHI_GHI_0_variables.R")
 
 ## check previous steps
