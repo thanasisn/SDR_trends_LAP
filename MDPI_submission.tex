@@ -468,9 +468,9 @@ the Sun's intensity variability, using a time series of satellite TSI
 observations. The TSI data we used are part of the ``NOAA Climate Data
 Record of Total Solar Irradiance'' dataset \citep{Coddington2005}. The
 initial daily values of this dataset were interpolated to match the time
-step of our measurements. In the final dataset \(40.1\%\) of the
-1-minute data were identified as under clear-sky conditions and
-\(59.9\%\) as under cloud-sky conditions.
+step of our measurements. In the final dataset \(NA\%\) of the 1-minute
+data were identified as under clear-sky conditions and \(NA\%\) as under
+cloud-sky conditions.
 
 In order to investigate the SDR trends, we implemented an appropriate
 aggregation scheme to the 1-minute data to derive a series in coarser
@@ -502,9 +502,9 @@ only the time series under all-sky conditions; the plots for clear-sky
 and cloud-sky conditions, are very similar and are shown in the Appendix
 (Figures~\ref{fig:trendCLEAR} and~ \ref{fig:trendCLOUD}). We observe a
 positive trend for all-sky conditions (\(0.38\,\%/y\)), a very close but
-smaller trend for clear-skies (\(0.16\,\%/y\)) and a negative weaker
-trend for cloudy-skies (\(0.019\,\%/y\)). In the studied period, there
-is no significant break or change in the variability of the time series.
+smaller trend for clear-skies (\(0.041\,\%/y\)) and a negative weaker
+trend for cloudy-skies (\(0.34\,\%/y\)). In the studied period, there is
+no significant break or change in the variability of the time series.
 Other studies for the European region reported a change of the SDR
 slope, around 1980 \citep{Wild2021, Yuan2021, Ohmura2009}, a few years
 before the start of our records. It is interesting to note, that for the
@@ -517,11 +517,11 @@ variability.
 \caption{\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period 1993 - 2023.}
 \begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\centering}X}
 \toprule
-slope & slope.p & Rsqrd & RsqrdAdj & cor.t & cor.esimate & DATA & N & slope.stat\_sig\\
+slope & slope.p & Rsqrd & RsqrdAdj & cor.t & cor.estimate & DATA & N & slope.stat\_sig\\
 \midrule
-0.376 & 0.00e+00 & 0.0083302 & 0.0082334 & 9.279 & 0.091270 & All skies & 10252 & 100.00\\
-0.156 & 7.00e-07 & 0.0030928 & 0.0029676 & 4.971 & 0.055613 & Clear skies & 7967 & 100.00\\
-0.019 & 7.23e-01 & 0.0000123 & -0.0000858 & 0.354 & 0.003506 & Cloudy skies & 10194 & 27.66\\
+0.3760 & 0.0000 & 0.008339 & 0.0082421 & 9.284 & 0.09132 & All skies & 10251 & 100.00\\
+0.3430 & 0.0000 & 0.005312 & 0.0051756 & 6.234 & 0.07289 & Cloudy skies & 7279 & 100.00\\
+0.0406 & 0.0141 & 0.001195 & 0.0009971 & 2.455 & 0.03458 & Clear skies & 5036 & 98.59\\
 \bottomrule
 \end{tabu}
 \end{table}
@@ -669,7 +669,7 @@ the \(99\,\%\) confidence level. In spring and summer, the trends are
 much smaller and of lesser statistical significance. These seasonal
 differences indicate a possible relation of the trends in SDR to trends
 of clouds during winter and autumn. For clear-skies, the trend in winter
-is \(0.7\,\%/y\), larger than for all-skies (\(0.69\,\%/y\)), which is
+is \(0.5\,\%/y\), larger than for all-skies (\(0.69\,\%/y\)), which is
 another indication of a decreasing trend in cloud optical thickness.
 Moreover, the trends under clear- and cloudy-sky conditions are almost
 complementary to each other, particularly for winter and autumn, where
@@ -691,31 +691,31 @@ comparison.
 \caption{\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.}
 \begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\centering}X>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\centering}X}
 \toprule
-Trend [\%/year] & slope.p & Rsqrd & RsqrdAdj & cor.t & cor.esimate & Sky condition & Season & slope.stat\_sig\\
+Trend [\%/year] & slope.p & Rsqrd & RsqrdAdj & cor.t & cor.estimate & Sky condition & Season & slope.stat\_sig\\
 \midrule
-\cellcolor{gray!6}{0.6870} & \cellcolor{gray!6}{1.33e-03} & \cellcolor{gray!6}{0.3121839} & \cellcolor{gray!6}{0.2876190} & \cellcolor{gray!6}{3.5649059} & \cellcolor{gray!6}{0.5587342} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{99.90}\\
+\cellcolor{gray!6}{0.6870} & \cellcolor{gray!6}{0.001330} & \cellcolor{gray!6}{0.3121839} & \cellcolor{gray!6}{0.2876190} & \cellcolor{gray!6}{3.564906} & \cellcolor{gray!6}{0.5587342} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{99.9}\\
 \cmidrule{1-9}
-0.1460 & 1.78e-01 & 0.0616942 & 0.0293388 & 1.3808581 & 0.2483832 & All skies & Spring & 82.20\\
+0.1460 & 0.178000 & 0.0616942 & 0.0293388 & 1.380858 & 0.2483832 & All skies & Spring & 82.2\\
 \cmidrule{1-9}
-\cellcolor{gray!6}{0.1230} & \cellcolor{gray!6}{9.61e-02} & \cellcolor{gray!6}{0.0957525} & \cellcolor{gray!6}{0.0634580} & \cellcolor{gray!6}{1.7219100} & \cellcolor{gray!6}{0.3094390} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{90.40}\\
+\cellcolor{gray!6}{0.1230} & \cellcolor{gray!6}{0.096100} & \cellcolor{gray!6}{0.0957525} & \cellcolor{gray!6}{0.0634580} & \cellcolor{gray!6}{1.721910} & \cellcolor{gray!6}{0.3094390} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{90.4}\\
 \cmidrule{1-9}
-0.4300 & 6.67e-03 & 0.2347186 & 0.2073871 & 2.9305032 & 0.4844777 & All skies & Autumn & 99.30\\
+0.4300 & 0.006670 & 0.2347063 & 0.2073744 & 2.930403 & 0.4844650 & All skies & Autumn & 99.3\\
 \cmidrule{1-9}
-\cellcolor{gray!6}{0.6990} & \cellcolor{gray!6}{8.51e-05} & \cellcolor{gray!6}{0.4293113} & \cellcolor{gray!6}{0.4089296} & \cellcolor{gray!6}{4.5895019} & \cellcolor{gray!6}{0.6552185} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{100.00}\\
+\cellcolor{gray!6}{0.4990} & \cellcolor{gray!6}{0.000166} & \cellcolor{gray!6}{0.4025975} & \cellcolor{gray!6}{0.3812617} & \cellcolor{gray!6}{4.343912} & \cellcolor{gray!6}{0.6345057} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{100.0}\\
 \cmidrule{1-9}
--0.0265 & 8.46e-01 & 0.0013302 & -0.0331066 & -0.1965409 & -0.0364724 & Clear skies & Spring & 15.40\\
+-0.0865 & 0.315000 & 0.0348099 & 0.0015275 & -1.022690 & -0.1865741 & Clear skies & Spring & 68.5\\
 \cmidrule{1-9}
-\cellcolor{gray!6}{-0.1810} & \cellcolor{gray!6}{8.08e-03} & \cellcolor{gray!6}{0.2250803} & \cellcolor{gray!6}{0.1974046} & \cellcolor{gray!6}{-2.8518021} & \cellcolor{gray!6}{-0.4744263} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{99.20}\\
+\cellcolor{gray!6}{-0.2180} & \cellcolor{gray!6}{0.000398} & \cellcolor{gray!6}{0.3659586} & \cellcolor{gray!6}{0.3433142} & \cellcolor{gray!6}{-4.020094} & \cellcolor{gray!6}{-0.6049451} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{100.0}\\
 \cmidrule{1-9}
-0.1260 & 2.57e-01 & 0.0455591 & 0.0114719 & 1.1560907 & 0.2134457 & Clear skies & Autumn & 74.30\\
+0.1090 & 0.221000 & 0.0529350 & 0.0191112 & 1.251009 & 0.2300761 & Clear skies & Autumn & 77.9\\
 \cmidrule{1-9}
-\cellcolor{gray!6}{0.0944} & \cellcolor{gray!6}{6.13e-01} & \cellcolor{gray!6}{0.0092345} & \cellcolor{gray!6}{-0.0261500} & \cellcolor{gray!6}{0.5108573} & \cellcolor{gray!6}{0.0960962} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{38.70}\\
+\cellcolor{gray!6}{0.5200} & \cellcolor{gray!6}{0.009580} & \cellcolor{gray!6}{0.2164332} & \cellcolor{gray!6}{0.1884487} & \cellcolor{gray!6}{2.781012} & \cellcolor{gray!6}{0.4652238} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{99.0}\\
 \cmidrule{1-9}
-0.0161 & 9.09e-01 & 0.0004533 & -0.0340138 & 0.1146809 & 0.0212909 & Cloudy skies & Spring & 9.05\\
+0.1780 & 0.122000 & 0.0806332 & 0.0489309 & 1.594819 & 0.2839598 & Cloudy skies & Spring & 87.8\\
 \cmidrule{1-9}
-\cellcolor{gray!6}{-0.0283} & \cellcolor{gray!6}{8.07e-01} & \cellcolor{gray!6}{0.0021748} & \cellcolor{gray!6}{-0.0334619} & \cellcolor{gray!6}{-0.2470344} & \cellcolor{gray!6}{-0.0466343} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{19.30}\\
+\cellcolor{gray!6}{0.1940} & \cellcolor{gray!6}{0.036800} & \cellcolor{gray!6}{0.1466137} & \cellcolor{gray!6}{0.1161356} & \cellcolor{gray!6}{2.193277} & \cellcolor{gray!6}{0.3829017} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{96.3}\\
 \cmidrule{1-9}
--0.0427 & 7.98e-01 & 0.0023737 & -0.0332559 & -0.2581092 & -0.0487201 & Cloudy skies & Autumn & 20.20\\
+0.3470 & 0.100000 & 0.0934930 & 0.0611177 & 1.699350 & 0.3057662 & Cloudy skies & Autumn & 90.0\\
 \bottomrule
 \end{tabu}
 \end{table}
@@ -731,14 +731,14 @@ of \(0.33\,\%/y\). The increase of this trend indicates that the
 brightening of SDR continues and is probably caused by continuing
 decreases in aerosol optical depth and the optical thickness of clouds
 over the area. Moreover, we found a similar trend under clear-sky
-conditions (\(0.16\,\%/y\)) that further supports the assumption that
+conditions (\(0.041\,\%/y\)) that further supports the assumption that
 the brightening is caused mainly by decreasing aerosols. Unfortunately,
 for the entire period there is no available data for the aerosols, in
 order to quantify their effect on SDR. However, \citet{Siomos2020} have
 shown that aerosol optical depth over Thessaloniki is decreasing
 constantly at least up to 2018. The attenuation of SDR by aerosols over
 Europe have been proposed as major factor by \citet{Wild2021}. The
-dimming effect on SDR under cloudy-sky conditions (\(0.019\,\%/y\)),
+dimming effect on SDR under cloudy-sky conditions (\(0.34\,\%/y\)),
 suggests that cloud optical thickness is decreasing during this period.
 Because we have no adequate data to investigate the long term changes of
 cloud thickness in the region, we cannot verify if the negative SDR
@@ -748,9 +748,9 @@ changes in clouds.
 The observed brightening on SDR over Thessaloniki is dependent on SZA
 (larger SZAs lead to stronger brightening). The trend is also dependent
 on season, with winter showing the strongest statistically significant
-trend of \(0.69\) and \(0.7\,\%/y\) for all- and clear-skies,
+trend of \(0.69\) and \(0.5\,\%/y\) for all- and clear-skies,
 respectively, in contrast to spring and summer. The trends for autumn
-are also significant but smaller ( \(0.43\) and \(0.13\,\%/y\) for all-
+are also significant but smaller ( \(0.43\) and \(0.11\,\%/y\) for all-
 and clear-skies, respectively). Our findings are in agreement with other
 studies for the region.
 

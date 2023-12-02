@@ -200,7 +200,7 @@ library(data.table)
 library(kableExtra)
 library(dplyr)
 ## load data from trends analysis
-source("./DHI_GHI_00_raw_data.R")
+# source("./DHI_GHI_00_raw_data.R")
 # load(common_data)
 load("./data/Input_1_longterm_trends.Rda")
 ## number of measurements for each dataset
@@ -984,6 +984,5 @@ Also, additional data of cloudiness, aerosols, atmospheric water vapour, etc., w
 similar results with Evidence for Clear‐Sky Dimming and Brightening in Central Europe_Wild2021.pdf
 include in discussion
 -->
-
 
 
