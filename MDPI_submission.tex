@@ -468,9 +468,9 @@ the Sun's intensity variability, using a time series of satellite TSI
 observations. The TSI data we used are part of the ``NOAA Climate Data
 Record of Total Solar Irradiance'' dataset \citep{Coddington2005}. The
 initial daily values of this dataset were interpolated to match the time
-step of our measurements. In the final dataset \(NA\%\) of the 1-minute
-data were identified as under clear-sky conditions and \(NA\%\) as under
-cloud-sky conditions.
+step of our measurements. In the final dataset \(35.7\%\) of the
+1-minute data were identified as under clear-sky conditions and
+\(55.3\%\) as under cloud-sky conditions.
 
 In order to investigate the SDR trends, we implemented an appropriate
 aggregation scheme to the 1-minute data to derive a series in coarser
@@ -517,13 +517,13 @@ variability.
 \begin{table}[H]
 
 \caption{\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period 1993 - 2023.}
-\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\centering}X>{\raggedleft}X>{\raggedleft}X}
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
 \toprule
-Trend [\%/year] & slope.p & Rsqrd & cor.estimate & Sky condition & Days & slope.stat\_sig\\
+Sky conditions & Trend [\%/year] & Trend p-value & Pearson cor. & Days\\
 \midrule
-0.3760 & 0.0000 & 0.00834 & 0.09132 & All skies & 10251 & 100.00\\
-0.3430 & 0.0000 & 0.00531 & 0.07289 & Cloudy skies & 7279 & 100.00\\
-0.0406 & 0.0141 & 0.00120 & 0.03458 & Clear skies & 5036 & 98.59\\
+All skies & 0.3765 & 0.0000 & 0.0913 & 10251\\
+Cloudy skies & 0.3432 & 0.0000 & 0.0729 & 7279\\
+Clear skies & 0.0406 & 0.0141 & 0.0346 & 5036\\
 \bottomrule
 \end{tabu}
 \end{table}

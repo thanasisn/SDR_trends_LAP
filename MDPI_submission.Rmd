@@ -204,9 +204,9 @@ library(dplyr)
 # load(common_data)
 load("./data/Input_1_longterm_trends.Rda")
 ## number of measurements for each dataset
-SDR_N_All   <- sum(  ALL_1_daily_DESEAS[,GLB_att_N])
-SDR_N_Clear <- sum(CLEAR_1_daily_DESEAS[,GLB_att_N])
-SDR_N_Cloud <- sum(CLOUD_1_daily_DESEAS[,GLB_att_N])
+SDR_N_All   <- sum(  ALL_1_daily_DESEAS[,GLB_att_N], na.rm = T)
+SDR_N_Clear <- sum(CLEAR_1_daily_DESEAS[,GLB_att_N], na.rm = T)
+SDR_N_Cloud <- sum(CLOUD_1_daily_DESEAS[,GLB_att_N], na.rm = T)
 ## TSI data span info
 TSIinfo <- data.table(read.csv("./figures/tbl_tsi_info.dat",
                     strip.white = TRUE,
@@ -585,9 +585,9 @@ cloudtrend <- signif(LT[DATA == "Cloudy sky cond.", slope], 2)
 LTminSSig  <- signif(min(LT$slope.stat_sig), 4)
 
 ## numeric precision of table
-LT$slope    <- signif(LT$slope,   3)
-LT$slope.p  <- signif(LT$slope.p, 3)
-LT$Rsqrd    <- signif(LT$Rsqrd,   3)
+LT$slope    <- signif(LT$slope,   4)
+LT$slope.p  <- signif(LT$slope.p, 4)
+LT$Rsqrd    <- signif(LT$Rsqrd,   4)
 
 LT$RsqrdAdj <- NULL
 LT$cor.t    <- NULL
@@ -596,9 +596,11 @@ LT$cor.t    <- NULL
 LT$DATA <- sub(" cond.", "", LT$DATA)
 LT$DATA <- sub(" sky", " skies", LT$DATA)
 
-LT <- rename(LT, "Trend [%/year]" = slope)
-LT <- rename(LT, "Sky condition"  = DATA )
-LT <- rename(LT, "Days"           = N    )
+LT <- rename(LT, "Trend [%/year]" = slope       )
+LT <- rename(LT, "Sky conditions" = DATA        )
+LT <- rename(LT, "Days"           = N           )
+LT <- rename(LT, "Pearson cor."   = cor.estimate)
+LT <- rename(LT, "Trend p-value"  = slope.p     )
 
 
 # 
@@ -614,12 +616,13 @@ LT <- rename(LT, "Days"           = N    )
 
 
 ## order columns
-# LT1 <- LT[,c(
-#       "Sky conditions",
-#       "Trend [%/year]",
-#       "Trend p-value",
-#       "Days with data"
-#       )]
+LT1 <- LT[,c(
+      "Sky conditions",
+      "Trend [%/year]",
+      "Trend p-value",
+      "Pearson cor.",
+      "Days"
+      )]
 
 ## order columns
 # LT2 <- LT[,c(
@@ -652,13 +655,13 @@ and thus we can not attribute any major effect on SDR trend to Solar variability
 
 ```{r trendtable, echo=F}
 
-x_latex <- knitr::kable(LT2,
+x_latex <- knitr::kable(LT1,
                         format      = "latex",
                         booktabs    = TRUE,
                         escape      = TRUE,
-                        format.args = list(digits = 4),
+                        format.args = list(digits = 3),
                         linesep     = "",
-                        align       = "crrr",
+                        align       = "crrrr",
                         centering   = FALSE,
                         table.envir = "table",
                         position    = "H",
