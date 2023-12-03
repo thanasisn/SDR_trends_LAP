@@ -475,8 +475,10 @@ cloud-sky conditions.
 In order to investigate the SDR trends, we implemented an appropriate
 aggregation scheme to the 1-minute data to derive a series in coarser
 time-scales. To preserve the representativeness of the data we used the
-following criteria: a) for the daily mean values we accept days with
-more than 50\% of the daytime measurements present and valid, b) monthly
+following criteria: a) we accept only days with more than 50\% of the
+daytime measurements present and valid, b) on the dataset of clear- and
+cloudy-skies, we included only days with more than 30\% of the daytime
+measurements identified as clear or cloudy respectively, c) monthly
 values were computed from daily means only when at least 20 days were
 available. To create the daily and monthly climatological means, we
 averaged the data based on the day of year and calendar month,
@@ -515,13 +517,13 @@ variability.
 \begin{table}[H]
 
 \caption{\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period 1993 - 2023.}
-\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\centering}X}
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\centering}X>{\raggedleft}X>{\raggedleft}X}
 \toprule
-slope & slope.p & Rsqrd & RsqrdAdj & cor.t & cor.estimate & DATA & N & slope.stat\_sig\\
+Trend [\%/year] & slope.p & Rsqrd & cor.estimate & Sky condition & Days & slope.stat\_sig\\
 \midrule
-0.3760 & 0.0000 & 0.008339 & 0.0082421 & 9.284 & 0.09132 & All skies & 10251 & 100.00\\
-0.3430 & 0.0000 & 0.005312 & 0.0051756 & 6.234 & 0.07289 & Cloudy skies & 7279 & 100.00\\
-0.0406 & 0.0141 & 0.001195 & 0.0009971 & 2.455 & 0.03458 & Clear skies & 5036 & 98.59\\
+0.3760 & 0.0000 & 0.00834 & 0.09132 & All skies & 10251 & 100.00\\
+0.3430 & 0.0000 & 0.00531 & 0.07289 & Cloudy skies & 7279 & 100.00\\
+0.0406 & 0.0141 & 0.00120 & 0.03458 & Clear skies & 5036 & 98.59\\
 \bottomrule
 \end{tabu}
 \end{table}
@@ -650,7 +652,7 @@ incidence angles.
             \subfloat[Cloudy skies.\label{fig:szatrends-3}]
                 {\includegraphics[width=.32\linewidth]{./images/SzaTrends-7}}
         }
-        \caption{Long term trends of SDR as a function of SZA separately form morning and afternoon periods. Solid shapes  represent statistically significant trends ($p < 0.005$).}\label{fig:szatrends}
+        \caption{Long term trends of SDR as a function of SZA separately from morning and afternoon periods. Solid shapes  represent statistically significant trends ($p < 0.005$).}\label{fig:szatrends}
     \end{adjustwidth}
 \end{figure}
 
@@ -689,33 +691,33 @@ comparison.
 \begin{table}[!h]
 
 \caption{\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.}
-\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\centering}X>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\centering}X}
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\centering}X>{\centering}X>{\raggedleft}X}
 \toprule
-Trend [\%/year] & slope.p & Rsqrd & RsqrdAdj & cor.t & cor.estimate & Sky condition & Season & slope.stat\_sig\\
+Trend [\%/year] & slope.p & Rsqrd & cor.estimate & Sky condition & Season & slope.stat\_sig\\
 \midrule
-\cellcolor{gray!6}{0.6870} & \cellcolor{gray!6}{0.001330} & \cellcolor{gray!6}{0.3121839} & \cellcolor{gray!6}{0.2876190} & \cellcolor{gray!6}{3.564906} & \cellcolor{gray!6}{0.5587342} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{99.9}\\
-\cmidrule{1-9}
-0.1460 & 0.178000 & 0.0616942 & 0.0293388 & 1.380858 & 0.2483832 & All skies & Spring & 82.2\\
-\cmidrule{1-9}
-\cellcolor{gray!6}{0.1230} & \cellcolor{gray!6}{0.096100} & \cellcolor{gray!6}{0.0957525} & \cellcolor{gray!6}{0.0634580} & \cellcolor{gray!6}{1.721910} & \cellcolor{gray!6}{0.3094390} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{90.4}\\
-\cmidrule{1-9}
-0.4300 & 0.006670 & 0.2347063 & 0.2073744 & 2.930403 & 0.4844650 & All skies & Autumn & 99.3\\
-\cmidrule{1-9}
-\cellcolor{gray!6}{0.4990} & \cellcolor{gray!6}{0.000166} & \cellcolor{gray!6}{0.4025975} & \cellcolor{gray!6}{0.3812617} & \cellcolor{gray!6}{4.343912} & \cellcolor{gray!6}{0.6345057} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{100.0}\\
-\cmidrule{1-9}
--0.0865 & 0.315000 & 0.0348099 & 0.0015275 & -1.022690 & -0.1865741 & Clear skies & Spring & 68.5\\
-\cmidrule{1-9}
-\cellcolor{gray!6}{-0.2180} & \cellcolor{gray!6}{0.000398} & \cellcolor{gray!6}{0.3659586} & \cellcolor{gray!6}{0.3433142} & \cellcolor{gray!6}{-4.020094} & \cellcolor{gray!6}{-0.6049451} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{100.0}\\
-\cmidrule{1-9}
-0.1090 & 0.221000 & 0.0529350 & 0.0191112 & 1.251009 & 0.2300761 & Clear skies & Autumn & 77.9\\
-\cmidrule{1-9}
-\cellcolor{gray!6}{0.5200} & \cellcolor{gray!6}{0.009580} & \cellcolor{gray!6}{0.2164332} & \cellcolor{gray!6}{0.1884487} & \cellcolor{gray!6}{2.781012} & \cellcolor{gray!6}{0.4652238} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{99.0}\\
-\cmidrule{1-9}
-0.1780 & 0.122000 & 0.0806332 & 0.0489309 & 1.594819 & 0.2839598 & Cloudy skies & Spring & 87.8\\
-\cmidrule{1-9}
-\cellcolor{gray!6}{0.1940} & \cellcolor{gray!6}{0.036800} & \cellcolor{gray!6}{0.1466137} & \cellcolor{gray!6}{0.1161356} & \cellcolor{gray!6}{2.193277} & \cellcolor{gray!6}{0.3829017} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{96.3}\\
-\cmidrule{1-9}
-0.3470 & 0.100000 & 0.0934930 & 0.0611177 & 1.699350 & 0.3057662 & Cloudy skies & Autumn & 90.0\\
+\cellcolor{gray!6}{0.6870} & \cellcolor{gray!6}{0.001330} & \cellcolor{gray!6}{0.3120} & \cellcolor{gray!6}{0.5587342} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{99.9}\\
+\cmidrule{1-7}
+0.1460 & 0.178000 & 0.0617 & 0.2483832 & All skies & Spring & 82.2\\
+\cmidrule{1-7}
+\cellcolor{gray!6}{0.1230} & \cellcolor{gray!6}{0.096100} & \cellcolor{gray!6}{0.0958} & \cellcolor{gray!6}{0.3094390} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{90.4}\\
+\cmidrule{1-7}
+0.4300 & 0.006670 & 0.2350 & 0.4844650 & All skies & Autumn & 99.3\\
+\cmidrule{1-7}
+\cellcolor{gray!6}{0.4990} & \cellcolor{gray!6}{0.000166} & \cellcolor{gray!6}{0.4030} & \cellcolor{gray!6}{0.6345057} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{100.0}\\
+\cmidrule{1-7}
+-0.0865 & 0.315000 & 0.0348 & -0.1865741 & Clear skies & Spring & 68.5\\
+\cmidrule{1-7}
+\cellcolor{gray!6}{-0.2180} & \cellcolor{gray!6}{0.000398} & \cellcolor{gray!6}{0.3660} & \cellcolor{gray!6}{-0.6049451} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{100.0}\\
+\cmidrule{1-7}
+0.1090 & 0.221000 & 0.0529 & 0.2300761 & Clear skies & Autumn & 77.9\\
+\cmidrule{1-7}
+\cellcolor{gray!6}{0.5200} & \cellcolor{gray!6}{0.009580} & \cellcolor{gray!6}{0.2160} & \cellcolor{gray!6}{0.4652238} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{99.0}\\
+\cmidrule{1-7}
+0.1780 & 0.122000 & 0.0806 & 0.2839598 & Cloudy skies & Spring & 87.8\\
+\cmidrule{1-7}
+\cellcolor{gray!6}{0.1940} & \cellcolor{gray!6}{0.036800} & \cellcolor{gray!6}{0.1470} & \cellcolor{gray!6}{0.3829017} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{96.3}\\
+\cmidrule{1-7}
+0.3470 & 0.100000 & 0.0935 & 0.3057662 & Cloudy skies & Autumn & 90.0\\
 \bottomrule
 \end{tabu}
 \end{table}

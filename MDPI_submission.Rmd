@@ -534,8 +534,10 @@ as under cloud-sky conditions.
 In order to investigate the SDR trends, we implemented an appropriate aggregation scheme to the 1-minute data to derive a series in coarser time-scales.
 To preserve the representativeness of the data we used the following criteria:
 <!-- a) for daily mean values we exclude days with less than `r Daily_aggregation_N_lim` valid data points, -->
-a) for the daily mean values we accept days with more than `r 100 * All_daily_ratio_lim`% of the daytime measurements present and valid,
-b) monthly values were computed from daily means
+a) we accept only days with more than `r 100 * All_daily_ratio_lim`% of the daytime measurements present and valid,
+b) on the dataset of clear- and cloudy-skies, we included only days with more than
+`r 100 * Clear_daily_ratio_lim`% of the daytime measurements identified as clear or cloudy respectively,
+c) monthly values were computed from daily means
 only when at least `r Monthly_aggegation_N_lim` days were available.
 To create the daily and monthly climatological means, we averaged the data based on the day of year and calendar month, respectively.
 <!-- Seasonal -->
@@ -585,9 +587,19 @@ LTminSSig  <- signif(min(LT$slope.stat_sig), 4)
 ## numeric precision of table
 LT$slope    <- signif(LT$slope,   3)
 LT$slope.p  <- signif(LT$slope.p, 3)
+LT$Rsqrd    <- signif(LT$Rsqrd,   3)
+
+LT$RsqrdAdj <- NULL
+LT$cor.t    <- NULL
+
 ## rename sky conditions
 LT$DATA <- sub(" cond.", "", LT$DATA)
 LT$DATA <- sub(" sky", " skies", LT$DATA)
+
+LT <- rename(LT, "Trend [%/year]" = slope)
+LT <- rename(LT, "Sky condition"  = DATA )
+LT <- rename(LT, "Days"           = N    )
+
 
 # 
 # names(LT)    <- c("Trend [%/year]",
@@ -777,12 +789,12 @@ Between $50^\circ$ and $75^\circ$ SZA the trends for the period before noon are 
             \subfloat[Cloudy skies.\label{fig:szatrends-3}]
                 {\includegraphics[width=.32\linewidth]{./images/SzaTrends-7}}
         }
-        \caption{Long term trends of SDR as a function of SZA separately form morning and afternoon periods. Solid shapes  represent statistically significant trends ($p < 0.005$).}\label{fig:szatrends}
+        \caption{Long term trends of SDR as a function of SZA separately from morning and afternoon periods. Solid shapes  represent statistically significant trends ($p < 0.005$).}\label{fig:szatrends}
     \end{adjustwidth}
 \end{figure}
 
 
-<!-- ```{r szatrends, echo = FALSE, fig.cap='Long term trends of SDR as a function of SZA separately form morning and afternoon periods. Solid shapes  represent statistically significant trends ($p < 0.005$).', fig.subcap=c('All skies.', 'Clear skies.', 'Cloudy skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
+<!-- ```{r szatrends, echo = FALSE, fig.cap='Long term trends of SDR as a function of SZA separately from morning and afternoon periods. Solid shapes  represent statistically significant trends ($p < 0.005$).', fig.subcap=c('All skies.', 'Clear skies.', 'Cloudy skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
 <!-- knitr::include_graphics("./images/SzaTrends-1.png") -->
 <!-- knitr::include_graphics("./images/SzaTrends-4.png") -->
 <!-- knitr::include_graphics("./images/SzaTrends-7.png") -->
@@ -832,7 +844,9 @@ spp <- spp[order(spp$DATA), ]
 spp$slope          <- signif(spp$slope,          3)
 spp$slope.p        <- signif(spp$slope.p,        3)
 spp$slope.stat_sig <- signif(spp$slope.stat_sig, 3)
-
+spp$Rsqrd          <- signif(spp$Rsqrd,          3)
+spp$RsqrdAdj <- NULL
+spp$cor.t    <- NULL
 
 ## rename sky conditions
 spp$DATA <- sub(" cond.", "", spp$DATA)
