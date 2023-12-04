@@ -9,6 +9,13 @@ source("~/CODE/FUNCTIONS/R/data.R")
 source("./DHI_GHI_0_variables.R")
 Script.Name <- "DHI_GHI_01_Input_longterm.R"
 
+if (!interactive()) {
+    pdf( file = paste0("./runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
+    sink(file = paste0("./runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
+    filelock::lock(paste0("./runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
+}
+
+
 ##  Prepare raw data if needed  ------------------------------------------------
 ## check previous steps
 if (
@@ -50,6 +57,7 @@ DATA_Cloud[,.N]
 DATA_all[,length(unique(as.Date(Date)))]
 DATA_Clear[,length(unique(as.Date(Date)))]
 DATA_Cloud[,length(unique(as.Date(Date)))]
+
 
 
 
@@ -119,17 +127,22 @@ CLOUD_1_daily_mean <-
 hist(CLEAR_1_daily_mean[, GLB_att_N / DayLength], breaks = 100)
 abline(v = Clear_daily_ratio_lim, col = "red")
 
-CLEAR_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att    := NA]
-CLEAR_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att_N  := NA]
-CLEAR_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att_sd := NA]
-
 hist(CLOUD_1_daily_mean[, GLB_att_N / DayLength], breaks = 100)
 abline(v = Cloud_daily_ratio_lim, col = "red")
 
-CLOUD_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att    := NA]
-CLOUD_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att_N  := NA]
-CLOUD_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att_sd := NA]
+# ## proper way to apply filter
+# CLEAR_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att    := NA]
+# CLEAR_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att_N  := NA]
+# CLEAR_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att_sd := NA]
+# CLOUD_1_daily_mean[GLB_att_N / DayLength < Cloud_daily_ratio_lim, GLB_att    := NA]
+# CLOUD_1_daily_mean[GLB_att_N / DayLength < Cloud_daily_ratio_lim, GLB_att_N  := NA]
+# CLOUD_1_daily_mean[GLB_att_N / DayLength < Cloud_daily_ratio_lim, GLB_att_sd := NA]
 
+## HACK !!!!
+warning("This breaks other variables for Clear and Cloud!!")
+CLEAR_1_daily_mean <- CLEAR_1_daily_mean[!is.na(GLB_att) & GLB_att_N / DayLength > Clear_daily_ratio_lim, ]
+CLOUD_1_daily_mean <- CLOUD_1_daily_mean[!is.na(GLB_att) & GLB_att_N / DayLength > Cloud_daily_ratio_lim, ]
+## HACK !!!!
 
 
 ## _ Margin of error for confidence interval  ----------------------------------
@@ -417,7 +430,7 @@ CLOUD_1_D_monthly_DESEAS <- merge(CLOUD_1_monthly_daily_mean, CLOUD_1_monthly_da
 rm(  ALL_1_monthly_daily_mean,   ALL_1_monthly_daily_seas,
      CLEAR_1_monthly_daily_mean, CLEAR_1_monthly_daily_seas,
      CLOUD_1_monthly_daily_mean, CLOUD_1_monthly_daily_seas)
-gc()
+dummy <- gc()
 
 
 ## create date

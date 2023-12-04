@@ -342,7 +342,7 @@ for (DBn in dbs) {
 
 #+ LongtermTrendsRuMe, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
-vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att")
+vars <- c("GLB_att_des", "DIR_att_des", "tsi1au_att")
 
 dbs         <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
@@ -365,7 +365,7 @@ for (DBn in dbs) {
             ## correlation test
             cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
-            ## capture lm for table
+            ## capture stats for table
             gather <- rbind(gather,
                             data.frame(
                                 linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),

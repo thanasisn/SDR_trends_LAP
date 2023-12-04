@@ -207,6 +207,11 @@ load("./data/Input_1_longterm_trends.Rda")
 SDR_N_All   <- sum(  ALL_1_daily_DESEAS[,GLB_att_N], na.rm = T)
 SDR_N_Clear <- sum(CLEAR_1_daily_DESEAS[,GLB_att_N], na.rm = T)
 SDR_N_Cloud <- sum(CLOUD_1_daily_DESEAS[,GLB_att_N], na.rm = T)
+
+# CLEAR_1_daily_DESEAS[!is.na(GLB_att), .(sum(GLB_att_N), .N)]
+
+
+
 ## TSI data span info
 TSIinfo <- data.table(read.csv("./figures/tbl_tsi_info.dat",
                     strip.white = TRUE,

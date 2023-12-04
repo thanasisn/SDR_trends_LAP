@@ -10,7 +10,13 @@ require(zoo)
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 source("./DHI_GHI_0_variables.R")
+Script.Name <- "DHI_GHI_02_Input_szatrends.R"
 
+if (!interactive()) {
+    pdf( file = paste0("./runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
+    sink(file = paste0("./runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
+    filelock::lock(paste0("./runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
+}
 
 ##  Prepare raw data if needed  ------------------------------------------------
 ## check previous steps
