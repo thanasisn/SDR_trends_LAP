@@ -2,9 +2,6 @@
 
 ## Data input for this paper
 
-## to force a rebuild of the dataset remove stored
-# file.remove(common_data)
-
 require(data.table)
 require(zoo)
 source("~/CODE/FUNCTIONS/R/trig_deg.R")

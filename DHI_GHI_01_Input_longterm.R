@@ -123,12 +123,26 @@ CLOUD_1_daily_mean <-
 
 
 
+hist(ALL_1_daily_mean$GLB_att,   breaks = 100)
+
+hist(CLEAR_1_daily_mean$GLB_att, breaks = 100)
+
+hist(CLOUD_1_daily_mean$GLB_att, breaks = 100)
+
+
+
+
 ## _ Exclude days with few data for Clear and cloud  ---------------------------
 hist(CLEAR_1_daily_mean[, GLB_att_N / DayLength], breaks = 100)
 abline(v = Clear_daily_ratio_lim, col = "red")
 
 hist(CLOUD_1_daily_mean[, GLB_att_N / DayLength], breaks = 100)
 abline(v = Cloud_daily_ratio_lim, col = "red")
+
+
+CLEAR_1_daily_mean[!is.na(GLB_att) & GLB_att_N / DayLength > Clear_daily_ratio_lim, sum(GLB_att_N) ]
+CLOUD_1_daily_mean[!is.na(GLB_att) & GLB_att_N / DayLength > Cloud_daily_ratio_lim, sum(GLB_att_N) ]
+
 
 # ## proper way to apply filter
 # CLEAR_1_daily_mean[GLB_att_N / DayLength < Clear_daily_ratio_lim, GLB_att    := NA]
@@ -217,6 +231,16 @@ CLOUD_1_daily_seas <-
                           DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
                        by = .( doy ) ]
 
+
+
+plot(ALL_1_daily_seas[, GLB_att_seas, doy],pch= 1, cex = 1,
+     main = "ALL_1_daily_seas[, GLB_att_seas, doy]")
+
+plot(CLEAR_1_daily_seas[, GLB_att_seas, doy],pch= 1, cex = 1,
+     main = "CLEAR_1_daily_seas[, GLB_att_seas, doy]")
+
+plot(CLOUD_1_daily_seas[, GLB_att_seas, doy],pch= 1, cex = 1,
+     main = "CLOUD_1_daily_seas[, GLB_att_seas, doy]")
 
 
 ## _ Margin of error for confidence interval on seasonal data ------------------
@@ -333,6 +357,13 @@ CLOUD_1_monthly_daily_mean <-
                        ) ]
 
 
+hist(ALL_1_monthly_daily_mean$GLB_att, breaks = 100)
+
+hist(CLEAR_1_monthly_daily_mean$GLB_att, breaks = 100)
+
+hist(CLOUD_1_monthly_daily_mean$GLB_att, breaks = 100)
+
+
 
 ## _ Exclude means with less than Monthly_aggegation_N_lim data points ---------
 ALL_1_monthly_daily_mean[   DIR_att_N <= Monthly_aggegation_N_lim, DIR_att       := NA]
@@ -416,6 +447,17 @@ CLOUD_1_monthly_daily_seas <-
                           HOR_att_N_seas  = sum(!is.na(HOR_att)),
                           DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
                        by = .( Month = month(Date) ) ]
+
+
+
+plot(ALL_1_monthly_daily_seas[, GLB_att_seas, Month],pch= 1, cex = 1,
+     main = "ALL_1_monthly_daily_seas[, GLB_att_seas, Month]")
+
+plot(CLEAR_1_monthly_daily_seas[, GLB_att_seas, Month],pch= 1, cex = 1,
+     main = "CLEAR_1_monthly_daily_seas[, GLB_att_seas, Month]")
+
+plot(CLOUD_1_monthly_daily_seas[, GLB_att_seas, Month],pch= 1, cex = 1,
+     main = "CLOUD_1_monthly_daily_seas[, GLB_att_seas, Month]")
 
 
 

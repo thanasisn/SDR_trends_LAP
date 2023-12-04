@@ -601,6 +601,8 @@ LT$cor.t    <- NULL
 LT$DATA <- sub(" cond.", "", LT$DATA)
 LT$DATA <- sub(" sky", " skies", LT$DATA)
 
+LT <- LT[order(LT$DATA),]
+
 LT <- rename(LT, "Trend [%/year]" = slope       )
 LT <- rename(LT, "Sky conditions" = DATA        )
 LT <- rename(LT, "Days"           = N           )
