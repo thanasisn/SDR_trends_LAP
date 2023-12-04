@@ -6,6 +6,8 @@ require(data.table)
 require(zoo)
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
+source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
+source("~/CODE/FUNCTIONS/R/cor_test_stats.R")
 source("./DHI_GHI_0_variables.R")
 Script.Name <- "DHI_GHI_01_Input_longterm.R"
 
@@ -63,6 +65,110 @@ DATA_Cloud[,length(unique(as.Date(Date)))]
 
 # ......................................................................... ----
 ##  1. long-term  --------------------------------------------------------------
+
+vars <- c("wattGLB")
+
+dbs         <- c(  "DATA_all",
+                   "DATA_Clear",
+                   "DATA_Cloud")
+## gather trends
+gather <- data.frame()
+
+for (DBn in dbs) {
+    DB <- get(DBn)
+
+    for (avar in vars) {
+        dataset <- DB
+
+        if (all(is.na(dataset[[avar]]))) next()
+
+        ## linear model by day step
+        lm1 <- lm(dataset[[avar]] ~ dataset$Date)
+        ## correlation test
+        cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
+
+        ## capture lm for table
+        gather <- rbind(gather,
+                        data.frame(
+                            linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
+                            cor_test_stats(cor1),
+                            DATA      = DBn,
+                            var       = avar,
+                            N         = sum(!is.na(dataset[[avar]]))
+                        ))
+
+        par("mar" = c(3, 4, 2, 1))
+
+
+        ## plot data
+        plot(dataset$Date, dataset[[avar]],
+             pch  = ".",
+             col  = "green",
+             cex      = 2,
+             # main     = paste(translate(DBn), translate(avar)),
+             cex.main = 0.8,
+             yaxt     = "n",
+             xlab     = "",
+             ylab     = bquote("Wm^-2")
+        )
+        # y axis
+        axis(2, pretty(dataset[[avar]]), las = 2 )
+
+        # x axis
+        axis.Date(1,
+                  at = seq(as.Date("1993-01-01"), max(dataset$Date), by = "year"),
+                  format = "%Y",
+                  labels = NA,
+                  tcl = -0.25)
+
+        ## plot fit line
+        abline(lm1, lwd = 2)
+
+        title(paste(DBn, avar))
+
+        if (DRAFT == TRUE) {
+            ## Running mean
+            first <- head(which(!is.na(dataset[[avar]])),1)
+            last  <- tail(which(!is.na(dataset[[avar]])),1)
+
+            rm <- frollmean(dataset[[avar]][first:last],
+                            round(running_mean_window_days),
+                            na.rm = TRUE,
+                            algo  = "exact",
+                            align = "center")
+
+            # points(dataset$Date, rm, col = "red", cex = 0.5)
+            lines(dataset$Date[first:last], rm, col = "red", lwd = 1.5)
+
+            ## LOESS curve
+            vec <- !is.na(dataset[[avar]])
+            FTSE.lo3 <- loess.as(dataset$Date[vec], dataset[[avar]][vec],
+                                 degree = 1,
+                                 criterion = LOESS_CRITERIO, user.span = NULL, plot = F)
+            FTSE.lo.predict3 <- predict(FTSE.lo3, dataset$Date)
+            lines(dataset$Date, FTSE.lo.predict3, col = "cyan", lwd = 2.5)
+        }
+
+
+        ## display trend on graph
+        fit <- lm1[[1]]
+
+        legend("top", lty = 1, bty = "n", lwd = 2, cex = 1,
+               paste("Trend: ",
+                     if (fit[2] > 0) "+" else "-",
+                     signif(abs(fit[2]) * Days_of_year * 24 * 3600, 3),
+                     "%/y")
+        )
+
+    }
+}
+#+ echo=F, include=F
+
+
+write.csv(x = gather, file = "./figures/tbl_longterm_trends_raw.csv")
+
+
+
 
 ##  Daily means  ---------------------------------------------------------------
 

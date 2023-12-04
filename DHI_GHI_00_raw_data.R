@@ -268,9 +268,9 @@ if (havetorun) {
     DATA[, Glo_max_ref        := NULL]
     DATA[, Global_max         := NULL]
     DATA[, RaylDIFF           := NULL]
-    DATA[, wattDIR_1au        := NULL]
-    DATA[, wattGLB_1au        := NULL]
-    DATA[, wattHOR_1au        := NULL]
+    # DATA[, wattDIR_1au        := NULL]
+    # DATA[, wattGLB_1au        := NULL]
+    # DATA[, wattHOR_1au        := NULL]
 
     rm.cols.DT(DATA, "QCv9*")
     rm.cols.DT(DATA, "*Clim_lim")
