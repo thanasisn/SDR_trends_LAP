@@ -94,6 +94,7 @@ for (DBn in dbs) {
                             cor_test_stats(cor1),
                             DATA      = DBn,
                             var       = avar,
+                            Mean      = mean(dataset[[avar]], na.rm = TRUE),
                             N         = sum(!is.na(dataset[[avar]]))
                         ))
 
@@ -103,7 +104,7 @@ for (DBn in dbs) {
         ## plot data
         plot(dataset$Date, dataset[[avar]],
              pch  = ".",
-             col  = "green",
+             col  = "#1a9850",
              cex      = 2,
              # main     = paste(translate(DBn), translate(avar)),
              cex.main = 0.8,
@@ -116,7 +117,7 @@ for (DBn in dbs) {
 
         # x axis
         axis.Date(1,
-                  at = seq(as.Date("1993-01-01"), max(dataset$Date), by = "year"),
+                  at = seq(as.Date("1993-01-01"), as.Date(max(dataset$Date)), by = "year"),
                   format = "%Y",
                   labels = NA,
                   tcl = -0.25)
@@ -126,7 +127,7 @@ for (DBn in dbs) {
 
         title(paste(DBn, avar))
 
-        if (DRAFT == TRUE) {
+        if (FALSE) {
             ## Running mean
             first <- head(which(!is.na(dataset[[avar]])),1)
             last  <- tail(which(!is.na(dataset[[avar]])),1)
@@ -164,10 +165,10 @@ for (DBn in dbs) {
 }
 #+ echo=F, include=F
 
-
+gather <- data.table(gather)
 write.csv(x = gather, file = "./figures/tbl_longterm_trends_raw.csv")
 
-
+gather[, 100 *(slope * Days_of_year * 24 * 3600) ]
 
 
 ##  Daily means  ---------------------------------------------------------------
