@@ -1,7 +1,7 @@
 %  LaTeX support: latex@mdpi.com
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL SUBMISSION_01/MDPI_submission.tex   Sun Nov 12 17:31:09 2023
-%DIF ADD MDPI_submission.tex                 Mon Dec  4 13:46:06 2023
+%DIF ADD MDPI_submission.tex                 Mon Dec  4 20:25:26 2023
 %  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
 
 %=================================================================
@@ -331,14 +331,14 @@ The SDR data were measured with a Kipp \& Zonen CM-21 pyranometer
 operating continuously at the Laboratory of Atmospheric Physics of the
 Aristotle University of Thessaloniki (\(40^\circ\,38'\,\)N,
 \(22^\circ\,57'\,\)E, \(80\,\)m~a.s.l.) in the period from 1993-04-13 to
-2023-04-13. The monitoring site is located near the city centre, and we
+\DIFdelbegin \DIFdel{2023-04-13}\DIFdelend \DIFaddbegin \DIFadd{2023-04-12}\DIFaddend . The monitoring site is located near the city centre, and we
 expect to be affected by the urban environment. During the study period,
 the pyranometer has been independently calibrated three times at the
 Meteorologisches Observatorium Lindenberg, DWD, when it was verified the
 stability of the instrument to within better than \(0.7\%\) relative to
 the initial calibration by the manufacturer. Along with SDR, the direct
 beam radiation (DNI) was also measured by a collocated Kipp \& Zonen
-CHP-1 pyrheliometer, for the period 2016-04-01 to 2023-04-13. Although,
+CHP-1 pyrheliometer, for the period 2016-04-01 to \DIFdelbegin \DIFdel{2023-04-13}\DIFdelend \DIFaddbegin \DIFadd{2023-04-12}\DIFaddend . Although,
 we have performed a similar analysis to the DNI data, the results are
 not presented here, as they lack the appropriate statistical
 significance, due to the sorter duration of the data. However, the DNI
@@ -551,7 +551,7 @@ no significant break or change in the variability of the time series.
 Other studies for the European region reported a change of the SDR
 slope, around 1980 \citep{Wild2021, Yuan2021, Ohmura2009}, a few years
 before the start of our records. It is interesting to note, that for the
-observations period, the trend of the TSI is \DIFdelbegin \DIFdel{\(-0.0002\,\%/y\)}\DIFdelend \DIFaddbegin \DIFadd{\(-0.00022\,\%/y\)}\DIFaddend , and
+observations period, the trend of the TSI is \DIFdelbegin \DIFdel{\(-0.0002\,\%/y\)}\DIFdelend \DIFaddbegin \DIFadd{\(-0.00024\,\%/y\)}\DIFaddend , and
 thus we can not attribute any major effect on SDR trend to Solar
 variability.
 
@@ -564,8 +564,8 @@ Sky conditions & Trend [\%/year] & \DIFdelbeginFL \DIFdelFL{Statistical signif. 
 \DIFdelFL{\%}%DIFDELCMD < ] %%%
 \DIFdelendFL \DIFaddbeginFL \DIFaddFL{Trend p-value }& \DIFaddFL{Pearson cor. }\DIFaddendFL & Days\DIFdelbeginFL \DIFdelFL{with data}\DIFdelendFL \\
 \midrule
-All skies & \DIFdelbeginFL \DIFdelFL{0.376 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.3765 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{100.00 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{10256}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0913 }& \DIFaddFL{10251}\DIFaddendFL \\
-Clear skies & \DIFdelbeginFL \DIFdelFL{0.349 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0244 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{100.00 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.179 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{10256}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0176 }& \DIFaddFL{5804}\DIFaddendFL \\
+All skies & \DIFdelbeginFL \DIFdelFL{0.376 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.3756 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{100.00 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{10256}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0911 }& \DIFaddFL{10250}\DIFaddendFL \\
+Clear skies & \DIFdelbeginFL \DIFdelFL{0.349 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0239 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{100.00 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.189 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{10256}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0172 }& \DIFaddFL{5803}\DIFaddendFL \\
 Cloudy skies & \DIFdelbeginFL \DIFdelFL{-0.276 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.3416 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{99.97 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{5067}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0725 }& \DIFaddFL{8113}\DIFaddendFL \\
 \bottomrule
 \end{tabu}
@@ -750,7 +750,7 @@ comparison.
 
 %DIFDELCMD <  %%%
 \DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
-\DIFaddFL{0.1460 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Spring }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{1.78e-01 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{0.1450 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0617 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{81.8}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.2483832 }& \DIFaddFL{All skies }& \DIFaddFL{Spring }& \DIFaddFL{82.2}\DIFaddendFL \\
+\DIFaddFL{0.1360 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Spring }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{2.19e-01 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{0.1450 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0515 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{81.8}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.2270307 }& \DIFaddFL{All skies }& \DIFaddFL{Spring }& \DIFaddFL{78.1}\DIFaddendFL \\
 \DIFdelbeginFL %DIFDELCMD < 
 
 %DIFDELCMD < \cellcolor{gray!6}{} %%%
@@ -774,7 +774,7 @@ comparison.
 
 %DIFDELCMD <  %%%
 \DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
-\DIFaddFL{-0.1360 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Spring }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{1.71e-01 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{0.0613 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0635 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{38.6}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{-0.2520277 }& \DIFaddFL{Clear skies }& \DIFaddFL{Spring }& \DIFaddFL{82.9}\DIFaddendFL \\
+\DIFaddFL{-0.1450 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Spring }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{1.49e-01 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{0.0613 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0706 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{38.6}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{-0.2656359 }& \DIFaddFL{Clear skies }& \DIFaddFL{Spring }& \DIFaddFL{85.1}\DIFaddendFL \\
 \DIFdelbeginFL %DIFDELCMD < 
 
 %DIFDELCMD < \cellcolor{gray!6}{} %%%
