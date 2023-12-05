@@ -87,6 +87,11 @@ for (DBn in dbs) {
         ## correlation test
         cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
+
+        predict()
+
+        stop()
+
         ## capture lm for table
         gather <- rbind(gather,
                         data.frame(
@@ -169,6 +174,9 @@ gather <- data.table(gather)
 write.csv(x = gather, file = "./figures/tbl_longterm_trends_raw.csv")
 
 gather[, 100 *(slope * Days_of_year * 24 * 3600) ]
+
+
+stop("wait")
 
 
 ##  Daily means  ---------------------------------------------------------------
