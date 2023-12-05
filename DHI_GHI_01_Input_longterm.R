@@ -83,24 +83,27 @@ for (DBn in dbs) {
         if (all(is.na(dataset[[avar]]))) next()
 
         ## linear model by day step
-        lm1 <- lm(dataset[[avar]] ~ dataset$Date)
+        # lm1 <- lm(dataset[[avar]] ~ dataset$Date)
+        lm1 <- lm(get(avar) ~ Date, data = dataset)
+
         ## correlation test
         cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
+        dt <- data.frame(Date = (as.POSIXct(c("1993-01-01 00:00","2023-01-01 00:00"))))
+        slopePyear <- diff(predict(lm1, dt)) / diff(year(dt$Date))
 
-        predict()
 
-        stop()
 
         ## capture lm for table
         gather <- rbind(gather,
                         data.frame(
                             linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
                             cor_test_stats(cor1),
-                            DATA      = DBn,
-                            var       = avar,
-                            Mean      = mean(dataset[[avar]], na.rm = TRUE),
-                            N         = sum(!is.na(dataset[[avar]]))
+                            slopePyear = slopePyear,
+                            DATA       = DBn,
+                            var        = avar,
+                            Mean       = mean(dataset[[avar]], na.rm = TRUE),
+                            N          = sum(!is.na(dataset[[avar]]))
                         ))
 
         par("mar" = c(3, 4, 2, 1))
@@ -163,20 +166,24 @@ for (DBn in dbs) {
                paste("Trend: ",
                      if (fit[2] > 0) "+" else "-",
                      signif(abs(fit[2]) * Days_of_year * 24 * 3600, 3),
-                     "%/y")
+                     "W/y")
         )
 
     }
 }
 #+ echo=F, include=F
 
+
+
 gather <- data.table(gather)
+gather$WattPYear <- gather$slope * Days_of_year * 24 * 3600
+
+gather[, Slopepercent.. :=  100 * WattPYear / Mean ]
+
 write.csv(x = gather, file = "./figures/tbl_longterm_trends_raw.csv")
 
-gather[, 100 *(slope * Days_of_year * 24 * 3600) ]
 
 
-stop("wait")
 
 
 ##  Daily means  ---------------------------------------------------------------
