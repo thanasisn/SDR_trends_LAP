@@ -252,6 +252,14 @@ hist(CLEAR_1_daily_mean$GLB_att, breaks = 100)
 hist(CLOUD_1_daily_mean$GLB_att, breaks = 100)
 
 
+hist(DATA_all$wattGLB,   breaks = 100)
+
+hist(DATA_Clear$wattGLB, breaks = 100)
+
+hist(DATA_Cloud$wattGLB, breaks = 100)
+
+
+
 
 
 ## _ Exclude days with few data for Clear and cloud  ---------------------------
