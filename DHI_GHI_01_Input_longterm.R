@@ -173,13 +173,9 @@ for (DBn in dbs) {
 }
 #+ echo=F, include=F
 
-
-
 gather <- data.table(gather)
 gather$WattPYear <- gather$slope * Days_of_year * 24 * 3600
-
 gather[, Slopepercent.. :=  100 * WattPYear / Mean ]
-
 write.csv(x = gather, file = "./figures/tbl_longterm_trends_raw.csv")
 
 
@@ -192,6 +188,9 @@ ALL_1_daily_mean <-
     DATA_all[,.(DIR_att       = mean(DIR_att,      na.rm = T),
                 GLB_att       = mean(GLB_att,      na.rm = T),
                 HOR_att       = mean(HOR_att,      na.rm = T),
+                wattGLB       = mean(wattGLB,      na.rm = T),
+                wattGLB_sd    = sd(  wattGLB,      na.rm = T),
+                wattGLB_N     = sum(!is.na(wattGLB)),
                 DIR_transp    = mean(DIR_transp,   na.rm = T),
                 tsi1au_att    = mean(tsi_1au_comb, na.rm = T),
                 DIR_att_sd    = sd(  DIR_att,      na.rm = T),
@@ -211,6 +210,9 @@ CLEAR_1_daily_mean <-
     DATA_Clear[,.(DIR_att       = mean(DIR_att,      na.rm = T),
                   GLB_att       = mean(GLB_att,      na.rm = T),
                   HOR_att       = mean(HOR_att,      na.rm = T),
+                  wattGLB       = mean(wattGLB,      na.rm = T),
+                  wattGLB_sd    = sd(  wattGLB,      na.rm = T),
+                  wattGLB_N     = sum(!is.na(wattGLB)),
                   DIR_transp    = mean(DIR_transp,   na.rm = T),
                   tsi1au_att    = mean(tsi_1au_comb, na.rm = T),
                   DIR_att_sd    = sd(  DIR_att,      na.rm = T),
@@ -229,6 +231,9 @@ CLOUD_1_daily_mean <-
     DATA_Cloud[,.(DIR_att       = mean(DIR_att,      na.rm = T),
                   GLB_att       = mean(GLB_att,      na.rm = T),
                   HOR_att       = mean(HOR_att,      na.rm = T),
+                  wattGLB       = mean(wattGLB,      na.rm = T),
+                  wattGLB_sd    = sd(  wattGLB,      na.rm = T),
+                  wattGLB_N     = sum(!is.na(wattGLB)),
                   DIR_transp    = mean(DIR_transp,   na.rm = T),
                   tsi1au_att    = mean(tsi_1au_comb, na.rm = T),
                   DIR_att_sd    = sd(  DIR_att,      na.rm = T),

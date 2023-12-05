@@ -342,7 +342,7 @@ for (DBn in dbs) {
 
 #+ LongtermTrendsRuMe, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
-vars <- c("GLB_att_des", "DIR_att_des", "tsi1au_att")
+vars <- c("GLB_att_des", "DIR_att_des", "tsi1au_att", "wattGLB")
 
 dbs         <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
@@ -438,7 +438,7 @@ for (DBn in dbs) {
 
 #+ LongtermSeasonal, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
-vars <- c("DIR_att_seas", "GLB_att_seas")
+vars <- c("DIR_att_seas", "GLB_att_seas", "wattGLB_seas")
 
 dbs         <- c(  "ALL_1_daily_DESEAS",
                    "CLEAR_1_daily_DESEAS",
@@ -573,7 +573,7 @@ write_dat(pprint,
 
 #+ SeasonalTrends, echo=F, include=T, results="asis, fig.asp = 0.5"
 # vars        <- c("DIR_att", "GLB_att")
-vars        <- c("GLB_att_des")
+vars        <- c("GLB_att_des", "wattGLB_des")
 
 ## Monthly aggregation
 dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
@@ -692,7 +692,7 @@ for (DBn in dbs) {
 
 #+ SeasonalTrendsTogether, echo=F, include=T
 # vars        <- c("DIR_att", "GLB_att")
-vars        <- c("GLB_att_des")
+vars        <- c("GLB_att_des", "wattGLB_des")
 
 ## Monthly aggregation
 dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
@@ -808,7 +808,7 @@ for (avar in vars) {
 
 #+ SeasonalTrendsTogether2, echo=F, include=T
 {
-    vars        <- c("GLB_att_des")
+    vars        <- c("GLB_att_des", "wattGLB_des")
     avar        <- vars[1]
     dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
                        "CLEAR_1_D_bySeason_DESEAS",
@@ -1020,7 +1020,7 @@ for (avar in vars) {
 
 #+ SeasonalTrendsTogether3, echo=F, include=T
 {
-    vars        <- c("GLB_att_des")
+    vars        <- c("GLB_att_des", "wattGLB_des")
     avar        <- vars[1]
     dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
                        "CLEAR_1_D_bySeason_DESEAS",
@@ -1261,7 +1261,7 @@ for (avar in vars) {
 
 
 ## __ Calculate trends for each season  ----------------------------------------
-vars        <- c("DIR_att_des", "GLB_att_des")
+vars        <- c("DIR_att_des", "GLB_att_des", "wattGLB_des")
 
 ## vars are  set above
 gather_seas <- data.frame()
@@ -1358,7 +1358,7 @@ write_dat(pprint,
 
 #+ TrendByMonth, echo=F, include=T, results="asis", fig.width=7, fig.height=11, out.height="97%"
 # vars   <- c("DIR_att", "GLB_att")
-vars   <- c("GLB_att_des")
+vars   <- c("GLB_att_des", "wattGLB_des")
 
 ## Monthly aggregation
 dbs <- c(  "ALL_1_D_monthly_DESEAS",
@@ -1476,7 +1476,7 @@ for (DBn in dbs) {
 
 
 ## __ Calculate trend by each month  -------------------------------------------
-vars        <- c("DIR_att_des", "GLB_att_des")
+vars        <- c("DIR_att_des", "GLB_att_des", "wattGLB_des")
 gather_seas <- data.frame()
 for (DBn in dbs) {
     DB <- get(DBn)
