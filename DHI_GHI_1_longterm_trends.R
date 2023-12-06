@@ -1529,7 +1529,7 @@ for (DBn in dbs) {
     }
 }
 
-names()
+
 
 ## __ Display table with trends and stats  -------------------------------------
 #'
