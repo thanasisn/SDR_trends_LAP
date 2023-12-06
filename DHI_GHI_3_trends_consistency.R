@@ -178,8 +178,13 @@ for (i in data_list) {
         for (yvar in wecare) {
             if (all(is.na(Dplot[[yvar]]))) next()
 
-            col <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
-                              collapse = "_"))
+            if (grepl("wattGLB", yvar)) {
+                col <- "green"
+            } else {
+                col <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
+                                  collapse = "_"))
+            }
+
             vect <- Dplot[[yvar]]
             plot(Dplot[[xvar]], vect,
                  pch  = 19,
@@ -201,8 +206,13 @@ for (i in data_list) {
         if (!yvar %in% names(Dplot)) next()
         if (all(is.na(Dplot[[yvar]]))) next()
 
-        col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),
-                          collapse = "_"))
+        if (grepl("wattGLB", yvar)) {
+            col <- "green"
+        } else {
+            col <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
+                              collapse = "_"))
+        }
+
         hist(Dplot[[yvar]],
              main   = paste(i, yvar),
              xlab   = yvar,
