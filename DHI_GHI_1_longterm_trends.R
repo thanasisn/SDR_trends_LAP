@@ -470,12 +470,17 @@ for (DBn in dbs) {
 
         par("mar" = c(3, 4, 2, 1))
 
+        if (grepl("wattGLB", yvar)) {
+            acol <- "green"
+        } else {
+            acol <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
+                              collapse = "_"))
+        }
+
         ## plot data
         plot(dataset$doy, dataset$V2,
-             pch  = ".",
-             col  = get(paste0(c("col",
-                                 unlist(strsplit(avar, split = "_"))[1:2]),
-                               collapse = "_")),
+             pch      = ".",
+             col      = acol,
              cex      = 2,
              main     = paste("Climatology", translate(DBn), translate(avar)),
              cex.main = 0.8,
