@@ -115,7 +115,6 @@ options(error = function() {
         system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
         system(paste("notify-send -u normal -t 30000 ", Script.Name, " 'An error occurred!'"))
     }
-    traceback()
 })
 
 ## __ Flags --------------------------------------------------------------------
@@ -589,7 +588,7 @@ write_dat(pprint,
 
 #+ SeasonalTrends, echo=F, include=T, results="asis, fig.asp = 0.5"
 # vars        <- c("DIR_att", "GLB_att")
-vars        <- c("GLB_att_des", "wattGLB_des")
+vars        <- c("GLB_att_des")
 
 ## Monthly aggregation
 dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
@@ -708,7 +707,7 @@ for (DBn in dbs) {
 
 #+ SeasonalTrendsTogether, echo=F, include=T
 # vars        <- c("DIR_att", "GLB_att")
-vars        <- c("GLB_att_des", "wattGLB_des")
+vars        <- c("GLB_att_des")
 
 ## Monthly aggregation
 dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
@@ -824,7 +823,7 @@ for (avar in vars) {
 
 #+ SeasonalTrendsTogether2, echo=F, include=T
 {
-    vars        <- c("GLB_att_des", "wattGLB_des")
+    vars        <- c("GLB_att_des")
     avar        <- vars[1]
     dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
                        "CLEAR_1_D_bySeason_DESEAS",
@@ -1277,7 +1276,7 @@ for (avar in vars) {
 
 
 ## __ Calculate trends for each season  ----------------------------------------
-vars        <- c("DIR_att_des", "GLB_att_des", "wattGLB_des")
+vars        <- c("DIR_att_des", "GLB_att_des")
 
 ## vars are  set above
 gather_seas <- data.frame()
@@ -1374,7 +1373,7 @@ write_dat(pprint,
 
 #+ TrendByMonth, echo=F, include=T, results="asis", fig.width=7, fig.height=11, out.height="97%"
 # vars   <- c("DIR_att", "GLB_att")
-vars   <- c("GLB_att_des", "wattGLB_des")
+vars   <- c("GLB_att_des")
 
 ## Monthly aggregation
 dbs <- c(  "ALL_1_D_monthly_DESEAS",
@@ -1492,7 +1491,7 @@ for (DBn in dbs) {
 
 
 ## __ Calculate trend by each month  -------------------------------------------
-vars        <- c("DIR_att_des", "GLB_att_des", "wattGLB_des")
+vars        <- c("DIR_att_des", "GLB_att_des")
 gather_seas <- data.frame()
 for (DBn in dbs) {
     DB <- get(DBn)
@@ -1511,20 +1510,26 @@ for (DBn in dbs) {
             ## correlation test
             cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
+
             ## gather stats
-            gather_seas <- rbind(gather_seas,
-                                 data.frame(
-                                     linear_fit_stats(lm2,
-                                                      confidence_interval = Daily_confidence_limit),
-                                     cor_test_stats(cor1),
-                                     DATA      = DBn,
-                                     Month     = ase,
-                                     var       = avar,
-                                     N         = sum(!is.na(dataset[[avar]]))
-                                 ))
+            temp <- data.frame(
+                linear_fit_stats(lm2,
+                                 confidence_interval = Daily_confidence_limit),
+                cor_test_stats(cor1),
+                DATA      = DBn,
+                Month     = ase,
+                var       = avar,
+                N         = sum(!is.na(dataset[[avar]]))
+            )
+            gather_seas <- rbind(gather_seas, temp )
+
+            names(temp)
+            names(gather_seas)
         }
     }
 }
+
+names()
 
 ## __ Display table with trends and stats  -------------------------------------
 #'
