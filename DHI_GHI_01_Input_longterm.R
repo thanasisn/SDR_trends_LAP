@@ -319,6 +319,9 @@ ALL_1_daily_seas <-
     ALL_1_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
                         GLB_att_seas       = mean(GLB_att,    na.rm = T),
                         HOR_att_seas       = mean(HOR_att,    na.rm = T),
+                        wattGLB       = mean(wattGLB,      na.rm = T),
+                        wattGLB_sd    = sd(  wattGLB,      na.rm = T),
+                        wattGLB_N     = sum(!is.na(wattGLB)),
                         DIR_transp_seas    = mean(DIR_transp, na.rm = T),
                         DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
                         HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
@@ -336,6 +339,9 @@ CLEAR_1_daily_seas <-
     CLEAR_1_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
                           GLB_att_seas       = mean(GLB_att,    na.rm = T),
                           HOR_att_seas       = mean(HOR_att,    na.rm = T),
+                          wattGLB       = mean(wattGLB,      na.rm = T),
+                          wattGLB_sd    = sd(  wattGLB,      na.rm = T),
+                          wattGLB_N     = sum(!is.na(wattGLB)),
                           DIR_transp_seas    = mean(DIR_transp, na.rm = T),
                           DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
                           HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
@@ -353,6 +359,9 @@ CLOUD_1_daily_seas <-
     CLOUD_1_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
                           GLB_att_seas       = mean(GLB_att,    na.rm = T),
                           HOR_att_seas       = mean(HOR_att,    na.rm = T),
+                          wattGLB       = mean(wattGLB,      na.rm = T),
+                          wattGLB_sd    = sd(  wattGLB,      na.rm = T),
+                          wattGLB_N     = sum(!is.na(wattGLB)),
                           DIR_transp_seas    = mean(DIR_transp, na.rm = T),
                           DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
                           HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
@@ -412,14 +421,17 @@ ALL_1_daily_DESEAS[, DIR_att_des   := 100*( DIR_att    - DIR_att_seas    ) / DIR
 ALL_1_daily_DESEAS[, HOR_att_des   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas   ]
 ALL_1_daily_DESEAS[, GLB_att_des   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
 ALL_1_daily_DESEAS[, DIR_transp_des:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas]
+ALL_1_daily_DESEAS[, wattGLB_des   := wattGLB - wattGLB_seas ]
 CLEAR_1_daily_DESEAS[, DIR_att_des   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas   ]
 CLEAR_1_daily_DESEAS[, HOR_att_des   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas   ]
 CLEAR_1_daily_DESEAS[, GLB_att_des   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
 CLEAR_1_daily_DESEAS[, DIR_transp_des:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas]
+CLEAR_1_daily_DESEAS[, wattGLB_des   := wattGLB - wattGLB_seas]
 CLOUD_1_daily_DESEAS[, DIR_att_des   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas   ]
 CLOUD_1_daily_DESEAS[, HOR_att_des   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas   ]
 CLOUD_1_daily_DESEAS[, GLB_att_des   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
 CLOUD_1_daily_DESEAS[, DIR_transp_des:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas]
+CLOUD_1_daily_DESEAS[, wattGLB_des   := wattGLB - wattGLB_seas]
 
 ## add TSI data process
 ## data departure from mean value

@@ -156,7 +156,7 @@ LOESS_CRITERIO <-  c("aicc", "gcv")[1]
 #'
 #+ echo=F, include=F
 
-
+col_wattGLB_NA              <- "green"
 
 ## ____ Scatter plots with SZA all data ----------------------------------------
 data_list <- c(  "ALL_1_D_monthly_DESEAS",
@@ -165,6 +165,8 @@ data_list <- c(  "ALL_1_D_monthly_DESEAS",
                      "ALL_1_daily_DESEAS",
                    "CLEAR_1_daily_DESEAS",
                    "CLEAR_1_daily_DESEAS")
+
+
 
 by_var     <- c("doy")
 #+ echo=F, include=F
@@ -175,8 +177,12 @@ for (i in data_list) {
     ## loop existing x vars
     for (xvar in names(Dplot)[names(Dplot) %in% by_var]) {
         for (yvar in wecare) {
-            col <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
-                              collapse = "_"))
+            if (grepl("wattGLB", yvar)) {
+                col <- "green"
+            } else {
+                col <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
+                                  collapse = "_"))
+            }
             vect <- Dplot[[yvar]]
             if (all(is.na(vect))) next()
             plot(Dplot[[xvar]], vect,
@@ -199,8 +205,13 @@ for (i in data_list) {
         if (!yvar %in% names(Dplot))   next()
         if (all(is.na(Dplot[[yvar]]))) next()
 
-        col <- get(paste0(c("col", unlist(strsplit(yvar,split = "_" ))[1:2]),
-                          collapse = "_"))
+        if (grepl("wattGLB", yvar)) {
+            col <- "green"
+        } else {
+            col <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
+                              collapse = "_"))
+        }
+
         hist(Dplot[[yvar]],
              main   = paste(i, yvar),
              xlab   = yvar,
