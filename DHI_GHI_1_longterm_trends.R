@@ -1508,23 +1508,26 @@ for (DBn in dbs) {
             ## linear model counting years
             lm2 <- lm(dataset[[avar]] ~ dataset$Year)
             ## correlation test
-            cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
+            # if (sum(!is.na(dataset[[avar]])) > 2) {
+            #     cor1    <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
+            #     tempcor <- cor_test_stats(cor1)
+            # } else {
+            #     tempcor <- NA
+            # }
 
             ## gather stats
             temp <- data.frame(
                 linear_fit_stats(lm2,
                                  confidence_interval = Daily_confidence_limit),
-                cor_test_stats(cor1),
+                # tempcor,
                 DATA      = DBn,
                 Month     = ase,
                 var       = avar,
                 N         = sum(!is.na(dataset[[avar]]))
             )
-            gather_seas <- rbind(gather_seas, temp )
+            gather_seas <- rbind(gather_seas, temp, fill = TRUE )
 
-            names(temp)
-            names(gather_seas)
         }
     }
 }
@@ -1541,7 +1544,10 @@ for (DBn in dbs) {
 
 wecare        <- grep("intercept", names(gather_seas), value = T, invert = T)
 gather_seas   <- data.table(gather_seas)
+## some wired data where inserted
+gather_seas   <- gather_seas[DATA != "TRUE",]
 pprint        <- gather_seas[, ..wecare]
+
 pprint[, DATA := translate(DATA)]
 pprint[, var  := translate(var) ]
 
