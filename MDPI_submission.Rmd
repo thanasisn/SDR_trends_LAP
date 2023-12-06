@@ -578,7 +578,7 @@ LT$cor.df           <- NULL
 # LT$cor.method       <- NULL
 # LT$cor.data_name    <- NULL
 # LT$cor.p            <- NULL
-LT$conf.level       <- NULL
+LT$cor.conf_level   <- NULL
 LT$cor.conf_int_1   <- NULL
 LT$cor.conf_int_2   <- NULL
 
@@ -837,7 +837,7 @@ spp$cor.alternative    <- NULL
 spp$cor.method         <- NULL
 spp$cor.data_name      <- NULL
 spp$cor.p              <- NULL
-spp$conf.level         <- NULL
+spp$cor.conf.level     <- NULL
 spp$cor.conf_int_1     <- NULL
 spp$cor.conf_int_2     <- NULL
 
