@@ -473,9 +473,9 @@ the Sun's intensity variability, using a time series of satellite TSI
 observations. The TSI data we used are part of the ``NOAA Climate Data
 Record of Total Solar Irradiance'' dataset \citep{Coddington2005}. The
 initial daily values of this dataset were interpolated to match the time
-step of our measurements. In the final dataset \(38\%\) of the 1-minute
-data were identified as under clear-sky conditions and \(57.8\%\) as
-under cloud-sky conditions.
+step of our measurements. In the final dataset \(23.7\%\) of the
+1-minute data were identified as under clear-sky conditions and \(41\%\)
+as under cloud-sky conditions.
 
 In order to investigate the SDR trends, we implemented an appropriate
 aggregation scheme to the 1-minute data to derive a series in coarser
@@ -696,33 +696,33 @@ comparison.
 \begin{table}[!h]
 
 \caption{\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.}
-\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\centering}X>{\centering}X>{\raggedleft}X>{\raggedleft}X}
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\centering}X>{\centering}X>{\raggedleft}X}
 \toprule
-Trend [\%/year] & slope.p & Rsqrd & cor.estimate & cor.conf\_level & Sky condition & Season & slope.stat\_sig\\
+Trend [\%/year] & slope.p & Rsqrd & cor.estimate & Sky condition & Season & slope.stat\_sig\\
 \midrule
-\cellcolor{gray!6}{0.6870} & \cellcolor{gray!6}{1.33e-03} & \cellcolor{gray!6}{0.3120} & \cellcolor{gray!6}{0.5587342} & \cellcolor{gray!6}{0.95} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{99.9}\\
-\cmidrule{1-8}
-0.1460 & 1.78e-01 & 0.0617 & 0.2483832 & 0.95 & All skies & Spring & 82.2\\
-\cmidrule{1-8}
-\cellcolor{gray!6}{0.1230} & \cellcolor{gray!6}{9.61e-02} & \cellcolor{gray!6}{0.0958} & \cellcolor{gray!6}{0.3094390} & \cellcolor{gray!6}{0.95} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{90.4}\\
-\cmidrule{1-8}
-0.4300 & 6.67e-03 & 0.2350 & 0.4844650 & 0.95 & All skies & Autumn & 99.3\\
-\cmidrule{1-8}
-\cellcolor{gray!6}{0.5050} & \cellcolor{gray!6}{4.16e-04} & \cellcolor{gray!6}{0.3640} & \cellcolor{gray!6}{0.6033797} & \cellcolor{gray!6}{0.95} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{100.0}\\
-\cmidrule{1-8}
--0.1360 & 1.71e-01 & 0.0635 & -0.2520277 & 0.95 & Clear skies & Spring & 82.9\\
-\cmidrule{1-8}
-\cellcolor{gray!6}{-0.2310} & \cellcolor{gray!6}{3.01e-05} & \cellcolor{gray!6}{0.4690} & \cellcolor{gray!6}{-0.6846238} & \cellcolor{gray!6}{0.95} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{100.0}\\
-\cmidrule{1-8}
-0.0432 & 5.79e-01 & 0.0111 & 0.1054619 & 0.95 & Clear skies & Autumn & 42.1\\
-\cmidrule{1-8}
-\cellcolor{gray!6}{0.4720} & \cellcolor{gray!6}{2.01e-02} & \cellcolor{gray!6}{0.1780} & \cellcolor{gray!6}{0.4221299} & \cellcolor{gray!6}{0.95} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{98.0}\\
-\cmidrule{1-8}
-0.1780 & 1.25e-01 & 0.0792 & 0.2814813 & 0.95 & Cloudy skies & Spring & 87.5\\
-\cmidrule{1-8}
-\cellcolor{gray!6}{0.2130} & \cellcolor{gray!6}{2.20e-02} & \cellcolor{gray!6}{0.1740} & \cellcolor{gray!6}{0.4167034} & \cellcolor{gray!6}{0.95} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{97.8}\\
-\cmidrule{1-8}
-0.4140 & 2.46e-02 & 0.1680 & 0.4094891 & 0.95 & Cloudy skies & Autumn & 97.5\\
+\cellcolor{gray!6}{0.6870} & \cellcolor{gray!6}{1.33e-03} & \cellcolor{gray!6}{0.3120} & \cellcolor{gray!6}{0.5587342} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{99.9}\\
+\cmidrule{1-7}
+0.1460 & 1.78e-01 & 0.0617 & 0.2483832 & All skies & Spring & 82.2\\
+\cmidrule{1-7}
+\cellcolor{gray!6}{0.1230} & \cellcolor{gray!6}{9.61e-02} & \cellcolor{gray!6}{0.0958} & \cellcolor{gray!6}{0.3094390} & \cellcolor{gray!6}{All skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{90.4}\\
+\cmidrule{1-7}
+0.4300 & 6.67e-03 & 0.2350 & 0.4844650 & All skies & Autumn & 99.3\\
+\cmidrule{1-7}
+\cellcolor{gray!6}{0.5050} & \cellcolor{gray!6}{4.16e-04} & \cellcolor{gray!6}{0.3640} & \cellcolor{gray!6}{0.6033797} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{100.0}\\
+\cmidrule{1-7}
+-0.1360 & 1.71e-01 & 0.0635 & -0.2520277 & Clear skies & Spring & 82.9\\
+\cmidrule{1-7}
+\cellcolor{gray!6}{-0.2310} & \cellcolor{gray!6}{3.01e-05} & \cellcolor{gray!6}{0.4690} & \cellcolor{gray!6}{-0.6846238} & \cellcolor{gray!6}{Clear skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{100.0}\\
+\cmidrule{1-7}
+0.0432 & 5.79e-01 & 0.0111 & 0.1054619 & Clear skies & Autumn & 42.1\\
+\cmidrule{1-7}
+\cellcolor{gray!6}{0.4720} & \cellcolor{gray!6}{2.01e-02} & \cellcolor{gray!6}{0.1780} & \cellcolor{gray!6}{0.4221299} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{98.0}\\
+\cmidrule{1-7}
+0.1780 & 1.25e-01 & 0.0792 & 0.2814813 & Cloudy skies & Spring & 87.5\\
+\cmidrule{1-7}
+\cellcolor{gray!6}{0.2130} & \cellcolor{gray!6}{2.20e-02} & \cellcolor{gray!6}{0.1740} & \cellcolor{gray!6}{0.4167034} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{97.8}\\
+\cmidrule{1-7}
+0.4140 & 2.46e-02 & 0.1680 & 0.4094891 & Cloudy skies & Autumn & 97.5\\
 \bottomrule
 \end{tabu}
 \end{table}
