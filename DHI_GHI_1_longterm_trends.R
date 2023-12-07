@@ -352,7 +352,7 @@ for (DBn in dbs) {
 
 #+ LongtermTrendsRuMe, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
-vars <- c("GLB_att_des", "DIR_att_des", "tsi1au_att", "wattGLB")
+vars <- c("GLB_att_des", "DIR_att_des", "tsi1au_att", "wattGLB", "wattGLB_des")
 
 dbs         <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
