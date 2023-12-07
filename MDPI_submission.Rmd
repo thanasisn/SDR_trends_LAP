@@ -840,6 +840,8 @@ spp$cor.p              <- NULL
 spp$cor.conf.level     <- NULL
 spp$cor.conf_int_1     <- NULL
 spp$cor.conf_int_2     <- NULL
+spp$cor.conf_level     <- NULL
+
 
 rownames(spp)          <- NULL
 
