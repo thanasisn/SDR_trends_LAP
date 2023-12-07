@@ -315,7 +315,7 @@ if (havetorun) {
     #
 
     warning("REMOVING CLOUD ENHANCEMENT")
-    DATA <- DATA[wattGLB < cosde(SZA) * TSIextEARTH_comb * 0.8 + 20]
+    DATA <- DATA[wattGLB < cosde(SZA) * TSIextEARTH_comb * 0.8 + 30]
 
 
     ##_ Select only CM-21 flags for trends -------------------------------------

@@ -413,7 +413,7 @@ TSI$RsqrdAdj           <- NULL
 # TSI$cor.method         <- NULL
 # TSI$cor.data_name      <- NULL
 # TSI$cor.p              <- NULL
-TSI$conf.level         <- NULL
+TSI$cor.conf_level      <- NULL
 care <- grep("^cor\\.", names(TSI), value = T)
 for (an in care) {
     TSI[, (an) := NULL ]
