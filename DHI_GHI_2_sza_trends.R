@@ -1326,9 +1326,10 @@ for (ase in seasons) {
                   cex  = ccex)
             ## morning points
             points(pam$SZA, pam[[awe]],
-                   pch = pam$pch,
-                   col = 2,
-                   cex = ccex)
+                   pch    = pam$pch,
+                   pt.lwd = .5,  # pch lwd?
+                   col    = 2,
+                   cex    = ccex)
 
             ## evening lines
             lines(ppm$SZA, ppm[[awe]],
@@ -1338,9 +1339,10 @@ for (ase in seasons) {
                   cex  = ccex)
             ## evening points
             points(ppm$SZA, ppm[[awe]],
-                   pch = ppm$pch,
-                   col = 3,
-                   cex = ccex)
+                   pch    = ppm$pch,
+                   pt.lwd = .5,  # pch lwd?
+                   col    = 3,
+                   cex    = ccex)
 
             ## tag plots with letters
             legend("bottomright", 0, paste0("(",letters[lec],")"),
