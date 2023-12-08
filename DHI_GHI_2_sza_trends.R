@@ -1327,7 +1327,7 @@ for (ase in seasons) {
             ## morning points
             points(pam$SZA, pam[[awe]],
                    pch    = pam$pch,
-                   pt.lwd = .5,  # pch lwd?
+                   lwd    = .5,
                    col    = 2,
                    cex    = ccex)
 
@@ -1340,7 +1340,7 @@ for (ase in seasons) {
             ## evening points
             points(ppm$SZA, ppm[[awe]],
                    pch    = ppm$pch,
-                   pt.lwd = .5,  # pch lwd?
+                   lwd    = .5,
                    col    = 3,
                    cex    = ccex)
 

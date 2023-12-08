@@ -898,7 +898,7 @@ for (adb in database) {
             par("mar" = c(3, 5, 2,  1))
         } else {
             par("mar" = c(3, 5, 0.5, 0.5))
-            par("mar" = c(3, 5, 0, 1))
+            par("mar" = c(3, 5, 0.5, 1))
         }
         par(pch = 19)
 
@@ -920,7 +920,6 @@ for (adb in database) {
                   format = "%Y",
                   labels = NA,
                   tcl = -0.25)
-
 
         # y axis
         # sfmt <- paste0(pretty(ylim) / 1000,"k")
@@ -1069,7 +1068,7 @@ for (adb in database) {
         # pdb[ , sum(get(paste0(avar,"_des")), na.rm = T), by = year(Date) ]
     }
 }
- #'
+#'
 #+ echo=F, include=T
 
 
