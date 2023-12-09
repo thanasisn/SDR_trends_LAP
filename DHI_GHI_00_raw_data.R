@@ -314,9 +314,6 @@ if (havetorun) {
     #  For this paper we use only flags derived from CM-21.
     #
 
-    # warning("REMOVING CLOUD ENHANCEMENT")
-    # DATA <- DATA[wattGLB < cosde(SZA) * TSIextEARTH_comb * 0.8 + 30]
-
 
     ##_ Select only CM-21 flags for trends -------------------------------------
     wecare <- grep("CSflag_", names(DATA), value = T)
@@ -325,6 +322,12 @@ if (havetorun) {
     ##_ Set flag for sky conditions --------------------------------------------
     DATA[rowSums(DATA[, ..wecare], na.rm = T) == 0, TYPE := "Clear"]
     DATA[rowSums(DATA[, ..wecare], na.rm = T) != 0, TYPE := "Cloud"]
+
+
+    ##_ Remove hopefully the cloud enhancement cases  --------------------------
+    warning("REMOVING CLOUD ENHANCEMENT")
+    DATA <- DATA[!(TYPE == "Cloud" & wattGLB > cosde(SZA) * TSIextEARTH_comb * 0.8 + 30), ]
+
 
     ## remove unused columns
     rm.cols.DT(DATA, "CSflag_*")
