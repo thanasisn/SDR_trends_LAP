@@ -324,9 +324,9 @@ if (havetorun) {
     DATA[rowSums(DATA[, ..wecare], na.rm = T) != 0, TYPE := "Cloud"]
 
 
-    ##_ Remove hopefully the cloud enhancement cases  --------------------------
-    warning("REMOVING CLOUD ENHANCEMENT")
-    DATA <- DATA[!(TYPE == "Cloud" & wattGLB > cosde(SZA) * TSIextEARTH_comb * 0.8 + 30), ]
+    # ##_ Remove hopefully the cloud enhancement cases  --------------------------
+    # warning("REMOVING CLOUD ENHANCEMENT")
+    # DATA <- DATA[!(TYPE == "Cloud" & wattGLB > cosde(SZA) * TSIextEARTH_comb * 0.8 + 30), ]
 
 
     ## remove unused columns
