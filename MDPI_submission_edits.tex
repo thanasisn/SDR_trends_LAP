@@ -1,7 +1,7 @@
 %  LaTeX support: latex@mdpi.com
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL SUBMISSION_01/MDPI_submission.tex   Sun Nov 12 17:31:09 2023
-%DIF ADD MDPI_submission.tex                 Sat Dec  9 19:34:24 2023
+%DIF ADD MDPI_submission.tex                 Sat Dec  9 21:43:12 2023
 %  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
 
 %=================================================================
@@ -511,8 +511,8 @@ Record of Total Solar Irradiance'' dataset \citep{Coddington2005}. The
 initial daily values of this dataset were interpolated to match the time
 step of our measurements. In the final dataset \DIFdelbegin \DIFdel{\(84.2\%\) of the
 }\DIFdelend \DIFaddbegin \DIFadd{\(23.3\%\) of the
-1-minute }\DIFaddend data were identified as under clear-sky conditions and \DIFdelbegin \DIFdel{\(15.8\%\) }\DIFdelend \DIFaddbegin \DIFadd{\(43\%\)
-}\DIFaddend as under cloud-sky conditions.
+1-minute }\DIFaddend data were identified as under clear-sky conditions and
+\DIFdelbegin \DIFdel{\(15.8\%\) }\DIFdelend \DIFaddbegin \DIFadd{\(40.7\%\) }\DIFaddend as under cloud-sky conditions.
 
 In order to investigate the SDR trends, we implemented an appropriate
 aggregation scheme to the 1-minute data to derive a series in coarser
@@ -547,7 +547,7 @@ and cloud-sky conditions, are very similar and are shown in the Appendix
 (Figures~\ref{fig:trendCLEAR} and~ \ref{fig:trendCLOUD}). We observe a
 positive trend for all-sky conditions (\(0.38\,\%/y\)), a very close but
 smaller trend for clear-skies (\DIFdelbegin \DIFdel{\(0.35\,\%/y\)}\DIFdelend \DIFaddbegin \DIFadd{\(0.097\,\%/y\)}\DIFaddend ) and a negative weaker
-trend for cloudy-skies (\DIFdelbegin \DIFdel{\(-0.28\,\%/y\)}\DIFdelend \DIFaddbegin \DIFadd{\(0.41\,\%/y\)}\DIFaddend ). In the studied period, there is
+trend for cloudy-skies (\DIFdelbegin \DIFdel{\(-0.28\,\%/y\)}\DIFdelend \DIFaddbegin \DIFadd{\(0.25\,\%/y\)}\DIFaddend ). In the studied period, there is
 no significant break or change in the variability of the time series.
 Other studies for the European region reported a change of the SDR
 slope, around 1980 \citep{Wild2021, Yuan2021, Ohmura2009}, a few years
@@ -565,9 +565,9 @@ Sky conditions & Trend [\%/year] & \DIFdelbeginFL \DIFdelFL{Statistical signif. 
 \DIFdelFL{\%}%DIFDELCMD < ] %%%
 \DIFdelendFL \DIFaddbeginFL \DIFaddFL{Trend p-value }& \DIFaddFL{Pearson cor. }\DIFaddendFL & Days\DIFdelbeginFL \DIFdelFL{with data}\DIFdelendFL \\
 \midrule
-All skies & \DIFdelbeginFL \DIFdelFL{0.376 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.377 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{100.00 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{10256}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0913 }& \DIFaddFL{10251}\DIFaddendFL \\
-Clear skies & \DIFdelbeginFL \DIFdelFL{0.349 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.097 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{100.00 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{10256}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.1381 }& \DIFaddFL{2689}\DIFaddendFL \\
-Cloudy skies & \DIFdelbeginFL \DIFdelFL{-0.276 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.408 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{99.97 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{5067}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0810 }& \DIFaddFL{4937}\DIFaddendFL \\
+All skies & \DIFdelbeginFL \DIFdelFL{0.376 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.377 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{100.00 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.000000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{10256}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0913 }& \DIFaddFL{10251}\DIFaddendFL \\
+Clear skies & \DIFdelbeginFL \DIFdelFL{0.349 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.097 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{100.00 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.000000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{10256}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.1381 }& \DIFaddFL{2689}\DIFaddendFL \\
+Cloudy skies & \DIFdelbeginFL \DIFdelFL{-0.276 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.250 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{99.97 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.000655 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{5067}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0494 }& \DIFaddFL{4747}\DIFaddendFL \\
 \bottomrule
 \end{tabu}
 \end{table}
@@ -793,28 +793,28 @@ comparison.
 \DIFdelbeginFL %DIFDELCMD < \cmidrule{1-4}
 %DIFDELCMD < \cellcolor{gray!6}{} %%%
 \DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
-\cellcolor{gray!6}{0.8250} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{Winter} %%%
-\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.000123} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{-0.8820} %%%
-\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.41500} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{98.9}%%%
-\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.6439160} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{100.0}\DIFaddendFL \\
+\cellcolor{gray!6}{0.7890} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{Winter} %%%
+\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.000262} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{-0.8820} %%%
+\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.38400} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{98.9}%%%
+\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.6194510} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{100.0}\DIFaddendFL \\
 \DIFdelbeginFL %DIFDELCMD < 
 
 %DIFDELCMD <  %%%
 \DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
-\DIFaddFL{0.0942 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Spring }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.425000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{-0.0991 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.02210 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{37.2}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.1485860 }& \DIFaddFL{Cloudy skies }& \DIFaddFL{Spring }& \DIFaddFL{57.5}\DIFaddendFL \\
+\DIFaddFL{-0.1460 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Spring }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.261000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{-0.0991 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.04330 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{37.2}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{-0.2081141 }& \DIFaddFL{Cloudy skies }& \DIFaddFL{Spring }& \DIFaddFL{73.9}\DIFaddendFL \\
 \DIFdelbeginFL %DIFDELCMD < 
 
 %DIFDELCMD < \cellcolor{gray!6}{} %%%
 \DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
-\cellcolor{gray!6}{-0.0983} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{Summer} %%%
-\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.414000} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{0.0444} %%%
-\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.02400} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{21.5}%%%
-\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{-0.1548507} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{58.6}\DIFaddendFL \\
+\cellcolor{gray!6}{-0.5680} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{Summer} %%%
+\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.000483} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{0.0444} %%%
+\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{0.35800} \DIFaddendFL & \DIFdelbeginFL %DIFDELCMD < \cellcolor{gray!6}{21.5}%%%
+\DIFdelendFL \DIFaddbeginFL \cellcolor{gray!6}{-0.5979999} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{100.0}\DIFaddendFL \\
 \DIFdelbeginFL %DIFDELCMD < 
 
 %DIFDELCMD < \multirow{-4}{*}{\centering\arraybackslash Cloudy skies} %%%
 \DIFdelendFL \DIFaddbeginFL \cmidrule{1-7}
-\DIFaddFL{0.1950 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Autumn }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.460000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{-0.4000 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.01960 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{89.5}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.1401398 }& \DIFaddFL{Cloudy skies }& \DIFaddFL{Autumn }& \DIFaddFL{54.0}\DIFaddendFL \\
+\DIFaddFL{0.1070 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{Autumn }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.701000 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{-0.4000 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.00536 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{89.5}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.0732067 }& \DIFaddFL{Cloudy skies }& \DIFaddFL{Autumn }& \DIFaddFL{29.9}\DIFaddendFL \\
 \bottomrule
 \end{tabu}
 \end{table}
@@ -837,7 +837,7 @@ order to quantify their effect on SDR. However, \citet{Siomos2020} have
 shown that aerosol optical depth over Thessaloniki is decreasing
 constantly at least up to 2018. The attenuation of SDR by aerosols over
 Europe have been proposed as major factor by \citet{Wild2021}. The
-dimming effect on SDR under cloudy-sky conditions (\DIFdelbegin \DIFdel{\(-0.28\,\%/y\)}\DIFdelend \DIFaddbegin \DIFadd{\(0.41\,\%/y\)}\DIFaddend ),
+dimming effect on SDR under cloudy-sky conditions (\DIFdelbegin \DIFdel{\(-0.28\,\%/y\)}\DIFdelend \DIFaddbegin \DIFadd{\(0.25\,\%/y\)}\DIFaddend ),
 suggests that cloud optical thickness is decreasing during this period.
 Because we have no adequate data to investigate the long term changes of
 cloud thickness in the region, we cannot verify if the negative SDR
