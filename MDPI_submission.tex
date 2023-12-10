@@ -469,8 +469,8 @@ observations. The TSI data we used are part of the ``NOAA Climate Data
 Record of Total Solar Irradiance'' dataset \citep{Coddington2005}. The
 initial daily values of this dataset were interpolated to match the time
 step of our measurements. In the final dataset \(23.3\%\) of the
-1-minute data were identified as under clear-sky conditions and
-\(40.7\%\) as under cloud-sky conditions.
+1-minute data were identified as under clear-sky conditions and \(43\%\)
+as under cloud-sky conditions.
 
 In order to investigate the SDR trends, we implemented an appropriate
 aggregation scheme to the 1-minute data to derive a series in coarser
@@ -505,7 +505,7 @@ and cloud-sky conditions, are very similar and are shown in the Appendix
 (Figures~\ref{fig:trendCLEAR} and~ \ref{fig:trendCLOUD}). We observe a
 positive trend for all-sky conditions (\(0.38\,\%/y\)), a very close but
 smaller trend for clear-skies (\(0.097\,\%/y\)) and a negative weaker
-trend for cloudy-skies (\(0.25\,\%/y\)). In the studied period, there is
+trend for cloudy-skies (\(0.41\,\%/y\)). In the studied period, there is
 no significant break or change in the variability of the time series.
 Other studies for the European region reported a change of the SDR
 slope, around 1980 \citep{Wild2021, Yuan2021, Ohmura2009}, a few years
@@ -521,9 +521,9 @@ variability.
 \toprule
 Sky conditions & Trend [\%/year] & Trend p-value & Pearson cor. & Days\\
 \midrule
-All skies & 0.377 & 0.000000 & 0.0913 & 10251\\
-Clear skies & 0.097 & 0.000000 & 0.1381 & 2689\\
-Cloudy skies & 0.250 & 0.000655 & 0.0494 & 4747\\
+All skies & 0.377 & 0 & 0.0913 & 10251\\
+Clear skies & 0.097 & 0 & 0.1381 & 2689\\
+Cloudy skies & 0.408 & 0 & 0.0810 & 4937\\
 \bottomrule
 \end{tabu}
 \end{table}
@@ -711,13 +711,13 @@ Trend [\%/year] & slope.p & Rsqrd & cor.estimate & Sky condition & Season & slop
 \cmidrule{1-7}
 0.1100 & 0.308000 & 0.03710 & 0.1926085 & Clear skies & Autumn & 69.2\\
 \cmidrule{1-7}
-\cellcolor{gray!6}{0.7890} & \cellcolor{gray!6}{0.000262} & \cellcolor{gray!6}{0.38400} & \cellcolor{gray!6}{0.6194510} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{100.0}\\
+\cellcolor{gray!6}{0.8250} & \cellcolor{gray!6}{0.000123} & \cellcolor{gray!6}{0.41500} & \cellcolor{gray!6}{0.6439160} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{100.0}\\
 \cmidrule{1-7}
--0.1460 & 0.261000 & 0.04330 & -0.2081141 & Cloudy skies & Spring & 73.9\\
+0.0942 & 0.425000 & 0.02210 & 0.1485860 & Cloudy skies & Spring & 57.5\\
 \cmidrule{1-7}
-\cellcolor{gray!6}{-0.5680} & \cellcolor{gray!6}{0.000483} & \cellcolor{gray!6}{0.35800} & \cellcolor{gray!6}{-0.5979999} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{100.0}\\
+\cellcolor{gray!6}{-0.0983} & \cellcolor{gray!6}{0.414000} & \cellcolor{gray!6}{0.02400} & \cellcolor{gray!6}{-0.1548507} & \cellcolor{gray!6}{Cloudy skies} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{58.6}\\
 \cmidrule{1-7}
-0.1070 & 0.701000 & 0.00536 & 0.0732067 & Cloudy skies & Autumn & 29.9\\
+0.1950 & 0.460000 & 0.01960 & 0.1401398 & Cloudy skies & Autumn & 54.0\\
 \bottomrule
 \end{tabu}
 \end{table}
@@ -740,7 +740,7 @@ order to quantify their effect on SDR. However, \citet{Siomos2020} have
 shown that aerosol optical depth over Thessaloniki is decreasing
 constantly at least up to 2018. The attenuation of SDR by aerosols over
 Europe have been proposed as major factor by \citet{Wild2021}. The
-dimming effect on SDR under cloudy-sky conditions (\(0.25\,\%/y\)),
+dimming effect on SDR under cloudy-sky conditions (\(0.41\,\%/y\)),
 suggests that cloud optical thickness is decreasing during this period.
 Because we have no adequate data to investigate the long term changes of
 cloud thickness in the region, we cannot verify if the negative SDR

@@ -53,8 +53,8 @@ DATA_Clear[, TYPE := NULL]
 DATA_Cloud[, TYPE := NULL]
 
 
-warning("REMOVING CLOUD ENHANCEMENT")
-DATA_Cloud <- DATA_Cloud[wattGLB < cosde(SZA) * TSIextEARTH_comb * 0.8 + 30 ]
+# warning("REMOVING CLOUD ENHANCEMENT")
+# DATA_Cloud <- DATA_Cloud[wattGLB < cosde(SZA) * TSIextEARTH_comb * 0.8 + 30 ]
 
 
 
