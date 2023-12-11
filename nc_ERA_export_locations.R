@@ -85,9 +85,15 @@ for (afile in filelist) {
     for (avvv in variables) {
         tempd <- data[[avvv]]
 
+        str(tempd)
+
+        ## era5 data are points on locations
+
+        x_near_in <- which.min(abs(x_inx - locations$LongX))
+        y_near_in <- which.min(abs(y_inx - locations$LatiY))
 
 
-
+        tempd[x_near_in, y_near_in, ]
 
         ## Change NA to -9999
         tempd[is.na(tempd)] <- -99999
@@ -95,12 +101,19 @@ for (afile in filelist) {
         ## interpolate temperature data to location
         out <- apply(tempd, MARGIN = c(3), function(z) bilinear(x = x_inx, y = y_inx, flip_matrix_v(z), locations$LongX, locations$LatiY))
 
+
+
         ## get data coordinates
         x_long <- out[[1]]$x
         y_lat  <- out[[1]]$y
 
         ## prepare data
         outt <- lapply( out , "[[" , "z" )
+
+        do.call(rbind, out)
+        do.call(rbind, outt)
+
+        lirrst2DF(outt)
         outt <- data.frame(outt)
         names(outt) <- Dates
         ## change back to NAs
