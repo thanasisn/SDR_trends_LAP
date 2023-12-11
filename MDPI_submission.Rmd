@@ -859,6 +859,7 @@ spp$slope.stat_sig <- signif(spp$slope.stat_sig, 3)
 spp$Rsqrd          <- signif(spp$Rsqrd,          3)
 spp$RsqrdAdj       <- NULL
 spp$cor.t          <- NULL
+spp$slope.stat_sig <- NULL
 
 ## rename sky conditions
 spp$DATA <- sub(" cond.", "", spp$DATA)
