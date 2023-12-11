@@ -259,6 +259,15 @@ for (DBn in dbs) {
             ## correlation test
             cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
+            lag   <- 1
+            dd    <- acf(dataset[[avar]], na.action = na.pass)
+            N_eff <- sum(!is.na(dataset[[avar]])) * (1 - dd[lag][[1]]) / (1 + dd[lag][[1]])
+            se_sq <- sum((lm1$residuals)^2, na.rm = T) / (N_eff - 2)
+            sa_sq <- se_sq / sum((dataset[[avar]] - mean(dataset[[avar]], na.rm = T))^2, na.rm = T)
+            t_eff     <- lm1$coefficients[[2]] / sa_sq
+            #find two-tailed t critical values
+            t_eff_cri <- qt(p = .05/2, df = N_eff, lower.tail = FALSE)
+
             ## capture lm for table
             gather <- rbind(gather,
                             data.frame(
@@ -266,10 +275,17 @@ for (DBn in dbs) {
                                 cor_test_stats(cor1),
                                 DATA      = DBn,
                                 var       = avar,
-                                N         = sum(!is.na(dataset[[avar]]))
+                                N         = sum(!is.na(dataset[[avar]])),
+                                N_eff     = N_eff,
+                                t_eff     = t_eff,
+                                t_eff_cri = t_eff_cri
                             ))
 
             par("mar" = c(3, 4, 2, 1))
+
+
+
+            stop()
 
 
             ## plot data
@@ -352,7 +368,7 @@ for (DBn in dbs) {
 
 #+ LongtermTrendsRuMe, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
-vars <- c("GLB_att_des", "DIR_att_des", "tsi1au_att", "wattGLB", "wattGLB_des")
+vars <- c("GLB_att_des", "DIR_att_des", "tsi1au_att", "wattGLB")
 
 dbs         <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
@@ -375,6 +391,19 @@ for (DBn in dbs) {
             ## correlation test
             cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
+            lag   <- 1
+            dd    <- acf(dataset[[avar]], na.action = na.pass)
+            N_eff <- sum(!is.na(dataset[[avar]])) * (1 - dd[lag][[1]]) / (1 + dd[lag][[1]])
+            se_sq <- sum((lm1$residuals)^2, na.rm = T) / (N_eff - 2)
+            sa_sq <- se_sq / sum((dataset[[avar]] - mean(dataset[[avar]], na.rm = T))^2, na.rm = T)
+            t_eff     <- lm1$coefficients[[2]] / sa_sq
+            #find two-tailed t critical values
+            t_eff_cri <- qt(p = .05/2, df = N_eff, lower.tail = FALSE)
+
+            conf      <- confint(lm1)
+            conf_2.5  <- conf[2,1]
+            conf_97.5 <- conf[2,2]
+
             ## capture stats for table
             gather <- rbind(gather,
                             data.frame(
@@ -383,7 +412,12 @@ for (DBn in dbs) {
                                 DATA      = DBn,
                                 var       = avar,
                                 N         = sum(!is.na(dataset[[avar]])),
-                                Obs       = sum(dataset[[sub("_des","_N", avar)]], na.rm = TRUE)
+                                Obs       = sum(dataset[[sub("_des","_N", avar)]], na.rm = TRUE),
+                                N_eff     = N_eff,
+                                t_eff     = t_eff,
+                                t_eff_cri = t_eff_cri,
+                                conf_2.5  = conf_2.5,
+                                conf_97.5 = conf_97.5
                             )
             )
 
@@ -529,17 +563,18 @@ for (DBn in dbs) {
 #'
 #+ echo=F, include=T
 
-wecare      <- names(gather)
 # wecare      <- grep("intercept", names(gather), value = T, invert = T)
+wecare      <- names(gather)
 gather      <- data.table(gather)
 gather$DATA <- sub("_.*", "", gather$DATA)
 
-pprint <- gather[ , ..wecare]
+pprint      <- gather[ , ..wecare]
 
 pprint[, slope.stat_sig := 100 * (1 - slope.p)]
 pprint[, slope.t        := NULL]
-# pprint[, Rsqrd          := NULL]
-# pprint[, RsqrdAdj       := NULL]
+pprint$cor.data_name <- NULL
+
+
 
 saveRDS(pprint,
         "./figures/tbl_longterm_trends.Rds")
@@ -1041,7 +1076,7 @@ for (avar in vars) {
 
 #+ SeasonalTrendsTogether3, echo=F, include=T
 {
-    vars        <- c("GLB_att_des", "wattGLB_des")
+    vars        <- c("GLB_att_des", "wattGLB")
     avar        <- vars[1]
     dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
                        "CLEAR_1_D_bySeason_DESEAS",
@@ -1300,16 +1335,34 @@ for (DBn in dbs) {
             ## correlation test
             cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Year), method = 'pearson')
 
+            lag   <- 1
+            dd    <- acf(dataset[[avar]], na.action = na.pass)
+            N_eff <- sum(!is.na(dataset[[avar]])) * (1 - dd[lag][[1]]) / (1 + dd[lag][[1]])
+            se_sq <- sum((lm1$residuals)^2, na.rm = T) / (N_eff - 2)
+            sa_sq <- se_sq / sum((dataset[[avar]] - mean(dataset[[avar]], na.rm = T))^2, na.rm = T)
+            t_eff     <- lm1$coefficients[[2]] / sa_sq
+            #find two-tailed t critical values
+            t_eff_cri <- qt(p = .05/2, df = N_eff, lower.tail = FALSE)
+
+            conf      <- confint(lm1)
+            conf_2.5  <- conf[2,1]
+            conf_97.5 <- conf[2,2]
+
             ## gather stats
             gather_seas <- rbind(gather_seas,
                                  data.frame(
                                      linear_fit_stats(lm2,
                                                       confidence_interval = Daily_confidence_limit),
                                      cor_test_stats(cor1),
-                                     DATA   = DBn,
-                                     Season = ase,
-                                     var    = avar,
-                                     N      = sum(!is.na(dataset[[avar]]))
+                                     DATA      = DBn,
+                                     Season    = ase,
+                                     var       = avar,
+                                     N         = sum(!is.na(dataset[[avar]])),
+                                     N_eff     = N_eff,
+                                     t_eff     = t_eff,
+                                     t_eff_cri = t_eff_cri,
+                                     conf_2.5  = conf_2.5,
+                                     conf_97.5 = conf_97.5
                                  ))
         }
     }
@@ -1327,8 +1380,11 @@ for (DBn in dbs) {
 wecare           <- grep("intercept", names(gather_seas), value = T, invert = T)
 gather_seas      <- data.table(gather_seas)
 gather_seas$DATA <- sub("_.*", "", gather_seas$DATA)
+
+
 pprint           <- gather_seas[ , ..wecare]
 
+pprint$cor.data_name        <- NULL
 pprint[, slope.stat_sig     := 100 * (1 - slope.p)]
 pprint[, slope.t            := NULL               ]
 # pprint[, Rsqrd              := NULL               ]
@@ -1583,6 +1639,10 @@ pander(pprint,
 write_dat(pprint,
           "./figures/tbl_longterm_trends_monthly.dat",
           clean = TRUE)
+
+
+
+
 
 
 
