@@ -236,7 +236,7 @@ rm(data_list)
 #'
 #+ LongtermTrends, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
-vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att", "near_tcc_att")
+vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att", "near_tcc_att", "near_tcc_des")
 
 dbs         <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
@@ -292,14 +292,18 @@ for (DBn in dbs) {
                             ))
 
 
+            if (grepl("near_tcc", avar)) {
+                acol <- "cyan"
+            } else {
+                acol <- get(paste0(c("col", unlist(strsplit(avar, split = "_"))[1:2]),
+                                   collapse = "_"))
+            }
 
 
             ## plot data
             plot(dataset$Date, dataset[[avar]],
-                 pch  = ".",
-                 col  = get(paste0(c("col",
-                                     unlist(strsplit(avar, split = "_"))[1:2]),
-                                   collapse = "_")),
+                 pch      = ".",
+                 col      = acol,
                  cex      = 2,
                  # main     = paste(translate(DBn), translate(avar)),
                  cex.main = 0.8,
