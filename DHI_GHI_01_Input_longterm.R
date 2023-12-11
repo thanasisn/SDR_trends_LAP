@@ -99,7 +99,6 @@ for (DBn in dbs) {
         slopePyear <- diff(predict(lm1, dt)) / diff(year(dt$Date))
 
 
-
         ## capture lm for table
         gather <- rbind(gather,
                         data.frame(
@@ -185,7 +184,7 @@ gather[, Slopepercent.. :=  100 * WattPYear / Mean ]
 write.csv(x = gather, file = "./figures/tbl_longterm_trends_raw.csv")
 
 
-
+names(DATA_all)
 
 
 ##  Daily means  ---------------------------------------------------------------
@@ -194,6 +193,8 @@ ALL_1_daily_mean <-
     DATA_all[,.(DIR_att       = mean(DIR_att,      na.rm = T),
                 GLB_att       = mean(GLB_att,      na.rm = T),
                 HOR_att       = mean(HOR_att,      na.rm = T),
+                near_tcc_att  = mean(near_tcc,     na.rm = T),
+                bilin_tcc_att = mean(bilin_tcc,    na.rm = T),
                 wattGLB       = mean(wattGLB,      na.rm = T),
                 wattGLB_sd    = sd(  wattGLB,      na.rm = T),
                 wattGLB_N     = sum(!is.na(wattGLB)),
@@ -325,8 +326,10 @@ ALL_1_daily_seas <-
     ALL_1_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
                         GLB_att_seas       = mean(GLB_att,    na.rm = T),
                         HOR_att_seas       = mean(HOR_att,    na.rm = T),
-                        wattGLB_seas       = mean(wattGLB,      na.rm = T),
-                        wattGLB_sd_seas    = sd(  wattGLB,      na.rm = T),
+                        near_tcc_att_seas  = mean(near_tcc_att,   na.rm = T),
+                        bilin_tcc_att_seas = mean(bilin_tcc_att,  na.rm = T),
+                        wattGLB_seas       = mean(wattGLB,    na.rm = T),
+                        wattGLB_sd_seas    = sd(  wattGLB,    na.rm = T),
                         wattGLB_N_seas     = sum(!is.na(wattGLB)),
                         DIR_transp_seas    = mean(DIR_transp, na.rm = T),
                         DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
@@ -423,11 +426,14 @@ setorder(CLOUD_1_daily_DESEAS, Date)
 
 ## Using the % departure from seasonal values
 
-ALL_1_daily_DESEAS[, DIR_att_des   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas   ]
-ALL_1_daily_DESEAS[, HOR_att_des   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas   ]
-ALL_1_daily_DESEAS[, GLB_att_des   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
-ALL_1_daily_DESEAS[, DIR_transp_des:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas]
-ALL_1_daily_DESEAS[, wattGLB_des   := wattGLB - wattGLB_seas ]
+ALL_1_daily_DESEAS[, DIR_att_des       := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas   ]
+ALL_1_daily_DESEAS[, HOR_att_des       := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas   ]
+ALL_1_daily_DESEAS[, GLB_att_des       := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
+ALL_1_daily_DESEAS[, DIR_transp_des    := 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas]
+ALL_1_daily_DESEAS[, wattGLB_des       := wattGLB - wattGLB_seas ]
+ALL_1_daily_DESEAS[, near_tcc_att_des  := near_tcc_att - near_tcc_att_seas ]
+ALL_1_daily_DESEAS[, bilin_tcc_att_des := bilin_tcc_att - bilin_tcc_att_seas ]
+
 CLEAR_1_daily_DESEAS[, DIR_att_des   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas   ]
 CLEAR_1_daily_DESEAS[, HOR_att_des   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas   ]
 CLEAR_1_daily_DESEAS[, GLB_att_des   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
