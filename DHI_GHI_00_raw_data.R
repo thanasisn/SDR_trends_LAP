@@ -146,11 +146,6 @@ if (havetorun) {
             DATA <- DATA[!test_vec]
         }
 
-
-        ## retest
-        test <- DATA[duplicated(DATA$Date) | duplicated(DATA$Date, fromLast = TRUE)]
-        cat("\nThere are ", nrow(test), " duplicate dates remaining!\n")
-
         ## FIXME do we still need this?
         ## this may be used by old scripts
     #     setorder(DATA, Date)
@@ -170,8 +165,6 @@ if (havetorun) {
 
     # fix dates
     DATA <- merge(DATA, clDATA, by = "Date", all.x = TRUE)
-
-    stop("clouds")
 
     ## __ Skip data ranges for CM-21 --------------------------------------------
     for (as in nrow(SKIP_cm21)) {
