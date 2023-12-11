@@ -133,18 +133,19 @@ if (havetorun) {
         ## TODO warn duplicate dates
         if (sum(duplicated(DATA$Date)) > 0) {
             warning("There are duplicate dates in the data")
+
+            ## There are some duplicates introduced at some point!!
+            test1 <- DATA[duplicated(DATA$Date) | duplicated(DATA$Date, fromLast = TRUE)]
+            stopifnot( nrow(test1) < 100 )
+
+            ## Workaround for duplicates
+            test_vec <- DATA[is.na(wattGLB) &
+                                 (duplicated(DATA$Date) | duplicated(DATA$Date, fromLast = TRUE)),
+                             which = TRUE]
+            ## Drop some data
+            DATA <- DATA[!test_vec]
         }
 
-        ## There are some duplicates introduced at some point!!
-        test <- DATA[duplicated(DATA$Date) | duplicated(DATA$Date, fromLast = TRUE)]
-        stopifnot( nrow(test) < 1000 )
-
-        ## Workaround for duplicates
-        test_vec <- DATA[is.na(wattGLB) &
-                             (duplicated(DATA$Date) | duplicated(DATA$Date, fromLast = TRUE)),
-                         which = TRUE]
-        ## Drop some data
-        DATA <- DATA[!test_vec]
 
         ## retest
         test <- DATA[duplicated(DATA$Date) | duplicated(DATA$Date, fromLast = TRUE)]
@@ -158,6 +159,19 @@ if (havetorun) {
     #     DATA <- readRDS(CS_file)
     # }
 
+
+    ## __ Import clouds data  --------------------------------------------------
+
+    clDATA <- readRDS("~/DATA/Clouds ERA5/Thessaloniki_clouds.Rds")
+    clDATA[, Date := Date + 30]
+    clDATA[, name   := NULL]
+    clDATA[, x_long := NULL]
+    clDATA[, y_lat  := NULL]
+
+    # fix dates
+    DATA <- merge(DATA, clDATA, by = "Date", all.x = TRUE)
+
+    stop("clouds")
 
     ## __ Skip data ranges for CM-21 --------------------------------------------
     for (as in nrow(SKIP_cm21)) {

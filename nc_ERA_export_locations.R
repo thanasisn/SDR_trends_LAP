@@ -14,6 +14,7 @@ Script.Name = c("nc_ERA_export_locations.R")
 library(RNetCDF)
 library(data.table)
 library(akima)
+library(purrr)
 
 source("~/FUNCTIONS/R/data.R")
 
@@ -44,11 +45,14 @@ filelist <- sort(filelist)
 
 
 for (afile in filelist) {
-    sfile = sub("nc$","Rds",afile)
+    sfile <- sub("nc$","Rds",afile)
     cat(paste(basename(afile), "\n"))
 
     ## dont overwrite existing exports
-    if (file.exists(sfile)) { next() }
+    if (file.exists(sfile)) {
+        cat("output exist\n")
+        next()
+    }
 
     ## load file and read data
     anc  <- open.nc(afile,write = F)
@@ -58,7 +62,7 @@ for (afile in filelist) {
     gather$filename <- basename(afile)
 
     ## variables in file
-    variables <- grep("time|longitude|latitude|tp", names(data), ignore.case = T, invert = T,value = T)
+    variables <- grep("time|longitude|latitude|tp|expver", names(data), ignore.case = T, invert = T,value = T)
 
     #### get variables info #####
     var_info <- data.table()
@@ -85,15 +89,18 @@ for (afile in filelist) {
     for (avvv in variables) {
         tempd <- data[[avvv]]
 
-        str(tempd)
+        if (length(dim(tempd)) == 4) {
+            tempd <- tempd[,,1,]
+            cat("Reduced dims\n")
+            warning("Reduced dims\n")
+        }
 
         ## era5 data are points on locations
 
         x_near_in <- which.min(abs(x_inx - locations$LongX))
         y_near_in <- which.min(abs(y_inx - locations$LatiY))
 
-
-        tempd[x_near_in, y_near_in, ]
+        near_tcc  <- tempd[x_near_in, y_near_in, ]
 
         ## Change NA to -9999
         tempd[is.na(tempd)] <- -99999
@@ -101,54 +108,46 @@ for (afile in filelist) {
         ## interpolate temperature data to location
         out <- apply(tempd, MARGIN = c(3), function(z) bilinear(x = x_inx, y = y_inx, flip_matrix_v(z), locations$LongX, locations$LatiY))
 
-
-
         ## get data coordinates
         x_long <- out[[1]]$x
         y_lat  <- out[[1]]$y
 
         ## prepare data
         outt <- lapply( out , "[[" , "z" )
+        outt <- do.call(rbind, outt)
 
-        do.call(rbind, out)
-        do.call(rbind, outt)
+        temp <- data.frame(
+            bilin_tcc = outt,
+            Date      = as.POSIXct(Dates),
+            near_tcc  = near_tcc)
 
-        lirrst2DF(outt)
-        outt <- data.frame(outt)
-        names(outt) <- Dates
-        ## change back to NAs
-        outt[outt < -999] <- NA
-
-
-
-        outt
-
-        stop()
+        # plot(temp$Date, temp$bilin_tcc)
+        # plot(temp$Date, temp$near_tcc)
+        # plot(temp$bilin_tcc/temp$near_tcc)
 
         ## create proper structure
         store <- data.table(x_long = x_long,
                             y_lat  = y_lat,
                             name   = locations$Name,
-                            outt)
+                            temp)
 
-        gather[[avvv]] <- store
+        # gather[[avvv]] <- store
     }
-    saveRDS(object   = gather,
+    saveRDS(object   = store,
             file     = sfile,
             compress = "xz")
     close.nc(anc)
 }
 # image(x_inx, y_inx, flip_matrix_v(data$t2m[,,1]), col = heat.colors(9))
+dummy <- gc()
 
 
 
 
-
-####    ERA20c exporter    #####################################################
-nc_folder <- "/home/athan/DATA/ERA20C/"
+## read data ----------
 
 filelist <- list.files(path        = nc_folder,
-                       pattern     = "*.nc",
+                       pattern     = "adaptor.*.Rds",
                        full.names  = T,
                        ignore.case = T,
                        recursive   = F
@@ -156,80 +155,25 @@ filelist <- list.files(path        = nc_folder,
 filelist <- sort(filelist)
 
 
-for (afile in filelist) {
-    sfile = sub("nc$","Rds",afile)
-    cat(paste(basename(afile), "\r"))
+DATA <- filelist %>% map_dfr(readRDS, .id = NULL) %>% data.table()
 
-    ## don't overwrite existing exports
-    if (file.exists(sfile)) { next() }
+DATA <- DATA[!(bilin_tcc < 0 & is.na(near_tcc)),]
 
-    # stop()
 
-    ## load file and read data
-    anc  <- open.nc(afile,write = F)
-    data <- read.nc(anc, unpack=TRUE)
-    ## store data for saving
-    gather          <- list()
-    gather$filename <- basename(afile)
+hist(DATA$bilin_tcc)
+hist(DATA$near_tcc)
+range(DATA$Date)
 
-    ## variables in file
-    variables <- grep("time|longitude|latitude|tp|expver" ,names(data), ignore.case = T, invert = T,value = T)
 
-    #### get variables info #####
-    var_info <- data.table()
-    for (avar in variables) {
-        var_info <- rbind(var_info,
-                          data.table(sort_name = avar,
-                                     long_name = att.get.nc(anc,avar,"long_name"),
-                                     units     = att.get.nc(anc,avar,"units"))
-        )
-    }
-    gather$var_info <- var_info
+plot(DATA[, bilin_tcc, Date])
+lm1 <- lm(DATA[, Date, bilin_tcc])
+abline(lm1)
 
-    #### get data from nc ####
 
-    ## create proper dates from nc file
-    time_desc <- att.get.nc(anc, "time", "units")
-    Dates     <- utcal.nc(time_desc, data$time, type = "s")
+plot(DATA[, near_tcc, Date])
+lm1 <- lm(DATA[, Date, near_tcc])
+abline(lm1)
 
-    ## match indexes with cordinates
-    x_inx <- data$longitude
-    ## we have to reverse the y axis values and matrix
-    y_inx <- rev(data$latitude)
-
-    for (avvv in variables) {
-        tempd <- data[[avvv]]
-
-        ## Change NA to -9999
-        tempd[is.na(tempd)] <- -99999
-
-        ## interpolate temperature data to location
-        out <- apply(tempd, MARGIN = c(3), function(z) bilinear(x = x_inx, y = y_inx, flip_matrix_v(z), poisen$x, poisen$y))
-
-        ## get data coordinates
-        x_long <- out[[1]]$x
-        y_lat  <- out[[1]]$y
-
-        ## prepare data
-        outt <- lapply( out , "[[" , "z" )
-        outt <- data.frame(outt)
-        names(outt) <- Dates
-        ## change back to NAs
-        outt[outt < -999] <- NA
-
-        ## create proper structure
-        store <- data.table(x_long = x_long,
-                            y_lat  = y_lat,
-                            name   = poisen$Name,
-                            outt)
-
-        gather[[avvv]] <- store
-    }
-    saveRDS(object   = gather,
-            file     = sfile,
-            compress = "xz")
-    close.nc(anc)
-}
-
+saveRDS(DATA, "~/DATA/Clouds ERA5/Thessaloniki_clouds.Rds", compress = "xz")
 
 cat(paste("\n\n    DONE \n\n"))
