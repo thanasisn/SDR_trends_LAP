@@ -268,24 +268,30 @@ for (DBn in dbs) {
             #find two-tailed t critical values
             t_eff_cri <- qt(p = .05/2, df = N_eff, lower.tail = FALSE)
 
+            conf      <- confint(lm1)
+            conf_2.5  <- conf[2,1]
+            conf_97.5 <- conf[2,2]
+
+            ## get daily climatology
+            dclima <- dataset[, max(get(gsub("_des", "_seas", avar))), by = doy]
+
             ## capture lm for table
             gather <- rbind(gather,
                             data.frame(
                                 linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
                                 cor_test_stats(cor1),
-                                DATA      = DBn,
-                                var       = avar,
-                                N         = sum(!is.na(dataset[[avar]])),
-                                N_eff     = N_eff,
-                                t_eff     = t_eff,
-                                t_eff_cri = t_eff_cri
+                                DATA       = DBn,
+                                var        = avar,
+                                N          = sum(!is.na(dataset[[avar]])),
+                                N_eff      = N_eff,
+                                t_eff      = t_eff,
+                                t_eff_cri  = t_eff_cri,
+                                conf_2.5   = conf_2.5,
+                                conf_97.5  = conf_97.5,
+                                mean_clima = mean(dclima$V1, na.rm = T)
                             ))
 
-            par("mar" = c(3, 4, 2, 1))
 
-
-
-            stop()
 
 
             ## plot data
@@ -404,6 +410,9 @@ for (DBn in dbs) {
             conf_2.5  <- conf[2,1]
             conf_97.5 <- conf[2,2]
 
+            ## get daily climatology
+            dclima <- dataset[, max(get(gsub("_des", "_seas", avar))), by = doy]
+
             ## capture stats for table
             gather <- rbind(gather,
                             data.frame(
@@ -417,7 +426,8 @@ for (DBn in dbs) {
                                 t_eff     = t_eff,
                                 t_eff_cri = t_eff_cri,
                                 conf_2.5  = conf_2.5,
-                                conf_97.5 = conf_97.5
+                                conf_97.5 = conf_97.5,
+                                mean_clima = mean(dclima$V1, na.rm = T)
                             )
             )
 
@@ -578,6 +588,7 @@ pprint$cor.data_name <- NULL
 
 saveRDS(pprint,
         "./figures/tbl_longterm_trends.Rds")
+
 ## convert slope / year
 pprint[, slope              := slope              * Days_of_year]
 pprint[, slope.sd           := slope.sd           * Days_of_year]
@@ -587,6 +598,11 @@ wecare <- grep("intercept", names(pprint), value = T, invert = T)
 pprint <- pprint[ , ..wecare]
 pprint[, DATA               := translate(DATA)                  ]
 pprint[, var                := translate(var)                   ]
+
+
+pprint[, ChangeWpY := mean_clima * slope / 100 ]
+
+
 
 pprint$cor.data_name   <- NULL
 pprint$cor.null_value  <- NULL
