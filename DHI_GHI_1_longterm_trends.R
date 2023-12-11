@@ -236,7 +236,7 @@ rm(data_list)
 #'
 #+ LongtermTrends, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
-vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att")
+vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att", "near_tcc_att")
 
 dbs         <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
@@ -1660,7 +1660,10 @@ write_dat(pprint,
 
 
 
-
+plot(ALL_1_daily_DESEAS[, near_tcc_att, Date])
+lm1 <- lm(ALL_1_daily_DESEAS[, Date, near_tcc_att])
+abline(lm1 , col = "red")
+coefficients(lm1)[2] * Days_of_year
 
 
 
