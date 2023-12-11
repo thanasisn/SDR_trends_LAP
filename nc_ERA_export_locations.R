@@ -56,9 +56,9 @@ for (afile in filelist) {
     ## store data for saving
     gather          <- list()
     gather$filename <- basename(afile)
-stop()
+
     ## variables in file
-    variables <- grep("time|longitude|latitude|tp" ,names(data), ignore.case = T, invert = T,value = T)
+    variables <- grep("time|longitude|latitude|tp", names(data), ignore.case = T, invert = T,value = T)
 
     #### get variables info #####
     var_info <- data.table()
@@ -85,11 +85,15 @@ stop()
     for (avvv in variables) {
         tempd <- data[[avvv]]
 
+
+
+
+
         ## Change NA to -9999
         tempd[is.na(tempd)] <- -99999
 
         ## interpolate temperature data to location
-        out <- apply(tempd, MARGIN = c(3), function(z) bilinear(x = x_inx, y = y_inx, flip_matrix_v(z), poisen$x, poisen$y))
+        out <- apply(tempd, MARGIN = c(3), function(z) bilinear(x = x_inx, y = y_inx, flip_matrix_v(z), locations$LongX, locations$LatiY))
 
         ## get data coordinates
         x_long <- out[[1]]$x
@@ -102,10 +106,16 @@ stop()
         ## change back to NAs
         outt[outt < -999] <- NA
 
+
+
+        outt
+
+        stop()
+
         ## create proper structure
         store <- data.table(x_long = x_long,
                             y_lat  = y_lat,
-                            name   = poisen$Name,
+                            name   = locations$Name,
                             outt)
 
         gather[[avvv]] <- store
