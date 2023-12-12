@@ -431,8 +431,8 @@ ALL_1_daily_DESEAS[, HOR_att_des       := 100*( HOR_att    - HOR_att_seas    ) /
 ALL_1_daily_DESEAS[, GLB_att_des       := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
 ALL_1_daily_DESEAS[, DIR_transp_des    := 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas]
 ALL_1_daily_DESEAS[, wattGLB_des       := wattGLB - wattGLB_seas ]
-ALL_1_daily_DESEAS[, near_tcc_att_des  := near_tcc_att - near_tcc_att_seas ]
-ALL_1_daily_DESEAS[, bilin_tcc_att_des := bilin_tcc_att - bilin_tcc_att_seas ]
+ALL_1_daily_DESEAS[, near_tcc_att_des  := 100*( near_tcc_att  - near_tcc_att_seas ) / near_tcc_att_seas]
+ALL_1_daily_DESEAS[, bilin_tcc_att_des := 100*( bilin_tcc_att - bilin_tcc_att_seas ) / bilin_tcc_att_seas]
 
 CLEAR_1_daily_DESEAS[, DIR_att_des   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas   ]
 CLEAR_1_daily_DESEAS[, HOR_att_des   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas   ]

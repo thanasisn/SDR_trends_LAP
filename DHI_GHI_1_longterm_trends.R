@@ -90,6 +90,7 @@ source("~/CODE/FUNCTIONS/R/data.R")
 # source("./DHI_GHI_0_data_input.R")
 source("./DHI_GHI_0_variables.R")
 source("~/CODE/R_myRtools/myRtools/R/write_.R")
+source("./var_translation.R")
 
 ## check previous steps
 if (! file.exists(I1_longterm) |
@@ -378,7 +379,7 @@ for (DBn in dbs) {
 
 #+ LongtermTrendsRuMe, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
-vars <- c("GLB_att_des", "DIR_att_des", "tsi1au_att", "wattGLB")
+vars <- c("GLB_att_des", "DIR_att_des", "tsi1au_att", "wattGLB", "near_tcc_att", "near_tcc_des")
 
 dbs         <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
@@ -439,7 +440,10 @@ for (DBn in dbs) {
 
             if (grepl("wattGLB", yvar)) {
                 acol <- "green"
-            } else {
+            } else if (grepl("near_tcc", avar)) {
+                acol <- "cyan"
+            }
+            else {
                 acol <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
                                    collapse = "_"))
             }
