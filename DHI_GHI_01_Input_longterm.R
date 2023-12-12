@@ -77,16 +77,27 @@ table(DATA_all$near_tcc)
 
 ## create era cloud subset variables
 cf_lim <- 0.1
-DATA_all[near_tcc == 0,      near_tcc_zero   := near_tcc]
+DATA_all[near_tcc == 0,      near_tcc_zero   := TRUE]
 DATA_all[near_tcc >  0,      near_tcc_NOzero := near_tcc]
 DATA_all[near_tcc <  cf_lim, near_tcc_clear  := near_tcc]
 DATA_all[near_tcc >  cf_lim, near_tcc_cloud  := near_tcc]
 
 
+ALL_tcc_yearly_mean <-
+    DATA_all[,.(
+        near_tcc_att        = mean(near_tcc,        na.rm = T),
+        bilin_tcc_att       = mean(bilin_tcc,       na.rm = T),
+        near_tcc_zero_rel   = sum(near_tcc_zero,    na.rm = T),
+        near_tcc_N          = sum(!is.na(near_tcc)),
+        near_tcc_NOzero_att = mean(near_tcc_NOzero, na.rm = T),
+        near_tcc_clear_att  = mean(near_tcc_clear,  na.rm = T),
+        near_tcc_cloud_att  = mean(near_tcc_cloud,  na.rm = T)
+    ),
+    by = .( Year = year(Day) ) ]
 
 
 
-
+stop("DD")
 
 # ......................................................................... ----
 ##  1. long-term  --------------------------------------------------------------
@@ -214,13 +225,10 @@ ALL_1_daily_mean <-
                 HOR_att       = mean(HOR_att,      na.rm = T),
                 near_tcc_att  = mean(near_tcc,     na.rm = T),
                 bilin_tcc_att = mean(bilin_tcc,    na.rm = T),
-
-                near_tcc_zero
-                near_tcc_NOzero
-                near_tcc_clear
-                near_tcc_cloud
-
-
+                near_tcc_zero_att   = mean(near_tcc_zero,   na.rm = T),
+                near_tcc_NOzero_att = mean(near_tcc_NOzero, na.rm = T),
+                near_tcc_clear_att  = mean(near_tcc_clear,  na.rm = T),
+                near_tcc_cloud_att  = mean(near_tcc_cloud,  na.rm = T),
                 wattGLB       = mean(wattGLB,      na.rm = T),
                 wattGLB_sd    = sd(  wattGLB,      na.rm = T),
                 wattGLB_N     = sum(!is.na(wattGLB)),
@@ -354,6 +362,10 @@ ALL_1_daily_seas <-
                         HOR_att_seas       = mean(HOR_att,    na.rm = T),
                         near_tcc_att_seas  = mean(near_tcc_att,   na.rm = T),
                         bilin_tcc_att_seas = mean(bilin_tcc_att,  na.rm = T),
+                        near_tcc_zero_att_seas   = mean(near_tcc_zero,   na.rm = T),
+                        near_tcc_NOzero_att_seas = mean(near_tcc_NOzero, na.rm = T),
+                        near_tcc_clear_att_seas  = mean(near_tcc_clear,  na.rm = T),
+                        near_tcc_cloud_att_seas  = mean(near_tcc_cloud,  na.rm = T),
                         wattGLB_seas       = mean(wattGLB,    na.rm = T),
                         wattGLB_sd_seas    = sd(  wattGLB,    na.rm = T),
                         wattGLB_N_seas     = sum(!is.na(wattGLB)),
@@ -457,9 +469,12 @@ ALL_1_daily_DESEAS[, HOR_att_des       := 100*( HOR_att    - HOR_att_seas    ) /
 ALL_1_daily_DESEAS[, GLB_att_des       := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
 ALL_1_daily_DESEAS[, DIR_transp_des    := 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas]
 ALL_1_daily_DESEAS[, wattGLB_des       := wattGLB - wattGLB_seas ]
-ALL_1_daily_DESEAS[, near_tcc_att_des  := 100*( near_tcc_att  - near_tcc_att_seas ) / near_tcc_att_seas]
-ALL_1_daily_DESEAS[, bilin_tcc_att_des := 100*( bilin_tcc_att - bilin_tcc_att_seas ) / bilin_tcc_att_seas]
-
+ALL_1_daily_DESEAS[, near_tcc_att_des  := near_tcc_att  - near_tcc_att_seas            ]
+ALL_1_daily_DESEAS[, bilin_tcc_att_des := bilin_tcc_att - bilin_tcc_att_seas           ]
+ALL_1_daily_DESEAS[, near_tcc_zero_des   := near_tcc_zero_att   - near_tcc_zero_seas   ]
+ALL_1_daily_DESEAS[, near_tcc_NOzero_des := near_tcc_NOzero_att - near_tcc_NOzero_seas ]
+ALL_1_daily_DESEAS[, near_tcc_clear_des  := near_tcc_clear_att  - near_tcc_clear_seas  ]
+ALL_1_daily_DESEAS[, near_tcc_cloud_des  := near_tcc_cloud_att  - near_tcc_cloud_seas  ]
 CLEAR_1_daily_DESEAS[, DIR_att_des   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas   ]
 CLEAR_1_daily_DESEAS[, HOR_att_des   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas   ]
 CLEAR_1_daily_DESEAS[, GLB_att_des   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
