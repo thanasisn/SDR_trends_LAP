@@ -1,22 +1,44 @@
+#+ echo=T, include=T
+# # ~  Universal Header  ~ # # # # # # # # # # # # # # # # # # # # # # # # # # #
+Script.Name <- "DHI_GHI_01_Input_longterm.R"
+dir.create("./runtime/", showWarnings = FALSE)
+filelock::lock(paste0("./runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
+Sys.setenv(TZ = "UTC")
+## standard output
+if (!interactive()) {
+    pdf( file = paste0("./runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
+    sink(file = paste0("./runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
+}
+## error notification function
+options(error = function() {
+    if (interactive()) {
+        system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
+        system(paste("notify-send -u normal -t 30000 ", Script.Name, " 'An error occurred!'"))
+    }
+})
+tic <- Sys.time()
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 
-## Data input for this paper
 
-require(data.table)
-require(zoo)
+## __ Document options ---------------------------------------------------------
+knitr::opts_chunk$set(comment    = ""       )
+# knitr::opts_chunk$set(dev        = c("pdf", "png"))
+knitr::opts_chunk$set(dev        = "png"    )
+knitr::opts_chunk$set(out.width  = "100%"   )
+knitr::opts_chunk$set(fig.align  = "center" )
+knitr::opts_chunk$set(cache      =  FALSE   )  ## !! breaks calculations
+knitr::opts_chunk$set(fig.pos    = '!h'     )
+
+
+require(data.table, quietly = TRUE, warn.conflicts = FALSE)
+require(zoo,        quietly = TRUE, warn.conflicts = FALSE)
 source("~/CODE/FUNCTIONS/R/trig_deg.R")
 source("~/CODE/FUNCTIONS/R/data.R")
 source("~/CODE/FUNCTIONS/R/linear_fit_stats.R")
 source("~/CODE/FUNCTIONS/R/cor_test_stats.R")
 source("./DHI_GHI_0_variables.R")
-Script.Name <- "DHI_GHI_01_Input_longterm.R"
-
-if (!interactive()) {
-    pdf( file = paste0("./runtime/",  basename(sub("\\.R$",".pdf", Script.Name))))
-    sink(file = paste0("./runtime/",  basename(sub("\\.R$",".out", Script.Name))), split = TRUE)
-    filelock::lock(paste0("./runtime/", basename(sub("\\.R$",".lock", Script.Name))), timeout = 0)
-}
-
+source("./var_translation.R")
 
 ##  Prepare raw data if needed  ------------------------------------------------
 ## check previous steps
@@ -43,6 +65,7 @@ if (
     stop("Normal to exit here")
 }
 
+#+ echo=T, include=T
 ##  Load raw data  -------------------------------------------------------------
 DATA_all   <- readRDS(raw_input_data)
 DATA_Clear <- DATA_all[TYPE == "Clear"]
@@ -52,15 +75,11 @@ DATA_all  [, TYPE := NULL]
 DATA_Clear[, TYPE := NULL]
 DATA_Cloud[, TYPE := NULL]
 
-#
+
 # warning("REMOVING CLOUD ENHANCEMENT")
 # DATA_Cloud <- DATA_Cloud[wattGLB < cosde(SZA) * TSIextEARTH_comb * 0.8 + 30 ]
 
 
-
-DATA_all[,.N]
-DATA_Clear[,.N]
-DATA_Cloud[,.N]
 
 DATA_all[,length(unique(as.Date(Date)))]
 DATA_Clear[,length(unique(as.Date(Date)))]
@@ -70,14 +89,12 @@ DATA_Cloud[,length(unique(as.Date(Date)))]
 
 ##  ERA5 cloud data  -----------------------------------------------------------
 
-
 hist(DATA_all$near_tcc, breaks = 100)
-table(DATA_all$near_tcc)
+cat(" \n \n")
 
-
-## create era cloud subset variables
+## create ERA5 cloud subset variables
 cf_lim <- 0.1
-DATA_all[near_tcc == 0,      near_tcc_zero   := TRUE]
+DATA_all[near_tcc == 0,      near_tcc_zero   := TRUE    ]
 DATA_all[near_tcc >  0,      near_tcc_NOzero := near_tcc]
 DATA_all[near_tcc <  cf_lim, near_tcc_clear  := near_tcc]
 DATA_all[near_tcc >  cf_lim, near_tcc_cloud  := near_tcc]
@@ -87,17 +104,96 @@ ALL_tcc_yearly_mean <-
     DATA_all[,.(
         near_tcc_att        = mean(near_tcc,        na.rm = T),
         bilin_tcc_att       = mean(bilin_tcc,       na.rm = T),
-        near_tcc_zero_rel   = sum(near_tcc_zero,    na.rm = T),
+        near_tcc_zero_N     = sum(near_tcc_zero,    na.rm = T),
         near_tcc_N          = sum(!is.na(near_tcc)),
         near_tcc_NOzero_att = mean(near_tcc_NOzero, na.rm = T),
         near_tcc_clear_att  = mean(near_tcc_clear,  na.rm = T),
         near_tcc_cloud_att  = mean(near_tcc_cloud,  na.rm = T)
     ),
     by = .( Year = year(Day) ) ]
+ALL_tcc_yearly_mean[, near_tcc_zero_rel := near_tcc_zero_N / near_tcc_N ]
 
 
 
-stop("DD")
+
+## plot TCC trends  ------------------------------------------------------------
+vars   <- grep("Year", names(ALL_tcc_yearly_mean), invert = T, value = T)
+dbs    <- c("ALL_tcc_yearly_mean")
+gather <- data.frame()
+for (DBn in dbs) {
+    DB <- get(DBn)
+
+    for (avar in vars) {
+        dataset <- DB
+
+        if (all(is.na(dataset[[avar]]))) next()
+
+        ## linear model by day step
+        lm1 <- lm(get(avar) ~ Year, data = dataset)
+
+        ## correlation test
+        cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Year), method = 'pearson')
+
+        dt <- data.frame(Year = year(as.POSIXct(c("1993-01-01 00:00","2023-01-01 00:00"))))
+        slopePyear <- diff(predict(lm1, dt)) / diff((dt$Year))
+
+
+        ## capture lm for table
+        gather <- rbind(gather,
+                        data.frame(
+                            linear_fit_stats(lm1, confidence_interval = Daily_confidence_limit),
+                            cor_test_stats(cor1),
+                            slopePyear = slopePyear,
+                            DATA       = DBn,
+                            var        = avar,
+                            Mean       = mean(dataset[[avar]], na.rm = TRUE),
+                            N          = sum(!is.na(dataset[[avar]]))
+                        ))
+
+        par("mar" = c(3, 4, 2, 1))
+
+
+        ## plot data
+        plot(dataset$Year, dataset[[avar]],
+             pch  = 19,
+             col  = "#1a9850",
+             cex      = 1,
+             cex.main = 0.8,
+             yaxt     = "n",
+             xlab     = "",
+             ylab     = bquote("?")
+        )
+        # y axis
+        axis(2, pretty(dataset[[avar]]), las = 2 )
+
+        # x axis
+        axis(1,
+             at = seq(1993, max(dataset$Year), by = 1),
+             # format = "%Y",
+             labels = NA,
+             tcl = -0.25)
+
+        ## plot fit line
+        abline(lm1, lwd = 2)
+
+        title(paste("ERA5  ", translate(avar)))
+
+        ## display trend on graph
+        fit <- lm1[[1]]
+
+        legend("top", lty = 1, bty = "n", lwd = 2, cex = 1,
+               paste("Trend: ",
+                     if (fit[2] > 0) "+" else "-",
+                     signif(abs(fit[2]) , 3),
+                     "?/y")
+        )
+        cat(" \n \n")
+    }
+}
+
+
+
+
 
 # ......................................................................... ----
 ##  1. long-term  --------------------------------------------------------------
@@ -107,9 +203,8 @@ vars <- c("wattGLB")
 dbs         <- c(  "DATA_all",
                    "DATA_Clear",
                    "DATA_Cloud")
-## gather trends
+## plot raw trends  -------------------------------------------------------------
 gather <- data.frame()
-
 for (DBn in dbs) {
     DB <- get(DBn)
 
@@ -168,7 +263,7 @@ for (DBn in dbs) {
         ## plot fit line
         abline(lm1, lwd = 2)
 
-        title(paste(DBn, avar))
+        title(paste(DBn, translate(avar)))
 
         if (FALSE) {
             ## Running mean
@@ -203,10 +298,9 @@ for (DBn in dbs) {
                      signif(abs(fit[2]) * Days_of_year * 24 * 3600, 3),
                      "W/y")
         )
-
+        cat(" \n \n")
     }
 }
-#+ echo=F, include=F
 
 gather <- data.table(gather)
 gather$WattPYear <- gather$slope * Days_of_year * 24 * 3600
@@ -214,80 +308,85 @@ gather[, Slopepercent.. :=  100 * WattPYear / Mean ]
 write.csv(x = gather, file = "./figures/tbl_longterm_trends_raw.csv")
 
 
-names(DATA_all)
 
 
 ##  Daily means  ---------------------------------------------------------------
 
 ALL_1_daily_mean <-
-    DATA_all[,.(DIR_att       = mean(DIR_att,      na.rm = T),
-                GLB_att       = mean(GLB_att,      na.rm = T),
-                HOR_att       = mean(HOR_att,      na.rm = T),
-                near_tcc_att  = mean(near_tcc,     na.rm = T),
-                bilin_tcc_att = mean(bilin_tcc,    na.rm = T),
-                near_tcc_zero_att   = mean(near_tcc_zero,   na.rm = T),
-                near_tcc_NOzero_att = mean(near_tcc_NOzero, na.rm = T),
-                near_tcc_clear_att  = mean(near_tcc_clear,  na.rm = T),
-                near_tcc_cloud_att  = mean(near_tcc_cloud,  na.rm = T),
-                wattGLB       = mean(wattGLB,      na.rm = T),
-                wattGLB_sd    = sd(  wattGLB,      na.rm = T),
-                wattGLB_N     = sum(!is.na(wattGLB)),
-                DIR_transp    = mean(DIR_transp,   na.rm = T),
-                tsi1au_att    = mean(tsi_1au_comb, na.rm = T),
-                DIR_att_sd    = sd(  DIR_att,      na.rm = T),
-                GLB_att_sd    = sd(  GLB_att,      na.rm = T),
-                HOR_att_sd    = sd(  HOR_att,      na.rm = T),
-                DIR_transp_sd = sd(  DIR_transp,   na.rm = T),
-                tsi1au_att_sd = sd(  tsi_1au_comb, na.rm = T),
-                DayLength     = max(DayLength),
-                doy           = yday(Date),
-                GLB_att_N     = sum(!is.na(GLB_att)),
-                HOR_att_N     = sum(!is.na(HOR_att)),
-                DIR_att_N     = sum(!is.na(DIR_att))),
-             by = .( Date = Day ) ]
+    DATA_all[,.(
+        DIR_att       = mean(DIR_att,      na.rm = T),
+        GLB_att       = mean(GLB_att,      na.rm = T),
+        HOR_att       = mean(HOR_att,      na.rm = T),
+        near_tcc_att  = mean(near_tcc,     na.rm = T),
+        bilin_tcc_att = mean(bilin_tcc,    na.rm = T),
+        near_tcc_zero_att   = mean(near_tcc_zero,   na.rm = T),
+        near_tcc_NOzero_att = mean(near_tcc_NOzero, na.rm = T),
+        near_tcc_clear_att  = mean(near_tcc_clear,  na.rm = T),
+        near_tcc_cloud_att  = mean(near_tcc_cloud,  na.rm = T),
+        wattGLB       = mean(wattGLB,      na.rm = T),
+        wattGLB_sd    = sd(  wattGLB,      na.rm = T),
+        wattGLB_N     = sum(!is.na(wattGLB)),
+        DIR_transp    = mean(DIR_transp,   na.rm = T),
+        tsi1au_att    = mean(tsi_1au_comb, na.rm = T),
+        DIR_att_sd    = sd(  DIR_att,      na.rm = T),
+        GLB_att_sd    = sd(  GLB_att,      na.rm = T),
+        HOR_att_sd    = sd(  HOR_att,      na.rm = T),
+        DIR_transp_sd = sd(  DIR_transp,   na.rm = T),
+        tsi1au_att_sd = sd(  tsi_1au_comb, na.rm = T),
+        DayLength     = max(DayLength),
+        doy           = yday(Date),
+        GLB_att_N     = sum(!is.na(GLB_att)),
+        HOR_att_N     = sum(!is.na(HOR_att)),
+        DIR_att_N     = sum(!is.na(DIR_att))
+    ),
+    by = .( Date = Day ) ]
 
 
 CLEAR_1_daily_mean <-
-    DATA_Clear[,.(DIR_att       = mean(DIR_att,      na.rm = T),
-                  GLB_att       = mean(GLB_att,      na.rm = T),
-                  HOR_att       = mean(HOR_att,      na.rm = T),
-                  wattGLB       = mean(wattGLB,      na.rm = T),
-                  wattGLB_sd    = sd(  wattGLB,      na.rm = T),
-                  wattGLB_N     = sum(!is.na(wattGLB)),
-                  DIR_transp    = mean(DIR_transp,   na.rm = T),
-                  tsi1au_att    = mean(tsi_1au_comb, na.rm = T),
-                  DIR_att_sd    = sd(  DIR_att,      na.rm = T),
-                  GLB_att_sd    = sd(  GLB_att,      na.rm = T),
-                  HOR_att_sd    = sd(  HOR_att,      na.rm = T),
-                  DIR_transp_sd = sd(  DIR_transp,   na.rm = T),
-                  tsi1au_att_sd = sd(  tsi_1au_comb, na.rm = T),
-                  DayLength     = max(DayLength),
-                  doy           = yday(Date),
-                  GLB_att_N     = sum(!is.na(GLB_att)),
-                  HOR_att_N     = sum(!is.na(HOR_att)),
-                  DIR_att_N     = sum(!is.na(DIR_att))),
-               by = .( Date = Day ) ]
+    DATA_Clear[,.(
+        DIR_att       = mean(DIR_att,      na.rm = T),
+        GLB_att       = mean(GLB_att,      na.rm = T),
+        HOR_att       = mean(HOR_att,      na.rm = T),
+        wattGLB       = mean(wattGLB,      na.rm = T),
+        wattGLB_sd    = sd(  wattGLB,      na.rm = T),
+        wattGLB_N     = sum(!is.na(wattGLB)),
+        DIR_transp    = mean(DIR_transp,   na.rm = T),
+        tsi1au_att    = mean(tsi_1au_comb, na.rm = T),
+        DIR_att_sd    = sd(  DIR_att,      na.rm = T),
+        GLB_att_sd    = sd(  GLB_att,      na.rm = T),
+        HOR_att_sd    = sd(  HOR_att,      na.rm = T),
+        DIR_transp_sd = sd(  DIR_transp,   na.rm = T),
+        tsi1au_att_sd = sd(  tsi_1au_comb, na.rm = T),
+        DayLength     = max(DayLength),
+        doy           = yday(Date),
+        GLB_att_N     = sum(!is.na(GLB_att)),
+        HOR_att_N     = sum(!is.na(HOR_att)),
+        DIR_att_N     = sum(!is.na(DIR_att))
+    ),
+    by = .( Date = Day ) ]
 
 CLOUD_1_daily_mean <-
-    DATA_Cloud[,.(DIR_att       = mean(DIR_att,      na.rm = T),
-                  GLB_att       = mean(GLB_att,      na.rm = T),
-                  HOR_att       = mean(HOR_att,      na.rm = T),
-                  wattGLB       = mean(wattGLB,      na.rm = T),
-                  wattGLB_sd    = sd(  wattGLB,      na.rm = T),
-                  wattGLB_N     = sum(!is.na(wattGLB)),
-                  DIR_transp    = mean(DIR_transp,   na.rm = T),
-                  tsi1au_att    = mean(tsi_1au_comb, na.rm = T),
-                  DIR_att_sd    = sd(  DIR_att,      na.rm = T),
-                  GLB_att_sd    = sd(  GLB_att,      na.rm = T),
-                  HOR_att_sd    = sd(  HOR_att,      na.rm = T),
-                  DIR_transp_sd = sd(  DIR_transp,   na.rm = T),
-                  tsi1au_att_sd = sd(  tsi_1au_comb, na.rm = T),
-                  DayLength     = max(DayLength),
-                  doy           = yday(Date),
-                  GLB_att_N     = sum(!is.na(GLB_att)),
-                  HOR_att_N     = sum(!is.na(HOR_att)),
-                  DIR_att_N     = sum(!is.na(DIR_att))),
-               by = .( Date = Day ) ]
+    DATA_Cloud[,.(
+        DIR_att       = mean(DIR_att,      na.rm = T),
+        GLB_att       = mean(GLB_att,      na.rm = T),
+        HOR_att       = mean(HOR_att,      na.rm = T),
+        wattGLB       = mean(wattGLB,      na.rm = T),
+        wattGLB_sd    = sd(  wattGLB,      na.rm = T),
+        wattGLB_N     = sum(!is.na(wattGLB)),
+        DIR_transp    = mean(DIR_transp,   na.rm = T),
+        tsi1au_att    = mean(tsi_1au_comb, na.rm = T),
+        DIR_att_sd    = sd(  DIR_att,      na.rm = T),
+        GLB_att_sd    = sd(  GLB_att,      na.rm = T),
+        HOR_att_sd    = sd(  HOR_att,      na.rm = T),
+        DIR_transp_sd = sd(  DIR_transp,   na.rm = T),
+        tsi1au_att_sd = sd(  tsi_1au_comb, na.rm = T),
+        DayLength     = max(DayLength),
+        doy           = yday(Date),
+        GLB_att_N     = sum(!is.na(GLB_att)),
+        HOR_att_N     = sum(!is.na(HOR_att)),
+        DIR_att_N     = sum(!is.na(DIR_att))
+    ),
+    by = .( Date = Day ) ]
 
 
 
@@ -357,30 +456,32 @@ suppressWarnings({
 
 ## _ Daily seasonal values from daily ------------------------------------------
 ALL_1_daily_seas <-
-    ALL_1_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
-                        GLB_att_seas       = mean(GLB_att,    na.rm = T),
-                        HOR_att_seas       = mean(HOR_att,    na.rm = T),
-                        near_tcc_att_seas  = mean(near_tcc_att,   na.rm = T),
-                        bilin_tcc_att_seas = mean(bilin_tcc_att,  na.rm = T),
-                        near_tcc_zero_att_seas   = mean(near_tcc_zero,   na.rm = T),
-                        near_tcc_NOzero_att_seas = mean(near_tcc_NOzero, na.rm = T),
-                        near_tcc_clear_att_seas  = mean(near_tcc_clear,  na.rm = T),
-                        near_tcc_cloud_att_seas  = mean(near_tcc_cloud,  na.rm = T),
-                        wattGLB_seas       = mean(wattGLB,    na.rm = T),
-                        wattGLB_sd_seas    = sd(  wattGLB,    na.rm = T),
-                        wattGLB_N_seas     = sum(!is.na(wattGLB)),
-                        DIR_transp_seas    = mean(DIR_transp, na.rm = T),
-                        DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
-                        HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
-                        GLB_att_sd_seas    = sd(  GLB_att,    na.rm = T),
-                        DIR_transp_sd_seas = sd(  DIR_transp, na.rm = T),
-                        DIR_att_N_obs      = sum( DIR_att_N,  na.rm = T),
-                        GLB_att_N_obs      = sum( GLB_att_N,  na.rm = T),
-                        HOR_att_N_obs      = sum( HOR_att_N,  na.rm = T),
-                        GLB_att_N_seas     = sum(!is.na(GLB_att)),
-                        HOR_att_N_seas     = sum(!is.na(HOR_att)),
-                        DIR_att_N_seas     = sum(!is.na(DIR_att))  ),
-                     by = .( doy ) ]
+    ALL_1_daily_mean[,.(
+        DIR_att_seas             = mean(DIR_att,    na.rm = T),
+        GLB_att_seas             = mean(GLB_att,    na.rm = T),
+        HOR_att_seas             = mean(HOR_att,    na.rm = T),
+        near_tcc_att_seas        = mean(near_tcc_att,   na.rm = T),
+        bilin_tcc_att_seas       = mean(bilin_tcc_att,  na.rm = T),
+        near_tcc_zero_att_seas   = mean(near_tcc_zero_att,   na.rm = T),
+        near_tcc_NOzero_att_seas = mean(near_tcc_NOzero_att, na.rm = T),
+        near_tcc_clear_att_seas  = mean(near_tcc_clear_att,  na.rm = T),
+        near_tcc_cloud_att_seas  = mean(near_tcc_cloud_att,  na.rm = T),
+        wattGLB_seas             = mean(wattGLB,    na.rm = T),
+        wattGLB_sd_seas          = sd(  wattGLB,    na.rm = T),
+        wattGLB_N_seas           = sum(!is.na(wattGLB)),
+        DIR_transp_seas          = mean(DIR_transp, na.rm = T),
+        DIR_att_sd_seas          = sd(  DIR_att,    na.rm = T),
+        HOR_att_sd_seas          = sd(  HOR_att,    na.rm = T),
+        GLB_att_sd_seas          = sd(  GLB_att,    na.rm = T),
+        DIR_transp_sd_seas       = sd(  DIR_transp, na.rm = T),
+        DIR_att_N_obs            = sum( DIR_att_N,  na.rm = T),
+        GLB_att_N_obs            = sum( GLB_att_N,  na.rm = T),
+        HOR_att_N_obs            = sum( HOR_att_N,  na.rm = T),
+        GLB_att_N_seas           = sum(!is.na(GLB_att)),
+        HOR_att_N_seas           = sum(!is.na(HOR_att)),
+        DIR_att_N_seas           = sum(!is.na(DIR_att))
+    ),
+    by = .( doy ) ]
 
 CLEAR_1_daily_seas <-
     CLEAR_1_daily_mean[,.(DIR_att_seas       = mean(DIR_att,    na.rm = T),
@@ -426,12 +527,16 @@ CLOUD_1_daily_seas <-
 
 plot(ALL_1_daily_seas[, GLB_att_seas, doy],pch= 1, cex = 1,
      main = "ALL_1_daily_seas[, GLB_att_seas, doy]")
+cat(" \n \n")
+
 
 plot(CLEAR_1_daily_seas[, GLB_att_seas, doy],pch= 1, cex = 1,
      main = "CLEAR_1_daily_seas[, GLB_att_seas, doy]")
+cat(" \n \n")
 
 plot(CLOUD_1_daily_seas[, GLB_att_seas, doy],pch= 1, cex = 1,
      main = "CLOUD_1_daily_seas[, GLB_att_seas, doy]")
+cat(" \n \n")
 
 
 ## _ Margin of error for confidence interval on seasonal data ------------------
@@ -464,27 +569,27 @@ setorder(CLOUD_1_daily_DESEAS, Date)
 
 ## Using the % departure from seasonal values
 
-ALL_1_daily_DESEAS[, DIR_att_des       := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas   ]
-ALL_1_daily_DESEAS[, HOR_att_des       := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas   ]
-ALL_1_daily_DESEAS[, GLB_att_des       := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
-ALL_1_daily_DESEAS[, DIR_transp_des    := 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas]
-ALL_1_daily_DESEAS[, wattGLB_des       := wattGLB - wattGLB_seas ]
-ALL_1_daily_DESEAS[, near_tcc_att_des  := near_tcc_att  - near_tcc_att_seas            ]
-ALL_1_daily_DESEAS[, bilin_tcc_att_des := bilin_tcc_att - bilin_tcc_att_seas           ]
-ALL_1_daily_DESEAS[, near_tcc_zero_des   := near_tcc_zero_att   - near_tcc_zero_seas   ]
-ALL_1_daily_DESEAS[, near_tcc_NOzero_des := near_tcc_NOzero_att - near_tcc_NOzero_seas ]
-ALL_1_daily_DESEAS[, near_tcc_clear_des  := near_tcc_clear_att  - near_tcc_clear_seas  ]
-ALL_1_daily_DESEAS[, near_tcc_cloud_des  := near_tcc_cloud_att  - near_tcc_cloud_seas  ]
-CLEAR_1_daily_DESEAS[, DIR_att_des   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas   ]
-CLEAR_1_daily_DESEAS[, HOR_att_des   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas   ]
-CLEAR_1_daily_DESEAS[, GLB_att_des   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
-CLEAR_1_daily_DESEAS[, DIR_transp_des:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas]
-CLEAR_1_daily_DESEAS[, wattGLB_des   := wattGLB - wattGLB_seas]
-CLOUD_1_daily_DESEAS[, DIR_att_des   := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas   ]
-CLOUD_1_daily_DESEAS[, HOR_att_des   := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas   ]
-CLOUD_1_daily_DESEAS[, GLB_att_des   := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
-CLOUD_1_daily_DESEAS[, DIR_transp_des:= 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas]
-CLOUD_1_daily_DESEAS[, wattGLB_des   := wattGLB - wattGLB_seas]
+ALL_1_daily_DESEAS[, DIR_att_des         := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas   ]
+ALL_1_daily_DESEAS[, HOR_att_des         := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas   ]
+ALL_1_daily_DESEAS[, GLB_att_des         := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
+ALL_1_daily_DESEAS[, DIR_transp_des      := 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas]
+ALL_1_daily_DESEAS[, wattGLB_des         := wattGLB             - wattGLB_seas                    ]
+ALL_1_daily_DESEAS[, near_tcc_att_des    := near_tcc_att        - near_tcc_att_seas               ]
+ALL_1_daily_DESEAS[, bilin_tcc_att_des   := bilin_tcc_att       - bilin_tcc_att_seas              ]
+ALL_1_daily_DESEAS[, near_tcc_zero_des   := near_tcc_zero_att   - near_tcc_zero_att_seas          ]
+ALL_1_daily_DESEAS[, near_tcc_NOzero_des := near_tcc_NOzero_att - near_tcc_NOzero_att_seas        ]
+ALL_1_daily_DESEAS[, near_tcc_clear_des  := near_tcc_clear_att  - near_tcc_clear_att_seas         ]
+ALL_1_daily_DESEAS[, near_tcc_cloud_des  := near_tcc_cloud_att  - near_tcc_cloud_att_seas         ]
+CLEAR_1_daily_DESEAS[, DIR_att_des       := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas   ]
+CLEAR_1_daily_DESEAS[, HOR_att_des       := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas   ]
+CLEAR_1_daily_DESEAS[, GLB_att_des       := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
+CLEAR_1_daily_DESEAS[, DIR_transp_des    := 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas]
+CLEAR_1_daily_DESEAS[, wattGLB_des       := wattGLB - wattGLB_seas]
+CLOUD_1_daily_DESEAS[, DIR_att_des       := 100*( DIR_att    - DIR_att_seas    ) / DIR_att_seas   ]
+CLOUD_1_daily_DESEAS[, HOR_att_des       := 100*( HOR_att    - HOR_att_seas    ) / HOR_att_seas   ]
+CLOUD_1_daily_DESEAS[, GLB_att_des       := 100*( GLB_att    - GLB_att_seas    ) / GLB_att_seas   ]
+CLOUD_1_daily_DESEAS[, DIR_transp_des    := 100*( DIR_transp - DIR_transp_seas ) / DIR_transp_seas]
+CLOUD_1_daily_DESEAS[, wattGLB_des       := wattGLB - wattGLB_seas]
 
 ## add TSI data process
 ## data departure from mean value
@@ -558,10 +663,13 @@ CLOUD_1_monthly_daily_mean <-
 
 
 hist(ALL_1_monthly_daily_mean$GLB_att, breaks = 100)
+cat(" \n \n")
 
 hist(CLEAR_1_monthly_daily_mean$GLB_att, breaks = 100)
+cat(" \n \n")
 
 hist(CLOUD_1_monthly_daily_mean$GLB_att, breaks = 100)
+cat(" \n \n")
 
 
 
@@ -652,12 +760,15 @@ CLOUD_1_monthly_daily_seas <-
 
 plot(ALL_1_monthly_daily_seas[, GLB_att_seas, Month],pch= 1, cex = 1,
      main = "ALL_1_monthly_daily_seas[, GLB_att_seas, Month]")
+cat(" \n \n")
 
 plot(CLEAR_1_monthly_daily_seas[, GLB_att_seas, Month],pch= 1, cex = 1,
      main = "CLEAR_1_monthly_daily_seas[, GLB_att_seas, Month]")
+cat(" \n \n")
 
 plot(CLOUD_1_monthly_daily_seas[, GLB_att_seas, Month],pch= 1, cex = 1,
      main = "CLOUD_1_monthly_daily_seas[, GLB_att_seas, Month]")
+cat(" \n \n")
 
 
 
@@ -847,7 +958,7 @@ CLOUD_1_D_bySeason_DESEAS <- merge(CLOUD_1_bySeason_daily_mean, CLOUD_1_bySeason
 rm(  ALL_1_bySeason_daily_mean,   ALL_1_bySeason_daily_seas,
      CLEAR_1_bySeason_daily_mean, CLEAR_1_bySeason_daily_seas,
      CLOUD_1_bySeason_daily_mean, CLOUD_1_bySeason_daily_seas)
-gc()
+dummy <- gc()
 
 ## calculate anomaly
 ALL_1_D_bySeason_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
@@ -878,7 +989,7 @@ setorder(CLOUD_1_D_bySeason_DESEAS, Yqrt)
 rm(  ALL_1_daily_mean,   ALL_1_daily_seas,
      CLEAR_1_daily_mean, CLEAR_1_daily_seas,
      CLOUD_1_daily_mean, CLOUD_1_daily_seas)
-gc()
+dummy <- gc()
 
 
 
@@ -1068,5 +1179,15 @@ save(file = I1_longterm,
 cat(paste("\n Long term proccessed data saved", I1_longterm, "\n\n"))
 
 
-system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
-system(paste("notify-send -u normal -t 30000 ", Script.Name, " 'FINISHED'"))
+
+
+# # ~  Universal Footer  ~ # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#' **END**
+#+ include=T, echo=F
+tac <- Sys.time()
+cat(sprintf("%s %s@%s %s %f mins\n\n", Sys.time(), Sys.info()["login"],
+            Sys.info()["nodename"], basename(Script.Name), difftime(tac,tic,units = "mins")))
+if (interactive() & difftime(tac, tic, units = "sec") > 30) {
+    system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
+    system(paste("notify-send -u normal -t 30000 ", Script.Name, " 'FINISHED'"))
+}

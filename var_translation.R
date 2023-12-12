@@ -26,7 +26,7 @@ translate <- function(x) {
     for (ax in x) {
         ## get match
         amatch <- as.vector(unlist(
-            dictionary[stringr::str_detect(ax, names(dict))]
+            dictionary[stringr::str_detect(ax, names(dictionary))]
         ))
         ## return same if not found
         if (is.null(amatch)) {
@@ -37,5 +37,3 @@ translate <- function(x) {
     }
     return(res)
 }
-
-
