@@ -237,7 +237,7 @@ rm(data_list)
 #'
 #+ LongtermTrends, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
-vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att", "near_tcc_att", "near_tcc_des")
+vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att", "near_tcc_att", "near_tcc_att_des")
 
 dbs         <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
@@ -261,7 +261,7 @@ for (DBn in dbs) {
             cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
             lag   <- 1
-            dd    <- acf(dataset[[avar]], na.action = na.pass)
+            dd    <- acf(dataset[[avar]], na.action = na.pass, plot = FALSE)
             N_eff <- sum(!is.na(dataset[[avar]])) * (1 - dd[lag][[1]]) / (1 + dd[lag][[1]])
             se_sq <- sum((lm1$residuals)^2, na.rm = T) / (N_eff - 2)
             sa_sq <- se_sq / sum((dataset[[avar]] - mean(dataset[[avar]], na.rm = T))^2, na.rm = T)
@@ -379,7 +379,7 @@ for (DBn in dbs) {
 
 #+ LongtermTrendsRuMe, echo=F, include=T, results="asis"
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
-vars <- c("GLB_att_des", "DIR_att_des", "tsi1au_att", "wattGLB", "near_tcc_att", "near_tcc_des")
+vars <- c("GLB_att_des", "DIR_att_des", "tsi1au_att", "wattGLB", "near_tcc_att", "near_tcc_att_des")
 
 dbs         <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
@@ -403,7 +403,7 @@ for (DBn in dbs) {
             cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
             lag   <- 1
-            dd    <- acf(dataset[[avar]], na.action = na.pass)
+            dd    <- acf(dataset[[avar]], na.action = na.pass, plot = FALSE)
             N_eff <- sum(!is.na(dataset[[avar]])) * (1 - dd[lag][[1]]) / (1 + dd[lag][[1]])
             se_sq <- sum((lm1$residuals)^2, na.rm = T) / (N_eff - 2)
             sa_sq <- se_sq / sum((dataset[[avar]] - mean(dataset[[avar]], na.rm = T))^2, na.rm = T)
@@ -438,13 +438,13 @@ for (DBn in dbs) {
 
             par("mar" = c(3, 4, 2, 1))
 
-            if (grepl("wattGLB", yvar)) {
+            if (grepl("wattGLB", avar)) {
                 acol <- "green"
             } else if (grepl("near_tcc", avar)) {
                 acol <- "cyan"
             }
             else {
-                acol <- get(paste0(c("col", unlist(strsplit(yvar, split = "_"))[1:2]),
+                acol <- get(paste0(c("col", unlist(strsplit(avar, split = "_"))[1:2]),
                                    collapse = "_"))
             }
 
@@ -602,6 +602,11 @@ pprint[, slope              := slope              * Days_of_year]
 pprint[, slope.sd           := slope.sd           * Days_of_year]
 pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year]
 pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year]
+
+
+
+
+
 wecare <- grep("intercept", names(pprint), value = T, invert = T)
 pprint <- pprint[ , ..wecare]
 pprint[, DATA               := translate(DATA)                  ]
@@ -1360,7 +1365,7 @@ for (DBn in dbs) {
             cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Year), method = 'pearson')
 
             lag   <- 1
-            dd    <- acf(dataset[[avar]], na.action = na.pass)
+            dd    <- acf(dataset[[avar]], na.action = na.pass, plot = FALSE)
             N_eff <- sum(!is.na(dataset[[avar]])) * (1 - dd[lag][[1]]) / (1 + dd[lag][[1]])
             se_sq <- sum((lm1$residuals)^2, na.rm = T) / (N_eff - 2)
             sa_sq <- se_sq / sum((dataset[[avar]] - mean(dataset[[avar]], na.rm = T))^2, na.rm = T)

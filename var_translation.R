@@ -17,12 +17,18 @@ dict <- list(DIR_att    = 'Dir. Beam Irrad.',
 translate <- function(x) {
     res <- c()
     for (ax in x) {
-        res <- c(res,
-                 as.vector(unlist(
-                     dict[stringr::str_detect(ax, names(dict))]
-                 ))
-        )
+        ## get match
+        amatch <- as.vector(unlist(
+            dict[stringr::str_detect(ax, names(dict))]
+        ))
+        ## return same if not found
+        if (is.null(amatch)) {
+            amatch <- ax
+        }
+        ## gather results
+        res <- c(res, amatch)
     }
     return(res)
 }
+
 
