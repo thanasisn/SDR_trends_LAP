@@ -408,6 +408,7 @@ TSI$Obs                <- NULL
 TSI$Rsqrd              <- NULL
 TSI$RsqrdAdj           <- NULL
 
+
 # TSI$cor.null_value     <- NULL
 # TSI$cor.alternative    <- NULL
 # TSI$cor.method         <- NULL
@@ -419,10 +420,12 @@ for (an in care) {
     TSI[, (an) := NULL ]
 }
 
-setorder(TSI, -slope.stat_sig)
-rownames(TSI) <- NULL
-names(TSI) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Trend statistical signif. [%]")
-TSIslopeAll <- TSI[`Sky condition` == "All sky cond."]
+# setorder(TSI, -slope.stat_sig)
+# rownames(TSI) <- NULL
+# names(TSI) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Trend statistical signif. [%]")
+# 
+# TSIslopeAll <- TSI[`Sky condition` == "All sky cond."]
+TSIslopeAll <- TSI[DATA == "All sky cond."]
 ```
 
 <!-- # Detection of clear periods in GHI measurements for SDR trends. -->
