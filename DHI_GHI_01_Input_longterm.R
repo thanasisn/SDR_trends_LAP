@@ -68,6 +68,25 @@ DATA_Cloud[,length(unique(as.Date(Date)))]
 
 
 
+##  ERA5 cloud data  -----------------------------------------------------------
+
+
+hist(DATA_all$near_tcc, breaks = 100)
+table(DATA_all$near_tcc)
+
+
+## create era cloud subset variables
+cf_lim <- 0.1
+DATA_all[near_tcc == 0,      near_tcc_zero   := near_tcc]
+DATA_all[near_tcc >  0,      near_tcc_NOzero := near_tcc]
+DATA_all[near_tcc <  cf_lim, near_tcc_clear  := near_tcc]
+DATA_all[near_tcc >  cf_lim, near_tcc_cloud  := near_tcc]
+
+
+
+
+
+
 
 # ......................................................................... ----
 ##  1. long-term  --------------------------------------------------------------
@@ -195,6 +214,13 @@ ALL_1_daily_mean <-
                 HOR_att       = mean(HOR_att,      na.rm = T),
                 near_tcc_att  = mean(near_tcc,     na.rm = T),
                 bilin_tcc_att = mean(bilin_tcc,    na.rm = T),
+
+                near_tcc_zero
+                near_tcc_NOzero
+                near_tcc_clear
+                near_tcc_cloud
+
+
                 wattGLB       = mean(wattGLB,      na.rm = T),
                 wattGLB_sd    = sd(  wattGLB,      na.rm = T),
                 wattGLB_N     = sum(!is.na(wattGLB)),
