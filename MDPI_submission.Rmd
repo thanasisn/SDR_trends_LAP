@@ -612,27 +612,25 @@ LT <- rename(LT, "Days"           = N           )
 LT <- rename(LT, "Pearson cor."   = cor.estimate)
 LT <- rename(LT, "Trend p-value"  = slope.p     )
 
+LT$slope.stat_sig  <- NULL
+LT$`Trend p-value` <- NULL
+LT$N_eff           <- NULL
 
-# 
-# names(LT)    <- c("Trend [%/year]",
-#                   "Trend p-value",
-#                   "Sky conditions",
-#                   "Days with data",
-#                   "Statistical signif. [%]")
 
-## no need all are 100%
 
 # LT$`Trend statistical signif. [%]` <- NULL
 
 
 ## order columns
-LT1 <- LT[,c(
-      "Sky conditions",
-      "Trend [%/year]",
-      "Trend p-value",
-      "Pearson cor.",
-      "Days"
-      )]
+# LT1 <- LT[,c(
+#       "Sky conditions",
+#       "Trend [%/year]",
+#       "Trend p-value",
+#       "Pearson cor.",
+#       "Days"
+#       )]
+LT1 <- LT
+
 
 ## order columns
 # LT2 <- LT[,c(
