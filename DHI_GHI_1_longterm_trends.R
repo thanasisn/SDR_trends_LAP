@@ -134,6 +134,11 @@ FIGURESGRID <- TRUE
 LOESS_CRITERIO <-  c("aicc", "gcv")[1]
 
 
+export <- ALL_1_daily_DESEAS[, .(Date, doy, year = year(Date) ), GLB_att_des ]
+# plot(export[,GLB_att_des,Date])
+# write.csv(export, "./data/ALL_1_daily_DESEAS.csv", row.names = FALSE)
+
+
 
 #+ echo=F, include=T
 #'
