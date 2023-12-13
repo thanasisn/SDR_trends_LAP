@@ -80,10 +80,9 @@ DATA_Cloud[, TYPE := NULL]
 # DATA_Cloud <- DATA_Cloud[wattGLB < cosde(SZA) * TSIextEARTH_comb * 0.8 + 30 ]
 
 
-
-DATA_all[,length(unique(as.Date(Date)))]
-DATA_Clear[,length(unique(as.Date(Date)))]
-DATA_Cloud[,length(unique(as.Date(Date)))]
+# DATA_all[, length(unique(as.Date(Date)))]
+# DATA_Clear[,length(unique(as.Date(Date)))]
+# DATA_Cloud[,length(unique(as.Date(Date)))]
 
 
 
@@ -105,13 +104,17 @@ ALL_tcc_yearly_mean <-
         near_tcc_att        = mean(near_tcc,        na.rm = T),
         bilin_tcc_att       = mean(bilin_tcc,       na.rm = T),
         near_tcc_zero_N     = sum(near_tcc_zero,    na.rm = T),
-        near_tcc_N          = sum(!is.na(near_tcc)),
+        near_tcc_TN         = sum(!is.na(near_tcc)),
         near_tcc_NOzero_att = mean(near_tcc_NOzero, na.rm = T),
         near_tcc_clear_att  = mean(near_tcc_clear,  na.rm = T),
         near_tcc_cloud_att  = mean(near_tcc_cloud,  na.rm = T)
     ),
     by = .( Year = year(Day) ) ]
-ALL_tcc_yearly_mean[, near_tcc_zero_rel := near_tcc_zero_N / near_tcc_N ]
+ALL_tcc_yearly_mean[, near_tcc_zero_rel := near_tcc_zero_N / near_tcc_TN ]
+
+## remove first and last non complete years
+ALL_tcc_yearly_mean <- ALL_tcc_yearly_mean[!Year %in% c(1993, 2023) ]
+
 
 
 
@@ -1187,7 +1190,7 @@ cat(paste("\n Long term proccessed data saved", I1_longterm, "\n\n"))
 tac <- Sys.time()
 cat(sprintf("%s %s@%s %s %f mins\n\n", Sys.time(), Sys.info()["login"],
             Sys.info()["nodename"], basename(Script.Name), difftime(tac,tic,units = "mins")))
-if (interactive() & difftime(tac, tic, units = "sec") > 30) {
+if (difftime(tac, tic, units = "sec") > 30) {
     system("mplayer /usr/share/sounds/freedesktop/stereo/dialog-warning.oga", ignore.stdout = T, ignore.stderr = T)
     system(paste("notify-send -u normal -t 30000 ", Script.Name, " 'FINISHED'"))
 }

@@ -11,7 +11,7 @@ dictionary <-
          near_tcc_att        = "TCC nearest",
          bilin_tcc_att       = "TCC bilinear fit",
          near_tcc_zero_N     = "TCCn zero counts",
-         near_tcc_N          = "TCCn total counts",
+         near_tcc_TN         = "TCCn total counts",
          near_tcc_NOzero_att = "TCCn without zeros",
          near_tcc_clear_att  = "TCCn almost completely clear",
          near_tcc_cloud_att  = "TCCn complementary to almost completely clear",
@@ -37,3 +37,6 @@ translate <- function(x) {
     }
     return(res)
 }
+
+
+agrep("near_tcc_N", names(dictionary), value = T)
