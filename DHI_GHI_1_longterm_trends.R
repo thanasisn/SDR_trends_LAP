@@ -72,6 +72,8 @@ library(pander,     quietly = TRUE, warn.conflicts = FALSE)
 library(lubridate,  quietly = TRUE, warn.conflicts = FALSE)
 library(ggplot2,    quietly = TRUE, warn.conflicts = FALSE)
 library(fANCOVA,    quietly = TRUE, warn.conflicts = FALSE)
+library(xts,        quietly = TRUE, warn.conflicts = FALSE)
+library(forecast,   quietly = TRUE, warn.conflicts = FALSE)
 
 
 panderOptions("table.alignment.default", "right")
@@ -244,6 +246,9 @@ rm(data_list)
 # vars <- c("HOR_att","DIR_transp", "DIR_att", "GLB_att", "tsi1au_att")
 vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att", "near_tcc_att", "near_tcc_att_des")
 
+# test
+vars <- c("GLB_att_des")
+
 dbs         <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
                  "CLOUD_1_daily_DESEAS")
@@ -265,6 +270,26 @@ for (DBn in dbs) {
             ## correlation test
             cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
+
+
+
+            dd <- read.zoo(dataset, index.column = "Date")
+            dd <- as.ts(dd)
+
+            summary(arima(dd[,avar]))
+            summary(auto.arima(dd[, avar]))
+            aamodelo <- auto.arima(dd[, avar])
+            amodelo  <- arima(dd[,avar])
+            lm1
+            decompose(dd,"multiplicative")
+
+            arima(dd[,avar])
+
+            myforecast <- forecast(aamodelo,level = c(95),h=500)
+            plot(myforecast)
+            abline(amodelo, col = "red")
+
+stop("DDD")
             lag   <- 1
             dd    <- acf(dataset[[avar]], na.action = na.pass, plot = FALSE)
             N_eff <- sum(!is.na(dataset[[avar]])) * (1 - dd[lag][[1]]) / (1 + dd[lag][[1]])
