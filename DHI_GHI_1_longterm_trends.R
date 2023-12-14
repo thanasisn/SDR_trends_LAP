@@ -287,22 +287,22 @@ for (DBn in dbs) {
 
             ## _ Arima tests  --------------------------------------------------
 
-            aamodelo <- auto.arima(dd[, avar])
-            summary(aamodelo)
-
-            amodelo  <- arima(dd[, avar], order = c(1,0,0), method = "ML")
-            summary(amodelo)
-            ddd <- summary(amodelo)
-
-            myforecast <- forecast(aamodelo,level = c(95),h=500)
-            plot(myforecast)
-            abline(amodelo, col = "red")
-
-            sarima(dd[, avar], 1,0,0, details = F, method = "ML", no.constant = T)
-            sarima(dd[, avar], 1,0,0, details = F, method = "ML")
-
-
-stop("tess")
+#             aamodelo <- auto.arima(dd[, avar])
+#             summary(aamodelo)
+#
+#             amodelo  <- arima(dd[, avar], order = c(1,0,0), method = "ML")
+#             summary(amodelo)
+#             ddd <- summary(amodelo)
+#
+#             myforecast <- forecast(aamodelo,level = c(95),h=500)
+#             plot(myforecast)
+#             abline(amodelo, col = "red")
+#
+#             sarima(dd[, avar], 1,0,0, details = F, method = "ML", no.constant = T)
+#             sarima(dd[, avar], 1,0,0, details = F, method = "ML")
+#
+#
+# stop("tess")
 
             lag   <- 1
             dd    <- acf(dataset[[avar]], na.action = na.pass, plot = FALSE)
