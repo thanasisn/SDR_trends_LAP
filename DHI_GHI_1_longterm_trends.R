@@ -287,19 +287,19 @@ for (DBn in dbs) {
 
             ## _ Arima tests  --------------------------------------------------
 
-            aamodelo <- auto.arima(dd[, avar], d = 1)
+            aamodelo <- auto.arima(dd[, avar])
+            summary(aamodelo)
+
             amodelo  <- arima(dd[, avar], order = c(1,0,0), method = "ML")
             summary(amodelo)
-            summary(aamodelo)
+            ddd <- summary(amodelo)
 
             myforecast <- forecast(aamodelo,level = c(95),h=500)
             plot(myforecast)
             abline(amodelo, col = "red")
 
-            sarima(dd[, avar], 0,0,1, method = "ML")
-            sarima(dd[, avar], 1,0,0, no.constant = T, details = F, method = "ML")
+            sarima(dd[, avar], 1,0,0, details = F, method = "ML", no.constant = T)
             sarima(dd[, avar], 1,0,0, details = F, method = "ML")
-            arima(dd[,avar], order = c(1,0,0))
 
 
 stop("tess")
@@ -334,7 +334,8 @@ stop("tess")
                                 conf_2.5   = conf_2.5,
                                 conf_97.5  = conf_97.5,
                                 mean_clima = mean(dclima$V1, na.rm = T)
-                            ))
+                            )
+            )
 
 
             if (grepl("near_tcc", avar)) {
