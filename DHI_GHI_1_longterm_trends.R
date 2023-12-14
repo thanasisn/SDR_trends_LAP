@@ -73,6 +73,7 @@ library(lubridate,  quietly = TRUE, warn.conflicts = FALSE)
 library(ggplot2,    quietly = TRUE, warn.conflicts = FALSE)
 library(fANCOVA,    quietly = TRUE, warn.conflicts = FALSE)
 library(xts,        quietly = TRUE, warn.conflicts = FALSE)
+library(zoo,        quietly = TRUE, warn.conflicts = FALSE)
 library(forecast,   quietly = TRUE, warn.conflicts = FALSE)
 library(astsa,      quietly = TRUE, warn.conflicts = FALSE)
 
@@ -286,22 +287,22 @@ for (DBn in dbs) {
 
             ## _ Arima tests  --------------------------------------------------
 
-            # aamodelo <- auto.arima(dd[, avar])
-            # amodelo  <- arima(dd[, avar], order = c(1,0,0), method = "ML")
-            # summary(amodelo)
-            # summary(aamodelo)
-            #
-            # myforecast <- forecast(aamodelo,level = c(95),h=500)
-            # plot(myforecast)
-            # abline(amodelo, col = "red")
-            #
-            # sarima(dd[, avar], 0,0,1, method = "ML")
-            # sarima(dd[, avar], 1,0,0, no.constant = T, details = F, method = "ML")
-            # sarima(dd[, avar], 1,0,0, details = F, method = "ML")
-            # arima(dd[,avar], order = c(1,0,0))
+            aamodelo <- auto.arima(dd[, avar], d = 1)
+            amodelo  <- arima(dd[, avar], order = c(1,0,0), method = "ML")
+            summary(amodelo)
+            summary(aamodelo)
+
+            myforecast <- forecast(aamodelo,level = c(95),h=500)
+            plot(myforecast)
+            abline(amodelo, col = "red")
+
+            sarima(dd[, avar], 0,0,1, method = "ML")
+            sarima(dd[, avar], 1,0,0, no.constant = T, details = F, method = "ML")
+            sarima(dd[, avar], 1,0,0, details = F, method = "ML")
+            arima(dd[,avar], order = c(1,0,0))
 
 
-
+stop("tess")
 
             lag   <- 1
             dd    <- acf(dataset[[avar]], na.action = na.pass, plot = FALSE)
