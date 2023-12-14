@@ -74,6 +74,8 @@ library(ggplot2,    quietly = TRUE, warn.conflicts = FALSE)
 library(fANCOVA,    quietly = TRUE, warn.conflicts = FALSE)
 library(xts,        quietly = TRUE, warn.conflicts = FALSE)
 library(forecast,   quietly = TRUE, warn.conflicts = FALSE)
+library(astsa,      quietly = TRUE, warn.conflicts = FALSE)
+
 
 
 panderOptions("table.alignment.default", "right")
@@ -136,9 +138,16 @@ FIGURESGRID <- TRUE
 LOESS_CRITERIO <-  c("aicc", "gcv")[1]
 
 
-export <- ALL_1_daily_DESEAS[, .(Date, doy, year = year(Date) ), GLB_att_des ]
-# plot(export[,GLB_att_des,Date])
+# export <- ALL_1_daily_DESEAS[, .(Date, doy, year = year(Date) ), GLB_att_des ]
+# # plot(export[,GLB_att_des,Date])
 # write.csv(export, "./data/ALL_1_daily_DESEAS.csv", row.names = FALSE)
+#
+# export <- CLEAR_1_daily_DESEAS[, .(Date, doy, year = year(Date) ), GLB_att_des ]
+# write.csv(export, "./data/CLEAR_1_daily_DESEAS.csv", row.names = FALSE)
+#
+# export <- CLOUD_1_daily_DESEAS[, .(Date, doy, year = year(Date) ), GLB_att_des ]
+# write.csv(export, "./data/CLOUD_1_daily_DESEAS.csv", row.names = FALSE)
+
 
 
 
@@ -247,7 +256,7 @@ rm(data_list)
 vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att", "near_tcc_att", "near_tcc_att_des")
 
 # test
-vars <- c("GLB_att_des")
+vars <- c( "GLB_att_des")
 
 dbs         <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
@@ -271,25 +280,29 @@ for (DBn in dbs) {
             cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
 
-
-
             dd <- read.zoo(dataset, index.column = "Date")
             dd <- as.ts(dd)
 
-            summary(arima(dd[,avar]))
-            summary(auto.arima(dd[, avar]))
-            aamodelo <- auto.arima(dd[, avar])
-            amodelo  <- arima(dd[,avar])
-            lm1
-            decompose(dd,"multiplicative")
 
-            arima(dd[,avar])
+            ## _ Arima tests  --------------------------------------------------
 
-            myforecast <- forecast(aamodelo,level = c(95),h=500)
-            plot(myforecast)
-            abline(amodelo, col = "red")
+            # aamodelo <- auto.arima(dd[, avar])
+            # amodelo  <- arima(dd[, avar], order = c(1,0,0), method = "ML")
+            # summary(amodelo)
+            # summary(aamodelo)
+            #
+            # myforecast <- forecast(aamodelo,level = c(95),h=500)
+            # plot(myforecast)
+            # abline(amodelo, col = "red")
+            #
+            # sarima(dd[, avar], 0,0,1, method = "ML")
+            # sarima(dd[, avar], 1,0,0, no.constant = T, details = F, method = "ML")
+            # sarima(dd[, avar], 1,0,0, details = F, method = "ML")
+            # arima(dd[,avar], order = c(1,0,0))
 
-stop("DDD")
+
+
+
             lag   <- 1
             dd    <- acf(dataset[[avar]], na.action = na.pass, plot = FALSE)
             N_eff <- sum(!is.na(dataset[[avar]])) * (1 - dd[lag][[1]]) / (1 + dd[lag][[1]])
