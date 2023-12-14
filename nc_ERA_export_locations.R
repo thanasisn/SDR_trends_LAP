@@ -100,6 +100,8 @@ for (afile in filelist) {
         x_near_in <- which.min(abs(x_inx - locations$LongX))
         y_near_in <- which.min(abs(y_inx - locations$LatiY))
 
+        cat("Nearest coordinates", x_inx[x_near_in], y_inx[y_near_in])
+
         near_tcc  <- tempd[x_near_in, y_near_in, ]
 
         ## Change NA to -9999
