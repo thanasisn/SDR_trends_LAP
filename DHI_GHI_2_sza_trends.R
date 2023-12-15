@@ -204,18 +204,73 @@ ccex_sbs <- 1.3
 #'
 #+ echo=F, include=F
 
-test <- ALL_2_daily_DESEAS[preNoon == TRUE & SZA > 74 & SZA < 82 ]
+test <- ALL_2_daily_DESEAS[preNoon == TRUE & SZA > 70 & SZA < 86 ]
 test <- rm.cols.dups.DT(test)
 test <- rm.cols.NA.DT(test)
+
+
 
 for (asz in unique(test$SZA)) {
     # plot(test[SZA == asz, GLB_att_des, Date],
     #      main = asz)
     hist(test[SZA == asz, GLB_att_des], breaks = 100,
          main = asz)
-    abline(v = 180, col = "red")
+    abline(v = 170, col = "red")
 }
-test[GLB_att_des > 180, ]
+test[GLB_att_des > 170, .N , by = Date]
+
+for (asz in unique(test$SZA)) {
+    # plot(test[SZA == asz, GLB_att_des, Date],
+    #      main = asz)
+    if (all(is.na(test[SZA == asz, GLB_att]))) next()
+    hist(test[SZA == asz, GLB_att], breaks = 100,
+         main = asz)
+    abline(v = 300, col = "red")
+}
+test[GLB_att_des > 170, .N , by = Date]
+
+
+
+
+
+
+test <- CLOUD_2_daily_DESEAS[preNoon == TRUE & SZA > 70 & SZA < 86 ]
+test <- rm.cols.dups.DT(test)
+test <- rm.cols.NA.DT(test)
+
+for (asz in unique(test$SZA)) {
+    if (all(is.na(test[SZA == asz, GLB_att]))) next()
+
+    # plot(test[SZA == asz, GLB_att, Date],
+    #      main = asz)
+    # abline(lm(test[SZA == asz, Date, GLB_att]), col = "red")
+
+    plot(test[SZA == asz, GLB_att_des, Date],
+         main = asz)
+    abline(lm(test[SZA == asz, Date, GLB_att_des]), col = "red")
+
+
+    # hist(test[SZA == asz, GLB_att_des], breaks = 100,
+    #      main = asz)
+    # abline(v = 170, col = "red")
+}
+test[GLB_att_des > 170, .N , by = Date]
+
+for (asz in unique(test$SZA)) {
+    # plot(test[SZA == asz, GLB_att_des, Date],
+    #      main = asz)
+    if (all(is.na(test[SZA == asz, GLB_att]))) next()
+    hist(test[SZA == asz, GLB_att], breaks = 100,
+         main = asz)
+    abline(v = 300, col = "red")
+}
+test[GLB_att_des > 170, .N , by = Date]
+
+
+
+test[SZA == 78 & GLB_att_des > 200, .N , by = Date ]
+
+
 
 
 
