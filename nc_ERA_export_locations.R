@@ -183,37 +183,47 @@ for (af in filelist) {
 
 DATA <- merge(tcc, tclw, all = T)
 DATA <- merge(DATA, tcwv)
-
-
-
-stop()
-
-
-# DATA <- filelist %>% map_dfr(readRDS, .id = NULL) %>% data.table()
-
-
-
-
-
-DATA <- DATA[!(bilin_tcc < 0 & is.na(near_tcc)),]
+DATA <- DATA[apply(DATA, MARGIN = 1, function(x) sum(is.na(x))) < 6, ]
 
 
 hist(DATA$bilin_tcc)
 hist(DATA$near_tcc)
+
+hist(DATA$bilin_tclw)
+hist(DATA$near_tclw)
+
+hist(DATA$bilin_tcwv)
+hist(DATA$near_tcwv)
+
 range(DATA$Date)
 
 
 plot(DATA[, bilin_tcc, Date])
 lm1 <- lm(DATA[, Date, bilin_tcc])
-abline(lm1)
+abline(lm1, col = "red")
+
+plot(DATA[, bilin_tclw, Date])
+lm1 <- lm(DATA[, Date, bilin_tclw])
+abline(lm1, col = "red")
+
+plot(DATA[, bilin_tcwv, Date])
+lm1 <- lm(DATA[, Date, bilin_tcwv])
+abline(lm1, col = "red")
 
 
 plot(DATA[, near_tcc, Date])
 lm1 <- lm(DATA[, Date, near_tcc])
-abline(lm1)
+abline(lm1, col = "red")
+
+plot(DATA[, near_tclw, Date])
+lm1 <- lm(DATA[, Date, near_tclw])
+abline(lm1, col = "red")
+
+plot(DATA[, near_tcwv, Date])
+lm1 <- lm(DATA[, Date, near_tcwv])
+abline(lm1, col = "red")
 
 
-stop()
-saveRDS(DATA, "~/DATA/Clouds ERA5/Thessaloniki_clouds.Rds", compress = "xz")
+saveRDS(DATA, "~/DATA/Clouds ERA5/LAP_tcc_tclw_tcwv.Rds", compress = "xz")
 
 cat(paste("\n\n    DONE \n\n"))
