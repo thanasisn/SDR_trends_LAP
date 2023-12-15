@@ -259,8 +259,8 @@ vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att", "near_tcc_att", "near_tcc_
 # test
 vars <- c( "GLB_att_des")
 
-dbs         <- c(  "ALL_1_daily_DESEAS",
-                 "CLEAR_1_daily_DESEAS",
+dbs         <- c("CLEAR_1_daily_DESEAS",
+                 "ALL_1_daily_DESEAS",
                  "CLOUD_1_daily_DESEAS")
 ## gather trends
 gather <- data.frame()
@@ -287,22 +287,31 @@ for (DBn in dbs) {
 
             ## _ Arima tests  --------------------------------------------------
 
-#             aamodelo <- auto.arima(dd[, avar])
-#             summary(aamodelo)
-#
-#             amodelo  <- arima(dd[, avar], order = c(1,0,0), method = "ML")
-#             summary(amodelo)
-#             ddd <- summary(amodelo)
-#
-#             myforecast <- forecast(aamodelo,level = c(95),h=500)
-#             plot(myforecast)
-#             abline(amodelo, col = "red")
-#
-#             sarima(dd[, avar], 1,0,0, details = F, method = "ML", no.constant = T)
-#             sarima(dd[, avar], 1,0,0, details = F, method = "ML")
-#
-#
-# stop("tess")
+            aamodelo <- auto.arima(dd[, avar])
+            summary(aamodelo)
+
+            amodelo  <- arima(dd[, avar], order = c(1,0,0), method = "ML")
+            summary(amodelo)
+            ddd <- summary(amodelo)
+
+            myforecast <- forecast(aamodelo,level = c(95),h=500)
+            plot(myforecast)
+            abline(amodelo, col = "red")
+
+            sarima(dd[, avar], 1,0,0, details = F, method = "ML", no.constant = T)
+            sarima(dd[, avar], 1,0,0, details = F, method = "ML")
+
+
+
+            armodel <- ar.ols(dd[, avar], na.action = na.exclude, order.max = 1, demean = F, intercept = T )
+            summary(armodel)
+            armodel
+
+            lmtest::coeftest(amodelo)
+            lmtest::coeftest(lm1) * Days_of_year
+
+
+stop("tess")
 
             lag   <- 1
             dd    <- acf(dataset[[avar]], na.action = na.pass, plot = FALSE)

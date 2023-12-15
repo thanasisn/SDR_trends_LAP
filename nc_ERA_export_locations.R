@@ -63,7 +63,7 @@ for (afile in filelist) {
 
     ## variables in file
     variables <- grep("time|longitude|latitude|tp|expver", names(data), ignore.case = T, invert = T,value = T)
-
+stop()
     #### get variables info #####
     var_info <- data.table()
     for (avar in variables) {
