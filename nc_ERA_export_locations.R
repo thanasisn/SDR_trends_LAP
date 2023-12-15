@@ -159,15 +159,38 @@ filelist <- list.files(path        = nc_folder,
 )
 filelist <- sort(filelist)
 
+
+vars <- c("tcc", "tcwv", "tclv")
+
+for (avar in vars) {
+    assign(avar, data.table())
+}
+
 gather <- data.table()
+for (af in filelist) {
+    temp <- readRDS(af)
+    for (avar in vars) {
+        if (any(grepl(avar, names(temp)))) {
+
+            assign(avar, rbind(get(avar), temp))
+        }
+    }
+}
+id <- data.table(Date = unique(gather$x))
+
 
 library(dplyr)
+
+
+
+
 
 gather <- readRDS(filelist[1])
 
 for (af in filelist[-1]) {
     temp <- readRDS(af)
-    # gather <- full_join(gather, temp, by = intersect(names(gather), names(temp)))
+    # gather <- bind_rows(temp, gather, .id = Date)
+    gather <- full_join(gather, temp, by = intersect(names(gather), names(temp)))
     # gather <- merge(gather, temp, by =  'Date', all = T)
 }
 
