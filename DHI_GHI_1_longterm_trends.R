@@ -151,6 +151,19 @@ LOESS_CRITERIO <-  c("aicc", "gcv")[1]
 
 
 
+ALL_1_daily_DESEAS[           GLB_att_des == 0]
+CLOUD_1_daily_DESEAS[         GLB_att_des == 0]
+# test <- CLEAR_1_daily_DESEAS[ GLB_att_des == 0]
+# test <- rm.cols.dups.DT(test)
+CLEAR_1_daily_DESEAS[         GLB_att_des == 0, GLB_att_des := NA]
+
+
+
+stopifnot(ALL_1_daily_DESEAS[   GLB_att_des == 0, .N ] == 0)
+stopifnot(CLOUD_1_daily_DESEAS[ GLB_att_des == 0, .N ] == 0)
+stopifnot(CLEAR_1_daily_DESEAS[ GLB_att_des == 0, .N ] == 0)
+
+
 
 #+ echo=F, include=T
 #'
@@ -287,31 +300,31 @@ for (DBn in dbs) {
 
             ## _ Arima tests  --------------------------------------------------
 
-            aamodelo <- auto.arima(dd[, avar])
-            summary(aamodelo)
-
-            amodelo  <- arima(dd[, avar], order = c(1,0,0), method = "ML")
-            summary(amodelo)
-            ddd <- summary(amodelo)
-
-            myforecast <- forecast(aamodelo,level = c(95),h=500)
-            plot(myforecast)
-            abline(amodelo, col = "red")
-
-            sarima(dd[, avar], 1,0,0, details = F, method = "ML", no.constant = T)
-            sarima(dd[, avar], 1,0,0, details = F, method = "ML")
-
-
-
-            armodel <- ar.ols(dd[, avar], na.action = na.exclude, order.max = 1, demean = F, intercept = T )
-            summary(armodel)
-            armodel
-
-            lmtest::coeftest(amodelo)
-            lmtest::coeftest(lm1) * Days_of_year
-
-
-stop("tess")
+#             aamodelo <- auto.arima(dd[, avar])
+#             summary(aamodelo)
+#
+#             amodelo  <- arima(dd[, avar], order = c(1,0,0), method = "ML")
+#             summary(amodelo)
+#             ddd <- summary(amodelo)
+#
+#             myforecast <- forecast(aamodelo,level = c(95),h=500)
+#             plot(myforecast)
+#             abline(amodelo, col = "red")
+#
+#             sarima(dd[, avar], 1,0,0, details = F, method = "ML", no.constant = T)
+#             sarima(dd[, avar], 1,0,0, details = F, method = "ML")
+#
+#
+#
+#             armodel <- ar.ols(dd[, avar], na.action = na.exclude, order.max = 1, demean = F, intercept = T )
+#             summary(armodel)
+#             armodel
+#
+#             lmtest::coeftest(amodelo)
+#             lmtest::coeftest(lm1) * Days_of_year
+#
+#
+# stop("tess")
 
             lag   <- 1
             dd    <- acf(dataset[[avar]], na.action = na.pass, plot = FALSE)

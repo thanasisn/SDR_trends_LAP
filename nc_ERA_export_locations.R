@@ -164,10 +164,11 @@ gather <- data.table()
 library(dplyr)
 
 gather <- readRDS(filelist[1])
+
 for (af in filelist[-1]) {
     temp <- readRDS(af)
     # gather <- full_join(gather, temp, by = intersect(names(gather), names(temp)))
-    gather <- merge(gather, temp, by = intersect(names(gather), names(temp)), all = T)
+    # gather <- merge(gather, temp, by =  'Date', all = T)
 }
 
 

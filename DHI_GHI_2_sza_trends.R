@@ -204,6 +204,20 @@ ccex_sbs <- 1.3
 #'
 #+ echo=F, include=F
 
+test <- ALL_2_daily_DESEAS[preNoon == TRUE & SZA > 74 & SZA < 82 ]
+test <- rm.cols.dups.DT(test)
+test <- rm.cols.NA.DT(test)
+
+for (asz in unique(test$SZA)) {
+    # plot(test[SZA == asz, GLB_att_des, Date],
+    #      main = asz)
+    hist(test[SZA == asz, GLB_att_des], breaks = 100,
+         main = asz)
+    abline(v = 180, col = "red")
+}
+test[GLB_att_des > 180, ]
+
+
 
 ## __ Calculate trend SZA ~ Day ------------------------------------------------
 
@@ -383,6 +397,11 @@ szatrends[preNoon == F, pch := pch_pm ]
 # abline(h=50)
 # plot(test2$SZA, test2$N, pch = 19)
 # abline(h=300)
+
+
+
+
+szatrends[DATA == "ALL_2_daily_DESEAS" & preNoon == TRUE & slope > 0.6]
 
 
 
