@@ -27,9 +27,6 @@ locations <- data.frame(
 
 
 
-
-
-
 ####    ERA5 exporter    #######################################################
 nc_folder <- "/home/athan/DATA/Clouds ERA5/"
 
@@ -110,6 +107,7 @@ for (afile in filelist) {
         ## interpolate temperature data to location
         out <- apply(tempd, MARGIN = c(3), function(z) bilinear(x = x_inx, y = y_inx, flip_matrix_v(z), locations$LongX, locations$LatiY))
 
+
         ## get data coordinates
         x_long <- out[[1]]$x
         y_lat  <- out[[1]]$y
@@ -117,12 +115,19 @@ for (afile in filelist) {
         ## prepare data
         outt <- lapply( out , "[[" , "z" )
         outt <- do.call(rbind, outt)
+        hist(outt)
+        hist(near_tcc)
+
+        outt[outt < -10]         <- NA
+        near_tcc[near_tcc < -10] <- NA
+
+        if (any(outt < -1, na.rm = TRUE) | any(near_tcc < -1, na.rm = TRUE)) stop()
 
         dum1 <- data.frame(outt)
-        names(dum1) <- paste0("bilin_",avar)
+        names(dum1) <- paste0("bilin_", avar)
 
         dum2 <- data.frame(near_tcc)
-        names(dum2) <- paste0("near_",avar)
+        names(dum2) <- paste0("near_", avar)
 
         temp <- data.frame(Date = as.POSIXct(Dates), dum1, dum2)
 
@@ -147,7 +152,7 @@ for (afile in filelist) {
 dummy <- gc()
 
 
-stop()
+
 
 ## read data ----------
 
@@ -160,42 +165,31 @@ filelist <- list.files(path        = nc_folder,
 filelist <- sort(filelist)
 
 
-vars <- c("tcc", "tcwv", "tclv")
-
+vars <- c("tcc", "tcwv", "tclw")
+## init empty data tables
 for (avar in vars) {
     assign(avar, data.table())
 }
-
+## fill data tables
 gather <- data.table()
 for (af in filelist) {
     temp <- readRDS(af)
     for (avar in vars) {
         if (any(grepl(avar, names(temp)))) {
-
             assign(avar, rbind(get(avar), temp))
         }
     }
 }
-id <- data.table(Date = unique(gather$x))
 
-
-library(dplyr)
-
-
+DATA <- merge(tcc, tclw, all = T)
+DATA <- merge(DATA, tcwv)
 
 
 
-gather <- readRDS(filelist[1])
-
-for (af in filelist[-1]) {
-    temp <- readRDS(af)
-    # gather <- bind_rows(temp, gather, .id = Date)
-    gather <- full_join(gather, temp, by = intersect(names(gather), names(temp)))
-    # gather <- merge(gather, temp, by =  'Date', all = T)
-}
+stop()
 
 
-DATA <- filelist %>% map_dfr(readRDS, .id = NULL) %>% data.table()
+# DATA <- filelist %>% map_dfr(readRDS, .id = NULL) %>% data.table()
 
 
 
