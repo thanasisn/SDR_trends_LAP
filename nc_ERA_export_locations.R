@@ -45,7 +45,7 @@ filelist <- sort(filelist)
 
 
 for (afile in filelist) {
-    sfile <- sub("nc$","Rds",afile)
+    sfile <- sub("nc$", "Rds", afile)
     cat(paste(basename(afile), "\n"))
 
     ## dont overwrite existing exports
@@ -63,7 +63,7 @@ for (afile in filelist) {
 
     ## variables in file
     variables <- grep("time|longitude|latitude|tp|expver", names(data), ignore.case = T, invert = T,value = T)
-stop()
+
     #### get variables info #####
     var_info <- data.table()
     for (avar in variables) {
@@ -118,10 +118,13 @@ stop()
         outt <- lapply( out , "[[" , "z" )
         outt <- do.call(rbind, outt)
 
-        temp <- data.frame(
-            bilin_tcc = outt,
-            Date      = as.POSIXct(Dates),
-            near_tcc  = near_tcc)
+        dum1 <- data.frame(outt)
+        names(dum1) <- paste0("bilin_",avar)
+
+        dum2 <- data.frame(near_tcc)
+        names(dum2) <- paste0("near_",avar)
+
+        temp <- data.frame(Date = as.POSIXct(Dates), dum1, dum2)
 
         # plot(temp$Date, temp$bilin_tcc)
         # plot(temp$Date, temp$near_tcc)
@@ -130,10 +133,10 @@ stop()
         ## create proper structure
         store <- data.table(x_long = x_long,
                             y_lat  = y_lat,
+                            x_long_near = x_inx[x_near_in],
+                            y_lat_near = y_inx[y_near_in],
                             name   = locations$Name,
                             temp)
-
-        # gather[[avvv]] <- store
     }
     saveRDS(object   = store,
             file     = sfile,
@@ -144,7 +147,7 @@ stop()
 dummy <- gc()
 
 
-
+stop()
 
 ## read data ----------
 
@@ -156,8 +159,23 @@ filelist <- list.files(path        = nc_folder,
 )
 filelist <- sort(filelist)
 
+gather <- data.table()
+
+library(dplyr)
+
+gather <- readRDS(filelist[1])
+for (af in filelist[-1]) {
+    temp <- readRDS(af)
+    # gather <- full_join(gather, temp, by = intersect(names(gather), names(temp)))
+    gather <- merge(gather, temp, by = intersect(names(gather), names(temp)), all = T)
+}
+
 
 DATA <- filelist %>% map_dfr(readRDS, .id = NULL) %>% data.table()
+
+
+
+
 
 DATA <- DATA[!(bilin_tcc < 0 & is.na(near_tcc)),]
 
@@ -176,6 +194,8 @@ plot(DATA[, near_tcc, Date])
 lm1 <- lm(DATA[, Date, near_tcc])
 abline(lm1)
 
+
+stop()
 saveRDS(DATA, "~/DATA/Clouds ERA5/Thessaloniki_clouds.Rds", compress = "xz")
 
 cat(paste("\n\n    DONE \n\n"))
