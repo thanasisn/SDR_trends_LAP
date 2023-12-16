@@ -229,10 +229,6 @@ $$X_{i} < 7.5\, Wm^{- 2}$$
 In the final dataset $23.3\%$ of the 1-minute data were identified as
 under clear-sky conditions and $43\%$ as under cloud-sky conditions.
 
-In the final [dataset]{.mark} $23.3\%$ [of the 1-minute data were
-identified as under clear-sky conditions and]{.mark} $43\%$ [as]{.mark}
-under cloud-sky conditions.
-
 ## 2.2 Aggregation of data and statistical approach
 
 In order to investigate the SDR trends which are the main focus of the
