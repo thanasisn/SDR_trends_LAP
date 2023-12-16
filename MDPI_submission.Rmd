@@ -527,6 +527,11 @@ $`r signif(100 * SDR_N_Cloud / SDR_N_All, 3)`\%$
 as under cloud-sky conditions.
 <!-- The TSI data we use, is a combination of data from NOAA [@Coddington2005] (for `r as.Date(TSIinfo[TSI_Source == "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source == "NOAA", End])`) and adjusted data from @LASP2023 (for `r as.Date(TSIinfo[TSI_Source != "NOAA", Start])` - `r as.Date(TSIinfo[TSI_Source != "NOAA", End])`).-->
 
+In the final [dataset $23.3\%$ of the 1-minute data were
+identified as under clear-sky conditions and]{.mark} $43\%$ [as]{.mark}
+under cloud-sky conditions.
+
+
 ## Aggregation of data and statistical approach
 
 In order to investigate the SDR trends which are the main focus of the
@@ -534,17 +539,18 @@ study, we implemented an appropriate aggregation scheme to the
 one-minute data to derive a series in coarser time-scales.
 To preserve the representativeness of the data we used the following criteria:
 <!-- a) for daily mean values we exclude days with less than `r Daily_aggregation_N_lim` valid data points, -->
-a) we accept only days with more than `r 100 * All_daily_ratio_lim`% of the daytime measurements present and valid,
-b) on the dataset of clear- and cloudy-skies, we included only days with more than
-`r 100 * Clear_daily_ratio_lim`% of the daytime measurements identified as clear or cloudy respectively,
-c) monthly values were computed from daily means
-only when at least `r Monthly_aggegation_N_lim` days were available.
+a) we excluded all days with less than `r 100 * All_daily_ratio_lim`% of the expected daytime measurements,
+b) daily means for the clear-sky and cloudy-sky datasets
+were calculated only for days with more than
+`r 100 * Clear_daily_ratio_lim`% of the expected daytime
+measurements identified as clear or cloudy respectively,
+c) monthly means were computed from daily means only when at least `r Monthly_aggegation_N_lim` days of the month were available.
 To create the daily and monthly climatological means, we averaged the data based on the day of year and calendar month, respectively.
 <!-- Seasonal -->
 For the seasonal means we averaged the mean daily values in each season (Winter: December - February, Spring: March - May, etc.).
 <!-- Deseasonalization -->
 Finally, each data set was deseasonalized by subtracting the corresponding climatological annual cycle (daily or monthly) from the actual data.
-To estimate the SZA effect on the SDR trends, the one-minute data were aggregated in $1^\circ$ SZA bins, separately for the morning and afternoon hours, and then were deseasonalized as mentioned above.
+Finally, to estimate the SZA effect on the SDR trends, the one-minute data were aggregated in $1^\circ$ SZA bins, separately for the morning and afternoon hours, and then were deseasonalized as mentioned above.
 
 
 
@@ -634,8 +640,8 @@ LT1 <- LT
 LT2 <- LT
 ```
 
-We calculated the linear SDR trends, from the departures of the mean daily values from the daily climatology and for the three sky conditions (Table\ \ref{tab:trendtable}).
-In Figure\ \ref{fig:trendALL} we present only the time series under all-sky conditions; the plots for clear-sky and cloud-sky conditions, are very similar and are shown in the Appendix (Figures\ \ref{fig:trendCLEAR} and\  \ref{fig:trendCLOUD}).
+We calculated the linear trends of SDR, from the departures of the mean daily values from the daily climatology and for the three sky conditions (Table\ \ref{tab:trendtable}).
+In Figure\ \ref{fig:trendALL} we present only the time series under all-sky conditions; the plots for clear-sky and cloud-sky conditions, are shown in the Appendix (Figures\ \ref{fig:trendCLEAR} and\  \ref{fig:trendCLOUD}).
 We observe a positive trend for all-sky conditions
 ($`r alltrend`\,\%/y$), a very close but smaller trend for clear-skies ($`r cleartrend`\,\%/y$) and a negative weaker trend for cloudy-skies ($`r cloudtrend`\,\%/y$).
 In the studied period, there is no significant break or change in the variability of the time series.
@@ -772,8 +778,12 @@ The following stable period spans for about 15 years up to 2021 when CUSUMs star
 
 ## Effects of the solar zenith angle on SDR.
 
-The solar zenith angle is a major factor of SDR reaching the ground, due to the enhancement of the radiation path in the atmosphere, especially in urban environments with human activities emitting aerosols [@Wang2021].
-In order to estimate the effect of the SZA on the SDR trends, we grouped the anomaly data in bins of $1^\circ$ SZA, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
+The solar zenith angle is a major factor affecting the SDR, since
+increases in SZA leads to enhancement of the radiation path in the
+atmosphere, especially in urban environments with human activities
+emitting aerosols 
+[@Wang2021].
+In order to estimate the effect of SZA on the SDR trends, we grouped the anomaly data in bins of $1^\circ$ SZA, and calculated the overall trend for each bin before noon and after noon (Figure\ \ref{fig:szatrends}).
 Although there are seasonal dependencies of the minimum SZA (see Appendix, Figure\ \ref{fig:SZAtrendSeason}), these dependencies would not be further examined here.
 For all-sky and clear-sky conditions the brightening effect of SDR (positive trend) is stronger for large SZAs (Figures\ \ref{fig:szatrends-1} and \ref{fig:szatrends-2}).
 The trends in the morning and afternoon hours are more or less consistent with small differences, which can be attributed to systematic diurnal variations of aerosols, particularly during the warm period of the year [@Wang2021].
@@ -872,7 +882,7 @@ spp <- rename(spp, "Sky condition"  = DATA )
 ```
 
 
-Similarly to the long term trends discussed above, we have calculated the trend of the anomalies for the three different sky conditions, and for each season of the year, using the corresponding mean monthly values
+Similarly to the long term trends from daily means of SDR discussed above, we have calculated the trend of the anomalies for the three different sky conditions, and for each season of the year, using the corresponding mean monthly values
 (Figure\ \ref{fig:seasonalALL} and Table\ \ref{tab:trendseasontable}).
 For all-sky conditions the trend in SDR in winter is the largest
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All skies"], 2)`\,\%/y$),

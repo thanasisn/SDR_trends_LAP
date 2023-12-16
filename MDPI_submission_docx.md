@@ -229,46 +229,50 @@ $$X_{i} < 7.5\, Wm^{- 2}$$
 In the final dataset $23.3\%$ of the 1-minute data were identified as
 under clear-sky conditions and $43\%$ as under cloud-sky conditions.
 
+In the final [dataset]{.mark} $23.3\%$ [of the 1-minute data were
+identified as under clear-sky conditions and]{.mark} $43\%$ [as]{.mark}
+under cloud-sky conditions.
+
 ## 2.2 Aggregation of data and statistical approach
 
 In order to investigate the SDR trends which are the main focus of the
 study, we implemented an appropriate aggregation scheme to the
 one-minute data to derive a series in coarser time-scales. To preserve
 the representativeness of the data we used the following criteria: a) we
-accept only days with more than 50% of the daytime measurements present
-and valid, b) on the dataset of clear- and cloudy-skies, we included
-only days with more than 60% of the daytime measurements identified as
-clear or cloudy respectively, c) monthly values were computed from daily
-means only when at least 20 days were available. To create the daily and
-monthly climatological means, we averaged the data based on the day of
-year and calendar month, respectively. For the seasonal means we
-averaged the mean daily values in each season (Winter: December -
-February, Spring: March - May, etc.). Finally, each data set was
-deseasonalized by subtracting the corresponding climatological annual
-cycle (daily or monthly) from the actual data. To estimate the SZA
-effect on the SDR trends, the one-minute data were aggregated in
-$1^{\circ}$ SZA bins, separately for the morning and afternoon hours,
-and then were deseasonalized as mentioned above.
+excluded all days with less than 50% of the expected daytime
+measurements, b) daily means for the clear-sky and cloudy-sky datasets
+were calculated only for days with more than 60% of the expected daytime
+measurements identified as clear or cloudy respectively, c) monthly
+means were computed from daily means only when at least 20 days of the
+month were available. To create the daily and monthly climatological
+means, we averaged the data based on the day of year and calendar month,
+respectively. For the seasonal means we averaged the mean daily values
+in each season (Winter: December - February, Spring: March - May, etc.).
+Finally, each data set was deseasonalized by subtracting the
+corresponding climatological annual cycle (daily or monthly) from the
+actual data. Finally, to estimate the SZA effect on the SDR trends, the
+one-minute data were aggregated in $1^{\circ}$ SZA bins, separately for
+the morning and afternoon hours, and then were deseasonalized as
+mentioned above.
 
 # 3 Results
 
 ## 3.1 Long-term SDR trends
 
-We calculated the linear SDR trends, from the departures of the mean
+We calculated the linear trends of SDR, from the departures of the mean
 daily values from the daily climatology and for the three sky conditions
 (Table ). In Figure  we present only the time series under all-sky
-conditions; the plots for clear-sky and cloud-sky conditions, are very
-similar and are shown in the Appendix (Figures  and  ). We observe a
-positive trend for all-sky conditions ($0.38\,\%/y$), a very close but
-smaller trend for clear-skies ($0.097\,\%/y$) and a negative weaker
-trend for cloudy-skies ($0.41\,\%/y$). In the studied period, there is
-no significant break or change in the variability of the time series.
-Other studies for the European region reported a change of the SDR
-slope, around 1980 (Wild et al. 2021; Yuan, Leirvik, and Wild 2021;
-Ohmura 2009), a few years before the start of our records. It is
-interesting to note, that for the observations period, the trend of the
-TSI is $- 0.00024\,\%/y$, and thus we can not attribute any major effect
-on SDR trend to Solar variability.
+conditions; the plots for clear-sky and cloud-sky conditions, are shown
+in the Appendix (Figures  and  ). We observe a positive trend for
+all-sky conditions ($0.38\,\%/y$), a very close but smaller trend for
+clear-skies ($0.097\,\%/y$) and a negative weaker trend for cloudy-skies
+($0.41\,\%/y$). In the studied period, there is no significant break or
+change in the variability of the time series. Other studies for the
+European region reported a change of the SDR slope, around 1980 (Wild et
+al. 2021; Yuan, Leirvik, and Wild 2021; Ohmura 2009), a few years before
+the start of our records. It is interesting to note, that for the
+observations period, the trend of the TSI is $- 0.00024\,\%/y$, and thus
+we can not attribute any major effect on SDR trend to Solar variability.
 
 ![Figure 3.1: Anomalies (%) of the daily all-sky SDR from the
 climatological mean for the period1993 - 2023. The black line is the
@@ -326,43 +330,43 @@ start increasing again.
 
 ## 3.2 Effects of the solar zenith angle on SDR.
 
-The solar zenith angle is a major factor of SDR reaching the ground, due
-to the enhancement of the radiation path in the atmosphere, especially
-in urban environments with human activities emitting aerosols (Wang et
-al. 2021). In order to estimate the effect of the SZA on the SDR trends,
-we grouped the anomaly data in bins of $1^{\circ}$ SZA, and calculated
-the overall trend for each bin before noon and after noon (Figure ).
-Although there are seasonal dependencies of the minimum SZA (see
-Appendix, Figure ), these dependencies would not be further examined
-here. For all-sky and clear-sky conditions the brightening effect of SDR
-(positive trend) is stronger for large SZAs (Figures  and ). The trends
-in the morning and afternoon hours are more or less consistent with
-small differences, which can be attributed to systematic diurnal
-variations of aerosols, particularly during the warm period of the year
-(Wang et al. 2021). For cloudy-sky conditions (Figure ), we can not
-discern any significant dependence of the SDR trend with SZA. For SZAs
-$16^{\circ}$ - $50^{\circ}$, the trends range within about
-$\pm 0.2\,\%/y$, with a weak statistical significance. Between
-$50^{\circ}$ and $75^{\circ}$ SZA the trends for the period before noon
-are stronger and negative, possibly associated with stronger attenuation
-by clouds under oblique incidence angles.
+The solar zenith angle is a major factor affecting the SDR, since
+increases in SZA leads to enhancement of the radiation path in the
+atmosphere, especially in urban environments with human activities
+emitting aerosols (Wang et al. 2021). In order to estimate the effect of
+SZA on the SDR trends, we grouped the anomaly data in bins of
+$1^{\circ}$ SZA, and calculated the overall trend for each bin before
+noon and after noon (Figure ). Although there are seasonal dependencies
+of the minimum SZA (see Appendix, Figure ), these dependencies would not
+be further examined here. For all-sky and clear-sky conditions the
+brightening effect of SDR (positive trend) is stronger for large SZAs
+(Figures  and ). The trends in the morning and afternoon hours are more
+or less consistent with small differences, which can be attributed to
+systematic diurnal variations of aerosols, particularly during the warm
+period of the year (Wang et al. 2021). For cloudy-sky conditions
+(Figure ), we can not discern any significant dependence of the SDR
+trend with SZA. For SZAs $16^{\circ}$ - $50^{\circ}$, the trends range
+within about $\pm 0.2\,\%/y$, with a weak statistical significance.
+Between $50^{\circ}$ and $75^{\circ}$ SZA the trends for the period
+before noon are stronger and negative, possibly associated with stronger
+attenuation by clouds under oblique incidence angles.
 
 ## 3.3 Long term trends by season
 
-Similarly to the long term trends discussed above, we have calculated
-the trend of the anomalies for the three different sky conditions, and
-for each season of the year, using the corresponding mean monthly values
-(Figure  and Table ). For all-sky conditions the trend in SDR in winter
-is the largest ($0.69\,\%/y$), followed by the trend in autumn
-($0.43\,\%/y$, a value close to the long term trend) both statistically
-significant above the $99\,\%$ confidence level. In spring and summer,
-the trends are much smaller and of lesser statistical significance.
-These seasonal differences indicate a possible relation of the trends in
-SDR to trends of clouds during winter and autumn. For clear-skies, the
-trend in winter is $0.36\,\%/y$, larger than for all-skies
-($0.69\,\%/y$), which is another indication of a decreasing trend in
-cloud optical thickness. Moreover, the trends under clear- and
-cloudy-sky conditions are almost complementary to each other,
+Similarly to the long term trends from daily means of SDR discussed
+above, we have calculated the trend of the anomalies for the three
+different sky conditions, and for each season of the year, using the
+corresponding mean monthly values (Figure  and Table ). For all-sky
+conditions the trend in SDR in winter is the largest ($0.69\,\%/y$),
+followed by the trend in autumn ($0.43\,\%/y$, a value close to the long
+term trend) both statistically significant above the $99\,\%$ confidence
+level. In spring and summer, the trends are much smaller and of lesser
+statistical significance. These seasonal differences indicate a possible
+relation of the trends in SDR to trends of clouds during winter and
+autumn. For clear-skies, the trend in winter is $0.36\,\%/y$, larger
+than for all-skies ($0.69\,\%/y$), which is another indication of a
+decreasing trend in cloud optical thickness. Moreover, the trends under
+clear- and cloudy-sky conditions are almost complementary to each other,
 particularly for winter and autumn, where the signal is stronger. During
 spring and summer the statistical significance is very low and the
 actual trend too small for a meaningful comparison.
