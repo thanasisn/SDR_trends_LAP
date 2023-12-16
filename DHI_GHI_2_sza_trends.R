@@ -471,7 +471,11 @@ wecare <- grep("^slope\\.t", wecare, ignore.case = T, value = T, invert = T)
 wecare <- grep("slope\\.sd", wecare, ignore.case = T, value = T, invert = T)
 wecare <- grep("slope.Conf", wecare, ignore.case = T, value = T, invert = T)
 
+
+warning("this should be _des  !!")
 vars <- c("GLB_att_des")
+# vars <- c("GLB_att")
+
 
 #+ SzaTrends, echo=F, include=T, results = "asis"
 for (avar in vars) {
