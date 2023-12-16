@@ -1200,7 +1200,8 @@ for (ase in seasons) {
 
 #+ SzaTrendsSeasTogether, echo=F, include=T
 {
-    vars        <- c("GLB_att_des")
+    vars        <- c("GLB_att_des") ## original
+    vars        <- c("GLB_att")
     avar        <- vars[1]
     dbs         <- c(  "ALL_2_bySeason_daily_DESEAS",
                      "CLEAR_2_bySeason_daily_DESEAS",

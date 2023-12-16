@@ -328,11 +328,9 @@ ALL_2_daily_mean <-
     DATA_all[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                  HOR_att       = mean(HOR_att,    na.rm = T),
                  GLB_att       = mean(GLB_att,    na.rm = T),
-                 # DIR_transp    = mean(DIR_transp, na.rm = T),
                  DIR_att_sd    = sd(  DIR_att,    na.rm = T),
                  HOR_att_sd    = sd(  HOR_att,    na.rm = T),
                  GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                 # DIR_transp_sd = sd(  DIR_transp, na.rm = T),
                  doy           = yday(Date),
                  GLB_att_N     = sum(!is.na(GLB_att)),
                  HOR_att_N     = sum(!is.na(HOR_att)),
@@ -345,11 +343,9 @@ CLEAR_2_daily_mean <-
     DATA_Clear[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                    HOR_att       = mean(HOR_att,    na.rm = T),
                    GLB_att       = mean(GLB_att,    na.rm = T),
-                   # DIR_transp    = mean(DIR_transp, na.rm = T),
                    DIR_att_sd    = sd(  DIR_att,    na.rm = T),
                    HOR_att_sd    = sd(  HOR_att,    na.rm = T),
                    GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                   # DIR_transp_sd = sd(  DIR_transp, na.rm = T),
                    doy           = yday(Date),
                    GLB_att_N     = sum(!is.na(GLB_att)),
                    HOR_att_N     = sum(!is.na(HOR_att)),
@@ -362,11 +358,9 @@ CLOUD_2_daily_mean <-
     DATA_Cloud[, .(DIR_att       = mean(DIR_att,    na.rm = T),
                    HOR_att       = mean(HOR_att,    na.rm = T),
                    GLB_att       = mean(GLB_att,    na.rm = T),
-                   # DIR_transp    = mean(DIR_transp, na.rm = T),
                    DIR_att_sd    = sd(  DIR_att,    na.rm = T),
                    HOR_att_sd    = sd(  HOR_att,    na.rm = T),
                    GLB_att_sd    = sd(  GLB_att,    na.rm = T),
-                   # DIR_transp_sd = sd(  DIR_transp, na.rm = T),
                    doy           = yday(Date),
                    GLB_att_N     = sum(!is.na(GLB_att)),
                    HOR_att_N     = sum(!is.na(HOR_att)),
@@ -423,11 +417,9 @@ ALL_2_daily_seas <-
                          DIR_att_seas       = mean(DIR_att,    na.rm = T),
                          HOR_att_seas       = mean(HOR_att,    na.rm = T),
                          GLB_att_seas       = mean(GLB_att,    na.rm = T),
-                         # DIR_transp_seas    = mean(DIR_transp, na.rm = T),
                          DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
                          HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
                          GLB_att_sd_seas    = sd(  GLB_att,    na.rm = T),
-                         # DIR_transp_sd_seas = sd(DIR_transp,   na.rm = T),
                          GLB_att_N_seas     = sum(!is.na(GLB_att)),
                          HOR_att_N_seas     = sum(!is.na(HOR_att)),
                          DIR_att_N_seas     = sum(!is.na(DIR_att))
@@ -444,11 +436,9 @@ CLEAR_2_daily_seas <-
                            DIR_att_seas       = mean(DIR_att,    na.rm = T),
                            HOR_att_seas       = mean(HOR_att,    na.rm = T),
                            GLB_att_seas       = mean(GLB_att,    na.rm = T),
-                           # DIR_transp_seas    = mean(DIR_transp, na.rm = T),
                            DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
                            HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
                            GLB_att_sd_seas    = sd(  GLB_att,    na.rm = T),
-                           # DIR_transp_sd_seas = sd(DIR_transp,   na.rm = T),
                            GLB_att_N_seas     = sum(!is.na(GLB_att)),
                            HOR_att_N_seas     = sum(!is.na(HOR_att)),
                            DIR_att_N_seas     = sum(!is.na(DIR_att))
@@ -465,11 +455,9 @@ CLOUD_2_daily_seas <-
                            DIR_att_seas       = mean(DIR_att,    na.rm = T),
                            HOR_att_seas       = mean(HOR_att,    na.rm = T),
                            GLB_att_seas       = mean(GLB_att,    na.rm = T),
-                           # DIR_transp_seas    = mean(DIR_transp, na.rm = T),
                            DIR_att_sd_seas    = sd(  DIR_att,    na.rm = T),
                            HOR_att_sd_seas    = sd(  HOR_att,    na.rm = T),
                            GLB_att_sd_seas    = sd(  GLB_att,    na.rm = T),
-                           # DIR_transp_sd_seas = sd(DIR_transp,   na.rm = T),
                            GLB_att_N_seas     = sum(!is.na(GLB_att)),
                            HOR_att_N_seas     = sum(!is.na(HOR_att)),
                            DIR_att_N_seas     = sum(!is.na(DIR_att))
@@ -487,11 +475,9 @@ suppressWarnings({
     ALL_2_daily_seas[,DIR_att_EM_seas   :=qt(conf_param,df=DIR_att_N_seas -1)* DIR_att_sd_seas   /sqrt(DIR_att_N_seas)]
     ALL_2_daily_seas[,HOR_att_EM_seas   :=qt(conf_param,df=HOR_att_N_seas -1)* HOR_att_sd_seas   /sqrt(HOR_att_N_seas)]
     ALL_2_daily_seas[,GLB_att_EM_seas   :=qt(conf_param,df=GLB_att_N_seas -1)* GLB_att_sd_seas   /sqrt(GLB_att_N_seas)]
-    # ALL_2_daily_seas[,DIR_transp_EM_seas:=qt(conf_param,df=DIR_att_N_seas -1)* DIR_transp_sd_seas/sqrt(DIR_att_N_seas)]
     CLEAR_2_daily_seas[,DIR_att_EM_seas   :=qt(conf_param,df=DIR_att_N_seas -1)* DIR_att_sd_seas   /sqrt(DIR_att_N_seas)]
     CLEAR_2_daily_seas[,HOR_att_EM_seas   :=qt(conf_param,df=HOR_att_N_seas -1)* HOR_att_sd_seas   /sqrt(HOR_att_N_seas)]
     CLEAR_2_daily_seas[,GLB_att_EM_seas   :=qt(conf_param,df=GLB_att_N_seas -1)* GLB_att_sd_seas   /sqrt(GLB_att_N_seas)]
-    # CLEAR_2_daily_seas[,DIR_transp_EM_seas:=qt(conf_param,df=DIR_att_N_seas -1)* DIR_transp_sd_seas/sqrt(DIR_att_N_seas)]
     CLOUD_2_daily_seas[,DIR_att_EM_seas   :=qt(conf_param,df=DIR_att_N_seas -1)* DIR_att_sd_seas   /sqrt(DIR_att_N_seas)]
     CLOUD_2_daily_seas[,HOR_att_EM_seas   :=qt(conf_param,df=HOR_att_N_seas -1)* HOR_att_sd_seas   /sqrt(HOR_att_N_seas)]
     CLOUD_2_daily_seas[,GLB_att_EM_seas   :=qt(conf_param,df=GLB_att_N_seas -1)* GLB_att_sd_seas   /sqrt(GLB_att_N_seas)]

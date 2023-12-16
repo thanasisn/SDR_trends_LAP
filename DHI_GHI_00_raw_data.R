@@ -157,7 +157,8 @@ if (havetorun) {
 
     ## __ Import clouds data  --------------------------------------------------
 
-    clDATA <- readRDS("~/DATA/Clouds ERA5/Thessaloniki_clouds.Rds")
+    # clDATA <- readRDS("~/DATA/Clouds ERA5/Thessaloniki_clouds.Rds")
+    clDATA <- readRDS("~/DATA/Clouds ERA5/LAP_tcc_tclw_tcwv.Rds")
     clDATA[, Date := Date + 30]
     clDATA[, name   := NULL]
     clDATA[, x_long := NULL]
