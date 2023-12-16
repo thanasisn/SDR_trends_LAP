@@ -313,63 +313,49 @@ et al 2012).
 #Wild2012 : simplify interaction nice graph
 -->
 
-# Observational data and methodology.
+# Data and methodology
 
 The SDR data were measured with a Kipp & Zonen CM-21 pyranometer operating continuously at the Laboratory of Atmospheric Physics of the Aristotle University of Thessaloniki
-($40^\circ\,38'\,$N, $22^\circ\,57'\,$E, $80\,$m\ a.s.l.)
-in the period from
-<!-- \mbox{ -->
+($40^\circ\,38'\,$N, $22^\circ\,57'\,$E, $80\,$m\ a.s.l.) since 1993.
+Here we use data for the period from
 `r min(ALL_1_daily_DESEAS$Date)`
-<!-- } -->
 to
-<!-- \mbox{ -->
 `r max(ALL_1_daily_DESEAS$Date)`.
-<!-- }. -->
-The monitoring site is located near the city centre, and we expect to be affected by the urban environment.
-During the study period, the pyranometer has been independently calibrated three times at the Meteorologisches Observatorium Lindenberg, DWD, when it was verified the stability of the instrument to within better than $0.7\%$ relative to the initial calibration by the manufacturer.
-Along with SDR, the direct beam radiation (DNI) was also measured by a collocated Kipp & Zonen CHP-1 pyrheliometer, for the period
-<!-- \mbox{ -->
-`r min(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`
-<!-- } -->
-to
-<!-- \mbox{ -->
-`r max(ALL_1_daily_DESEAS[!is.na(DIR_att), Date])`.
-<!-- }. -->
-Although, we have performed a similar analysis to the DNI data, the results are not presented here, as they lack the appropriate statistical significance, due to the sorter duration of the data.
-However, the DNI data were used as auxiliary data, in the clear sky identification algorithm (CSid), which is discussed later, for the selection of the appropriate thresholds.
-It is noted that despite the capability of the CSid algorithm to use the DNI as a characterization parameter, we haven't utilized it here, to avoid any selection bias, due to unequal length of the two datasets.
-There are four distinct steps in the creation of the dataset analysed here:
+The monitoring site is located
+near the city centre thus we expect that measurements are affected by the urban environment.
+During the study period, the pyranometer has been
+independently calibrated three times at the Meteorologisches
+Observatorium Lindenberg, DWD, verifying that stability of the
+instrument's sensitivity is better than $0.7\%$ relative to the initial
+calibration by the manufacturer. 
+Along with SDR, the direct beam
+radiation (DNI) is also measured with a collocated Kipp & Zonen CHP-1 pyrheliometer since 2016-04-01. 
+The DNI data were used as auxiliary data
+to support the selection of appropriate thresholds in the clear sky
+identification algorithm (CSid), which is discussed later. It is noted
+that the limited dataset of DNI was not used for the identification of
+clear sky cases in the entire SDR series to avoid any selection bias due
+to unequal length of the two datasets.
+There are four distinct steps in the creation of the dataset analyzed here:
 a)\ the acquisition of radiation measurements from the sensors,
 b)\ the data quality check,
 c)\ the identification of "clear sky" conditions from the radiometric data, and
 d)\ the aggregation of data and trend analysis.
 
-<!--
-The horizon is clear of obstructions except for the azimuth angles between 35 and 120 where obstacles of up to 10 elevation block the direct irradiance in the morning for SZA larger than 80.  These data points were excluded from the analysis, as
--->
 
-<!-- Zerefos
-Northern Greece has been selected because it is well known to be located at the crossroads of aerosols and various pollutants pathways originating in central and Eastern
-Europe (Lelieveld et al., 2002; Zerefos et al., 2002). Thessa-
-loniki, the major city in northern Greece, lies along the exit of air
-pollutants from Europe, in the path of the prevailing long-range
-transport (LRT) trajectories, as we move from central and east-
-ern Europe to the Mediterranean (Zerefos et. al., 2002). On the
--->
 
 <!-- a) acquisition -->
-For the acquisition of radiometric data, the signal of the pyranometer is sampled with a rate of $1\,\text{Hz}$.
-The mean and the standard deviation of these samples are recorded every minute.
-The measurements are corrected for the zero offset ("dark signal" in volts).
-The "dark signal" is calculated by averaging all measurements recorded for a period of $3\,\text{h}$, before (morning) or after (evening) the Sun reaches an elevation angle of $-10^\circ$.
-The signal is converted to irradiance using a ramped value of the instrument’s sensitivity between calibrations.
+For the acquisition of radiometric data, the signal of the pyranometer is sampled at a rate of $1\,\text{Hz}$.
+The mean and the standard deviation of these samples are calculated and recorded every minute.
+The measurements are corrected for the zero offset ("dark signal" in volts), which is calculated by averaging all measurements recorded for a period of $3\,\text{h}$, before (morning) or after (evening) the Sun reaches an elevation angle of $-10^\circ$.
+The signal is converted to irradiance using a ramped value of the instrument’s sensitivity between  subsequent calibrations.
 
 <!-- b) Radiation data quality check -->
 A manual screening was performed, to remove inconsistent and erroneous recordings that can occur stochastically or systematically, during the continuous operation of the instruments.
 The manual screening is aided by a radiation data quality assurance procedure, adjusted for the site, which is based on the methods of
 Long and Shi\ [-@Long2008a; -@Long2006].
 Thus, problematic recordings have been excluded from further processing.
-Although it is impossible to detect all false data, the large number of available data, and the aggregation scheme we used, ensures the good quality of the radiation measurements used in this study.
+Although it is impossible to detect all false data, the large number of available data, and the aggregation scheme we used, ensures the quality of the radiation measurements used in this study.
 
 <!-- c) Clear sky identification -->
 In order to be able to estimate the effect of the sky conditions on the long term variability of SDR, we created three datasets, by characterizing each one-minute measurement with a corresponding sky condition (i.e., all-sky, clear-sky and cloudy-sky).
@@ -428,7 +414,8 @@ for (an in care) {
 TSIslopeAll <- TSI[DATA == "All sky cond."]
 ```
 
-<!-- # Detection of clear periods in GHI measurements for SDR trends. -->
+
+## The clear sky identification algorithm
 
 For completeness, we will provide below a brief overview of the clear sky identification algorithm (CSid), along with the site specific thresholds.
 To calculate the reference clear sky $\text{SDR}_\text{CSref}$ we used the $\text{SDR}_\text{Haurwitz}$ derived by the radiation model of @Haurwitz1945, adjusted for our site with a factor $a$ (Eq.\ \ref{eq:ahau}), resulted by an iterative optimization process, as described by @Long2000 and @Reno2016.

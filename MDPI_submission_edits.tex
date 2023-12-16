@@ -1,7 +1,7 @@
 %  LaTeX support: latex@mdpi.com
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL SUBMISSION_01/MDPI_submission.tex   Sun Nov 12 17:31:09 2023
-%DIF ADD MDPI_submission.tex                 Fri Dec 15 12:35:29 2023
+%DIF ADD MDPI_submission.tex                 Sat Dec 16 12:12:46 2023
 %  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
 
 %=================================================================
@@ -323,45 +323,53 @@ period of study, under different sky conditions (all-sky, clear-sky and
 cloud-sky). Finally, we investigated the dependence of the trends on
 solar zenith angle and season.
 
-\hypertarget{observational-data-and-methodology.}{%
-\section{Observational data and
-methodology.}\label{observational-data-and-methodology.}}
+\DIFdelbegin %DIFDELCMD < \hypertarget{observational-data-and-methodology.}{%
+%DIFDELCMD < \section{Observational data and
+%DIFDELCMD < methodology.}\label{observational-data-and-methodology.}}
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \hypertarget{data-and-methodology}{%
+\section{Data and methodology}\label{data-and-methodology}}
+\DIFaddend 
 
 The SDR data were measured with a Kipp \& Zonen CM-21 pyranometer
 operating continuously at the Laboratory of Atmospheric Physics of the
 Aristotle University of Thessaloniki (\(40^\circ\,38'\,\)N,
-\(22^\circ\,57'\,\)E, \(80\,\)m~a.s.l.) in the period from 1993-04-13 to
-\DIFdelbegin \DIFdel{2023-04-13}\DIFdelend \DIFaddbegin \DIFadd{2023-04-12}\DIFaddend . The monitoring site is located near the city centre, and we
-expect to be affected by the urban environment. During the study period,
-the pyranometer has been independently calibrated three times at the
-Meteorologisches Observatorium Lindenberg, DWD, when it was verified the
-stability of the instrument to within better than \(0.7\%\) relative to
-the initial calibration by the manufacturer. Along with SDR, the direct
-beam radiation (DNI) was also measured by a collocated Kipp \& Zonen
-CHP-1 pyrheliometer, for the period 2016-04-01 to \DIFdelbegin \DIFdel{2023-04-13}\DIFdelend \DIFaddbegin \DIFadd{2023-04-12}\DIFaddend . Although,
+\(22^\circ\,57'\,\)E, \(80\,\)m~a.s.l.) \DIFdelbegin \DIFdel{in }\DIFdelend \DIFaddbegin \DIFadd{since 1993. Here we use data for
+}\DIFaddend the period from 1993-04-13 to \DIFdelbegin \DIFdel{2023-04-13}\DIFdelend \DIFaddbegin \DIFadd{2023-04-12}\DIFaddend . The monitoring site is located
+near the city centre \DIFdelbegin \DIFdel{, and we expect to be }\DIFdelend \DIFaddbegin \DIFadd{thus we expect that measurements are }\DIFaddend affected by
+the urban environment. During the study period, the pyranometer has been
+independently calibrated three times at the Meteorologisches
+Observatorium Lindenberg, DWD, \DIFdelbegin \DIFdel{when it was verified the
+}\DIFdelend \DIFaddbegin \DIFadd{verifying that }\DIFaddend stability of the
+instrument\DIFdelbegin \DIFdel{to within }\DIFdelend \DIFaddbegin \DIFadd{'s sensitivity is }\DIFaddend better than \(0.7\%\) relative to the
+initial calibration by the manufacturer. Along with SDR, the direct beam
+radiation (DNI) \DIFdelbegin \DIFdel{was also measured by }\DIFdelend \DIFaddbegin \DIFadd{is also measured with }\DIFaddend a collocated Kipp \& Zonen CHP-1
+pyrheliometer \DIFdelbegin \DIFdel{, for the period }\DIFdelend \DIFaddbegin \DIFadd{since }\DIFaddend 2016-04-01\DIFdelbegin \DIFdel{to 2023-04-13. Although,
 we have performed a similar analysis to the DNI data, the results are
 not presented here, as they lack the appropriate statistical
-significance, due to the sorter duration of the data. However, the DNI
-data were used as auxiliary data, in the clear sky identification
-algorithm (CSid), which is discussed later, for the selection of the
-appropriate thresholds. It is noted that despite the capability of the
-CSid algorithm to use the DNI as a characterization parameter, we
-haven't utilized it here, to avoid any selection bias, due to unequal
-length of the two datasets. There are four distinct steps in the
-creation of the dataset analysed here: a)~the acquisition of radiation
-measurements from the sensors, b)~the data quality check, c)~the
-identification of ``clear sky'' conditions from the radiometric data,
-and d)~the aggregation of data and trend analysis.
+significance, due to the sorter duration of the data. However, the }\DIFdelend \DIFaddbegin \DIFadd{. The }\DIFaddend DNI data were used as auxiliary data
+\DIFdelbegin \DIFdel{, }\DIFdelend \DIFaddbegin \DIFadd{to support the selection of appropriate thresholds }\DIFaddend in the clear sky
+identification algorithm (CSid), which is discussed later\DIFdelbegin \DIFdel{, for the selection of the
+appropriate thresholds}\DIFdelend . It is noted
+that \DIFdelbegin \DIFdel{despite the capability of }\DIFdelend the \DIFdelbegin \DIFdel{CSid algorithm to use the DNI as a characterization parameter, we
+haven't utilized it here, }\DIFdelend \DIFaddbegin \DIFadd{limited dataset of DNI was not used for the identification of
+clear sky cases in the entire SDR series }\DIFaddend to avoid any selection bias \DIFdelbegin \DIFdel{, }\DIFdelend due
+to unequal length of the two datasets. There are four distinct steps in
+the creation of the dataset \DIFdelbegin \DIFdel{analysed }\DIFdelend \DIFaddbegin \DIFadd{analyzed }\DIFaddend here: a)~the acquisition of
+radiation measurements from the sensors, b)~the data quality check,
+c)~the identification of ``clear sky'' conditions from the radiometric
+data, and d)~the aggregation of data and trend analysis.
 
 For the acquisition of radiometric data, the signal of the pyranometer
-is sampled with a rate of \(1\,\text{Hz}\). The mean and the standard
-deviation of these samples are recorded every minute. The measurements
-are corrected for the zero offset (``dark signal'' in volts). The ``dark
-signal'' is calculated by averaging all measurements recorded for a
+is sampled \DIFdelbegin \DIFdel{with }\DIFdelend \DIFaddbegin \DIFadd{at }\DIFaddend a rate of \(1\,\text{Hz}\). The mean and the standard
+deviation of these samples are \DIFaddbegin \DIFadd{calculated and }\DIFaddend recorded every minute. The
+measurements are corrected for the zero offset (``dark signal'' in
+volts)\DIFdelbegin \DIFdel{. The ``dark
+signal'' }\DIFdelend \DIFaddbegin \DIFadd{, which }\DIFaddend is calculated by averaging all measurements recorded for a
 period of \(3\,\text{h}\), before (morning) or after (evening) the Sun
 reaches an elevation angle of \(-10^\circ\). The signal is converted to
 irradiance using a ramped value of the instrument's sensitivity between
-calibrations.
+\DIFaddbegin \DIFadd{subsequent }\DIFaddend calibrations.
 
 A manual screening was performed, to remove inconsistent and erroneous
 recordings that can occur stochastically or systematically, during the
@@ -371,8 +379,9 @@ which is based on the methods of Long and
 Shi~\citetext{\citeyear{Long2008a}; \citeyear{Long2006}}. Thus,
 problematic recordings have been excluded from further processing.
 Although it is impossible to detect all false data, the large number of
-available data, and the aggregation scheme we used, ensures the good
-quality of the radiation measurements used in this study.
+available data, and the aggregation scheme we used, ensures the \DIFdelbegin \DIFdel{good
+}\DIFdelend quality
+of the radiation measurements used in this study.
 
 In order to be able to estimate the effect of the sky conditions on the
 long term variability of SDR, we created three datasets, by
@@ -392,7 +401,11 @@ the sky. Despite the fine-tuning of the procedure, a few marginal cases
 exist, that have been identified manually as false positive or false
 negative but cannot affect the final results of the study.
 
-For completeness, we will provide below a brief overview of the clear
+\DIFaddbegin \hypertarget{the-clear-sky-identification-algorithm}{%
+\subsection{The clear sky identification
+algorithm}\label{the-clear-sky-identification-algorithm}}
+
+\DIFaddend For completeness, we will provide below a brief overview of the clear
 sky identification algorithm (CSid), along with the site specific
 thresholds. To calculate the reference clear sky
 \(\text{SDR}_\text{CSref}\) we used the \(\text{SDR}_\text{Haurwitz}\)

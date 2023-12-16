@@ -283,45 +283,41 @@ period of study, under different sky conditions (all-sky, clear-sky and
 cloud-sky). Finally, we investigated the dependence of the trends on
 solar zenith angle and season.
 
-\hypertarget{observational-data-and-methodology.}{%
-\section{Observational data and
-methodology.}\label{observational-data-and-methodology.}}
+\hypertarget{data-and-methodology}{%
+\section{Data and methodology}\label{data-and-methodology}}
 
 The SDR data were measured with a Kipp \& Zonen CM-21 pyranometer
 operating continuously at the Laboratory of Atmospheric Physics of the
 Aristotle University of Thessaloniki (\(40^\circ\,38'\,\)N,
-\(22^\circ\,57'\,\)E, \(80\,\)m~a.s.l.) in the period from 1993-04-13 to
-2023-04-12. The monitoring site is located near the city centre, and we
-expect to be affected by the urban environment. During the study period,
-the pyranometer has been independently calibrated three times at the
-Meteorologisches Observatorium Lindenberg, DWD, when it was verified the
-stability of the instrument to within better than \(0.7\%\) relative to
-the initial calibration by the manufacturer. Along with SDR, the direct
-beam radiation (DNI) was also measured by a collocated Kipp \& Zonen
-CHP-1 pyrheliometer, for the period 2016-04-01 to 2023-04-12. Although,
-we have performed a similar analysis to the DNI data, the results are
-not presented here, as they lack the appropriate statistical
-significance, due to the sorter duration of the data. However, the DNI
-data were used as auxiliary data, in the clear sky identification
-algorithm (CSid), which is discussed later, for the selection of the
-appropriate thresholds. It is noted that despite the capability of the
-CSid algorithm to use the DNI as a characterization parameter, we
-haven't utilized it here, to avoid any selection bias, due to unequal
-length of the two datasets. There are four distinct steps in the
-creation of the dataset analysed here: a)~the acquisition of radiation
-measurements from the sensors, b)~the data quality check, c)~the
-identification of ``clear sky'' conditions from the radiometric data,
-and d)~the aggregation of data and trend analysis.
+\(22^\circ\,57'\,\)E, \(80\,\)m~a.s.l.) since 1993. Here we use data for
+the period from 1993-04-13 to 2023-04-12. The monitoring site is located
+near the city centre thus we expect that measurements are affected by
+the urban environment. During the study period, the pyranometer has been
+independently calibrated three times at the Meteorologisches
+Observatorium Lindenberg, DWD, verifying that stability of the
+instrument's sensitivity is better than \(0.7\%\) relative to the
+initial calibration by the manufacturer. Along with SDR, the direct beam
+radiation (DNI) is also measured with a collocated Kipp \& Zonen CHP-1
+pyrheliometer since 2016-04-01. The DNI data were used as auxiliary data
+to support the selection of appropriate thresholds in the clear sky
+identification algorithm (CSid), which is discussed later. It is noted
+that the limited dataset of DNI was not used for the identification of
+clear sky cases in the entire SDR series to avoid any selection bias due
+to unequal length of the two datasets. There are four distinct steps in
+the creation of the dataset analyzed here: a)~the acquisition of
+radiation measurements from the sensors, b)~the data quality check,
+c)~the identification of ``clear sky'' conditions from the radiometric
+data, and d)~the aggregation of data and trend analysis.
 
 For the acquisition of radiometric data, the signal of the pyranometer
-is sampled with a rate of \(1\,\text{Hz}\). The mean and the standard
-deviation of these samples are recorded every minute. The measurements
-are corrected for the zero offset (``dark signal'' in volts). The ``dark
-signal'' is calculated by averaging all measurements recorded for a
+is sampled at a rate of \(1\,\text{Hz}\). The mean and the standard
+deviation of these samples are calculated and recorded every minute. The
+measurements are corrected for the zero offset (``dark signal'' in
+volts), which is calculated by averaging all measurements recorded for a
 period of \(3\,\text{h}\), before (morning) or after (evening) the Sun
 reaches an elevation angle of \(-10^\circ\). The signal is converted to
 irradiance using a ramped value of the instrument's sensitivity between
-calibrations.
+subsequent calibrations.
 
 A manual screening was performed, to remove inconsistent and erroneous
 recordings that can occur stochastically or systematically, during the
@@ -331,8 +327,8 @@ which is based on the methods of Long and
 Shi~\citetext{\citeyear{Long2008a}; \citeyear{Long2006}}. Thus,
 problematic recordings have been excluded from further processing.
 Although it is impossible to detect all false data, the large number of
-available data, and the aggregation scheme we used, ensures the good
-quality of the radiation measurements used in this study.
+available data, and the aggregation scheme we used, ensures the quality
+of the radiation measurements used in this study.
 
 In order to be able to estimate the effect of the sky conditions on the
 long term variability of SDR, we created three datasets, by
@@ -351,6 +347,10 @@ calibrated with the main focus, to identify the presence of clouds on
 the sky. Despite the fine-tuning of the procedure, a few marginal cases
 exist, that have been identified manually as false positive or false
 negative but cannot affect the final results of the study.
+
+\hypertarget{the-clear-sky-identification-algorithm}{%
+\subsection{The clear sky identification
+algorithm}\label{the-clear-sky-identification-algorithm}}
 
 For completeness, we will provide below a brief overview of the clear
 sky identification algorithm (CSid), along with the site specific
