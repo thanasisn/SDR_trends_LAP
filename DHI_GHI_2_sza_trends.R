@@ -219,7 +219,7 @@ for (asz in unique(test$SZA)) {
          main = asz)
     abline(v = 170, col = "red")
 }
-test[GLB_att_des > 170, .N , by = Date]
+test[GLB_att_des > 180, .N , by = Date]
 
 for (asz in unique(test$SZA)) {
     # plot(test[SZA == asz, GLB_att_des, Date],
@@ -229,7 +229,7 @@ for (asz in unique(test$SZA)) {
          main = asz)
     abline(v = 300, col = "red")
 }
-test[GLB_att_des > 170, .N , by = Date]
+test[GLB_att_des > 180, .N , by = Date]
 
 
 
@@ -274,6 +274,22 @@ test[SZA == 78 & GLB_att_des > 200, .N , by = Date ]
 
 
 
+test <- ALL_2_daily_DESEAS[ SZA > 75 & SZA < 86 ]
+test <- rm.cols.dups.DT(test)
+test <- rm.cols.NA.DT(test)
+
+
+count <- test[, sum(GLB_att_N) , by = .(SZA, preNoon, Date )]
+
+tc <- count[, (diff(V1)), by = .(SZA, Date) ]
+
+hist(tc$SZA)
+plot(tc[SZA==76 , V1, Date])
+plot(tc[SZA==77 , V1, Date])
+plot(tc[SZA==78 , V1, Date])
+plot(tc[SZA==79 , V1, Date])
+
+tc[SZA==78 & V1 < -2]
 
 
 ## __ Calculate trend SZA ~ Day ------------------------------------------------
@@ -1207,7 +1223,7 @@ for (ase in seasons) {
 #+ SzaTrendsSeasTogether, echo=F, include=T
 {
     vars        <- c("GLB_att_des") ## original
-    vars        <- c("GLB_att")
+    # vars        <- c("GLB_att")
     avar        <- vars[1]
     dbs         <- c(  "ALL_2_bySeason_daily_DESEAS",
                      "CLEAR_2_bySeason_daily_DESEAS",
