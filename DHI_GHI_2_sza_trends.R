@@ -211,6 +211,8 @@ test <- rm.cols.NA.DT(test)
 
 
 for (asz in unique(test$SZA)) {
+    if (all(is.na(test[SZA == asz, GLB_att_des]))) next()
+
     # plot(test[SZA == asz, GLB_att_des, Date],
     #      main = asz)
     hist(test[SZA == asz, GLB_att_des], breaks = 100,
@@ -276,7 +278,7 @@ test[SZA == 78 & GLB_att_des > 200, .N , by = Date ]
 
 ## __ Calculate trend SZA ~ Day ------------------------------------------------
 
-vars <- c("GLB_att_des")
+vars <- c("GLB_att_des", "GLB_att")
 
 dbs  <- c(  "ALL_2_daily_DESEAS",
           "CLEAR_2_daily_DESEAS",

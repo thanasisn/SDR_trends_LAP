@@ -88,45 +88,59 @@ Although it is impossible to detect all false data, the large number of
 available data, and the aggregation scheme we used, ensures the quality
 of the radiation measurements used in this study.
 
-In order to be able to estimate the effect of the sky conditions on the
-long term variability of SDR, we created three datasets, by
-characterizing each one-minute measurement with a corresponding sky
-condition (i.e., all-sky, clear-sky and cloudy-sky). To identify the
-clear-sky conditions we used a method proposed by Long and Ackerman
-(2000) and by Reno and Hansen (2016), which were adapted and configured
-for the site, as the authors suggest.
+Due to the significant measurement uncertainty when the Sun is near the
+horizon, we have excluded all measurements with SZA greater than
+$85^{\circ}$. Moreover, due to obstructions around the site (hills and
+buildings) which block the direct irradiance, we excluded data with
+azimuth angle in the range $58^{\circ}$ - $120^{\circ}$ and with SZA
+greater than $78^{\circ}$. To make the measurements comparable
+throughout the dataset, we adjusted all one-minute data to the mean
+Sun - Earth distance. Subsequently, we adjusted all measurements to the
+Total Solar Irradiance (TSI) at $1\,\text{au}$, in order to compensate
+for the Sun's intensity variability, using a time series of satellite
+TSI observations. The TSI data we used are part of the "NOAA Climate
+Data Record of Total Solar Irradiance" dataset (Coddington et al. 2005).
+The initial daily values of this dataset were interpolated to match the
+time step of our measurements.
 
-We have to note, that the definition of clear or cloudy sky, has some
-subjectivity, in any method of characterization. As a result, the
-details of the definition are site specific, it relies on a combination
-of thresholds and comparisons with ideal radiation models and
-statistical analysis of different signal metrics. The CSid algorithm was
-calibrated with the main focus, to identify the presence of clouds on
-the sky. Despite the fine-tuning of the procedure, a few marginal cases
-exist, that have been identified manually as false positive or false
-negative but cannot affect the final results of the study.
+In order to estimate the effect of the sky conditions on the long term
+variability of SDR, we created three datasets by characterizing each
+one-minute measurement with a corresponding sky-condition flag (i.e.,
+all-sky, clear-sky and cloudy-sky). To identify the clear-cases we used
+a method proposed by Long and Ackerman (2000) and by Reno and Hansen
+(2016), which were adapted and configured for the site of Thessaloniki.
+We note that all methods have some subjectivity in the definition of
+clear or cloudy sky cases. As a result, the details of the definition
+are site specific and they rely on a combination of thresholds and
+comparisons with ideal radiation models and statistical analysis of
+different signal metrics. The CSid algorithm was calibrated with the
+main focus, to identify the presence of clouds. Despite the fine-tuning
+of the procedure, in a few marginal cases false positive or false
+negative results were identified by manual inspection. However, due to
+their small number, they cannot affect the final results of the study.
+For completeness, we provide below a brief overview of the clear-sky
+identification algorithm (CSid), along with the site specific
+thresholds.
 
 ## 2.1 The clear sky identification algorithm
 
-For completeness, we will provide below a brief overview of the clear
-sky identification algorithm (CSid), along with the site specific
-thresholds. To calculate the reference clear sky
-$\text{SDR}_{\text{CSref}}$ we used the $\text{SDR}_{\text{Haurwitz}}$
-derived by the radiation model of Haurwitz (1945), adjusted for our site
-with a factor $a$ (Eq. ), resulted by an iterative optimization process,
-as described by Long and Ackerman (2000) and Reno and Hansen (2016). The
-target of the optimization was the minimization of a function $f(a)$
-(Eq. ) and was accomplished with the algorithmic function "optimise",
-which is an implementation based on the work of Brent (1973), from the
-library "stats" of the R programming language (R Core Team 2023).
+To calculate the reference clear-sky $\text{SDR}_{\text{CSref}}$ we used
+the $\text{SDR}_{\text{Haurwitz}}$ derived by the radiation model of
+Haurwitz (1945), adjusted for our site with a factor $a$ (Eq. ),
+estimated through an iterative optimization process, as described by
+Long and Ackerman (2000) and Reno and Hansen (2016). The target of the
+optimization was the minimization of a function $f(a)$ (Eq. ) and was
+accomplished with the algorithmic function "optimise", which is an
+implementation based on the work of Brent (1973), from the library
+"stats" of the R programming language (R Core Team 2023).
 
 $$f(a) = \frac{1}{n}\sum_{i = 1}^{n}\left( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i} \right)^{2}$$
 
-where: $n$ is the total number of daylight records,
-$\text{SDR}_{\text{CSid},i}$ are the records identified as clear sky by
-CSid, $a$ is a hypothetical adjustment factor, and
-$\text{SDR}_{\text{testCSref},i}$ is any of the tested clear sky
-radiation models.
+where: $n$ is the total number of daylight data,
+$\text{SDR}_{\text{CSid},i}$ are the data identified as clear sky by
+CSid, $a$ is a site-specific adjustment factor, and
+$\text{SDR}_{\text{testCSref},i}$ is the SDR derived by any of the
+tested clear-sky radiation models.
 
 The optimization and the selection of the clear sky reference model, was
 performed on SDR observations for the period 2016 - 2021. During the
@@ -137,28 +151,28 @@ Ineichen-Perez), with a wide range of factors. These models are
 described in more details by Reno, Hansen, and Stein (2012b) and
 evaluated by Reno and Hansen (2016). We found, that Haurwitz's model,
 adjusted with the factor $a = 0.965$ yields one of the lowest root mean
-squared errors (RMSE), while the procedure, manages to characterize the
-majority of the data. Thus, our clear sky reference is derived by the
-Eq. .
+squared errors (RMSE), while the procedure manages to characterize
+successfully the majority of the data. Thus, our clear sky reference is
+derived by the Eq. .
 
 $$\text{SDR}_{\text{CSref}} = a \times \text{SDR}_{\text{Haurwitz}} = 0.965 \times 1098 \times \cos(\theta) \times \exp\left( \frac{- 0.057}{\cos(\theta)} \right)$$
 
-where: $\text{SDR}_{\text{CSref}}$ is the reference clear sky SDR, in
-$\text{W}\,\text{m}^{- 2}$ and $\theta$ is the solar zenith angle (SZA).
+where $\theta$ is the solar zenith angle (SZA).
 
 The criteria that were used to identify whether a measurement was taken
 under clear-sky conditions are presented below. A data point is flagged
-as "clear-sky" if all criteria are satisfied, otherwise it is considered
-to be "cloud-sky". Each criterion was applied for a running window of
-$11$ consecutive one-minute measurements, and the characterization is
-assigned to the central value of the window. Each parameter, was
+as "clear-sky" if all criteria are satisfied; otherwise it is considered
+as "cloud-sky". Each criterion was applied for a running window of $11$
+consecutive one-minute measurements, and the characterization was
+assigned to the central datum of the window. Each parameter, was
 calculated both from the observations and the reference clear sky model,
 for each comparison. The allowable range of variation is defined by the
 model-derived value of the parameter multiplied by a factor plus an
 offset. The factors and the offsets were determined empirically, by
 manually inspecting each filter's performance on selected days and
-adjusting them accordingly during an iterative process. The criteria
-are:
+adjusting them accordingly during an iterative process. The criteria are
+listed below, together with the range of values within which the
+respective parameter should fall in order to raise the clear-sky flag:
 
 a)  Mean of the measured ${\overline{\text{SDR}}}_{i}$ (Eq. ).
 
@@ -212,42 +226,29 @@ x_{\text{CSref},i} = \text{SDR}_{\text{CSref},i + 1} - \text{SDR}_{\text{CSref},
 
 $$X_{i} < 7.5\, Wm^{- 2}$$
 
-Due to the significant measurement uncertainty when the Sun is near the
-horizon, we have excluded all measurements with SZA greater than
-$85^{\circ}$. Moreover, due to some obstructions around the site (hills
-and buildings), we excluded data with azimuth angle between $58^{\circ}$
-and $120^{\circ}$ with SZA greater than $78^{\circ}$. On the latter
-instances, Sun is systematically not visible from the instrument's
-location. To make the measurements comparable throughout the dataset, we
-adjusted all one-minute radiometric values to the mean Sun - Earth
-distance. Subsequently, we made all measurements relative to the Total
-Solar Irradiance (TSI) at $1\,\text{au}$, in order to compensate for the
-Sun's intensity variability, using a time series of satellite TSI
-observations. The TSI data we used are part of the "NOAA Climate Data
-Record of Total Solar Irradiance" dataset (Coddington et al. 2005). The
-initial daily values of this dataset were interpolated to match the time
-step of our measurements. In the final dataset $23.3\%$ of the 1-minute
-data were identified as under clear-sky conditions and $43\%$ as under
-cloud-sky conditions.
+In the final dataset $23.3\%$ of the 1-minute data were identified as
+under clear-sky conditions and $43\%$ as under cloud-sky conditions.
 
-In order to investigate the SDR trends, we implemented an appropriate
-aggregation scheme to the 1-minute data to derive a series in coarser
-time-scales. To preserve the representativeness of the data we used the
-following criteria: a) we accept only days with more than 50% of the
-daytime measurements present and valid, b) on the dataset of clear- and
-cloudy-skies, we included only days with more than 60% of the daytime
-measurements identified as clear or cloudy respectively, c) monthly
-values were computed from daily means only when at least 20 days were
-available. To create the daily and monthly climatological means, we
-averaged the data based on the day of year and calendar month,
-respectively. For the seasonal means we averaged the mean daily values
-in each season (Winter: December - February, Spring: March - May, etc.).
-Finally, each data set was deseasonalized by subtracting the
-corresponding climatological annual cycle (daily or monthly) from the
-actual data. To estimate the SZA effect on the SDR trends, the
-one-minute data were aggregated in $1^{\circ}$ SZA bins, separately for
-the morning and afternoon hours, and then were deseasonalized as
-mentioned above.
+## 2.2 Aggregation of data and statistical approach
+
+In order to investigate the SDR trends which are the main focus of the
+study, we implemented an appropriate aggregation scheme to the
+one-minute data to derive a series in coarser time-scales. To preserve
+the representativeness of the data we used the following criteria: a) we
+accept only days with more than 50% of the daytime measurements present
+and valid, b) on the dataset of clear- and cloudy-skies, we included
+only days with more than 60% of the daytime measurements identified as
+clear or cloudy respectively, c) monthly values were computed from daily
+means only when at least 20 days were available. To create the daily and
+monthly climatological means, we averaged the data based on the day of
+year and calendar month, respectively. For the seasonal means we
+averaged the mean daily values in each season (Winter: December -
+February, Spring: March - May, etc.). Finally, each data set was
+deseasonalized by subtracting the corresponding climatological annual
+cycle (daily or monthly) from the actual data. To estimate the SZA
+effect on the SDR trends, the one-minute data were aggregated in
+$1^{\circ}$ SZA bins, separately for the morning and afternoon hours,
+and then were deseasonalized as mentioned above.
 
 # 3 Results
 
@@ -269,14 +270,14 @@ interesting to note, that for the observations period, the trend of the
 TSI is $- 0.00024\,\%/y$, and thus we can not attribute any major effect
 on SDR trend to Solar variability.
 
-![Figure 3.1: Anomalies (%) of the daily all-sky SDR, relative to
-climatological values for 1993 - 2023. The black line shows the long
-term linear trend.](media/rId23.png){width="5.833333333333333in"
+![Figure 3.1: Anomalies (%) of the daily all-sky SDR from the
+climatological mean for the period1993 - 2023. The black line is the
+long term linear trend.](media/rId24.png){width="5.833333333333333in"
 height="2.6942082239720033in"}
 
-Figure 3.1: Anomalies (%) of the daily all-sky SDR, relative to
-climatological values for 1993 - 2023. The black line shows the long
-term linear trend.
+Figure 3.1: Anomalies (%) of the daily all-sky SDR from the
+climatological mean for the period1993 - 2023. The black line is the
+long term linear trend.
 
 Although the year-to-year variability of the anomalies (Figure and
 Figures , in Appendix), shows a rather homogeneous behaviour, plots of
