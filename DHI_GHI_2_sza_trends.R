@@ -295,9 +295,17 @@ tc[SZA==78 & V1 < -2]
 
 ##  EXCLUDE PROBLEMATIC DATA  --------------------------------------------------
 
-dbs  <- c(  "ALL_2_daily_DESEAS",
+dbs  <- c("ALL_2_daily_DESEAS",
           "CLEAR_2_daily_DESEAS",
-          "CLOUD_2_daily_DESEAS")
+          "CLOUD_2_daily_DESEAS",
+          ## monthly
+          "ALL_2_monthly_DESEAS",
+          "CLEAR_2_monthly_DESEAS",
+          "CLOUD_2_monthly_DESEAS",
+          ## seasonal daily
+          "ALL_2_bySeason_daily_DESEAS",
+          "CLEAR_2_bySeason_daily_DESEAS",
+          "CLOUD_2_bySeason_daily_DESEAS")
 
 for (DBn in dbs) {
     DB <- get(DBn)
