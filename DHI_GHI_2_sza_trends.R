@@ -286,10 +286,29 @@ tc <- count[, (diff(V1)), by = .(SZA, Date) ]
 hist(tc$SZA)
 plot(tc[SZA==76 , V1, Date])
 plot(tc[SZA==77 , V1, Date])
-plot(tc[SZA==78 , V1, Date])
-plot(tc[SZA==79 , V1, Date])
+# plot(tc[SZA==78 , V1, Date])
+# plot(tc[SZA==79 , V1, Date])
 
 tc[SZA==78 & V1 < -2]
+
+
+
+##  EXCLUDE PROBLEMATIC DATA  --------------------------------------------------
+
+dbs  <- c(  "ALL_2_daily_DESEAS",
+          "CLEAR_2_daily_DESEAS",
+          "CLOUD_2_daily_DESEAS")
+
+for (DBn in dbs) {
+    DB <- get(DBn)
+    DB[ !(SZA > 77 & preNoon == TRUE) ]
+    assign(DBn, DB[ !(SZA > 77 & preNoon == TRUE) ])
+}
+
+dbs         <- c(  "ALL_2_bySeason_daily_DESEAS",
+                   "CLEAR_2_bySeason_daily_DESEAS",
+                   "CLOUD_2_bySeason_daily_DESEAS")
+
 
 
 ## __ Calculate trend SZA ~ Day ------------------------------------------------
