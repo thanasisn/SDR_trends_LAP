@@ -1,4 +1,4 @@
-# 1 Introduction.
+# 1 Introduction
 
 The shortwave downward solar irradiance (SDR) at Earth's surface plays a
 significant role, on its climate. Changes of the SDR can be related to
@@ -259,9 +259,11 @@ We calculated the linear trends of SDR, from the departures of the mean
 daily values from the daily climatology and for the three sky conditions
 (Table ). In Figure  we present only the time series under all-sky
 conditions; the plots for clear-sky and cloud-sky conditions, are shown
-in the Appendix (Figures  and  ). We observe a positive trend for
-all-sky conditions ($0.38\,\%/y$), a very close but smaller trend for
-clear-skies ($0.097\,\%/y$) and a negative weaker trend for cloudy-skies
+in the Appendix (Figures  and  ). In the studied period, there is no
+significant break or change in the variability pattern of the time
+series. We observe a positive trend for all-sky conditions
+($0.38\,\%/y$), a very close but smaller trend for clear-skies
+($0.097\,\%/y$) and a negative weaker trend for cloudy-skies
 ($0.41\,\%/y$). In the studied period, there is no significant break or
 change in the variability of the time series. Other studies for the
 European region reported a change of the SDR slope, around 1980 (Wild et
@@ -324,7 +326,7 @@ the optical thickness of clouds, followed by a period of rapid increase
 following stable period spans for about 15 years up to 2021 when CUSUMs
 start increasing again.
 
-## 3.2 Effects of the solar zenith angle on SDR.
+## 3.2 Effects of the solar zenith angle on SDR
 
 The solar zenith angle is a major factor affecting the SDR, since
 increases in SZA leads to enhancement of the radiation path in the
@@ -337,10 +339,11 @@ seasonal dependencies of the minimum SZA (see Appendix, Figure ), these
 dependencies are not discussed further.
 
 For all-sky conditions the brightening effect of SDR (positive trend) is
-stronger for large SZAs (Figures  and ). The trends in the morning and
-afternoon hours are more or less consistent with small differences,
-which can be attributed to systematic diurnal variations of aerosols,
-particularly during the warm period of the year (Wang et al. 2021).
+stronger for large SZAs (Figures  and ) ranging from about $0.1\,\%/y$
+to about $0.7\,\%/y$. The trends in the morning and afternoon hours are
+more or less consistent with small differences, which can be attributed
+to systematic diurnal variations of aerosols, particularly during the
+warm period of the year (Wang et al. 2021).
 
 For cloudy-sky conditions (Figure ), we can not discern any significant
 dependence of the SDR trend with SZA. For SZAs $16^{\circ}$ -

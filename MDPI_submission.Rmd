@@ -258,7 +258,7 @@ knitr::knit_hooks$set(extrawide = function(before, options, envir) {
 ```
 
 
-# Introduction.
+# Introduction
 
 
 
@@ -640,6 +640,9 @@ LT2 <- LT
 
 We calculated the linear trends of SDR, from the departures of the mean daily values from the daily climatology and for the three sky conditions (Table\ \ref{tab:trendtable}).
 In Figure\ \ref{fig:trendALL} we present only the time series under all-sky conditions; the plots for clear-sky and cloud-sky conditions, are shown in the Appendix (Figures\ \ref{fig:trendCLEAR} and\  \ref{fig:trendCLOUD}).
+In the studied period, there is no
+significant break or change in the variability pattern of the time
+series.
 We observe a positive trend for all-sky conditions
 ($`r alltrend`\,\%/y$), a very close but smaller trend for clear-skies ($`r cleartrend`\,\%/y$) and a negative weaker trend for cloudy-skies ($`r cloudtrend`\,\%/y$).
 In the studied period, there is no significant break or change in the variability of the time series.
@@ -774,7 +777,7 @@ The following stable period spans for about 15 years up to 2021 when CUSUMs star
 
 
 
-## Effects of the solar zenith angle on SDR.
+## Effects of the solar zenith angle on SDR
 
 The solar zenith angle is a major factor affecting the SDR, since
 increases in SZA leads to enhancement of the radiation path in the
@@ -786,7 +789,9 @@ periods before noon and after noon (Figure\ \ref{fig:szatrends}).
 Although there are seasonal dependencies of the minimum SZA (see Appendix, Figure\ \ref{fig:SZAtrendSeason}), these dependencies are not discussed further.
 
 For all-sky conditions the brightening effect of SDR (positive trend) is
-stronger for large SZAs (Figures\ \ref{fig:szatrends-1} and \ref{fig:szatrends-2}).
+stronger for large SZAs (Figures\ \ref{fig:szatrends-1} and \ref{fig:szatrends-2})
+ranging from about $0.1\,\%/y$ to
+about $0.7\,\%/y$.
 The trends in the morning and afternoon hours are more or less consistent with small differences, which can be attributed to systematic diurnal variations of aerosols, particularly during the warm period of the year [@Wang2021].
 
 For cloudy-sky conditions (Figure\ \ref{fig:szatrends-3}), we can not discern any significant dependence of the SDR trend with SZA.
