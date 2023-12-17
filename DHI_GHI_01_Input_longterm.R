@@ -998,12 +998,6 @@ dummy <- gc()
 
 
 
-In the studied period, there is no
-significant break or change in the variability pattern of the time
-series.
-
-
-
 ## Season of year monthly aggregation --------------------------------------------
 
 ## Quarter of year with one month shift to include December in the next years winter
@@ -1025,70 +1019,70 @@ CLOUD_1_D_monthly_DESEAS[season_Yqrt %% 1 == 0.25, Season := "Spring"]
 CLOUD_1_D_monthly_DESEAS[season_Yqrt %% 1 == 0.50, Season := "Summer"]
 CLOUD_1_D_monthly_DESEAS[season_Yqrt %% 1 == 0.75, Season := "Autumn"]
 
-stop("DD")
+
 ## _ Create variables by season from daily means -------------------------------
-ALL_1_bySeason_daily_mean <-
-    ALL_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
-                        GLB_att    = mean(GLB_att,    na.rm = T),
-                        HOR_att    = mean(HOR_att,    na.rm = T),
-                        DIR_transp = mean(DIR_transp, na.rm = T),
-                        DIR_att_sd = sd(  DIR_att,    na.rm = T),
-                        HOR_att_sd = sd(  HOR_att,    na.rm = T),
-                        GLB_att_sd = sd(  GLB_att,    na.rm = T),
-                        GLB_att_N  = sum(!is.na(GLB_att)),
-                        HOR_att_N  = sum(!is.na(HOR_att)),
-                        DIR_att_N  = sum(!is.na(DIR_att)),
-                        minDate    = min(Date),
-                        maxDate    = max(Date),
-                        medDate    = median(Date)    ),
-                     by = .( Yqrt = season_Yqrt) ]
+ALL_1_bySeason_monthly_mean <-
+    ALL_1_D_monthly_DESEAS[,.(DIR_att    = mean(DIR_att,    na.rm = T),
+                              GLB_att    = mean(GLB_att,    na.rm = T),
+                              HOR_att    = mean(HOR_att,    na.rm = T),
+                              DIR_transp = mean(DIR_transp, na.rm = T),
+                              DIR_att_sd = sd(  DIR_att,    na.rm = T),
+                              HOR_att_sd = sd(  HOR_att,    na.rm = T),
+                              GLB_att_sd = sd(  GLB_att,    na.rm = T),
+                              GLB_att_N  = sum(!is.na(GLB_att)),
+                              HOR_att_N  = sum(!is.na(HOR_att)),
+                              DIR_att_N  = sum(!is.na(DIR_att)),
+                              minDate    = min(Date),
+                              maxDate    = max(Date),
+                              medDate    = median(Date)    ),
+                           by = .( Yqrt = season_Yqrt) ]
 
-CLEAR_1_bySeason_daily_mean <-
-    CLEAR_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
-                          GLB_att    = mean(GLB_att,    na.rm = T),
-                          HOR_att    = mean(HOR_att,    na.rm = T),
-                          DIR_transp = mean(DIR_transp, na.rm = T),
-                          DIR_att_sd = sd(  DIR_att,    na.rm = T),
-                          HOR_att_sd = sd(  HOR_att,    na.rm = T),
-                          GLB_att_sd = sd(  GLB_att,    na.rm = T),
-                          GLB_att_N  = sum(!is.na(GLB_att)),
-                          HOR_att_N  = sum(!is.na(HOR_att)),
-                          DIR_att_N  = sum(!is.na(DIR_att)),
-                          minDate    = min(Date),
-                          maxDate    = max(Date),
-                          medDate    = median(Date)    ),
-                       by = .( Yqrt = season_Yqrt) ]
+CLEAR_1_bySeason_monthly_mean <-
+    CLEAR_1_D_monthly_DESEAS[,.(DIR_att    = mean(DIR_att,    na.rm = T),
+                                GLB_att    = mean(GLB_att,    na.rm = T),
+                                HOR_att    = mean(HOR_att,    na.rm = T),
+                                DIR_transp = mean(DIR_transp, na.rm = T),
+                                DIR_att_sd = sd(  DIR_att,    na.rm = T),
+                                HOR_att_sd = sd(  HOR_att,    na.rm = T),
+                                GLB_att_sd = sd(  GLB_att,    na.rm = T),
+                                GLB_att_N  = sum(!is.na(GLB_att)),
+                                HOR_att_N  = sum(!is.na(HOR_att)),
+                                DIR_att_N  = sum(!is.na(DIR_att)),
+                                minDate    = min(Date),
+                                maxDate    = max(Date),
+                                medDate    = median(Date)    ),
+                             by = .( Yqrt = season_Yqrt) ]
 
-CLOUD_1_bySeason_daily_mean <-
-    CLOUD_1_daily_mean[,.(DIR_att    = mean(DIR_att,    na.rm = T),
-                          GLB_att    = mean(GLB_att,    na.rm = T),
-                          HOR_att    = mean(HOR_att,    na.rm = T),
-                          DIR_transp = mean(DIR_transp, na.rm = T),
-                          DIR_att_sd = sd(  DIR_att,    na.rm = T),
-                          HOR_att_sd = sd(  HOR_att,    na.rm = T),
-                          GLB_att_sd = sd(  GLB_att,    na.rm = T),
-                          GLB_att_N  = sum(!is.na(GLB_att)),
-                          HOR_att_N  = sum(!is.na(HOR_att)),
-                          DIR_att_N  = sum(!is.na(DIR_att)),
-                          minDate    = min(Date),
-                          maxDate    = max(Date),
-                          medDate    = median(Date)    ),
-                       by = .( Yqrt = season_Yqrt) ]
+CLOUD_1_bySeason_monthly_mean <-
+    CLOUD_1_D_monthly_DESEAS[,.(DIR_att    = mean(DIR_att,    na.rm = T),
+                                GLB_att    = mean(GLB_att,    na.rm = T),
+                                HOR_att    = mean(HOR_att,    na.rm = T),
+                                DIR_transp = mean(DIR_transp, na.rm = T),
+                                DIR_att_sd = sd(  DIR_att,    na.rm = T),
+                                HOR_att_sd = sd(  HOR_att,    na.rm = T),
+                                GLB_att_sd = sd(  GLB_att,    na.rm = T),
+                                GLB_att_N  = sum(!is.na(GLB_att)),
+                                HOR_att_N  = sum(!is.na(HOR_att)),
+                                DIR_att_N  = sum(!is.na(DIR_att)),
+                                minDate    = min(Date),
+                                maxDate    = max(Date),
+                                medDate    = median(Date)    ),
+                             by = .( Yqrt = season_Yqrt) ]
 
-
+stop("DD")
 ## Flag seasons using quarters
-ALL_1_bySeason_daily_mean[Yqrt %% 1 == 0   , Season := "Winter"]
-ALL_1_bySeason_daily_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
-ALL_1_bySeason_daily_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
-ALL_1_bySeason_daily_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
-CLEAR_1_bySeason_daily_mean[Yqrt %% 1 == 0   , Season := "Winter"]
-CLEAR_1_bySeason_daily_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
-CLEAR_1_bySeason_daily_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
-CLEAR_1_bySeason_daily_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
-CLOUD_1_bySeason_daily_mean[Yqrt %% 1 == 0   , Season := "Winter"]
-CLOUD_1_bySeason_daily_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
-CLOUD_1_bySeason_daily_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
-CLOUD_1_bySeason_daily_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
+ALL_1_bySeason_monthly_mean[Yqrt %% 1 == 0   , Season := "Winter"]
+ALL_1_bySeason_monthly_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
+ALL_1_bySeason_monthly_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
+ALL_1_bySeason_monthly_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
+CLEAR_1_bySeason_monthly_mean[Yqrt %% 1 == 0   , Season := "Winter"]
+CLEAR_1_bySeason_monthly_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
+CLEAR_1_bySeason_monthly_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
+CLEAR_1_bySeason_monthly_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
+CLOUD_1_bySeason_monthly_mean[Yqrt %% 1 == 0   , Season := "Winter"]
+CLOUD_1_bySeason_monthly_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
+CLOUD_1_bySeason_monthly_mean[Yqrt %% 1 == 0.50, Season := "Summer"]
+CLOUD_1_bySeason_monthly_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
 
 
 
@@ -1097,44 +1091,44 @@ CLOUD_1_bySeason_daily_mean[Yqrt %% 1 == 0.75, Season := "Autumn"]
 
 ## _ Seasonal by season daily values -------------------------------------------
 
-ALL_1_bySeason_daily_seas <-
-    ALL_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
-                        GLB_att_seas    = mean(GLB_att,    na.rm = T),
-                        HOR_att_seas    = mean(HOR_att,    na.rm = T),
-                        DIR_transp_seas = mean(DIR_transp, na.rm = T),
-                        DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
-                        HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
-                        GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
-                        GLB_att_N_seas  = sum(!is.na(GLB_att)),
-                        HOR_att_N_seas  = sum(!is.na(HOR_att)),
-                        DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
-                     by = .(Season)]
+ALL_1_bySeason_monthly_seas <-
+    ALL_1_bySeason_monthly_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+                                   GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                                   HOR_att_seas    = mean(HOR_att,    na.rm = T),
+                                   DIR_transp_seas = mean(DIR_transp, na.rm = T),
+                                   DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                                   HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
+                                   GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
+                                   GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                                   HOR_att_N_seas  = sum(!is.na(HOR_att)),
+                                   DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
+                                by = .(Season)]
 
-CLEAR_1_bySeason_daily_seas <-
-    CLEAR_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
-                          GLB_att_seas    = mean(GLB_att,    na.rm = T),
-                          HOR_att_seas    = mean(HOR_att,    na.rm = T),
-                          DIR_transp_seas = mean(DIR_transp, na.rm = T),
-                          DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
-                          HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
-                          GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
-                          GLB_att_N_seas  = sum(!is.na(GLB_att)),
-                          HOR_att_N_seas  = sum(!is.na(HOR_att)),
-                          DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
-                       by = .(Season)]
+CLEAR_1_bySeason_monthly_seas <-
+    CLEAR_1_bySeason_monthly_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+                                     GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                                     HOR_att_seas    = mean(HOR_att,    na.rm = T),
+                                     DIR_transp_seas = mean(DIR_transp, na.rm = T),
+                                     DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                                     HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
+                                     GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
+                                     GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                                     HOR_att_N_seas  = sum(!is.na(HOR_att)),
+                                     DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
+                                  by = .(Season)]
 
-CLOUD_1_bySeason_daily_seas <-
-    CLOUD_1_daily_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
-                          GLB_att_seas    = mean(GLB_att,    na.rm = T),
-                          HOR_att_seas    = mean(HOR_att,    na.rm = T),
-                          DIR_transp_seas = mean(DIR_transp, na.rm = T),
-                          DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
-                          HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
-                          GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
-                          GLB_att_N_seas  = sum(!is.na(GLB_att)),
-                          HOR_att_N_seas  = sum(!is.na(HOR_att)),
-                          DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
-                       by = .(Season)]
+CLOUD_1_bySeason_monthly_seas <-
+    CLOUD_1_bySeason_monthly_mean[,.(DIR_att_seas    = mean(DIR_att,    na.rm = T),
+                                     GLB_att_seas    = mean(GLB_att,    na.rm = T),
+                                     HOR_att_seas    = mean(HOR_att,    na.rm = T),
+                                     DIR_transp_seas = mean(DIR_transp, na.rm = T),
+                                     DIR_att_sd_seas = sd(  DIR_att,    na.rm = T),
+                                     HOR_att_sd_seas = sd(  HOR_att,    na.rm = T),
+                                     GLB_att_sd_seas = sd(  GLB_att,    na.rm = T),
+                                     GLB_att_N_seas  = sum(!is.na(GLB_att)),
+                                     HOR_att_N_seas  = sum(!is.na(HOR_att)),
+                                     DIR_att_N_seas  = sum(!is.na(DIR_att))  ),
+                                  by = .(Season)]
 
 
 
