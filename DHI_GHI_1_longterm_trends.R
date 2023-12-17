@@ -1165,7 +1165,7 @@ for (avar in vars) {
 
 
 
-## ____ by season in a tight grid ----------------------------------------------
+## ____ tight grid by season ----------------------------------------------
 
 #'
 #' ### Grid of trends for each season of year from daily
@@ -1176,9 +1176,12 @@ for (avar in vars) {
 {
     vars        <- c("GLB_att_des", "wattGLB")
     avar        <- vars[1]
-    dbs         <- c(  "ALL_1_D_bySeason_DESEAS",
-                       "CLEAR_1_D_bySeason_DESEAS",
-                       "CLOUD_1_D_bySeason_DESEAS")
+    # dbs         <- c("ALL_1_D_bySeason_DESEAS",
+    #                  "CLEAR_1_D_bySeason_DESEAS",
+    #                  "CLOUD_1_D_bySeason_DESEAS")
+    dbs         <- c("ALL_1_D_bySeason_DESEAS",
+                     "CLEAR_1_D_bySeason_DESEAS",
+                     "CLOUD_1_D_bySeason_DESEAS")
     Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
     lec         <- 0
 

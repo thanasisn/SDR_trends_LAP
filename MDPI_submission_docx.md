@@ -330,22 +330,25 @@ The solar zenith angle is a major factor affecting the SDR, since
 increases in SZA leads to enhancement of the radiation path in the
 atmosphere, especially in urban environments with human activities
 emitting aerosols (Wang et al. 2021). In order to estimate the effect of
-SZA on the SDR trends, we grouped the anomaly data in bins of
-$1^{\circ}$ SZA, and calculated the overall trend for each bin before
-noon and after noon (Figure ). Although there are seasonal dependencies
-of the minimum SZA (see Appendix, Figure ), these dependencies would not
-be further examined here. For all-sky and clear-sky conditions the
-brightening effect of SDR (positive trend) is stronger for large SZAs
-(Figures  and ). The trends in the morning and afternoon hours are more
-or less consistent with small differences, which can be attributed to
-systematic diurnal variations of aerosols, particularly during the warm
-period of the year (Wang et al. 2021). For cloudy-sky conditions
-(Figure ), we can not discern any significant dependence of the SDR
-trend with SZA. For SZAs $16^{\circ}$ - $50^{\circ}$, the trends range
-within about $\pm 0.2\,\%/y$, with a weak statistical significance.
-Between $50^{\circ}$ and $75^{\circ}$ SZA the trends for the period
-before noon are stronger and negative, possibly associated with stronger
-attenuation by clouds under oblique incidence angles.
+SZA on the SDR trends, we grouped the data in bins of $1^{\circ}$ SZA,
+and calculated the overall trend for each bin, separately for the daily
+periods before noon and after noon (Figure ). Although there are
+seasonal dependencies of the minimum SZA (see Appendix, Figure ), these
+dependencies are not discussed further.
+
+For all-sky conditions the brightening effect of SDR (positive trend) is
+stronger for large SZAs (Figures  and ). The trends in the morning and
+afternoon hours are more or less consistent with small differences,
+which can be attributed to systematic diurnal variations of aerosols,
+particularly during the warm period of the year (Wang et al. 2021).
+
+For cloudy-sky conditions (Figure ), we can not discern any significant
+dependence of the SDR trend with SZA. For SZAs $16^{\circ}$ -
+$50^{\circ}$, the trends range within about $\pm 0.2\,\%/y$, with a weak
+statistical significance. Between $50^{\circ}$ and $75^{\circ}$ SZA the
+trends for the period before noon are stronger and negative, possibly
+associated with stronger attenuation by clouds under oblique incidence
+angles.
 
 ## 3.3 Long term trends by season
 
