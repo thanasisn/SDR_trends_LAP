@@ -1069,7 +1069,7 @@ CLOUD_1_bySeason_monthly_mean <-
                                 medDate    = median(Date)    ),
                              by = .( Yqrt = season_Yqrt) ]
 
-stop("DD")
+# stop("DD")
 ## Flag seasons using quarters
 ALL_1_bySeason_monthly_mean[Yqrt %% 1 == 0   , Season := "Winter"]
 ALL_1_bySeason_monthly_mean[Yqrt %% 1 == 0.25, Season := "Spring"]
@@ -1134,48 +1134,35 @@ CLOUD_1_bySeason_monthly_seas <-
 
 ## _ De-seasonal by season daily mean  -----------------------------------------
 
-ALL_1_D_bySeason_DESEAS <- merge(  ALL_1_bySeason_daily_mean,   ALL_1_bySeason_daily_seas, by = "Season", all = T)
-CLEAR_1_D_bySeason_DESEAS <- merge(CLEAR_1_bySeason_daily_mean, CLEAR_1_bySeason_daily_seas, by = "Season", all = T)
-CLOUD_1_D_bySeason_DESEAS <- merge(CLOUD_1_bySeason_daily_mean, CLOUD_1_bySeason_daily_seas, by = "Season", all = T)
+ALL_1_M_bySeason_DESEAS <- merge(  ALL_1_bySeason_monthly_mean,   ALL_1_bySeason_monthly_seas, by = "Season", all = T)
+CLEAR_1_M_bySeason_DESEAS <- merge(CLEAR_1_bySeason_monthly_mean, CLEAR_1_bySeason_monthly_seas, by = "Season", all = T)
+CLOUD_1_M_bySeason_DESEAS <- merge(CLOUD_1_bySeason_monthly_mean, CLOUD_1_bySeason_monthly_seas, by = "Season", all = T)
 
 
-rm(  ALL_1_bySeason_daily_mean,   ALL_1_bySeason_daily_seas,
-     CLEAR_1_bySeason_daily_mean, CLEAR_1_bySeason_daily_seas,
-     CLOUD_1_bySeason_daily_mean, CLOUD_1_bySeason_daily_seas)
+rm(  ALL_1_bySeason_monthly_mean,   ALL_1_bySeason_monthly_seas,
+     CLEAR_1_bySeason_monthly_mean, CLEAR_1_bySeason_monthly_seas,
+     CLOUD_1_bySeason_monthly_mean, CLOUD_1_bySeason_monthly_seas)
 dummy <- gc()
 
 ## calculate anomaly
-ALL_1_D_bySeason_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-ALL_1_D_bySeason_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
-ALL_1_D_bySeason_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-ALL_1_D_bySeason_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-CLEAR_1_D_bySeason_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-CLEAR_1_D_bySeason_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
-CLEAR_1_D_bySeason_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-CLEAR_1_D_bySeason_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
-CLOUD_1_D_bySeason_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
-CLOUD_1_D_bySeason_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
-CLOUD_1_D_bySeason_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
-CLOUD_1_D_bySeason_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+ALL_1_M_bySeason_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+ALL_1_M_bySeason_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+ALL_1_M_bySeason_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+ALL_1_M_bySeason_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+CLEAR_1_M_bySeason_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+CLEAR_1_M_bySeason_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+CLEAR_1_M_bySeason_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+CLEAR_1_M_bySeason_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
+CLOUD_1_M_bySeason_DESEAS[, DIR_att_des   := 100*(DIR_att    - DIR_att_seas   ) / DIR_att_seas   ]
+CLOUD_1_M_bySeason_DESEAS[, HOR_att_des   := 100*(HOR_att    - HOR_att_seas   ) / HOR_att_seas   ]
+CLOUD_1_M_bySeason_DESEAS[, GLB_att_des   := 100*(GLB_att    - GLB_att_seas   ) / GLB_att_seas   ]
+CLOUD_1_M_bySeason_DESEAS[, DIR_transp_des:= 100*(DIR_transp - DIR_transp_seas) / DIR_transp_seas]
 
 ## Create year from quarter!
 warning("Years in by Season are shifted by a month to match seasons")
-ALL_1_D_bySeason_DESEAS[, Year := year(Yqrt)]
-CLEAR_1_D_bySeason_DESEAS[, Year := year(Yqrt)]
-CLOUD_1_D_bySeason_DESEAS[, Year := year(Yqrt)]
-
-
-setorder(  ALL_1_D_bySeason_DESEAS, Yqrt)
-setorder(CLEAR_1_D_bySeason_DESEAS, Yqrt)
-setorder(CLOUD_1_D_bySeason_DESEAS, Yqrt)
-
-
-rm(  ALL_1_daily_mean,   ALL_1_daily_seas,
-     CLEAR_1_daily_mean, CLEAR_1_daily_seas,
-     CLOUD_1_daily_mean, CLOUD_1_daily_seas)
-dummy <- gc()
-
-
+ALL_1_M_bySeason_DESEAS[, Year := year(Yqrt)]
+CLEAR_1_M_bySeason_DESEAS[, Year := year(Yqrt)]
+CLOUD_1_M_bySeason_DESEAS[, Year := year(Yqrt)]
 
 
 
