@@ -301,8 +301,8 @@ dbs  <- c(  "ALL_2_daily_DESEAS",
 
 for (DBn in dbs) {
     DB <- get(DBn)
-    DB[ !(SZA > 77 & preNoon == TRUE) ]
-    assign(DBn, DB[ !(SZA > 77 & preNoon == TRUE) ])
+    # DB[ !(SZA > 77 & preNoon == TRUE) ]
+    assign(DBn, DB[ !(SZA > 76 & preNoon == TRUE) ])
 }
 
 dbs         <- c(  "ALL_2_bySeason_daily_DESEAS",
