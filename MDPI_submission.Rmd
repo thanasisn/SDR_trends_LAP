@@ -542,14 +542,26 @@ b) daily means for the clear-sky and cloudy-sky datasets
 were calculated only for days with more than
 `r 100 * Clear_daily_ratio_lim`% of the expected daytime
 measurements identified as clear or cloudy respectively,
-c) monthly means were computed from daily means only when at least `r Monthly_aggegation_N_lim` days of the month were available.
-To create the daily and monthly climatological means, we averaged the data based on the day of year and calendar month, respectively.
-<!-- Seasonal -->
-For the seasonal means we averaged the mean daily values in each season (Winter: December - February, Spring: March - May, etc.).
-<!-- Deseasonalization -->
-Finally, each data set was deseasonalized by subtracting the corresponding climatological annual cycle (daily or monthly) from the actual data.
-Finally, to estimate the SZA effect on the SDR trends, the one-minute data were aggregated in $1^\circ$ SZA bins, separately for the morning and afternoon hours, and then were deseasonalized as mentioned above.
+c) monthly means were computed from daily means, for all-skies dataset 
+means were computed only when at least `r Monthly_aggegation_N_lim` 
+days of the month were available.
+Seasonal means were derived by averaging the
+monthly mean values in each season (winter: December - February, spring:
+March - May, etc.).
+The daily and monthly climatological means were
+derived by averaging the data for each day of year and calendar month,
+respectively. The daily and monthly datasets were deseasonalized by
+subtracting the corresponding climatological annual cycle (daily or
+monthly) from the actual data. Finally, to estimate the SZA effect on
+the SDR trends, the one-minute data were aggregated in $1^{\circ}$ SZA
+bins, separately for the morning and afternoon hours.
 
+The linear trends were calculated using an autoregressive model
+<!-- ([ARIMA......)]{.mark} and were reported together with the 2σ errors. -->
+<!-- [For the trends derived from monthly mean data we used an effective -->
+<!-- number of observations to calculate the standard error (Sander et al., -->
+<!-- 2000) in order to assess the significance of the trends.]{.mark} -->
+@Santer2000
 
 
 # Results
@@ -793,10 +805,18 @@ For all-sky conditions the brightening effect of SDR (positive trend) is
 stronger for large SZAs (Figures\ \ref{fig:szatrends-1} and \ref{fig:szatrends-2})
 ranging from about $0.1\,\%/y$ to
 about $0.7\,\%/y$.
-The trends in the morning and afternoon hours are more or less consistent with small differences, which can be attributed to systematic diurnal variations of aerosols, particularly during the warm period of the year [@Wang2021].
+The trends in the morning and afternoon hours are more or
+less consistent with small differences at small SZAs which can be
+attributed to effects on clear sky SDR from systematic diurnal patterns
+of aerosols during the warm period of the year [@Wang2021]. 
+Note that SZAs less than $35^\circ$ can only occur during the warm period of the
+year when clear skies are more frequent.
 
-For cloudy-sky conditions (Figure\ \ref{fig:szatrends-3}), we can not discern any significant dependence of the SDR trend with SZA.
-For SZAs $16^\circ$ - $50^\circ$, the trends range within about $\pm 0.2\,\%/y$, with a weak statistical significance.
+For cloudy-sky conditions (Figure\ \ref{fig:szatrends-3}), we can not discern any significant dependence of the SDR trend with SZA as the variability of irradiance is
+dominated by the cloud effects.
+For SZAs $25^\circ$ - $75^\circ$, the trends range within about $\pm 0.2\,\%/y$, 
+the trends are variable and for most SZAs insignificant ranging between
+$0$ and $0.2%\,\%/y$.
 Between $50^\circ$ and $75^\circ$ SZA the trends for the period before noon are stronger and negative, possibly associated with stronger attenuation by clouds under oblique incidence angles.
 
 
@@ -832,10 +852,17 @@ Between $50^\circ$ and $75^\circ$ SZA the trends for the period before noon are 
 
 ```{r echo=F, eval=TRUE}
 ## Prepare table and data
-spp <- read.csv("./figures/tbl_longterm_trends_season.dat",
+
+# spp <- read.csv("./figures/tbl_longterm_trends_season.dat",
+#                strip.white = TRUE,
+#                sep         = ";",
+#                header      = TRUE)
+spp <- read.csv("./figures/tbl_longterm_trends_season_byM.dat",
                strip.white = TRUE,
                sep         = ";",
                header      = TRUE)
+
+
 spp <- spp[grep("SDR" ,spp$var), ]
 spp$slope.sd           <- NULL
 spp$slope.ConfInt_0.95 <- NULL
@@ -872,6 +899,7 @@ spp$RsqrdAdj       <- NULL
 spp$Rsqrd          <- NULL
 spp$cor.t          <- NULL
 spp$slope.stat_sig <- NULL
+spp$N_eff          <- NULL
 
 ## rename sky conditions
 spp$DATA <- sub(" cond.", "", spp$DATA)
@@ -907,12 +935,13 @@ During spring and summer the statistical significance is very low and the actual
 \begin{figure}[h!]
     \begin{adjustwidth}{-\extralength}{0cm}
         {\centering 
-            \includegraphics[width=1\linewidth]{./images/SeasonalTrendsTogether3-2} 
+            \includegraphics[width=1\linewidth]{./images/SeasonalMTrendsTogether3-2}   % Seasonal from Monthly
         }
         \caption{Linear trends (black lines) of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots).}\label{fig:seasonalALL}
     \end{adjustwidth}
 \end{figure}
 
+            <!-- % \includegraphics[width=1\linewidth]{./images/SeasonalTrendsTogether3-2}  % Seasonal from Daily -->
 
 <!-- ```{r seasonalALL, echo=F, fig.cap="Linear trends (black lines) of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots).", out.width="100%"} -->
 <!-- knitr::include_graphics("./images/SeasonalTrendsTogether3-2.png") -->

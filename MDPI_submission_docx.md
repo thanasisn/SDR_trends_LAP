@@ -239,17 +239,20 @@ excluded all days with less than 50% of the expected daytime
 measurements, b) daily means for the clear-sky and cloudy-sky datasets
 were calculated only for days with more than 60% of the expected daytime
 measurements identified as clear or cloudy respectively, c) monthly
-means were computed from daily means only when at least 20 days of the
-month were available. To create the daily and monthly climatological
-means, we averaged the data based on the day of year and calendar month,
-respectively. For the seasonal means we averaged the mean daily values
-in each season (Winter: December - February, Spring: March - May, etc.).
-Finally, each data set was deseasonalized by subtracting the
+means were computed from daily means, for all-skies dataset means were
+computed only when at least 20 days of the month were available.
+Seasonal means were derived by averaging the monthly mean values in each
+season (winter: December - February, spring: March - May, etc.). The
+daily and monthly climatological means were derived by averaging the
+data for each day of year and calendar month, respectively. The daily
+and monthly datasets were deseasonalized by subtracting the
 corresponding climatological annual cycle (daily or monthly) from the
 actual data. Finally, to estimate the SZA effect on the SDR trends, the
 one-minute data were aggregated in $1^{\circ}$ SZA bins, separately for
-the morning and afternoon hours, and then were deseasonalized as
-mentioned above.
+the morning and afternoon hours.
+
+The linear trends were calculated using an autoregressive model Santer
+et al. (2000)
 
 # 3 Results
 
@@ -341,17 +344,19 @@ dependencies are not discussed further.
 For all-sky conditions the brightening effect of SDR (positive trend) is
 stronger for large SZAs (Figures  and ) ranging from about $0.1\,\%/y$
 to about $0.7\,\%/y$. The trends in the morning and afternoon hours are
-more or less consistent with small differences, which can be attributed
-to systematic diurnal variations of aerosols, particularly during the
-warm period of the year (Wang et al. 2021).
+more or less consistent with small differences at small SZAs which can
+be attributed to effects on clear sky SDR from systematic diurnal
+patterns of aerosols during the warm period of the year (Wang et al.
+2021). Note that SZAs less than $35^{\circ}$ can only occur during the
+warm period of the year when clear skies are more frequent.
 
 For cloudy-sky conditions (Figure ), we can not discern any significant
-dependence of the SDR trend with SZA. For SZAs $16^{\circ}$ -
-$50^{\circ}$, the trends range within about $\pm 0.2\,\%/y$, with a weak
-statistical significance. Between $50^{\circ}$ and $75^{\circ}$ SZA the
-trends for the period before noon are stronger and negative, possibly
-associated with stronger attenuation by clouds under oblique incidence
-angles.
+dependence of the SDR trend with SZA as the variability of irradiance is
+dominated by the cloud effects. For SZAs $25^{\circ}$ - $75^{\circ}$,
+the trends range within about $\pm 0.2\,\%/y$, with a weak statistical
+significance. Between $50^{\circ}$ and $75^{\circ}$ SZA the trends for
+the period before noon are stronger and negative, possibly associated
+with stronger attenuation by clouds under oblique incidence angles.
 
 ## 3.3 Long term trends by season
 
@@ -359,19 +364,21 @@ Similarly to the long term trends from daily means of SDR discussed
 above, we have calculated the trend of the anomalies for the three
 different sky conditions, and for each season of the year, using the
 corresponding mean monthly values (Figure  and Table ). For all-sky
-conditions the trend in SDR in winter is the largest ($0.69\,\%/y$),
-followed by the trend in autumn ($0.43\,\%/y$, a value close to the long
+conditions the trend in SDR in winter is the largest ($0.7\,\%/y$),
+followed by the trend in autumn ($0.42\,\%/y$, a value close to the long
 term trend) both statistically significant above the $99\,\%$ confidence
 level. In spring and summer, the trends are much smaller and of lesser
 statistical significance. These seasonal differences indicate a possible
 relation of the trends in SDR to trends of clouds during winter and
-autumn. For clear-skies, the trend in winter is $0.36\,\%/y$, larger
-than for all-skies ($0.69\,\%/y$), which is another indication of a
-decreasing trend in cloud optical thickness. Moreover, the trends under
-clear- and cloudy-sky conditions are almost complementary to each other,
+autumn. For clear-skies, the trend in winter is $0.4\,\%/y$, larger than
+for all-skies ($0.7\,\%/y$), which is another indication of a decreasing
+trend in cloud optical thickness. Moreover, the trends under clear- and
+cloudy-sky conditions are almost complementary to each other,
 particularly for winter and autumn, where the signal is stronger. During
 spring and summer the statistical significance is very low and the
 actual trend too small for a meaningful comparison.
+
+            <!-- % \includegraphics[width=1\linewidth]{./images/SeasonalTrendsTogether3-2}  % Seasonal from Daily -->
 
 # 4 Conclusions
 
@@ -400,9 +407,9 @@ changes in clouds.
 The observed brightening on SDR over Thessaloniki is dependent on SZA
 (larger SZAs lead to stronger brightening). The trend is also dependent
 on season, with winter showing the strongest statistically significant
-trend of $0.69$ and $0.36\,\%/y$ for all- and clear-skies, respectively,
+trend of $0.7$ and $0.4\,\%/y$ for all- and clear-skies, respectively,
 in contrast to spring and summer. The trends for autumn are also
-significant but smaller ( $0.43$ and $0.11\,\%/y$ for all- and
+significant but smaller ( $0.42$ and $0.054\,\%/y$ for all- and
 clear-skies, respectively). Our findings are in agreement with other
 studies for the region.
 
@@ -490,6 +497,13 @@ Fuglestvedt, S. Osprey, and C.‐F. Schleussner. 2018. "Climate Impacts
 from a Removal of Anthropogenic Aerosol Emissions." *Geophysical
 Research Letters* 45 (2): 1020--29.
 <https://doi.org/10.1002/2017GL076079>.
+
+Santer, B. D., T. M. L. Wigley, J. S. Boyle, D. J. Gaffen, J. J. Hnilo,
+D. Nychka, D. E. Parker, and K. E. Taylor. 2000. "Statistical
+Significance of Trends and Trend Differences in Layer‐average
+Atmospheric Temperature Time Series." *Journal of Geophysical Research:
+Atmospheres* 105 (March): 7337--56.
+<https://doi.org/10.1029/1999JD901105>.
 
 Schwarz, M., D. Folini, S. Yang, R. P. Allan, and M. Wild. 2020.
 "Changes in Atmospheric Shortwave Absorption as Important Driver of

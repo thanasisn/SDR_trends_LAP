@@ -958,8 +958,8 @@ for (adb in database) {
         ## daily from other DT
         lines(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = col, lwd = 2)
 
-        #test
-        points(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = "red")
+        # #test
+        # points(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = "red")
 
 
         if (DRAFT == T) {

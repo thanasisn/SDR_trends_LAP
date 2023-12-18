@@ -1764,12 +1764,6 @@ write_dat(pprint,
 
 
 
-
-
-
-
-
-
 ## __ Calculate trends for each season  ----------------------------------------
 vars        <- c("GLB_att_des")
 
