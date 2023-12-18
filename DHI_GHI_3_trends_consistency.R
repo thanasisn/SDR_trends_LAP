@@ -270,6 +270,7 @@ dsets    <- c(  "ALL_1_D_monthly_DESEAS",
               "CLEAR_1_D_monthly_DESEAS",
               "CLOUD_1_D_monthly_DESEAS")
 
+
 for (ad in dsets) {
     DBS  <- get(ad)
     type <- sub("_.*", "", ad)
@@ -412,6 +413,8 @@ database    <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
                  "CLOUD_1_daily_DESEAS")
 
+
+
 #+ CumulativeDailyCuSum, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
@@ -476,7 +479,7 @@ for (adb in database) {
         ## daily from other DT
         lines(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = col, lwd = 2)
 
-        points(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = "red", lwd = 2)
+        # points(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = "red", lwd = 2)
 
 
         if (DRAFT == T) {
@@ -877,6 +880,20 @@ database    <- c(  "ALL_1_D_monthly_DESEAS",
                  "CLOUD_1_D_monthly_DESEAS")
 lec         <- 0
 
+for (adb in database) {
+    DB    <- get(adb)
+    avar  <- "GLB_att"
+    TYPE  <- sub("_.*", "", adb)
+    wcare <- c("Date", avar ,paste0(avar,"_sd"), paste0(avar,"_des"), paste0(avar,"_cusum"))
+    # DB[, ..wcare]
+    # paste0("Export_",TYPE, "_1_D_monthly_DESEAS.csv")
+    write.csv(file = paste0("Export_",TYPE, "_1_D_monthly_DESEAS.csv"),
+              x = DB[, ..wcare],
+              row.names = F)
+}
+
+
+
 #+ CumulativeMonthlyCuSum, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
@@ -940,6 +957,10 @@ for (adb in database) {
 
         ## daily from other DT
         lines(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = col, lwd = 2)
+
+        #test
+        points(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = "red")
+
 
         if (DRAFT == T) {
             title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
