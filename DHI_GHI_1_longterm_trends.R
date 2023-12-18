@@ -272,8 +272,9 @@ vars <- c("DIR_att_des", "GLB_att_des", "tsi1au_att", "near_tcc_att", "near_tcc_
 # test
 vars <- c( "GLB_att_des")
 
-dbs         <- c("ALL_1_daily_DESEAS",
-                 "CLEAR_1_daily_DESEAS",
+dbs         <- c("CLEAR_1_daily_DESEAS",
+                 "ALL_1_daily_DESEAS",
+
                  "CLOUD_1_daily_DESEAS")
 ## gather trends
 gather <- data.frame()
@@ -291,42 +292,48 @@ for (DBn in dbs) {
             ## linear model by day step
             lm1 <- lm(dataset[[avar]] ~ dataset$Date)
             d   <- summary(lm1)$coefficients
-            cat("lm: ",lm1$coefficients[2] * Days_of_year, "+/-", d[2,2] * Days_of_year,"\n")
+            cat("lm:      ", lm1$coefficients[2] * Days_of_year, "+/-", d[2,2] * Days_of_year,"\n")
             ## correlation test
             cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
 
-            ## creat times serries
+            ## create times series
             dd <- read.zoo(dataset, index.column = "Date")
             dd <- as.ts(dd)
 
 
             ## _ Arima tests  --------------------------------------------------
 
-#             amodelo  <- arima(dd[, avar], order = c(1,0,0), method = "ML")
-#             summary(amodelo)
-#             ddd <- summary(amodelo)
-#
-#             arima(x = dataset$Date, order = c(1,0,0), xreg = dataset[[avar]], method = "ML")
-#             d <- arima(x = dataset[[avar]], order = c(1,0,0), xreg = dataset$Date, method = "ML")
-#
-#             d$coef
-#             d$var.coef
-#
-#             sarima(dd[, avar], 1,0,0, details = F, method = "ML", no.constant = T)
-#             sarima(dd[, avar], 1,0,0, details = F, method = "ML")
-#
-#
-#             # armodel <- ar.ols(dd[, avar], na.action = na.exclude, order.max = 1, demean = F, intercept = T )
-#             # summary(armodel)
-#             # armodel
-#
-#             lmtest::coeftest(amodelo)
-#             lmtest::coeftest(lm1) * Days_of_year
-#             lmtest::coeftest(d)  * Days_of_year
-#
-#
-# stop("tess")
+            amodelo  <- arima(dd[, avar], order = c(1,0,0), method = "ML")
+            amod_test <- lmtest::coeftest(amodelo)
+            cat("My arima:", round(amod_test[1,], 4), "\n")
+
+
+            ## tourpal
+            dataset[, year(Date) - min(year(Date)) + ( doy - 1 ) / Hmisc::yearDays(Date) ]
+
+
+            c <- arima(x = dataset$Date,    order = c(1,0,0), xreg = dataset[[avar]], method = "ML")
+            d <- arima(x = dataset[[avar]], order = c(1,0,0), xreg = dataset$Date,    method = "ML")
+
+
+            d$coef
+            d$var.coef
+
+            sarima(dd[, avar], 1,0,0, details = F, method = "ML", no.constant = T)
+            sarima(dd[, avar], 1,0,0, details = F, method = "ML")
+
+
+            # armodel <- ar.ols(dd[, avar], na.action = na.exclude, order.max = 1, demean = F, intercept = T )
+            # summary(armodel)
+            # armodel
+
+            lmtest::coeftest(amodelo)
+            lmtest::coeftest(lm1)
+            lmtest::coeftest(d)
+            lmtest::coeftest(c)
+
+stop("tess")
 
             lag   <- 1
             dd    <- acf(dataset[[avar]], na.action = na.pass, plot = FALSE)

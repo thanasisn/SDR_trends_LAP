@@ -884,7 +884,12 @@ for (adb in database) {
     DB    <- get(adb)
     avar  <- "GLB_att"
     TYPE  <- sub("_.*", "", adb)
-    wcare <- c("Date", avar ,paste0(avar,"_sd"), paste0(avar,"_des"), paste0(avar,"_cusum"))
+    wcare <- c("Date", avar,
+               paste0(avar,"_sd"),
+               paste0(avar,"_des"),
+               paste0(avar,"_cusum"),
+               paste0(avar,"_N")
+               )
     # DB[, ..wcare]
     # paste0("Export_",TYPE, "_1_D_monthly_DESEAS.csv")
     write.csv(file = paste0("Export_",TYPE, "_1_D_monthly_DESEAS.csv"),

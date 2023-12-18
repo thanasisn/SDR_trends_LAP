@@ -353,10 +353,11 @@ warm period of the year when clear skies are more frequent.
 For cloudy-sky conditions (Figure ), we can not discern any significant
 dependence of the SDR trend with SZA as the variability of irradiance is
 dominated by the cloud effects. For SZAs $25^{\circ}$ - $75^{\circ}$,
-the trends range within about $\pm 0.2\,\%/y$, with a weak statistical
-significance. Between $50^{\circ}$ and $75^{\circ}$ SZA the trends for
-the period before noon are stronger and negative, possibly associated
-with stronger attenuation by clouds under oblique incidence angles.
+the trends range within about $\pm 0.2\,\%/y$, the trends are variable
+and for most SZAs insignificant ranging between $0$ and $0.2$. The
+smooth increase of the trend at SZAs larger than $\sim 75^{\circ}$ is
+probably associated with stronger attenuation by clouds under oblique
+incidence angles which results in smaller variability.
 
 ## 3.3 Long term trends by season
 
