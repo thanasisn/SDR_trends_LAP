@@ -303,30 +303,30 @@ for (DBn in dbs) {
 
             ## _ Arima tests  --------------------------------------------------
 
-            amodelo  <- arima(dd[, avar], order = c(1,0,0), method = "ML")
-            summary(amodelo)
-            ddd <- summary(amodelo)
-
-            arima(x = dataset$Date, order = c(1,0,0), xreg = dataset[[avar]], method = "ML")
-            d <- arima(x = dataset[[avar]], order = c(1,0,0), xreg = dataset$Date, method = "ML")
-
-            d$coef
-            d$var.coef
-
-            sarima(dd[, avar], 1,0,0, details = F, method = "ML", no.constant = T)
-            sarima(dd[, avar], 1,0,0, details = F, method = "ML")
-
-
-            # armodel <- ar.ols(dd[, avar], na.action = na.exclude, order.max = 1, demean = F, intercept = T )
-            # summary(armodel)
-            # armodel
-
-            lmtest::coeftest(amodelo)
-            lmtest::coeftest(lm1) * Days_of_year
-            lmtest::coeftest(d)  * Days_of_year
-
-
-stop("tess")
+#             amodelo  <- arima(dd[, avar], order = c(1,0,0), method = "ML")
+#             summary(amodelo)
+#             ddd <- summary(amodelo)
+#
+#             arima(x = dataset$Date, order = c(1,0,0), xreg = dataset[[avar]], method = "ML")
+#             d <- arima(x = dataset[[avar]], order = c(1,0,0), xreg = dataset$Date, method = "ML")
+#
+#             d$coef
+#             d$var.coef
+#
+#             sarima(dd[, avar], 1,0,0, details = F, method = "ML", no.constant = T)
+#             sarima(dd[, avar], 1,0,0, details = F, method = "ML")
+#
+#
+#             # armodel <- ar.ols(dd[, avar], na.action = na.exclude, order.max = 1, demean = F, intercept = T )
+#             # summary(armodel)
+#             # armodel
+#
+#             lmtest::coeftest(amodelo)
+#             lmtest::coeftest(lm1) * Days_of_year
+#             lmtest::coeftest(d)  * Days_of_year
+#
+#
+# stop("tess")
 
             lag   <- 1
             dd    <- acf(dataset[[avar]], na.action = na.pass, plot = FALSE)
@@ -1165,7 +1165,7 @@ for (avar in vars) {
 
 
 
-## ____ tight grid by season ----------------------------------------------
+## ____ tight grid by season from Daily ----------------------------------------
 
 #'
 #' ### Grid of trends for each season of year from daily
@@ -1174,11 +1174,9 @@ for (avar in vars) {
 
 #+ SeasonalTrendsTogether3, echo=F, include=T
 {
-    vars        <- c("GLB_att_des", "wattGLB")
+    vars        <- c("GLB_att_des")
     avar        <- vars[1]
-    # dbs         <- c("ALL_1_D_bySeason_DESEAS",
-    #                  "CLEAR_1_D_bySeason_DESEAS",
-    #                  "CLOUD_1_D_bySeason_DESEAS")
+
     dbs         <- c("ALL_1_D_bySeason_DESEAS",
                      "CLEAR_1_D_bySeason_DESEAS",
                      "CLOUD_1_D_bySeason_DESEAS")
@@ -1513,6 +1511,360 @@ write_dat(pprint,
           "./figures/tbl_longterm_trends_season.dat",
           clean = TRUE)
 
+
+
+
+
+
+
+
+
+
+## ____ tight grid by season from Monthly ----------------------------------------
+
+#'
+#' ### Grid of trends for each season of year from Monthly
+#'
+#+ echo=F, include=F
+
+#+ SeasonalMTrendsTogether3, echo=F, include=T
+{
+    vars        <- c("GLB_att_des")
+    avar        <- vars[1]
+
+    dbs         <- c("ALL_1_M_bySeason_DESEAS",
+                     "CLEAR_1_M_bySeason_DESEAS",
+                     "CLOUD_1_M_bySeason_DESEAS")
+    Seasons     <- c("Winter", "Spring", "Summer", "Autumn")
+    lec         <- 0
+
+    ## the order must be predefined to match
+    expanded <- expand.grid(Dataset = dbs, Seasons = Seasons, stringsAsFactors = FALSE)
+
+    nf <- layout(
+        matrix(1:30, ncol = 5, byrow = TRUE),
+        widths  = c(0.25,   1,1,1, 0.05),
+        heights = c(0.1, 1,1,1,1, 0.3)
+    )
+    ## an empty layout
+    layout.show(nf)
+
+    # 1
+    par("mar"=c(0,0,0,0))
+    plot.new()
+    # 2
+    plot.new()
+    text(x = 0.5, y = 0.3,
+         adj  = c(0.5, 0.5),
+         "All skies",    cex = 0.9, font = 2)
+
+    # 3
+    plot.new()
+    text(x = 0.5, y = 0.3,
+         adj  = c(0.5, 0.5),
+         "Clear skies",  cex = 0.9, font = 2)
+
+    # 4
+    plot.new()
+    text(x = 0.5, y = 0.3,
+         adj  = c(0.5, 0.5),
+         "Cloudy skies", cex = 0.9, font = 2)
+
+    # 5
+    plot.new()
+
+    for (i  in 6:25) {
+
+        if (i == 6) {
+            plot.new()
+            text(x = 0.05, y = 0.5,
+                 adj  = c(0.5, 0.5),
+                 srt  = 90, "Winter", cex = 0.9, font = 2)
+        }
+        if (i == 10) {
+            plot.new()
+            text(x = 0.25, y = 0.5,
+                 adj  = c(0.5, 0.5),
+                 srt  = 90, "Winter", cex = 0.9, font = 2)
+        }
+
+        if (i == 11) {
+            plot.new()
+            text(x = 0.05, y = 0.5,
+                 adj  = c(0.5,0.5),
+                 srt  = 90, "Spring", cex = 0.9, font = 2)
+        }
+        if (i == 15) {
+            plot.new()
+            text(x = 0.25, y = 0.5,
+                 adj  = c(0.5,0.5),
+                 srt  = 90, "Spring", cex = 0.9, font = 2)
+        }
+
+
+        if (i == 16) {
+            plot.new()
+            text(x = 0.05, y = 0.5,
+                 adj  = c(0.5,0.5),
+                 srt  = 90, "Summer", cex = 0.9, font = 2)
+        }
+        if (i == 20) {
+            plot.new()
+            text(x = 0.25, y = 0.5,
+                 adj  = c(0.5,0.5),
+                 srt  = 90, "Summer", cex = 0.9, font = 2)
+        }
+
+
+        if (i == 21) {
+            plot.new()
+            text(x = 0.05, y = 0.5,
+                 adj  = c(0.5,0.5),
+                 srt  = 90, "Automn", cex = 0.9, font = 2)
+        }
+        if (i == 25) {
+            plot.new()
+            text(x = 0.25, y = 0.5,
+                 adj  = c(0.5,0.5),
+                 srt  = 90, "Automn", cex = 0.9, font = 2)
+        }
+
+
+        ## actual plots
+        if (! i %in% c(6,11,16,21,10,15,20,25)) {
+            lec      <- lec + 1
+            kk       <- expanded[1,]
+            expanded <- expanded[-1, ]
+
+            DB      <- get(kk$Dataset)
+            dataset <- DB[ Season == kk$Seasons, ]
+
+            ## linear model counting years
+            lm2 <- lm(dataset[[avar]] ~ dataset$Year)
+
+            ## plot
+            par("mar" = c(0, 0, 0.5, 0.5))
+
+            plot(dataset$Year, dataset[[avar]],
+                 ylim     = ylim,
+                 pch      = 19,
+                 col      = get(paste0(c("col",
+                                         unlist(strsplit(avar, split = "_" ))[1:2]),
+                                       collapse = "_")),
+                 cex      = .6,
+                 ylab     = "",
+                 xlab     = "",
+                 xaxt     = "n",
+                 yaxt     = "n",
+                 cex.main = 0.9,
+                 cex.lab  = 0.8,
+                 cex.axis = 0.8,
+                 mgp  = c(2, 0.5, 0)
+            )
+
+            ## y axis
+            if (i %in% c(7,12,17,22)){
+                axis(2, pretty(ylim), las = 2,  cex.axis = 0.8)
+                ## minor ticks
+                axis(2, seq(-100, 100, by = 5), cex.axis = 0.8, labels = NA, tcl = -0.25)
+            } else {
+                # axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck =  0.03)
+                axis(2, pretty(ylim), cex.axis = 0.8, labels = NA, tck = -0.03)
+                ## minor ticks
+                axis(2, seq(-100, 100, by = 5), labels = NA, tcl = -0.25/2)
+            }
+
+            ## x axis
+            if (i %in% c(22, 23, 24)) {
+                ## bottom row axis
+                axis(1, pretty(dataset$Year), las = 1, cex.axis = 0.8, line =  0,   labels = NA)
+                axis(1, pretty(dataset$Year), las = 1, cex.axis = 0.8, line = -0.5, tck = 0, lwd = 0)
+                ## minor ticks
+                axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
+                     tcl = -0.25)
+            } else {
+                ## major ticks
+                # axis(1, pretty(dataset$Year), cex.axis = 0.8, labels = NA, tck =  0.03)
+                axis(1, pretty(dataset$Year),                cex.axis = 0.8, labels = NA, tck = -0.04)
+                ## minor ticks
+                axis(1, seq(1993, year(Sys.time()), by = 1), cex.axis = 0.8, labels = NA, tcl = -0.3/2)
+                # axis(1, at = seq(1993, year(Sys.time()), by = 1), labels = NA,
+                #      tcl = +0.25/2)
+            }
+
+            abline(lm2)
+
+
+            ## decorations
+            fit <- lm2[[1]]
+
+            legend("top", lty = 1, bty = "n", lwd = 1, cex = 0.8,
+                   inset = 0.1,
+                   paste("Trend: ",
+                         if (fit[2] > 0) '+' else '-',
+                         signif(abs(fit[2]), 2),
+                         "%/y")
+            )
+
+
+            ## tag plots with letters
+            legend("bottomright", 0, paste0("(",letters[lec],")"),
+                   cex   = 1.1,
+                   bty   = "n",
+                   xjust = 0.5,      # 0.5 means center adjusted
+                   yjust = 0.5,      # 0.5 means center adjusted
+                   x.intersp = -0.5, # adjust character interspacing as you like to effect box width
+                   y.intersp =  0.2, # adjust character interspacing to effect box height
+                   adj = c(0, 0.5))  # adjust string position (default values used here)
+
+
+
+            if (i %in% c(7,12,17,22)) {
+                mtext(text = bquote("Anomalies [%]"),
+                      cex  = 0.6,
+                      side = 2,
+                      line = 2.3)
+            }
+
+            par("mar" = c(0,0,0,0))
+        }
+
+    }
+
+    # 1
+    par("mar" = c(0,0,0,0))
+    plot.new()
+
+    # 2
+    plot.new()
+    text(x = 0.5, y = 0.15,
+         adj  = c(0.5, 0.5),
+         "All skies",    cex = 0.9, font = 2)
+
+    # 3
+    plot.new()
+    text(x = 0.5, y = 0.15,
+         adj  = c(0.5, 0.5),
+         "Clear skies",  cex = 0.9, font = 2)
+
+    # 4
+    plot.new()
+    text(x = 0.5, y = 0.15,
+         adj  = c(0.5, 0.5),
+         "Cloudy skies", cex = 0.9, font = 2)
+
+    # 5
+    plot.new()
+
+    par(mfrow = c(1,1))
+}
+#+ echo=F, include=F
+
+
+
+
+
+
+
+
+
+
+
+## __ Calculate trends for each season  ----------------------------------------
+vars        <- c("GLB_att_des")
+
+## vars are  set above
+gather_seas <- data.frame()
+for (DBn in dbs) {
+    DB <- get(DBn)
+
+    for (ase in Seasons) {
+        for (avar in vars) {
+            dataset <- DB[ Season == ase, ]
+
+            if (sum(!is.na(dataset[[avar]])) <= 1) next()
+
+            ## linear model counting years
+            lm2 <- lm(dataset[[avar]] ~ dataset$Year)
+            ## correlation test
+            cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Year), method = 'pearson')
+
+            lag   <- 1
+            dd    <- acf(dataset[[avar]], na.action = na.pass, plot = FALSE)
+            N_eff <- sum(!is.na(dataset[[avar]])) * (1 - dd[lag][[1]]) / (1 + dd[lag][[1]])
+            se_sq <- sum((lm1$residuals)^2, na.rm = T) / (N_eff - 2)
+            sa_sq <- se_sq / sum((dataset[[avar]] - mean(dataset[[avar]], na.rm = T))^2, na.rm = T)
+            t_eff     <- lm1$coefficients[[2]] / sa_sq
+            #find two-tailed t critical values
+            t_eff_cri <- qt(p = .05/2, df = N_eff, lower.tail = FALSE)
+
+            conf      <- confint(lm1)
+            conf_2.5  <- conf[2,1]
+            conf_97.5 <- conf[2,2]
+
+            ## gather stats
+            gather_seas <- rbind(gather_seas,
+                                 data.frame(
+                                     linear_fit_stats(lm2,
+                                                      confidence_interval = Daily_confidence_limit),
+                                     cor_test_stats(cor1),
+                                     DATA      = DBn,
+                                     Season    = ase,
+                                     var       = avar,
+                                     N         = sum(!is.na(dataset[[avar]])),
+                                     N_eff     = N_eff,
+                                     t_eff     = t_eff,
+                                     t_eff_cri = t_eff_cri,
+                                     conf_2.5  = conf_2.5,
+                                     conf_97.5 = conf_97.5
+                                 ))
+        }
+    }
+}
+
+## __ Display data table  ------------------------------------------------------
+#'
+#' \newpage
+#' \FloatBarrier
+#'
+#' #### Table of trends by season.
+#'
+#+ echo=F, include=T
+
+wecare           <- grep("intercept", names(gather_seas), value = T, invert = T)
+gather_seas      <- data.table(gather_seas)
+gather_seas$DATA <- sub("_.*", "", gather_seas$DATA)
+
+
+pprint           <- gather_seas[ , ..wecare]
+
+pprint$cor.data_name        <- NULL
+pprint[, slope.stat_sig     := 100 * (1 - slope.p)]
+pprint[, slope.t            := NULL               ]
+# pprint[, Rsqrd              := NULL               ]
+# pprint[, RsqrdAdj           := NULL               ]
+pprint[, N                  := NULL               ]
+pprint[, slope.ConfInt_0.99 := NULL               ]
+pprint[, slope.ConfInt_0.95 := NULL               ]
+pprint[, DATA               := translate(DATA)    ]
+pprint[, var                := translate(var)     ]
+
+pprint$cor.data_name   <- NULL
+pprint$cor.null_value  <- NULL
+pprint$cor.method      <- NULL
+pprint$cor.alternative <- NULL
+pprint$cor.p           <- NULL
+
+setorder(pprint, DATA, var)
+
+#+ echo=F, include=T
+pander(pprint,
+       cap = "Slope is in %/year")
+#+ echo=F, include=F
+
+write_dat(pprint,
+          "./figures/tbl_longterm_trends_season_byM.dat",
+          clean = TRUE)
 
 
 

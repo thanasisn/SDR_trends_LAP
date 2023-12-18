@@ -476,6 +476,9 @@ for (adb in database) {
         ## daily from other DT
         lines(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = col, lwd = 2)
 
+        points(pdb$Date, pdb[[paste0(avar,"_cusum")]], col = "red", lwd = 2)
+
+
         if (DRAFT == T) {
             title(paste(sub("_.*","",adb), "mean daily cumulative sum ",
                         translate(avar) ), cex.main = 1)
