@@ -274,7 +274,6 @@ vars <- c( "GLB_att_des")
 
 dbs         <- c("CLEAR_1_daily_DESEAS",
                  "ALL_1_daily_DESEAS",
-
                  "CLOUD_1_daily_DESEAS")
 ## gather trends
 gather <- data.frame()
@@ -292,7 +291,7 @@ for (DBn in dbs) {
             ## linear model by day step
             lm1 <- lm(dataset[[avar]] ~ dataset$Date)
             d   <- summary(lm1)$coefficients
-            cat("lm:      ", lm1$coefficients[2] * Days_of_year, "+/-", d[2,2] * Days_of_year,"\n")
+            cat("lm:      ", lm1$coefficients[2] * Days_of_year, "+/-", d[2,2] * Days_of_year,"\n\n")
             ## correlation test
             cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
@@ -304,36 +303,28 @@ for (DBn in dbs) {
 
             ## _ Arima tests  --------------------------------------------------
 
-            amodelo  <- arima(dd[, avar], order = c(1,0,0), method = "ML")
-            amod_test <- lmtest::coeftest(amodelo)
-            cat("My arima:", round(amod_test[1,], 4), "\n")
+            # amodelo   <- arima(dd[, avar], order = c(1, 0, 0), method = "ML")
+            # amod_test <- lmtest::coeftest(amodelo)
+            # cat("My arima:", round(amod_test[1,], 4), "\n")
+
+            ## _ auto reggression arima Tourpali -------------------------------
+            ## create a time variable (with lag of 1 day ?)
+            dataset[, ts := (year(Date) - min(year(Date))) + ( doy - 1 ) / Hmisc::yearDays(Date) ]
+            tmodelo <- arima(x = dataset[[avar]], order = c(1,0,0), xreg = dataset$ts, method = "ML")
+
+            ## trend per year with auto correlation
+            Tres <- data.frame(t(lmtest::coeftest(tmodelo)[3,]))
+            Tint <- data.frame(t(lmtest::coeftest(tmodelo)[2,]))
+            names(Tres) <- paste0("Tmod_", names(Tres))
+
+            cat("Tourpali:", paste(round(Tres, 4)), "\n\n")
 
 
-            ## tourpal
-            dataset[, year(Date) - min(year(Date)) + ( doy - 1 ) / Hmisc::yearDays(Date) ]
-
-
-            c <- arima(x = dataset$Date,    order = c(1,0,0), xreg = dataset[[avar]], method = "ML")
-            d <- arima(x = dataset[[avar]], order = c(1,0,0), xreg = dataset$Date,    method = "ML")
-
-
-            d$coef
-            d$var.coef
-
-            sarima(dd[, avar], 1,0,0, details = F, method = "ML", no.constant = T)
-            sarima(dd[, avar], 1,0,0, details = F, method = "ML")
-
-
-            # armodel <- ar.ols(dd[, avar], na.action = na.exclude, order.max = 1, demean = F, intercept = T )
-            # summary(armodel)
-            # armodel
-
-            lmtest::coeftest(amodelo)
-            lmtest::coeftest(lm1)
-            lmtest::coeftest(d)
-            lmtest::coeftest(c)
-
-stop("tess")
+            # sarima(dd[, avar], 1,0,0, details = F, method = "ML", no.constant = T)
+            # sarima(dd[, avar], 1,0,0, details = F, method = "ML")
+            # lmtest::coeftest(amodelo)
+            # lmtest::coeftest(lm1)
+            # lmtest::coeftest(tmodelo)
 
             lag   <- 1
             dd    <- acf(dataset[[avar]], na.action = na.pass, plot = FALSE)
@@ -364,7 +355,8 @@ stop("tess")
                                 t_eff_cri  = t_eff_cri,
                                 conf_2.5   = conf_2.5,
                                 conf_97.5  = conf_97.5,
-                                mean_clima = mean(dclima$V1, na.rm = T)
+                                mean_clima = mean(dclima$V1, na.rm = T),
+                                Tres
                             )
             )
 
@@ -411,6 +403,15 @@ stop("tess")
             ## plot fit line
             abline(lm1, lwd = 2)
 
+            Tres[1] / Days_of_year
+
+            Tint[1] / Days_of_year
+
+            abline(b = Tres[1] / Days_of_year, col = "red")
+
+
+
+
             if (DRAFT == TRUE) {
                 ## Running mean
                 first <- head(which(!is.na(dataset[[avar]])),1)
@@ -444,7 +445,7 @@ stop("tess")
                          signif(abs(fit[2]) * Days_of_year, 3),
                          "%/y")
             )
-
+stop()
     }
 }
 #+ echo=F, include=F
@@ -478,6 +479,16 @@ for (DBn in dbs) {
             ## correlation test
             cor1 <- cor.test(x = dataset[[avar]], y = as.numeric(dataset$Date), method = 'pearson')
 
+
+            ## _ auto reggression arima Tourpali -------------------------------
+            ## create a time variable (with lag of 1 day ?)
+            dataset[, ts := (year(Date) - min(year(Date))) + ( doy - 1 ) / Hmisc::yearDays(Date) ]
+            tmodelo <- arima(x = dataset[[avar]], order = c(1,0,0), xreg = dataset$ts, method = "ML")
+
+            ## trend per year with auto correlation
+            Tres <- data.frame(t(lmtest::coeftest(tmodelo)[3,]))
+            names(Tres) <- paste0("Tmod_", names(Tres))
+
             lag   <- 1
             dd    <- acf(dataset[[avar]], na.action = na.pass, plot = FALSE)
             N_eff <- sum(!is.na(dataset[[avar]])) * (1 - dd[lag][[1]]) / (1 + dd[lag][[1]])
@@ -508,7 +519,8 @@ for (DBn in dbs) {
                                 t_eff_cri = t_eff_cri,
                                 conf_2.5  = conf_2.5,
                                 conf_97.5 = conf_97.5,
-                                mean_clima = mean(dclima$V1, na.rm = T)
+                                mean_clima = mean(dclima$V1, na.rm = T),
+                                Tres
                             )
             )
 
