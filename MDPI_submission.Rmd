@@ -597,7 +597,7 @@ LT$cor.conf_int_2   <- NULL
 
 ## some vars to use later
 alltrend   <- signif(LT[DATA == "All sky cond.",    slope], 2)
-cleartrend <- signif(LT[DATA == "Clear sky cond.",  slope], 2)
+cleartrend <- signif(LT[DATA == "Clear sky cond.",  slope], 1)
 cloudtrend <- signif(LT[DATA == "Cloudy sky cond.", slope], 2)
 LTminSSig  <- signif(min(LT$slope.stat_sig), 4)
 
@@ -672,25 +672,44 @@ In Figure\ \ref{fig:trendALL} we present only the time series under all-sky cond
 In the studied period, there is no
 significant break or change in the variability pattern of the time
 series.
-We observe a positive trend for all-sky conditions
-($`r alltrend`\,\%/y$), a very close but smaller trend for clear-skies ($`r cleartrend`\,\%/y$) and a negative weaker trend for cloudy-skies ($`r cloudtrend`\,\%/y$).
-In the studied period, there is no significant break or change in the variability of the time series.
-Other studies for the European region reported a change of the SDR slope, around 1980 [@Wild2021; @Yuan2021; @Ohmura2009], a few years before the start of our records.
-It is interesting to note, that for the observations period, the trend of the TSI is
-$`r format(TSIslopeAll[1,1], scientific = F, digits = 2)`\,\%/y$,
-and thus we can not attribute any major effect on SDR trend to Solar variability.
+The linear trends in all three datasets are positive and around
+$0.4\,\%/y$ for all-sky and cloudy-sky conditions, while for clear-skies the
+trend is much smaller (\~$`r cloudtrend`\,\%/y$). 
+The linear trends were calculated
+taking into account the autocorrelation of the time series and all three
+are statistically significant at least at the $95\,\%$ confidence level, as
+they are larger than the corresponding $2\sigma$ errors.
+The clear-sky trend is
+very small suggesting a small effect from aerosols and water vapor which
+are the dominant factors of the SDR variability. 
+In contrast the large
+positive trend of SDR under cloudy skies can be attributed to reduction
+in cloud cover and/or optical depth. 
+Lack of continuous cloud
+observations that could support these findings does not allow drawing
+firm conclusions. However, there are indications that the total
+cloud-cover as inferred from the ERA5 analysis for the grid point of
+Thessaloniki is decreasing over the period of study.
 
+<!-- ($`r alltrend`\,\%/y$), a very close but smaller trend for clear-skies ($`r cleartrend`\,\%/y$) and a negative weaker trend for cloudy-skies ($`r cloudtrend`\,\%/y$). -->
+The all-sky trend is similar to the one reported in @Bais2013
+from a ten-year shorter dataset suggesting that the tendency of SDR in
+Thessaloniki is systematic.
+Other studies for the European region reported a change in the SDR trend
+around 1980 from negative to positive
+with comparable magnitude [@Wild2021; @Yuan2021; @Ohmura2009], 
+well before the start of our records.
+However, the
+trends reported here for the three datasets are in accordance with the
+widely accepted solar radiation brightening over Europe.
+For the period
+of our observations the trend in the TSI is negligible
+($`r format(TSIslopeAll[1,1], scientific = F, digits = 2)`\,\%/y$),
+and thus we cannot attribute any significant effect
+on the SDR trend to solar variability.
 
-<!-- \footnotesize -->
-<!-- ```{r trendtable2, echo=F} -->
-<!-- panderOptions("table.alignment.default", "center") -->
-<!-- pander(LT1, -->
-<!--        caption = paste0("\\label{tab:trendtable2}Trends in SDR daily mean for different sky conditions for the period", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), ". For all cases the statistical significance is above $", LTminSSig, "\\,\\%$.")) -->
-<!-- ``` -->
-<!-- \normalsize -->
 
 ```{r trendtable, echo=F}
-
 # names(LT1)
 # "Sky conditions", "Trend [%/year]", "Trend S.E.", "Pearson cor.", "Trend [W/year]", "Days" 
 x_latex <- knitr::kable(LT1,
@@ -833,9 +852,9 @@ year when clear skies are more frequent.
 
 For cloudy-sky conditions (Figure\ \ref{fig:szatrends-3}), we can not discern any significant dependence of the SDR trend with SZA as the variability of irradiance is
 dominated by the cloud effects.
-For SZAs $25^\circ$ -- $75^\circ$, the trends range within about $\pm 0.2\,\%/y$,
+For SZAs $25^\circ$ -- $75^\circ$,
 the trends are variable and for most SZAs insignificant ranging between $0$ and $0.2\,\%/y$.
-The smooth increase of the trend at SZAs larger than $75^\circ$ is probably associated with stronger attenuation by
+The smooth increase of the trend at SZAs larger than $\sim 75^\circ$ is probably associated with stronger attenuation by
 clouds under oblique incidence angles which results in smaller
 variability.
 
@@ -915,21 +934,36 @@ spp$slope          <- signif(spp$slope,          3)
 spp$slope.p        <- signif(spp$slope.p,        3)
 spp$slope.stat_sig <- signif(spp$slope.stat_sig, 3)
 spp$Rsqrd          <- signif(spp$Rsqrd,          3)
+spp$cor.estimate   <- signif(spp$cor.estimate,   3)
 spp$RsqrdAdj       <- NULL
 spp$Rsqrd          <- NULL
 spp$cor.t          <- NULL
 spp$slope.stat_sig <- NULL
 spp$N_eff          <- NULL
+spp$conf_2.5       <- NULL
+spp$conf_97.5      <- NULL
+spp$t_eff          <- NULL
+spp$t_eff_cri      <- NULL
+
 
 ## rename sky conditions
 spp$DATA <- sub(" cond.", "", spp$DATA)
 ## rename conditions
 spp$DATA <- sub(" sky", " skies", spp$DATA)
 
-spp <- rename(spp, "Trend [%/year]" = slope)
-spp <- rename(spp, "Sky condition"  = DATA )
+spp <- rename(spp, "Trend [%/year]" = slope       )
+spp <- rename(spp, "Sky condition"  = DATA        )
+spp <- rename(spp, "Pearson cor."   = cor.estimate)
 
-# names(spp) <- c("Trend [%/year]", "Trend p-value", "Sky condition", "Season", "Statistical signif. [%]")
+## arrange columns
+spp <- spp[,c(
+      "Sky condition",
+      "Season",
+      "Trend [%/year]",
+      "Pearson cor.",
+      "Trend p-value"
+      )]
+
 
 # ## put all sky first
 # A  <- which(spp$`Sky condition` == "All sky cond.")
@@ -939,7 +973,7 @@ spp <- rename(spp, "Sky condition"  = DATA )
 ```
 
 
-Similarly to the long term trends from daily means of SDR discussed above, we have calculated the trend of the anomalies for the three different sky conditions, and for each season of the year, using the corresponding mean monthly values
+Similarly to the long term trends from daily means of SDR discussed above, we have calculated the trend for the three sky conditions, and for each season of the year, using the corresponding mean monthly anomalies
 (Figure\ \ref{fig:seasonalALL} and Table\ \ref{tab:trendseasontable}).
 For all-sky conditions the trend in SDR in winter is the largest
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All skies"], 2)`\,\%/y$),
@@ -985,17 +1019,7 @@ During spring and summer the statistical significance is very low and the actual
 
 ```{r trendseasontable, echo=F}
 
-## arrange columns
-# spp <- spp[,c(
-#       "Sky condition",
-#       "Season",
-#       "Trend [%/year]",
-#       # "Trend p-value",
-#       "Statistical signif. [%]"
-#       )]
-
 spp2 <- spp
-
 
 rownames(spp2) <- NULL
 # panderOptions("table.alignment.default", "left")
@@ -1012,7 +1036,7 @@ x_latex <- knitr::kable(spp2,
                         escape      = TRUE,
                         # format.args = list(digits = 3),
                         linesep     = "",
-                        align       = "ccrr",
+                        align       = "ccrrr",
                         centering   = FALSE,
                         table.envir = "table",
                         # position    = "H",
