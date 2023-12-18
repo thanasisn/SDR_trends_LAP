@@ -251,8 +251,9 @@ actual data. Finally, to estimate the SZA effect on the SDR trends, the
 one-minute data were aggregated in $1^{\circ}$ SZA bins, separately for
 the morning and afternoon hours.
 
-The linear trends were calculated using an autoregressive model Santer
-et al. (2000)
+The linear trends were calculated using an first order autoregressive
+model (arima) with lag-1, and were reported together with the $2\sigma$
+errors (Table ). Santer et al. (2000)
 
 # 3 Results
 
@@ -352,10 +353,10 @@ warm period of the year when clear skies are more frequent.
 
 For cloudy-sky conditions (Figure ), we can not discern any significant
 dependence of the SDR trend with SZA as the variability of irradiance is
-dominated by the cloud effects. For SZAs $25^{\circ}$ - $75^{\circ}$,
+dominated by the cloud effects. For SZAs $25^{\circ}$ -- $75^{\circ}$,
 the trends range within about $\pm 0.2\,\%/y$, the trends are variable
-and for most SZAs insignificant ranging between $0$ and $0.2$. The
-smooth increase of the trend at SZAs larger than $\sim 75^{\circ}$ is
+and for most SZAs insignificant ranging between $0$ and $0.2\,\%/y$. The
+smooth increase of the trend at SZAs larger than $75^{\circ}$ is
 probably associated with stronger attenuation by clouds under oblique
 incidence angles which results in smaller variability.
 
@@ -378,8 +379,6 @@ cloudy-sky conditions are almost complementary to each other,
 particularly for winter and autumn, where the signal is stronger. During
 spring and summer the statistical significance is very low and the
 actual trend too small for a meaningful comparison.
-
-            <!-- % \includegraphics[width=1\linewidth]{./images/SeasonalTrendsTogether3-2}  % Seasonal from Daily -->
 
 # 4 Conclusions
 

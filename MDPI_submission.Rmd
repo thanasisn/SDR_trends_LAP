@@ -556,8 +556,9 @@ monthly) from the actual data. Finally, to estimate the SZA effect on
 the SDR trends, the one-minute data were aggregated in $1^{\circ}$ SZA
 bins, separately for the morning and afternoon hours.
 
-The linear trends were calculated using an autoregressive model
-<!-- ([ARIMA......)]{.mark} and were reported together with the 2σ errors. -->
+The linear trends were calculated using an first order autoregressive model
+(arima) with lag-1, and were reported together with the $2\sigma$ errors (Table\ \ref{tab:trendtable}).
+
 <!-- [For the trends derived from monthly mean data we used an effective -->
 <!-- number of observations to calculate the standard error (Sander et al., -->
 <!-- 2000) in order to assess the significance of the trends.]{.mark} -->
@@ -601,9 +602,14 @@ cloudtrend <- signif(LT[DATA == "Cloudy sky cond.", slope], 2)
 LTminSSig  <- signif(min(LT$slope.stat_sig), 4)
 
 ## numeric precision of table
-LT$slope    <- signif(LT$slope,   4)
-LT$slope.p  <- signif(LT$slope.p, 4)
-LT$Rsqrd    <- signif(LT$Rsqrd,   4)
+LT$slope         <- signif(LT$slope,         3)
+LT$slope.p       <- signif(LT$slope.p,       3)
+LT$Rsqrd         <- signif(LT$Rsqrd,         3)
+LT$Tmod_Estimate <- signif(LT$Tmod_Estimate, 3)
+LT$cor.estimate  <- signif(LT$cor.estimate,  3)
+LT$Tmod_Std..Error <- signif(LT$Tmod_Std..Error * 2, 3)
+LT$ChangeWpY       <- signif(LT$ChangeWpY, 3)
+
 
 LT$RsqrdAdj <- NULL
 LT$cor.t    <- NULL
@@ -615,30 +621,40 @@ LT$DATA <- sub(" sky", " skies", LT$DATA)
 
 LT <- LT[order(LT$DATA),]
 
-LT <- rename(LT, "Trend [%/year]" = slope       )
-LT <- rename(LT, "Sky conditions" = DATA        )
-LT <- rename(LT, "Days"           = N           )
-LT <- rename(LT, "Pearson cor."   = cor.estimate)
-LT <- rename(LT, "Trend p-value"  = slope.p     )
+
+
+# LT <- rename(LT, "Trend [%/year]" = slope        )
+LT <- rename(LT, "Sky conditions"  = DATA         )
+LT <- rename(LT, "Days"            = N            )
+LT <- rename(LT, "Pearson cor."    = cor.estimate )
+LT <- rename(LT, "Trend p-value"   = slope.p      )
+LT <- rename(LT, "Trend [%/year]"  = Tmod_Estimate) # Arima slope
+LT <- rename(LT, "Trend S.E."      = Tmod_Std..Error )
+LT <- rename(LT, "Trend [W/year]"  = ChangeWpY )
 
 LT$slope.stat_sig  <- NULL
 LT$`Trend p-value` <- NULL
 LT$N_eff           <- NULL
-
-
-
-# LT$`Trend statistical signif. [%]` <- NULL
+LT$slope           <- NULL
+LT$t_eff           <- NULL
+LT$t_eff_cri       <- NULL
+LT$conf_2.5        <- NULL
+LT$conf_97.5       <- NULL
+LT$mean_clima      <- NULL
+LT$Tmod_z.value    <- NULL
+LT$Tmod_Pr...z..   <- NULL
 
 
 ## order columns
-# LT1 <- LT[,c(
-#       "Sky conditions",
-#       "Trend [%/year]",
-#       "Trend p-value",
-#       "Pearson cor.",
-#       "Days"
-#       )]
-LT1 <- LT
+LT1 <- LT[,c(
+      "Sky conditions",
+      "Trend [%/year]",
+      "Trend S.E.",
+      "Pearson cor.",
+      "Trend [W/year]",
+      "Days"
+      )]
+# LT1 <- LT
 
 
 ## order columns
@@ -675,13 +691,16 @@ and thus we can not attribute any major effect on SDR trend to Solar variability
 
 ```{r trendtable, echo=F}
 
+# names(LT1)
+# "Sky conditions", "Trend [%/year]", "Trend S.E.", "Pearson cor.", "Trend [W/year]", "Days" 
 x_latex <- knitr::kable(LT1,
                         format      = "latex",
                         booktabs    = TRUE,
-                        escape      = TRUE,
+                        escape      = FALSE,
+                        col.names   = c("Sky conditions", "Trend [\\%/year]", "Trend S.E. ($2\\sigma$)", "Pearson cor.", "Trend [W/year]", "Days"),
                         format.args = list(digits = 3),
                         linesep     = "",
-                        align       = "crrrr",
+                        align       = "crrrrr",
                         centering   = FALSE,
                         table.envir = "table",
                         position    = "H",
@@ -814,11 +833,9 @@ year when clear skies are more frequent.
 
 For cloudy-sky conditions (Figure\ \ref{fig:szatrends-3}), we can not discern any significant dependence of the SDR trend with SZA as the variability of irradiance is
 dominated by the cloud effects.
-For SZAs $25^\circ$ - $75^\circ$, the trends range within about $\pm 0.2\,\%/y$, 
-the trends are variable and for most SZAs insignificant ranging between
-$0$ and $0.2%\,\%/y$.
-The smooth increase of the trend at SZAs larger than
-$\sim 75^{\circ}$ is probably associated with stronger attenuation by
+For SZAs $25^\circ$ -- $75^\circ$, the trends range within about $\pm 0.2\,\%/y$,
+the trends are variable and for most SZAs insignificant ranging between $0$ and $0.2\,\%/y$.
+The smooth increase of the trend at SZAs larger than $75^\circ$ is probably associated with stronger attenuation by
 clouds under oblique incidence angles which results in smaller
 variability.
 
@@ -944,7 +961,7 @@ During spring and summer the statistical significance is very low and the actual
     \end{adjustwidth}
 \end{figure}
 
-            <!-- % \includegraphics[width=1\linewidth]{./images/SeasonalTrendsTogether3-2}  % Seasonal from Daily -->
+<!-- % \includegraphics[width=1\linewidth]{./images/SeasonalTrendsTogether3-2}  % Seasonal from Daily -->
 
 <!-- ```{r seasonalALL, echo=F, fig.cap="Linear trends (black lines) of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots).", out.width="100%"} -->
 <!-- knitr::include_graphics("./images/SeasonalTrendsTogether3-2.png") -->

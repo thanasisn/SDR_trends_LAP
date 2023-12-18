@@ -494,7 +494,10 @@ monthly) from the actual data. Finally, to estimate the SZA effect on
 the SDR trends, the one-minute data were aggregated in \(1^{\circ}\) SZA
 bins, separately for the morning and afternoon hours.
 
-The linear trends were calculated using an autoregressive model
+The linear trends were calculated using an first order autoregressive
+model (arima) with lag-1, and were reported together with the
+\(2\sigma\) errors (Table~\ref{tab:trendtable}).
+
 \citet{Santer2000}
 
 \hypertarget{results}{%
@@ -525,13 +528,13 @@ variability.
 \begin{table}[H]
 
 \caption{\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period 1993 - 2023.}
-\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
 \toprule
-Trend [\%/year] & Pearson cor. & Sky conditions & Days & t\_eff & t\_eff\_cri & conf\_2.5 & conf\_97.5 & mean\_clima & ChangeWpY\\
+Sky conditions & Trend [\%/year] & Trend S.E. ($2\sigma$) & Pearson cor. & Trend [W/year] & Days\\
 \midrule
-0.3756 & 0.0911 & All skies & 10250 & 4.727 & 1.96 & 0.000811 & 0.001246 & 387 & 1.452\\
-0.0972 & 0.1383 & Clear skies & 2684 & 0.476 & 1.96 & 0.000194 & 0.000338 & 515 & 0.501\\
-0.4077 & 0.0810 & Cloudy skies & 4937 & 3.566 & 1.96 & 0.000733 & 0.001499 & 290 & 1.181\\
+All skies & 0.3760 & 0.1210 & 0.0911 & 1.450 & 10250\\
+Clear skies & 0.0972 & 0.0327 & 0.1380 & 0.501 & 2684\\
+Cloudy skies & 0.4080 & 0.1770 & 0.0810 & 1.180 & 4937\\
 \bottomrule
 \end{tabu}
 \end{table}
@@ -651,12 +654,12 @@ of the year when clear skies are more frequent.
 For cloudy-sky conditions (Figure~\ref{fig:szatrends-3}), we can not
 discern any significant dependence of the SDR trend with SZA as the
 variability of irradiance is dominated by the cloud effects. For SZAs
-\(25^\circ\) - \(75^\circ\), the trends range within about
+\(25^\circ\) -- \(75^\circ\), the trends range within about
 \(\pm 0.2\,\%/y\), the trends are variable and for most SZAs
-insignificant ranging between \(0\) and \(0.2%\,\%/y\). The smooth
-increase of the trend at SZAs larger than \(\sim 75^{\circ}\) is
-probably associated with stronger attenuation by clouds under oblique
-incidence angles which results in smaller variability.
+insignificant ranging between \(0\) and \(0.2\,\%/y\). The smooth
+increase of the trend at SZAs larger than \(75^\circ\) is probably
+associated with stronger attenuation by clouds under oblique incidence
+angles which results in smaller variability.
 
 \begin{figure}[h!]
     \begin{adjustwidth}{-\extralength}{0cm}
@@ -703,10 +706,6 @@ actual trend too small for a meaningful comparison.
         \caption{Linear trends (black lines) of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots).}\label{fig:seasonalALL}
     \end{adjustwidth}
 \end{figure}
-
-\begin{verbatim}
-        <!-- % \includegraphics[width=1\linewidth]{./images/SeasonalTrendsTogether3-2}  % Seasonal from Daily -->
-\end{verbatim}
 
 \begin{table}[!h]
 
