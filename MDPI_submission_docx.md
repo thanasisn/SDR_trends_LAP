@@ -382,22 +382,22 @@ variability.
 ## 3.3 Long term trends by season
 
 Similarly to the long term trends from daily means of SDR discussed
-above, we have calculated the trend for the three sky conditions, and
-for each season of the year, using the corresponding mean monthly
-anomalies (Figure  and Table ). For all-sky conditions the trend in SDR
-in winter is the largest ($0.7\,\%/y$), followed by the trend in autumn
+above, we have calculated the trend for the three sky conditions and for
+each season of the year, using the corresponding mean monthly anomalies
+(Figure  and Table ). For all-sky conditions the trend in SDR in winter
+is the largest ($0.7\,\%/y$), followed by the trend in autumn
 ($0.42\,\%/y$, a value close to the long term trend) both statistically
-significant above the $99\,\%$ confidence level. In spring and summer,
-the trends are much smaller and of lesser statistical significance.
-These seasonal differences indicate a possible relation of the trends in
-SDR to trends of clouds during winter and autumn. For clear-skies, the
-trend in winter is $0.4\,\%/y$, larger than for all-skies ($0.7\,\%/y$),
-which is another indication of a decreasing trend in cloud optical
-thickness. Moreover, the trends under clear- and cloudy-sky conditions
-are almost complementary to each other, particularly for winter and
-autumn, where the signal is stronger. During spring and summer the
-statistical significance is very low and the actual trend too small for
-a meaningful comparison.
+significant at the $99\,\%$ confidence level. In spring and summer, the
+trends are much smaller and of lesser statistical significance. These
+seasonal differences indicate a possible relation of the trends in SDR
+to trends of clouds during winter and autumn. For clear-skies, the trend
+in winter is $0.4\,\%/y$, larger than for all-skies ($0.7\,\%/y$), which
+is another indication of a decreasing trend in cloud optical thickness.
+Moreover, the trends under clear- and cloudy-sky conditions are almost
+complementary to each other, particularly for winter and autumn, where
+the signal is stronger. During spring and summer the statistical
+significance is very low and the actual trend too small for a meaningful
+comparison.
 
 # 4 Conclusions
 

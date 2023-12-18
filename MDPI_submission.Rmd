@@ -952,6 +952,7 @@ spp$DATA <- sub(" cond.", "", spp$DATA)
 spp$DATA <- sub(" sky", " skies", spp$DATA)
 
 spp <- rename(spp, "Trend [%/year]" = slope       )
+spp <- rename(spp, "Trend p-value"  = slope.p     )
 spp <- rename(spp, "Sky condition"  = DATA        )
 spp <- rename(spp, "Pearson cor."   = cor.estimate)
 
@@ -973,13 +974,13 @@ spp <- spp[,c(
 ```
 
 
-Similarly to the long term trends from daily means of SDR discussed above, we have calculated the trend for the three sky conditions, and for each season of the year, using the corresponding mean monthly anomalies
+Similarly to the long term trends from daily means of SDR discussed above, we have calculated the trend for the three sky conditions and for each season of the year, using the corresponding mean monthly anomalies
 (Figure\ \ref{fig:seasonalALL} and Table\ \ref{tab:trendseasontable}).
 For all-sky conditions the trend in SDR in winter is the largest
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All skies"], 2)`\,\%/y$),
 followed by the trend in autumn
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All skies"], 2)`\,\%/y$,
-a value close to the long term trend) both statistically significant above the $99\,\%$ confidence level.
+a value close to the long term trend) both statistically significant at the $99\,\%$ confidence level.
 In spring and summer, the trends are much smaller and of lesser statistical significance.
 These seasonal differences indicate a possible relation of the trends in SDR to trends of clouds during winter and autumn.
 For clear-skies, the trend in winter is $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear skies"], 2)`\,\%/y$, larger than for all-skies ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All skies"], 2)`\,\%/y$), which is another indication of a decreasing trend in cloud optical thickness.
