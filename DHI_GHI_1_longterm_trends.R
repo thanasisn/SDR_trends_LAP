@@ -312,6 +312,8 @@ for (DBn in dbs) {
             dataset[, ts := (year(Date) - min(year(Date))) + ( doy - 1 ) / Hmisc::yearDays(Date) ]
             tmodelo <- arima(x = dataset[[avar]], order = c(1,0,0), xreg = dataset$ts, method = "ML")
 
+            coef(tmodelo)
+
             ## trend per year with auto correlation
             Tres <- data.frame(t(lmtest::coeftest(tmodelo)[3,]))
             Tint <- data.frame(t(lmtest::coeftest(tmodelo)[2,]))
@@ -380,6 +382,26 @@ for (DBn in dbs) {
                  xlab     = "",
                  ylab     = bquote("Anomalies [%]")
             )
+
+            ## plot fit line lm
+            abline(lm1, lwd = 2)
+
+            # abline(coef = coef(lm1), col = "blue")
+
+            # Tres[1] / Days_of_year
+
+            # Tint[1] / Days_of_year
+
+            # coef(lm1)[1] / Tint[1]
+
+            ## arima first order line
+            # abline(coef = c(Tint[1], Tres[1]/Days_of_year) , col = "red")
+
+            # abline(coef = c(Tint[1]/Days_of_year - 4   , Tres[1]/Days_of_year ) , col = "red")
+
+            # abline(h=0,col= "cyan")
+
+
             # y axis
             axis(2, pretty(dataset[[avar]]), las = 2 )
 
@@ -391,7 +413,6 @@ for (DBn in dbs) {
                       tcl = -0.25)
 
 
-
             if (DRAFT == TRUE) {
                 title(main = paste(translate(DBn), translate(avar)),
                       cex.main = 0.8 )
@@ -399,19 +420,6 @@ for (DBn in dbs) {
 
 
             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
-
-            ## plot fit line
-            abline(lm1, lwd = 2)
-
-            Tres[1] / Days_of_year
-
-            Tint[1] / Days_of_year
-
-
-            abline(coef = c(Tint[1] - 2   , Tres[1]/Days_of_year ) , col = "red")
-
-            abline(coef = c(Tint[1]/Days_of_year - 4   , Tres[1]/Days_of_year ) , col = "red")
-
 
 
 
@@ -446,7 +454,7 @@ for (DBn in dbs) {
                    paste("Trend: ",
                          if (fit[2] > 0) "+" else "-",
                          signif(abs(fit[2]) * Days_of_year, 3),
-                         "%/y")
+                         "%/y" )
             )
 
     }
@@ -693,9 +701,6 @@ pprint[, slope              := slope              * Days_of_year]
 pprint[, slope.sd           := slope.sd           * Days_of_year]
 pprint[, slope.ConfInt_0.95 := slope.ConfInt_0.95 * Days_of_year]
 pprint[, slope.ConfInt_0.99 := slope.ConfInt_0.99 * Days_of_year]
-
-
-
 
 
 wecare <- grep("intercept", names(pprint), value = T, invert = T)
