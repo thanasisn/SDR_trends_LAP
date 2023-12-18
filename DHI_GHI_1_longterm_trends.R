@@ -407,7 +407,10 @@ for (DBn in dbs) {
 
             Tint[1] / Days_of_year
 
-            abline(b = Tres[1] / Days_of_year, col = "red")
+
+            abline(coef = c(Tint[1] - 2   , Tres[1]/Days_of_year ) , col = "red")
+
+            abline(coef = c(Tint[1]/Days_of_year - 4   , Tres[1]/Days_of_year ) , col = "red")
 
 
 
@@ -445,7 +448,7 @@ for (DBn in dbs) {
                          signif(abs(fit[2]) * Days_of_year, 3),
                          "%/y")
             )
-stop()
+
     }
 }
 #+ echo=F, include=F
