@@ -312,7 +312,7 @@ for (DBn in dbs) {
             dataset[, ts := (year(Date) - min(year(Date))) + ( doy - 1 ) / Hmisc::yearDays(Date) ]
             tmodelo <- arima(x = dataset[[avar]], order = c(1,0,0), xreg = dataset$ts, method = "ML")
 
-            coef(tmodelo)
+            # coef(tmodelo)
 
             ## trend per year with auto correlation
             Tres <- data.frame(t(lmtest::coeftest(tmodelo)[3,]))
@@ -1823,6 +1823,15 @@ for (DBn in dbs) {
             conf_2.5  <- conf[2,1]
             conf_97.5 <- conf[2,2]
 
+            ## trend per year with st error
+            Tres <- data.frame(t(lmtest::coeftest(lm2)[2,]))
+            Tint <- data.frame(t(lmtest::coeftest(lm2)[1,]))
+            names(Tres) <- paste0("Tlm_", names(Tres))
+
+            d   <- summary(lm2)$coefficients
+            cat("lm:      ", lm2$coefficients[2] , "+/-", d[2,2] ,"\n\n")
+            # lmtest::coeftest(lm2)
+
             ## gather stats
             gather_seas <- rbind(gather_seas,
                                  data.frame(
@@ -1837,7 +1846,8 @@ for (DBn in dbs) {
                                      t_eff     = t_eff,
                                      t_eff_cri = t_eff_cri,
                                      conf_2.5  = conf_2.5,
-                                     conf_97.5 = conf_97.5
+                                     conf_97.5 = conf_97.5,
+                                     Tres
                                  ))
         }
     }

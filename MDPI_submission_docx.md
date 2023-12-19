@@ -296,7 +296,7 @@ with comparable magnitude (Wild et al. 2021; Yuan, Leirvik, and Wild
 trends reported here for the three datasets are in accordance with the
 widely accepted solar radiation brightening over Europe. For the period
 of our observations the trend in the TSI is negligible
-($- 0.00024\,\%/y$), and thus we cannot attribute any significant effect
+($- 0.00022\,\%/y$), and thus we cannot attribute any significant effect
 on the SDR trend to solar variability.
 
 ![Figure 3.1: Anomalies (%) of the daily all-sky SDR from the
