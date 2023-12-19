@@ -449,11 +449,11 @@ et al. (2021). The brightening effect on SDR under cloudy-sky conditions
 during this period. As long term data of cloud optical thickness are
 also not available for the region, we cannot draw quantitative
 conclusions. Lozano, Alados, and Foyo-Moreno (2023) reported a Cloud
-Radiative Forcing (CRF) trend of $1.22\, W/m^{2}/y$ for the SDR for the
-city of Granada Spain (${37.16}^{\circ}\,$N, ${3.61}^{\circ}\,$E,
+Radiative Forcing (CRF) SDR trend of $1.22\, W/m^{2}/y$ for the city of
+Granada Spain ($37^{\circ}\, 10\prime\,$N, $3^{\circ}\, 37\prime\,$E,
 $680\,$m a.s.l.). We found a comparable result, for the same parameter,
 using the long term trend of all- and clear-skies, as follows
-$CRF = 1.46 - 0.501 = 0.959\, W/m^{2}/y$.
+$\text{CRF} = 1.46 - 0.501 = 0.959\, W/m^{2}/y$.
 
 The observed brightening on SDR over Thessaloniki is dependent on SZA
 (larger SZAs lead to stronger brightening). The trend is also dependent
