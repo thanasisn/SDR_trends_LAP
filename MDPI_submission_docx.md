@@ -332,26 +332,22 @@ turn to positive at a fast rate for about five years and at a slower
 rate thereafter.
 
 In order to unveil further the features of the variability of the three
-datasets, Figure  of the CUSUMs, we created another set of CUSUM plots
-by subtracting the corresponding long term trend from the SDR anomaly
-data, prior to the CUSUM calculation (Figure ). With this approach
-periods when the CUSUMs diverge from zero can be interpreted as a
-systematic variation of SDR from the climatological mean. When the CUSUM
-is increasing, the added values are above the climatological values of
-the SDR trend and vice versa. Overall, for all- and clear-sky conditions
-(Figures  and ) we observe periods when the anomalies diverge from the
-climatological value, each lasting for several years. The pattern in
-both datasets is very similar, suggesting prevalence in clear skies over
-Thessaloniki. It is interesting that in the period 1993 - 2016 the
-anomalies have a high variability around zero, while after 2016, the
-range of the variability is decreased to about one third of the prior
-period. For cloudy-sky conditions (Figure ) the period 1997 - 2008 is
-dominated by positive CUSUMs, suggesting a reduced effect of clouds on
-SDR. From 1997 to mid-2000s CUSUMs are increasing, likely due to a
-continuous decrease in the optical thickness of clouds, followed by a
-period of rapid increase (within 3 years) in cloud optical thickness
-lasting up to 2008. The following stable period spans for about 15 years
-up to 2021 when CUSUMs start increasing again.
+datasets, Figure  presents another set of CUSUM plots using anomalies
+after the long-term linear trend is removed. With this approach, periods
+when the CUSUMs diverge from zero can be interpreted as a systematic
+variation of SDR from the climatological mean. When the CUSUM is
+increasing, the anomalies values are above the climatology and vice
+versa. Overall, for all- and cloudy-sky conditions (Figures  and ) we
+observe periods with anomalies diverging from the climatological values,
+each lasting for several years. These fluctuations are probably within
+the natural variability and no distinct changes are identified. The
+pattern in both datasets is similar, suggesting prevalence in cloudy
+skies over Thessaloniki. For clear skies (Figure ) the distinct change
+in 2004 is now clearer. The most likely reason for this change is the
+monotonic reduction of aerosols in Thessaloniki. At that year there a
+change in the rate of decrease in aerosol optical depth as illustrated
+in Figure 7 of Siomos et al. (2020). This abrupt change in CUSUMs lasts
+until about 2010 when the anomalies become again variable.
 
 ## 3.2 Effects of the solar zenith angle on SDR
 
@@ -391,17 +387,24 @@ each season of the year, using the corresponding mean monthly anomalies
 (Figure  and Table ). For all-sky conditions the trend in SDR in winter
 is the largest ($0.7\,\%/y$), followed by the trend in autumn
 ($0.42\,\%/y$, a value close to the long term trend) both statistically
-significant at the $99\,\%$ confidence level. In spring and summer, the
+significant at the $95\,\%$ confidence level. In spring and summer, the
 trends are much smaller and of lesser statistical significance. These
 seasonal differences indicate a possible relation of the trends in SDR
 to trends in clouds during winter and autumn. For clear-skies, the trend
-in winter is $0.4\,\%/y$, larger than for all-skies ($0.7\,\%/y$), which
-is another indication of a decreasing trend in cloud optical thickness.
-Moreover, the trends under clear- and cloudy-sky conditions are almost
-complementary to each other, particularly for winter and autumn, where
-the signal is stronger. During spring and summer the statistical
-significance is very low and the actual trend too small for a meaningful
-comparison.
+in winter is $0.4\,\%/y$, and is associated with the decreasing trend in
+aerosol optical depth (Siomos et al. 2020), and almost half of that for
+all-skies, which is another indication of a decreasing trend in cloud
+optical thickness. In other seasons the clear-sky trend is still very
+small (below $0.1\,\%/y$). Finally, for cloud-skies the winter trend is
+the largest ($0.76\,\%/y$) and greater than for all-skies, followed by a
+much smaller trend in autumn ($0.19\,\%/y$).
+
+The trends under clear- and cloudy-sky conditions are of the same
+direction and it would be expected that their sum is similar to the
+all-sky trend. This does not happen, especially for winter, likely due
+to the way the monthly means for clear and cloudy skies were calculated.
+Daily means were calculated only when at least $60\,\%$ of the clear- or
+cloudy-sky data were available (see sect. ).
 
 # 4 Conclusions
 
@@ -414,26 +417,25 @@ conditions there is a positive trend in SDR of $0.38\,\%/y$
 increase of this trend indicates that the brightening of SDR continues
 and is probably caused by continuing decreases in aerosol optical depth
 and the optical thickness of clouds over the area. A smaller trend has
-been found under clear-sky conditions ($0.1\,\%/y$) that further
-supports the assumption that the brightening is caused mainly by
-decreasing aerosols. Unfortunately, for the entire period there is no
-available data for the aerosols, in order to quantify their effect on
-SDR. However, Siomos et al. (2020) have shown that aerosol optical depth
-over Thessaloniki is decreasing constantly at least up to 2018. The
-attenuation of SDR by aerosols over Europe have been proposed as major
-factor by Wild et al. (2021). The dimming effect on SDR under cloudy-sky
-conditions ($0.41\,\%/y$), suggests that cloud optical thickness is
-decreasing during this period. Because we have no adequate data to
-investigate the long term changes of cloud thickness in the region, we
-cannot verify if the negative SDR trend we observe under under
-cloudy-skies can be attributed solely to changes in clouds.
+been found under clear-sky conditions ($0.097\,\%/y$) which supports the
+notion that part of the brightening is caused by decreasing aerosols.
+Siomos et al. (2020) have shown that aerosol optical depth over
+Thessaloniki is decreasing constantly at least up to 2018.
+Unfortunately, for this study aerosol data for the entire period were
+not available in order to quantify their effect on SDR. The attenuation
+of SDR by aerosols over Europe has been proposed as major factor by Wild
+et al. (2021). The brightening effect on SDR under cloudy-sky conditions
+($0.41\,\%/y$), suggests that cloud optical thickness is also decreasing
+during this period. As long term data of cloud optical thickness are
+also not available for the region, we cannot draw quantitative
+conclusions.
 
 The observed brightening on SDR over Thessaloniki is dependent on SZA
 (larger SZAs lead to stronger brightening). The trend is also dependent
 on season, with winter showing the strongest statistically significant
 trend of $0.7$ and $0.4\,\%/y$ for all- and clear-skies, respectively,
 in contrast to spring and summer. The trends for autumn are also
-significant but smaller ( $0.42$ and $0.054\,\%/y$ for all- and
+significant but smaller ( $0.42$ and $0.05\,\%/y$ for all- and
 clear-skies, respectively). Our findings are in agreement with other
 studies for the region.
 

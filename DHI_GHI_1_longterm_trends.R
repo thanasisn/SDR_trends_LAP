@@ -422,7 +422,6 @@ for (DBn in dbs) {
             # ylab = bquote("Deseas." ~ .(translate(avar)) ~ "[" ~ Watt/m^2 ~ "]" ) )
 
 
-
             if (DRAFT == TRUE) {
                 ## Running mean
                 first <- head(which(!is.na(dataset[[avar]])),1)
@@ -449,12 +448,12 @@ for (DBn in dbs) {
 
             ## display trend on graph
             fit <- lm1[[1]]
-
+signif(Tres[2], 2)
             legend("top", lty = 1, bty = "n", lwd = 2, cex = 1,
                    paste("Trend: ",
                          if (fit[2] > 0) "+" else "-",
-                         signif(abs(fit[2]) * Days_of_year, 3),
-                         "%/y" )
+                         signif(abs(fit[2]) * Days_of_year, 2),
+                         "±", signif(2 * Tres[2], 2) ,"%/y" )
             )
 
     }
@@ -1721,16 +1720,16 @@ write_dat(pprint,
 
             abline(lm2)
 
-
             ## decorations
             fit <- lm2[[1]]
+            pm <- lmtest::coeftest(lm2)[2,2]
 
-            legend("top", lty = 1, bty = "n", lwd = 1, cex = 0.8,
-                   inset = 0.1,
+            legend("bottom", lty = 1, bty = "n", lwd = 1, cex = 0.8,
+                   inset = 0.03, # o.1
                    paste("Trend: ",
                          if (fit[2] > 0) '+' else '-',
                          signif(abs(fit[2]), 2),
-                         "%/y")
+                         "±", signif(2 * pm, 2), "%/y")
             )
 
 
