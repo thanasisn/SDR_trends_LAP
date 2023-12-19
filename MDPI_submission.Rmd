@@ -609,7 +609,7 @@ LT$Rsqrd           <- signif(LT$Rsqrd,               2)
 LT$Tmod_Estimate   <- signif(LT$Tmod_Estimate,       2)
 LT$cor.estimate    <- signif(LT$cor.estimate,        2)
 LT$Tmod_Std..Error <- signif(LT$Tmod_Std..Error * 2, 2)
-LT$ChangeWpY       <- signif(LT$ChangeWpY,           2)
+LT$ChangeWpY       <- signif(LT$ChangeWpY,           3)
 LT$slope <- format(LT$slope, 3, drop0trailing = T)
 
 
@@ -1165,6 +1165,9 @@ during this period.
 As long term data of cloud optical thickness are
 also not available for the region, we cannot draw quantitative
 conclusions.
+@Lozano2023 reported a Cloud Radiative Forcing (CRF) trend of $1.22\,W/m^2/y$ for the SDR for the city of Granada Spain ($37.16^\circ\,$N, $3.61^\circ\,$E, $680\,$m\ a.s.l.). 
+ <!-- (37.16◦ N, 3.61◦ W, 680 m a.s.l.), 37° 9' 35.9994" N  3° 36' 35.9994" W-->
+We found a comparable result, for the same parameter, using the long term trend of all- and clear-skies, as follows $CRF = 1.46 - 0.501 = `r 1.46 - 0.501`\,W/m^2/y$.
 
 The observed brightening on SDR over Thessaloniki is dependent on SZA (larger SZAs lead to stronger brightening).
 The trend is also dependent on season, with winter showing the strongest statistically significant trend of
