@@ -382,16 +382,19 @@ ranging between $0.1$ and $0.15\,\%/y$ up to $77^{\circ}$ SZA. At higher
 SZAs and in the afternoon hours there a sharp increase in the trend up
 to $0.3\,\%/y$, which may have been caused by the long path length of
 radiation through the atmosphere as discussed above for the all-sky
-conditions. The small
+conditions. The small differences in the trend between morning and
+afternoon between $35$ and $60^{\circ}$ SZA is likely a result of less
+attenuation of SDR in the morning hours due to lesser amounts of
+aerosols and shallower boundary layer.
 
 For cloudy-sky conditions (Figure ), we can not discern any significant
 dependence of the SDR trend with SZA as the variability of irradiance is
-dominated by the cloud effects. For SZAs $25^{\circ}$ -- $75^{\circ}$,
-the trends are variable and for most SZAs insignificant ranging between
-$0$ and $0.2\,\%/y$. The smooth increase of the trend at SZAs larger
-than $\sim 75^{\circ}$ is probably associated with stronger attenuation
-by clouds under oblique incidence angles which results in smaller
-variability.
+dominated by the cloud effects leading to insignificant trends.
+Statistically significant trends appear only in the afternoon and for
+SZAs larger than $60^{\circ}$. The sharp increase of the trend at SZAs
+larger than $\sim 75^{\circ}$, observed also for clear skies, is
+probably associated with stronger attenuation by clouds under oblique
+incidence angles, which result also in smaller variability.
 
 ## 3.3 Long term trends by season
 
