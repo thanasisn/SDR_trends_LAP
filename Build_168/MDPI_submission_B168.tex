@@ -369,19 +369,14 @@ algorithm}\label{the-clear-sky-identification-algorithm}}
 
 To calculate the reference clear-sky \(\text{SDR}_\text{CSref}\) we used
 the \(\text{SDR}_\text{Haurwitz}\) derived by the radiation model of
-\citet{Haurwitz1945} (Eq.~\ref{eq:hau}), adjusted for our site:
-\begin{equation}
-\text{SDR}_\text{Haurwitz} = 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.057}{\cos(\theta)} \right) \label{eq:hau}
-\end{equation} where \(\theta\) is the solar zenith angle (SZA).
-
-The adjustment was made with a factor \(a\) (Eq.~\ref{eq:ahau}), which
-was estimated through an iterative optimization process, as described by
-\citet{Long2000} and \citet{Reno2016}. The target of the optimization
-was the minimization of a function \(f(a)\) (Eq.~\ref{eq:minf}) and was
-accomplished with the algorithmic function ``optimise'', which is an
-implementation based on the work of \citet{Brent1973}, from the library
-``stats'' of the R programming language \citep{RCT2023}.
-\begin{equation}
+\citet{Haurwitz1945}, adjusted for our site with a factor \(a\)
+(Eq.~\ref{eq:ahau}), estimated through an iterative optimization
+process, as described by \citet{Long2000} and \citet{Reno2016}. The
+target of the optimization was the minimization of a function \(f(a)\)
+(Eq.~\ref{eq:minf}) and was accomplished with the algorithmic function
+``optimise'', which is an implementation based on the work of
+\citet{Brent1973}, from the library ``stats'' of the R programming
+language \citep{RCT2023}. \begin{equation}
 f(a) = \frac{1}{n}\sum_{i=1}^{n} ( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i} )^2 \label{eq:minf}
 \end{equation} where: \(n\) is the total number of daylight data,
 \(\text{SDR}_{\text{CSid},i}\) are the data identified as clear sky by
@@ -400,9 +395,9 @@ described in more details by \citet{Reno2012} and evaluated by
 factor \(a = 0.965\) yields one of the lowest root mean squared errors
 (RMSE), while the procedure manages to characterize successfully the
 majority of the data. Thus, our clear sky reference is derived by the
-Eq.~\ref{eq:ahau}: \begin{equation}
+Eq.~\ref{eq:ahau}. \begin{equation}
 \text{SDR}_\text{CSref} = a \times \text{SDR}_\text{Haurwitz} = 0.965 \times 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.057}{\cos(\theta)} \right) \label{eq:ahau}
-\end{equation}
+\end{equation} where \(\theta\) is the solar zenith angle (SZA).
 
 The criteria that were used to identify whether a measurement was taken
 under clear-sky conditions are presented below. A data point is flagged
@@ -521,18 +516,18 @@ period, there is no significant break or change in the variability
 pattern of the time series. The linear trends in all three datasets are
 positive and around \(0.4\,\%/y\) for all-sky and cloudy-sky conditions,
 while for clear-skies the trend is much smaller
-(\textasciitilde{}\(0.1\,\%/y\)). The linear trends were calculated
+(\textasciitilde{}\(0.41\,\%/y\)). The linear trends were calculated
 taking into account the autocorrelation of the time series and all three
 are statistically significant at least at the \(95\,\%\) confidence
 level, as they are larger than the corresponding \(2\sigma\) errors. The
 clear-sky trend is very small suggesting a small effect from aerosols
 and water vapor which are the dominant factors of the SDR variability.
 In contrast the large positive trend of SDR under cloudy skies can be
-attributed to reduction in cloud cover and/or cloud optical depth. Lack
-of continuous cloud observations that could support these findings does
-not allow drawing firm conclusions. However, there are indications that
-the total cloud-cover as inferred from the ERA5 analysis for the grid
-point of Thessaloniki is decreasing over the period of study.
+attributed to reduction in cloud cover and/or optical depth. Lack of
+continuous cloud observations that could support these findings does not
+allow drawing firm conclusions. However, there are indications that the
+total cloud-cover as inferred from the ERA5 analysis for the grid point
+of Thessaloniki is decreasing over the period of study.
 
 The all-sky trend is similar to the one reported in \citet{Bais2013}
 from a ten-year shorter dataset suggesting that the tendency of SDR in
@@ -551,7 +546,7 @@ variability.
 \caption{\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period 1993 - 2023.}
 \begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
 \toprule
-Sky conditions & Trend [\%/year] & Trend S.E. ($2\sigma$) & Pearson correl. & Trend [W/m\textsuperscript{2}/year] & Days\\
+Sky conditions & Trend [\%/year] & Trend S.E. ($2\sigma$) & Pearson cor. & Trend [W/year] & Days\\
 \midrule
 All skies & 0.3760 & 0.1210 & 0.0911 & 1.450 & 10250\\
 Clear skies & 0.0972 & 0.0327 & 0.1380 & 0.501 & 2684\\
@@ -566,32 +561,34 @@ Cloudy skies & 0.4080 & 0.1770 & 0.0810 & 1.180 & 4937\\
 
 }
 
-\caption{Anomalies (\%) of the daily all-sky SDR from the climatological mean for the period 1993 -- 2023. The black line is the long term linear trend.}\label{fig:trendALL}
+\caption{Anomalies (\%) of the daily all-sky SDR from the climatological mean for the period1993 - 2023. The black line is the long term linear trend.}\label{fig:trendALL}
 \end{figure}
 
 Although the year-to-year variability of the anomalies (Figure
-\ref{fig:trendALL} and Figures~\ref{fig:trendCLEAR},
+\ref{fig:trendALL} and Figures \ref{fig:trendCLEAR},
 \ref{fig:trendCLOUD} in Appendix), shows a rather homogeneous behaviour,
 plots of the cumulative sums (CUSUM) \citep{Regier2019} of the anomalies
 can reveal different structures in the records of all three sky
-conditions. For time series with a uniform trend, we would expect the
-CUSUMs of the anomalies to have a symmetric `V' shape centered around
-the middle of the series. This would indicate that the anomalies are
-evenly distributed around the climatological mean, and for a positive
-uniform trend, the first half is below and the second half above the
-climatological mean. In our case, there is a more complex evolution of
-the anomalies. For all-skies (Figure~\ref{fig:cusummonth-1}), we observe
-three rather distinct periods: a) a downward part between the start of
-the datasets and about 2000, denoting that all anomalies are negative
-thus below the climatology; b) a relatively steady part lasting for
-almost 20 years suggesting little variability in SDR anomalies; and c) a
-steep upward part to present indicating anomalies above the climatology.
-The CUSUMs for cloudy-skies (Figure~\ref{fig:cusummonth-3}), show a
-similar behavior with some short-term differences that do not change the
-overall pattern. For clear skies (Figure~\ref{fig:cusummonth-2}), a
-monotonic downward tendency is evident until 2004, suggesting that the
-anomalies are all negative. After 2004 the anomalies turn to positive at
-a fast rate for about five years and at a slower rate thereafter.
+conditions. In the cases of all-sky and clear-sky conditions (Figures
+\ref{fig:cusummonth-1} and \ref{fig:cusummonth-2}), we observe three
+macroscopic periods. A downward part from the start until about 2005, a
+relatively steady part until about 2016 and, finally, a steep upward
+part until the present. For cloud-sky (Figure~\ref{fig:cusummonth-3}),
+we have a different pattern; it begins with a relatively steady part
+until 1997, followed by an upward part until 2005, and a long decline
+until 2020, with a small positive slope until the present. For a uniform
+trend, we would expect the CUSUMs of the anomalies to have a symmetric
+`V' shape. This would indicate that the anomalies are evenly distributed
+around the climatological mean, and for a positive uniform trend, the
+first half to be below and the other half above the climatological mean.
+In our case, there is a more complex evolution of the anomalies. Another
+distinct feature of the CUSUMs, is the different pattern of the
+cloudy-sky dataset which peaks around the middle of the period.
+Although, there seems to exist a complementary relation to the CUSUMs of
+the clear- and all-sky cases, we can not assert that clouds are the main
+driver for this relation due to the great difference in the number of
+observational data between the two datasets
+(Table~\ref{tab:trendtable}).
 
 \begin{figure}[h!]
     \begin{adjustwidth}{-\extralength}{0cm}
@@ -607,8 +604,7 @@ a fast rate for about five years and at a slower rate thereafter.
 \end{adjustwidth}
 \end{figure}
 
-In order to unveil further the features of the variability of the three
-datasets, Figure~\ref{fig:cusumnotrendmonthly} of the CUSUMs, we created
+In order to investigate further the features of the CUSUMs, we created
 another set of CUSUM plots by subtracting the corresponding long term
 trend from the SDR anomaly data, prior to the CUSUM calculation
 (Figure~\ref{fig:cusumnotrendmonthly}). With this approach periods when
@@ -708,7 +704,7 @@ value close to the long term trend) both statistically significant at
 the \(99\,\%\) confidence level. In spring and summer, the trends are
 much smaller and of lesser statistical significance. These seasonal
 differences indicate a possible relation of the trends in SDR to trends
-in clouds during winter and autumn. For clear-skies, the trend in winter
+of clouds during winter and autumn. For clear-skies, the trend in winter
 is \(0.4\,\%/y\), larger than for all-skies (\(0.7\,\%/y\)), which is
 another indication of a decreasing trend in cloud optical thickness.
 Moreover, the trends under clear- and cloudy-sky conditions are almost
@@ -763,28 +759,26 @@ Sky condition & Season & Trend [\%/year] & Pearson cor. & Trend p-value\\
 \hypertarget{conclusions}{%
 \section{Conclusions}\label{conclusions}}
 
-We have analyzed a 30 year dataset of SRD measurements in Thessaloniki
-Greece (1993 -- 2023) aiming to identify the long term variability of
-solar irradiance under different sky conditions. Under all-sky
-conditions there is a positive trend in SDR of \(0.38\,\%/y\)
-(brightening). A previous study \citep{Bais2013} for the period 1993 --
-2011 reported also a positive trend, of \(0.33\,\%/y\). The slight
-increase of this trend indicates that the brightening of SDR continues
-and is probably caused by continuing decreases in aerosol optical depth
-and the optical thickness of clouds over the area. A smaller trend has
-been found under clear-sky conditions (\(0.1\,\%/y\)) that further
-supports the assumption that the brightening is caused mainly by
-decreasing aerosols. Unfortunately, for the entire period there is no
-available data for the aerosols, in order to quantify their effect on
-SDR. However, \citet{Siomos2020} have shown that aerosol optical depth
-over Thessaloniki is decreasing constantly at least up to 2018. The
-attenuation of SDR by aerosols over Europe have been proposed as major
-factor by \citet{Wild2021}. The dimming effect on SDR under cloudy-sky
-conditions (\(0.41\,\%/y\)), suggests that cloud optical thickness is
-decreasing during this period. Because we have no adequate data to
-investigate the long term changes of cloud thickness in the region, we
-cannot verify if the negative SDR trend we observe under under
-cloudy-skies can be attributed solely to changes in clouds.
+We have demonstrated that in the period 1993 - 2023, there is a positive
+trend in SDR of (\(0.38\,\%/y\)) (brightening) (positive trend) in
+Thessaloniki, Greece, under all-sky conditions. A previous study
+\citep{Bais2013} for the period 1993 - 2011 found also a positive trend
+of \(0.33\,\%/y\). The increase of this trend indicates that the
+brightening of SDR continues and is probably caused by continuing
+decreases in aerosol optical depth and the optical thickness of clouds
+over the area. Moreover, we found a similar trend under clear-sky
+conditions (\(0.1\,\%/y\)) that further supports the assumption that the
+brightening is caused mainly by decreasing aerosols. Unfortunately, for
+the entire period there is no available data for the aerosols, in order
+to quantify their effect on SDR. However, \citet{Siomos2020} have shown
+that aerosol optical depth over Thessaloniki is decreasing constantly at
+least up to 2018. The attenuation of SDR by aerosols over Europe have
+been proposed as major factor by \citet{Wild2021}. The dimming effect on
+SDR under cloudy-sky conditions (\(0.41\,\%/y\)), suggests that cloud
+optical thickness is decreasing during this period. Because we have no
+adequate data to investigate the long term changes of cloud thickness in
+the region, we cannot verify if the negative SDR trend we observe under
+under cloudy-skies can be attributed solely to changes in clouds.
 
 The observed brightening on SDR over Thessaloniki is dependent on SZA
 (larger SZAs lead to stronger brightening). The trend is also dependent
@@ -795,11 +789,11 @@ are also significant but smaller ( \(0.42\) and \(0.054\,\%/y\) for all-
 and clear-skies, respectively). Our findings are in agreement with other
 studies for the region.
 
-Using the CUSUMs of the monthly departures for all- and cloudy-skies, we
-observed a 20 year period starting around 2000 where the CUSUMs remain
-relatively stable, with a steep decline before and a steep increase
-after. The rather smooth course of the CUSUMs suggests that no important
-change in the SDR pattern has occurred in the entire record.
+Using the CUSUMs of the monthly departures for all- and clear-skies, we
+observed periods where the CUSUMs remain relatively stable, with a steep
+decline before and a steep increase after. This is an indication that
+the whole brightening effect does not follow a smooth development over
+time.
 
 Continued observations with a collocated pyrheliometer, which started in
 2016, will allow us to further investigate the variability of solar
