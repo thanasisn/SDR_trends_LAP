@@ -511,6 +511,22 @@ model (arima) with lag-1, and were reported together with the
 \hypertarget{long-term-sdr-trends}{%
 \subsection{Long-term SDR trends}\label{long-term-sdr-trends}}
 
+\begin{verbatim}
+[1] 0.380 0.097 0.410
+\end{verbatim}
+
+\begin{verbatim}
+[1] 0.380 0.097 0.410
+\end{verbatim}
+
+\begin{verbatim}
+[1] "0.38"  "0.097" "0.41" 
+\end{verbatim}
+
+\begin{verbatim}
+[1] "0.380" "0.097" "0.410"
+\end{verbatim}
+
 We calculated the linear trends of SDR, from the departures of the mean
 daily values from the daily climatology and for the three sky conditions
 (Table~\ref{tab:trendtable}). In Figure~\ref{fig:trendALL} we present
@@ -553,9 +569,9 @@ variability.
 \toprule
 Sky conditions & Trend [\%/year] & Trend S.E. ($2\sigma$) & Pearson correl. & Trend [W/m\textsuperscript{2}/year] & Days\\
 \midrule
-All skies & 0.3760 & 0.1210 & 0.0913 & 1.460 & 10251\\
-Clear skies & 0.0972 & 0.0327 & 0.1380 & 0.501 & 2684\\
-Cloudy skies & 0.4080 & 0.1770 & 0.0810 & 1.180 & 4937\\
+All skies & 0.380 & 0.120 & 0.091 & 1.5 & 10251\\
+Clear skies & 0.097 & 0.033 & 0.140 & 0.5 & 2684\\
+Cloudy skies & 0.410 & 0.180 & 0.081 & 1.2 & 4937\\
 \bottomrule
 \end{tabu}
 \end{table}
@@ -729,33 +745,33 @@ comparison.
 \begin{table}[!h]
 
 \caption{\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.}
-\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\centering}X}
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
 \toprule
 Sky condition & Season & Trend [\%/year] & Trend S.E. ($2\sigma$) & Pearson correl. & Trend p-value\\
 \midrule
-\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.7000} & \cellcolor{gray!6}{0.4250} & \cellcolor{gray!6}{0.5350} & \cellcolor{gray!6}{0.002770}\\
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.70} & \cellcolor{gray!6}{0.43} & \cellcolor{gray!6}{0.54} & \cellcolor{gray!6}{0.003}\\
 
- & Spring & 0.1070 & 0.2350 & 0.1660 & 0.371000\\
+ & Spring & 0.11 & 0.24 & 0.17 & 0.371\\
 
-\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{0.1050} & \cellcolor{gray!6}{0.1520} & \cellcolor{gray!6}{0.2540} & \cellcolor{gray!6}{0.175000}\\
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{0.11} & \cellcolor{gray!6}{0.15} & \cellcolor{gray!6}{0.25} & \cellcolor{gray!6}{0.175}\\
 
-\multirow{-4}{*}{\centering\arraybackslash All skies} & Autumn & 0.4230 & 0.3030 & 0.4660 & 0.009390\\
+\multirow{-4}{*}{\centering\arraybackslash All skies} & Autumn & 0.42 & 0.30 & 0.47 & 0.009\\
 \cmidrule{1-6}
-\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.3950} & \cellcolor{gray!6}{0.2010} & \cellcolor{gray!6}{0.5960} & \cellcolor{gray!6}{0.000515}\\
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.40} & \cellcolor{gray!6}{0.20} & \cellcolor{gray!6}{0.60} & \cellcolor{gray!6}{0.001}\\
 
- & Spring & 0.0591 & 0.1720 & 0.1270 & 0.497000\\
+ & Spring & 0.06 & 0.17 & 0.13 & 0.497\\
 
-\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{-0.0540} & \cellcolor{gray!6}{0.0646} & \cellcolor{gray!6}{-0.3010} & \cellcolor{gray!6}{0.106000}\\
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{-0.05} & \cellcolor{gray!6}{0.06} & \cellcolor{gray!6}{-0.30} & \cellcolor{gray!6}{0.106}\\
 
-\multirow{-4}{*}{\centering\arraybackslash Clear skies} & Autumn & 0.0539 & 0.1170 & 0.1710 & 0.366000\\
+\multirow{-4}{*}{\centering\arraybackslash Clear skies} & Autumn & 0.05 & 0.12 & 0.17 & 0.366\\
 \cmidrule{1-6}
-\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.7590} & \cellcolor{gray!6}{0.3970} & \cellcolor{gray!6}{0.5860} & \cellcolor{gray!6}{0.000665}\\
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.76} & \cellcolor{gray!6}{0.40} & \cellcolor{gray!6}{0.59} & \cellcolor{gray!6}{0.001}\\
 
- & Spring & 0.0621 & 0.2300 & 0.0998 & 0.593000\\
+ & Spring & 0.06 & 0.23 & 0.10 & 0.593\\
 
-\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{-0.0789} & \cellcolor{gray!6}{0.2670} & \cellcolor{gray!6}{-0.1110} & \cellcolor{gray!6}{0.560000}\\
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{-0.08} & \cellcolor{gray!6}{0.27} & \cellcolor{gray!6}{-0.11} & \cellcolor{gray!6}{0.560}\\
 
-\multirow{-4}{*}{\centering\arraybackslash Cloudy skies} & Autumn & 0.1910 & 0.4320 & 0.1650 & 0.384000\\
+\multirow{-4}{*}{\centering\arraybackslash Cloudy skies} & Autumn & 0.19 & 0.43 & 0.16 & 0.384\\
 \bottomrule
 \end{tabu}
 \end{table}
@@ -791,7 +807,7 @@ The observed brightening on SDR over Thessaloniki is dependent on SZA
 on season, with winter showing the strongest statistically significant
 trend of \(0.7\) and \(0.4\,\%/y\) for all- and clear-skies,
 respectively, in contrast to spring and summer. The trends for autumn
-are also significant but smaller ( \(0.42\) and \(0.054\,\%/y\) for all-
+are also significant but smaller ( \(0.42\) and \(0.05\,\%/y\) for all-
 and clear-skies, respectively). Our findings are in agreement with other
 studies for the region.
 

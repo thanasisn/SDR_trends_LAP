@@ -607,13 +607,14 @@ cloudtrend <- signif(LT[DATA == "Cloudy sky cond.", slope], 2)
 LTminSSig  <- signif(min(LT$slope.stat_sig), 4)
 
 ## numeric precision of table
-LT$slope           <- signif(LT$slope,         3)
-LT$slope.p         <- signif(LT$slope.p,       3)
-LT$Rsqrd           <- signif(LT$Rsqrd,         3)
-LT$Tmod_Estimate   <- signif(LT$Tmod_Estimate, 3)
-LT$cor.estimate    <- signif(LT$cor.estimate,  3)
-LT$Tmod_Std..Error <- signif(LT$Tmod_Std..Error * 2, 3)
-LT$ChangeWpY       <- signif(LT$ChangeWpY, 3)
+LT$slope           <- signif(LT$slope,               2)
+LT$slope.p         <- signif(LT$slope.p,             3)
+LT$Rsqrd           <- signif(LT$Rsqrd,               2)
+LT$Tmod_Estimate   <- signif(LT$Tmod_Estimate,       2)
+LT$cor.estimate    <- signif(LT$cor.estimate,        2)
+LT$Tmod_Std..Error <- signif(LT$Tmod_Std..Error * 2, 2)
+LT$ChangeWpY       <- signif(LT$ChangeWpY,           2)
+LT$slope <- format(LT$slope, 3, drop0trailing = T)
 
 
 LT$RsqrdAdj <- NULL
@@ -660,6 +661,12 @@ LT1 <- LT[,c(
       "Days"
       )]
 # LT1 <- LT
+
+
+signif(LT1$`Trend [%/year]` , 3)
+round(LT1$`Trend [%/year]` , 3)
+format(LT1$`Trend [%/year]` , 3, drop0trailing = T)
+as.character(format(LT1$`Trend [%/year]` , 3))
 
 
 ## order columns
@@ -728,6 +735,7 @@ x_latex <- knitr::kable(LT1,
                         centering   = FALSE,
                         table.envir = "table",
                         position    = "H",
+                        drop0trailing = T,
                         caption     = paste0("Trends in SDR daily means for different sky conditions for the period ", year(min(ALL_1_daily_DESEAS$Date)), " - ", year(max(ALL_1_daily_DESEAS$Date)), "."))
 
 # x_latex %>%
@@ -956,12 +964,12 @@ spp       <- spp[new_order,]
 spp <- spp[order(spp$DATA), ]
 
 ## numeric precision
-spp$Tlm_Std..Error  <- signif(spp$Tlm_Std..Error * 2, 3)
-spp$slope           <- signif(spp$slope,          3)
-spp$slope.p         <- signif(spp$slope.p,        3)
+spp$Tlm_Std..Error  <- round(spp$Tlm_Std..Error * 2, 2)
+spp$slope           <- round(spp$slope,              2)
+spp$slope.p         <- round(spp$slope.p,            3)
+spp$cor.estimate    <- round(spp$cor.estimate,       2)
 # spp$slope.stat_sig  <- signif(spp$slope.stat_sig, 3)
 # spp$Rsqrd           <- signif(spp$Rsqrd,          3)
-spp$cor.estimate    <- signif(spp$cor.estimate,   3)
 
 # spp$Tlm_Pr...t..
 
