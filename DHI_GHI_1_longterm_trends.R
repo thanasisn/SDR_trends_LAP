@@ -448,14 +448,12 @@ for (DBn in dbs) {
 
             ## display trend on graph
             fit <- lm1[[1]]
-signif(Tres[2], 2)
             legend("top", lty = 1, bty = "n", lwd = 2, cex = 1,
                    paste("Trend: ",
                          if (fit[2] > 0) "+" else "-",
                          signif(abs(fit[2]) * Days_of_year, 2),
                          "±", signif(2 * Tres[2], 2) ,"%/y" )
             )
-
     }
 }
 #+ echo=F, include=F

@@ -82,8 +82,8 @@ A manual screening was performed, to remove inconsistent and erroneous
 recordings that can occur stochastically or systematically, during the
 continuous operation of the instruments. The manual screening is aided
 by a radiation data quality assurance procedure, adjusted for the site,
-which is based on the methods of Long and Shi (2008, 2006). Thus,
-problematic recordings have been excluded from further processing.
+which is based on the methods of Long and Shi (Long and Shi 2006, 2008).
+Thus, problematic recordings have been excluded from further processing.
 Although it is impossible to detect all false data, the large number of
 available data, and the aggregation scheme we used, ensures the quality
 of the radiation measurements used in this study.
@@ -107,8 +107,11 @@ In order to estimate the effect of the sky conditions on the long term
 variability of SDR, we created three datasets by characterizing each
 one-minute measurement with a corresponding sky-condition flag (i.e.,
 all-sky, clear-sky and cloudy-sky). To identify the clear-cases we used
-a method proposed by Long and Ackerman (2000) and by Reno and Hansen
-(2016), which were adapted and configured for the site of Thessaloniki.
+the method proposed by Reno and Hansen (2016), which requires the
+definition of some site specific parameters. These parameters, were
+produced by an iterative process, as the original authors proposed and
+it are discussed in the next section.
+
 We note that all methods have some subjectivity in the definition of
 clear or cloudy sky cases. As a result, the details of the definition
 are site specific and they rely on a combination of thresholds and
@@ -455,7 +458,7 @@ in contrast to spring and summer. The trends for autumn are also
 significant but smaller ( $0.42$ and $0.19\,\%/y$ for all- and
 cloudy-skies, respectively). Our findings are in agreement with other
 studies for the region. The trend for clear skies is largest in winter
-($0.4$) and negligible in spring, summer and autumn.
+($0.4\,\%/y$) and negligible in spring, summer and autumn.
 
 Using the CUSUMs of the monthly departures for all- and cloudy-skies, we
 observed a 20 year period starting around 2000 where the CUSUMs remain

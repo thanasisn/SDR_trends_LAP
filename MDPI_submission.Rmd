@@ -344,14 +344,11 @@ The signal is converted to irradiance using a ramped value of the instrument’s
 <!-- b) Radiation data quality check -->
 A manual screening was performed, to remove inconsistent and erroneous recordings that can occur stochastically or systematically, during the continuous operation of the instruments.
 The manual screening is aided by a radiation data quality assurance procedure, adjusted for the site, which is based on the methods of
-Long and Shi\ [-@Long2008a; -@Long2006].
+Long and Shi\ [@Long2006; @Long2008a].
 Thus, problematic recordings have been excluded from further processing.
 Although it is impossible to detect all false data, the large number of available data, and the aggregation scheme we used, ensures the quality of the radiation measurements used in this study.
 
-
-
-
-<!-- ### Data selection -->
+<!-- Data selection -->
 Due to the significant measurement uncertainty when the Sun is near the horizon, we have excluded all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$.
 Moreover, due to obstructions around the site (hills and buildings) which block the direct irradiance, we excluded data with azimuth angle in the range
 $`r FIBais_Az_1`^{\circ}$ - $`r FIBais_Az_2`^{\circ}$ and with SZA greater than $`r 90 -  FIBais_Elev`^{\circ}$.
@@ -365,11 +362,10 @@ The initial daily values of this dataset were interpolated to match the time ste
 
 <!-- c) Clear sky identification -->
 In order to estimate the effect of the sky conditions on the long term variability of SDR, we created three datasets by characterizing each one-minute measurement with a corresponding sky-condition flag (i.e., all-sky, clear-sky and cloudy-sky).
-To identify the clear-cases we used a method proposed by
-@Long2000
-and by
-@Reno2016,
-which were adapted and configured for the site of Thessaloniki.
+To identify the clear-cases we used the method proposed by
+@Reno2016, which requires the definition of some site specific parameters.
+These parameters, were produced by an iterative process, as the original authors proposed and it are discussed in the next section.
+
 <!-- CS subjectivity -->
 We note that all methods have some subjectivity in the definition of clear or cloudy sky cases.
 As a result, the details of the definition are site specific and they rely on a combination of thresholds and comparisons with ideal radiation models and statistical analysis of different signal metrics.
@@ -748,7 +744,7 @@ x_latex %>%
 ```
 
 
-```{r trendALL, echo=F, out.width='.70\\linewidth', fig.cap=paste0("Anomalies (\\%) of the daily all-sky SDR from the climatological mean for the period ", year(min(ALL_1_daily_DESEAS$Date)), " -- ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line is the long term linear trend.")}
+```{r trendALL, echo=F, out.width='.75\\linewidth', fig.cap=paste0("Anomalies (\\%) of the daily all-sky SDR from the climatological mean for the period ", year(min(ALL_1_daily_DESEAS$Date)), " -- ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line is the long term linear trend.")}
 knitr::include_graphics("./images/LongtermTrends-2.png")
 ```
 
@@ -1183,7 +1179,7 @@ $`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == 
 for all- and cloudy-skies, respectively).
 Our findings are in agreement with other studies for the region.
 The trend for clear skies is largest in winter
-($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear skies"], 2)`$) 
+($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear skies"], 2)`\,\%/y$) 
 and negligible in spring, summer and autumn.
 
 Using the CUSUMs of the monthly departures for all- and cloudy-skies, we observed a 20 year period starting around 2000 where the CUSUMs remain relatively stable, with a steep decline before and a steep increase after. 

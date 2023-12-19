@@ -324,11 +324,11 @@ recordings that can occur stochastically or systematically, during the
 continuous operation of the instruments. The manual screening is aided
 by a radiation data quality assurance procedure, adjusted for the site,
 which is based on the methods of Long and
-Shi~\citetext{\citeyear{Long2008a}; \citeyear{Long2006}}. Thus,
-problematic recordings have been excluded from further processing.
-Although it is impossible to detect all false data, the large number of
-available data, and the aggregation scheme we used, ensures the quality
-of the radiation measurements used in this study.
+Shi~\citep{Long2006, Long2008a}. Thus, problematic recordings have been
+excluded from further processing. Although it is impossible to detect
+all false data, the large number of available data, and the aggregation
+scheme we used, ensures the quality of the radiation measurements used
+in this study.
 
 Due to the significant measurement uncertainty when the Sun is near the
 horizon, we have excluded all measurements with SZA greater than
@@ -349,19 +349,23 @@ In order to estimate the effect of the sky conditions on the long term
 variability of SDR, we created three datasets by characterizing each
 one-minute measurement with a corresponding sky-condition flag (i.e.,
 all-sky, clear-sky and cloudy-sky). To identify the clear-cases we used
-a method proposed by \citet{Long2000} and by \citet{Reno2016}, which
-were adapted and configured for the site of Thessaloniki. We note that
-all methods have some subjectivity in the definition of clear or cloudy
-sky cases. As a result, the details of the definition are site specific
-and they rely on a combination of thresholds and comparisons with ideal
-radiation models and statistical analysis of different signal metrics.
-The CSid algorithm was calibrated with the main focus, to identify the
-presence of clouds. Despite the fine-tuning of the procedure, in a few
-marginal cases false positive or false negative results were identified
-by manual inspection. However, due to their small number, they cannot
-affect the final results of the study. For completeness, we provide
-below a brief overview of the clear-sky identification algorithm (CSid),
-along with the site specific thresholds.
+the method proposed by \citet{Reno2016}, which requires the definition
+of some site specific parameters. These parameters, were produced by an
+iterative process, as the original authors proposed and it are discussed
+in the next section.
+
+We note that all methods have some subjectivity in the definition of
+clear or cloudy sky cases. As a result, the details of the definition
+are site specific and they rely on a combination of thresholds and
+comparisons with ideal radiation models and statistical analysis of
+different signal metrics. The CSid algorithm was calibrated with the
+main focus, to identify the presence of clouds. Despite the fine-tuning
+of the procedure, in a few marginal cases false positive or false
+negative results were identified by manual inspection. However, due to
+their small number, they cannot affect the final results of the study.
+For completeness, we provide below a brief overview of the clear-sky
+identification algorithm (CSid), along with the site specific
+thresholds.
 
 \hypertarget{the-clear-sky-identification-algorithm}{%
 \subsection{The clear sky identification
@@ -563,7 +567,7 @@ Cloudy skies & 0.410 & 0.180 & 0.081 & 1.2 & 4937\\
 
 \begin{figure}[h!]
 
-{\centering \includegraphics[width=.70\linewidth]{./images/LongtermTrends-2} 
+{\centering \includegraphics[width=.75\linewidth]{./images/LongtermTrends-2} 
 
 }
 
@@ -813,7 +817,7 @@ respectively, in contrast to spring and summer. The trends for autumn
 are also significant but smaller ( \(0.42\) and \(0.19\,\%/y\) for all-
 and cloudy-skies, respectively). Our findings are in agreement with
 other studies for the region. The trend for clear skies is largest in
-winter (\(0.4\)) and negligible in spring, summer and autumn.
+winter (\(0.4\,\%/y\)) and negligible in spring, summer and autumn.
 
 Using the CUSUMs of the monthly departures for all- and cloudy-skies, we
 observed a 20 year period starting around 2000 where the CUSUMs remain

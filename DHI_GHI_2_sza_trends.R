@@ -580,7 +580,7 @@ for (avar in vars) {
             ## empty plot
             plot(1, type = "n",
                  xlab = "",
-                 ylab = awename,
+                 ylab = "",
                  xlim = xlim,
                  ylim = ylim,
                  yaxt = "n")
@@ -593,6 +593,9 @@ for (avar in vars) {
                       tcl = -0.25)
             title(xlab = bquote("Solar zenith angle (SZA)"),
                   line = 2.5)
+
+            title(ylab = awename,
+                  line = 3.3)
 
             ## zero line
             abline(h = 0, lty = 3)
