@@ -256,10 +256,11 @@ one-minute data were aggregated in $1^{\circ}$ SZA bins, separately for
 the morning and afternoon hours.
 
 The linear trends were calculated using an first order autoregressive
-model (arima) with lag-1, and were reported together with the $2\sigma$
+model with lag of 1 day with fitting method of the "maximum likelihood"
+(Gardner, Harvey, and Phillips 1980; Jones 1980), by implementing the
+function "arima" from the library "stats" of the R programming language
+(R Core Team 2023). The trends were reported together with the $2\sigma$
 errors (Table ).
-
-Santer et al. (2000)
 
 # 3 Results
 
@@ -361,14 +362,27 @@ periods before noon and after noon (Figure ). Although there are
 seasonal dependencies of the minimum SZA (see Appendix, Figure ), these
 dependencies are not discussed further.
 
-For all-sky conditions the brightening effect of SDR (positive trend) is
-stronger for large SZAs (Figures  and ) ranging from about $0.1\,\%/y$
-to about $0.7\,\%/y$. The trends in the morning and afternoon hours are
-more or less consistent with small differences at small SZAs which can
-be attributed to effects on clear sky SDR from systematic diurnal
-patterns of aerosols during the warm period of the year (Wang et al.
-2021). Note that SZAs less than $35^{\circ}$ can only occur during the
-warm period of the year when clear skies are more frequent.
+For all-sky conditions the brightening effect of SDR (positive trend)
+increases with SZAs (Figures ) ranging from about $0.1\,\%/y$ to about
+$0.7\,\%/y$ for the statistically significant trends. The trends in the
+morning and afternoon hours are more or less consistent with small
+differences at small SZAs which can be attributed to effects on clear
+sky SDR from systematic diurnal patterns of aerosols during the warm
+period of the year, consistently with the results reported for China by
+Wang et al. (2021). Note that SZAs less than $25^{\circ}$ can only occur
+during the warm period of the year around noon when clear skies are more
+frequent. The increasing of the trend with SZA is likely caused by the
+increased attenuation of SDR with SZA. The effect is larger when aerosol
+and/or cloud layers are optically thicker, therefore, decreases in
+aerosol and clouds through the study period will result in larger
+positive trends of SDR at larger SZAs.
+
+Under clear skies (Figures ), the trends are smaller and less variable,
+ranging between $0.1$ and $0.15\,\%/y$ up to $77^{\circ}$ SZA. At higher
+SZAs and in the afternoon hours there a sharp increase in the trend up
+to $0.3\,\%/y$, which may have been caused by the long path length of
+radiation through the atmosphere as discussed above for the all-sky
+conditions. The small
 
 For cloudy-sky conditions (Figure ), we can not discern any significant
 dependence of the SDR trend with SZA as the variability of irradiance is
@@ -433,11 +447,12 @@ conclusions.
 The observed brightening on SDR over Thessaloniki is dependent on SZA
 (larger SZAs lead to stronger brightening). The trend is also dependent
 on season, with winter showing the strongest statistically significant
-trend of $0.7$ and $0.4\,\%/y$ for all- and clear-skies, respectively,
+trend of $0.7$ and $0.76\,\%/y$ for all- and cloudy-skies, respectively,
 in contrast to spring and summer. The trends for autumn are also
-significant but smaller ( $0.42$ and $0.05\,\%/y$ for all- and
-clear-skies, respectively). Our findings are in agreement with other
-studies for the region.
+significant but smaller ( $0.42$ and $0.19\,\%/y$ for all- and
+cloudy-skies, respectively). Our findings are in agreement with other
+studies for the region. The trend for clear skies is largest in winter
+($0.4$) and negligible in spring, summer and autumn.
 
 Using the CUSUMs of the monthly departures for all- and cloudy-skies, we
 observed a 20 year period starting around 2000 where the CUSUMs remain
@@ -464,8 +479,17 @@ Martin Snow, and NOAA CDR Program. 2005. "NOAA Climate Data Record (CDR)
 of Total Solar Irradiance (TSI), NRLTSI Version 2. Daily."
 <https://doi.org/10.7289/V55B00C1>.
 
+Gardner, G., A. C. Harvey, and G. D. A. Phillips. 1980. "Algorithm AS
+154: An Algorithm for Exact Maximum Likelihood Estimation of
+Autoregressive-Moving Average Models by Means of Kalman Filtering."
+*Applied Statistics* 29 (3): 311. <https://doi.org/10.2307/2346910>.
+
 Haurwitz, Bernhard. 1945. "Insolation in Relation to Cloudiness and
 Cloud Density." *Journal of Meteorology* 2 (September): 154--66.
+
+Jones, Richard H. 1980. "Maximum Likelihood Fitting of ARMA Models to
+Time Series with Missing Observations." *Technometrics* 22 (3): 389--95.
+<https://doi.org/10.1080/00401706.1980.10486171>.
 
 Li, Zhanqing, W. K.‐M. Lau, V. Ramanathan, G. Wu, Y. Ding, M. G. Manoj,
 J. Liu, et al. 2016. "Aerosol and Monsoon Climate Interactions over
@@ -523,13 +547,6 @@ Fuglestvedt, S. Osprey, and C.‐F. Schleussner. 2018. "Climate Impacts
 from a Removal of Anthropogenic Aerosol Emissions." *Geophysical
 Research Letters* 45 (2): 1020--29.
 <https://doi.org/10.1002/2017GL076079>.
-
-Santer, B. D., T. M. L. Wigley, J. S. Boyle, D. J. Gaffen, J. J. Hnilo,
-D. Nychka, D. E. Parker, and K. E. Taylor. 2000. "Statistical
-Significance of Trends and Trend Differences in Layer‐average
-Atmospheric Temperature Time Series." *Journal of Geophysical Research:
-Atmospheres* 105 (March): 7337--56.
-<https://doi.org/10.1029/1999JD901105>.
 
 Schwarz, M., D. Folini, S. Yang, R. P. Allan, and M. Wild. 2020.
 "Changes in Atmospheric Shortwave Absorption as Important Driver of
