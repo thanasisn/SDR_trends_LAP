@@ -49,7 +49,7 @@ The SDR data were measured with a Kipp & Zonen CM-21 pyranometer
 operating continuously at the Laboratory of Atmospheric Physics of the
 Aristotle University of Thessaloniki ($40^{\circ}\, 38\prime\,$N,
 $22^{\circ}\, 57\prime\,$E, $80\,$m a.s.l.) since 1993. Here we use data
-for the period from 1993-04-13 to 2023-04-12. The monitoring site is
+for the period from 1993-04-13 to 2023-04-13. The monitoring site is
 located near the city centre thus we expect that measurements are
 affected by the urban environment. During the study period, the
 pyranometer has been independently calibrated three times at the
