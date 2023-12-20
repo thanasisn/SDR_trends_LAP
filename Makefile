@@ -17,7 +17,6 @@ presentation = "../presentations/2023-01-18_LAP_GHI_trends/"
 LIBRARY      = ~/LIBRARY/REPORTS/
 
 
-
 ### MDPI Article
 TARGET = MDPI_submission
 RMD    = $(TARGET).Rmd
@@ -75,9 +74,6 @@ $(PDF): $(RMD)
 	-chmod 0444 Build_$(shell echo $$(($$(cat $(BLD_FILE)) + 1)))/*_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).*
 	## increase counter
 	$(call buildver)
-
-
-
 
 
 

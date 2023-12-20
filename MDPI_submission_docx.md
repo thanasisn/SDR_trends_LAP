@@ -120,7 +120,7 @@ are discussed in the next section.
 
 We note that all methods have some subjectivity in the definition of
 clear or cloudy sky cases. As a result, the details of the definition
-are site specific and they rely on a combination of thresholds and
+are site specific, and they rely on a combination of thresholds and
 comparisons with ideal radiation models and statistical analysis of
 different signal metrics. The CSid algorithm was calibrated with the
 main focus, to identify the presence of clouds. Despite the fine-tuning
