@@ -144,15 +144,15 @@ consistency of these trends, their seasonal variability, and the effect
 of the solar zenith angle have also been investigated. Under all three
 sky categories the SDR trend is stronger in winter with \(0.7\), \(0.4\)
 and \(0.76\,\%/\text{year}\), respectively for all-, clear- and
-cloudy-skies. In automn, there are the next larger trends of \(0.42\)
-and \(0.19\,\%/\text{year}\), for all- and cloudy-skies respectively.
-The rest seasonal trends are significant smaller, close to zero, with
-clear- and cloudy-skies having a negative trend for summer. The SDR
-trend is increasing with increasing solar zenith angle, except under
-cloudy skies where the trend is highly variable and close to zero.
-Finally, we are discussing shorter-term variations in SDR anomalies by
-examining the patterns of the cumulative sums of monthly anomalies from
-the climatological mean, both before and after removing the long-term
+cloudy-skies. The next larger seasonal trends are in automn \(0.42\) and
+\(0.19\,\%/\text{year}\), for all- and cloudy-skies respectively. The
+rest seasonal trends are significant smaller, close to zero, with a
+negative values in summer, for clear- and cloudy-skies. The SDR trend is
+increasing with increasing solar zenith angle, except under cloudy skies
+where the trend is highly variable and close to zero. Finally, we are
+discussing shorter-term variations in SDR anomalies by examining the
+patterns of the cumulative sums of monthly anomalies from the
+climatological mean, both before and after removing the long-term
 trend.}
 
 
@@ -382,7 +382,7 @@ To calculate the reference clear-sky \(\text{SDR}_\text{CSref}\) we used
 the \(\text{SDR}_\text{Haurwitz}\) derived by the radiation model of
 \citet{Haurwitz1945} (Eq.~\ref{eq:hau}), adjusted for our site:
 \begin{equation}
-\text{SDR}_\text{Haurwitz} = 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.057}{\cos(\theta)} \right) \label{eq:hau}
+\text{SDR}_\text{Haurwitz} = 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.059}{\cos(\theta)} \right) \label{eq:hau}
 \end{equation} where \(\theta\) is the SZA.
 
 The adjustment was made with a factor \(a\) (Eq.~\ref{eq:ahau}), which
@@ -482,8 +482,10 @@ respective parameter should fall in order to raise the clear-sky flag:
   \end{equation}
 \end{enumerate}
 
-In the final dataset \(23.3\%\) of the 1-minute data were identified as
-under clear-sky conditions and \(43\%\) as under cloud-sky conditions.
+In the final dataset \(26\,\%\) of the days were identified as under
+clear-sky conditions and \(48\,\%\) as under cloud-sky conditions. The
+remaining \(26\,\%\) of the data correspond to mixed cases and were not
+analyzed as a separate group.
 
 \hypertarget{aggregationstatistical}{%
 \subsection{Aggregation of data and statistical
@@ -821,7 +823,7 @@ been found under clear-sky conditions (\(0.097\,\%/y\)) which supports
 the notion that part of the brightening is caused by decreasing
 aerosols. \citet{Siomos2020} have shown that aerosol optical depth over
 Thessaloniki is decreasing constantly at least up to 2018. The
-attenuation of SDR by aerosols over Europe have been proposed as major
+attenuation of SDR by aerosols over Europe has been proposed as major
 factor by \citet{Wild2021}. Unfortunately, for this study aerosol data
 for the entire period were not available in order to quantify their
 effect on SDR. The brightening effect on SDR under cloudy-sky conditions
@@ -886,6 +888,7 @@ The following abbreviations are used in this manuscript:\\
 \noindent
 \begin{tabular}{@{}ll}
 DNI & Direct beam/normal irradiance \\
+ERA5 & ECMWF Reanalysis v5 \\
 CSid & Clear sky identification algorithm \\
 CUSUM & Cumulative sum \\
 SDR & Solar downward radiation \\

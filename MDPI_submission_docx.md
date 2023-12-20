@@ -136,7 +136,7 @@ To calculate the reference clear-sky $\text{SDR}_{\text{CSref}}$ we used
 the $\text{SDR}_{\text{Haurwitz}}$ derived by the radiation model of
 Haurwitz (1945) (Eq. ), adjusted for our site:
 
-$$\text{SDR}_{\text{Haurwitz}} = 1098 \times \cos(\theta) \times \exp\left( \frac{- 0.057}{\cos(\theta)} \right)$$
+$$\text{SDR}_{\text{Haurwitz}} = 1098 \times \cos(\theta) \times \exp\left( \frac{- 0.059}{\cos(\theta)} \right)$$
 
 where $\theta$ is the SZA.
 
@@ -238,8 +238,10 @@ x_{\text{CSref},i} = \text{SDR}_{\text{CSref},i + 1} - \text{SDR}_{\text{CSref},
 
 $$X_{i} < 7.5\, Wm^{- 2}$$
 
-In the final dataset $23.3\%$ of the 1-minute data were identified as
-under clear-sky conditions and $43\%$ as under cloud-sky conditions.
+In the final dataset $26\,\%$ of the days were identified as under
+clear-sky conditions and $48\,\%$ as under cloud-sky conditions. The
+remaining $26\,\%$ of the data correspond to mixed cases and were not
+analyzed as a separate group.
 
 ## 2.2 Aggregation of data and statistical approach
 
@@ -457,7 +459,7 @@ been found under clear-sky conditions ($0.097\,\%/y$) which supports the
 notion that part of the brightening is caused by decreasing aerosols.
 Siomos et al. (2020) have shown that aerosol optical depth over
 Thessaloniki is decreasing constantly at least up to 2018. The
-attenuation of SDR by aerosols over Europe have been proposed as major
+attenuation of SDR by aerosols over Europe has been proposed as major
 factor by Wild et al. (2021). Unfortunately, for this study aerosol data
 for the entire period were not available in order to quantify their
 effect on SDR. The brightening effect on SDR under cloudy-sky conditions
