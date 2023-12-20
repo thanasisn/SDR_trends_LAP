@@ -44,16 +44,20 @@ status:  submit
 #   A Simple summary goes here.
 
 abstract: |
-  The shortwave downward solar irradiance (SDR) is an important factor that drives climate processes, production and can affect all living organisms.
-  Observations of SDR at different locations around the world with different environmental characteristics have been used to investigate its long-term variability and trends at different time scales.
-  Periods of positive trends are referred as brightening periods and of negative trends as dimming periods.
-  Here we studied 30 years of pyranometer data in Thessaloniki, Greece, under three types of sky conditions (clear sky, cloudy sky and all sky).
-  The clear-sky data were identified by applying a cloud screening algorithm. We found a positive trend of $0.38\,\%/\text{year}$ for all-sky, $0.35\,\%/\text{year}$ for clear-sky conditions, and $-0.28\,\%/\text{year}$ for cloudy conditions.
-  We have also investigated the consistency of these trends, their seasonal variability, and the effect of the solar zenith angle. 
-  We have found that for all-sky and clear-sky conditions the SDR trend is positive in winter ($0.7$ and $0.8\,\%/\text{year}$, respectively) and autumn ($~0.4\,\%/\text{year}$), while under cloudy skies the trend is negative ($-0.9\,\%/\text{year}$ in winter and $-0.4\,\%/\text{year}$ in autumn). 
-  In spring and summer the trend is very close to zero, irrespective of sky conditions. 
-  The SDR trend is increasing with increasing solar zenith angle, except under cloudy skies where the trend is highly variable and close to zero.
-  Finally, we identified some anomalies in the long term SDR trends for all sky conditions by examining the cumulative sums of monthly anomalies from the climatological mean.
+  The shortwave downward solar irradiance (SDR) is an important factor that drives climate processes, energy production and can affect all living organisms. 
+  Observations of SDR at different locations around the world with different environmental characteristics have been used to investigate its long-term variability and trends at different time scales. Periods of positive trends are referred as brightening periods and of negative trends as dimming periods. 
+  In this study we have used 30 years of pyranometer data in Thessaloniki, Greece, to investigate the variability of SDR under three types of sky conditions (clear-, cloudy- and all-sky). 
+  The clear-sky data were identified by applying a cloud screening algorithm. 
+  We have found a positive trend of $0.38\,\%/\text{year}$ for all-sky, $\sim 0.1\,\%/\text{year}$ for clear-sky, and $-0.41\,\%/\text{year}$ for cloudy conditions.
+  The consistency of these trends, their seasonal variability, and the effect of the solar zenith angle have also been investigated.
+  
+  
+  
+  
+  We have found that for all conditions the SDR trend is stronger in winter ($0.7$, $0.4$ and $0.76\,\%/\text{year}$, for all- clear- and cloudy skies respectively). For all- and cloudy-skis, in autumn there are the next larger trends ($0.42$ and $0.19\,\%/\text{year}$, respectively), the rest cases bare a negligable seasonal trend. 
+  The SDR trend is increasing with increasing solar zenith angle (SZA) for all-skies, from about $0.2$ to $0.6\,\%/\text{year}$. For clear- and cloudy-skies remains low, about $0.1$ -- $0.2\,\%/\text{year}\,\%/\text{year}$ for all SZAs below $\sim 75^\circ$, and rizes rapidly for the larger SZAs.
+  
+  Finally, we are discussing shorter-term variations in SDR anomalies by examining the patterns of the cumulative sums of monthly anomalies from the climatological mean, both before and after removing the long-term trend.
 
 # back matter
 keywords: |
@@ -273,17 +277,17 @@ On multiple stations in China, a dimming period was reported until about 2000, f
 <!-- Trends Europe Brazil -->
 A similar pattern was identified, with the breaking point around 1980, for stations in Central Europe [@Wild2021] and Brazil [@Yamasoe2021].
 <!-- Trends Global -->
-On global scale, an artificial Intelligence aided spatial analysis on continental level with data from multiple stations reach similar conclusions for these regions and for the global trend [@Yuan2021].
+On global scale, artificial Intelligence aided spatial analysis on continental level with data from multiple stations reach similar conclusions for these regions and for the global trend [@Yuan2021].
 
 There is a consensus among researchers that the major factor affecting the variability of SDR attenuation is the interactions of solar radiation with atmospheric aerosols and clouds.
 Those interactions, among other factors, have been analysed with models [@Li2016; @Samset2018], showing the existence of feedback mechanisms between the two.
 Similar findings have been shown in observational data [@Schwarz2020; @Ohvril2009; @Zerefos2009; @Xia2007 and references therein].
 <!-- Sun variability: should cite that there is no significant trend found Wild2021 -->
 
-Due to the significant spatial and temporal variability of the trends, and the contributing factors, there is a constant need to monitor and investigate SDR in different sites in order to estimate the degree of variability,  and its relation to the local conditions.
+Due to the significant spatial and temporal variability of the trends, and the contributing factors, there is a constant need to monitor and investigate SDR in different sites in order to estimate the degree of variability, and its relation to the local conditions.
 In this study, we examine the trends of SDR, using ground-based measurements at Thessaloniki, Greece, for the period `r year(min(ALL_1_daily_DESEAS$Date))` to `r year(max(ALL_1_daily_DESEAS$Date))`, as derived from a CM-21 pyranometer.
 <!-- goals -->
-We reevaluated and extended the dataset used by @Bais2013, we applied a different algorithm for the identification of clear-/cloud-sky instances [@Reno2016; @Reno2012a], and we derived the SDR trends for the period of study, under different sky conditions (all-sky, clear-sky and cloud-sky).
+We re-evaluated and extended the dataset used by @Bais2013, we applied a different algorithm for the identification of clear-/cloud-sky instances [@Reno2016; @Reno2012a], and we derived the SDR trends for the period of study, under different sky conditions (all-sky, clear-sky and cloud-sky).
 Finally, we investigated the dependence of the trends on solar zenith angle and season.
 
 
@@ -327,7 +331,7 @@ identification algorithm (CSid), which is discussed later. It is noted
 that the limited dataset of DNI was not used for the identification of
 clear sky cases in the entire SDR series to avoid any selection bias due
 to unequal length of the two datasets.
-There are four distinct steps in the creation of the dataset analyzed here:
+There are four distinct steps in the creation of the dataset analysed here:
 a)\ the acquisition of radiation measurements from the sensors,
 b)\ the data quality check,
 c)\ the identification of "clear sky" conditions from the radiometric data, and
@@ -339,7 +343,7 @@ d)\ the aggregation of data and trend analysis.
 For the acquisition of radiometric data, the signal of the pyranometer is sampled at a rate of $1\,\text{Hz}$.
 The mean and the standard deviation of these samples are calculated and recorded every minute.
 The measurements are corrected for the zero offset ("dark signal" in volts), which is calculated by averaging all measurements recorded for a period of $3\,\text{h}$, before (morning) or after (evening) the Sun reaches an elevation angle of $-10^\circ$.
-The signal is converted to irradiance using a ramped value of the instrument’s sensitivity between  subsequent calibrations.
+The signal is converted to irradiance using a ramped value of the instrument’s sensitivity between subsequent calibrations.
 
 <!-- b) Radiation data quality check -->
 A manual screening was performed, to remove inconsistent and erroneous recordings that can occur stochastically or systematically, during the continuous operation of the instruments.
@@ -364,11 +368,11 @@ The initial daily values of this dataset were interpolated to match the time ste
 In order to estimate the effect of the sky conditions on the long term variability of SDR, we created three datasets by characterizing each one-minute measurement with a corresponding sky-condition flag (i.e., all-sky, clear-sky and cloudy-sky).
 To identify the clear-cases we used the method proposed by
 @Reno2016, which requires the definition of some site specific parameters.
-These parameters, were produced by an iterative process, as the original authors proposed and it are discussed in the next section.
+These parameters, were produced by an iterative process, as the original authors proposed, and are discussed in the next section.
 
 <!-- CS subjectivity -->
 We note that all methods have some subjectivity in the definition of clear or cloudy sky cases.
-As a result, the details of the definition are site specific and they rely on a combination of thresholds and comparisons with ideal radiation models and statistical analysis of different signal metrics.
+As a result, the details of the definition are site specific, and they rely on a combination of thresholds and comparisons with ideal radiation models and statistical analysis of different signal metrics.
 The CSid algorithm was calibrated with the main focus, to identify the presence of clouds. Despite the fine-tuning
 of the procedure, in a few marginal cases false positive or false
 negative results were identified by manual inspection. However, due to
@@ -557,7 +561,7 @@ monthly) from the actual data. Finally, to estimate the SZA effect on
 the SDR trends, the one-minute data were aggregated in $1^{\circ}$ SZA
 bins, separately for the morning and afternoon hours.
 
-The linear trends were calculated using an first order autoregressive model
+The linear trends were calculated using a first order autoregressive model
  with lag of 1 day with fitting method of the "maximum likelihood" [@Gardner1980; @Jones1980], by implementing the function "arima" from the library "stats" of the R programming language [@RCT2023]. The trends were reported together with the $2\sigma$ errors (Table\ \ref{tab:trendtable}).
 
 <!-- [For the trends derived from monthly mean data we used an effective -->
@@ -688,7 +692,7 @@ taking into account the autocorrelation of the time series and all three
 are statistically significant at least at the $95\,\%$ confidence level, as
 they are larger than the corresponding $2\sigma$ errors.
 The clear-sky trend is
-very small suggesting a small effect from aerosols and water vapor which
+very small suggesting a small effect from aerosols and water vapour which
 are the dominant factors of the SDR variability. 
 In contrast the large
 positive trend of SDR under cloudy skies can be attributed to reduction
@@ -750,7 +754,7 @@ knitr::include_graphics("./images/LongtermTrends-1.png")
 
 Although the year-to-year variability of the anomalies (Figure \ref{fig:trendALL} and Figures\ \ref{fig:trendCLEAR}, \ref{fig:trendCLOUD} in Appendix), shows a rather homogeneous behaviour, plots of the cumulative sums (CUSUM) [@Regier2019] of the anomalies can reveal different structures in the records of all three sky conditions.
 For time series with a uniform trend, we would expect
-the CUSUMs of the anomalies to have a symmetric 'V' shape centered
+the CUSUMs of the anomalies to have a symmetric 'V' shape centred
 around the middle of the series. This would indicate that the anomalies
 are evenly distributed around the climatological mean, and for a
 positive uniform trend, the first half is below and the second half
@@ -764,7 +768,7 @@ datasets and about 2000, denoting that all anomalies are negative thus
 below the climatology; b) a relatively steady part lasting for almost 20
 years suggesting little variability in SDR anomalies; and c) a steep
 upward part to present indicating anomalies above the climatology. The
-CUSUMs for cloudy-skies (Figure\ \ref{fig:cusummonth-3}), show a similar behavior with some short-term
+CUSUMs for cloudy-skies (Figure\ \ref{fig:cusummonth-3}), show a similar behaviour with some short-term
 differences that do not change the overall pattern.
 For clear skies
 (Figure\ \ref{fig:cusummonth-2}), a monotonic downward tendency is evident until 2004,
@@ -1051,7 +1055,7 @@ followed by a much smaller trend in autumn
 
 
 The trends under clear- and cloudy-sky conditions are of the same
-direction and it would be expected that their sum is similar to the
+direction, and it would be expected that their sum is similar to the
 all-sky trend. This does not happen, especially for winter, likely due
 to the way the monthly means for clear and cloudy skies were calculated.
 Daily means were calculated only when at least $60\,\%$ of the clear- or
@@ -1144,7 +1148,7 @@ x_latex %>%
 
 # Conclusions
 
-We have analyzed a 30 year dataset of SRD measurements in Thessaloniki Greece 
+We have analysed a 30-year dataset of SRD measurements in Thessaloniki Greece 
 (`r paste(year(min(ALL_1_daily_DESEAS$Date)), " -- ", year(max(ALL_1_daily_DESEAS$Date)))`) aiming to identify the long term variability of
 solar irradiance under different sky conditions.
 Under all-sky conditions 
@@ -1158,7 +1162,7 @@ notion that part of the brightening is caused by decreasing aerosols.
 Thessaloniki is decreasing constantly at least up to 2018.
 Unfortunately, for this study aerosol data for the entire period were
 not available in order to quantify their effect on SDR. The attenuation
-of SDR by aerosols over Europe has been proposed as major factor by @Wild2021.
+of SDR by aerosols over Europe have been proposed as major factor by @Wild2021.
 The brightening effect on SDR under cloudy-sky conditions
 ($`r cloudtrend`\,\%/y$), suggests that cloud optical thickness is also decreasing
 during this period.
@@ -1185,7 +1189,7 @@ The trend for clear skies is largest in winter
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear skies"], 2)`\,\%/y$) 
 and negligible in spring, summer and autumn.
 
-Using the CUSUMs of the monthly departures for all- and cloudy-skies, we observed a 20 year period starting around 2000 where the CUSUMs remain relatively stable, with a steep decline before and a steep increase after. 
+Using the CUSUMs of the monthly departures for all- and cloudy-skies, we observed a 20-year period starting around 2000 where the CUSUMs remain relatively stable, with a steep decline before and a steep increase after. 
 The rather smooth course of the CUSUMs suggests that no important
 change in the SDR pattern has occurred in the entire record.
 
