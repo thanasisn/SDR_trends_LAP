@@ -5,7 +5,7 @@ significant role, on its climate. Changes of the SDR can be related to
 changes on Earth's energy budget, the mechanisms of climate change, and
 water and carbon cycles (Wild 2009). It can also affect solar and
 agricultural production, and all living organisms. Studies of SDR
-variability, have identified some distinct SDR trends on different
+variability have identified some distinct SDR trends on different
 regions of the world on different time periods. The term 'brightening'
 is generally used to describe periods of positive SDR trend, and
 'dimming' for negative trend (Wild 2009). There are many cases in the
@@ -13,11 +13,11 @@ long term records of irradiance, showing a systematic change in the
 magnitude of the trend, occurring roughly in the last decades of the
 20th century. On multiple stations in China, a dimming period was
 reported until about 2000, followed by a brightening period (Yang et al.
-2021). A similar pattern was identified, with the breaking point around
+2021). A similar pattern was identified, with a breaking point around
 1980, for stations in Central Europe (Wild et al. 2021) and Brazil
-(Yamasoe et al. 2021). On global scale, artificial Intelligence aided
+(Yamasoe et al. 2021). On global scale, an Artificial Intelligence aided
 spatial analysis on continental level with data from multiple stations
-reach similar conclusions for these regions and for the global trend
+reached similar conclusions for these regions and for the global trend
 (Yuan, Leirvik, and Wild 2021).
 
 There is a consensus among researchers that the major factor affecting
@@ -25,48 +25,54 @@ the variability of SDR attenuation is the interactions of solar
 radiation with atmospheric aerosols and clouds. Those interactions,
 among other factors, have been analysed with models (Li et al. 2016;
 Samset et al. 2018), showing the existence of feedback mechanisms
-between the two. Similar findings have been shown in observational data
-(Schwarz et al. 2020; Ohvril et al. 2009; Zerefos et al. 2009; Xia et
-al. 2007 and references therein).
+between the two. Similar findings have been from the analysis of
+observations at other locations (Schwarz et al. 2020; Ohvril et al.
+2009; Zerefos et al. 2009; Xia et al. 2007 and references therein). In
+the Mediterranean region aerosols have been recognized as an important
+factor affecting the penetration of solar radiation to the surface
+(Fountoulakis et al. 2016; Siomos et al. 2018; Gkikas et al. 2013;
+Lozano et al. 2021). These studies investigated the long-term trend in
+aerosol optical depth, which has been found to decrease in the last
+three decades, the transport and composition of aerosols, and their
+radiative effects.
 
 Due to the significant spatial and temporal variability of the trends,
 and the contributing factors, there is a constant need to monitor and
 investigate SDR in different sites in order to estimate the degree of
 variability, and its relation to the local conditions. In this study, we
 examine the trends of SDR, using ground-based measurements at
-Thessaloniki, Greece, for the period 1993 to 2023, as derived from a
-CM-21 pyranometer. We re-evaluated and extended the dataset used by Bais
-et al. (2013), we applied a different algorithm for the identification
-of clear-/cloud-sky instances (Reno and Hansen 2016; Reno, Hansen, and
-Stein 2012a), and we derived the SDR trends for the period of study,
-under different sky conditions (all-sky, clear-sky and cloud-sky).
-Finally, we investigated the dependence of the trends on solar zenith
-angle and season.
+Thessaloniki, Greece, for the period 1993 to 2023. We re-evaluated and
+extended the dataset used by Bais et al. (2013), we applied a different
+algorithm for the identification of clear-/cloud-sky instances (Reno and
+Hansen 2016; Reno, Hansen, and Stein 2012a), and we derived the SDR
+trends for the period of study, under different sky conditions (all-sky,
+clear-sky and cloud-sky). Finally, we investigated the dependence of the
+trends on solar zenith angle and season.
 
 # 2 Data and methodology
 
 The SDR data were measured with a Kipp & Zonen CM-21 pyranometer
 operating continuously at the Laboratory of Atmospheric Physics of the
 Aristotle University of Thessaloniki ($40^{\circ}\, 38\prime\,$N,
-$22^{\circ}\, 57\prime\,$E, $80\,$m a.s.l.) since 1993. Here we use data
-for the period from 1993-04-13 to 2023-04-13. The monitoring site is
-located near the city centre thus we expect that measurements are
-affected by the urban environment. During the study period, the
+$22^{\circ}\, 57\prime\,$E, $80\,$m a.s.l.). Here we use data for the
+period from 1993-04-13 to 2023-04-13. The monitoring site is located
+near the city centre thus we expect that measurements are affected by
+the urban environment, mainly by aerosols. During the study period, the
 pyranometer has been independently calibrated three times at the
-Meteorologisches Observatorium Lindenberg, DWD, verifying that stability
-of the instrument's sensitivity is better than $0.7\%$ relative to the
-initial calibration by the manufacturer. Along with SDR, the direct beam
-radiation (DNI) is also measured with a collocated Kipp & Zonen CHP-1
-pyrheliometer since 2016-04-01. The DNI data were used as auxiliary data
-to support the selection of appropriate thresholds in the clear sky
-identification algorithm (CSid), which is discussed later. It is noted
-that the limited dataset of DNI was not used for the identification of
-clear sky cases in the entire SDR series to avoid any selection bias due
-to unequal length of the two datasets. There are four distinct steps in
-the creation of the dataset analysed here: a) the acquisition of
-radiation measurements from the sensors, b) the data quality check,
-c) the identification of "clear sky" conditions from the radiometric
-data, and d) the aggregation of data and trend analysis.
+Meteorologisches Observatorium Lindenberg, DWD, verifying that the
+stability of the instrument's sensitivity is better than $0.7\%$
+relative to the initial calibration by the manufacturer. Along with SDR,
+the direct beam radiation (DNI) is also measured with a collocated Kipp
+& Zonen CHP-1 pyrheliometer since 2016-04-01. The DNI data were used as
+auxiliary data to support the selection of appropriate thresholds in the
+clear-sky identification algorithm (CSid), which is discussed in sect. .
+It is noted that the limited dataset of DNI was not used for the
+identification of clear sky cases in the entire SDR series to avoid any
+selection bias due to unequal length of the two datasets. There are four
+distinct steps in the creation of the dataset analysed here: a) the
+acquisition of radiation measurements from the sensors, b) the data
+quality check, c) the identification of "clear sky" conditions from the
+SDR data, and d) the aggregation of data and trend analysis.
 
 For the acquisition of radiometric data, the signal of the pyranometer
 is sampled at a rate of $1\,\text{Hz}$. The mean and the standard
@@ -89,11 +95,11 @@ available data, and the aggregation scheme we used, ensures the quality
 of the radiation measurements used in this study.
 
 Due to the significant measurement uncertainty when the Sun is near the
-horizon, we have excluded all measurements with SZA greater than
-$85^{\circ}$. Moreover, due to obstructions around the site (hills and
-buildings) which block the direct irradiance, we excluded data with
-azimuth angle in the range $58^{\circ}$ - $120^{\circ}$ and with SZA
-greater than $78^{\circ}$. To make the measurements comparable
+horizon, we have excluded all measurements with solar zenith angle (SZA)
+greater than $85^{\circ}$. Moreover, due to obstructions around the site
+(hills and buildings) which block the direct irradiance, we excluded
+data with azimuth angle in the range $58^{\circ}$ - $120^{\circ}$ and
+with SZA greater than $78^{\circ}$. To make the measurements comparable
 throughout the dataset, we adjusted all one-minute data to the mean
 Sun - Earth distance. Subsequently, we adjusted all measurements to the
 Total Solar Irradiance (TSI) at $1\,\text{au}$, in order to compensate
@@ -108,9 +114,9 @@ variability of SDR, we created three datasets by characterizing each
 one-minute measurement with a corresponding sky-condition flag (i.e.,
 all-sky, clear-sky and cloudy-sky). To identify the clear-cases we used
 the method proposed by Reno and Hansen (2016), which requires the
-definition of some site specific parameters. These parameters, were
-produced by an iterative process, as the original authors proposed, and
-are discussed in the next section.
+definition of some site specific parameters. These parameters were
+determined by an iterative process, as the original authors proposed,
+and are discussed in the next section.
 
 We note that all methods have some subjectivity in the definition of
 clear or cloudy sky cases. As a result, the details of the definition
@@ -121,9 +127,8 @@ main focus, to identify the presence of clouds. Despite the fine-tuning
 of the procedure, in a few marginal cases false positive or false
 negative results were identified by manual inspection. However, due to
 their small number, they cannot affect the final results of the study.
-For completeness, we provide below a brief overview of the clear-sky
-identification algorithm (CSid), along with the site specific
-thresholds.
+For completeness, we provide below a brief overview of the CSid
+algorithm, along with the site specific thresholds.
 
 ## 2.1 The clear sky identification algorithm
 
@@ -133,7 +138,7 @@ Haurwitz (1945) (Eq. ), adjusted for our site:
 
 $$\text{SDR}_{\text{Haurwitz}} = 1098 \times \cos(\theta) \times \exp\left( \frac{- 0.057}{\cos(\theta)} \right)$$
 
-where $\theta$ is the solar zenith angle (SZA).
+where $\theta$ is the SZA.
 
 The adjustment was made with a factor $a$ (Eq. ), which was estimated
 through an iterative optimization process, as described by Long and
@@ -490,10 +495,23 @@ Martin Snow, and NOAA CDR Program. 2005. "NOAA Climate Data Record (CDR)
 of Total Solar Irradiance (TSI), NRLTSI Version 2. Daily."
 <https://doi.org/10.7289/V55B00C1>.
 
+Fountoulakis, Ilias, Alberto Redondas, Alkiviadis F. Bais, Juan José
+Rodriguez-Franco, Konstantinos Fragkos, and Alexander Cede. 2016. "Dead
+Time Effect on the Brewer Measurements: Correction and Estimated
+Uncertainties." *Atmospheric Measurement Techniques* 9 (4): 1799--1816.
+<https://doi.org/gcc32t>.
+
 Gardner, G., A. C. Harvey, and G. D. A. Phillips. 1980. "Algorithm AS
 154: An Algorithm for Exact Maximum Likelihood Estimation of
 Autoregressive-Moving Average Models by Means of Kalman Filtering."
 *Applied Statistics* 29 (3): 311. <https://doi.org/10.2307/2346910>.
+
+Gkikas, A., N. Hatzianastassiou, N. Mihalopoulos, V. Katsoulis, S.
+Kazadzis, J. Pey, X. Querol, and O. Torres. 2013. "The Regime of Intense
+Desert Dust Episodes in the Mediterranean Based on Contemporary
+Satellite Observations and Ground Measurements." *Atmospheric Chemistry
+and Physics* 13 (23): 12135--54.
+<https://doi.org/10.5194/acp-13-12135-2013>.
 
 Haurwitz, Bernhard. 1945. "Insolation in Relation to Cloudiness and
 Cloud Density." *Journal of Meteorology* 2 (September): 154--66.
@@ -526,6 +544,13 @@ Lozano, Ismael L., Inmaculada Alados, and Inmaculada Foyo-Moreno. 2023.
 "Analysis of the Solar Radiation/Atmosphere Interaction at a
 Mediterranean Site: The Role of Clouds." *Atmospheric Research* 296
 (December): 107072. <https://doi.org/10.1016/j.atmosres.2023.107072>.
+
+Lozano, Ismael L., Guadalupe Sánchez-Hernández, Juan Luis
+Guerrero-Rascado, Inmaculada Alados, and Inmaculada Foyo-Moreno. 2021.
+"Aerosol Radiative Effects in Photosynthetically Active Radiation and
+Total Irradiance at a Mediterranean Site from an 11-Year Database."
+*Atmospheric Research* 255 (June): 105538.
+<https://doi.org/10.1016/j.atmosres.2021.105538>.
 
 Ohmura, Atsumu. 2009. "Observed Decadal Variations in Surface Solar
 Radiation and Their Causes." *Jour* 114.
@@ -568,6 +593,13 @@ Schwarz, M., D. Folini, S. Yang, R. P. Allan, and M. Wild. 2020.
 "Changes in Atmospheric Shortwave Absorption as Important Driver of
 Dimming and Brightening." *Nature Geoscience* 13 (2): 110--15.
 <https://doi.org/10.1038/s41561-019-0528-y>.
+
+Siomos, Nikolaos, Dimitris S. Balis, Kalliopi A. Voudouri, Eleni
+Giannakaki, Maria Filioglou, Vassilis Amiridis, Alexandros Papayannis,
+and Konstantinos Fragkos. 2018. "Are EARLINET and AERONET Climatologies
+Consistent? The Case of Thessaloniki, Greece." *Atmospheric Chemistry
+and Physics* 18 (16): 11885--903.
+<https://doi.org/10.5194/acp-18-11885-2018>.
 
 Siomos, Nikolaos, Ilias Fountoulakis, Athanasios Natsis, Theano
 Drosoglou, and Alkiviadis Bais. 2020. "Automated Aerosol Classification

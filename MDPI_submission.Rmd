@@ -48,15 +48,11 @@ abstract: |
   Observations of SDR at different locations around the world with different environmental characteristics have been used to investigate its long-term variability and trends at different time scales. Periods of positive trends are referred as brightening periods and of negative trends as dimming periods. 
   In this study we have used 30 years of pyranometer data in Thessaloniki, Greece, to investigate the variability of SDR under three types of sky conditions (clear-, cloudy- and all-sky). 
   The clear-sky data were identified by applying a cloud screening algorithm. 
-  We have found a positive trend of $0.38\,\%/\text{year}$ for all-sky, $\sim 0.1\,\%/\text{year}$ for clear-sky, and $-0.41\,\%/\text{year}$ for cloudy conditions.
+  We have found a positive trend of $0.38\,\%/\text{year}$ for all-sky, $\sim 0.1\,\%/\text{year}$ for clear-sky, and $0.41\,\%/\text{year}$ for cloudy conditions.
   The consistency of these trends, their seasonal variability, and the effect of the solar zenith angle have also been investigated.
-  
-  
-  
-  
-  We have found that for all conditions the SDR trend is stronger in winter ($0.7$, $0.4$ and $0.76\,\%/\text{year}$, for all- clear- and cloudy skies respectively). For all- and cloudy-skis, in autumn there are the next larger trends ($0.42$ and $0.19\,\%/\text{year}$, respectively), the rest cases bare a negligable seasonal trend. 
-  The SDR trend is increasing with increasing solar zenith angle (SZA) for all-skies, from about $0.2$ to $0.6\,\%/\text{year}$. For clear- and cloudy-skies remains low, about $0.1$ -- $0.2\,\%/\text{year}\,\%/\text{year}$ for all SZAs below $\sim 75^\circ$, and rizes rapidly for the larger SZAs.
-  
+  Under all three sky categories the SDR trend is stronger in winter with $0.7$, $0.4$ and $0.76\,\%/\text{year}$, respectively for all-, clear- and cloudy-skies. In automn, there are the next larger trends of $0.42$ and $0.19\,\%/\text{year}$, for all- and cloudy-skies respectively. 
+  The rest seasonal trends are significant smaller, close to zero, with clear- and cloudy-skies having a negative trend for summer.
+  The SDR trend is increasing with increasing solar zenith angle, except under cloudy skies where the trend is highly variable and close to zero.
   Finally, we are discussing shorter-term variations in SDR anomalies by examining the patterns of the cumulative sums of monthly anomalies from the climatological mean, both before and after removing the long-term trend.
 
 # back matter
@@ -269,23 +265,22 @@ knitr::knit_hooks$set(extrawide = function(before, options, envir) {
 The shortwave downward solar irradiance (SDR) at Earth's surface plays a significant role, on its climate.
 Changes of the SDR can be related to changes on Earth's energy budget, the mechanisms of climate change, and water and carbon cycles [@Wild2009].
 It can also affect solar and agricultural production, and all living organisms.
-Studies of SDR variability, have identified some distinct SDR trends on different regions of the world on different time periods.
+Studies of SDR variability have identified some distinct SDR trends on different regions of the world on different time periods.
 The term 'brightening' is generally used to describe periods of positive SDR trend, and 'dimming' for negative trend [@Wild2009].
 There are many cases in the long term records of irradiance, showing a systematic change in the magnitude of the trend, occurring roughly in the last decades of the 20th century.
 <!-- Trends china -->
 On multiple stations in China, a dimming period was reported until about 2000, followed by a brightening period [@Yang2021].
 <!-- Trends Europe Brazil -->
-A similar pattern was identified, with the breaking point around 1980, for stations in Central Europe [@Wild2021] and Brazil [@Yamasoe2021].
+A similar pattern was identified, with a breaking point around 1980, for stations in Central Europe [@Wild2021] and Brazil [@Yamasoe2021].
 <!-- Trends Global -->
-On global scale, artificial Intelligence aided spatial analysis on continental level with data from multiple stations reach similar conclusions for these regions and for the global trend [@Yuan2021].
+On global scale, an Artificial Intelligence aided spatial analysis on continental level with data from multiple stations reached similar conclusions for these regions and for the global trend [@Yuan2021].
 
 There is a consensus among researchers that the major factor affecting the variability of SDR attenuation is the interactions of solar radiation with atmospheric aerosols and clouds.
 Those interactions, among other factors, have been analysed with models [@Li2016; @Samset2018], showing the existence of feedback mechanisms between the two.
-Similar findings have been shown in observational data [@Schwarz2020; @Ohvril2009; @Zerefos2009; @Xia2007 and references therein].
-<!-- Sun variability: should cite that there is no significant trend found Wild2021 -->
+Similar findings have been from the analysis of observations at other locations [@Schwarz2020; @Ohvril2009; @Zerefos2009; @Xia2007 and references therein].  In the Mediterranean region aerosols have been recognized as an important factor affecting the penetration of solar radiation to the surface [@Fountoulakis2016; @Siomos2018; @Gkikas2013; @Lozano2021]. These studies investigated the long-term trend in aerosol optical depth, which has been found to decrease in the last three decades, the transport and composition of aerosols, and their radiative effects. 
 
 Due to the significant spatial and temporal variability of the trends, and the contributing factors, there is a constant need to monitor and investigate SDR in different sites in order to estimate the degree of variability, and its relation to the local conditions.
-In this study, we examine the trends of SDR, using ground-based measurements at Thessaloniki, Greece, for the period `r year(min(ALL_1_daily_DESEAS$Date))` to `r year(max(ALL_1_daily_DESEAS$Date))`, as derived from a CM-21 pyranometer.
+In this study, we examine the trends of SDR, using ground-based measurements at Thessaloniki, Greece, for the period `r year(min(ALL_1_daily_DESEAS$Date))` to `r year(max(ALL_1_daily_DESEAS$Date))`.
 <!-- goals -->
 We re-evaluated and extended the dataset used by @Bais2013, we applied a different algorithm for the identification of clear-/cloud-sky instances [@Reno2016; @Reno2012a], and we derived the SDR trends for the period of study, under different sky conditions (all-sky, clear-sky and cloud-sky).
 Finally, we investigated the dependence of the trends on solar zenith angle and season.
@@ -311,33 +306,32 @@ et al 2012).
 # Data and methodology
 
 The SDR data were measured with a Kipp & Zonen CM-21 pyranometer operating continuously at the Laboratory of Atmospheric Physics of the Aristotle University of Thessaloniki
-($40^\circ\,38'\,$N, $22^\circ\,57'\,$E, $80\,$m\ a.s.l.) since 1993.
+($40^\circ\,38'\,$N, $22^\circ\,57'\,$E, $80\,$m\ a.s.l.).
 Here we use data for the period from
 `r min(ALL_1_daily_DESEAS$Date)`
 to
 `r max(ALL_1_daily_DESEAS$Date)`.
 The monitoring site is located
-near the city centre thus we expect that measurements are affected by the urban environment.
+near the city centre thus we expect that measurements are affected by the urban environment, mainly by aerosols.
 During the study period, the pyranometer has been
 independently calibrated three times at the Meteorologisches
-Observatorium Lindenberg, DWD, verifying that stability of the
+Observatorium Lindenberg, DWD, verifying that the stability of the
 instrument's sensitivity is better than $0.7\%$ relative to the initial
 calibration by the manufacturer. 
 Along with SDR, the direct beam
 radiation (DNI) is also measured with a collocated Kipp & Zonen CHP-1 pyrheliometer since 2016-04-01. 
 The DNI data were used as auxiliary data
-to support the selection of appropriate thresholds in the clear sky
-identification algorithm (CSid), which is discussed later. It is noted
+to support the selection of appropriate thresholds in the clear-sky
+identification algorithm (CSid), which is discussed in sect. \ref{CDIDalgorithm}. 
+It is noted
 that the limited dataset of DNI was not used for the identification of
 clear sky cases in the entire SDR series to avoid any selection bias due
 to unequal length of the two datasets.
 There are four distinct steps in the creation of the dataset analysed here:
 a)\ the acquisition of radiation measurements from the sensors,
 b)\ the data quality check,
-c)\ the identification of "clear sky" conditions from the radiometric data, and
+c)\ the identification of "clear sky" conditions from the SDR data, and
 d)\ the aggregation of data and trend analysis.
-
-
 
 <!-- a) acquisition -->
 For the acquisition of radiometric data, the signal of the pyranometer is sampled at a rate of $1\,\text{Hz}$.
@@ -353,7 +347,7 @@ Thus, problematic recordings have been excluded from further processing.
 Although it is impossible to detect all false data, the large number of available data, and the aggregation scheme we used, ensures the quality of the radiation measurements used in this study.
 
 <!-- Data selection -->
-Due to the significant measurement uncertainty when the Sun is near the horizon, we have excluded all measurements with SZA greater than $`r 90-MIN_ELEVA`^\circ$.
+Due to the significant measurement uncertainty when the Sun is near the horizon, we have excluded all measurements with solar zenith angle (SZA) greater than $`r 90-MIN_ELEVA`^\circ$.
 Moreover, due to obstructions around the site (hills and buildings) which block the direct irradiance, we excluded data with azimuth angle in the range
 $`r FIBais_Az_1`^{\circ}$ - $`r FIBais_Az_2`^{\circ}$ and with SZA greater than $`r 90 -  FIBais_Elev`^{\circ}$.
 <!-- 1au -->
@@ -363,23 +357,21 @@ Subsequently, we adjusted all measurements to the Total Solar Irradiance (TSI) a
 The TSI data we used are part of the "NOAA Climate Data Record of Total Solar Irradiance" dataset [@Coddington2005].
 The initial daily values of this dataset were interpolated to match the time step of our measurements.
 
-
 <!-- c) Clear sky identification -->
 In order to estimate the effect of the sky conditions on the long term variability of SDR, we created three datasets by characterizing each one-minute measurement with a corresponding sky-condition flag (i.e., all-sky, clear-sky and cloudy-sky).
 To identify the clear-cases we used the method proposed by
 @Reno2016, which requires the definition of some site specific parameters.
-These parameters, were produced by an iterative process, as the original authors proposed, and are discussed in the next section.
+These parameters were determined by an iterative process, as the original authors proposed, and are discussed in the next section.
 
 <!-- CS subjectivity -->
 We note that all methods have some subjectivity in the definition of clear or cloudy sky cases.
 As a result, the details of the definition are site specific, and they rely on a combination of thresholds and comparisons with ideal radiation models and statistical analysis of different signal metrics.
 The CSid algorithm was calibrated with the main focus, to identify the presence of clouds. Despite the fine-tuning
 of the procedure, in a few marginal cases false positive or false
-negative results were identified by manual inspection. However, due to
+negative results were identified by manual inspection. 
+However, due to
 their small number, they cannot affect the final results of the study.
-For completeness, we provide below a brief overview of the clear-sky
-identification algorithm (CSid), along with the site specific
-thresholds.
+For completeness, we provide below a brief overview of the CSid algorithm, along with the site specific thresholds.
 
 
 ```{r setup, echo=F, include=T, eval=TRUE}
@@ -425,14 +417,14 @@ TSIslopeAll <- TSI[DATA == "All sky cond."]
 ```
 
 
-## The clear sky identification algorithm
+## The clear sky identification algorithm {#CDIDalgorithm}
 
 To calculate the reference clear-sky $\text{SDR}_\text{CSref}$ we used the $\text{SDR}_\text{Haurwitz}$ derived by the radiation model of @Haurwitz1945 (Eq.\ \ref{eq:hau}), adjusted for our site:
 <!-- adjusted Haurwitz -->
 \begin{equation}
 \text{SDR}_\text{Haurwitz} = 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.057}{\cos(\theta)} \right) \label{eq:hau}
 \end{equation}
-where $\theta$ is the solar zenith angle (SZA).
+where $\theta$ is the SZA.
 
 The adjustment was made with a factor $a$ (Eq.\ \ref{eq:ahau}), which was estimated through an iterative optimization process, as described by @Long2000 and @Reno2016.
 The target of the optimization was the minimization of a function $f(a)$ (Eq.\ \ref{eq:minf}) and was accomplished with the algorithmic function "optimise", which is an implementation based on the work of @Brent1973, from the library "stats" of the R programming language [@RCT2023].
