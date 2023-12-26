@@ -1,0 +1,1325 @@
+%  LaTeX support: latex@mdpi.com
+%  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
+
+%=================================================================
+% pandoc conditionals added to preserve backwards compatibility with previous versions of rticles
+
+\documentclass[applsci,article,accept,moreauthors,pdftex]{Definitions/mdpi}
+
+
+%% Some pieces required from the pandoc template
+\setlist[itemize]{leftmargin=*,labelsep=5.8mm}
+\setlist[enumerate]{leftmargin=*,labelsep=4.9mm}
+
+
+%--------------------
+% Class Options:
+%--------------------
+
+%---------
+% article
+%---------
+% The default type of manuscript is "article", but can be replaced by:
+% abstract, addendum, article, book, bookreview, briefreport, casereport, comment, commentary, communication, conferenceproceedings, correction, conferencereport, entry, expressionofconcern, extendedabstract, datadescriptor, editorial, essay, erratum, hypothesis, interestingimage, obituary, opinion, projectreport, reply, retraction, review, perspective, protocol, shortnote, studyprotocol, systematicreview, supfile, technicalnote, viewpoint, guidelines, registeredreport, tutorial
+% supfile = supplementary materials
+
+%----------
+% submit
+%----------
+% The class option "submit" will be changed to "accept" by the Editorial Office when the paper is accepted. This will only make changes to the frontpage (e.g., the logo of the journal will get visible), the headings, and the copyright information. Also, line numbering will be removed. Journal info and pagination for accepted papers will also be assigned by the Editorial Office.
+
+
+%------------------
+% moreauthors
+%------------------
+% If there is only one author the class option oneauthor should be used. Otherwise use the class option moreauthors.
+
+%---------
+% pdftex
+%---------
+% The option pdftex is for use with pdfLaTeX. Remove "pdftex" for (1) compiling with LaTeX & dvi2pdf (if eps figures are used) or for (2) compiling with XeLaTeX.
+
+%=================================================================
+% MDPI internal commands - do not modify
+\firstpage{1}
+\makeatletter
+\setcounter{page}{\@firstpage}
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2024}
+\copyrightyear{2023}
+\externaleditor{Academic Editor: }
+\datereceived{13 November 2023 }
+\daterevised{20 December 2023 } % Comment out if no revised date
+\dateaccepted{ }
+\datepublished{ }
+%\datecorrected{} % For corrected papers: "Corrected: XXX" date in the original paper.
+%\dateretracted{} % For corrected papers: "Retracted: XXX" date in the original paper.
+\hreflink{https://doi.org/} % If needed use \linebreak
+%\doinum{}
+%\pdfoutput=1 % Uncommented for upload to arXiv.org
+
+%=================================================================
+% Add packages and commands here. The following packages are loaded in our class file: fontenc, inputenc, calc, indentfirst, fancyhdr, graphicx, epstopdf, lastpage, ifthen, float, amsmath, amssymb, lineno, setspace, enumitem, mathpazo, booktabs, titlesec, etoolbox, tabto, xcolor, colortbl, soul, multirow, microtype, tikz, totcount, changepage, attrib, upgreek, array, tabularx, pbox, ragged2e, tocloft, marginnote, marginfix, enotez, amsthm, natbib, hyperref, cleveref, scrextend, url, geometry, newfloat, caption, draftwatermark, seqsplit
+% cleveref: load \crefname definitions after \begin{document}
+
+%=================================================================
+% Please use the following mathematics environments: Theorem, Lemma, Corollary, Proposition, Characterization, Property, Problem, Example, ExamplesandDefinitions, Hypothesis, Remark, Definition, Notation, Assumption
+%% For proofs, please use the proof environment (the amsthm package is loaded by the MDPI class).
+
+%=================================================================
+% Full title of the paper (Capitalized)
+\Title{Trends from 30-Year Observations of Downward Solar Irradiance in
+Thessaloniki, \colorbox{green}{Greece}}%MDPI: Important note:
+%1. The paper was edited by our English editor, please check the whole text and confirm if your meaning is retained.
+%2. Do not delete any comment we left for you and reply to each comment so that we can understand your meaning clearly.
+%3. Please directly correct on this version. If you need to revise somewhere in your paper, please highlight the revisions and track changes to make us known.
+%4. Please finish the proofreading based on this version.
+%5.Please confirm and revise all the comments with “Confirmed”, “OK”, “Revised”, “It should be italic”; “I confirm”; “I confirm xx is correct”; “I have checked and revised all.” , etc.“
+%6. Please note that at this stage (the manuscript has been accepted in the current form), we will not accept authorship or content changes to the main text.
+%(Thank you for your cooperation in advance.)
+
+
+% MDPI internal command: Title for citation in the left column
+\TitleCitation{Trends from 30-Year Observations of Downward Solar Irradiance in
+Thessaloniki, Greece}
+
+% Author Orchid ID: enter ID or remove command
+%\newcommand{\orcidauthorA}{0000-0000-0000-000X} % Add \orcidA{} behind the author's name
+%\newcommand{\orcidauthorB}{0000-0000-0000-000X} % Add \orcidB{} behind the author's name
+
+
+% Authors, for the paper (add full first names)
+\Author{Athanasios
+Natsis \href{https://orcid.org/0000-0002-5199-4119}
+{\orcidicon}, Alkiviadis Bais * and Charikleia Meleti}
+
+
+%\longauthorlist{yes}
+
+
+% MDPI internal command: Authors, for metadata in PDF
+\AuthorNames{Athanasios Natsis, Alkiviadis Bais, Charikleia Meleti}
+
+% MDPI internal command: Authors, for citation in the left column
+%\AuthorCitation{Lastname, F.; Lastname, F.; Lastname, F.}
+% If this is a Chicago style journal: Lastname, Firstname, Firstname Lastname, and Firstname Lastname.
+\AuthorCitation{Natsis, A.; Bais, A.; Meleti, C.}
+
+% Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
+\address[1]{Laboratory of
+Atmospheric Physics, Aristotle University of Thessaloniki, Campus Box 149, \mbox{54124 Thessaloniki,
+Greece;} {{natsisphysicist@gmail.com}}
+(A.N.); 
+{{meleti@auth.gr}} (C.M.)\\
+}
+
+% Contact information of the corresponding author
+\corres{\hangafter=1 \hangindent=1.0em \hspace{-1em}Correspondence: {{abais@auth.gr}}}
+
+% Current address and/or shared authorship
+
+
+
+
+
+
+
+
+% The commands \thirdnote{} till \eighthnote{} are available for further notes
+
+% Simple summary
+
+%\conference{} % An extended version of a conference paper
+
+% Abstract (Do not insert blank lines, i.e. \\)
+\abstract{The shortwave downward solar irradiance (SDR) is an important
+factor that drives climate processes and energy production and can affect
+all living organisms. Observations of SDR at different locations around
+the world with different environmental characteristics have been used to
+investigate its long-term variability and trends at different time
+scales. Periods of positive trends are referred to as brightening periods
+and of negative trends as dimming periods. In this study we have used 30
+years of pyranometer data in Thessaloniki, Greece, to investigate the
+variability of SDR under three types of sky conditions (clear-, cloudy-
+and all-sky). The clear-sky data were identified by applying a cloud
+screening algorithm. We have found a positive trend of
+\(0.38\%/\text{year}\) for all-sky, $\sim$0.1\%/{year} for
+clear-sky, and \(0.41\%/\text{year}\) for cloudy conditions. The
+consistency of these trends, their seasonal variability, and the effect
+of the solar zenith angle have also been investigated. Under all three
+sky categories, the SDR trend is stronger in winter, with \(0.7\), \(0.4\),
+and \(0.76\%/\text{year}\), respectively, for all-, clear-, and
+cloudy-sky conditions. The next larger seasonal trends are in autumn---\(0.42\) and
+\(0.19\%/\text{year}\), for all and cloudy skies, respectively. The
+rest of the seasonal trends are significant smaller, close to zero, with a
+negative values in summer, for clear and cloudy skies. The SDR trend is
+increasing with increasing solar zenith angle, except under cloudy skies,
+where the trend is highly variable and close to zero. Finally, we
+discuss shorter-term variations in SDR anomalies by examining the
+patterns of the cumulative sums of monthly anomalies from the
+climatological mean, both before and after removing the long-term
+trend.}
+
+
+% Keywords
+\keyword{GHI; SDR; solar radiation; solar brigthening/dimming; aerosols;
+clouds}
+
+% The fields PACS, MSC, and JEL may be left empty or commented out if not applicable
+%\PACS{J0101}
+%\MSC{}
+%\JEL{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Diversity
+%\LSID{\url{http://}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Applied Sciences
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Data
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Toxins
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Encyclopedia
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Advances in Respiratory Medicine
+%\addhighlights{yes}
+%\renewcommand{\addhighlights}{%
+
+%\noindent This is an obligatory section in “Advances in Respiratory Medicine”, whose goal is to increase the discoverability and readability of the article via search engines and other scholars. Highlights should not be a copy of the abstract, but a simple text allowing the reader to quickly and simplified find out what the article is about and what can be cited from it. Each of these parts should be devoted up to 2~bullet points.\vspace{3pt}\\
+%\textbf{What are the main findings?}
+% \begin{itemize}[labelsep=2.5mm,topsep=-3pt]
+% \item First bullet.
+% \item Second bullet.
+% \end{itemize}\vspace{3pt}
+%\textbf{What is the implication of the main finding?}
+% \begin{itemize}[labelsep=2.5mm,topsep=-3pt]
+% \item First bullet.
+% \item Second bullet.
+% \end{itemize}
+%}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% tightlist command for lists without linebreak
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+\usepackage{subcaption}
+\captionsetup[sub]{position=bottom, labelfont={bf, small, stretch=1.17}, labelsep=space, textfont={small, stretch=1.17}, aboveskip=6pt,  belowskip=-6pt, singlelinecheck=off, justification=justified}
+\usepackage{placeins}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+\begin{document}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+The shortwave downward solar irradiance (SDR) at Earth's surface plays a
+significant role on its climate. Changes in the SDR can be related to
+changes in Earth's energy budget, the mechanisms of climate change, and
+water and carbon cycles \citep{Wild2009}. It can also affect solar and
+agricultural production and all living organisms. Studies of SDR
+variability have identified some distinct SDR trends in different
+regions of the world in different time periods. The term `brightening'
+is generally used to describe periods of positive SDR trend, and
+`dimming' for periods of negative trend \citep{Wild2009}. There are many cases in
+the long-term records of irradiance showing a systematic change in the
+magnitude of the trend, occurring roughly in the last decades of the
+20th century. At multiple stations in China, a dimming period was
+reported until about 2000, followed by a brightening period
+\citep{Yang2021}. A similar pattern was identified, with a breaking
+point around 1980, for stations in Central Europe \citep{Wild2021} and
+Brazil~\citep{Yamasoe2021}. On global scale, an artificial intelligence
+aided spatial analysis on the continental level with data from multiple
+stations reached similar conclusions for these regions and for the
+global trend \citep{Yuan2021}.
+
+There is a consensus among researchers that the major factor affecting
+the variability of SDR attenuation is the interactions of solar
+radiation with atmospheric aerosols and clouds. Those interactions,
+among other factors, have been analyzed with models
+\citep{Li2016, Samset2018}, showing the existence of feedback mechanisms
+between the two. Similar findings have been shown from the analysis of
+observations at other \hl{locations} %MDPI: We revised citation. Please confirm.
+ \citep{Schwarz2020, Ohvril2009, Zerefos2009, Xia2007} [and references
+therein]. In the
+Mediterranean region, aerosols have been recognized as an important
+factor affecting the penetration of solar radiation at the surface
+\citep{Fountoulakis2016, Siomos2018, Gkikas2013, Lozano2021}. These
+studies investigated the long-term trend in aerosol optical depth, which
+has been found to decrease in the last three decades, the transport and
+composition of aerosols, and their radiative effects.
+
+Due to the significant spatial and temporal variability of the trends
+and the contributing factors, there is a constant need to monitor and
+investigate SDR at different sites in order to estimate the degree of
+variability and its relation to the local conditions. In this study, we
+examine the trends of SDR using ground-based measurements at
+Thessaloniki, Greece, for the period from 1993 to 2023. We re-evaluated and
+extended the dataset used by \citet{Bais2013}, we applied a different
+algorithm for the identification of clear-/cloud-sky instances
+\citep{Reno2016, Reno2012a}, and we derived the SDR trends for the
+period of study under different sky conditions (all-sky, clear-sky, and
+cloudy-sky). Finally, we investigated the dependence of the trends on
+solar zenith angle and season.
+
+\hypertarget{data-and-methodology}{%
+\section{Data and Methodology}\label{data-and-methodology}}
+
+The SDR data were measured with a Kipp \& Zonen CM-21 pyranometer
+operating continuously at the Laboratory of Atmospheric Physics of the
+Aristotle University of Thessaloniki (\(40^\circ\,38'\,\)N,
+\(22^\circ\,57'\,\)E, \(80\,\)m~a.s.l.). Here, we used data for the period
+from 13~April 1993 to 13 April 2023. The monitoring site was located near the
+city center, thus we expect that measurements were affected by the urban
+environment, mainly by aerosols. During the study period, the
+pyranometer was independently calibrated three times at the
+Meteorologisches Observatorium Lindenberg, DWD, verifying that the
+stability of the instrument's sensitivity was better than \(0.7\%\)
+relative to the initial calibration by the manufacturer. Along with SDR,
+the direct beam radiation (DNI) was also measured with a collocated Kipp
+\& Zonen CHP-1 pyrheliometer since 1 April 2016. The DNI data were used as
+auxiliary data to support the selection of appropriate thresholds in the
+clear-sky identification algorithm (CSid), which is discussed in Section
+\ref{CDIDalgorithm}. It is noted that the limited dataset of DNI was not
+used for the identification of clear-sky cases in the entire SDR series
+to avoid any selection bias due to the unequal length of the two datasets.
+There are four distinct steps in the creation of the dataset analyzed
+here: (a)~the acquisition of radiation measurements from the sensors,
+(b)~the data quality check, (c)~the identification of ``clear sky''
+conditions from the SDR data, and (d)~the aggregation of data and trend
+analysis.
+
+For the acquisition of radiometric data, the signal of the pyranometer
+was sampled at a rate of \(1\,\text{Hz}\). The mean and the standard
+deviation of these samples were calculated and recorded every minute. The
+measurements were corrected for the zero offset (``dark signal'' in
+volts), which was calculated by averaging all measurements recorded for a
+period of \(3\,\text{h}\), before (morning) or after (evening) the Sun
+reaches an elevation angle of \(-10^\circ\). The signal was converted to
+irradiance using a ramped value of the instrument's sensitivity between
+subsequent calibrations.
+
+A manual screening was performed to remove inconsistent and erroneous
+recordings that can occur stochastically or systematically during the
+continuous operation of the instruments. The manual screening was aided
+by a radiation data quality assurance procedure, adjusted for the site,
+which was based on the methods of Long and
+Shi~\citep{Long2006, Long2008a}. Thus, problematic recordings have been
+excluded from further processing. Although it is impossible to detect
+all false data, the large number of available data, and the aggregation
+scheme we used, ensures the quality of the radiation measurements used
+in this study.
+
+Due to the significant measurement uncertainty when the Sun is near the
+horizon, we have excluded all measurements with solar zenith angle (SZA)
+greater than \(85^\circ\). Moreover, due to obstructions around the site
+(hills and buildings) that block the direct irradiance, we excluded
+data with azimuth angle in the range \(58^{\circ}\)--\(120^{\circ}\)
+and with SZA greater than \(78^{\circ}\). To make the measurements
+comparable throughout the dataset, we adjusted all one-minute data to
+the mean Sun--Earth distance. Subsequently, we adjusted all
+measurements to the total solar irradiance (TSI) at \(1\,\text{au}\) in
+order to compensate for the Sun's intensity variability using a time
+series of satellite TSI observations. The TSI data we used are part of
+the `NOAA Climate Data Record of Total Solar Irradiance' dataset
+\citep{Coddington2005}. The initial daily values of this dataset were
+interpolated to match the time step of our measurements.
+
+In order to estimate the effect of the sky conditions on the long-term
+variability of SDR, we created three datasets by characterizing each
+one-minute measurement with a corresponding sky-condition flag (i.e.,
+all-sky, clear-sky, and cloudy-sky). To identify the clear cases, we used
+the method proposed by \citet{Reno2016}, which requires the definition
+of some site specific parameters. These parameters were determined by an
+iterative process, as the original authors proposed, and are discussed in
+the next section.
+
+We note that all methods have some subjectivity in the definition of
+clear or cloudy sky cases. As a result, the details of the definition
+are site specific, and they rely on a combination of thresholds and
+comparisons with ideal radiation models and statistical analysis of
+different signal metrics. The CSid algorithm was calibrated with the
+main focus to identify the presence of clouds. Despite the fine-tuning
+of the procedure, in a few marginal cases, false positive or false
+negative results were identified by manual inspection. However, due to
+their small number, they did not affect the final results of the study.
+For completeness, we provide below a brief overview of the CSid
+algorithm, along with the site-specific thresholds.
+
+\hypertarget{CDIDalgorithm}{%
+\subsection{The Clear Sky Identification
+Algorithm}\label{CDIDalgorithm}}
+
+To calculate the reference clear-sky \(\text{SDR}_\text{CSref}\), we used
+the \(\text{SDR}_\text{Haurwitz}\) derived by the radiation model of
+\citet{Haurwitz1945} (Equation~\eqref{eq:hau}), adjusted for our site:
+\begin{equation}
+\text{SDR}_\text{Haurwitz} = 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.059}{\cos(\theta)} \right) \label{eq:hau}
+\end{equation} where \(\theta\) is the SZA.
+
+The adjustment was made with a factor \(a\) (Equation~\eqref{eq:ahau}), which
+was estimated through an iterative optimization process, as described by
+\citet{Long2000} and \citet{Reno2016}. The target of the optimization
+was the minimization of a function \(f(a)\) (Equation~\eqref{eq:minf}) and was
+accomplished with the algorithmic function `optimise', which is an
+implementation based on the work of \citet{Brent1973}, from the library
+`stats' of the R programming language \citep{RCT2023}.
+\begin{equation}
+f(a) = \frac{1}{n}\sum_{i=1}^{n} ( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i} )^2 \label{eq:minf}
+\end{equation} where \(n\) is the total number of daylight data,
+\(\text{SDR}_{\text{CSid},i}\) are the data identified as clear-sky by
+CSid, \(a\) is a site-specific adjustment factor, and
+\(\text{SDR}_{\text{testCSref},i}\) is the SDR derived by any of the
+tested clear-sky radiation models.
+
+The optimization and the selection of the clear-sky reference model was
+performed on SDR observations for the period 2016--2021. During the
+optimization, eight simple clear-sky radiation models were tested
+(namely, Daneshyar--Paltridge--Proctor, Kasten--Czeplak, Haurwitz,
+Berger--Duffie, Adnot--Bourges--Campana--Gicquel, Robledo--Soler, Kasten, and
+Ineichen--Perez) with a wide range of factors. These models are
+described in more detail by \citet{Reno2012} and are evaluated by
+\citet{Reno2016}. We found that Haurwitz's model, adjusted with the
+factor \(a = 0.965\), yields one of the lowest root mean squared errors
+(RMSE), and the procedure manages to successfully characterize the
+majority of the data. Thus, our clear sky reference is derived by
+Equation~\eqref{eq:ahau}: \begin{equation}
+\text{SDR}_\text{CSref} = a \times \text{SDR}_\text{Haurwitz} = 0.965 \times 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.057}{\cos(\theta)} \right) \label{eq:ahau}
+\end{equation}
+
+The criteria that were used to identify whether a measurement was taken
+under clear-sky conditions are presented below. A data point is flagged
+as `clear-sky' if all criteria are satisfied; otherwise, it is
+considered as `cloud-sky'. Each criterion was applied for a running
+window of \(11\) consecutive one-minute measurements, and the
+characterization was assigned to the central datum of the window. Each
+parameter was calculated from the observations in comparison to the
+reference clear-sky model. The allowable range of variation is defined
+by the model-derived value of the parameter multiplied by a factor plus
+an offset. The factors and the offsets were determined empirically by
+manually inspecting each filter's performance on selected days and
+adjusting them accordingly during an iterative process. The criteria are
+listed below, together with the range of values within which the
+respective parameter should fall in order to raise the clear-sky flag:
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  \hl{Mean} %MDPI: We removed italics of units. Please confirm.
+ of the measured \(\overline{\text{SDR}}_i\) (Equation~\eqref{eq:MeanVIP}): \begin{equation}
+  0.91 \times \overline{\text{SDR}}_{\text{CSref},i} - 20\,\text{Wm}^{-2}
+  < \overline{\text{SDR}}_i <
+  1.095 \times \overline{\text{SDR}}_{\text{CSref},i} + 30\,\text{Wm}^{-2}
+  \label{eq:MeanVIP}
+  \end{equation}
+\item
+  Maximum measured value \(M_{i}\) (Equation~\eqref{eq:MaxVIP}):
+  \begin{equation}
+  1 \times M_{\text{CSref},i} - 75\,\text{Wm}^{-2}
+  < M_{i} <
+  1 \times M_{\text{CSref},i} + 75\,\text{Wm}^{-2}
+  \label{eq:MaxVIP}
+  \end{equation}
+\item
+  Length \(L_i\) of the sequential line segments, connecting the points
+  of the \(11\) SDR values (Equation~\eqref{eq:VILeq}): \begin{equation}
+  L_i = \sum_{i=1}^{n-1}\sqrt{\left ( \text{SDR}_{i+1} - \text{SDR}_{i}\right )^2 + \left ( t_{i+1} - t_i \right )^2}
+  \label{eq:VILeq}
+  \end{equation} \begin{equation}
+  1 \times L_{\text{CSref},i} - 5 < L_i < 1.3 \times L_{\text{CSref},i} + 13
+  \label{eq:VILcr}
+  \end{equation} where \(t_i\) is the time stamp of each SDR
+  measurement.
+\item
+  Standard deviation \(\sigma_i\) of the slope (\(s_i\)) between the
+  \(11\) sequential points, normalized by the mean
+  \(\overline{\text{SDR}}_i\) (Equation~\eqref{eq:VCT1}): \begin{gather}
+    \sigma_i = \frac {\sqrt{\frac{1}{n-1} \sum_{i=1}^{n-1} \left( s_i - \bar{s} \right)^2}} {\overline{\text{SDR}}_i} \label{eq:VCT1} \\
+    s_i = \frac{\text{SDR}_{i+1} - \text{SDR}_{i}}{t_{i+1} - t_i},\;\;   \bar{s} = \frac{1}{n-1} \sum_{i=1}^{n-1} s_i,\;\;\forall i \in \left \{ 1, 2, \ldots, n-1 \right \}\;\;
+  \end{gather} For this criterion, \(\sigma_i\) should be below a
+  certain threshold (Equation~\eqref{eq:VCTcr}): \begin{equation}
+    \sigma_i < \ensuremath{1.1\times 10^{-4}} \label{eq:VCTcr}
+  \end{equation}
+\item
+  Maximum difference \(X_i\) between the change in measured irradiance
+  and the change in clear sky irradiance over each measurement interval:
+  \begin{gather}
+    X_i = \max{\left \{ \left | x_i - x_{\text{CSref},i} \right | \right \}} \label{eq:VSM3} \\
+    x_i = \text{SDR}_{i+1} - \text{SDR}_{i} \forall i \in \left \{ 1, 2, \ldots, n-1 \right \} \label{eq:VSM1} \\
+    x_{\text{CSref},i} = \text{SDR}_{\text{CSref},i+1} - \text{SDR}_{\text{CSref},i} \forall i \in \left \{ 1, 2, \ldots, n-1 \right \} \label{eq:VSM2}
+  \end{gather} For this criterion, \(X_i\) should be below a certain
+  threshold (Equation~\eqref{eq:VSMcr}): \begin{equation}
+    X_i < 7.5\,\text{Wm}^{-2} \label{eq:VSMcr}
+  \end{equation}
+\end{enumerate}
+
+In the final dataset, \(26\%\) of the days were identified as under
+clear-sky conditions and \(48\%\) as under cloud-sky conditions. The
+remaining \(26\%\) of the data correspond to mixed cases and were not
+analyzed as a separate group.
+
+\hypertarget{aggregationstatistical}{%
+\subsection{Aggregation of Data and Statistical
+Approach}\label{aggregationstatistical}}
+
+In order to investigate the SDR trends that are the main focus of the
+study, we implemented an aggregation scheme to the one-minute data to
+derive series in coarser time scales. To preserve the representativeness
+of the data, we used the following criteria: (a)~we excluded all days with
+less than 50\% of the expected daytime measurements, (b)~daily means for
+the clear-sky and cloudy-sky datasets were calculated only for days with
+more than 60\% of the expected daytime measurements identified as clear
+or cloudy, respectively, and (c) monthly means were computed from daily means.
+For the all-skies dataset, monthly means were computed only when at least
+20 days were available. Seasonal means were derived by averaging the
+monthly mean values in each season (winter: December--February, spring:
+March--May, etc.). The daily and monthly climatological means were
+derived by averaging the data for each day of the year and calendar month,
+respectively. The daily and monthly datasets were deseasonalized by
+subtracting the corresponding climatological annual cycle (daily or
+monthly) from the actual data. Finally, to estimate the SZA effect on
+the SDR trends, the one-minute data were aggregated in \(1^{\circ}\) SZA
+bins, separately for the morning and afternoon hours.
+
+The linear trends were calculated using a first-order autoregressive
+model with lag of 1~day using the `maximum likelihood' fitting method
+\citep{Gardner1980, Jones1980} by implementing the function `arima'
+from the library `stats' of the R programming language
+\citep{RCT2023}. The trends were reported together with the \(2\sigma\)
+errors.
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+\hypertarget{long-term-sdr-trends}{%
+\subsection{Long-Term SDR Trends}\label{long-term-sdr-trends}}
+
+We calculated the linear trends of SDR from the departures of the mean
+daily values from the daily climatology and for the three sky
+conditions. These are presented in Table~\ref{tab:trendtable}, which also contains the \(2\sigma\) standard error, the Pearson's correlation
+coefficient R, and the trend in absolute units. In
+Figure~\ref{fig:trendALL}, we present only the time series under all-sky
+conditions; the plots for clear-sky and cloud-sky conditions, are shown
+in \mbox{\hl{Appendix} %MDPI: We revised citation. Please confirm.
+ \ref{app1}} \mbox{(Figures~\ref{fig:trendCLEAR} and~
+\ref{fig:trendCLOUD}).} In the studied period, there is no significant
+break or change in the variability pattern of the time series. The
+linear trends in all three datasets are positive and \hl{around} %MDPI: We removed italics of units. Please confirm. The same below.
+\(0.4\%/\)y for all-sky and cloudy-sky conditions, whereas for
+clear-skies the trend is much smaller (\textasciitilde{}\(0.1\%/\)y).
+The linear trends were calculated taking into account the
+autocorrelation of the time series, and all three are statistically
+significant at least at the \(95\%\) confidence level, as they are
+larger than the corresponding \(2\sigma\) errors, despite the small
+values of R, which is due to the large variability of the daily values.
+The clear-sky trend is very small, suggesting a small effect from
+aerosols and water vapor, which are the dominant factors of the SDR
+variability \citep{Fountoulakis2016, Siomos2018, Yu2022}. In contrast,
+the large positive trend of SDR under cloudy skies can be attributed to
+reduction in cloud cover and/or cloud optical depth. Lack of continuous
+observations of cloud optical thickness that could support these
+findings does not allow drawing firm conclusions. However, there are
+indications that the total cloud cover as inferred from the ERA5
+analysis for the grid point of Thessaloniki is decreasing over the
+period of study. From the difference between all-sky and clear-sky SDR
+trends, expressed in W/m$^2$/y using the long-term mean of the
+respective datasets, the radiative effect of clouds is estimated to
+0.96 W/m$^2$/y. This estimate is similar to the cloud radiative
+forcing of 1.22 W/m$^2$/y  reported for Granada, Spain
+\citep{Lozano2023}.
+
+The all-sky trend is similar to the one reported in \citet{Bais2013}
+from a ten-year shorter dataset, suggesting that the tendency of SDR in
+Thessaloniki is systematic. Other studies for the European region
+reported a change in the SDR trend around 1980 from negative to positive
+with comparable magnitude \citep{Wild2021, Yuan2021, Ohmura2009}, well
+before the start of our records. However, the trends reported here for
+the three datasets are in accordance with the widely accepted solar
+radiation brightening over Europe. For the period of our observations,
+the trend in the TSI is negligible (\(-0.00022\%/\)y), and thus we
+cannot attribute any significant effect on the SDR trend to solar
+variability.
+
+\begin{table}[H]
+
+\caption{\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period 1993--2023.}
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\toprule
+\multirow{-1}{*}{\textbf{Sky Conditions}} & \textbf{Trend [\%/year]} & \textbf{Trend S.E. (\boldmath$2\sigma$)} & \textbf{Pearson Correl.} & \textbf{Trend [W/m\textsuperscript{2}/year]} & \multirow{-1}{*}{\textbf{Days}}\\
+\midrule
+All skies & 0.380 & 0.120 & 0.091 & 1.460 & 10251\\
+Clear skies & 0.097 & 0.033 & 0.140 & 0.501 & 2684\\
+Cloudy skies & 0.410 & 0.180 & 0.081 & 1.180 & 4937\\
+\bottomrule
+\end{tabu}
+\end{table}
+
+\vspace{-6pt}
+
+\begin{figure}[H]
+
+{ \includegraphics[width=.75\linewidth]{./images/LongtermTrends-1} 
+
+}
+
+\caption{Anomalies (\%) of the daily all-sky SDR from the climatological mean for the period 1993--2023. The black line is the long-term linear trend.}\label{fig:trendALL}
+\end{figure}
+
+Although the year-to-year variability of the anomalies (Figure
+\ref{fig:trendALL} and \mbox{Figures~\ref{fig:trendCLEAR} and
+\ref{fig:trendCLOUD}} in \mbox{Appendix \ref{app1})} shows a rather homogeneous behavior,
+plots of the cumulative sums (CUSUM) \citep{Regier2019} of the anomalies
+can reveal different structures in the records of all three sky
+conditions. For time series with a uniform trend, we would expect the
+CUSUMs of the anomalies to have a symmetric `V' shape centered around
+the middle of the series. This would indicate that the anomalies are
+evenly distributed around the climatological mean, and, for a positive
+uniform trend, the first half is below and the second half above the
+climatological mean. In our case, there is a more complex evolution of
+the anomalies. For all skies (Figure~\ref{fig:cusummonth}a), we observe
+three rather distinct periods: (a) a downward part between the start of
+the datasets and about 2000, denoting that all anomalies are negative,
+thus below the climatology; (b) a relatively steady part lasting for
+almost 20 years, suggesting little variability in SDR anomalies; and (c) a
+steep upward part to the present, indicating anomalies above the climatology.
+The CUSUMs for cloudy skies (Figure~\ref{fig:cusummonth}c) show a
+similar behavior with some short-term differences that do not change the
+overall pattern. For clear skies (Figure~\ref{fig:cusummonth}b), a
+monotonic downward tendency is evident until 2004, suggesting that the
+anomalies are all negative. After 2004, the anomalies turn positive at
+a fast rate for about five years and at a slower rate thereafter.
+
+\begin{figure}[H]
+    \begin{adjustwidth}{-\extralength}{0cm}
+        {\centering 
+       % \subfloat[\label{fig:cusummonth-1}]
+            {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-1}}\hfill
+       % \subfloat[\label{fig:cusummonth-2}]
+            {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-5}}\hfill
+        \subfloat[\label{fig:cusummonth-3}]
+            {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-9}}\hfill
+        }
+\end{adjustwidth}
+\caption{\hl{Cumulative} %MDPI: We moved the subfigure explanations into the figure caption. Please confirm.
+ sum plots of the monthly SDR anomalies in (\%) for different sky conditions: (\textbf{a})~all skies; (\textbf{b}) clear skies; (\textbf{c}) cloudy skies.}\label{fig:cusummonth}
+
+\end{figure}
+
+In order to unveil further the features of the variability of the three
+datasets, Figure~\ref{fig:cusumnotrendmonthly} presents another set of
+CUSUM plots using anomalies after the long-term linear trend is removed.
+With this approach, periods when the CUSUMs diverge from zero can be
+interpreted as a systematic variation of SDR from the climatological
+mean. When the CUSUM is increasing, the anomalies values are above the
+climatology, and vice versa. Overall, for all- and cloudy-sky conditions
+(Figure~\ref{fig:cusumnotrendmonthly}a,c), we observe periods with anomalies
+diverging from the climatological values, each lasting for several
+years. These fluctuations are probably within the natural variability,
+and no distinct changes are identified. The pattern in both datasets is
+similar, suggesting prevalence in cloudy skies over Thessaloniki. For
+clear skies (Figure~\ref{fig:cusumnotrendmonthly}b), the distinct change
+in 2004 is now clearer. The most likely reason for this change is the
+monotonic reduction of aerosols in Thessaloniki. In that year, there was a
+change in the rate of decrease in aerosol optical depth, as illustrated
+in Figure 7 of \citet{Siomos2020}. This abrupt change in CUSUMs lasted
+until about 2010, when the anomalies become again variable.
+
+\begin{figure}[H]
+    \begin{adjustwidth}{-\extralength}{0cm}
+        {\centering 
+          %  \subfloat[All skies.\label{fig:cusumnotrendmonthly-1}]
+                {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-1} }\hfill
+           % \subfloat[Clear skies.\label{fig:cusumnotrendmonthly-2}]
+                {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-5} }\hfill
+           % \subfloat[Cloudy skies.\label{fig:cusumnotrendmonthly-3}]
+                {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-9} }
+        }
+
+\end{adjustwidth}
+        \caption{\hl{Cumulative} %MDPI: We moved the subfigure explanations into the figure caption. Please confirm.
+ sum plots of monthly SDR anomalies in (\%) for different sky conditions after removing the long-term linear trend: (\textbf{a})~all skies; (\textbf{b}) clear skies; (\textbf{c}) cloudy skies.}\label{fig:cusumnotrendmonthly}
+\end{figure}
+
+\hypertarget{effects-of-the-solar-zenith-angle-on-sdr}{%
+\subsection{Effects of the Solar Zenith Angle on
+SDR}\label{effects-of-the-solar-zenith-angle-on-sdr}}
+
+The solar zenith angle is a major factor affecting the SDR, as
+increases in SZA leads to enhancement of the radiation path in the
+atmosphere, especially in urban environments with human activities
+emitting aerosols \citep{Wang2021}. In order to estimate the effect of
+SZA on the SDR trends, we grouped the data in bins of \(1^\circ\) SZA
+and calculated the overall trend for each bin separately for the daily
+periods before noon and after noon (Figure~\ref{fig:szatrends}).
+Although there are seasonal dependencies of the minimum SZA (see
+Appendix \ref{app1}, Figure~\ref{fig:SZAtrendSeason}), these dependencies are not
+discussed further.
+
+For all-sky conditions, the brightening effect of SDR (positive trend)
+increases with SZAs (Figure~\ref{fig:szatrends}a), ranging from about
+\(0.1\%/\)y to about \(0.7\%/\)y for the statistically significant
+trends. The trends in the morning and afternoon hours are more or less
+consistent with small differences at small SZAs, which can be attributed
+to effects on clear sky SDR from systematic diurnal patterns of aerosols
+during the warm period of the year, consistent with the results
+reported for China by \citet{Wang2021}. Note that SZAs less than
+\(25^\circ\) can only occur during the warm period of the year around
+noon when clear skies are more frequent. The increasing trend with SZA
+is likely caused by the increased attenuation of SDR with SZA. The
+effect is larger when aerosol and/or cloud layers are optically thicker;
+therefore, decreases in aerosol and clouds through the study period will
+result in larger positive trends of SDR at larger SZAs.
+
+Under clear skies (Figure~\ref{fig:szatrends}b), the trends are
+smaller and less variable, ranging between \(0.1\) and \(0.15\%/\)y up
+to \(77^\circ\) SZA. At higher SZAs and in the afternoon hours, there is a
+sharp increase in the trend up to \(0.3\%/\)y, which may have been
+caused by the long path length of radiation through the atmosphere as
+discussed above for the all-sky conditions. The small differences in the
+trend between morning and afternoon between \(35^\circ\) and
+\(60^\circ\) SZA is likely a result of less attenuation of SDR in the
+morning hours due to lesser amounts of aerosols and a shallower boundary
+layer.
+
+For cloudy-sky conditions (Figure~\ref{fig:szatrends}c), we cannot
+discern any significant dependence of the SDR trend with SZA, as the
+variability of irradiance is dominated by the cloud effects leading to
+insignificant trends. Statistically significant trends appear only in
+the afternoon and for SZAs larger than \(60^\circ\). The sharp increase
+of the trend at SZAs larger than $\sim${75}$^{\circ}$, observed also for
+clear skies, is probably associated with stronger attenuation by clouds
+under oblique incidence angles, which also result in smaller
+variability.
+
+\begin{figure}[H]
+    \begin{adjustwidth}{-\extralength}{0cm}
+        {\centering 
+          %  \subfloat[All skies.\label{fig:szatrends-1}]
+                {\includegraphics[width=.32\linewidth]{./images/SzaTrends-1}}\hfill
+         %   \subfloat[Clear skies.\label{fig:szatrends-2}]
+                {\includegraphics[width=.32\linewidth]{./images/SzaTrends-4}}\hfill
+           % \subfloat[Cloudy skies.\label{fig:szatrends-3}]
+                {\includegraphics[width=.32\linewidth]{./images/SzaTrends-7}}
+        }
+
+    \end{adjustwidth}
+        \caption{\hl{Long} %MDPI: We removed duplicate explanation in figure.
+ -term trends of daily SDR as a function of SZA for (\textbf{a}) all-sky, (\textbf{b}) clear-sky and (\textbf{c}) cloudy-sky conditions, separately for morning and afternoon periods. Solid shapes represent statistically significant trends ($p < 0.005$).}\label{fig:szatrends}
+\end{figure}
+
+\hypertarget{long-term-sdr-trends-by-season}{%
+\subsection{Long-Term SDR Trends by
+Season}\label{long-term-sdr-trends-by-season}}
+
+Similarly to the long term trends from daily means of SDR discussed
+above, we have calculated the trend for the three sky conditions and for
+each season of the year using the corresponding mean monthly anomalies
+(Figure~\ref{fig:seasonalALL} and Table~\ref{tab:trendseasontable}).
+Table~\ref{tab:trendseasontable} also contains the \(2\sigma\) standard
+error, the Pearson's correlation coefficient R, and the corresponding
+p-value. The winter linear trends generally exhibit the largest R values,
+ranging between \(0.54\) and \(0.60\%/\)y. For all-sky conditions, the
+trend in SDR in winter is the largest (\(0.7\%/\)y), followed by the
+trend in autumn (\(0.42\%/\)y, a value close to the long-term trend),
+both statistically significant at the \(95\%\) confidence level. In
+spring and summer, the trends are much smaller and of lesser statistical
+significance. These seasonal differences indicate a possible relation of
+the trends in SDR to trends in clouds during winter and autumn. For
+clear skies, the trend in winter is \(0.4\%/\)y and is associated with
+the decreasing trend in aerosol optical depth \citep{Siomos2020}.
+Moreover, it is almost half of that for all skies, which is another
+indication of a decreasing trend in cloud optical thickness. In other
+seasons, the clear-sky trend is very small (below \(0.1\%/\)y).
+Finally, for cloudy skies, the winter trend is the largest
+(\(0.76\%/\)y) and greater than for all skies, followed by a much
+smaller trend in autumn (\(0.19\%/\)y).
+
+The trends under clear- and cloudy-sky conditions are in the same
+direction, and it would be expected that their sum is similar to the
+all-sky trend. This does not happen, especially for winter, likely due
+to the way the monthly means for clear and cloudy skies were calculated.
+Daily means were calculated only when at least \(60\%\) of the clear-
+or cloudy-sky data were available (see Section \ref{aggregationstatistical}).
+
+
+
+\begin{table}[H]
+
+\caption{\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year and related statistical parameters.}
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\toprule
+\multirow{-1}{*}{\textbf{Sky Condition}} & \multirow{-1}{*}{\textbf{Season}} & \textbf{Trend [\%/year]} & \textbf{Trend S.E. (\boldmath$2\sigma$)} & \textbf{Pearson Correl.} & \textbf{Trend \emph{p}-Value}\\
+\midrule
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.70} & \cellcolor{gray!6}{0.43} & \cellcolor{gray!6}{0.54} & \cellcolor{gray!6}{0.003}\\
+
+ & Spring & 0.11 & 0.24 & 0.17 & 0.371\\
+
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{0.11} & \cellcolor{gray!6}{0.15} & \cellcolor{gray!6}{0.25} & \cellcolor{gray!6}{0.175}\\
+
+\multirow{-4}{*}{\centering\arraybackslash All skies} & Autumn & 0.42 & 0.30 & 0.47 & 0.009\\
+\cmidrule{1-6}
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.40} & \cellcolor{gray!6}{0.20} & \cellcolor{gray!6}{0.60} & \cellcolor{gray!6}{0.001}\\
+
+ & Spring & 0.06 & 0.17 & 0.13 & 0.497\\
+
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{$-$0.05} & \cellcolor{gray!6}{0.06} & \cellcolor{gray!6}{$-$0.30} & \cellcolor{gray!6}{0.106}\\
+
+\multirow{-4}{*}{\centering\arraybackslash Clear skies} & Autumn & 0.05 & 0.12 & 0.17 & 0.366\\
+%\cmidrule{1-6}
+\bottomrule
+\end{tabu}
+\end{table}
+
+\begin{table}[H]\ContinuedFloat
+
+\caption{\label{tab:trendseasontable}\emph{Cont.}}
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\toprule
+\multirow{-1}{*}{\textbf{Sky Condition}} & \multirow{-1}{*}{\textbf{Season}} & \textbf{Trend [\%/year]} & \textbf{Trend S.E. (\boldmath$2\sigma$)} & \textbf{Pearson Correl.} & \textbf{Trend \emph{p}-Value}\\
+\midrule
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.76} & \cellcolor{gray!6}{0.40} & \cellcolor{gray!6}{0.59} & \cellcolor{gray!6}{0.001}\\
+
+ & Spring & 0.06 & 0.23 & 0.10 & 0.593\\
+
+\cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{$-$0.08} & \cellcolor{gray!6}{0.27} & \cellcolor{gray!6}{$-$0.11} & \cellcolor{gray!6}{0.560}\\
+
+\multirow{-4}{*}{\centering\arraybackslash Cloudy skies} & Autumn & 0.19 & 0.43 & 0.16 & 0.384\\
+\bottomrule
+\end{tabu}
+\end{table}
+
+
+\vspace{-7pt}
+
+\begin{figure}[H]
+    \begin{adjustwidth}{-\extralength}{0cm}
+        {\centering 
+            \includegraphics[width=1\linewidth]{./images/SeasonalMTrendsTogether3-2}   % Seasonal from Monthly
+        }
+       
+    \end{adjustwidth}
+ \caption{\colorbox{red}{Monthly} %MDPI: Please add the explanation for subfifgures in the figure.
+ mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends.}\label{fig:seasonalALL}
+\end{figure}
+
+
+\hypertarget{conclusions}{%
+\section{\colorbox{green}{Conclusions}\label{conclusions}}} %MDPI: Please make sure no figure in paper is repeated
+
+We have analyzed a 30-year dataset of SRD measurements in Thessaloniki,
+Greece (1993--2023), aiming to identify the long-term variability of
+solar irradiance under different sky conditions. Under all-sky
+conditions, there is a positive trend in SDR of \(0.38\%/\)y
+(brightening). A previous study \citep{Bais2013} for the period 1993--2011 also reported a positive trend of \(0.33\%/\)y. The slight
+increase in this trend indicates that the brightening of SDR continues
+and is likely caused by continuing decreases in aerosol optical depth
+and the optical thickness of clouds over the area. A smaller trend has
+been found under clear-sky conditions (\(0.097\%/\)y), which supports
+the notion that part of the brightening is caused by decreasing
+aerosols. \citet{Siomos2020} showed that aerosol optical depth over
+Thessaloniki was decreasing constantly, at least up until 2018. The
+attenuation of SDR by aerosols over Europe has been proposed as major
+factor by \citet{Wild2021}. Unfortunately, for this study, aerosol data
+for the entire period were not available in order to quantify their
+effect on SDR. The brightening effect on SDR under cloudy-sky conditions
+(\(0.41\%/\)y) suggests that cloud optical thickness is also
+decreasing during this period. As long-term data of cloud optical
+thickness are also not available for the region, we cannot draw
+quantitative~conclusions.
+
+The observed brightening on SDR over Thessaloniki is dependent on SZA
+(larger SZAs lead to stronger brightening). The trend is also dependent
+on season, with winter showing the strongest statistically significant
+trend of \(0.7\) and \(0.76\%/\)y for all- and cloudy-skies,
+respectively, in contrast to spring and summer. The trends for autumn
+are also significant but smaller (\(0.42\) and \(0.19\%/\)y for all-
+and cloudy-skies, respectively). The trend for clear skies is largest in
+winter (\(0.4\%/\)y) and negligible in spring, summer, and autumn.
+
+Using the CUSUMs of the monthly departures for all and cloudy skies, we
+observed a 20-year period starting around 2000 where the CUSUMs remain
+relatively stable, with a steep decline before and a steep increase
+after. The rather smooth course of the CUSUMs suggests that no important
+change in the SDR pattern has occurred in the entire record.
+
+Continued observations with a collocated pyrheliometer, which started in
+2016, will allow us to further investigate the variability of solar
+radiation at ground level in Thessaloniki. Also, additional data of
+cloudiness, aerosols, atmospheric water vapor, etc., will allow better
+attribution and quantification of the effects of these factors on SRD.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{6pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% optional
+
+% Only for the journal Methods and Protocols:
+% If you wish to submit a video article, please do so with any other supplementary material.
+% \supplementary{The following supporting information can be downloaded at: \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title. A supporting video article is available at doi: link.}
+\authorcontributions{\hl{  } %MDPI: For research articles with several authors, a short paragraph specifying their individual contributions must be provided. The following statements should be used ``Conceptualization, X.X. and Y.Y.; methodology, X.X.; software, X.X.; validation, X.X., Y.Y. and Z.Z.; formal analysis, X.X.; investigation, X.X.; resources, X.X.; data curation, X.X.; writing---original draft preparation, X.X.; writing---review and editing, X.X.; visualization, X.X.; supervision, X.X.; project administration, X.X.; funding acquisition, Y.Y. All authors have read and agreed to the published version of the manuscript.'', please turn to the  \href{http://img.mdpi.org/data/contributor-role-instruction.pdf}{CRediT taxonomy} for the term explanation. Authorship must be limited to those who have contributed substantially to the work~reported.
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\funding{This research received no external funding.}
+
+\institutionalreview{\hl{  } %MDPI: In this section, you should add the Institutional Review Board Statement and approval number, if relevant to your study. You might choose to exclude this statement if the study did not require ethical approval. Please note that the Editorial Office might ask you for further information. Please add “The study was conducted in accordance with the Declaration of Helsinki, and approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies involving humans. OR “The animal study protocol was approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies involving animals. OR “Ethical review and approval were waived for this study due to REASON (please provide a detailed justification).” OR “Not applicable” for studies not involving humans or animals.
+}
+
+\informedconsent{\hl{  } %MDPI: Any research article describing a study involving humans should contain this statement. Please add ``Informed consent was obtained from all subjects involved in the study.'' OR ``Patient consent was waived due to REASON (please provide a detailed justification).'' OR ``Not applicable'' for studies not involving humans. You might also choose to exclude this statement if the study did not involve humans.
+
+%Written informed consent for publication must be obtained from participating patients who can be identified (including by the patients themselves). Please state ``Written informed consent has been obtained from the patient(s) to publish this paper'' if applicable.
+}
+
+\dataavailability{Data as daily sums are available through the WRDC
+database, \url{http://wrdc.mgo.rssi.ru}. One-minute data are available on
+request from the corresponding author. The data are not publicly
+available for protection against unmonitored commercial use.}
+
+
+\conflictsofinterest{\hl{  } %MDPI: Declare conflicts of interest or state ``The authors declare no conflict of interest.'' Authors must identify and declare any personal circumstances or interest that may be perceived as inappropriately influencing the representation or interpretation of reported research results. Any role of the funders in the design of the study; in the collection, analyses or interpretation of data; in the writing of the manuscript; or in the decision to publish the results must be declared in this section. If there is no role, please state ``The funders had no role in the design of the study; in the collection, analyses, or interpretation of data; in the writing of the manuscript; or in the decision to publish the results''.
+} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optional
+
+%% Only for journal Encyclopedia
+
+\abbreviations{Abbreviations}{
+The following abbreviations are used in this manuscript:\\
+
+\noindent
+\begin{tabular}{@{}ll}
+DNI & Direct beam/normal irradiance \\
+ERA5 & ECMWF Reanalysis v5 \\
+CSid & Clear sky identification algorithm \\
+CUSUM & Cumulative sum \\
+SDR & Solar downward radiation \\
+SZA & Solar zenith angle \\
+\end{tabular}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optional
+%\input{"appendix.tex"}
+
+% % \renewcommand\thefigure{\thesection.\arabic{figure}} %% my
+% % \renewcommand\thefigure{\thesection.\arabic{figure}}
+%
+% %% From R rticle MDPI template
+% %% optional
+% \appendixtitles{no} %Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
+% \appendixsections{one} %Leave argument "multiple" if there are multiple sections. Then a counter is printed ("Appendix A"). If there is only one appendix section then change the argument to "one" and no counter is printed ("Appendix").
+%
+% % \appendix
+% % \section{}
+%
+% \appendix
+% \setcounter{secnumdepth}{0}
+% \section{Appendix}
+%
+% \setcounter{figure}{0}    %% my
+
+
+
+%% From raw MDPI template
+%% Optional
+\appendixtitles{no} % Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
+\appendixstart
+\appendix
+\section[\appendixname~\thesection]{}
+
+\label{app1}
+
+% copy output from Rmd
+
+\begin{figure}[H]
+    {
+        \includegraphics[width=0.75\linewidth]{./images/LongtermTrends-2}
+
+    }
+    \caption{Anomalies (\%) of the daily clear-sky SDR, relative to climatological values for 1993--2023. The black line shows the long-term linear trend for clear-sky conditions.}\label{fig:trendCLEAR}
+\end{figure}
+
+
+
+\begin{figure}[H]
+    {
+        \includegraphics[width=0.75\linewidth]{./images/LongtermTrends-3}
+
+    }
+    \caption{Anomalies (\%) of the daily cloud-sky SDR, relative to climatological values for 1993--2023. The black line shows the long-term linear trend for cloud-sky conditions.}\label{fig:trendCLOUD}
+\end{figure}
+
+\vspace{-6pt}
+
+
+\begin{figure}[H]
+    \begin{adjustwidth}{-\extralength}{0cm}
+        {\centering
+            \includegraphics[width=1.0\linewidth]{./images/SzaTrendsSeasTogether-2}
+        }
+   \end{adjustwidth}
+        \caption{\colorbox{red}{Long} %MDPI: Please add the explanation for subfifgures in the figure.
+ -term trends of SDR as a function of SZA separately form morning
+               and afternoon periods, by season (rows of plots) for the three sky
+               conditions (columns of plots).
+               Solid shapes represent statistical significant trends ($p<0.005$).
+               Cases where $p<0.005$ or with less than $85$~observations may be
+               missing from view.}\label{fig:SZAtrendSeason}
+ 
+\end{figure}
+
+
+
+
+\FloatBarrier
+
+% \subsection{}
+% The appendix is an optional section that can contain details and data supplemental to the main text. For example, explanations of experimental details that would disrupt the flow of the main text, but nonetheless remain crucial to understanding and reproducing the research shown; figures of replicates for experiments of which representative data is shown in the main text can be added here if brief, or as Supplementary data. Mathematical proofs of results not central to the paper can be added as an appendix.
+%
+% \section{}
+% All appendix sections must be cited in the main text. In the appendixes, Figures, Tables, etc. should be labeled starting with `A', e.g., Figure A1, Figure A2, etc.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{adjustwidth}{-\extralength}{0cm}
+
+%\printendnotes[custom] % Un-comment to print a list of endnotes
+
+
+\reftitle{References}
+%\bibliography{manualreferences.bib}
+\begin{thebibliography}{999}
+
+\bibitem[Wild(2009)]{Wild2009}
+Wild, M.
+\newblock Global dimming and brightening: A review.
+\newblock {\em J. Geophys. Res. Atmos.} {\bf 2009}, {\em
+  114},~1--31.
+\newblock {\url{https://doi.org/10/bcq}}.
+
+\bibitem[Yang et~al.(2021)Yang, Zhou, Yu, and Wild]{Yang2021}
+Yang, S.; Zhou, Z.; Yu, Y.; Wild, M.
+\newblock Cloud {\textquotedblleft}shrinking{\textquotedblright} and
+  {\textquotedblleft}optical thinning{\textquotedblright} in the
+  {\textquotedblleft}dimming{\textquotedblright} period and a subsequent
+  recovery in the {\textquotedblleft}brightening{\textquotedblright} period
+  over China.
+\newblock {\em Environ. Res. Lett.} {\bf 2021}, \emph{16}, 034013.
+\newblock {\url{https://doi.org/10.1088/1748-9326/abdf89}}.
+
+\bibitem[Wild et~al.(2021)Wild, Wacker, Yang, and Sanchez-Lorenzo]{Wild2021}
+Wild, M.; Wacker, S.; Yang, S.; Sanchez-Lorenzo, A.
+\newblock Evidence for Clear‐Sky Dimming and Brightening in Central Europe.
+\newblock {\em Geophys. Res. Lett.} {\bf 2021}, {\em 48}, e2020GL092216.
+\newblock {\url{https://doi.org/10.1029/2020GL092216}}.
+
+\bibitem[Yamasoe et~al.(2021)Yamasoe, Ros{\'{a}}rio, Almeida, and
+  Wild]{Yamasoe2021}
+Yamasoe, M.A.; Ros{\'{a}}rio, N.M.{\'{E}}.; Almeida, S.N.S.M.; Wild, M.
+\newblock Fifty-six years of surface solar radiation and sunshine duration over
+  S{\~{a}}o Paulo, Brazil: 1961--2016.
+\newblock {\em Atmos. Chem. Phys.} {\bf 2021}, {\em
+  21},~6593--6603.
+\newblock {\url{https://doi.org/10.5194/acp-21-6593-2021}}.
+
+\bibitem[Yuan et~al.(2021)Yuan, Leirvik, and Wild]{Yuan2021}
+Yuan, M.; Leirvik, T.; Wild, M.
+\newblock Global trends in downward surface solar radiation from spatial
+  interpolated ground observations during 1961--2019.
+\newblock {\em J. Clim.} {\bf 2021}, \emph{34}, 9501--9521.
+\newblock {\url{https://doi.org/10.1175/JCLI-D-21-0165.1}}.
+
+\bibitem[Li et~al.(2016)Li, Lau, Ramanathan, Wu, Ding, Manoj, Liu, Qian, Li,
+  Zhou, Fan, Rosenfeld, Ming, Wang, Huang, Wang, Xu, Lee, Cribb, Zhang, Yang,
+  Zhao, Takemura, Wang, Xia, Yin, Zhang, Guo, Zhai, Sugimoto, Babu, and
+  Brasseur]{Li2016}
+Li, Z.; Lau, W.K.; Ramanathan, V.; Wu, G.; Ding, Y.; Manoj, M.G.; Liu, J.;
+  Qian, Y.; Li, J.; Zhou, T.;  et~al.
+\newblock Aerosol and monsoon climate interactions over Asia.
+\newblock {\em Rev. Geophys.} {\bf 2016}, {\em 54},~866--929.
+\newblock {\url{https://doi.org/10.1002/2015RG000500}}.
+
+\bibitem[Samset et~al.(2018)Samset, Sand, Smith, Bauer, Forster, Fuglestvedt,
+  Osprey, and Schleussner]{Samset2018}
+Samset, B.H.; Sand, M.; Smith, C.J.; Bauer, S.E.; Forster, P.M.; Fuglestvedt,
+  J.S.; Osprey, S.; Schleussner, C.
+\newblock Climate Impacts From a Removal of Anthropogenic Aerosol Emissions.
+\newblock {\em Geophys. Res. Lett.} {\bf 2018}, {\em 45},~1020--1029.
+\newblock {\url{https://doi.org/10.1002/2017GL076079}}.
+
+\bibitem[Schwarz et~al.(2020)Schwarz, Folini, Yang, Allan, and
+  Wild]{Schwarz2020}
+Schwarz, M.; Folini, D.; Yang, S.; Allan, R.P.; Wild, M.
+\newblock Changes in atmospheric shortwave absorption as important driver of
+  dimming and brightening.
+\newblock {\em Nat. Geosci.} {\bf 2020}, {\em 13},~110--115.
+\newblock {\url{https://doi.org/10.1038/s41561-019-0528-y}}.
+
+\bibitem[Ohvril et~al.(2009)Ohvril, Teral, Neiman, Kannel, Uustare, Tee,
+  Russak, Okulov, Jõeveer, Kallis, Ohvril, Terez, Terez, Gushchin, Abakumova,
+  Gorbarenko, Tsvetkov, and Laulainen]{Ohvril2009}
+Ohvril, H.; Teral, H.; Neiman, L.; Kannel, M.; Uustare, M.; Tee, M.; Russak,
+  V.; Okulov, O.; Jõeveer, A.; Kallis, A.;  et~al.
+\newblock Global dimming and brightening versus atmospheric column
+  transparency, Europe, 1906–2007.
+\newblock {\em J. Geophys. Res.} {\bf 2009}, {\em 114}.
+\newblock {\url{https://doi.org/10.1029/2008JD010644}}.
+
+\bibitem[Zerefos et~al.(2009)Zerefos, Eleftheratos, Meleti, Kazadzis, Romanou,
+  Ichoku, Tselioudis, and Bais]{Zerefos2009}
+Zerefos, C.S.; Eleftheratos, K.; Meleti, C.; Kazadzis, S.; Romanou, A.; Ichoku,
+  C.; Tselioudis, G.; Bais, A.
+\newblock Solar dimming and brightening over Thessaloniki, Greece, and Beijing,
+  China.
+\newblock {\em Tellus B Chem. Phys. Meteorol.} {\bf 2009}, {\em
+  61},~657.
+\newblock {\url{https://doi.org/10.1111/j.1600-0889.2009.00425.x}}.
+
+\bibitem[Xia et~al.(2007)Xia, Chen, Li, Wang, and Wang]{Xia2007}
+Xia, X.; Chen, H.; Li, Z.; Wang, P.; Wang, J.
+\newblock Significant reduction of surface solar irradiance induced by aerosols
+  in a suburban region in northeastern China.
+\newblock {\em J. Geophys. Res. Atmos.} {\bf 2007}, {\em
+  112},~1--9.
+\newblock {\url{https://doi.org/10/cdtntw}}.
+
+\bibitem[Fountoulakis et~al.(2016)Fountoulakis, Redondas, Bais,
+  Rodriguez-Franco, Fragkos, and Cede]{Fountoulakis2016}
+Fountoulakis, I.; Redondas, A.; Bais, A.F.; Rodriguez-Franco, J.J.; Fragkos,
+  K.; Cede, A.
+\newblock Dead time effect on the Brewer measurements: Correction and estimated
+  uncertainties.
+\newblock {\em Atmos. Meas. Tech.} {\bf 2016}, {\em
+  9},~1799--1816.
+\newblock {\url{https://doi.org/10/gcc32t}}.
+
+\bibitem[Siomos et~al.(2018)Siomos, Balis, Voudouri, Giannakaki, Filioglou,
+  Amiridis, Papayannis, and Fragkos]{Siomos2018}
+Siomos, N.; Balis, D.S.; Voudouri, K.A.; Giannakaki, E.; Filioglou, M.;
+  Amiridis, V.; Papayannis, A.; Fragkos, K.
+\newblock Are {EARLINET} and {AERONET} climatologies consistent? The case of
+  Thessaloniki, Greece.
+\newblock {\em Atmos. Chem. Phys.} {\bf 2018}, {\em
+  18},~11885--11903.
+\newblock {\url{https://doi.org/10.5194/acp-18-11885-2018}}.
+
+\bibitem[Gkikas et~al.(2013)Gkikas, Hatzianastassiou, Mihalopoulos, Katsoulis,
+  Kazadzis, Pey, Querol, and Torres]{Gkikas2013}
+Gkikas, A.; Hatzianastassiou, N.; Mihalopoulos, N.; Katsoulis, V.; Kazadzis,
+  S.; Pey, J.; Querol, X.; Torres, O.
+\newblock The regime of intense desert dust episodes in the Mediterranean based
+  on contemporary satellite observations and ground measurements.
+\newblock {\em Atmos. Chem. Phys.} {\bf 2013}, {\em
+  13},~12135--12154.
+\newblock {\url{https://doi.org/10.5194/acp-13-12135-2013}}.
+
+\bibitem[Lozano et~al.(2021)Lozano, Sánchez-Hernández, Guerrero-Rascado,
+  Alados, and Foyo-Moreno]{Lozano2021}
+Lozano, I.L.; Sánchez-Hernández, G.; Guerrero-Rascado, J.L.; Alados, I.;
+  Foyo-Moreno, I.
+\newblock Aerosol radiative effects in photosynthetically active radiation and
+  total irradiance at a Mediterranean site from an 11-year database.
+\newblock {\em Atmos. Res.} {\bf 2021}, {\em 255},~105538.
+\newblock {\url{https://doi.org/10.1016/j.atmosres.2021.105538}}.
+
+\bibitem[Bais et~al.(2013)Bais, Drosoglou, Meleti, Tourpali, and
+  Kouremeti]{Bais2013}
+Bais, A.F.; Drosoglou, T.; Meleti, C.; Tourpali, K.; Kouremeti, N.
+\newblock Changes in surface shortwave solar irradiance from 1993 to 2011 at
+  Thessaloniki (Greece).
+\newblock {\em Int. J. Climatol.} {\bf 2013}, {\em
+  33},~2871--2876.
+\newblock {\url{https://doi.org/10/f5dzz5}}.
+
+\bibitem[Reno and Hansen(2016)]{Reno2016}
+Reno, M.J.; Hansen, C.W.
+\newblock Identification of periods of clear sky irradiance in time series of
+  GHI measurements.
+\newblock {\em Renew. Energy} {\bf 2016}, {\em 90},~520--531.
+\newblock {\url{https://doi.org/10/gq3sbg}}.
+
+\bibitem[Reno et~al.(2012)Reno, Hansen, and Stein]{Reno2012a}
+\colorbox{green}{Reno,} %MDPI: Refs. 18 and 26 are duplicated. Please remove duplicated references and rearrange all the references to appear in numerical order. Please ensure that there are no duplicated references.
+ M.J.; Hansen, C.W.; Stein, J.S.
+\newblock {\emph{Global Horizontal Irradiance Clear Sky Models: Implementation and
+  Analysis}};
+\newblock \hl{Technical report;}  %MDPI: Please confirm if it can be removed. Please add the name of the publisher and their location.
+ 2012.
+
+\bibitem[Long and Shi(2006)]{Long2006}
+Long, C.N.; Shi, Y.
+\newblock \emph{The QCRad Value Added Product: Surface Radiation Measurement Quality
+  Control Testing, Including Climatology Configurable Limits};
+\newblock \hl{Technical Report DOE/SC-ARM/TR-074;} %MDPI: Please confirm if it can be removed. Please add the name of the publisher and their location.
+  2006.
+
+\bibitem[Long and Shi(2008)]{Long2008a}
+Long, C.N.; Shi, Y.
+\newblock An Automated Quality Assessment and Control Algorithm for Surface
+  Radiation Measurements.
+\newblock {\em  Open Atmos. Sci. J.} {\bf 2008}, \emph{2}, 23--37.
+
+\bibitem[Coddington et~al.(2005)Coddington, Lean, Lindholm, Pilewskie, Snow,
+  and {NOAA CDR Program}]{Coddington2005}
+Coddington, O.; Lean, J.L.; Lindholm, D.; Pilewskie, P.; Snow, M.; {NOAA CDR
+  Program}.
+\newblock \emph{{NOAA} Climate Data Record ({CDR}) of Total Solar Irradiance ({TSI}),
+  {NRLTSI} Version 2}; \hl{{D}aily;} %MDPI: Please confirm if it can be removed. Please add the name of the publisher and their location.
+  2005.
+\newblock {\url{https://doi.org/10.7289/V55B00C1}}.
+
+\bibitem[Haurwitz(1945)]{Haurwitz1945}
+Haurwitz, B.
+\newblock Insolation in {Relation} to {Cloudiness} and {Cloud} {Density}.
+\newblock {\em J. Meteorol.} {\bf 1945}, {\em 2},~154--166.
+
+\bibitem[Long and Ackerman(2000)]{Long2000}
+Long, C.N.; Ackerman, T.P.
+\newblock Identification of clear skies from broadband pyranometer measurements
+  and calculation of downwelling shortwave cloud effects.
+\newblock {\em J. Geophys. Res. Atmos.} {\bf 2000}, {\em
+  105},~15609--15626.
+\newblock {\url{https://doi.org/10.1029/2000jd900077}}.
+
+\bibitem[Brent(1973)]{Brent1973}
+Brent, R.P.
+\newblock \emph{Algorithms for Minimization without Derivatives};
+\newblock {\em PrenticeHall: Englewood Cliffs, NJ, USA,} {1973}.
+
+\bibitem[{R Core Team}(2023)]{RCT2023}
+{R Core Team}.
+\newblock {\em R: A Language and Environment for Statistical Computing};
+\newblock R Foundation for Statistical Computing: Vienna, Austria,  2023.
+
+\bibitem[Reno et~al.(2012)Reno, Hansen, and Stein]{Reno2012}
+\colorbox{red}{Reno,} 
+ M.J.; Hansen, C.W.; Stein, J.S.
+\newblock \emph{Global Horizontal Irradiance Clear Sky Models: Implementation and
+  Analysis};
+\newblock \hl{Technical Report SAND2012-2389, 1039404;} %MDPI: Please confirm if it can be removed. Please add the name of the publisher and their location.
+  2012.
+\newblock {\url{https://doi.org/10/gq5npv}}.
+
+\bibitem[Gardner et~al.(1980)Gardner, Harvey, and Phillips]{Gardner1980}
+Gardner, G.; Harvey, A.C.; Phillips, G.D.A.
+\newblock Algorithm {AS} 154: An Algorithm for Exact Maximum Likelihood
+  Estimation of Autoregressive-Moving Average Models by Means of Kalman
+  Filtering.
+\newblock {\em Appl. Stat.} {\bf 1980}, {\em 29},~311.
+\newblock {\url{https://doi.org/10.2307/2346910}}.
+
+\bibitem[Jones(1980)]{Jones1980}
+Jones, R.H.
+\newblock Maximum Likelihood Fitting of {ARMA} Models to Time Series With
+  Missing Observations.
+\newblock {\em Technometrics} {\bf 1980}, {\em 22},~389--395.
+\newblock {\url{https://doi.org/10.1080/00401706.1980.10486171}}.
+
+\bibitem[Yu et~al.(2022)Yu, Zhang, Wang, Qin, Jiang, and Li]{Yu2022}
+Yu, L.; Zhang, M.; Wang, L.; Qin, W.; Jiang, D.; Li, J.
+\newblock Variability of surface solar radiation under clear skies over
+  Qinghai-Tibet Plateau: Role of aerosols and water vapor.
+\newblock {\em Atmos. Environ.} {\bf 2022}, {\em 287},~119286.
+\newblock {\url{https://doi.org/10.1016/j.atmosenv.2022.119286}}.
+
+\bibitem[Lozano et~al.(2023)Lozano, Alados, and Foyo-Moreno]{Lozano2023}
+Lozano, I.L.; Alados, I.; Foyo-Moreno, I.
+\newblock Analysis of the solar radiation/atmosphere interaction at a
+  Mediterranean site: The role of clouds.
+\newblock {\em Atmos. Res.} {\bf 2023}, {\em 296},~107072.
+\newblock {\url{https://doi.org/10.1016/j.atmosres.2023.107072}}.
+
+\bibitem[Ohmura(2009)]{Ohmura2009}
+Ohmura, A.
+\newblock Observed decadal variations in surface solar radiation and their
+  causes.
+\newblock {\em J. Geophys. Res. Atmos.} {\bf 2009}, {\em 114}.
+\newblock {\url{https://doi.org/10.1029/2008JD011290}}.
+
+\bibitem[Regier et~al.(2019)Regier, Brice{\~{n}}o, and Boyer]{Regier2019}
+Regier, P.; Brice{\~{n}}o, H.; Boyer, J.N.
+\newblock Analyzing and comparing complex environmental time series using a
+  cumulative sums approach.
+\newblock {\em {MethodsX}} {\bf 2019}, {\em 6},~779--787.
+\newblock {\url{https://doi.org/10.1016/j.mex.2019.03.014}}.
+
+\bibitem[Siomos et~al.(2020)Siomos, Fountoulakis, Natsis, Drosoglou, and
+  Bais]{Siomos2020}
+Siomos, N.; Fountoulakis, I.; Natsis, A.; Drosoglou, T.; Bais, A.
+\newblock Automated Aerosol Classification from Spectral {UV} Measurements
+  Using Machine Learning Clustering.
+\newblock {\em Remote Sens.} {\bf 2020}, {\em 12},~965.
+\newblock {\url{https://doi.org/10.3390/rs12060965}}.
+
+\bibitem[Wang et~al.(2021)Wang, Zhang, Sanchez‐Lorenzo, Tanaka, Trentmann,
+  Yuan, and Wild]{Wang2021}
+Wang, Y.; Zhang, J.; Sanchez‐Lorenzo, A.; Tanaka, K.; Trentmann, J.; Yuan,
+  W.; Wild, M.
+\newblock Hourly Surface Observations Suggest Stronger Solar Dimming and
+  Brightening at Sunrise and Sunset Over China.
+\newblock {\em Geophys. Res. Lett.} {\bf 2021}, {\em 48}, e2020GL091422.
+\newblock {\url{https://doi.org/10.1029/2020GL091422}}.
+
+\end{thebibliography}
+
+% If authors have biography, please use the format below
+%\section*{Short Biography of Authors}
+%\bio
+%{\raisebox{-0.35cm}{\includegraphics[width=3.5cm,height=5.3cm,clip,keepaspectratio]{Definitions/author1.pdf}}}
+%{\textbf{Firstname Lastname} Biography of first author}
+%
+%\bio
+%{\raisebox{-0.35cm}{\includegraphics[width=3.5cm,height=5.3cm,clip,keepaspectratio]{Definitions/author2.jpg}}}
+%{\textbf{Firstname Lastname} Biography of second author}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% for journal Sci
+%\reviewreports{\\
+%Reviewer 1 comments and authors’ response\\
+%Reviewer 2 comments and authors’ response\\
+%Reviewer 3 comments and authors’ response
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\PublishersNote{}
+\end{adjustwidth}
+
+
+\end{document}
