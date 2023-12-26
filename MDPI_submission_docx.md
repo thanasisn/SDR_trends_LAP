@@ -27,7 +27,7 @@ among other factors, have been analyzed with models (Li et al. 2016;
 Samset et al. 2018), showing the existence of feedback mechanisms
 between the two. Similar findings have been shown from the analysis of
 observations at other locations (Schwarz et al. 2020; Ohvril et al.
-2009; Zerefos et al. 2009; Xia et al. 2007) \[and references therein\].
+2009; Zerefos et al. 2009; Xia et al. 2007) \[and references therein\].\
 In the Mediterranean region aerosols have been recognized as an
 important factor affecting the penetration of solar radiation at the
 surface (Fountoulakis et al. 2016; Siomos et al. 2018; Gkikas et al.
@@ -56,52 +56,52 @@ operating continuously at the Laboratory of Atmospheric Physics of the
 Aristotle University of Thessaloniki ($40^{\circ}\, 38\prime\,$N,
 $22^{\circ}\, 57\prime\,$E, $80\,$m a.s.l.). Here, we used data for the
 period from 1993-04-13 to 2023-04-13. The monitoring site was located
-near the city center, thus we expect that measurements are affected by
+near the city center, thus we expect that measurements were affected by
 the urban environment, mainly by aerosols. During the study period, the
-pyranometer has been independently calibrated three times at the
+pyranometer was independently calibrated three times at the
 Meteorologisches Observatorium Lindenberg, DWD, verifying that the
-stability of the instrument's sensitivity is better than $0.7\%$
+stability of the instrument's sensitivity was better than $0.7\%$
 relative to the initial calibration by the manufacturer. Along with SDR,
-the direct beam radiation (DNI) is also measured with a collocated Kipp
+the direct beam radiation (DNI) was also measured with a collocated Kipp
 & Zonen CHP-1 pyrheliometer since 2016-04-01. The DNI data were used as
 auxiliary data to support the selection of appropriate thresholds in the
-clear-sky identification algorithm (CSid), which is discussed in sect. .
-It is noted that the limited dataset of DNI was not used for the
-identification of clear sky cases in the entire SDR series to avoid any
-selection bias due to unequal length of the two datasets. There are four
-distinct steps in the creation of the dataset analyzed here: a) the
-acquisition of radiation measurements from the sensors, b) the data
-quality check, c) the identification of "clear sky" conditions from the
-SDR data, and d) the aggregation of data and trend analysis.
+clear-sky identification algorithm (CSid), which is discussed in Section
+. It is noted that the limited dataset of DNI was not used for the
+identification of clear-sky cases in the entire SDR series to avoid any
+selection bias due to the unequal length of the two datasets. There are
+four distinct steps in the creation of the dataset analyzed here:
+(a) the acquisition of radiation measurements from the sensors, (b) the
+data quality check, (c) the identification of "clear sky" conditions
+from the SDR data, and (d) the aggregation of data and trend analysis.
 
 For the acquisition of radiometric data, the signal of the pyranometer
-is sampled at a rate of $1\,\text{Hz}$. The mean and the standard
-deviation of these samples are calculated and recorded every minute. The
-measurements are corrected for the zero offset ("dark signal" in volts),
-which is calculated by averaging all measurements recorded for a period
-of $3\,\text{h}$, before (morning) or after (evening) the Sun reaches an
-elevation angle of $- 10^{\circ}$. The signal is converted to irradiance
-using a ramped value of the instrument's sensitivity between subsequent
-calibrations.
+was sampled at a rate of $1\,\text{Hz}$. The mean and the standard
+deviation of these samples were calculated and recorded every minute.
+The measurements were corrected for the zero offset ("dark signal" in
+volts), which was calculated by averaging all measurements recorded for
+a period of $3\,\text{h}$, before (morning) or after (evening) the Sun
+reaches an elevation angle of $- 10^{\circ}$. The signal was converted
+to irradiance using a ramped value of the instrument's sensitivity
+between subsequent calibrations.
 
 A manual screening was performed, to remove inconsistent and erroneous
 recordings that can occur stochastically or systematically, during the
-continuous operation of the instruments. The manual screening is aided
+continuous operation of the instruments. The manual screening was aided
 by a radiation data quality assurance procedure, adjusted for the site,
-which is based on the methods of Long and Shi (Long and Shi 2006, 2008).
-Thus, problematic recordings have been excluded from further processing.
-Although it is impossible to detect all false data, the large number of
-available data, and the aggregation scheme we used, ensures the quality
-of the radiation measurements used in this study.
+which was based on the methods of Long and Shi (Long and Shi 2006,
+2008). Thus, problematic recordings have been excluded from further
+processing. Although it is impossible to detect all false data, the
+large number of available data, and the aggregation scheme we used,
+ensures the quality of the radiation measurements used in this study.
 
 Due to the significant measurement uncertainty when the Sun is near the
 horizon, we have excluded all measurements with solar zenith angle (SZA)
 greater than $85^{\circ}$. Moreover, due to obstructions around the site
-(hills and buildings) which block the direct irradiance, we excluded
-data with azimuth angle in the range $58^{\circ}$ - $120^{\circ}$ and
-with SZA greater than $78^{\circ}$. To make the measurements comparable
+(hills and buildings) that block the direct irradiance, we excluded data
+with azimuth angle in the range $58^{\circ}$--$120^{\circ}$ and with SZA
+greater than $78^{\circ}$. To make the measurements comparable
 throughout the dataset, we adjusted all one-minute data to the mean
-Sun - Earth distance. Subsequently, we adjusted all measurements to the
+Sun--Earth distance. Subsequently, we adjusted all measurements to the
 Total Solar Irradiance (TSI) at $1\,\text{au}$, in order to compensate
 for the Sun's intensity variability, using a time series of satellite
 TSI observations. The TSI data we used are part of the "NOAA Climate

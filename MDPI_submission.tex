@@ -270,14 +270,15 @@ among other factors, have been analyzed with models
 between the two. Similar findings have been shown from the analysis of
 observations at other locations
 \citep{Schwarz2020, Ohvril2009, Zerefos2009, Xia2007} {[}and references
-therein{]}. In the Mediterranean region aerosols have been recognized as
-an important factor affecting the penetration of solar radiation at the
+therein{]}.\\
+In the Mediterranean region aerosols have been recognized as an
+important factor affecting the penetration of solar radiation at the
 surface \citep{Fountoulakis2016, Siomos2018, Gkikas2013, Lozano2021}.
 These studies investigated the long-term trend in aerosol optical depth,
 which has been found to decrease in the last three decades, the
 transport and composition of aerosols, and their radiative effects.
 
-Due to the significant spatial and temporal variability of the trends,
+Due to the significant spatial and temporal variability of the trends
 and the contributing factors, there is a constant need to monitor and
 investigate SDR at different sites in order to estimate the degree of
 variability, and its relation to the local conditions. In this study, we
@@ -298,40 +299,40 @@ operating continuously at the Laboratory of Atmospheric Physics of the
 Aristotle University of Thessaloniki (\(40^\circ\,38'\,\)N,
 \(22^\circ\,57'\,\)E, \(80\,\)m~a.s.l.). Here, we used data for the
 period from 1993-04-13 to 2023-04-13. The monitoring site was located
-near the city center, thus we expect that measurements are affected by
+near the city center, thus we expect that measurements were affected by
 the urban environment, mainly by aerosols. During the study period, the
-pyranometer has been independently calibrated three times at the
+pyranometer was independently calibrated three times at the
 Meteorologisches Observatorium Lindenberg, DWD, verifying that the
-stability of the instrument's sensitivity is better than \(0.7\%\)
+stability of the instrument's sensitivity was better than \(0.7\%\)
 relative to the initial calibration by the manufacturer. Along with SDR,
-the direct beam radiation (DNI) is also measured with a collocated Kipp
+the direct beam radiation (DNI) was also measured with a collocated Kipp
 \& Zonen CHP-1 pyrheliometer since 2016-04-01. The DNI data were used as
 auxiliary data to support the selection of appropriate thresholds in the
-clear-sky identification algorithm (CSid), which is discussed in sect.
+clear-sky identification algorithm (CSid), which is discussed in Section
 \ref{CDIDalgorithm}. It is noted that the limited dataset of DNI was not
-used for the identification of clear sky cases in the entire SDR series
-to avoid any selection bias due to unequal length of the two datasets.
-There are four distinct steps in the creation of the dataset analyzed
-here: a)~the acquisition of radiation measurements from the sensors,
-b)~the data quality check, c)~the identification of ``clear sky''
-conditions from the SDR data, and d)~the aggregation of data and trend
-analysis.
+used for the identification of clear-sky cases in the entire SDR series
+to avoid any selection bias due to the unequal length of the two
+datasets. There are four distinct steps in the creation of the dataset
+analyzed here: (a)~the acquisition of radiation measurements from the
+sensors, (b)~the data quality check, (c)~the identification of ``clear
+sky'' conditions from the SDR data, and (d)~the aggregation of data and
+trend analysis.
 
 For the acquisition of radiometric data, the signal of the pyranometer
-is sampled at a rate of \(1\,\text{Hz}\). The mean and the standard
-deviation of these samples are calculated and recorded every minute. The
-measurements are corrected for the zero offset (``dark signal'' in
-volts), which is calculated by averaging all measurements recorded for a
-period of \(3\,\text{h}\), before (morning) or after (evening) the Sun
-reaches an elevation angle of \(-10^\circ\). The signal is converted to
+was sampled at a rate of \(1\,\text{Hz}\). The mean and the standard
+deviation of these samples were calculated and recorded every minute.
+The measurements were corrected for the zero offset (``dark signal'' in
+volts), which was calculated by averaging all measurements recorded for
+a period of \(3\,\text{h}\), before (morning) or after (evening) the Sun
+reaches an elevation angle of \(-10^\circ\). The signal was converted to
 irradiance using a ramped value of the instrument's sensitivity between
 subsequent calibrations.
 
 A manual screening was performed, to remove inconsistent and erroneous
 recordings that can occur stochastically or systematically, during the
-continuous operation of the instruments. The manual screening is aided
+continuous operation of the instruments. The manual screening was aided
 by a radiation data quality assurance procedure, adjusted for the site,
-which is based on the methods of Long and
+which was based on the methods of Long and
 Shi~\citep{Long2006, Long2008a}. Thus, problematic recordings have been
 excluded from further processing. Although it is impossible to detect
 all false data, the large number of available data, and the aggregation
@@ -341,17 +342,17 @@ in this study.
 Due to the significant measurement uncertainty when the Sun is near the
 horizon, we have excluded all measurements with solar zenith angle (SZA)
 greater than \(85^\circ\). Moreover, due to obstructions around the site
-(hills and buildings) which block the direct irradiance, we excluded
-data with azimuth angle in the range \(58^{\circ}\) - \(120^{\circ}\)
-and with SZA greater than \(78^{\circ}\). To make the measurements
-comparable throughout the dataset, we adjusted all one-minute data to
-the mean Sun - Earth distance. Subsequently, we adjusted all
-measurements to the Total Solar Irradiance (TSI) at \(1\,\text{au}\), in
-order to compensate for the Sun's intensity variability, using a time
-series of satellite TSI observations. The TSI data we used are part of
-the ``NOAA Climate Data Record of Total Solar Irradiance'' dataset
-\citep{Coddington2005}. The initial daily values of this dataset were
-interpolated to match the time step of our measurements.
+(hills and buildings) that block the direct irradiance, we excluded data
+with azimuth angle in the range \(58^{\circ}\)--\(120^{\circ}\) and with
+SZA greater than \(78^{\circ}\). To make the measurements comparable
+throughout the dataset, we adjusted all one-minute data to the mean
+Sun--Earth distance. Subsequently, we adjusted all measurements to the
+Total Solar Irradiance (TSI) at \(1\,\text{au}\), in order to compensate
+for the Sun's intensity variability, using a time series of satellite
+TSI observations. The TSI data we used are part of the ``NOAA Climate
+Data Record of Total Solar Irradiance'' dataset \citep{Coddington2005}.
+The initial daily values of this dataset were interpolated to match the
+time step of our measurements.
 
 In order to estimate the effect of the sky conditions on the long term
 variability of SDR, we created three datasets by characterizing each
