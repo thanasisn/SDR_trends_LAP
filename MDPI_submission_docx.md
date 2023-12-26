@@ -1,24 +1,24 @@
 # 1 Introduction
 
 The shortwave downward solar irradiance (SDR) at Earth's surface plays a
-significant role, on its climate. Changes of the SDR can be related to
-changes on Earth's energy budget, the mechanisms of climate change, and
+significant role on its climate. Changes in the SDR can be related to
+changes in Earth's energy budget, the mechanisms of climate change, and
 water and carbon cycles (Wild 2009). It can also affect solar and
-agricultural production, and all living organisms. Studies of SDR
-variability have identified some distinct SDR trends on different
-regions of the world on different time periods. The term 'brightening'
+agricultural production and all living organisms. Studies of SDR
+variability have identified some distinct SDR trends in different
+regions of the world in different time periods. The term 'brightening'
 is generally used to describe periods of positive SDR trend, and
-'dimming' for negative trend (Wild 2009). There are many cases in the
-long term records of irradiance, showing a systematic change in the
-magnitude of the trend, occurring roughly in the last decades of the
-20th century. On multiple stations in China, a dimming period was
+'dimming' for periods of negative trend (Wild 2009). There are many
+cases in the long-term records of irradiance showing a systematic change
+in the magnitude of the trend, occurring roughly in the last decades of
+the 20th century. At multiple stations in China, a dimming period was
 reported until about 2000, followed by a brightening period (Yang et al.
 2021). A similar pattern was identified, with a breaking point around
 1980, for stations in Central Europe (Wild et al. 2021) and Brazil
-(Yamasoe et al. 2021). On global scale, an Artificial Intelligence aided
-spatial analysis on continental level with data from multiple stations
-reached similar conclusions for these regions and for the global trend
-(Yuan, Leirvik, and Wild 2021).
+(Yamasoe et al. 2021). On global scale, an artificial intelligence aided
+spatial analysis on the continental level with data from multiple
+stations reached similar conclusions for these regions and for the
+global trend (Yuan, Leirvik, and Wild 2021).
 
 There is a consensus among researchers that the major factor affecting
 the variability of SDR attenuation is the interactions of solar
@@ -27,36 +27,36 @@ among other factors, have been analyzed with models (Li et al. 2016;
 Samset et al. 2018), showing the existence of feedback mechanisms
 between the two. Similar findings have been shown from the analysis of
 observations at other locations (Schwarz et al. 2020; Ohvril et al.
-2009; Zerefos et al. 2009; Xia et al. 2007 and references therein). In
-the Mediterranean region aerosols have been recognized as an important
-factor affecting the penetration of solar radiation to the surface
-(Fountoulakis et al. 2016; Siomos et al. 2018; Gkikas et al. 2013;
-Lozano et al. 2021). These studies investigated the long-term trend in
-aerosol optical depth, which has been found to decrease in the last
-three decades, the transport and composition of aerosols, and their
+2009; Zerefos et al. 2009; Xia et al. 2007) \[and references therein\].
+In the Mediterranean region aerosols have been recognized as an
+important factor affecting the penetration of solar radiation at the
+surface (Fountoulakis et al. 2016; Siomos et al. 2018; Gkikas et al.
+2013; Lozano et al. 2021). These studies investigated the long-term
+trend in aerosol optical depth, which has been found to decrease in the
+last three decades, the transport and composition of aerosols, and their
 radiative effects.
 
-Due to the significant spatial and temporal variability of the trends,
+Due to the significant spatial and temporal variability of the trends
 and the contributing factors, there is a constant need to monitor and
-investigate SDR in different sites in order to estimate the degree of
+investigate SDR at different sites in order to estimate the degree of
 variability, and its relation to the local conditions. In this study, we
 examine the trends of SDR, using ground-based measurements at
-Thessaloniki, Greece, for the period 1993 to 2023. We re-evaluated and
-extended the dataset used by Bais et al. (2013), we applied a different
-algorithm for the identification of clear-/cloud-sky instances (Reno and
-Hansen 2016; Reno, Hansen, and Stein 2012a), and we derived the SDR
-trends for the period of study, under different sky conditions (all-sky,
-clear-sky and cloud-sky). Finally, we investigated the dependence of the
-trends on solar zenith angle and season.
+Thessaloniki, Greece, for the period from 1993 to 2023. We re-evaluated
+and extended the dataset used by Bais et al. (2013), we applied a
+different algorithm for the identification of clear-/cloud-sky instances
+(Reno and Hansen 2016; Reno, Hansen, and Stein 2012a), and we derived
+the SDR trends for the period of study, under different sky conditions
+(all-sky, clear-sky, and cloudy-sky). Finally, we investigated the
+dependence of the trends on solar zenith angle and season.
 
-# 2 Data and methodology
+# 2 Data and Methodology
 
 The SDR data were measured with a Kipp & Zonen CM-21 pyranometer
 operating continuously at the Laboratory of Atmospheric Physics of the
 Aristotle University of Thessaloniki ($40^{\circ}\, 38\prime\,$N,
-$22^{\circ}\, 57\prime\,$E, $80\,$m a.s.l.). Here we use data for the
-period from 1993-04-13 to 2023-04-13. The monitoring site is located
-near the city center thus we expect that measurements are affected by
+$22^{\circ}\, 57\prime\,$E, $80\,$m a.s.l.). Here, we used data for the
+period from 1993-04-13 to 2023-04-13. The monitoring site was located
+near the city center, thus we expect that measurements are affected by
 the urban environment, mainly by aerosols. During the study period, the
 pyranometer has been independently calibrated three times at the
 Meteorologisches Observatorium Lindenberg, DWD, verifying that the
