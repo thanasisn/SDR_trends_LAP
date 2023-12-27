@@ -1288,13 +1288,13 @@ for (avar in vars) {
             plot.new()
             text(x = 0.05, y = 0.5,
                  adj  = c(0.5,0.5),
-                 srt  = 90, "Automn", cex = 0.9, font = 2)
+                 srt  = 90, "Autumn", cex = 0.9, font = 2)
         }
         if (i == 25) {
             plot.new()
             text(x = 0.25, y = 0.5,
                  adj  = c(0.5,0.5),
-                 srt  = 90, "Automn", cex = 0.9, font = 2)
+                 srt  = 90, "Autumn", cex = 0.9, font = 2)
         }
 
 
@@ -1643,13 +1643,13 @@ write_dat(pprint,
             plot.new()
             text(x = 0.05, y = 0.5,
                  adj  = c(0.5,0.5),
-                 srt  = 90, "Automn", cex = 0.9, font = 2)
+                 srt  = 90, "Autumn", cex = 0.9, font = 2)
         }
         if (i == 25) {
             plot.new()
             text(x = 0.25, y = 0.5,
                  adj  = c(0.5,0.5),
-                 srt  = 90, "Automn", cex = 0.9, font = 2)
+                 srt  = 90, "Autumn", cex = 0.9, font = 2)
         }
 
 
