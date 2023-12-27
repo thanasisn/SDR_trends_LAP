@@ -413,8 +413,6 @@ database    <- c(  "ALL_1_daily_DESEAS",
                  "CLEAR_1_daily_DESEAS",
                  "CLOUD_1_daily_DESEAS")
 
-
-
 #+ CumulativeDailyCuSum, echo=F, include=T, results="asis"
 for (adb in database) {
     DB  <- get(adb)
@@ -695,7 +693,7 @@ for (adb in database) {
                         translate(avar) ), cex.main = 1)
         } else {
             legend("bottomleft", 0, translate(sub("_.*","",adb)),
-                   cex   = 1.1,
+                   cex   = 2,
                    bty   = "n",
                    xjust = 0.5,      # 0.5 means center adjusted
                    yjust = 0.5,      # 0.5 means center adjusted
@@ -974,15 +972,15 @@ for (adb in database) {
             ## tag the corner
             ## translate(sub("_.*","",adb))
             legend("bottomleft", 0, paste0("(",letters[lec],")"),
-                   cex   = 1.1,
+                   # cex   = 1.1,
+                   cex   = 2,
                    bty   = "n",
                    xjust = 0.5,      # 0.5 means center adjusted
                    yjust = 0.5,      # 0.5 means center adjusted
                    x.intersp = -0.5, # adjust character interspacing as you like to effect box width
                    y.intersp =  0.2, # adjust character interspacing to effect box height
                    adj = c(0, 0.5))  # adjust string position (default values used here)
-            # cex = 1.5,      # change cex if you like (not used here)
-            # text.font = 2)  # bold the text if you like (not used here)
+            # text.font = 2  # bold the text if you like (not used here)
             par("mar" = c(3,4,2,1))
         }
 
@@ -1204,7 +1202,7 @@ for (adb in database) {
             ## tag plot with type
             ## translate(sub("_.*","",adb))
             legend("bottomleft", 0, paste0("(",letters[lec],")"),
-                   cex   = 1.1,
+                   cex   = 2,
                    bty   = "n",
                    xjust = 0.5,      # 0.5 means center adjusted
                    yjust = 0.5,      # 0.5 means center adjusted

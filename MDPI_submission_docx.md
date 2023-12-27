@@ -27,7 +27,7 @@ among other factors, have been analyzed with models (Li et al. 2016;
 Samset et al. 2018), showing the existence of feedback mechanisms
 between the two. Similar findings have been shown from the analysis of
 observations at other locations (Schwarz et al. 2020; Ohvril et al.
-2009; Zerefos et al. 2009; Xia et al. 2007) \[and references therein\].\
+2009; Zerefos et al. 2009; Xia et al. 2007) \[and references therein\].
 In the Mediterranean region aerosols have been recognized as an
 important factor affecting the penetration of solar radiation at the
 surface (Fountoulakis et al. 2016; Siomos et al. 2018; Gkikas et al.
@@ -44,8 +44,8 @@ examine the trends of SDR, using ground-based measurements at
 Thessaloniki, Greece, for the period from 1993 to 2023. We re-evaluated
 and extended the dataset used by Bais et al. (2013), we applied a
 different algorithm for the identification of clear-/cloud-sky instances
-(Reno and Hansen 2016; Reno, Hansen, and Stein 2012a), and we derived
-the SDR trends for the period of study, under different sky conditions
+(Reno and Hansen 2016; Reno, Hansen, and Stein 2012), and we derived the
+SDR trends for the period of study, under different sky conditions
 (all-sky, clear-sky, and cloudy-sky). Finally, we investigated the
 dependence of the trends on solar zenith angle and season.
 
@@ -162,7 +162,7 @@ optimization, eight simple clear sky radiation models were tested
 (namely, Daneshyar-Paltridge-Proctor, Kasten-Czeplak, Haurwitz,
 Berger-Duffie, Adnot-Bourges-Campana-Gicquel, Robledo-Soler, Kasten and
 Ineichen-Perez), with a wide range of factors. These models are
-described in more detail by Reno, Hansen, and Stein (2012b) and are
+described in more detail by Reno, Hansen, and Stein (2012) and are
 evaluated by Reno and Hansen (2016). We found, that Haurwitz's model,
 adjusted with the factor $a = 0.965$ yields one of the lowest root mean
 squared errors (RMSE), while the procedure manages to characterize
@@ -582,13 +582,10 @@ Reno, Matthew J., and Clifford W. Hansen. 2016. "Identification of
 Periods of Clear Sky Irradiance in Time Series of GHI Measurements."
 *Renewable Energy* 90: 520--31. <https://doi.org/gq3sbg>.
 
-Reno, Matthew J., Clifford W. Hansen, and Joshua S. Stein. 2012b.
-"Global Horizontal Irradiance Clear Sky Models: Implementation and
-Analysis." SAND2012-2389, 1039404. <https://doi.org/gq5npv>.
-
----------. 2012a. "Global Horizontal Irradiance Clear Sky Models:
-Implementation and Analysis." *SANDIA REPORT SAND2012-2389 Unlimited
-Release Printed March 2012*.
+Reno, Matthew J., Clifford W. Hansen, and Joshua S. Stein. 2012. "Global
+Horizontal Irradiance Clear Sky Models: Implementation and Analysis."
+SAND2012-2389, 1039404. Albuquerque, New Mexico: Sandia National
+Laboratories. <https://doi.org/10.2172/1039404>.
 
 Samset, B. H., M. Sand, C. J. Smith, S. E. Bauer, P. M. Forster, J. S.
 Fuglestvedt, S. Osprey, and C.‐F. Schleussner. 2018. "Climate Impacts
