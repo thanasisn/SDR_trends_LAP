@@ -28,7 +28,7 @@ Samset et al. 2018), showing the existence of feedback mechanisms
 between the two. Similar findings have been shown from the analysis of
 observations at other locations (Schwarz et al. 2020; Ohvril et al.
 2009; Zerefos et al. 2009; Xia et al. 2007) \[and references therein\].
-In the Mediterranean region aerosols have been recognized as an
+In the Mediterranean region, aerosols have been recognized as an
 important factor affecting the penetration of solar radiation at the
 surface (Fountoulakis et al. 2016; Siomos et al. 2018; Gkikas et al.
 2013; Lozano et al. 2021). These studies investigated the long-term
@@ -55,7 +55,7 @@ The SDR data were measured with a Kipp & Zonen CM-21 pyranometer
 operating continuously at the Laboratory of Atmospheric Physics of the
 Aristotle University of Thessaloniki ($40^{\circ}\, 38\prime\,$N,
 $22^{\circ}\, 57\prime\,$E, $80\,$m a.s.l.). Here, we used data for the
-period from 13 April 1993 to 13 April 2023. The monitoring site was
+period from 13 April 1993 to 13 April 2023. The monitoring site was
 located near the city center, thus we expect that measurements were
 affected by the urban environment, mainly by aerosols. During the study
 period, the pyranometer was independently calibrated three times at the
@@ -109,14 +109,14 @@ Data Record of Total Solar Irradiance' dataset (Coddington et al. 2005).
 The initial daily values of this dataset were interpolated to match the
 time step of our measurements.
 
-In order to estimate the effect of the sky conditions on the long term
+In order to estimate the effect of the sky conditions on the long-term
 variability of SDR, we created three datasets by characterizing each
 one-minute measurement with a corresponding sky-condition flag (i.e.,
-all-sky, clear-sky, and cloudy-sky). To identify the clear cases we used
-the method proposed by Reno and Hansen (2016), which requires the
+all-sky, clear-sky, and cloudy-sky). To identify the clear cases, we
+used the method proposed by Reno and Hansen (2016), which requires the
 definition of some site specific parameters. These parameters were
-determined by an iterative process, as the original authors proposed and
-are discussed in the next section.
+determined by an iterative process, as the original authors proposed,
+and are discussed in the next section.
 
 We note that all methods have some subjectivity in the definition of
 clear or cloudy sky cases. As a result, the details of the definition
@@ -124,50 +124,50 @@ are site specific, and they rely on a combination of thresholds and
 comparisons with ideal radiation models and statistical analysis of
 different signal metrics. The CSid algorithm was calibrated with the
 main focus to identify the presence of clouds. Despite the fine-tuning
-of the procedure, in a few marginal cases false positive or false
+of the procedure, in a few marginal cases, false positive or false
 negative results were identified by manual inspection. However, due to
 their small number, they did not affect the final results of the study.
 For completeness, we provide below a brief overview of the CSid
-algorithm, along with the site specific thresholds.
+algorithm, along with the site-specific thresholds.
 
-## 2.1 The clear sky identification algorithm
+## 2.1 The Clear Sky Identification Algorithm
 
-To calculate the reference clear-sky $\text{SDR}_{\text{CSref}}$ we used
-the $\text{SDR}_{\text{Haurwitz}}$ derived by the radiation model of
-Haurwitz (1945) (Eq. ), adjusted for our site:
+To calculate the reference clear-sky $\text{SDR}_{\text{CSref}}$, we
+used the $\text{SDR}_{\text{Haurwitz}}$ derived by the radiation model
+of Haurwitz (1945) (Equation ()), adjusted for our site:
 
 $$\text{SDR}_{\text{Haurwitz}} = 1098 \times \cos(\theta) \times \exp\left( \frac{- 0.059}{\cos(\theta)} \right)$$
 
 where $\theta$ is the SZA.
 
-The adjustment was made with a factor $a$ (Eq. ), which was estimated
-through an iterative optimization process, as described by Long and
-Ackerman (2000) and Reno and Hansen (2016). The target of the
-optimization was the minimization of a function $f(a)$ (Eq. ) and was
-accomplished with the algorithmic function "optimise", which is an
+The adjustment was made with a factor $a$ (Equation ()), which was
+estimated through an iterative optimization process, as described by
+Long and Ackerman (2000) and Reno and Hansen (2016). The target of the
+optimization was the minimization of a function $f(a)$ (Equation ()) and
+was accomplished with the algorithmic function 'optimise', which is an
 implementation based on the work of Brent (1973), from the library
-"stats" of the R programming language (R Core Team 2023).
+'stats' of the R programming language (R Core Team 2023).
 
 $$f(a) = \frac{1}{n}\sum_{i = 1}^{n}\left( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i} \right)^{2}$$
 
-where: $n$ is the total number of daylight data,
+where $n$ is the total number of daylight data,
 $\text{SDR}_{\text{CSid},i}$ are the data identified as clear-sky by
 CSid, $a$ is a site-specific adjustment factor, and
 $\text{SDR}_{\text{testCSref},i}$ is the SDR derived by any of the
 tested clear-sky radiation models.
 
-The optimization and the selection of the clear sky reference model, was
-performed on SDR observations for the period 2016 - 2021. During the
-optimization, eight simple clear sky radiation models were tested
-(namely, Daneshyar-Paltridge-Proctor, Kasten-Czeplak, Haurwitz,
-Berger-Duffie, Adnot-Bourges-Campana-Gicquel, Robledo-Soler, Kasten and
-Ineichen-Perez), with a wide range of factors. These models are
-described in more detail by Reno, Hansen, and Stein (2012) and are
-evaluated by Reno and Hansen (2016). We found, that Haurwitz's model,
-adjusted with the factor $a = 0.965$ yields one of the lowest root mean
-squared errors (RMSE), while the procedure manages to characterize
-successfully the majority of the data. Thus, our clear sky reference is
-derived by the Eq. :
+The optimization and the selection of the clear-sky reference model was
+performed on SDR observations for the period 2016--2021. During the
+optimization, eight simple clear-sky radiation models were tested
+(namely, Daneshyar--Paltridge--Proctor, Kasten--Czeplak, Haurwitz,
+Berger--Duffie, Adnot--Bourges--Campana--Gicquel, Robledo--Soler,
+Kasten, and Ineichen--Perez), with a wide range of factors. These models
+are described in more detail by Reno, Hansen, and Stein (2012) and are
+evaluated by Reno and Hansen (2016). We found that Haurwitz's model,
+adjusted with the factor $a = 0.965$, yields one of the lowest root mean
+squared errors (RMSE), and the procedure manages to successfully
+characterize the majority of the data. Thus, our clear sky reference is
+derived by Equation ():
 
 $$\text{SDR}_{\text{CSref}} = a \times \text{SDR}_{\text{Haurwitz}} = 0.965 \times 1098 \times \cos(\theta) \times \exp\left( \frac{- 0.057}{\cos(\theta)} \right)$$
 
@@ -199,7 +199,7 @@ $$1 \times M_{\text{CSref},i} - 75\, Wm^{- 2} < M_{i} < 1 \times M_{\text{CSref}
 -   
 
 c)  Length $L_{i}$ of the sequential line segments, connecting the
-    points of the $11$ SDR values (Eq. ).
+    points of the $11$ SDR values (Equation ).
 
 $$L_{i} = \sum_{i = 1}^{n - 1}\sqrt{\left( \text{SDR}_{i + 1} - \text{SDR}_{i} \right)^{2} + \left( t_{i + 1} - t_{i} \right)^{2}}$$
 

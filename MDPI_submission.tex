@@ -270,12 +270,13 @@ among other factors, have been analyzed with models
 between the two. Similar findings have been shown from the analysis of
 observations at other locations
 \citep{Schwarz2020, Ohvril2009, Zerefos2009, Xia2007} {[}and references
-therein{]}. In the Mediterranean region aerosols have been recognized as
-an important factor affecting the penetration of solar radiation at the
-surface \citep{Fountoulakis2016, Siomos2018, Gkikas2013, Lozano2021}.
-These studies investigated the long-term trend in aerosol optical depth,
-which has been found to decrease in the last three decades, the
-transport and composition of aerosols, and their radiative effects.
+therein{]}. In the Mediterranean region, aerosols have been recognized
+as an important factor affecting the penetration of solar radiation at
+the surface
+\citep{Fountoulakis2016, Siomos2018, Gkikas2013, Lozano2021}. These
+studies investigated the long-term trend in aerosol optical depth, which
+has been found to decrease in the last three decades, the transport and
+composition of aerosols, and their radiative effects.
 
 Due to the significant spatial and temporal variability of the trends
 and the contributing factors, there is a constant need to monitor and
@@ -297,7 +298,7 @@ The SDR data were measured with a Kipp \& Zonen CM-21 pyranometer
 operating continuously at the Laboratory of Atmospheric Physics of the
 Aristotle University of Thessaloniki (\(40^\circ\,38'\,\)N,
 \(22^\circ\,57'\,\)E, \(80\,\)m~a.s.l.). Here, we used data for the
-period from 13 April 1993 to 13 April 2023. The monitoring site was
+period from 13~April 1993 to 13~April 2023. The monitoring site was
 located near the city center, thus we expect that measurements were
 affected by the urban environment, mainly by aerosols. During the study
 period, the pyranometer was independently calibrated three times at the
@@ -353,14 +354,14 @@ Data Record of Total Solar Irradiance' dataset \citep{Coddington2005}.
 The initial daily values of this dataset were interpolated to match the
 time step of our measurements.
 
-In order to estimate the effect of the sky conditions on the long term
+In order to estimate the effect of the sky conditions on the long-term
 variability of SDR, we created three datasets by characterizing each
 one-minute measurement with a corresponding sky-condition flag (i.e.,
-all-sky, clear-sky, and cloudy-sky). To identify the clear cases we used
-the method proposed by \citet{Reno2016}, which requires the definition
-of some site specific parameters. These parameters were determined by an
-iterative process, as the original authors proposed and are discussed in
-the next section.
+all-sky, clear-sky, and cloudy-sky). To identify the clear cases, we
+used the method proposed by \citet{Reno2016}, which requires the
+definition of some site specific parameters. These parameters were
+determined by an iterative process, as the original authors proposed,
+and are discussed in the next section.
 
 We note that all methods have some subjectivity in the definition of
 clear or cloudy sky cases. As a result, the details of the definition
@@ -368,50 +369,50 @@ are site specific, and they rely on a combination of thresholds and
 comparisons with ideal radiation models and statistical analysis of
 different signal metrics. The CSid algorithm was calibrated with the
 main focus to identify the presence of clouds. Despite the fine-tuning
-of the procedure, in a few marginal cases false positive or false
+of the procedure, in a few marginal cases, false positive or false
 negative results were identified by manual inspection. However, due to
 their small number, they did not affect the final results of the study.
 For completeness, we provide below a brief overview of the CSid
-algorithm, along with the site specific thresholds.
+algorithm, along with the site-specific thresholds.
 
 \hypertarget{CDIDalgorithm}{%
-\subsection{The clear sky identification
-algorithm}\label{CDIDalgorithm}}
+\subsection{The Clear Sky Identification
+Algorithm}\label{CDIDalgorithm}}
 
-To calculate the reference clear-sky \(\text{SDR}_\text{CSref}\) we used
-the \(\text{SDR}_\text{Haurwitz}\) derived by the radiation model of
-\citet{Haurwitz1945} (Eq.~\ref{eq:hau}), adjusted for our site:
-\begin{equation}
+To calculate the reference clear-sky \(\text{SDR}_\text{CSref}\), we
+used the \(\text{SDR}_\text{Haurwitz}\) derived by the radiation model
+of \citet{Haurwitz1945} (Equation~(\ref{eq:hau})), adjusted for our
+site: \begin{equation}
 \text{SDR}_\text{Haurwitz} = 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.059}{\cos(\theta)} \right) \label{eq:hau}
 \end{equation} where \(\theta\) is the SZA.
 
-The adjustment was made with a factor \(a\) (Eq.~\ref{eq:ahau}), which
-was estimated through an iterative optimization process, as described by
-\citet{Long2000} and \citet{Reno2016}. The target of the optimization
-was the minimization of a function \(f(a)\) (Eq.~\ref{eq:minf}) and was
-accomplished with the algorithmic function ``optimise'', which is an
-implementation based on the work of \citet{Brent1973}, from the library
-``stats'' of the R programming language \citep{RCT2023}.
-\begin{equation}
+The adjustment was made with a factor \(a\) (Equation~(\ref{eq:ahau})),
+which was estimated through an iterative optimization process, as
+described by \citet{Long2000} and \citet{Reno2016}. The target of the
+optimization was the minimization of a function \(f(a)\)
+(Equation~(\ref{eq:minf})) and was accomplished with the algorithmic
+function `optimise', which is an implementation based on the work of
+\citet{Brent1973}, from the library `stats' of the R programming
+language \citep{RCT2023}. \begin{equation}
 f(a) = \frac{1}{n}\sum_{i=1}^{n} ( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i} )^2 \label{eq:minf}
-\end{equation} where: \(n\) is the total number of daylight data,
+\end{equation} where \(n\) is the total number of daylight data,
 \(\text{SDR}_{\text{CSid},i}\) are the data identified as clear-sky by
 CSid, \(a\) is a site-specific adjustment factor, and
 \(\text{SDR}_{\text{testCSref},i}\) is the SDR derived by any of the
 tested clear-sky radiation models.
 
-The optimization and the selection of the clear sky reference model, was
-performed on SDR observations for the period 2016 - 2021. During the
-optimization, eight simple clear sky radiation models were tested
-(namely, Daneshyar-Paltridge-Proctor, Kasten-Czeplak, Haurwitz,
-Berger-Duffie, Adnot-Bourges-Campana-Gicquel, Robledo-Soler, Kasten and
-Ineichen-Perez), with a wide range of factors. These models are
-described in more detail by \citet{Reno2012} and are evaluated by
-\citet{Reno2016}. We found, that Haurwitz's model, adjusted with the
-factor \(a = 0.965\) yields one of the lowest root mean squared errors
-(RMSE), while the procedure manages to characterize successfully the
-majority of the data. Thus, our clear sky reference is derived by the
-Eq.~\ref{eq:ahau}: \begin{equation}
+The optimization and the selection of the clear-sky reference model was
+performed on SDR observations for the period 2016--2021. During the
+optimization, eight simple clear-sky radiation models were tested
+(namely, Daneshyar--Paltridge--Proctor, Kasten--Czeplak, Haurwitz,
+Berger--Duffie, Adnot--Bourges--Campana--Gicquel, Robledo--Soler,
+Kasten, and Ineichen--Perez), with a wide range of factors. These models
+are described in more detail by \citet{Reno2012} and are evaluated by
+\citet{Reno2016}. We found that Haurwitz's model, adjusted with the
+factor \(a = 0.965\), yields one of the lowest root mean squared errors
+(RMSE), and the procedure manages to successfully characterize the
+majority of the data. Thus, our clear sky reference is derived by
+Equation~(\ref{eq:ahau}): \begin{equation}
 \text{SDR}_\text{CSref} = a \times \text{SDR}_\text{Haurwitz} = 0.965 \times 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.057}{\cos(\theta)} \right) \label{eq:ahau}
 \end{equation}
 
@@ -451,7 +452,7 @@ respective parameter should fall in order to raise the clear-sky flag:
   \end{equation}
 \item
   Length \(L_i\) of the sequential line segments, connecting the points
-  of the \(11\) SDR values (Eq. \ref{eq:VILeq}). \begin{equation}
+  of the \(11\) SDR values (Equation \ref{eq:VILeq}). \begin{equation}
   L_i = \sum_{i=1}^{n-1}\sqrt{\left ( \text{SDR}_{i+1} - \text{SDR}_{i}\right )^2 + \left ( t_{i+1} - t_i \right )^2}
   \label{eq:VILeq}
   \end{equation} \begin{equation}
