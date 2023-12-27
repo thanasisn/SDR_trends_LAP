@@ -180,7 +180,7 @@ characterization was assigned to the central datum of the window. Each
 parameter was calculated from the observations in comparison to the
 reference clear-sky model. The allowable range of variation is defined
 by the model-derived value of the parameter multiplied by a factor plus
-an offset. The factors and the offsets were determined empirically, by
+an offset. The factors and the offsets were determined empirically by
 manually inspecting each filter's performance on selected days and
 adjusting them accordingly during an iterative process. The criteria are
 listed below, together with the range of values within which the
@@ -205,11 +205,11 @@ $$L_{i} = \sum_{i = 1}^{n - 1}\sqrt{\left( \text{SDR}_{i + 1} - \text{SDR}_{i} \
 
 $$1 \times L_{\text{CSref},i} - 5 < L_{i} < 1.3 \times L_{\text{CSref},i} + 13$$
 
--   where: $t_{i}$ is the time stamp of each SDR measurement.
+-   where $t_{i}$ is the time stamp of each SDR measurement.
 
 (d) Standard deviation $\sigma_{i}$ of the slope ($s_{i}$) between the
     $11$ sequential points, normalized by the mean
-    ${\overline{\text{SDR}}}_{i}$ (Eq. ).
+    ${\overline{\text{SDR}}}_{i}$ (Equation ()):
 
 $$\begin{matrix}
 \sigma_{i} = \frac{\sqrt{\frac{1}{n - 1}\sum_{i = 1}^{n - 1}\left( s_{i} - \bar{s} \right)^{2}}}{{\overline{\text{SDR}}}_{i}} \\
@@ -217,7 +217,7 @@ s_{i} = \frac{\text{SDR}_{i + 1} - \text{SDR}_{i}}{t_{i + 1} - t_{i}},\mspace{6m
 \end{matrix}$$
 
 -   For this criterion, $\sigma_{i}$ should be below a certain threshold
-    (Eq. ):
+    (Equation ()):
 
 $$\sigma_{i} < 1.1 \times 10^{- 4}$$
 
@@ -225,7 +225,7 @@ $$\sigma_{i} < 1.1 \times 10^{- 4}$$
 
 (e) Maximum difference $X_{i}$ between the change in measured irradiance
     and the change in clear sky irradiance over each measurement
-    interval.
+    interval:
 
 $$\begin{matrix}
 X_{i} = \max\left\{ \left| x_{i} - x_{\text{CSref},i} \right| \right\} \\
@@ -234,7 +234,7 @@ x_{\text{CSref},i} = \text{SDR}_{\text{CSref},i + 1} - \text{SDR}_{\text{CSref},
 \end{matrix}$$
 
 -   For this criterion, $X_{i}$ should be below a certain threshold
-    (Eq. ):
+    (Equation ()):
 
 $$X_{i} < 7.5\, Wm^{- 2}$$
 
@@ -243,78 +243,80 @@ clear-sky conditions and $48\,\%$ as under cloud-sky conditions. The
 remaining $26\,\%$ of the data correspond to mixed cases and were not
 analyzed as a separate group.
 
-## 2.2 Aggregation of data and statistical approach
+## 2.2 Aggregation of Data and Statistical Approach
 
-In order to investigate the SDR trends which are the main focus of the
+In order to investigate the SDR trends that are the main focus of the
 study, we implemented an aggregation scheme to the one-minute data to
-derive series in coarser time-scales. To preserve the representativeness
-of the data we used the following criteria: a) we excluded all days with
-less than 50% of the expected daytime measurements, b) daily means for
-the clear-sky and cloudy-sky datasets were calculated only for days with
-more than 60% of the expected daytime measurements identified as clear
-or cloudy respectively, c) monthly means were computed from daily means.
-For the all-skies dataset monthly means were computed only when at least
-20 days were available. Seasonal means were derived by averaging the
-monthly mean values in each season (winter: December - February, spring:
-March - May, etc.). The daily and monthly climatological means were
-derived by averaging the data for each day of year and calendar month,
-respectively. The daily and monthly datasets were deseasonalized by
-subtracting the corresponding climatological annual cycle (daily or
-monthly) from the actual data. Finally, to estimate the SZA effect on
-the SDR trends, the one-minute data were aggregated in $1^{\circ}$ SZA
-bins, separately for the morning and afternoon hours.
+derive series in coarser time scales. To preserve the representativeness
+of the data, we used the following criteria: (a) we excluded all days
+with less than 50% of the expected daytime measurements, (b) daily means
+for the clear-sky and cloudy-sky datasets were calculated only for days
+with more than 60% of the expected daytime measurements identified as
+clear or cloudy, respectively, and (c) monthly means were computed from
+daily means. For the all-skies dataset, monthly means were computed only
+when at least 20 days were available. Seasonal means were derived by
+averaging the monthly mean values in each season (winter:
+December--February, spring: March--May, etc.). The daily and monthly
+climatological means were derived by averaging the data for each day of
+the year and calendar month, respectively. The daily and monthly
+datasets were deseasonalized by subtracting the corresponding
+climatological annual cycle (daily or monthly) from the actual data.
+Finally, to estimate the SZA effect on the SDR trends, the one-minute
+data were aggregated in $1^{\circ}$ SZA bins, separately for the morning
+and afternoon hours.
 
-The linear trends were calculated using a first order autoregressive
-model with lag of 1 day using the "maximum likelihood" fitting method
-(Gardner, Harvey, and Phillips 1980; Jones 1980), by implementing the
-function "arima" from the library "stats" of the R programming language
+The linear trends were calculated using a first-order autoregressive
+model with lag of 1 day using the 'maximum likelihood' fitting method
+(Gardner, Harvey, and Phillips 1980; Jones 1980) by implementing the
+function 'arima' from the library 'stats' of the R programming language
 (R Core Team 2023). The trends were reported together with the $2\sigma$
 errors.
 
 # 3 Results
 
-## 3.1 Long-term SDR trends
+## 3.1 Long-Term SDR Trends
 
-We calculated the linear trends of SDR, from the departures of the mean
+We calculated the linear trends of SDR from the departures of the mean
 daily values from the daily climatology and for the three sky
-conditions. These are presented in Table  which contains also the
-$2\sigma$ standard error, the Pearson's correlation coefficient R and
-the trend in absolute units. In Figure  we present only the time series
+conditions. These are presented in Table , which also contains the
+$2\sigma$ standard error, the Pearson's correlation coefficient R, and
+the trend in absolute units. In Figure , we present only the time series
 under all-sky conditions; the plots for clear-sky and cloud-sky
-conditions, are shown in the Appendix (Figures  and  ). In the studied
+conditions, are shown in Appendix (Figures  and  ). In the studied
 period, there is no significant break or change in the variability
 pattern of the time series. The linear trends in all three datasets are
 positive and around $0.4\,\%/y$ for all-sky and cloudy-sky conditions,
-while for clear-skies the trend is much smaller (\~$0.1\,\%/y$). The
+whereas for clear-skies the trend is much smaller (\~$0.1\,\%/y$). The
 linear trends were calculated taking into account the autocorrelation of
-the time series and all three are statistically significant at least at
+the time series, and all three are statistically significant at least at
 the $95\,\%$ confidence level, as they are larger than the corresponding
 $2\sigma$ errors, despite the small values of R, which is due to the
-large variability of the daily values. The clear-sky trend is very small
-suggesting a small effect from aerosols and water vapor which are the
-dominant factors of the SDR variability (Fountoulakis et al. 2016;
-Siomos et al. 2018; Yu et al. 2022). In contrast, the large positive
-trend of SDR under cloudy skies can be attributed to reduction in cloud
-cover and/or cloud optical depth. Lack of continuous observations of
-cloud optical thickness that could support these findings does not allow
-drawing firm conclusions. However, there are indications that the total
-cloud-cover as inferred from the ERA5 analysis for the grid point of
-Thessaloniki is decreasing over the period of study. From the difference
-between all-sky and clear-sky SDR trends, expressed in $W/m^{2}/y$ using
-the long-term mean of the respective datasets, the radiative effect of
-clouds is estimated to $0.96\, W/m^{2}/y$. This estimate is similar to
-the cloud radiative forcing of $1.22\, W/m^{2}/y$ reported for Granada,
-Spain (Lozano, Alados, and Foyo-Moreno 2023).
+large variability of the daily values. The clear-sky trend is very
+small, suggesting a small effect from aerosols and water vapor, which
+are the dominant factors of the SDR variability (Fountoulakis et al.
+2016; Siomos et al. 2018; Yu et al. 2022). In contrast, the large
+positive trend of SDR under cloudy skies can be attributed to reduction
+in cloud cover and/or cloud optical depth. Lack of continuous
+observations of cloud optical thickness that could support these
+findings does not allow drawing firm conclusions. However, there are
+indications that the total cloud cover as inferred from the ERA5
+analysis for the grid point of Thessaloniki is decreasing over the
+period of study. From the difference between all-sky and clear-sky SDR
+trends, expressed in $W/m^{2}/y$ using the long-term mean of the
+respective datasets, the radiative effect of clouds is estimated to
+$0.96\, W/m^{2}/y$. This estimate is similar to the cloud radiative
+forcing of $1.22\, W/m^{2}/y$ reported for Granada, Spain (Lozano,
+Alados, and Foyo-Moreno 2023).
 
 The all-sky trend is similar to the one reported in Bais et al. (2013)
-from a ten-year shorter dataset suggesting that the tendency of SDR in
+from a ten-year shorter dataset, suggesting that the tendency of SDR in
 Thessaloniki is systematic. Other studies for the European region
 reported a change in the SDR trend around 1980 from negative to positive
 with comparable magnitude (Wild et al. 2021; Yuan, Leirvik, and Wild
 2021; Ohmura 2009), well before the start of our records. However, the
 trends reported here for the three datasets are in accordance with the
 widely accepted solar radiation brightening over Europe. For the period
-of our observations the trend in the TSI is negligible
+of our observations, the trend in the TSI is negligible
 ($- 0.00022\,\%/y$), and thus we cannot attribute any significant effect
 on the SDR trend to solar variability.
 
@@ -328,7 +330,7 @@ climatological mean for the period 1993 -- 2023. The black line is the
 long term linear trend.
 
 Although the year-to-year variability of the anomalies (Figure and
-Figures , in Appendix), shows a rather homogeneous behavior, plots of
+Figures  and in Appendix), shows a rather homogeneous behavior, plots of
 the cumulative sums (CUSUM) (Regier, Briceño, and Boyer 2019) of the
 anomalies can reveal different structures in the records of all three
 sky conditions. For time series with a uniform trend, we would expect
@@ -337,13 +339,13 @@ around the middle of the series. This would indicate that the anomalies
 are evenly distributed around the climatological mean, and for a
 positive uniform trend, the first half is below and the second half
 above the climatological mean. In our case, there is a more complex
-evolution of the anomalies. For all-skies (Figure ), we observe three
+evolution of the anomalies. For all skies (Figure ), we observe three
 rather distinct periods: a) a downward part between the start of the
-datasets and about 2000, denoting that all anomalies are negative thus
+datasets and about 2000, denoting that all anomalies are negative, thus
 below the climatology; b) a relatively steady part lasting for almost 20
 years suggesting little variability in SDR anomalies; and c) a steep
-upward part to present indicating anomalies above the climatology. The
-CUSUMs for cloudy-skies (Figure ), show a similar behavior with some
+upward part to the present indicating anomalies above the climatology.
+The CUSUMs for cloudy-skies (Figure ), show a similar behavior with some
 short-term differences that do not change the overall pattern. For clear
 skies (Figure ), a monotonic downward tendency is evident until 2004,
 suggesting that the anomalies are all negative. After 2004 the anomalies

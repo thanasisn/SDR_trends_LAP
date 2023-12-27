@@ -1,7 +1,7 @@
 %  LaTeX support: latex@mdpi.com
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL SUBMISSION_01/MDPI_submission.tex   Sun Nov 12 17:31:09 2023
-%DIF ADD MDPI_submission.tex                 Wed Dec 27 23:29:35 2023
+%DIF ADD MDPI_submission.tex                 Thu Dec 28 00:04:58 2023
 %  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
 
 %=================================================================
@@ -572,10 +572,11 @@ as \DIFdelbegin \DIFdel{``}\DIFdelend \DIFaddbegin \DIFadd{`}\DIFaddend clear-sk
 considered \DIFdelbegin \DIFdel{to be ``}\DIFdelend \DIFaddbegin \DIFadd{as `}\DIFaddend cloud-sky\DIFdelbegin \DIFdel{''}\DIFdelend \DIFaddbegin \DIFadd{'}\DIFaddend . Each criterion was applied for a running
 window of \(11\) consecutive one-minute measurements, and the
 characterization \DIFdelbegin \DIFdel{is }\DIFdelend \DIFaddbegin \DIFadd{was }\DIFaddend assigned to the central \DIFdelbegin \DIFdel{value }\DIFdelend \DIFaddbegin \DIFadd{datum }\DIFaddend of the window. Each
-parameter \DIFdelbegin \DIFdel{, was calculated both }\DIFdelend \DIFaddbegin \DIFadd{was calculated }\DIFaddend from the observations \DIFdelbegin \DIFdel{and }\DIFdelend \DIFaddbegin \DIFadd{in comparison to }\DIFaddend the
-reference clear sky model\DIFdelbegin \DIFdel{, for each comparison}\DIFdelend . The allowable range of variation is defined
+parameter \DIFdelbegin \DIFdel{, was calculated both }\DIFdelend \DIFaddbegin \DIFadd{was calculated }\DIFaddend from the observations \DIFdelbegin \DIFdel{and the
+reference clear sky model, for each comparison}\DIFdelend \DIFaddbegin \DIFadd{in comparison to the
+reference clear-sky model}\DIFaddend . The allowable range of variation is defined
 by the model-derived value of the parameter multiplied by a factor plus
-an offset. The factors and the offsets were determined empirically, by
+an offset. The factors and the offsets were determined empirically \DIFdelbegin \DIFdel{, }\DIFdelend by
 manually inspecting each filter's performance on selected days and
 adjusting them accordingly during an iterative process. The criteria are
 \DIFaddbegin \DIFadd{listed below, together with the range of values within which the
@@ -612,27 +613,28 @@ respective parameter should fall in order to raise the clear-sky flag}\DIFaddend
   \end{equation} \begin{equation}
   1 \times L_{\text{CSref},i} - 5 < L_i < 1.3 \times L_{\text{CSref},i} + 13
   \label{eq:VILcr}
-  \end{equation} where: \(t_i\) is the time stamp of each SDR
+  \end{equation} where \DIFdelbegin \DIFdel{: }\DIFdelend \(t_i\) is the time stamp of each SDR
   measurement.
 \item
   Standard deviation \(\sigma_i\) of the slope (\(s_i\)) between the
   \(11\) sequential points, normalized by the mean
-  \(\overline{\text{SDR}}_i\) (Eq.~\ref{eq:VCT1}). \begin{gather}
+  \(\overline{\text{SDR}}_i\) (\DIFdelbegin \DIFdel{Eq.~\ref{eq:VCT1}). }\DIFdelend \DIFaddbegin \DIFadd{Equation~(\ref{eq:VCT1})): }\DIFaddend \begin{gather}
     \sigma_i = \frac{\sqrt{\frac{1}{n-1} \sum_{i=1}^{n-1} \left( s_i - \bar{s} \right)^2}}{\overline{\text{SDR}}_i} \label{eq:VCT1} \\
     s_i = \frac{\text{SDR}_{i+1} - \text{SDR}_{i}}{t_{i+1} - t_i},\;\;   \bar{s} = \frac{1}{n-1} \sum_{i=1}^{n-1} s_i,\;\;\forall i \in \left \{ 1, 2, \ldots, n-1 \right \}\;\;
   \end{gather} For this criterion, \(\sigma_i\) should be below a
-  certain threshold (Eq.~\ref{eq:VCTcr}): \begin{equation}
+  certain threshold (\DIFdelbegin \DIFdel{Eq.~\ref{eq:VCTcr}}\DIFdelend \DIFaddbegin \DIFadd{Equation~(\ref{eq:VCTcr})}\DIFaddend ): \begin{equation}
     \sigma_i < \ensuremath{1.1\times 10^{-4}} \label{eq:VCTcr}
   \end{equation}
 \item
   Maximum difference \(X_i\) between the change in measured irradiance
-  and the change in clear sky irradiance over each measurement interval.
-  \begin{gather}
+  and the change in clear sky irradiance over each measurement interval\DIFdelbegin \DIFdel{.
+  }\DIFdelend \DIFaddbegin \DIFadd{:
+  }\DIFaddend \begin{gather}
     X_i = \max{\left \{ \left | x_i - x_{\text{CSref},i} \right | \right \}} \label{eq:VSM3} \\
     x_i = \text{SDR}_{i+1} - \text{SDR}_{i} \forall i \in \left \{ 1, 2, \ldots, n-1 \right \} \label{eq:VSM1} \\
     x_{\text{CSref},i} = \text{SDR}_{\text{CSref},i+1} - \text{SDR}_{\text{CSref},i} \forall i \in \left \{ 1, 2, \ldots, n-1 \right \} \label{eq:VSM2}
   \end{gather} For this criterion, \(X_i\) should be below a certain
-  threshold (Eq.~\ref{eq:VSMcr}): \begin{equation}
+  threshold (\DIFdelbegin \DIFdel{Eq.~\ref{eq:VSMcr}}\DIFdelend \DIFaddbegin \DIFadd{Equation~(\ref{eq:VSMcr})}\DIFaddend ): \begin{equation}
     X_i < 7.5\,Wm^{-2} \label{eq:VSMcr}
   \end{equation}
 \end{enumerate}
@@ -661,84 +663,90 @@ analyzed as a separate group.
 }
 
 \hypertarget{aggregationstatistical}{%
-\subsection{Aggregation of data and statistical
-approach}\label{aggregationstatistical}}
+\subsection{Aggregation of Data and Statistical
+Approach}\label{aggregationstatistical}}
 \DIFaddend 
 
-In order to investigate the SDR trends \DIFaddbegin \DIFadd{which are the main focus of the
+In order to investigate the SDR trends \DIFaddbegin \DIFadd{that are the main focus of the
 study}\DIFaddend , we implemented an \DIFdelbegin \DIFdel{appropriate
 }\DIFdelend aggregation scheme to the \DIFdelbegin \DIFdel{1-minute }\DIFdelend \DIFaddbegin \DIFadd{one-minute }\DIFaddend data to
-derive \DIFdelbegin \DIFdel{a }\DIFdelend series in coarser time-scales. To preserve the representativeness
-of the data we used the following criteria: a) \DIFdelbegin \DIFdel{for the daily mean values we accept days with
-more }\DIFdelend \DIFaddbegin \DIFadd{we excluded all days with
-less }\DIFaddend than 50\% of the \DIFdelbegin \DIFdel{daytime measurements present and valid}\DIFdelend \DIFaddbegin \DIFadd{expected daytime measurements}\DIFaddend , b) \DIFdelbegin \DIFdel{monthly
-values }\DIFdelend \DIFaddbegin \DIFadd{daily means for
-the clear-sky and cloudy-sky datasets were calculated only for days with
-more than 60\% of the expected daytime measurements identified as clear
-or cloudy respectively, c) monthly means }\DIFaddend were computed from daily means\DIFaddbegin \DIFadd{.
-For the all-skies dataset monthly means were computed }\DIFaddend only when at least
-20 days were available. \DIFdelbegin \DIFdel{To create the daily and monthly climatological means, we
-averaged the data based on the day of year and calendar month,
-respectively. For the seasonal means we averaged the
-mean daily }\DIFdelend \DIFaddbegin \DIFadd{Seasonal means were derived by averaging the
-monthly mean }\DIFaddend values in each season (\DIFdelbegin \DIFdel{Winter}\DIFdelend \DIFaddbegin \DIFadd{winter}\DIFaddend : December - February, \DIFdelbegin \DIFdel{Spring}\DIFdelend \DIFaddbegin \DIFadd{spring}\DIFaddend :
-March - May, etc.). \DIFdelbegin \DIFdel{Finally, each data set was }\DIFdelend \DIFaddbegin \DIFadd{The daily and monthly climatological means were
-derived by averaging the data for each day of year and calendar month,
-respectively. The daily and monthly datasets were }\DIFaddend deseasonalized by
-subtracting the corresponding climatological annual cycle (daily or
-monthly) from the actual data. \DIFdelbegin \DIFdel{To }\DIFdelend \DIFaddbegin \DIFadd{Finally, to }\DIFaddend estimate the SZA effect on
-the SDR trends, the one-minute data were aggregated in \DIFdelbegin \DIFdel{\(1^\circ\) }\DIFdelend \DIFaddbegin \DIFadd{\(1^{\circ}\) }\DIFaddend SZA
-bins, separately for the morning and afternoon hours\DIFdelbegin \DIFdel{, and then were deseasonalized as
+derive \DIFdelbegin \DIFdel{a }\DIFdelend series in coarser \DIFdelbegin \DIFdel{time-scales}\DIFdelend \DIFaddbegin \DIFadd{time scales}\DIFaddend . To preserve the representativeness
+of the data\DIFaddbegin \DIFadd{, }\DIFaddend we used the following criteria: \DIFdelbegin \DIFdel{a) for the daily mean values we accept days
+with more }\DIFdelend \DIFaddbegin \DIFadd{(a) we excluded all days
+with less }\DIFaddend than 50\% of the \DIFdelbegin \DIFdel{daytime measurements present and valid, b) monthly
+values }\DIFdelend \DIFaddbegin \DIFadd{expected daytime measurements, (b) daily
+means for the clear-sky and cloudy-sky datasets were calculated only for
+days with more than 60\% of the expected daytime measurements identified
+as clear or cloudy, respectively, and (c) monthly means }\DIFaddend were computed
+from daily means\DIFaddbegin \DIFadd{. For the all-skies dataset, monthly means were computed
+}\DIFaddend only when at least 20 days were available. \DIFdelbegin \DIFdel{To create the }\DIFdelend \DIFaddbegin \DIFadd{Seasonal means were derived
+by averaging the monthly mean values in each season (winter:
+December--February, spring: March--May, etc.). The }\DIFaddend daily and monthly
+climatological means \DIFdelbegin \DIFdel{, we
+averaged the data based on the day of
+}\DIFdelend \DIFaddbegin \DIFadd{were derived by averaging the data for each day of
+the }\DIFaddend year and calendar month, respectively. \DIFdelbegin \DIFdel{For the seasonal means we averaged the mean daily values
+in each season (Winter: December - February, Spring: March - May, etc.).
+Finally, each data set was }\DIFdelend \DIFaddbegin \DIFadd{The daily and monthly
+datasets were }\DIFaddend deseasonalized by subtracting the corresponding
+climatological annual cycle (daily or monthly) from the actual data.
+\DIFdelbegin \DIFdel{To }\DIFdelend \DIFaddbegin \DIFadd{Finally, to }\DIFaddend estimate the SZA effect on the SDR trends, the one-minute
+data were aggregated in \DIFdelbegin \DIFdel{\(1^\circ\) }\DIFdelend \DIFaddbegin \DIFadd{\(1^{\circ}\) }\DIFaddend SZA bins, separately for the
+morning and afternoon hours\DIFdelbegin \DIFdel{, and then were deseasonalized as
 mentioned above}\DIFdelend \DIFaddbegin \DIFadd{.
 }
 
-\DIFadd{The linear trends were calculated using a first order autoregressive
-model with lag of 1 day using the ``maximum likelihood'' fitting method
+\DIFadd{The linear trends were calculated using a first-order autoregressive
+model with lag of 1 day using the `maximum likelihood' fitting method
 \mbox{%DIFAUXCMD
-\citep{Gardner1980, Jones1980}}\hskip0pt%DIFAUXCMD
-, by implementing the function ``arima''
-from the library ``stats'' of the R programming language
-\mbox{%DIFAUXCMD
+\citep{Gardner1980, Jones1980} }\hskip0pt%DIFAUXCMD
+by implementing the function `arima' from
+the library `stats' of the R programming language \mbox{%DIFAUXCMD
 \citep{RCT2023}}\hskip0pt%DIFAUXCMD
-. The trends were reported together with the \(2\sigma\)
-errors}\DIFaddend .
+. The
+trends were reported together with the \(2\sigma\) errors}\DIFaddend .
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-\hypertarget{long-term-sdr-trends}{%
-\subsection{Long-term SDR trends}\label{long-term-sdr-trends}}
+\DIFdelbegin %DIFDELCMD < \hypertarget{long-term-sdr-trends}{%
+%DIFDELCMD < \subsection{Long-term SDR trends}\label{long-term-sdr-trends}}
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \hypertarget{long-term-sdr-trends}{%
+\subsection{Long-Term SDR Trends}\label{long-term-sdr-trends}}
+\DIFaddend 
 
-We calculated the linear \DIFdelbegin \DIFdel{SDR trends }\DIFdelend \DIFaddbegin \DIFadd{trends of SDR}\DIFaddend , from the departures of the mean
+We calculated the linear \DIFdelbegin \DIFdel{SDR trends , }\DIFdelend \DIFaddbegin \DIFadd{trends of SDR }\DIFaddend from the departures of the mean
 daily values from the daily climatology and for the three sky
-conditions\DIFdelbegin \DIFdel{(}\DIFdelend \DIFaddbegin \DIFadd{. These are presented in }\DIFaddend Table~\ref{tab:trendtable} \DIFdelbegin \DIFdel{)}\DIFdelend \DIFaddbegin \DIFadd{which
-contains also the \(2\sigma\) standard error, the Pearson's correlation
-coefficient R and the trend in absolute units}\DIFaddend . In
-Figure~\ref{fig:trendALL} we present only the time series under all-sky
-conditions; the plots for clear-sky and cloud-sky conditions, are \DIFdelbegin \DIFdel{very similar and are }\DIFdelend shown
-in the Appendix (Figures~\ref{fig:trendCLEAR} and~
-\ref{fig:trendCLOUD}). \DIFdelbegin \DIFdel{We observe a
-positive trend }\DIFdelend \DIFaddbegin \DIFadd{In the studied period, there is no significant
-break or change in the variability pattern of the time series. The
-linear trends in all three datasets are positive and around
-\(0.4\,\%/y\) }\DIFaddend for all-sky \DIFdelbegin \DIFdel{conditions (\(0.38\,\%/y\)), a very close but
-smaller trend }\DIFdelend \DIFaddbegin \DIFadd{and cloudy-sky conditions, while }\DIFaddend for
-clear-skies \DIFdelbegin \DIFdel{(\(0.35\,\%/y\))}\DIFdelend \DIFaddbegin \DIFadd{the trend is much smaller (\textasciitilde{}\(0.1\,\%/y\)).
-The linear trends were calculated taking into account the
-autocorrelation of the time series and all three are statistically
-significant at least at the \(95\,\%\) confidence level, as they are
-larger than the corresponding \(2\sigma\) errors, despite the small
-values of R, which is due to the large variability of the daily values.
-The clear-sky trend is very small suggesting a small effect from
-aerosols and water vapor which are the dominant factors of the SDR
-variability \mbox{%DIFAUXCMD
+conditions\DIFdelbegin \DIFdel{(}\DIFdelend \DIFaddbegin \DIFadd{. These are presented in }\DIFaddend Table~\ref{tab:trendtable}\DIFdelbegin \DIFdel{)}\DIFdelend \DIFaddbegin \DIFadd{, which
+also contains the \(2\sigma\) standard error, the Pearson's correlation
+coefficient R, and the trend in absolute units}\DIFaddend . In
+Figure~\ref{fig:trendALL}\DIFaddbegin \DIFadd{, }\DIFaddend we present only the time series under all-sky
+conditions; the plots for clear-sky and cloud-sky conditions, are \DIFdelbegin \DIFdel{very similar and are shown
+in the }\DIFdelend \DIFaddbegin \DIFadd{shown
+in }\DIFaddend Appendix (Figures~\ref{fig:trendCLEAR} and~ \ref{fig:trendCLOUD}). \DIFdelbegin \DIFdel{We observe a
+positive trend }\DIFdelend \DIFaddbegin \DIFadd{In
+the studied period, there is no significant break or change in the
+variability pattern of the time series. The linear trends in all three
+datasets are positive and around \(0.4\,\%/y\) }\DIFaddend for all-sky \DIFdelbegin \DIFdel{conditions (\(0.38\,\%/y\)), a very close but
+smaller trend }\DIFdelend \DIFaddbegin \DIFadd{and
+cloudy-sky conditions, whereas }\DIFaddend for clear-skies \DIFdelbegin \DIFdel{(\(0.35\,\%/y\))}\DIFdelend \DIFaddbegin \DIFadd{the trend is much smaller
+(\textasciitilde{}\(0.1\,\%/y\)). The linear trends were calculated
+taking into account the autocorrelation of the time series, and all
+three are statistically significant at least at the \(95\,\%\)
+confidence level, as they are larger than the corresponding \(2\sigma\)
+errors, despite the small values of R, which is due to the large
+variability of the daily values. The clear-sky trend is very small,
+suggesting a small effect from aerosols and water vapor, which are the
+dominant factors of the SDR variability
+\mbox{%DIFAUXCMD
 \citep{Fountoulakis2016, Siomos2018, Yu2022}}\hskip0pt%DIFAUXCMD
-. In contrast,
-the large positive trend of SDR under cloudy skies can be attributed to
-reduction in cloud cover and/or cloud optical depth. Lack of continuous
+. In contrast, the large
+positive trend of SDR under cloudy skies can be attributed to reduction
+in cloud cover and/or cloud optical depth. Lack of continuous
 observations of cloud optical thickness that could support these
 findings does not allow drawing firm conclusions. However, there are
-indications that the total cloud-cover as inferred from the ERA5
+indications that the total cloud cover as inferred from the ERA5
 analysis for the grid point of Thessaloniki is decreasing over the
 period of study. From the difference between all-sky }\DIFaddend and \DIFdelbegin \DIFdel{a negative weaker
 trend for cloudy-skies (\(-0.28\,\%/y\)). In the studied period, there is no significant break or change in the variability of the
@@ -755,25 +763,25 @@ forcing of \(1.22\,W/m^2/y\) reported for Granada, Spain
 \DIFadd{The all-sky trend is similar to the one reported in \mbox{%DIFAUXCMD
 \citet{Bais2013}
 }\hskip0pt%DIFAUXCMD
-from a ten-year shorter dataset suggesting that the tendency of SDR in
+from a ten-year shorter dataset, suggesting that the tendency of SDR in
 Thessaloniki is systematic}\DIFaddend . Other studies for the European region
 reported a change \DIFdelbegin \DIFdel{of the SDR slope, }\DIFdelend \DIFaddbegin \DIFadd{in the SDR trend }\DIFaddend around 1980 \DIFaddbegin \DIFadd{from negative to positive
 with comparable magnitude }\DIFaddend \citep{Wild2021, Yuan2021, Ohmura2009}, \DIFdelbegin \DIFdel{a few years
 }\DIFdelend \DIFaddbegin \DIFadd{well
 }\DIFaddend before the start of our records. \DIFdelbegin \DIFdel{It is interesting to note, that for
-the observations period , the trend of }\DIFdelend \DIFaddbegin \DIFadd{However, the trends reported here for
+the observations period }\DIFdelend \DIFaddbegin \DIFadd{However, the trends reported here for
 the three datasets are in accordance with the widely accepted solar
-radiation brightening over Europe. For the period of our observations
-the trend in }\DIFaddend the TSI is \DIFdelbegin \DIFdel{\(-0.0002\,\%/y\)}\DIFdelend \DIFaddbegin \DIFadd{negligible (\(-0.00022\,\%/y\))}\DIFaddend , and thus we
+radiation brightening over Europe. For the period of our observations}\DIFaddend ,
+the trend \DIFdelbegin \DIFdel{of }\DIFdelend \DIFaddbegin \DIFadd{in }\DIFaddend the TSI is \DIFdelbegin \DIFdel{\(-0.0002\,\%/y\)}\DIFdelend \DIFaddbegin \DIFadd{negligible (\(-0.00022\,\%/y\))}\DIFaddend , and thus we
 \DIFdelbegin \DIFdel{can not attribute any major effect on }\DIFdelend \DIFaddbegin \DIFadd{cannot attribute any significant effect on the }\DIFaddend SDR trend to \DIFdelbegin \DIFdel{Solar }\DIFdelend \DIFaddbegin \DIFadd{solar
 }\DIFaddend variability.
 
 \begin{table}[H]
 
-\caption{\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period 1993 - 2023.}
+\caption{\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period \DIFdelbeginFL \DIFdelFL{1993 - 2023.}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{1993--2023.}\DIFaddendFL }
 \begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X\DIFaddbeginFL \DIFaddFL{>}{\raggedleft}\DIFaddFL{X>}{\raggedleft}\DIFaddFL{X}\DIFaddendFL }
 \toprule
-Sky conditions & Trend [\%/year] & \DIFdelbeginFL \DIFdelFL{Statistical signif. }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Trend S.E. ($2\sigma$) }& \DIFaddFL{Pearson correl. }& \DIFaddFL{Trend }\DIFaddendFL [\DIFdelbeginFL \DIFdelFL{\%}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{W/m\textsuperscript{2}/year}\DIFaddendFL ] & Days\DIFdelbeginFL \DIFdelFL{with data}\DIFdelendFL \\
+Sky conditions & Trend [\%/year] & \DIFdelbeginFL \DIFdelFL{Statistical signif.}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Trend S.E. ($2\sigma$) }& \DIFaddFL{Pearson correl. }& \DIFaddFL{Trend }\DIFaddendFL [\DIFdelbeginFL \DIFdelFL{\%}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{W/m\textsuperscript{2}/year}\DIFaddendFL ] & Days\DIFdelbeginFL \DIFdelFL{with data}\DIFdelendFL \\
 \midrule
 All skies & \DIFdelbeginFL \DIFdelFL{0.376 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.380 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{100.00 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.120 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{10256}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.091 }& \DIFaddFL{1.460 }& \DIFaddFL{10251}\DIFaddendFL \\
 Clear skies & \DIFdelbeginFL \DIFdelFL{0.349 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.097 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{100.00 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.033 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{10256}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.140 }& \DIFaddFL{0.501 }& \DIFaddFL{2684}\DIFaddendFL \\
@@ -795,8 +803,9 @@ Cloudy skies & \DIFdelbeginFL \DIFdelFL{-0.276 }\DIFdelendFL \DIFaddbeginFL \DIF
 \end{figure}
 
 Although the year-to-year variability of the anomalies (Figure
-\ref{fig:trendALL} and Figures\DIFaddbegin \DIFadd{~}\DIFaddend \ref{fig:trendCLEAR},
-\ref{fig:trendCLOUD} in Appendix), shows a rather homogeneous \DIFdelbegin \DIFdel{behaviour}\DIFdelend \DIFaddbegin \DIFadd{behavior}\DIFaddend ,
+\ref{fig:trendALL} and Figures\DIFdelbegin \DIFdel{\ref{fig:trendCLEAR},
+}\DIFdelend \DIFaddbegin \DIFadd{~\ref{fig:trendCLEAR} and
+}\DIFaddend \ref{fig:trendCLOUD} in Appendix), shows a rather homogeneous \DIFdelbegin \DIFdel{behaviour}\DIFdelend \DIFaddbegin \DIFadd{behavior}\DIFaddend ,
 plots of the cumulative sums (CUSUM) \citep{Regier2019} of the anomalies
 can reveal different structures in the records of all three sky
 conditions. \DIFdelbegin \DIFdel{In the cases of all-sky and clear-sky conditions (Figures
@@ -818,21 +827,22 @@ cloudy-sky dataset which peaks around the middle of the period.
 Although, there seems to exist acomplementary relation to the CUSUMs of
 the clear- and all-sky cases, we can not assert that clouds are the main
 driver for
-this relation due to the great difference in the number of
-observational data between the
-two datasets
-(Table~\ref{tab:trendtable})}\DIFdelend \DIFaddbegin \DIFadd{For all-skies (Figure~\ref{fig:cusummonth-1}), we observe
+this relation due to the great difference in the
+number of
+observational data between the two datasets
+(Table~\ref{tab:trendtable})}\DIFdelend \DIFaddbegin \DIFadd{For all skies (Figure~\ref{fig:cusummonth-1}), we observe
 three rather distinct periods: a) a downward part between the start of
-the datasets and about 2000, denoting that all anomalies are negative
+the datasets and about 2000, denoting that all anomalies are negative,
 thus below the climatology; b) a relatively steady part lasting for
 almost 20 years suggesting little variability in SDR anomalies; and c) a
-steep upward part to present indicating anomalies above the climatology.
-The CUSUMs for cloudy-skies (Figure~\ref{fig:cusummonth-3}), show a
-similar behavior with some short-term differences that do not change the
-overall pattern. For clear skies (Figure~\ref{fig:cusummonth-2}), a
-monotonic downward tendency is evident until 2004, suggesting that the
-anomalies are all negative. After 2004 the anomalies turn to positive at
-a fast rate for about five years and at a slower rate thereafter}\DIFaddend .
+steep upward part to the present indicating anomalies above the
+climatology. The CUSUMs for cloudy-skies
+(Figure~\ref{fig:cusummonth-3}), show a similar behavior with some
+short-term differences that do not change the overall pattern. For clear
+skies (Figure~\ref{fig:cusummonth-2}), a monotonic downward tendency is
+evident until 2004, suggesting that the anomalies are all negative.
+After 2004 the anomalies turn to positive at a fast rate for about five
+years and at a slower rate thereafter}\DIFaddend .
 
 \begin{figure}[h!]
     \begin{adjustwidth}{-\extralength}{0cm}
