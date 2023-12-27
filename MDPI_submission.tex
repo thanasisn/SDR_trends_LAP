@@ -297,20 +297,20 @@ The SDR data were measured with a Kipp \& Zonen CM-21 pyranometer
 operating continuously at the Laboratory of Atmospheric Physics of the
 Aristotle University of Thessaloniki (\(40^\circ\,38'\,\)N,
 \(22^\circ\,57'\,\)E, \(80\,\)m~a.s.l.). Here, we used data for the
-period from 1993-04-13 to 2023-04-13. The monitoring site was located
-near the city center, thus we expect that measurements were affected by
-the urban environment, mainly by aerosols. During the study period, the
-pyranometer was independently calibrated three times at the
+period from 13 April 1993 to 13 April 2023. The monitoring site was
+located near the city center, thus we expect that measurements were
+affected by the urban environment, mainly by aerosols. During the study
+period, the pyranometer was independently calibrated three times at the
 Meteorologisches Observatorium Lindenberg, DWD, verifying that the
 stability of the instrument's sensitivity was better than \(0.7\%\)
 relative to the initial calibration by the manufacturer. Along with SDR,
 the direct beam radiation (DNI) was also measured with a collocated Kipp
-\& Zonen CHP-1 pyrheliometer since 2016-04-01. The DNI data were used as
-auxiliary data to support the selection of appropriate thresholds in the
-clear-sky identification algorithm (CSid), which is discussed in Section
-\ref{CDIDalgorithm}. It is noted that the limited dataset of DNI was not
-used for the identification of clear-sky cases in the entire SDR series
-to avoid any selection bias due to the unequal length of the two
+\& Zonen CHP-1 pyrheliometer since 1 April 2016. The DNI data were used
+as auxiliary data to support the selection of appropriate thresholds in
+the clear-sky identification algorithm (CSid), which is discussed in
+Section \ref{CDIDalgorithm}. It is noted that the limited dataset of DNI
+was not used for the identification of clear-sky cases in the entire SDR
+series to avoid any selection bias due to the unequal length of the two
 datasets. There are four distinct steps in the creation of the dataset
 analyzed here: (a)~the acquisition of radiation measurements from the
 sensors, (b)~the data quality check, (c)~the identification of ``clear
@@ -348,15 +348,15 @@ throughout the dataset, we adjusted all one-minute data to the mean
 Sun--Earth distance. Subsequently, we adjusted all measurements to the
 Total Solar Irradiance (TSI) at \(1\,\text{au}\), in order to compensate
 for the Sun's intensity variability, using a time series of satellite
-TSI observations. The TSI data we used are part of the ``NOAA Climate
-Data Record of Total Solar Irradiance'' dataset \citep{Coddington2005}.
+TSI observations. The TSI data we used are part of the `NOAA Climate
+Data Record of Total Solar Irradiance' dataset \citep{Coddington2005}.
 The initial daily values of this dataset were interpolated to match the
 time step of our measurements.
 
 In order to estimate the effect of the sky conditions on the long term
 variability of SDR, we created three datasets by characterizing each
 one-minute measurement with a corresponding sky-condition flag (i.e.,
-all-sky, clear-sky and cloudy-sky). To identify the clear-cases we used
+all-sky, clear-sky, and cloudy-sky). To identify the clear cases we used
 the method proposed by \citet{Reno2016}, which requires the definition
 of some site specific parameters. These parameters were determined by an
 iterative process, as the original authors proposed and are discussed in
@@ -367,10 +367,10 @@ clear or cloudy sky cases. As a result, the details of the definition
 are site specific, and they rely on a combination of thresholds and
 comparisons with ideal radiation models and statistical analysis of
 different signal metrics. The CSid algorithm was calibrated with the
-main focus, to identify the presence of clouds. Despite the fine-tuning
+main focus to identify the presence of clouds. Despite the fine-tuning
 of the procedure, in a few marginal cases false positive or false
 negative results were identified by manual inspection. However, due to
-their small number, they cannot affect the final results of the study.
+their small number, they did not affect the final results of the study.
 For completeness, we provide below a brief overview of the CSid
 algorithm, along with the site specific thresholds.
 

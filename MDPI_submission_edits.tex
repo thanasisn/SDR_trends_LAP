@@ -1,7 +1,7 @@
 %  LaTeX support: latex@mdpi.com
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL SUBMISSION_01/MDPI_submission.tex   Sun Nov 12 17:31:09 2023
-%DIF ADD MDPI_submission.tex                 Wed Dec 27 11:52:55 2023
+%DIF ADD MDPI_submission.tex                 Wed Dec 27 12:26:23 2023
 %  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
 
 %=================================================================
@@ -403,26 +403,26 @@ The SDR data were measured with a Kipp \& Zonen CM-21 pyranometer
 operating continuously at the Laboratory of Atmospheric Physics of the
 Aristotle University of Thessaloniki (\(40^\circ\,38'\,\)N,
 \(22^\circ\,57'\,\)E, \(80\,\)m~a.s.l.)\DIFdelbegin \DIFdel{in }\DIFdelend \DIFaddbegin \DIFadd{. Here, we used data for }\DIFaddend the
-period from 1993-04-13 to 2023-04-13. The monitoring site \DIFdelbegin \DIFdel{is }\DIFdelend \DIFaddbegin \DIFadd{was }\DIFaddend located
-near the city \DIFdelbegin \DIFdel{centre, and we expect to be }\DIFdelend \DIFaddbegin \DIFadd{center, thus we expect that measurements were }\DIFaddend affected by
-the urban environment\DIFaddbegin \DIFadd{, mainly by aerosols}\DIFaddend . During the study period, the
-pyranometer \DIFdelbegin \DIFdel{has been }\DIFdelend \DIFaddbegin \DIFadd{was }\DIFaddend independently calibrated three times at the
+period from \DIFdelbegin \DIFdel{1993-04-13 to 2023-04-13. }\DIFdelend \DIFaddbegin \DIFadd{13 April 1993 to 13 April 2023. }\DIFaddend The monitoring site \DIFdelbegin \DIFdel{is }\DIFdelend \DIFaddbegin \DIFadd{was
+}\DIFaddend located near the city \DIFdelbegin \DIFdel{centre, and we expect to be }\DIFdelend \DIFaddbegin \DIFadd{center, thus we expect that measurements were
+}\DIFaddend affected by the urban environment\DIFaddbegin \DIFadd{, mainly by aerosols}\DIFaddend . During the study
+period, the pyranometer \DIFdelbegin \DIFdel{has been }\DIFdelend \DIFaddbegin \DIFadd{was }\DIFaddend independently calibrated three times at the
 Meteorologisches Observatorium Lindenberg, DWD, \DIFdelbegin \DIFdel{when it was verified }\DIFdelend \DIFaddbegin \DIFadd{verifying that }\DIFaddend the
 stability of the instrument\DIFdelbegin \DIFdel{to within }\DIFdelend \DIFaddbegin \DIFadd{'s sensitivity was }\DIFaddend better than \(0.7\%\)
 relative to the initial calibration by the manufacturer. Along with SDR,
 the direct beam radiation (DNI) was also measured \DIFdelbegin \DIFdel{by }\DIFdelend \DIFaddbegin \DIFadd{with }\DIFaddend a collocated Kipp
-\& Zonen CHP-1 pyrheliometer \DIFdelbegin \DIFdel{, for the period }\DIFdelend \DIFaddbegin \DIFadd{since }\DIFaddend 2016-04-01\DIFdelbegin \DIFdel{to 2023-04-13. Although,
+\& Zonen CHP-1 pyrheliometer \DIFdelbegin \DIFdel{, for the period 2016-04-01 to 2023-04-13. Although,
 we have performed a similar analysis to the DNI data, the results are
 not presented here, as they lack the appropriate statistical
-significance, due to the sorter duration of the data. However, the }\DIFdelend \DIFaddbegin \DIFadd{. The }\DIFaddend DNI data were used as
-auxiliary data \DIFdelbegin \DIFdel{, in the
-clear sky }\DIFdelend \DIFaddbegin \DIFadd{to support the selection of appropriate thresholds in the
-clear-sky }\DIFaddend identification algorithm (CSid), which is discussed \DIFdelbegin \DIFdel{later, for the selection of the
-appropriate thresholds}\DIFdelend \DIFaddbegin \DIFadd{in Section
-\ref{CDIDalgorithm}}\DIFaddend . It is noted that \DIFdelbegin \DIFdel{despite the capability of }\DIFdelend the \DIFdelbegin \DIFdel{CSid algorithm to use the DNI as a characterization parameter, we
-haven't utilized it here, }\DIFdelend \DIFaddbegin \DIFadd{limited dataset of DNI was not
-used for the identification of clear-sky cases in the entire SDR series
-}\DIFaddend to avoid any selection bias \DIFdelbegin \DIFdel{, due to }\DIFdelend \DIFaddbegin \DIFadd{due to the }\DIFaddend unequal length of the two
+significance, due to the sorter duration of the data. However, the }\DIFdelend \DIFaddbegin \DIFadd{since 1 April 2016. The }\DIFaddend DNI data were used
+as auxiliary data \DIFdelbegin \DIFdel{, in
+the clear sky }\DIFdelend \DIFaddbegin \DIFadd{to support the selection of appropriate thresholds in
+the clear-sky }\DIFaddend identification algorithm (CSid), which is discussed \DIFdelbegin \DIFdel{later, for the selection of the
+appropriate thresholds}\DIFdelend \DIFaddbegin \DIFadd{in
+Section \ref{CDIDalgorithm}}\DIFaddend . It is noted that \DIFdelbegin \DIFdel{despite the capability of }\DIFdelend the \DIFdelbegin \DIFdel{CSid algorithm to use the DNI as a characterization parameter, we
+haven't utilized it here, }\DIFdelend \DIFaddbegin \DIFadd{limited dataset of DNI
+was not used for the identification of clear-sky cases in the entire SDR
+series }\DIFaddend to avoid any selection bias \DIFdelbegin \DIFdel{, due to }\DIFdelend \DIFaddbegin \DIFadd{due to the }\DIFaddend unequal length of the two
 datasets. There are four distinct steps in the creation of the dataset
 \DIFdelbegin \DIFdel{analysed here: }\DIFdelend \DIFaddbegin \DIFadd{analyzed here: (}\DIFaddend a)~the acquisition of radiation measurements from the
 sensors, \DIFaddbegin \DIFadd{(}\DIFaddend b)~the data quality check, \DIFaddbegin \DIFadd{(}\DIFaddend c)~the identification of ``clear
@@ -466,8 +466,8 @@ throughout the dataset, we adjusted all one-minute data to the mean
 Sun--Earth distance. Subsequently, we adjusted all measurements to the
 Total Solar Irradiance (TSI) at \(1\,\text{au}\), in order to compensate
 for the Sun's intensity variability, using a time series of satellite
-TSI observations. The TSI data we used are part of the ``NOAA Climate
-Data Record of Total Solar Irradiance'' dataset \mbox{%DIFAUXCMD
+TSI observations. The TSI data we used are part of the `NOAA Climate
+Data Record of Total Solar Irradiance' dataset \mbox{%DIFAUXCMD
 \citep{Coddington2005}}\hskip0pt%DIFAUXCMD
 .
 The initial daily values of this dataset were interpolated to match the
@@ -478,8 +478,8 @@ time step of our measurements.
 variability of SDR, we created three datasets \DIFdelbegin \DIFdel{, }\DIFdelend by characterizing each
 one-minute measurement with a corresponding \DIFdelbegin \DIFdel{sky
 condition }\DIFdelend \DIFaddbegin \DIFadd{sky-condition flag }\DIFaddend (i.e.,
-all-sky, clear-sky and cloudy-sky). To identify the \DIFdelbegin \DIFdel{clear-sky conditions we used
-a }\DIFdelend \DIFaddbegin \DIFadd{clear-cases we used
+all-sky, clear-sky\DIFaddbegin \DIFadd{, }\DIFaddend and cloudy-sky). To identify the \DIFdelbegin \DIFdel{clear-sky conditions we used
+a }\DIFdelend \DIFaddbegin \DIFadd{clear cases we used
 the }\DIFaddend method proposed by \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
 \citet{Long2000} }\hskip0pt%DIFAUXCMD
 and
@@ -494,11 +494,11 @@ subjectivity, in any method of characterization}\DIFdelend \DIFaddbegin \DIFadd{
 are site specific, \DIFdelbegin \DIFdel{it relies }\DIFdelend \DIFaddbegin \DIFadd{and they rely }\DIFaddend on a combination of thresholds and
 comparisons with ideal radiation models and statistical analysis of
 different signal metrics. The CSid algorithm was calibrated with the
-main focus, to identify the presence of clouds\DIFdelbegin \DIFdel{on
+main focus \DIFdelbegin \DIFdel{, }\DIFdelend to identify the presence of clouds\DIFdelbegin \DIFdel{on
 the sky}\DIFdelend . Despite the fine-tuning
 of the procedure, \DIFaddbegin \DIFadd{in }\DIFaddend a few marginal cases \DIFdelbegin \DIFdel{exist, that have been identified manually as }\DIFdelend false positive or false
-negative \DIFdelbegin \DIFdel{but }\DIFdelend \DIFaddbegin \DIFadd{results were identified by manual inspection. However, due to
-their small number, they }\DIFaddend cannot affect the final results of the study.
+negative \DIFdelbegin \DIFdel{but cannot }\DIFdelend \DIFaddbegin \DIFadd{results were identified by manual inspection. However, due to
+their small number, they did not }\DIFaddend affect the final results of the study.
 \DIFdelbegin %DIFDELCMD < 
 
 %DIFDELCMD < %%%
