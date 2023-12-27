@@ -39,13 +39,13 @@ radiative effects.
 Due to the significant spatial and temporal variability of the trends
 and the contributing factors, there is a constant need to monitor and
 investigate SDR at different sites in order to estimate the degree of
-variability, and its relation to the local conditions. In this study, we
-examine the trends of SDR, using ground-based measurements at
+variability and its relation to the local conditions. In this study, we
+examine the trends of SDR using ground-based measurements at
 Thessaloniki, Greece, for the period from 1993 to 2023. We re-evaluated
 and extended the dataset used by Bais et al. (2013), we applied a
 different algorithm for the identification of clear-/cloud-sky instances
 (Reno and Hansen 2016; Reno, Hansen, and Stein 2012), and we derived the
-SDR trends for the period of study, under different sky conditions
+SDR trends for the period of study under different sky conditions
 (all-sky, clear-sky, and cloudy-sky). Finally, we investigated the
 dependence of the trends on solar zenith angle and season.
 
@@ -84,8 +84,8 @@ reaches an elevation angle of $- 10^{\circ}$. The signal was converted
 to irradiance using a ramped value of the instrument's sensitivity
 between subsequent calibrations.
 
-A manual screening was performed, to remove inconsistent and erroneous
-recordings that can occur stochastically or systematically, during the
+A manual screening was performed to remove inconsistent and erroneous
+recordings that can occur stochastically or systematically during the
 continuous operation of the instruments. The manual screening was aided
 by a radiation data quality assurance procedure, adjusted for the site,
 which was based on the methods of Long and Shi (Long and Shi 2006,
@@ -102,12 +102,12 @@ with azimuth angle in the range $58^{\circ}$--$120^{\circ}$ and with SZA
 greater than $78^{\circ}$. To make the measurements comparable
 throughout the dataset, we adjusted all one-minute data to the mean
 Sun--Earth distance. Subsequently, we adjusted all measurements to the
-Total Solar Irradiance (TSI) at $1\,\text{au}$, in order to compensate
-for the Sun's intensity variability, using a time series of satellite
-TSI observations. The TSI data we used are part of the 'NOAA Climate
-Data Record of Total Solar Irradiance' dataset (Coddington et al. 2005).
-The initial daily values of this dataset were interpolated to match the
-time step of our measurements.
+total solar irradiance (TSI) at $1\,\text{au}$ in order to compensate
+for the Sun's intensity variability using a time series of satellite TSI
+observations. The TSI data we used are part of the 'NOAA Climate Data
+Record of Total Solar Irradiance' dataset (Coddington et al. 2005). The
+initial daily values of this dataset were interpolated to match the time
+step of our measurements.
 
 In order to estimate the effect of the sky conditions on the long-term
 variability of SDR, we created three datasets by characterizing each
@@ -161,7 +161,7 @@ performed on SDR observations for the period 2016--2021. During the
 optimization, eight simple clear-sky radiation models were tested
 (namely, Daneshyar--Paltridge--Proctor, Kasten--Czeplak, Haurwitz,
 Berger--Duffie, Adnot--Bourges--Campana--Gicquel, Robledo--Soler,
-Kasten, and Ineichen--Perez), with a wide range of factors. These models
+Kasten, and Ineichen--Perez) with a wide range of factors. These models
 are described in more detail by Reno, Hansen, and Stein (2012) and are
 evaluated by Reno and Hansen (2016). We found that Haurwitz's model,
 adjusted with the factor $a = 0.965$, yields one of the lowest root mean
@@ -173,33 +173,33 @@ $$\text{SDR}_{\text{CSref}} = a \times \text{SDR}_{\text{Haurwitz}} = 0.965 \tim
 
 The criteria that were used to identify whether a measurement was taken
 under clear-sky conditions are presented below. A data point is flagged
-as "clear-sky" if all criteria are satisfied; otherwise it is considered
-as "cloud-sky". Each criterion was applied for a running window of $11$
-consecutive one-minute measurements, and the characterization was
-assigned to the central datum of the window. Each parameter was
-calculated from the observations in comparison to the reference clear
-sky model. The allowable range of variation is defined by the
-model-derived value of the parameter multiplied by a factor plus an
-offset. The factors and the offsets were determined empirically, by
+as 'clear-sky' if all criteria are satisfied; otherwise, it is
+considered as 'cloud-sky'. Each criterion was applied for a running
+window of $11$ consecutive one-minute measurements, and the
+characterization was assigned to the central datum of the window. Each
+parameter was calculated from the observations in comparison to the
+reference clear-sky model. The allowable range of variation is defined
+by the model-derived value of the parameter multiplied by a factor plus
+an offset. The factors and the offsets were determined empirically, by
 manually inspecting each filter's performance on selected days and
 adjusting them accordingly during an iterative process. The criteria are
 listed below, together with the range of values within which the
 respective parameter should fall in order to raise the clear-sky flag:
 
-a)  Mean of the measured ${\overline{\text{SDR}}}_{i}$ (Eq. ).
+(a) Mean of the measured ${\overline{\text{SDR}}}_{i}$ (Equation ()):
 
 $$0.91 \times {\overline{\text{SDR}}}_{\text{CSref},i} - 20\, Wm^{- 2} < {\overline{\text{SDR}}}_{i} < 1.095 \times {\overline{\text{SDR}}}_{\text{CSref},i} + 30\, Wm^{- 2}$$
 
 -   
 
-b)  Maximum measured value $M_{i}$ (Eq. ).
+(b) Maximum measured value $M_{i}$ (Equation ()):
 
 $$1 \times M_{\text{CSref},i} - 75\, Wm^{- 2} < M_{i} < 1 \times M_{\text{CSref},i} + 75\, Wm^{- 2}$$
 
 -   
 
-c)  Length $L_{i}$ of the sequential line segments, connecting the
-    points of the $11$ SDR values (Equation ).
+(c) Length $L_{i}$ of the sequential line segments, connecting the
+    points of the $11$ SDR values (Equation ()):
 
 $$L_{i} = \sum_{i = 1}^{n - 1}\sqrt{\left( \text{SDR}_{i + 1} - \text{SDR}_{i} \right)^{2} + \left( t_{i + 1} - t_{i} \right)^{2}}$$
 
@@ -207,7 +207,7 @@ $$1 \times L_{\text{CSref},i} - 5 < L_{i} < 1.3 \times L_{\text{CSref},i} + 13$$
 
 -   where: $t_{i}$ is the time stamp of each SDR measurement.
 
-d)  Standard deviation $\sigma_{i}$ of the slope ($s_{i}$) between the
+(d) Standard deviation $\sigma_{i}$ of the slope ($s_{i}$) between the
     $11$ sequential points, normalized by the mean
     ${\overline{\text{SDR}}}_{i}$ (Eq. ).
 
@@ -223,7 +223,7 @@ $$\sigma_{i} < 1.1 \times 10^{- 4}$$
 
 -   
 
-e)  Maximum difference $X_{i}$ between the change in measured irradiance
+(e) Maximum difference $X_{i}$ between the change in measured irradiance
     and the change in clear sky irradiance over each measurement
     interval.
 

@@ -1,7 +1,7 @@
 %  LaTeX support: latex@mdpi.com
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL SUBMISSION_01/MDPI_submission.tex   Sun Nov 12 17:31:09 2023
-%DIF ADD MDPI_submission.tex                 Wed Dec 27 23:05:00 2023
+%DIF ADD MDPI_submission.tex                 Wed Dec 27 23:29:35 2023
 %  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
 
 %=================================================================
@@ -323,7 +323,9 @@ clouds} %DIF >
 \DIFdelbegin %DIFDELCMD < \hypertarget{introduction.}{%
 %DIFDELCMD < \section{Introduction.}\label{introduction.}}
 %DIFDELCMD < %%%
-\DIFdelend \DIFaddbegin \hypertarget{introduction}{%
+\DIFdelend \DIFaddbegin \vspace{+6pt}
+
+\hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 \DIFaddend 
 
@@ -376,8 +378,8 @@ Due to the significant spatial and temporal variability of the trends
 \DIFdelbegin \DIFdel{,
 }\DIFdelend and the contributing factors, there is a constant need to monitor and
 investigate SDR \DIFdelbegin \DIFdel{in }\DIFdelend \DIFaddbegin \DIFadd{at }\DIFaddend different sites in order to estimate the degree of
-variability, and its relation to the local conditions. In this study, we
-examine the trends of SDR, using ground-based measurements at
+variability \DIFdelbegin \DIFdel{, }\DIFdelend and its relation to the local conditions. In this study, we
+examine the trends of SDR \DIFdelbegin \DIFdel{, }\DIFdelend using ground-based measurements at
 Thessaloniki, Greece, for the period \DIFaddbegin \DIFadd{from }\DIFaddend 1993 to \DIFdelbegin \DIFdel{2023, as derived from a
 CM-21 pyranometer. We reevaluated }\DIFdelend \DIFaddbegin \DIFadd{2023. We re-evaluated
 }\DIFaddend and extended the dataset used by \citet{Bais2013}, we applied a
@@ -387,7 +389,7 @@ different algorithm for the identification of clear-/cloud-sky instances
 }\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
 \citep{Reno2016, Reno2012}}\hskip0pt%DIFAUXCMD
 }\DIFaddend , and we derived the SDR trends for the period
-of study, under different sky conditions (all-sky, clear-sky\DIFdelbegin \DIFdel{and
+of study \DIFdelbegin \DIFdel{, }\DIFdelend under different sky conditions (all-sky, clear-sky\DIFdelbegin \DIFdel{and
 cloud-sky}\DIFdelend \DIFaddbegin \DIFadd{, and
 cloudy-sky}\DIFaddend ). Finally, we investigated the dependence of the trends on
 solar zenith angle and season.
@@ -441,8 +443,8 @@ reaches an elevation angle of \(-10^\circ\). The signal \DIFdelbegin \DIFdel{is 
 irradiance using a ramped value of the instrument's sensitivity between
 \DIFaddbegin \DIFadd{subsequent }\DIFaddend calibrations.
 
-A manual screening was performed, to remove inconsistent and erroneous
-recordings that can occur stochastically or systematically, during the
+A manual screening was performed \DIFdelbegin \DIFdel{, }\DIFdelend to remove inconsistent and erroneous
+recordings that can occur stochastically or systematically \DIFdelbegin \DIFdel{, }\DIFdelend during the
 continuous operation of the instruments. The manual screening \DIFdelbegin \DIFdel{is }\DIFdelend \DIFaddbegin \DIFadd{was }\DIFaddend aided
 by a radiation data quality assurance procedure, adjusted for the site,
 which \DIFdelbegin \DIFdel{is }\DIFdelend \DIFaddbegin \DIFadd{was }\DIFaddend based on the methods of Long and
@@ -465,14 +467,14 @@ with azimuth angle in the range \(58^{\circ}\)--\(120^{\circ}\) and with
 SZA greater than \(78^{\circ}\). To make the measurements comparable
 throughout the dataset, we adjusted all one-minute data to the mean
 Sun--Earth distance. Subsequently, we adjusted all measurements to the
-Total Solar Irradiance (TSI) at \(1\,\text{au}\), in order to compensate
-for the Sun's intensity variability, using a time series of satellite
-TSI observations. The TSI data we used are part of the `NOAA Climate
-Data Record of Total Solar Irradiance' dataset \mbox{%DIFAUXCMD
+total solar irradiance (TSI) at \(1\,\text{au}\) in order to compensate
+for the Sun's intensity variability using a time series of satellite TSI
+observations. The TSI data we used are part of the `NOAA Climate Data
+Record of Total Solar Irradiance' dataset \mbox{%DIFAUXCMD
 \citep{Coddington2005}}\hskip0pt%DIFAUXCMD
-.
-The initial daily values of this dataset were interpolated to match the
-time step of our measurements.
+. The
+initial daily values of this dataset were interpolated to match the time
+step of our measurements.
 }
 
 \DIFadd{In order }\DIFaddend to estimate the effect of the sky conditions on the \DIFdelbegin \DIFdel{long term }\DIFdelend \DIFaddbegin \DIFadd{long-term
@@ -548,8 +550,8 @@ optimization, eight simple \DIFdelbegin \DIFdel{clear sky }\DIFdelend \DIFaddbeg
 (namely, \DIFdelbegin \DIFdel{Daneshyar-Paltridge-Proctor, Kasten-Czeplak}\DIFdelend \DIFaddbegin \DIFadd{Daneshyar--Paltridge--Proctor, Kasten--Czeplak}\DIFaddend , Haurwitz,
 \DIFdelbegin \DIFdel{Berger-Duffie, Adnot-Bourges-Campana-Gicquel, Robledo-Soler,
 Kastenand
-Ineichen-Perez}\DIFdelend \DIFaddbegin \DIFadd{Berger--Duffie, Adnot--Bourges--Campana--Gicquel, Robledo--Soler,
-Kasten, and Ineichen--Perez}\DIFaddend ), with a wide range of factors. These models
+Ineichen-Perez) , }\DIFdelend \DIFaddbegin \DIFadd{Berger--Duffie, Adnot--Bourges--Campana--Gicquel, Robledo--Soler,
+Kasten, and Ineichen--Perez) }\DIFaddend with a wide range of factors. These models
 are described in more \DIFdelbegin \DIFdel{details }\DIFdelend \DIFaddbegin \DIFadd{detail }\DIFaddend by \citet{Reno2012} and \DIFaddbegin \DIFadd{are }\DIFaddend evaluated by
 \citet{Reno2016}. We found \DIFdelbegin \DIFdel{, }\DIFdelend that Haurwitz's model, adjusted with the
 factor \(a = 0.965\)\DIFaddbegin \DIFadd{, }\DIFaddend yields one of the lowest root mean squared errors
@@ -566,8 +568,8 @@ zenith angle (SZA).
 
 The criteria that were used to identify whether a measurement was taken
 under clear-sky conditions are presented below. A data point is flagged
-as ``clear-sky'' if all criteria are satisfied\DIFdelbegin \DIFdel{, }\DIFdelend \DIFaddbegin \DIFadd{; }\DIFaddend otherwise it is
-considered \DIFdelbegin \DIFdel{to be }\DIFdelend \DIFaddbegin \DIFadd{as }\DIFaddend ``cloud-sky''. Each criterion was applied for a running
+as \DIFdelbegin \DIFdel{``}\DIFdelend \DIFaddbegin \DIFadd{`}\DIFaddend clear-sky\DIFdelbegin \DIFdel{'' }\DIFdelend \DIFaddbegin \DIFadd{' }\DIFaddend if all criteria are satisfied\DIFdelbegin \DIFdel{, otherwise}\DIFdelend \DIFaddbegin \DIFadd{; otherwise, }\DIFaddend it is
+considered \DIFdelbegin \DIFdel{to be ``}\DIFdelend \DIFaddbegin \DIFadd{as `}\DIFaddend cloud-sky\DIFdelbegin \DIFdel{''}\DIFdelend \DIFaddbegin \DIFadd{'}\DIFaddend . Each criterion was applied for a running
 window of \(11\) consecutive one-minute measurements, and the
 characterization \DIFdelbegin \DIFdel{is }\DIFdelend \DIFaddbegin \DIFadd{was }\DIFaddend assigned to the central \DIFdelbegin \DIFdel{value }\DIFdelend \DIFaddbegin \DIFadd{datum }\DIFaddend of the window. Each
 parameter \DIFdelbegin \DIFdel{, was calculated both }\DIFdelend \DIFaddbegin \DIFadd{was calculated }\DIFaddend from the observations \DIFdelbegin \DIFdel{and }\DIFdelend \DIFaddbegin \DIFadd{in comparison to }\DIFaddend the
@@ -580,19 +582,23 @@ adjusting them accordingly during an iterative process. The criteria are
 respective parameter should fall in order to raise the clear-sky flag}\DIFaddend :
 
 \begin{enumerate}
-\def\labelenumi{\alph{enumi})}
-\tightlist
+\def\DIFdelbegin %DIFDELCMD < \labelenumi{\alph{enumi})}
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \labelenumi{(\alph{enumi})}
+\DIFaddend \tightlist
 \item
-  Mean of the measured \(\overline{\text{SDR}}_i\) (Eq.
-  \ref{eq:MeanVIP}). \begin{equation}
+  Mean of the measured \(\overline{\text{SDR}}_i\)
+  (\DIFdelbegin \DIFdel{Eq.
+  \ref{eq:MeanVIP}). }\DIFdelend \DIFaddbegin \DIFadd{Equation~(\ref{eq:MeanVIP})): }\DIFaddend \begin{equation}
   0.91 \times \overline{\text{SDR}}_{\text{CSref},i} - 20\,Wm^{-2}
   < \overline{\text{SDR}}_i <
   1.095 \times \overline{\text{SDR}}_{\text{CSref},i} + 30\,Wm^{-2}
   \label{eq:MeanVIP}
   \end{equation}
 \item
-  Maximum measured value \(M_{i}\) (Eq.~\ref{eq:MaxVIP}).
-  \begin{equation}
+  Maximum measured value \(M_{i}\) (\DIFdelbegin \DIFdel{Eq.~\ref{eq:MaxVIP}).
+  }\DIFdelend \DIFaddbegin \DIFadd{Equation~(\ref{eq:MaxVIP})):
+  }\DIFaddend \begin{equation}
   1 \times M_{\text{CSref},i} - 75\,Wm^{-2}
   < M_{i} <
   1 \times M_{\text{CSref},i} + 75\,Wm^{-2}
@@ -600,7 +606,7 @@ respective parameter should fall in order to raise the clear-sky flag}\DIFaddend
   \end{equation}
 \item
   Length \(L_i\) of the sequential line segments, connecting the points
-  of the \(11\) SDR values (\DIFdelbegin \DIFdel{Eq. }\DIFdelend \DIFaddbegin \DIFadd{Equation }\DIFaddend \ref{eq:VILeq}). \begin{equation}
+  of the \(11\) SDR values (\DIFdelbegin \DIFdel{Eq. \ref{eq:VILeq}). }\DIFdelend \DIFaddbegin \DIFadd{Equation~(\ref{eq:VILeq})): }\DIFaddend \begin{equation}
   L_i = \sum_{i=1}^{n-1}\sqrt{\left ( \text{SDR}_{i+1} - \text{SDR}_{i}\right )^2 + \left ( t_{i+1} - t_i \right )^2}
   \label{eq:VILeq}
   \end{equation} \begin{equation}
@@ -936,8 +942,7 @@ reported for China by \mbox{%DIFAUXCMD
 . Note that SZAs less than
 \(25^\circ\) can only occur }\DIFaddend during the warm period of the year \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
 \citep{Wang2021}}\hskip0pt%DIFAUXCMD
-.
-}\DIFdelend \DIFaddbegin \DIFadd{around
+. }\DIFdelend \DIFaddbegin \DIFadd{around
 noon when clear skies are more frequent. The increasing trend with SZA
 is likely caused by the increased attenuation of SDR with SZA. The
 effect is larger when aerosol and/or cloud layers are optically thicker,
@@ -959,8 +964,7 @@ layer.
 
 \DIFaddend For cloudy-sky conditions (Figure~\ref{fig:szatrends-3}), we \DIFdelbegin \DIFdel{can not }\DIFdelend \DIFaddbegin \DIFadd{cannot
 }\DIFaddend discern any significant dependence of the SDR trend with SZA \DIFdelbegin \DIFdel{. For SZAs \(16^\circ\)
-- \(50^\circ\), the
-trends range within about \(\pm 0.2\,\%/y\), with a
+- \(50^\circ\), the trends range within about \(\pm 0.2\,\%/y\), with a
 weak statistical significance. Between \(50^\circ\) and \(75^\circ\) SZA
 the trends for the period before noon are stronger and negative, possibly }\DIFdelend \DIFaddbegin \DIFadd{as the
 variability of irradiance is dominated by the cloud effects leading to

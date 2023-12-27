@@ -392,7 +392,7 @@ To calculate the reference clear-sky $\text{SDR}_\text{CSref}$, we used the $\te
 where $\theta$ is the SZA.
 
 The adjustment was made with a factor $a$ (Equation\ (\ref{eq:ahau})), which was estimated through an iterative optimization process, as described by @Long2000 and @Reno2016.
-The target of the optimization was the minimization of a function $f(a)$ (Equation\ (\ref{eq:minf})) and was accomplished with the algorithmic function 'optimise', which is an implementation based on the work of @Brent1973, from the library 'stats' of the R programming language [@RCT2023].
+The target of the optimization was the minimization of a function $f(a)$ (Equation\ \ref{eq:minf}) and was accomplished with the algorithmic function 'optimise', which is an implementation based on the work of @Brent1973, from the library 'stats' of the R programming language [@RCT2023].
 <!-- cost function -->
 \begin{equation}
 f(a) = \frac{1}{n}\sum_{i=1}^{n} ( \text{SDR}_{\text{CSid},i} - a \times \text{SDR}_{\text{testCSref},i} )^2 \label{eq:minf}
@@ -404,7 +404,7 @@ The optimization and the selection of the clear-sky reference model was performe
 During the optimization, eight simple clear-sky radiation models were tested (namely, Daneshyar--Paltridge--Proctor, Kasten--Czeplak, Haurwitz, Berger--Duffie, Adnot--Bourges--Campana--Gicquel, Robledo--Soler, Kasten, and Ineichen--Perez), with a wide range of factors.
 These models are described in more detail by @Reno2012 and are evaluated by @Reno2016.
 We found that Haurwitz's model, adjusted with the factor $a = `r signif(alpha,3)`$, yields one of the lowest root mean squared errors (RMSE), and the procedure manages to successfully characterize the majority of the data.
-Thus, our clear sky reference is derived by Equation\ (\ref{eq:ahau}):
+Thus, our clear sky reference is derived by Equation\ \ref{eq:ahau}:
 \begin{equation}
 \text{SDR}_\text{CSref} = a \times \text{SDR}_\text{Haurwitz} = `r signif(alpha,3)` \times 1098 \times \cos(\theta) \times \exp \left( \frac{ - 0.057}{\cos(\theta)} \right) \label{eq:ahau}
 \end{equation}
