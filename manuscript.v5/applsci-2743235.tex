@@ -911,11 +911,11 @@ Conceptualization, methodology, software, data analysis and original writing---d
 \funding{This research received no external funding.}
 
 \institutionalreview{\hl{  } %MDPI: In this section, you should add the Institutional Review Board Statement and approval number, if relevant to your study. You might choose to exclude this statement if the study did not require ethical approval. Please note that the Editorial Office might ask you for further information. Please add “The study was conducted in accordance with the Declaration of Helsinki, and approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies involving humans. OR “The animal study protocol was approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies involving animals. OR “Ethical review and approval were waived for this study due to REASON (please provide a detailed justification).” OR “Not applicable” for studies not involving humans or animals.
-Not applicable}  %Natsis: section added
+Not applicable.}  %Natsis: section added
 
 \informedconsent{\hl{  } %MDPI: Any research article describing a study involving humans should contain this statement. Please add ``Informed consent was obtained from all subjects involved in the study.'' OR ``Patient consent was waived due to REASON (please provide a detailed justification).'' OR ``Not applicable'' for studies not involving humans. You might also choose to exclude this statement if the study did not involve humans.
 %Written informed consent for publication must be obtained from participating patients who can be identified (including by the patients themselves). Please state ``Written informed consent has been obtained from the patient(s) to publish this paper'' if applicable.
-Not applicable} %Natsis: section added
+Not applicable.} %Natsis: section added
 
 \dataavailability{Data as daily sums are available through the WRDC
 database, \url{http://wrdc.mgo.rssi.ru}. One-minute data are available on
@@ -1183,19 +1183,43 @@ Reno, M.J.; Hansen, C.W.
 \newblock {\em Renew. Energy} {\bf 2016}, {\em 90},~520--531.
 \newblock {\url{https://doi.org/10/gq3sbg}}.
 
-\bibitem[Reno et~al.(2012)Reno, Hansen, and Stein]{Reno2012a}
+\bibitem[Reno et~al.(2012)Reno, Hansen, and Stein]{Reno2012} %Natsis: changed key
 \colorbox{green}{Reno,} %MDPI: Refs. 18 and 26 are duplicated. Please remove duplicated references and rearrange all the references to appear in numerical order. Please ensure that there are no duplicated references.
  M.J.; Hansen, C.W.; Stein, J.S.
 \newblock {\emph{Global Horizontal Irradiance Clear Sky Models: Implementation and
   Analysis}};
-\newblock \hl{Technical report;}  %MDPI: Please confirm if it can be removed. Please add the name of the publisher and their location.
+\newblock \hl{Technical report;}  %MDPI: Please confirm if it can be removed. Please add the name of the publisher and their location. %Natsis: the highlighted part can be removed
  2012.
+%Natsis: Please add the following fields to the citation:
+%publisher: {Sandia National Laboratories}
+%location:  {Albuquerque, New Mexico}
+
+% If it is helpfull, this is the full bibitex text:
+% @TechReport{Reno2012,
+%	author           = {Reno, Matthew J. and Hansen, Clifford W. and Stein, Joshua S.},
+%	title            = {{Global Horizontal Irradiance Clear Sky Models: Implementation and Analysis}},
+%	year             = {2012},
+%	address          = {Albuquerque, New Mexico},
+%	month            = mar,
+%	number           = {SAND2012-2389, 1039404},
+%	doi              = {10.2172/1039404},
+%	langid           = {english},
+%	language         = {English},
+%	pages            = {1--66},
+%	school           = {{Sandia National Laboratories}},
+%	shorttitle       = {Global horizontal irradiance clear sky models},
+%	url              = {https://www.osti.gov/servlets/purl/1039404/},
+%	urldate          = {2022-10-30},
+%}
+
+
+
 
 \bibitem[Long and Shi(2006)]{Long2006}
 Long, C.N.; Shi, Y.
 \newblock \emph{The QCRad Value Added Product: Surface Radiation Measurement Quality
   Control Testing, Including Climatology Configurable Limits};
-\newblock \hl{Technical Report DOE/SC-ARM/TR-074;} %MDPI: Please confirm if it can be removed. Please add the name of the publisher and their location.
+\newblock \hl{Technical Report DOE/SC-ARM/TR-074;} %MDPI: Please confirm if it can be removed. Please add the name of the publisher and their location. %Natsis: the highligted part can be removed. Unfortunetely the report doesn't state location and publisher properly.
   2006.
 
 \bibitem[Long and Shi(2008)]{Long2008a}
@@ -1209,9 +1233,13 @@ Long, C.N.; Shi, Y.
 Coddington, O.; Lean, J.L.; Lindholm, D.; Pilewskie, P.; Snow, M.; {NOAA CDR
   Program}.
 \newblock \emph{{NOAA} Climate Data Record ({CDR}) of Total Solar Irradiance ({TSI}),
-  {NRLTSI} Version 2}; \hl{{D}aily;} %MDPI: Please confirm if it can be removed. Please add the name of the publisher and their location.
+  {NRLTSI} Version 2}; \hl{{D}aily;} %MDPI: Please confirm if it can be removed. Please add the name of the publisher and their location. %Natsis: the highlighted part can be remove, please see bellow
   2005.
 \newblock {\url{https://doi.org/10.7289/V55B00C1}}.
+
+%Natsis: This is the official citation information. I'm not sure how to format the citation at this point, please feel free to edit it appropriately. The publisher is: NOAA National Centers for Environmental Information
+% Cite as: Odele Coddington, Judith L. Lean, Doug Lindholm, Peter Pilewskie, Martin Snow, and NOAA CDR Program (2015): NOAA Climate Data Record (CDR) of Total Solar Irradiance (TSI), NRLTSI Version 2. [indicate subset used]. NOAA National Centers for Environmental Information. doi:10.7289/V55B00C1 [access date].
+
 
 \bibitem[Haurwitz(1945)]{Haurwitz1945}
 Haurwitz, B.
@@ -1236,6 +1264,9 @@ Brent, R.P.
 \newblock {\em R: A Language and Environment for Statistical Computing};
 \newblock R Foundation for Statistical Computing: Vienna, Austria,  2023.
 
+
+
+%Natsis: the next reference can be removed
 \bibitem[Reno et~al.(2012)Reno, Hansen, and Stein]{Reno2012}
 \colorbox{red}{Reno,} 
  M.J.; Hansen, C.W.; Stein, J.S.
@@ -1243,7 +1274,9 @@ Brent, R.P.
   Analysis};
 \newblock \hl{Technical Report SAND2012-2389, 1039404;} %MDPI: Please confirm if it can be removed. Please add the name of the publisher and their location.
   2012.
-\newblock {\url{https://doi.org/10/gq5npv}}.
+\newblock {\url{https://doi.org/10/gq5npv}}. %Natsis the whole reference can be removed 
+
+
 
 \bibitem[Gardner et~al.(1980)Gardner, Harvey, and Phillips]{Gardner1980}
 Gardner, G.; Harvey, A.C.; Phillips, G.D.A.

@@ -973,7 +973,7 @@ for (adb in database) {
             ## translate(sub("_.*","",adb))
             legend("bottomleft", 0, paste0("(",letters[lec],")"),
                    # cex   = 1.1,
-                   cex   = 2,
+                   cex   = 1.70,
                    bty   = "n",
                    xjust = 0.5,      # 0.5 means center adjusted
                    yjust = 0.5,      # 0.5 means center adjusted
@@ -1202,7 +1202,7 @@ for (adb in database) {
             ## tag plot with type
             ## translate(sub("_.*","",adb))
             legend("bottomleft", 0, paste0("(",letters[lec],")"),
-                   cex   = 2,
+                   cex   = 1.70,
                    bty   = "n",
                    xjust = 0.5,      # 0.5 means center adjusted
                    yjust = 0.5,      # 0.5 means center adjusted

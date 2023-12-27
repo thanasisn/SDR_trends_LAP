@@ -607,7 +607,8 @@ for (avar in vars) {
                 # translate(type)
                 legend("bottomright", 0, paste0("(", letters[lec], ")"),
                        bty   = "n",
-                       cex   = .8 * ccex,
+                       # cex   = .8 * ccex,
+                       cex   = 1.7,
                        xjust = 0.5,      # 0.5 means center adjusted
                        yjust = 0.5,      # 0.5 means center adjusted
                        x.intersp = -0.5, # adjust character interspacing as you like to effect box width
