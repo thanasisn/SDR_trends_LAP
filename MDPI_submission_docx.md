@@ -361,14 +361,15 @@ increasing, the anomalies values are above the climatology and vice
 versa. Overall, for all- and cloudy-sky conditions (Figures  and ) we
 observe periods with anomalies diverging from the climatological values,
 each lasting for several years. These fluctuations are probably within
-the natural variability and no distinct changes are identified. The
+the natural variability, and no distinct changes are identified. The
 pattern in both datasets is similar, suggesting prevalence in cloudy
 skies over Thessaloniki. For clear skies (Figure ) the distinct change
 in 2004 is now clearer. The most likely reason for this change is the
 monotonic reduction of aerosols in Thessaloniki. In that year, there was
 a change in the rate of decrease in aerosol optical depth, as
 illustrated in Figure 7 of Siomos et al. (2020). This abrupt change in
-CUSUMs lasted until about 2010 when the anomalies become again variable.
+CUSUMs lasted until about 2010, when the anomalies become again
+variable.
 
 ## 3.2 Effects of the Solar Zenith Angle on SDR
 
@@ -397,15 +398,15 @@ and/or cloud layers are optically thicker, therefore, decreases in
 aerosol and clouds through the study period will result in larger
 positive trends of SDR at larger SZAs.
 
-Under clear skies (Figures ), the trends are smaller and less variable,
+Under clear skies (Figure ), the trends are smaller and less variable,
 ranging between $0.1$ and $0.15\,\%/y$ up to $77^{\circ}$ SZA. At higher
-SZAs and in the afternoon hours there a sharp increase in the trend up
-to $0.3\,\%/y$, which may have been caused by the long path length of
+SZAs and in the afternoon hours, there is a sharp increase in the trend
+up to $0.3\,\%/y$, which may have been caused by the long path length of
 radiation through the atmosphere as discussed above for the all-sky
 conditions. The small differences in the trend between morning and
 afternoon between $35^{\circ}$ and $60^{\circ}$ SZA is likely a result
 of less attenuation of SDR in the morning hours due to lesser amounts of
-aerosols and shallower boundary layer.
+aerosols and a shallower boundary layer.
 
 For cloudy-sky conditions (Figure ), we cannot discern any significant
 dependence of the SDR trend with SZA as the variability of irradiance is
