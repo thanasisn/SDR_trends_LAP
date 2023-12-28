@@ -1,7 +1,7 @@
 %  LaTeX support: latex@mdpi.com
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL SUBMISSION_01/MDPI_submission.tex   Sun Nov 12 17:31:09 2023
-%DIF ADD MDPI_submission.tex                 Thu Dec 28 00:04:58 2023
+%DIF ADD MDPI_submission.tex                 Thu Dec 28 19:08:42 2023
 %  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
 
 %=================================================================
@@ -781,7 +781,7 @@ the trend \DIFdelbegin \DIFdel{of }\DIFdelend \DIFaddbegin \DIFadd{in }\DIFadden
 \caption{\label{tab:trendtable}Trends in SDR daily means for different sky conditions for the period \DIFdelbeginFL \DIFdelFL{1993 - 2023.}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{1993--2023.}\DIFaddendFL }
 \begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X\DIFaddbeginFL \DIFaddFL{>}{\raggedleft}\DIFaddFL{X>}{\raggedleft}\DIFaddFL{X}\DIFaddendFL }
 \toprule
-Sky conditions & Trend [\%/year] & \DIFdelbeginFL \DIFdelFL{Statistical signif.}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Trend S.E. ($2\sigma$) }& \DIFaddFL{Pearson correl. }& \DIFaddFL{Trend }\DIFaddendFL [\DIFdelbeginFL \DIFdelFL{\%}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{W/m\textsuperscript{2}/year}\DIFaddendFL ] & Days\DIFdelbeginFL \DIFdelFL{with data}\DIFdelendFL \\
+Sky conditions & Trend [\%/year] & \DIFdelbeginFL \DIFdelFL{Statistical signif. }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Trend S.E. ($2\sigma$) }& \DIFaddFL{Pearson correl. }& \DIFaddFL{Trend }\DIFaddendFL [\DIFdelbeginFL \DIFdelFL{\%}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{W/m\textsuperscript{2}/year}\DIFaddendFL ] & Days\DIFdelbeginFL \DIFdelFL{with data}\DIFdelendFL \\
 \midrule
 All skies & \DIFdelbeginFL \DIFdelFL{0.376 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.380 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{100.00 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.120 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{10256}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.091 }& \DIFaddFL{1.460 }& \DIFaddFL{10251}\DIFaddendFL \\
 Clear skies & \DIFdelbeginFL \DIFdelFL{0.349 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.097 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{100.00 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.033 }\DIFaddendFL & \DIFdelbeginFL \DIFdelFL{10256}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0.140 }& \DIFaddFL{0.501 }& \DIFaddFL{2684}\DIFaddendFL \\
@@ -805,7 +805,7 @@ Cloudy skies & \DIFdelbeginFL \DIFdelFL{-0.276 }\DIFdelendFL \DIFaddbeginFL \DIF
 Although the year-to-year variability of the anomalies (Figure
 \ref{fig:trendALL} and Figures\DIFdelbegin \DIFdel{\ref{fig:trendCLEAR},
 }\DIFdelend \DIFaddbegin \DIFadd{~\ref{fig:trendCLEAR} and
-}\DIFaddend \ref{fig:trendCLOUD} in Appendix), shows a rather homogeneous \DIFdelbegin \DIFdel{behaviour}\DIFdelend \DIFaddbegin \DIFadd{behavior}\DIFaddend ,
+}\DIFaddend \ref{fig:trendCLOUD} in Appendix) \DIFdelbegin \DIFdel{, }\DIFdelend shows a rather homogeneous \DIFdelbegin \DIFdel{behaviour}\DIFdelend \DIFaddbegin \DIFadd{behavior}\DIFaddend ,
 plots of the cumulative sums (CUSUM) \citep{Regier2019} of the anomalies
 can reveal different structures in the records of all three sky
 conditions. \DIFdelbegin \DIFdel{In the cases of all-sky and clear-sky conditions (Figures
@@ -818,7 +818,7 @@ until 1997, followed by an upward part until 2005, and a long decline
 until 2020, with a small positive slope until the present. For a }\DIFdelend \DIFaddbegin \DIFadd{For time series with a }\DIFaddend uniform trend, we would expect the
 CUSUMs of the anomalies to have a symmetric `V' shape \DIFaddbegin \DIFadd{centered around
 the middle of the series}\DIFaddend . This would indicate that the anomalies are
-evenly distributed around the climatological mean, and for a positive
+evenly distributed around the climatological mean, and\DIFaddbegin \DIFadd{, }\DIFaddend for a positive
 uniform trend, the first half \DIFdelbegin \DIFdel{to be }\DIFdelend \DIFaddbegin \DIFadd{is }\DIFaddend below and the \DIFdelbegin \DIFdel{other }\DIFdelend \DIFaddbegin \DIFadd{second }\DIFaddend half above the
 climatological mean. In our case, there is a more complex evolution of
 the anomalies. \DIFdelbegin \DIFdel{Another
@@ -831,17 +831,17 @@ this relation due to the great difference in the
 number of
 observational data between the two datasets
 (Table~\ref{tab:trendtable})}\DIFdelend \DIFaddbegin \DIFadd{For all skies (Figure~\ref{fig:cusummonth-1}), we observe
-three rather distinct periods: a) a downward part between the start of
+three rather distinct periods: (a) a downward part between the start of
 the datasets and about 2000, denoting that all anomalies are negative,
-thus below the climatology; b) a relatively steady part lasting for
-almost 20 years suggesting little variability in SDR anomalies; and c) a
-steep upward part to the present indicating anomalies above the
-climatology. The CUSUMs for cloudy-skies
-(Figure~\ref{fig:cusummonth-3}), show a similar behavior with some
-short-term differences that do not change the overall pattern. For clear
-skies (Figure~\ref{fig:cusummonth-2}), a monotonic downward tendency is
+thus below the climatology; (b) a relatively steady part lasting for
+almost 20 years suggesting little variability in SDR anomalies; and (c)
+a steep upward part to the present, indicating anomalies above the
+climatology. The CUSUMs for cloudy skies (Figure~\ref{fig:cusummonth-3})
+show a similar behavior with some short-term differences that do not
+change the overall pattern. For clear skies
+(Figure~\ref{fig:cusummonth-2}), a monotonic downward tendency is
 evident until 2004, suggesting that the anomalies are all negative.
-After 2004 the anomalies turn to positive at a fast rate for about five
+After 2004, the anomalies turn positive at a fast rate for about five
 years and at a slower rate thereafter}\DIFaddend .
 
 \begin{figure}[h!]
@@ -883,19 +883,18 @@ about one third of the prior period. For
 cloudy-sky conditions
 }\DIFdelend \DIFaddbegin \DIFadd{For
 clear skies }\DIFaddend (Figure~\DIFdelbegin \DIFdel{\ref{fig:cusumnotrendmonthly-3}) the period 1997 - 2008 is dominated by positive CUSUMs, suggesting a reduced effect of clouds on
-SDR. From 1997 to mid-2000s CUSUMs are increasing, likely due to a
-continuous decrease in the
-optical thickness of clouds, followed by a
-period of rapid increase (within 3 years) in cloud optical thickness
+SDR. From 1997 to mid-2000s CUSUMs are increasing, likely due to a continuous decrease in the optical thickness of clouds, followed by a
+period of rapid increase (within 3 years) in
+cloud optical thickness
 lasting up to 2008. The following stable period spans for about 15 years
 up to 2021 when CUSUMs start increasing again }\DIFdelend \DIFaddbegin \DIFadd{\ref{fig:cusumnotrendmonthly-2}) the distinct change
 in 2004 is now clearer. The most likely reason for this change is the
-monotonic reduction of aerosols in Thessaloniki. At that year there a
-change in the rate of decrease in aerosol optical depth as illustrated
-in Figure 7 of \mbox{%DIFAUXCMD
+monotonic reduction of aerosols in Thessaloniki. In that year, there was
+a change in the rate of decrease in aerosol optical depth, as
+illustrated in Figure 7 of \mbox{%DIFAUXCMD
 \citet{Siomos2020}}\hskip0pt%DIFAUXCMD
-. This abrupt change in CUSUMs lasts
-until about 2010 when the anomalies become again variable}\DIFaddend .
+. This abrupt change in
+CUSUMs lasted until about 2010 when the anomalies become again variable}\DIFaddend .
 
 \begin{figure}[h!]
     \begin{adjustwidth}{-\extralength}{0cm}
@@ -952,7 +951,8 @@ reported for China by \mbox{%DIFAUXCMD
 . Note that SZAs less than
 \(25^\circ\) can only occur }\DIFaddend during the warm period of the year \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
 \citep{Wang2021}}\hskip0pt%DIFAUXCMD
-. }\DIFdelend \DIFaddbegin \DIFadd{around
+.
+}\DIFdelend \DIFaddbegin \DIFadd{around
 noon when clear skies are more frequent. The increasing trend with SZA
 is likely caused by the increased attenuation of SDR with SZA. The
 effect is larger when aerosol and/or cloud layers are optically thicker,
