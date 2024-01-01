@@ -639,20 +639,19 @@ CUSUM plots using anomalies after the long-term linear trend is removed.
 With this approach, periods when the CUSUMs diverge from zero can be
 interpreted as a systematic variation of SDR from the climatological
 mean. When the CUSUM is increasing, the anomalies values are above the
-climatology and vice versa. Overall, for all- and cloudy-sky conditions
-(Figures~\ref{fig:cusumnotrendmonthly-1}
-and~\ref{fig:cusumnotrendmonthly-3}) we observe periods with anomalies
-diverging from the climatological values, each lasting for several
-years. These fluctuations are probably within the natural variability,
-and no distinct changes are identified. The pattern in both datasets is
-similar, suggesting prevalence in cloudy skies over Thessaloniki. For
-clear skies (Figure~\ref{fig:cusumnotrendmonthly-2}) the distinct change
-in 2004 is now clearer. The most likely reason for this change is the
-monotonic reduction of aerosols in Thessaloniki. In that year, there was
-a change in the rate of decrease in aerosol optical depth, as
-illustrated in Figure 7 of \citet{Siomos2020}. This abrupt change in
-CUSUMs lasted until about 2010, when the anomalies become again
-variable.
+climatology, and vice versa. Overall, for all- and cloudy-sky conditions
+(Figure~\ref{fig:cusumnotrendmonthly}a,c), we observe periods with
+anomalies diverging from the climatological values, each lasting for
+several years. These fluctuations are probably within the natural
+variability, and no distinct changes are identified. The pattern in both
+datasets is similar, suggesting prevalence in cloudy skies over
+Thessaloniki. For clear skies (Figure~\ref{fig:cusumnotrendmonthly}b),
+the distinct change in 2004 is now clearer. The most likely reason for
+this change is the monotonic reduction of aerosols in Thessaloniki. In
+that year, there was a change in the rate of decrease in aerosol optical
+depth, as illustrated in Figure 7 of \citet{Siomos2020}. This abrupt
+change in CUSUMs lasted until about 2010, when the anomalies become
+again variable.
 
 \begin{figure}[h!]
     \begin{adjustwidth}{-\extralength}{0cm}
@@ -664,41 +663,41 @@ variable.
             % \subfloat[Cloudy skies.\label{fig:cusumnotrendmonthly-3}]
                 {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-9} }
         }
-        \caption{Cumulative sum plots of monthly SDR anomalies in (\%) for different sky conditions after removing the long-term linear trend: (a) all skies; (b) clear skies; (c) cloudy skies.}\label{fig:cusumnotrendmonthly}
-\end{adjustwidth}
+    \end{adjustwidth}
+    \caption{Cumulative sum plots of monthly SDR anomalies in (\%) for different sky conditions after removing the long-term linear trend: (a) all skies; (b) clear skies; (c) cloudy skies.}\label{fig:cusumnotrendmonthly}
 \end{figure}
 
 \hypertarget{effects-of-the-solar-zenith-angle-on-sdr}{%
 \subsection{Effects of the Solar Zenith Angle on
 SDR}\label{effects-of-the-solar-zenith-angle-on-sdr}}
 
-The solar zenith angle is a major factor affecting the SDR, since
-increases in SZA leads to enhancement of the radiation path in the
-atmosphere, especially in urban environments with human activities
-emitting aerosols \citep{Wang2021}. In order to estimate the effect of
-SZA on the SDR trends, we grouped the data in bins of \(1^\circ\) SZA,
-and calculated the overall trend for each bin, separately for the daily
-periods before noon and after noon (Figure~\ref{fig:szatrends}).
-Although there are seasonal dependencies of the minimum SZA (see
-Appendix, Figure~\ref{fig:SZAtrendSeason}), these dependencies are not
-discussed further.
+The solar zenith angle is a major factor affecting the SDR, as increases
+in SZA leads to enhancement of the radiation path in the atmosphere,
+especially in urban environments with human activities emitting aerosols
+\citep{Wang2021}. In order to estimate the effect of SZA on the SDR
+trends, we grouped the data in bins of \(1^\circ\) SZA and calculated
+the overall trend for each bin separately for the daily periods before
+noon and after noon (Figure~\ref{fig:szatrends}). Although there are
+seasonal dependencies of the minimum SZA (see Appendix \ref{appendix},
+Figure~\ref{fig:SZAtrendSeason}), these dependencies are not discussed
+further.
 
-For all-sky conditions the brightening effect of SDR (positive trend)
-increases with SZAs (Figures~\ref{fig:szatrends-1}) ranging from about
+For all-sky conditions, the brightening effect of SDR (positive trend)
+increases with SZAs (Figure~\ref{fig:szatrends}a), ranging from about
 \(0.1\,\%/y\) to about \(0.7\,\%/y\) for the statistically significant
 trends. The trends in the morning and afternoon hours are more or less
-consistent with small differences at small SZAs which can be attributed
+consistent with small differences at small SZAs, which can be attributed
 to effects on clear sky SDR from systematic diurnal patterns of aerosols
-during the warm period of the year, consistently with the results
-reported for China by \citet{Wang2021}. Note that SZAs less than
-\(25^\circ\) can only occur during the warm period of the year around
-noon when clear skies are more frequent. The increasing trend with SZA
-is likely caused by the increased attenuation of SDR with SZA. The
-effect is larger when aerosol and/or cloud layers are optically thicker,
-therefore, decreases in aerosol and clouds through the study period will
-result in larger positive trends of SDR at larger SZAs.
+during the warm period of the year, consistent with the results reported
+for China by \citet{Wang2021}. Note that SZAs less than \(25^\circ\) can
+only occur during the warm period of the year around noon when clear
+skies are more frequent. The increasing trend with SZA is likely caused
+by the increased attenuation of SDR with SZA. The effect is larger when
+aerosol and/or cloud layers are optically thicker; therefore, decreases
+in aerosol and clouds through the study period will result in larger
+positive trends of SDR at larger SZAs.
 
-Under clear skies (Figure~\ref{fig:szatrends-2}), the trends are smaller
+Under clear skies (Figure~\ref{fig:szatrends}b), the trends are smaller
 and less variable, ranging between \(0.1\) and \(0.15\,\%/y\) up to
 \(77^\circ\) SZA. At higher SZAs and in the afternoon hours, there is a
 sharp increase in the trend up to \(0.3\,\%/y\), which may have been
@@ -709,42 +708,42 @@ trend between morning and afternoon between \(35^\circ\) and
 morning hours due to lesser amounts of aerosols and a shallower boundary
 layer.
 
-For cloudy-sky conditions (Figure~\ref{fig:szatrends-3}), we cannot
-discern any significant dependence of the SDR trend with SZA as the
+For cloudy-sky conditions (Figure~\ref{fig:szatrends}c), we cannot
+discern any significant dependence of the SDR trend with SZA, as the
 variability of irradiance is dominated by the cloud effects leading to
 insignificant trends. Statistically significant trends appear only in
 the afternoon and for SZAs larger than \(60^\circ\). The sharp increase
 of the trend at SZAs larger than \(\sim{75}^{\circ}\), observed also for
 clear skies, is probably associated with stronger attenuation by clouds
-under oblique incidence angles, which result also in smaller
+under oblique incidence angles, which also result in smaller
 variability.
 
 \begin{figure}[h!]
     \begin{adjustwidth}{-\extralength}{0cm}
         {\centering 
-            \subfloat[All skies.\label{fig:szatrends-1}]
+            % \subfloat[All skies.\label{fig:szatrends-1}]
                 {\includegraphics[width=.32\linewidth]{./images/SzaTrends-1}}\hfill
-            \subfloat[Clear skies.\label{fig:szatrends-2}]
+            % \subfloat[Clear skies.\label{fig:szatrends-2}]
                 {\includegraphics[width=.32\linewidth]{./images/SzaTrends-4}}\hfill
-            \subfloat[Cloudy skies.\label{fig:szatrends-3}]
+            % \subfloat[Cloudy skies.\label{fig:szatrends-3}]
                 {\includegraphics[width=.32\linewidth]{./images/SzaTrends-7}}
         }
-        \caption{Long term trends of daily SDR as a function of SZA for (a) all-sky, (b) clear-sky and (c) cloudy-sky conditions, separately for morning and afternoon periods. Solid shapes represent statistically significant trends ($p < 0.005$).}\label{fig:szatrends}
     \end{adjustwidth}
+    \caption{Long-term trends of daily SDR as a function of SZA for (a) all-sky, (b) clear-sky and (c) cloudy-sky conditions, separately for morning and afternoon periods. Solid shapes represent statistically significant trends ($p < 0.005$).}\label{fig:szatrends}
 \end{figure}
 
 \hypertarget{long-term-sdr-trends-by-season}{%
-\subsection{Long term SDR trends by
-season}\label{long-term-sdr-trends-by-season}}
+\subsection{Long-Term SDR Trends by
+Season}\label{long-term-sdr-trends-by-season}}
 
 Similarly to the long term trends from daily means of SDR discussed
 above, we have calculated the trend for the three sky conditions and for
 each season of the year, using the corresponding mean monthly anomalies
 (Figure~\ref{fig:seasonalALL} and Table~\ref{tab:trendseasontable}).
-Table~\ref{tab:trendseasontable} contains also the \(2\sigma\) standard
+Table~\ref{tab:trendseasontable} also contains the \(2\sigma\) standard
 error, the Pearson's correlation coefficient R and the corresponding
 p-value. The winter linear trends exhibit generally the largest R values
-ranging between \(0.54\) and \(0.60\,\%/y\). For all-sky conditions the
+ranging between \(0.54\) and \(0.60\,\%/y\). For all-sky conditions, the
 trend in SDR in winter is the largest (\(0.7\,\%/y\)), followed by the
 trend in autumn (\(0.42\,\%/y\), a value close to the long term trend)
 both statistically significant at the \(95\,\%\) confidence level. In
@@ -872,7 +871,9 @@ attribution and quantification of the effects of these factors on SRD.
 
 \funding{This research received no external funding.}
 
+\institutionalreview{Not applicable.}
 
+\informedconsent{Not applicable.}
 
 \dataavailability{Data as daily sums are available through the WRDC
 database \url{http://wrdc.mgo.rssi.ru}. One minute data are available on
@@ -880,6 +881,7 @@ request from the corresponding author. The data are not publicly
 available for protection against unmonitored commercial use.}
 
 
+\conflictsofinterest{The authors declare no conflict of interest.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Optional

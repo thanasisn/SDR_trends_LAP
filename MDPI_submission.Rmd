@@ -59,50 +59,19 @@ keywords: |
 funding: |
   This research received no external funding.
 
-# institutionalreview: |
-#   In this section, you should add the Institutional Review Board Statement and
-#   approval number, if relevant to your study. You might choose to exclude
-#   this statement if the study did not require ethical approval. Please note
-#   that the Editorial Office might ask you for further information. Please add
-#   “The study was conducted in accordance with the Declaration of Helsinki,
-#   and approved by the Institutional Review Board (or Ethics Committee) of
-#   NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies
-#   involving humans. OR “The animal study protocol was approved by the
-#   Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE
-#   (protocol code XXX and date of approval).” for studies involving animals.
-#   OR “Ethical review and approval were waived for this study due to REASON
-#   (please provide a detailed justification).” OR “Not applicable” for
-#    studies not involving humans or animals.
-
-# informedconsent: |
-#   Any research article describing a study involving humans should contain this
-#   statement. Please add ``Informed consent was obtained from all subjects
-#   involved in the study.'' OR ``Patient consent was waived due to REASON
-#   (please provide a detailed justification).'' OR ``Not applicable'' for
-#   studies not involving humans. You might also choose to exclude this statement
-#   if the study did not involve humans.
-#
-#   Written informed consent for publication must be obtained from participating
-#   patients who can be identified (including by the patients themselves). Please
-#   state ``Written informed consent has been obtained from the patient(s) to
-#   publish this paper'' if applicable.
-
+institutionalreview: |
+  Not applicable.
+  
+informedconsent: |
+  Not applicable.
+  
 dataavailability: |
   Data as daily sums are available through the WRDC database \url{http://wrdc.mgo.rssi.ru}.
   One minute data are available on request from the corresponding author. The data are not publicly available for protection against unmonitored commercial use.
 
-# conflictsofinterest: |
-#   Declare conflicts of interest or state 'The authors declare no conflict of
-#   interest.' Authors must identify and declare any personal circumstances or
-#   interest that may be perceived as inappropriately influencing the
-#   representation or interpretation of reported research results. Any role of the
-#   funding sponsors in the design of the study; in the collection, analyses or
-#   interpretation of data in the writing of the manuscript, or in the decision to
-#   publish the results must be declared in this section. If there is no role,
-#   please state 'The founding sponsors had no role in the design of the study;
-#   in the collection, analyses, or interpretation of data; in the writing of the
-#   manuscript, an in the decision to publish the results'.
-
+conflictsofinterest: |
+  The authors declare no conflict of interest.
+  
 # sampleavailability: |
 #   Samples of the compounds ...... are available from the authors.
 
@@ -174,8 +143,6 @@ library(data.table)
 library(kableExtra)
 library(dplyr)
 ## load data from trends analysis
-# source("./DHI_GHI_00_raw_data.R")
-# load(common_data)
 load("./data/Input_1_longterm_trends.Rda")
 ## number of measurements for each dataset
 SDR_N_All   <- sum(  ALL_1_daily_DESEAS[,GLB_att_N], na.rm = T)
@@ -213,7 +180,6 @@ knitr::knit_hooks$set(extrawide = function(before, options, envir) {
     }
     
     # else {
-    #     
     #     output <- vector(mode = "character", length = options$fig.num + 1)
     #     
     #     for (i in 1:options$fig.num) {
@@ -256,20 +222,6 @@ We re-evaluated and extended the dataset used by @Bais2013, we applied a differe
 Finally, we investigated the dependence of the trends on solar zenith angle and season.
 
 
-<!--
-Aerosols interactions
-
-#Yang2021  Cloud “shrinking” and “optical thinning” in the “dimming” period and a subsequent recovery in the “brightening” period over China
-
-Aerosols not only strengthen but also weaken the
-growth of clouds with respect to their coverage and
-optical thickness, depending on the levels of pollution
-and the associated amounts of aerosols as postulated
-in a conceptual framework (Wild 2009a, 2012, Yang
-et al 2012).
-
-#Wild2012 : simplify interaction nice graph
--->
 
 # Data and Methodology
 
@@ -363,11 +315,6 @@ TSI$Obs                <- NULL
 TSI$Rsqrd              <- NULL
 TSI$RsqrdAdj           <- NULL
 
-# TSI$cor.null_value     <- NULL
-# TSI$cor.alternative    <- NULL
-# TSI$cor.method         <- NULL
-# TSI$cor.data_name      <- NULL
-# TSI$cor.p              <- NULL
 TSI$cor.conf_level      <- NULL
 care <- grep("^cor\\.", names(TSI), value = T)
 for (an in care) {
@@ -720,22 +667,21 @@ presents another set of CUSUM plots using anomalies
 after the long-term linear trend is removed. With this approach, periods
 when the CUSUMs diverge from zero can be interpreted as a systematic
 variation of SDR from the climatological mean. When the CUSUM is
-increasing, the anomalies values are above the climatology and vice
+increasing, the anomalies values are above the climatology, and vice
 versa. 
-Overall, for all- and cloudy-sky conditions (Figures\ \ref{fig:cusumnotrendmonthly-1} and\ \ref{fig:cusumnotrendmonthly-3}) we
+Overall, for all- and cloudy-sky conditions (Figure\ \ref{fig:cusumnotrendmonthly}a,c), we
 observe periods with anomalies diverging from the climatological values,
 each lasting for several years. These fluctuations are probably within
 the natural variability, and no distinct changes are identified. The
 pattern in both datasets is similar, suggesting prevalence in cloudy
 skies over Thessaloniki.
-For clear skies (Figure\ \ref{fig:cusumnotrendmonthly-2}) the distinct change
+For clear skies (Figure\ \ref{fig:cusumnotrendmonthly}b), the distinct change
 in 2004 is now clearer. The most likely reason for this change is the
 monotonic reduction of aerosols in Thessaloniki. In that year, there was a
 change in the rate of decrease in aerosol optical depth, as illustrated
 in Figure 7 of @Siomos2020.
 This abrupt change in CUSUMs lasted
 until about 2010, when the anomalies become again variable.
-
 
 \begin{figure}[h!]
     \begin{adjustwidth}{-\extralength}{0cm}
@@ -747,40 +693,40 @@ until about 2010, when the anomalies become again variable.
             % \subfloat[Cloudy skies.\label{fig:cusumnotrendmonthly-3}]
                 {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-9} }
         }
-        \caption{Cumulative sum plots of monthly SDR anomalies in (\%) for different sky conditions after removing the long-term linear trend: (a) all skies; (b) clear skies; (c) cloudy skies.}\label{fig:cusumnotrendmonthly}
-\end{adjustwidth}
+    \end{adjustwidth}
+    \caption{Cumulative sum plots of monthly SDR anomalies in (\%) for different sky conditions after removing the long-term linear trend: (a) all skies; (b) clear skies; (c) cloudy skies.}\label{fig:cusumnotrendmonthly}
 \end{figure}
-
-
 
 
 ## Effects of the Solar Zenith Angle on SDR
 
-The solar zenith angle is a major factor affecting the SDR, since
+The solar zenith angle is a major factor affecting the SDR, as
 increases in SZA leads to enhancement of the radiation path in the
 atmosphere, especially in urban environments with human activities
-emitting aerosols 
-[@Wang2021].
-In order to estimate the effect of SZA on the SDR trends, we grouped the data in bins of $1^\circ$ SZA, and calculated the overall trend for each bin, separately for the daily
+emitting aerosols [@Wang2021].
+In order to estimate the effect of SZA on the SDR trends, we grouped the data in 
+bins of $1^\circ$ SZA and calculated the overall trend for each bin separately for the daily
 periods before noon and after noon (Figure\ \ref{fig:szatrends}).
-Although there are seasonal dependencies of the minimum SZA (see Appendix, Figure\ \ref{fig:SZAtrendSeason}), these dependencies are not discussed further.
+Although there are seasonal dependencies of the minimum SZA (see Appendix \ref{appendix}, Figure\ \ref{fig:SZAtrendSeason}), these dependencies are not discussed further.
 
-For all-sky conditions the brightening effect of SDR (positive trend) increases with SZAs (Figures\ \ref{fig:szatrends-1})
+For all-sky conditions, the brightening effect of SDR (positive trend) increases with SZAs (Figure\ \ref{fig:szatrends}a),
 ranging from about $0.1\,\%/y$ to
 about $0.7\,\%/y$ for the statistically significant trends.
 The trends in the morning and afternoon hours are more or
-less consistent with small differences at small SZAs which can be
+less consistent with small differences at small SZAs, which can be
 attributed to effects on clear sky SDR from systematic diurnal patterns
-of aerosols during the warm period of the year, consistently with the results reported for China by @Wang2021. 
-Note that SZAs less than $25^\circ$ can only occur during the warm period of the year around noon when clear skies are more
-frequent. 
+of aerosols during the warm period of the year, consistent with the 
+results reported for China by @Wang2021. 
+Note that SZAs less than $25^\circ$ can only occur during the warm period
+of the year around noon when clear skies are more frequent. 
 The increasing trend with SZA is likely caused by the
 increased attenuation of SDR with SZA. The effect is larger when aerosol
-and/or cloud layers are optically thicker, therefore, decreases in
+and/or cloud layers are optically thicker; therefore, decreases in
 aerosol and clouds through the study period will result in larger
 positive trends of SDR at larger SZAs.
 
-Under clear skies (Figure\ \ref{fig:szatrends-2}), the trends are smaller and less variable,
+Under clear skies (Figure\ \ref{fig:szatrends}b), the trends are smaller
+and less variable,
 ranging between $0.1$ and $0.15\,\%/y$ up to $77^\circ$ SZA.
 At higher SZAs and in
 the afternoon hours, there is a sharp increase in the trend up to $0.3\,\%/y$,
@@ -790,46 +736,32 @@ differences in the trend between morning and afternoon between $35^\circ$ and
 $60^\circ$ SZA is likely a result of less attenuation of SDR in the morning
 hours due to lesser amounts of aerosols and a shallower boundary layer.
 
-For cloudy-sky conditions (Figure\ \ref{fig:szatrends-3}), we cannot discern any significant dependence of the SDR trend with SZA as the variability of irradiance is
+For cloudy-sky conditions (Figure\ \ref{fig:szatrends}c), we cannot discern any significant dependence of the SDR trend with SZA, as the variability of irradiance is
 dominated by the cloud effects leading to insignificant
 trends. Statistically significant trends appear only in the afternoon and
 for SZAs larger than $60^\circ$.
 The sharp increase of the trend at SZAs
 larger than $\sim{75}^{\circ}$, observed also for clear skies, is
 probably associated with stronger attenuation by clouds under oblique
-incidence angles, which result also in smaller variability.
-
+incidence angles, which also result in smaller variability.
 
 \begin{figure}[h!]
     \begin{adjustwidth}{-\extralength}{0cm}
         {\centering 
-            \subfloat[All skies.\label{fig:szatrends-1}]
+            % \subfloat[All skies.\label{fig:szatrends-1}]
                 {\includegraphics[width=.32\linewidth]{./images/SzaTrends-1}}\hfill
-            \subfloat[Clear skies.\label{fig:szatrends-2}]
+            % \subfloat[Clear skies.\label{fig:szatrends-2}]
                 {\includegraphics[width=.32\linewidth]{./images/SzaTrends-4}}\hfill
-            \subfloat[Cloudy skies.\label{fig:szatrends-3}]
+            % \subfloat[Cloudy skies.\label{fig:szatrends-3}]
                 {\includegraphics[width=.32\linewidth]{./images/SzaTrends-7}}
         }
-        \caption{Long term trends of daily SDR as a function of SZA for (a) all-sky, (b) clear-sky and (c) cloudy-sky conditions, separately for morning and afternoon periods. Solid shapes represent statistically significant trends ($p < 0.005$).}\label{fig:szatrends}
     \end{adjustwidth}
+    \caption{Long-term trends of daily SDR as a function of SZA for (a) all-sky, (b) clear-sky and (c) cloudy-sky conditions, separately for morning and afternoon periods. Solid shapes represent statistically significant trends ($p < 0.005$).}\label{fig:szatrends}
 \end{figure}
 
 
 
-<!-- ```{r szatrends, echo = FALSE, fig.cap='Long term trends of SDR as a function of SZA separately from morning and afternoon periods. Solid shapes  represent statistically significant trends ($p < 0.005$).', fig.subcap=c('All skies.', 'Clear skies.', 'Cloudy skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
-<!-- knitr::include_graphics("./images/SzaTrends-1.png") -->
-<!-- knitr::include_graphics("./images/SzaTrends-4.png") -->
-<!-- knitr::include_graphics("./images/SzaTrends-7.png") -->
-<!-- ``` -->
-
-<!-- ```{r szatrendsmonthly, echo = FALSE, fig.cap='*** Montlhly *** Distribution of the SDR\'s long term trends by SZA before and after noon. The solid data points represent values with an acceptable statistical significance ($p<0.005$).', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
-<!-- knitr::include_graphics("./images/SzaTrendsMonthly-1.png") -->
-<!-- knitr::include_graphics("./images/SzaTrendsMonthly-4.png" ) -->
-<!-- knitr::include_graphics("./images/SzaTrendsMonthly-7.png") -->
-<!-- ``` -->
-
-
-## Long term SDR trends by season
+## Long-Term SDR Trends by Season
 
 ```{r echo=F, eval=TRUE}
 ## Prepare table and data
@@ -880,10 +812,6 @@ spp$Tlm_Std..Error  <- round(spp$Tlm_Std..Error * 2, 2)
 spp$slope           <- round(spp$slope,              2)
 spp$slope.p         <- round(spp$slope.p,            3)
 spp$cor.estimate    <- round(spp$cor.estimate,       2)
-# spp$slope.stat_sig  <- signif(spp$slope.stat_sig, 3)
-# spp$Rsqrd           <- signif(spp$Rsqrd,          3)
-
-# spp$Tlm_Pr...t..
 
 ## rename sky conditions
 spp$DATA <- sub(" cond.", "", spp$DATA)
@@ -914,12 +842,16 @@ spp <- spp[,c(
 ```
 
 
-Similarly to the long term trends from daily means of SDR discussed above, we have calculated the trend for the three sky conditions and for each season of the year, using the corresponding mean monthly anomalies
+Similarly to the long term trends from daily means of SDR discussed above,
+we have calculated the trend for the three sky conditions and for each 
+season of the year, using the corresponding mean monthly anomalies
 (Figure\ \ref{fig:seasonalALL} and Table\ \ref{tab:trendseasontable}).
-Table\ \ref{tab:trendseasontable} contains also the $2\sigma$ standard error, the Pearson's correlation coefficient R and the corresponding p-value.
-The winter linear trends exhibit generally the largest R values ranging between $0.54$ and $0.60\,\%/y$. 
+Table\ \ref{tab:trendseasontable} also contains the $2\sigma$ standard error,
+the Pearson's correlation coefficient R and the corresponding p-value.
+The winter linear trends exhibit generally the largest R values ranging
+between $0.54$ and $0.60\,\%/y$. 
 <!-- all sky -->
-For all-sky conditions the trend in SDR in winter is the largest
+For all-sky conditions, the trend in SDR in winter is the largest
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All skies"], 2)`\,\%/y$),
 followed by the trend in autumn
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All skies"], 2)`\,\%/y$,
@@ -933,16 +865,12 @@ aerosol optical depth [@Siomos2020]. Moreover, it is almost half of that for
 all-skies, which is another indication of a decreasing trend in cloud
 optical thickness. 
 <!-- clear sky -->
-In other seasons the clear-sky trend is very small
-(below $0.1\,\%/y$). 
+In other seasons the clear-sky trend is very small (below $0.1\,\%/y$). 
 <!-- cloud dsky -->
-Finally, for cloudy-skies the
-winter trend is the largest 
+Finally, for cloudy-skies the winter trend is the largest 
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Cloudy skies"], 2)`\,\%/y$)
-and greater than for all-skies,
-followed by a much smaller trend in autumn 
+and greater than for all-skies, followed by a much smaller trend in autumn 
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "Cloudy skies"], 2)`\,\%/y$).
-<!-- ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All skies"], 2)`\,\%/y$) -->
 
 
 The trends under clear- and cloudy-sky conditions are of the same
@@ -963,45 +891,14 @@ cloudy-sky data were available (see sect. \ref{aggregationstatistical}).
 \end{figure}
 
 
-<!-- % \includegraphics[width=1\linewidth]{./images/SeasonalTrendsTogether3-2}  % Seasonal from Daily -->
-
-<!-- ```{r seasonalALL, echo=F, fig.cap="Linear trends (black lines) of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots).", out.width="100%"} -->
-<!-- knitr::include_graphics("./images/SeasonalTrendsTogether3-2.png") -->
-<!-- ``` -->
-
-<!-- ```{r seasonalALL, echo=F, fig.cap="Trends by season for all-sky condition. Displays monthly means of daily means."} -->
-<!-- knitr::include_graphics("./images/SeasonalTrends-1.png") -->
-<!-- ``` -->
-
-<!-- ```{r seasonalCLEAR, echo=F, fig.cap="Trends by season for clear-sky condition. Displays monthly means of daily means."} -->
-<!-- knitr::include_graphics("./images/SeasonalTrends-2.png") -->
-<!-- ``` -->
-
-<!-- ```{r seasonalCLOUD, echo=F, fig.cap="Trends by season for Cloudy-sky condition. Displays monthly means of daily means."} -->
-<!-- knitr::include_graphics("./images/SeasonalTrends-3.png") -->
-<!-- ``` -->
-
-
-
 
 
 ```{r trendseasontable, echo=F}
-
 spp2 <- spp
 
 # names(spp2)
 # col.names   = c("Sky conditions", "Trend [\\%/year]", "Trend S.E. ($2\\sigma$)", "Pearson correl.", "Trend [W/m\\textsuperscript{2}/year]", "Days"),
 
-# sub("Trend S.E.", "Trend S.E. ($2\\sigma$)", names(spp2))
-
-# panderOptions("table.alignment.default", "left")
-# panderOptions("table.alignment.default", "center")
-# pander(spp,
-#        justify = c('center', 'right', 'right', 'center'),
-#        split.table = Inf,
-#        caption = "\\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year.")
-
-## use kable
 x_latex <- knitr::kable(spp2,
                         format      = "latex",
                         booktabs    = TRUE,
@@ -1020,11 +917,6 @@ x_latex <- knitr::kable(spp2,
                         # position    = "H",
                         caption  = "SDR linear trends of monthly anomalies for each season of the year and related statistical parameters.")
 
-# x_latex %>%
-#     collapse_rows(columns = 1, valign = "middle", latex_hline = "custom") %>%
-#     kable_styling(latex_options = c("striped",
-#                                     "hold_position")
-#     )
 
 suppressMessages(
 x_latex %>%
