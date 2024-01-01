@@ -604,26 +604,11 @@ LT1 <- LT[,c(
       "Trend [W/year]",
       "Days"
       )]
-# LT1 <- LT
-
-# signif(LT1$`Trend [%/year]` , 3)
-# round(LT1$`Trend [%/year]` , 3)
-# format(LT1$`Trend [%/year]` , 3, drop0trailing = T)
-# as.character(format(LT1$`Trend [%/year]` , 3))
-
-## order columns
-# LT2 <- LT[,c(
-#       "Sky conditions",
-#       "Trend [%/year]",
-#       "Statistical signif. [%]",
-#       "Days with data"
-#       )]
-LT2 <- LT
 ```
 
 We calculated the linear trends of SDR from the departures of the mean daily values from the daily climatology and for the three sky conditions.
 These are presented in Table\ \ref{tab:trendtable}, which also contains the $2\sigma$ standard error, the Pearson's correlation coefficient R, and the trend in absolute units.
-In Figure\ \ref{fig:trendALL}, we present only the time series under all-sky conditions; the plots for clear-sky and cloud-sky conditions, are shown in Appendix (Figures\ \ref{fig:trendCLEAR} and\  \ref{fig:trendCLOUD}).
+In Figure\ \ref{fig:trendALL}, we present only the time series under all-sky conditions; the plots for clear-sky and cloud-sky conditions, are shown in Appendix \ref{appendix} (Figures\ \ref{fig:trendCLEAR} and\  \ref{fig:trendCLOUD}).
 In the studied period, there is no
 significant break or change in the variability pattern of the time
 series.
@@ -671,7 +656,7 @@ x_latex <- knitr::kable(LT1,
                         format      = "latex",
                         booktabs    = TRUE,
                         escape      = FALSE,
-                        col.names   = c("Sky conditions", "Trend [\\%/year]", "Trend S.E. ($2\\sigma$)", "Pearson correl.", "Trend [W/m\\textsuperscript{2}/year]", "Days"),
+                        col.names   = c("Sky Conditions", "Trend [\\%/year]", "Trend S.E. ($2\\sigma$)", "Pearson Correl.", "Trend [W/m\\textsuperscript{2}/year]", "Days"),
                         format.args = list(digits = 3),
                         linesep     = "",
                         align       = "crrrrr",
@@ -681,21 +666,18 @@ x_latex <- knitr::kable(LT1,
                         drop0trailing = T,
                         caption     = paste0("Trends in SDR daily means for different sky conditions for the period ", year(min(ALL_1_daily_DESEAS$Date)), "--", year(max(ALL_1_daily_DESEAS$Date)), "."))
 
-# x_latex %>%
-#     kable_styling(
-#         latex_options = c("hold_position")
-#     )
-x_latex %>%
+x_latex                              %>%
+    row_spec(0,bold=TRUE)            %>%
     kable_styling(full_width = TRUE) %>%
     column_spec(1, width = "8em")
 ```
 
 
-```{r trendALL, echo=F, out.width='.75\\linewidth', fig.cap=paste0("Anomalies (\\%) of the daily all-sky SDR from the climatological mean for the period ", year(min(ALL_1_daily_DESEAS$Date)), " -- ", year(max(ALL_1_daily_DESEAS$Date)), ". The black line is the long term linear trend.")}
+```{r trendALL, echo=F, out.width='.75\\linewidth', fig.cap=paste0("Anomalies (\\%) of the daily all-sky SDR from the climatological mean for the period ", year(min(ALL_1_daily_DESEAS$Date)), "--", year(max(ALL_1_daily_DESEAS$Date)), ". The black line is the long-term linear trend.")}
 knitr::include_graphics("./images/LongtermTrends-1.png")
 ```
 
-Although the year-to-year variability of the anomalies (Figure \ref{fig:trendALL} and Figures\ \ref{fig:trendCLEAR} and \ref{fig:trendCLOUD} in Appendix) shows a rather homogeneous behavior, plots of the cumulative sums (CUSUM) [@Regier2019] of the anomalies can reveal different structures in the records of all three sky conditions.
+Although the year-to-year variability of the anomalies (Figures\ \ref{fig:trendALL}, \ref{fig:trendCLEAR} and \ref{fig:trendCLOUD} in Appendix \ref{appendix}) shows a rather homogeneous behavior, plots of the cumulative sums (CUSUM) [@Regier2019] of the anomalies can reveal different structures in the records of all three sky conditions.
 For time series with a uniform trend, we would expect
 the CUSUMs of the anomalies to have a symmetric 'V' shape centered
 around the middle of the series. This would indicate that the anomalies
@@ -704,43 +686,33 @@ positive uniform trend, the first half is below and the second half
 above the climatological mean.
 In our case, there is a more complex
 evolution of the anomalies.
-For all skies (Figure\ \ref{fig:cusummonth-1}),
+For all skies (Figure\ \ref{fig:cusummonth}a),
 we observe three
 rather distinct periods: (a) a downward part between the start of the
 datasets and about 2000, denoting that all anomalies are negative, thus
 below the climatology; (b) a relatively steady part lasting for almost 20
-years suggesting little variability in SDR anomalies; and (c) a steep
+years, suggesting little variability in SDR anomalies; and (c) a steep
 upward part to the present, indicating anomalies above the climatology. The
-CUSUMs for cloudy skies (Figure\ \ref{fig:cusummonth-3}) show a similar behavior with some short-term
+CUSUMs for cloudy skies (Figure\ \ref{fig:cusummonth}c) show a similar behavior with some short-term
 differences that do not change the overall pattern.
 For clear skies
-(Figure\ \ref{fig:cusummonth-2}), a monotonic downward tendency is evident until 2004,
+(Figure\ \ref{fig:cusummonth}b), a monotonic downward tendency is evident until 2004,
 suggesting that the anomalies are all negative. After 2004, the anomalies
 turn positive at a fast rate for about five years and at a slower
 rate thereafter.
- 
 
 \begin{figure}[h!]
     \begin{adjustwidth}{-\extralength}{0cm}
         {\centering 
-        \subfloat[All skies.\label{fig:cusummonth-1}]
             {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-1}}\hfill
-        \subfloat[Clear skies.\label{fig:cusummonth-2}]
             {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-5}}\hfill
-        \subfloat[Cloudy skies.\label{fig:cusummonth-3}]
-            {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-9}}\hfill
+            {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-9}}
         }
-\caption{Cumulative sum plots of the monthly SDR anomalies in (\%) for different sky conditions.}\label{fig:cusummonth}
-\end{adjustwidth}
+    \end{adjustwidth}
+\caption{Cumulative sum plots of the monthly SDR anomalies in (\%) for different sky conditions: (a) all skies; (b) clear skies; (c) cloudy skies.}\label{fig:cusummonth}
 \end{figure}
 
-
-<!-- ```{r cusummonth, echo = FALSE, fig.cap='Cumulative sum plots of the monthly SDR anomalies in (%) for different sky conditions.', fig.subcap=c('All skies.', 'Clear skies.', 'Cloudy skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
-<!-- knitr::include_graphics(c( -->
-<!--     "./images/CumulativeMonthlyCuSum-1.png",    # ALL sky -->
-<!--     "./images/CumulativeMonthlyCuSum-5.png",    # CLEAR sky -->
-<!--     "./images/CumulativeMonthlyCuSum-9.png"))   # Cloud sky -->
-<!-- ``` -->
+\vspace{-6pt}
 
 In order to unveil further the features of the variability of the three
 datasets, Figure\ \ref{fig:cusumnotrendmonthly}
@@ -768,46 +740,17 @@ until about 2010, when the anomalies become again variable.
 \begin{figure}[h!]
     \begin{adjustwidth}{-\extralength}{0cm}
         {\centering 
-            \subfloat[All skies.\label{fig:cusumnotrendmonthly-1}]
+            % \subfloat[All skies.\label{fig:cusumnotrendmonthly-1}]
                 {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-1} }\hfill
-            \subfloat[Clear skies.\label{fig:cusumnotrendmonthly-2}]
+            % \subfloat[Clear skies.\label{fig:cusumnotrendmonthly-2}]
                 {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-5} }\hfill
-            \subfloat[Cloudy skies.\label{fig:cusumnotrendmonthly-3}]
+            % \subfloat[Cloudy skies.\label{fig:cusumnotrendmonthly-3}]
                 {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-9} }
         }
-        \caption{Cumulative sum plots of monthly SDR anomalies in (\%) for different sky conditions after removing the long-term linear trend.}\label{fig:cusumnotrendmonthly}
+        \caption{Cumulative sum plots of monthly SDR anomalies in (\%) for different sky conditions after removing the long-term linear trend: (a) all skies; (b) clear skies; (c) cloudy skies.}\label{fig:cusumnotrendmonthly}
 \end{adjustwidth}
 \end{figure}
 
-
-<!-- ```{r cusumnotrendmonthly, echo = FALSE, fig.cap='Cumulative sum plots of monthly SDR anomalies in (%) for different sky conditions after removing the long-term linear trend.', fig.subcap=c('All skies.', 'Clear skies.', 'Cloudy skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
-<!-- knitr::include_graphics(c( -->
-<!--     "./images/CumulativeMonthlyCuSumNOtrend-1.png",    # ALL sky -->
-<!--     "./images/CumulativeMonthlyCuSumNOtrend-5.png",    # CLEAR sky -->
-<!--     "./images/CumulativeMonthlyCuSumNOtrend-9.png"))   # Cloud sky -->
-<!-- ``` -->
-
-
-<!-- ```{r cusum, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR.', fig.subcap=c('All-sky conditions.', 'Clear-sky conditions.', 'Cloud-sky conditions.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
-<!-- knitr::include_graphics(c( -->
-<!--     "./images/CumulativeDailyCuSum-1.png",    # ALL sky -->
-<!--     "./images/CumulativeDailyCuSum-5.png",    # CLEAR sky -->
-<!--     "./images/CumulativeDailyCuSum-9.png"))   # Cloud sky -->
-<!-- ``` -->
-
-<!-- ```{r cusumnotrend, echo = FALSE, fig.cap='Running cumulative sum plots of the daily SDR after removing the long term trend from the daily values.', fig.subcap=c('All-skies.', 'Clear-skies.', 'Cloud-skies.'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
-<!-- knitr::include_graphics(c( -->
-<!--     "./images/CumulativeDailyCuSumNOtrend-1.png",    # ALL sky -->
-<!--     "./images/CumulativeDailyCuSumNOtrend-5.png",    # CLEAR sky -->
-<!--     "./images/CumulativeDailyCuSumNOtrend-9.png"))   # Cloud sky -->
-<!-- ``` -->
-
-<!-- ```{r cusumSTD, echo = FALSE, fig.cap='two plots', fig.subcap=c('one plot', 'the other one'), out.width='.32\\linewidth', fig.asp=1, fig.ncol = 3} -->
-<!-- knitr::include_graphics(c( -->
-<!--     "./images/CumulativeDailyCuSumSTD-1.png",    # ALL sky -->
-<!--     "./images/CumulativeDailyCuSumSTD-2.png",    # CLEAR sky -->
-<!--     "./images/CumulativeDailyCuSumSTD-3.png"))   # Cloud sky -->
-<!-- ``` -->
 
 
 
