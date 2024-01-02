@@ -218,6 +218,7 @@ clouds}
 \usepackage{subcaption}
 \captionsetup[sub]{position=bottom, labelfont={bf, small, stretch=1.17}, labelsep=space, textfont={small, stretch=1.17}, aboveskip=6pt,  belowskip=-6pt, singlelinecheck=off, justification=justified}
 \usepackage{placeins}
+\usepackage{float}
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage{array}
@@ -767,13 +768,22 @@ Daily means were calculated only when at least \(60\,\%\) of the clear-
 or cloudy-sky data were available (see Section
 \ref{aggregationstatistical}).
 
-\begin{table}[!h]
-
-\caption{\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year and related statistical parameters.}
-\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\begin{longtabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\caption{\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year and related statistical parameters.}\\
 \toprule
-Sky condition & Season & Trend [\%/year] & Trend S.E. ($2\sigma$) & Pearson correl. & Trend p-value\\
+\textbf{Sky Condition} & \textbf{Season} & \textbf{Trend [\%/year]} & \textbf{Trend S.E. ($2\sigma$)} & \textbf{Pearson Correl.} & \textbf{Trend p-Value}\\
 \midrule
+\endfirsthead
+\caption[]{SDR linear trends of monthly anomalies for each season of the year and related statistical parameters. \textit{(continued)}}\\
+\toprule
+\textbf{Sky Condition} & \textbf{Season} & \textbf{Trend [\%/year]} & \textbf{Trend S.E. ($2\sigma$)} & \textbf{Pearson Correl.} & \textbf{Trend p-Value}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{6}{r@{}}{\textit{(continued \ldots)}}\
+\endfoot
+\bottomrule
+\endlastfoot
 \cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.70} & \cellcolor{gray!6}{0.43} & \cellcolor{gray!6}{0.54} & \cellcolor{gray!6}{0.003}\\
 
  & Spring & 0.11 & 0.24 & 0.17 & 0.371\\
@@ -796,25 +806,28 @@ Sky condition & Season & Trend [\%/year] & Trend S.E. ($2\sigma$) & Pearson corr
 
 \cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{-0.08} & \cellcolor{gray!6}{0.27} & \cellcolor{gray!6}{-0.11} & \cellcolor{gray!6}{0.560}\\
 
-\multirow{-4}{*}{\centering\arraybackslash Cloudy skies} & Autumn & 0.19 & 0.43 & 0.16 & 0.384\\
-\bottomrule
-\end{tabu}
-\end{table}
+\multirow{-4}{*}{\centering\arraybackslash Cloudy skies} & Autumn & 0.19 & 0.43 & 0.16 & 0.384\\*
+\end{longtabu}
+
+\emph{\}\{\centering\arraybackslash Cloudy skies\} \& Autumn \& 0.19 \&
+0.43 \& 0.16 \& 0.384\textbackslash{}} \textbackslash end\{longtabu\}
 
 \begin{figure}[h!]
     \begin{adjustwidth}{-\extralength}{0cm}
         {\centering 
             \includegraphics[width=1\linewidth]{./images/SeasonalMTrendsTogether3-2}   % Seasonal from Monthly
         }
-        \caption{Monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends.}\label{fig:seasonalALL}
     \end{adjustwidth}
+    \caption{Time serries of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends, (a-c) winter}\label{fig:seasonalALL}
 \end{figure}
+
+\FloatBarrier
 
 \hypertarget{conclusions}{%
 \section{Conclusions}\label{conclusions}}
 
 We have analyzed a 30-year dataset of SRD measurements in Thessaloniki
-Greece (1993 -- 2023) aiming to identify the long term variability of
+Greece (1993 -- 2023), aiming to identify the long-term variability of
 solar irradiance under different sky conditions. Under all-sky
 conditions there is a positive trend in SDR of \(0.38\,\%/y\)
 (brightening). A previous study \citep{Bais2013} for the period 1993 --
@@ -838,11 +851,11 @@ quantitative conclusions.
 The observed brightening on SDR over Thessaloniki is dependent on SZA
 (larger SZAs lead to stronger brightening). The trend is also dependent
 on season, with winter showing the strongest statistically significant
-trend of \(0.7\) and \(0.76\,\%/y\) for all- and cloudy-skies,
-respectively, in contrast to spring and summer. The trends for autumn
-are also significant but smaller (\(0.42\) and \(0.19\,\%/y\) for all-
-and cloudy-skies, respectively). The trend for clear skies is largest in
-winter (\(0.4\,\%/y\)) and negligible in spring, summer and autumn.
+trend of \(0.7\) and \(\,\%/y\) for all- and cloudy-skies, respectively,
+in contrast to spring and summer. The trends for autumn are also
+significant but smaller (\$\$ and \(\,\%/y\) for all- and cloudy-skies,
+respectively). The trend for clear skies is largest in winter
+(\(\,\%/y\)) and negligible in spring, summer and autumn.
 
 Using the CUSUMs of the monthly departures for all- and cloudy-skies, we
 observed a 20-year period starting around 2000 where the CUSUMs remain

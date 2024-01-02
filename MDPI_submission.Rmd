@@ -98,6 +98,7 @@ header-includes:
    - \usepackage{subcaption}
    - \captionsetup[sub]{position=bottom, labelfont={bf, small, stretch=1.17}, labelsep=space, textfont={small, stretch=1.17}, aboveskip=6pt,  belowskip=-6pt, singlelinecheck=off, justification=justified}
    - \usepackage{placeins}
+   - \usepackage{float}
 
 bibliography: manualreferences.bib
 appendix:     appendix.tex
@@ -596,7 +597,7 @@ and thus we cannot attribute any significant effect
 on the SDR trend to solar variability.
 
 
-```{r trendtable, echo=F, fig.pos="H"}
+```{r trendtable, echo=F}
 # names(LT1)
 # "Sky conditions", "Trend [%/year]", "Trend S.E.", "Pearson cor.", "Trend [W/year]", "Days" 
 x_latex <- knitr::kable(LT1,
@@ -614,9 +615,8 @@ x_latex <- knitr::kable(LT1,
                         caption       = paste0("Trends in SDR daily means for different sky conditions for the period ", year(min(ALL_1_daily_DESEAS$Date)), "--", year(max(ALL_1_daily_DESEAS$Date)), "."))
 
 x_latex                              %>%
-    row_spec(0,bold=TRUE)            %>%
-    kable_styling(full_width = TRUE, 
-                  repeat_header_continued = T) %>%
+    row_spec(0,bold = TRUE)          %>%
+    kable_styling(full_width = TRUE) %>%
     column_spec(1, width = "8em")
 ```
 
@@ -881,29 +881,33 @@ to the way the monthly means for clear and cloudy skies were calculated.
 Daily means were calculated only when at least $60\,\%$ of the clear- or
 cloudy-sky data were available (see Section \ref{aggregationstatistical}).
 
-```{r trendseasontable, echo=F}
+```{r trendseasontable, echo=F, fig.pos='!h'}
 x_latex <- knitr::kable(spp,
                         format      = "latex",
                         booktabs    = TRUE,
+                        longtable = T, 
                         escape      = FALSE,
-                        col.names   = c("Sky condition",
+                        col.names   = c("Sky Condition",
                                         "Season",
                                         "Trend [\\%/year]",
                                         "Trend S.E. ($2\\sigma$)",
-                                        "Pearson correl.",
-                                        "Trend p-value" ),
-                        # format.args = list(digits = 3),
+                                        "Pearson Correl.",
+                                        "Trend p-Value" ),
                         linesep     = "",
                         align       = "ccrrrr",
                         centering   = FALSE,
                         table.envir = "table",
-                        # position    = "H",
-                        caption  = "SDR linear trends of monthly anomalies for each season of the year and related statistical parameters.")
+                        caption     = "SDR linear trends of monthly anomalies for each season of the year and related statistical parameters.")
 
 suppressMessages(
 x_latex %>%
     collapse_rows(columns = 1, valign = "middle", latex_hline = "custom")           %>%
-    kable_styling(latex_options = c('striped', 'hold_position'), full_width = TRUE) %>%
+    row_spec(0, bold = TRUE)                                                        %>%
+    kable_styling(latex_options = c('striped', 
+                                    'hold_position', 
+                                    "repeat_header"),
+                  repeat_header_continued = TRUE,
+                  full_width = TRUE) %>%
     column_spec(1, width = "8em")
 )
 
@@ -914,16 +918,17 @@ x_latex %>%
         {\centering 
             \includegraphics[width=1\linewidth]{./images/SeasonalMTrendsTogether3-2}   % Seasonal from Monthly
         }
-        \caption{Monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends.}\label{fig:seasonalALL}
     \end{adjustwidth}
+    \caption{Time serries of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends, (a-c) winter}\label{fig:seasonalALL}
 \end{figure}
 
 
+\FloatBarrier
 
 # Conclusions
 
 We have analyzed a 30-year dataset of SRD measurements in Thessaloniki Greece 
-(`r paste(year(min(ALL_1_daily_DESEAS$Date)), " -- ", year(max(ALL_1_daily_DESEAS$Date)))`) aiming to identify the long term variability of
+(`r paste(year(min(ALL_1_daily_DESEAS$Date)), " -- ", year(max(ALL_1_daily_DESEAS$Date)))`), aiming to identify the long-term variability of
 solar irradiance under different sky conditions.
 Under all-sky conditions 
 there is a positive trend in SDR of $`r alltrend`\,\%/y$ (brightening). 
@@ -952,15 +957,15 @@ The observed brightening on SDR over Thessaloniki is dependent on SZA (larger SZ
 The trend is also dependent on season, with winter showing the strongest statistically significant trend of
 $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All skies"], 2)`$
 and
-$`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Cloudy skies"], 2)`\,\%/y$
+$`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky Condition" == "Cloudy skies"], 2)`\,\%/y$
 for all- and cloudy-skies, respectively, in contrast to spring and summer.
-The trends for autumn are also significant but smaller ($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All skies"], 2)`$
+The trends for autumn are also significant but smaller ($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky Condition" == "All skies"], 2)`$
 and
-$`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "Cloudy skies"], 2)`\,\%/y$
+$`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky Condition" == "Cloudy skies"], 2)`\,\%/y$
 for all- and cloudy-skies, respectively).
 <!-- Our findings are in agreement with other studies for the region. -->
 The trend for clear skies is largest in winter
-($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear skies"], 2)`\,\%/y$) 
+($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky Condition" == "Clear skies"], 2)`\,\%/y$) 
 and negligible in spring, summer and autumn.
 
 Using the CUSUMs of the monthly departures for all- and cloudy-skies, we observed a 20-year period starting around 2000 where the CUSUMs remain relatively stable, with a steep decline before and a steep increase after. 
