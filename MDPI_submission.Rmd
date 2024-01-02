@@ -908,48 +908,91 @@ x_latex %>%
 
 ```
 
-\begin{figure}[h!]
-    \begin{adjustwidth}{-\extralength}{0cm}
-        {\centering 
-            \includegraphics[width=1\linewidth]{./images/SeasonalMTrendsTogether3-2}   % Seasonal from Monthly
-        }
-    \end{adjustwidth}
-    \caption{Time serries of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends, (\textbf{a}--\textbf{c}) winter, (\textbf{d}--\textbf{f}) spring, (\textbf{g}--\textbf{i}) summer, (\textbf{j}--\textbf{l}) autumn, and also (\textbf{a}, \textbf{d}, \textbf{g}, \textbf{j}) all-skies, (\textbf{b}, \textbf{e}, \textbf{h}, \textbf{k}) clear-skies and (\textbf{c}, \textbf{f}, \textbf{i}, \textbf{l}) cloudy-skies.}\label{fig:seasonalALL}
-\end{figure}
+<!-- \begin{figure}[h!] -->
+<!--     \begin{adjustwidth}{-\extralength}{0cm} -->
+<!--         {\centering  -->
+<!--             \includegraphics[width=1\linewidth]{./images/SeasonalMTrendsTogether3-2}   % Seasonal from Monthly -->
+<!--         } -->
+<!--     \end{adjustwidth} -->
+<!--     \caption{Time serries of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends, (\textbf{a}--\textbf{c}) winter, (\textbf{d}--\textbf{f}) spring, (\textbf{g}--\textbf{i}) summer, (\textbf{j}--\textbf{l}) autumn, and also (\textbf{a}, \textbf{d}, \textbf{g}, \textbf{j}) all-skies, (\textbf{b}, \textbf{e}, \textbf{h}, \textbf{k}) clear-skies and (\textbf{c}, \textbf{f}, \textbf{i}, \textbf{l}) cloudy-skies.}\label{fig:seasonalALL} -->
+<!-- \end{figure} -->
 
 
 \FloatBarrier
 
+
+\ \ 
+
+\ \ 
+
+\ \ 
+
+\ \ 
+
+\ \ 
+
+\ \ 
+
+\ \ 
+
+\ \ 
+
+\ \ 
+
+\ \ 
+
+\ \ 
+
+\ \ 
+
+\ \ 
+
+\ \ 
+
+\ \ 
+
+\ \ 
+
+\ \ 
+
+
+
 # Conclusions
 
-We have analyzed a 30-year dataset of SRD measurements in Thessaloniki Greece 
-(`r paste(year(min(ALL_1_daily_DESEAS$Date)), " -- ", year(max(ALL_1_daily_DESEAS$Date)))`), aiming to identify the long-term variability of
-solar irradiance under different sky conditions.
-Under all-sky conditions 
-there is a positive trend in SDR of $`r alltrend`\,\%/y$ (brightening). 
-A previous study [@Bais2013] for the period 1993 -- 2011 reported also a positive trend of $0.33\,\%/y$.
-The slight increase of this trend indicates that the brightening of SDR continues and is likely caused by continuing decreases in aerosol optical depth and the optical thickness of clouds over the area.
-A smaller trend has
-been found under clear-sky conditions ($`r cleartrend`\,\%/y$) which supports the
-notion that part of the brightening is caused by decreasing aerosols.
-@Siomos2020 have shown that aerosol optical depth over
-Thessaloniki is decreasing constantly at least up to 2018.
-The attenuation
-of SDR by aerosols over Europe has been proposed as major factor by @Wild2021.
-Unfortunately, for this study aerosol data for the entire period were
+
+We have analyzed a 30-year dataset of SRD measurements in Thessaloniki, Greece 
+(`r paste(year(min(ALL_1_daily_DESEAS$Date)), " -- ", year(max(ALL_1_daily_DESEAS$Date)))`), aiming to identify the long-term 
+variability of solar irradiance under different sky conditions.
+Under all-sky conditions, there is a positive trend in SDR of 
+$`r alltrend`\,\%/y$ (brightening). 
+A previous study [@Bais2013] for the period 1993--2011 also reported a
+positive trend of $0.33\,\%/y$.
+The slight increase in this trend indicates that the brightening of SDR
+continues and is likely caused by continuing decreases in aerosol optical
+depth and the optical thickness of clouds over the area.
+A smaller trend has been found under clear-sky conditions
+($`r cleartrend`\,\%/y$), which supports the notion that part of the
+brightening is caused by decreasing aerosols.
+@Siomos2020 showed that aerosol optical depth over Thessaloniki
+was decreasing constantly, at least up until 2018.
+The attenuation of SDR by aerosols over Europe has been proposed as
+major factor by @Wild2021.
+Unfortunately, for this study, aerosol data for the entire period were
 not available in order to quantify their effect on SDR. 
 The brightening effect on SDR under cloudy-sky conditions
-($`r cloudtrend`\,\%/y$), suggests that cloud optical thickness is also decreasing
-during this period.
-As long term data of cloud optical thickness are
+($`r cloudtrend`\,\%/y$) suggests that cloud optical thickness 
+is also decreasing during this period.
+As long-term data of cloud optical thickness are
 also not available for the region, we cannot draw quantitative
 conclusions.
 <!-- @Lozano2023 reported a Cloud Radiative Forcing (CRF) SDR trend of $1.22\,W/m^2/y$ for the city of Granada Spain ($37^\circ\,10'\,$N, $3^\circ\,37'\,$E, $680\,$m\ a.s.l.).  -->
  <!-- (37.16◦ N, 3.61◦ W, 680 m a.s.l.), 37° 9' 35.9994" N  3° 36' 35.9994" W    ($37^\circ\,10'\,$N, $3^\circ\,37'\,$E, $680\,$m\ a.s.l.)-->
 <!-- We found a comparable result, for the same parameter, using the long term trend of all- and clear-skies, as follows $\text{CRF} = 1.46 - 0.501 = `r 1.46 - 0.501`\,W/m^2/y$. -->
 
-The observed brightening on SDR over Thessaloniki is dependent on SZA (larger SZAs lead to stronger brightening).
-The trend is also dependent on season, with winter showing the strongest statistically significant trend of
+The observed brightening on SDR over Thessaloniki is dependent on
+SZA (larger SZAs lead to stronger brightening).
+The trend is also dependent on season, with winter showing the 
+strongest statistically significant trend of
 $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All skies"], 2)`$
 and
 $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Cloudy skies"], 2)`\,\%/y$
