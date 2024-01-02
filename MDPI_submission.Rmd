@@ -908,17 +908,14 @@ x_latex %>%
 
 ```
 
-<!-- \begin{figure}[h!] -->
-<!--     \begin{adjustwidth}{-\extralength}{0cm} -->
-<!--         {\centering  -->
-<!--             \includegraphics[width=1\linewidth]{./images/SeasonalMTrendsTogether3-2}   % Seasonal from Monthly -->
-<!--         } -->
-<!--     \end{adjustwidth} -->
-<!--     \caption{Time serries of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends, (\textbf{a}--\textbf{c}) winter, (\textbf{d}--\textbf{f}) spring, (\textbf{g}--\textbf{i}) summer, (\textbf{j}--\textbf{l}) autumn, and also (\textbf{a}, \textbf{d}, \textbf{g}, \textbf{j}) all-skies, (\textbf{b}, \textbf{e}, \textbf{h}, \textbf{k}) clear-skies and (\textbf{c}, \textbf{f}, \textbf{i}, \textbf{l}) cloudy-skies.}\label{fig:seasonalALL} -->
-<!-- \end{figure} -->
-
-
-\vspace{+100pt}
+\begin{figure}[h!]
+    \begin{adjustwidth}{-\extralength}{0cm}
+        {\centering 
+            \includegraphics[width=1\linewidth]{./images/SeasonalMTrendsTogether3-2}   % Seasonal from Monthly
+        }
+    \end{adjustwidth}
+    \caption{Time serries of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends, (\textbf{a}--\textbf{c}) winter, (\textbf{d}--\textbf{f}) spring, (\textbf{g}--\textbf{i}) summer, (\textbf{j}--\textbf{l}) autumn, and also (\textbf{a}, \textbf{d}, \textbf{g}, \textbf{j}) all-skies, (\textbf{b}, \textbf{e}, \textbf{h}, \textbf{k}) clear-skies and (\textbf{c}, \textbf{f}, \textbf{i}, \textbf{l}) cloudy-skies.}\label{fig:seasonalALL}
+\end{figure}
 
 
 \FloatBarrier
