@@ -908,57 +908,17 @@ x_latex %>%
 
 ```
 
-<!-- \begin{figure}[h!] -->
-<!--     \begin{adjustwidth}{-\extralength}{0cm} -->
-<!--         {\centering  -->
-<!--             \includegraphics[width=1\linewidth]{./images/SeasonalMTrendsTogether3-2}   % Seasonal from Monthly -->
-<!--         } -->
-<!--     \end{adjustwidth} -->
-<!--     \caption{Time serries of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends, (\textbf{a}--\textbf{c}) winter, (\textbf{d}--\textbf{f}) spring, (\textbf{g}--\textbf{i}) summer, (\textbf{j}--\textbf{l}) autumn, and also (\textbf{a}, \textbf{d}, \textbf{g}, \textbf{j}) all-skies, (\textbf{b}, \textbf{e}, \textbf{h}, \textbf{k}) clear-skies and (\textbf{c}, \textbf{f}, \textbf{i}, \textbf{l}) cloudy-skies.}\label{fig:seasonalALL} -->
-<!-- \end{figure} -->
-
-
-\FloatBarrier
-
-
-\ \ 
-
-\ \ 
-
-\ \ 
-
-\ \ 
-
-\ \ 
-
-\ \ 
-
-\ \ 
-
-\ \ 
-
-\ \ 
-
-\ \ 
-
-\ \ 
-
-\ \ 
-
-\ \ 
-
-\ \ 
-
-\ \ 
-
-\ \ 
-
-\ \ 
-
+\begin{figure}[h!]
+    \begin{adjustwidth}{-\extralength}{0cm}
+        {\centering
+            \includegraphics[width=1\linewidth]{./images/SeasonalMTrendsTogether3-2}   % Seasonal from Monthly
+        }
+    \end{adjustwidth}
+    \caption{Time serries of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends, (\textbf{a}--\textbf{c}) winter, (\textbf{d}--\textbf{f}) spring, (\textbf{g}--\textbf{i}) summer, (\textbf{j}--\textbf{l}) autumn, and also (\textbf{a}, \textbf{d}, \textbf{g}, \textbf{j}) all-skies, (\textbf{b}, \textbf{e}, \textbf{h}, \textbf{k}) clear-skies and (\textbf{c}, \textbf{f}, \textbf{i}, \textbf{l}) cloudy-skies.}\label{fig:seasonalALL}
+\end{figure}
 
 
 # Conclusions
-
 
 We have analyzed a 30-year dataset of SRD measurements in Thessaloniki, Greece 
 (`r paste(year(min(ALL_1_daily_DESEAS$Date)), " -- ", year(max(ALL_1_daily_DESEAS$Date)))`), aiming to identify the long-term 
@@ -985,9 +945,6 @@ is also decreasing during this period.
 As long-term data of cloud optical thickness are
 also not available for the region, we cannot draw quantitative
 conclusions.
-<!-- @Lozano2023 reported a Cloud Radiative Forcing (CRF) SDR trend of $1.22\,W/m^2/y$ for the city of Granada Spain ($37^\circ\,10'\,$N, $3^\circ\,37'\,$E, $680\,$m\ a.s.l.).  -->
- <!-- (37.16◦ N, 3.61◦ W, 680 m a.s.l.), 37° 9' 35.9994" N  3° 36' 35.9994" W    ($37^\circ\,10'\,$N, $3^\circ\,37'\,$E, $680\,$m\ a.s.l.)-->
-<!-- We found a comparable result, for the same parameter, using the long term trend of all- and clear-skies, as follows $\text{CRF} = 1.46 - 0.501 = `r 1.46 - 0.501`\,W/m^2/y$. -->
 
 The observed brightening on SDR over Thessaloniki is dependent on
 SZA (larger SZAs lead to stronger brightening).
@@ -1004,7 +961,7 @@ for all- and cloudy-skies, respectively).
 <!-- Our findings are in agreement with other studies for the region. -->
 The trend for clear skies is largest in winter
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear skies"], 2)`\,\%/y$) 
-and negligible in spring, summer and autumn.
+and negligible in spring, summer, and autumn.
 
 Using the CUSUMs of the monthly departures for all and cloudy skies, we observed a 20-year period starting around 2000 where the CUSUMs remain relatively stable, with a steep decline before and a steep increase after. 
 The rather smooth course of the CUSUMs suggests that no important

@@ -64,7 +64,7 @@ RMD    = $(TARGET).Rmd
 PDF    = $(TARGET)_B$(shell cat $(BLD_FILE)).pdf
 SLIDY  = $(TARGET).html
 Apv: $(PDF)
-$(PDF): $(RMD)
+$(PDF): $(RMD) 
 	@echo "Building: $@"
 	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', clean = TRUE, output_format='rticles::mdpi_article', output_file='MDPI_submission_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).pdf')"
 	-Rscript -e "rmarkdown::find_pandoc(dir = '/usr/lib/rstudio/resources/app/bin/quarto/bin/tools'); rmarkdown::render('$?', clean = TRUE, output_format='bookdown::word_document2', output_file='MDPI_submission_B$(shell echo $$(($$(cat $(BLD_FILE)) + 1))).docx')"
