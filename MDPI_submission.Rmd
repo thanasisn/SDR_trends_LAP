@@ -596,26 +596,27 @@ and thus we cannot attribute any significant effect
 on the SDR trend to solar variability.
 
 
-```{r trendtable, echo=F}
+```{r trendtable, echo=F, fig.pos="H"}
 # names(LT1)
 # "Sky conditions", "Trend [%/year]", "Trend S.E.", "Pearson cor.", "Trend [W/year]", "Days" 
 x_latex <- knitr::kable(LT1,
-                        format      = "latex",
-                        booktabs    = TRUE,
-                        escape      = FALSE,
-                        col.names   = c("Sky Conditions", "Trend [\\%/year]", "Trend S.E. ($2\\sigma$)", "Pearson Correl.", "Trend [W/m\\textsuperscript{2}/year]", "Days"),
-                        format.args = list(digits = 3),
-                        linesep     = "",
-                        align       = "crrrrr",
-                        centering   = FALSE,
-                        table.envir = "table",
-                        position    = "H",
+                        format        = "latex",
+                        booktabs      = TRUE,
+                        escape        = FALSE,
+                        col.names     = c("Sky Conditions", "Trend [\\%/year]", "Trend S.E. ($2\\sigma$)", "Pearson Correl.", "Trend [W/m\\textsuperscript{2}/year]", "Days"),
+                        format.args   = list(digits = 3),
+                        linesep       = "",
+                        align         = "crrrrr",
+                        centering     = FALSE,
+                        table.envir   = "table",
+                        position      = "H",
                         drop0trailing = T,
-                        caption     = paste0("Trends in SDR daily means for different sky conditions for the period ", year(min(ALL_1_daily_DESEAS$Date)), "--", year(max(ALL_1_daily_DESEAS$Date)), "."))
+                        caption       = paste0("Trends in SDR daily means for different sky conditions for the period ", year(min(ALL_1_daily_DESEAS$Date)), "--", year(max(ALL_1_daily_DESEAS$Date)), "."))
 
 x_latex                              %>%
     row_spec(0,bold=TRUE)            %>%
-    kable_styling(full_width = TRUE) %>%
+    kable_styling(full_width = TRUE, 
+                  repeat_header_continued = T) %>%
     column_spec(1, width = "8em")
 ```
 
@@ -844,62 +845,44 @@ spp <- spp[,c(
 
 Similarly to the long term trends from daily means of SDR discussed above,
 we have calculated the trend for the three sky conditions and for each 
-season of the year, using the corresponding mean monthly anomalies
+season of the year using the corresponding mean monthly anomalies
 (Figure\ \ref{fig:seasonalALL} and Table\ \ref{tab:trendseasontable}).
 Table\ \ref{tab:trendseasontable} also contains the $2\sigma$ standard error,
-the Pearson's correlation coefficient R and the corresponding p-value.
-The winter linear trends exhibit generally the largest R values ranging
+the Pearson's correlation coefficient R, and the corresponding p-value.
+The winter linear trends generally exhibit the largest R values, ranging
 between $0.54$ and $0.60\,\%/y$. 
 <!-- all sky -->
 For all-sky conditions, the trend in SDR in winter is the largest
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All skies"], 2)`\,\%/y$),
 followed by the trend in autumn
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All skies"], 2)`\,\%/y$,
-a value close to the long term trend) both statistically significant at the $95\,\%$ confidence level.
+a value close to the long-term trend), both statistically significant at the $95\,\%$ confidence level.
 In spring and summer, the trends are much smaller and of lesser statistical significance.
 These seasonal differences indicate a possible relation of the trends in SDR to trends in clouds during winter and autumn.
 <!-- clear sky -->
-For clear-skies, the trend in winter is $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear skies"], 2)`\,\%/y$ and is 
+For clear skies, the trend in winter is $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear skies"], 2)`\,\%/y$ and is 
 associated with the decreasing trend in
 aerosol optical depth [@Siomos2020]. Moreover, it is almost half of that for
-all-skies, which is another indication of a decreasing trend in cloud
+all skies, which is another indication of a decreasing trend in cloud
 optical thickness. 
 <!-- clear sky -->
-In other seasons the clear-sky trend is very small (below $0.1\,\%/y$). 
+In other seasons, the clear-sky trend is very small (below $0.1\,\%/y$). 
 <!-- cloud dsky -->
-Finally, for cloudy-skies the winter trend is the largest 
+Finally, for cloudy skies, the winter trend is the largest 
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Cloudy skies"], 2)`\,\%/y$)
-and greater than for all-skies, followed by a much smaller trend in autumn 
+and greater than for all skies, followed by a much smaller trend in autumn 
 ($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "Cloudy skies"], 2)`\,\%/y$).
 
 
-The trends under clear- and cloudy-sky conditions are of the same
+The trends under clear- and cloudy-sky conditions are in the same
 direction, and it would be expected that their sum is similar to the
 all-sky trend. This does not happen, especially for winter, likely due
 to the way the monthly means for clear and cloudy skies were calculated.
 Daily means were calculated only when at least $60\,\%$ of the clear- or
-cloudy-sky data were available (see sect. \ref{aggregationstatistical}).
-
-
-\begin{figure}[h!]
-    \begin{adjustwidth}{-\extralength}{0cm}
-        {\centering 
-            \includegraphics[width=1\linewidth]{./images/SeasonalMTrendsTogether3-2}   % Seasonal from Monthly
-        }
-        \caption{Monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends.}\label{fig:seasonalALL}
-    \end{adjustwidth}
-\end{figure}
-
-
-
+cloudy-sky data were available (see Section \ref{aggregationstatistical}).
 
 ```{r trendseasontable, echo=F}
-spp2 <- spp
-
-# names(spp2)
-# col.names   = c("Sky conditions", "Trend [\\%/year]", "Trend S.E. ($2\\sigma$)", "Pearson correl.", "Trend [W/m\\textsuperscript{2}/year]", "Days"),
-
-x_latex <- knitr::kable(spp2,
+x_latex <- knitr::kable(spp,
                         format      = "latex",
                         booktabs    = TRUE,
                         escape      = FALSE,
@@ -917,7 +900,6 @@ x_latex <- knitr::kable(spp2,
                         # position    = "H",
                         caption  = "SDR linear trends of monthly anomalies for each season of the year and related statistical parameters.")
 
-
 suppressMessages(
 x_latex %>%
     collapse_rows(columns = 1, valign = "middle", latex_hline = "custom")           %>%
@@ -926,6 +908,15 @@ x_latex %>%
 )
 
 ```
+
+\begin{figure}[h!]
+    \begin{adjustwidth}{-\extralength}{0cm}
+        {\centering 
+            \includegraphics[width=1\linewidth]{./images/SeasonalMTrendsTogether3-2}   % Seasonal from Monthly
+        }
+        \caption{Monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends.}\label{fig:seasonalALL}
+    \end{adjustwidth}
+\end{figure}
 
 
 
