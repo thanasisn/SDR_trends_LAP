@@ -48,13 +48,8 @@ keywords: |
 #   Clearly state if you received funds for covering the costs to publish in open
 #   access.
 
-# authorcontributions: |
-#   For research articles with several authors, a short paragraph specifying their
-#   individual contributions must be provided. The following statements should be
-#   used ``X.X. and Y.Y. conceive and designed the experiments; X.X. performed the
-#   experiments; X.X. and Y.Y. analyzed the data; W.W. contributed
-#   reagents/materials/analysis tools; Y.Y. wrote the paper.'' Authorship must be
-#   limited to those who have contributed substantially to the work reported.
+authorcontributions: |
+  Conceptualization, methodology, software, data analysis and original writing---draft preparation A.N.; writing---review and editing, supervision, A.B.; data curation, C.M. All authors have read and agreed to the published version of the manuscript.
 
 funding: |
   This research received no external funding.
@@ -657,7 +652,7 @@ rate thereafter.
             {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-9}}
         }
     \end{adjustwidth}
-\caption{Cumulative sum plots of the monthly SDR anomalies in (\%) for different sky conditions: (a) all skies; (b) clear skies; (c) cloudy skies.}\label{fig:cusummonth}
+\caption{Cumulative sum plots of the monthly SDR anomalies in (\%) for different sky conditions: (\textbf{a})\ all skies; (\textbf{b}) clear skies; (\textbf{c}) cloudy skies.}\label{fig:cusummonth}
 \end{figure}
 
 \vspace{-6pt}
@@ -695,7 +690,7 @@ until about 2010, when the anomalies become again variable.
                 {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-9} }
         }
     \end{adjustwidth}
-    \caption{Cumulative sum plots of monthly SDR anomalies in (\%) for different sky conditions after removing the long-term linear trend: (a) all skies; (b) clear skies; (c) cloudy skies.}\label{fig:cusumnotrendmonthly}
+    \caption{Cumulative sum plots of monthly SDR anomalies in (\%) for different sky conditions after removing the long-term linear trend: (\textbf{a})\ all skies; (\textbf{b}) clear skies; (\textbf{c}) cloudy skies.}\label{fig:cusumnotrendmonthly}
 \end{figure}
 
 
@@ -881,11 +876,10 @@ to the way the monthly means for clear and cloudy skies were calculated.
 Daily means were calculated only when at least $60\,\%$ of the clear- or
 cloudy-sky data were available (see Section \ref{aggregationstatistical}).
 
-```{r trendseasontable, echo=F, fig.pos='!h'}
+```{r trendseasontable, echo=F, out.extra = ''}
 x_latex <- knitr::kable(spp,
                         format      = "latex",
                         booktabs    = TRUE,
-                        longtable = T, 
                         escape      = FALSE,
                         col.names   = c("Sky Condition",
                                         "Season",
@@ -897,6 +891,7 @@ x_latex <- knitr::kable(spp,
                         align       = "ccrrrr",
                         centering   = FALSE,
                         table.envir = "table",
+                        potition    = 'H',
                         caption     = "SDR linear trends of monthly anomalies for each season of the year and related statistical parameters.")
 
 suppressMessages(
@@ -913,14 +908,17 @@ x_latex %>%
 
 ```
 
-\begin{figure}[h!]
-    \begin{adjustwidth}{-\extralength}{0cm}
-        {\centering 
-            \includegraphics[width=1\linewidth]{./images/SeasonalMTrendsTogether3-2}   % Seasonal from Monthly
-        }
-    \end{adjustwidth}
-    \caption{Time serries of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends, (a-c) winter}\label{fig:seasonalALL}
-\end{figure}
+<!-- \begin{figure}[h!] -->
+<!--     \begin{adjustwidth}{-\extralength}{0cm} -->
+<!--         {\centering  -->
+<!--             \includegraphics[width=1\linewidth]{./images/SeasonalMTrendsTogether3-2}   % Seasonal from Monthly -->
+<!--         } -->
+<!--     \end{adjustwidth} -->
+<!--     \caption{Time serries of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends, (\textbf{a}--\textbf{c}) winter, (\textbf{d}--\textbf{f}) spring, (\textbf{g}--\textbf{i}) summer, (\textbf{j}--\textbf{l}) autumn, and also (\textbf{a}, \textbf{d}, \textbf{g}, \textbf{j}) all-skies, (\textbf{b}, \textbf{e}, \textbf{h}, \textbf{k}) clear-skies and (\textbf{c}, \textbf{f}, \textbf{i}, \textbf{l}) cloudy-skies.}\label{fig:seasonalALL} -->
+<!-- \end{figure} -->
+
+
+\vspace{+100pt}
 
 
 \FloatBarrier
@@ -957,23 +955,23 @@ The observed brightening on SDR over Thessaloniki is dependent on SZA (larger SZ
 The trend is also dependent on season, with winter showing the strongest statistically significant trend of
 $`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "All skies"], 2)`$
 and
-$`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky Condition" == "Cloudy skies"], 2)`\,\%/y$
+$`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Cloudy skies"], 2)`\,\%/y$
 for all- and cloudy-skies, respectively, in contrast to spring and summer.
-The trends for autumn are also significant but smaller ($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky Condition" == "All skies"], 2)`$
+The trends for autumn are also significant but smaller ($`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "All skies"], 2)`$
 and
-$`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky Condition" == "Cloudy skies"], 2)`\,\%/y$
+$`r signif(spp$"Trend [%/year]"[spp$Season == "Autumn" & spp$"Sky condition" == "Cloudy skies"], 2)`\,\%/y$
 for all- and cloudy-skies, respectively).
 <!-- Our findings are in agreement with other studies for the region. -->
 The trend for clear skies is largest in winter
-($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky Condition" == "Clear skies"], 2)`\,\%/y$) 
+($`r signif(spp$"Trend [%/year]"[spp$Season == "Winter" & spp$"Sky condition" == "Clear skies"], 2)`\,\%/y$) 
 and negligible in spring, summer and autumn.
 
-Using the CUSUMs of the monthly departures for all- and cloudy-skies, we observed a 20-year period starting around 2000 where the CUSUMs remain relatively stable, with a steep decline before and a steep increase after. 
+Using the CUSUMs of the monthly departures for all and cloudy skies, we observed a 20-year period starting around 2000 where the CUSUMs remain relatively stable, with a steep decline before and a steep increase after. 
 The rather smooth course of the CUSUMs suggests that no important
 change in the SDR pattern has occurred in the entire record.
 
 Continued observations with a collocated pyrheliometer, which started in 2016, will allow us to further investigate the variability of solar radiation at ground level in Thessaloniki. 
-Also, additional data of cloudiness, aerosols, atmospheric water vapour, etc., will allow better attribution and quantification of the effects of these factors on SRD.
+Also, additional data of cloudiness, aerosols, atmospheric water vapour, etc., will allow better attribution and quantification of the effects of these factors on SDR.
 
 
 

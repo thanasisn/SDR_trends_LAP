@@ -629,7 +629,7 @@ for about five years and at a slower rate thereafter.
             {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSum-9}}
         }
     \end{adjustwidth}
-\caption{Cumulative sum plots of the monthly SDR anomalies in (\%) for different sky conditions: (a) all skies; (b) clear skies; (c) cloudy skies.}\label{fig:cusummonth}
+\caption{Cumulative sum plots of the monthly SDR anomalies in (\%) for different sky conditions: (\textbf{a})\ all skies; (\textbf{b}) clear skies; (\textbf{c}) cloudy skies.}\label{fig:cusummonth}
 \end{figure}
 
 \vspace{-6pt}
@@ -665,7 +665,7 @@ again variable.
                 {\includegraphics[width=.32\linewidth]{./images/CumulativeMonthlyCuSumNOtrend-9} }
         }
     \end{adjustwidth}
-    \caption{Cumulative sum plots of monthly SDR anomalies in (\%) for different sky conditions after removing the long-term linear trend: (a) all skies; (b) clear skies; (c) cloudy skies.}\label{fig:cusumnotrendmonthly}
+    \caption{Cumulative sum plots of monthly SDR anomalies in (\%) for different sky conditions after removing the long-term linear trend: (\textbf{a})\ all skies; (\textbf{b}) clear skies; (\textbf{c}) cloudy skies.}\label{fig:cusumnotrendmonthly}
 \end{figure}
 
 \hypertarget{effects-of-the-solar-zenith-angle-on-sdr}{%
@@ -768,22 +768,13 @@ Daily means were calculated only when at least \(60\,\%\) of the clear-
 or cloudy-sky data were available (see Section
 \ref{aggregationstatistical}).
 
-\begin{longtabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
-\caption{\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year and related statistical parameters.}\\
+\begin{table}[!h]
+
+\caption{\label{tab:trendseasontable}SDR linear trends of monthly anomalies for each season of the year and related statistical parameters.}
+\begin{tabu} to \linewidth {>{\centering\arraybackslash}p{8em}>{\centering}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
 \toprule
 \textbf{Sky Condition} & \textbf{Season} & \textbf{Trend [\%/year]} & \textbf{Trend S.E. ($2\sigma$)} & \textbf{Pearson Correl.} & \textbf{Trend p-Value}\\
 \midrule
-\endfirsthead
-\caption[]{SDR linear trends of monthly anomalies for each season of the year and related statistical parameters. \textit{(continued)}}\\
-\toprule
-\textbf{Sky Condition} & \textbf{Season} & \textbf{Trend [\%/year]} & \textbf{Trend S.E. ($2\sigma$)} & \textbf{Pearson Correl.} & \textbf{Trend p-Value}\\
-\midrule
-\endhead
-\midrule
-\multicolumn{6}{r@{}}{\textit{(continued \ldots)}}\
-\endfoot
-\bottomrule
-\endlastfoot
 \cellcolor{gray!6}{} & \cellcolor{gray!6}{Winter} & \cellcolor{gray!6}{0.70} & \cellcolor{gray!6}{0.43} & \cellcolor{gray!6}{0.54} & \cellcolor{gray!6}{0.003}\\
 
  & Spring & 0.11 & 0.24 & 0.17 & 0.371\\
@@ -806,20 +797,10 @@ or cloudy-sky data were available (see Section
 
 \cellcolor{gray!6}{} & \cellcolor{gray!6}{Summer} & \cellcolor{gray!6}{-0.08} & \cellcolor{gray!6}{0.27} & \cellcolor{gray!6}{-0.11} & \cellcolor{gray!6}{0.560}\\
 
-\multirow{-4}{*}{\centering\arraybackslash Cloudy skies} & Autumn & 0.19 & 0.43 & 0.16 & 0.384\\*
-\end{longtabu}
-
-\emph{\}\{\centering\arraybackslash Cloudy skies\} \& Autumn \& 0.19 \&
-0.43 \& 0.16 \& 0.384\textbackslash{}} \textbackslash end\{longtabu\}
-
-\begin{figure}[h!]
-    \begin{adjustwidth}{-\extralength}{0cm}
-        {\centering 
-            \includegraphics[width=1\linewidth]{./images/SeasonalMTrendsTogether3-2}   % Seasonal from Monthly
-        }
-    \end{adjustwidth}
-    \caption{Time serries of monthly mean anomalies of SDR by season (rows of plots) for the three sky conditions (columns of plots). The black lines represent the linear trends, (a-c) winter}\label{fig:seasonalALL}
-\end{figure}
+\multirow{-4}{*}{\centering\arraybackslash Cloudy skies} & Autumn & 0.19 & 0.43 & 0.16 & 0.384\\
+\bottomrule
+\end{tabu}
+\end{table}
 
 \FloatBarrier
 
@@ -851,13 +832,13 @@ quantitative conclusions.
 The observed brightening on SDR over Thessaloniki is dependent on SZA
 (larger SZAs lead to stronger brightening). The trend is also dependent
 on season, with winter showing the strongest statistically significant
-trend of \(0.7\) and \(\,\%/y\) for all- and cloudy-skies, respectively,
-in contrast to spring and summer. The trends for autumn are also
-significant but smaller (\$\$ and \(\,\%/y\) for all- and cloudy-skies,
-respectively). The trend for clear skies is largest in winter
-(\(\,\%/y\)) and negligible in spring, summer and autumn.
+trend of \(0.7\) and \(0.76\,\%/y\) for all- and cloudy-skies,
+respectively, in contrast to spring and summer. The trends for autumn
+are also significant but smaller (\(0.42\) and \(0.19\,\%/y\) for all-
+and cloudy-skies, respectively). The trend for clear skies is largest in
+winter (\(0.4\,\%/y\)) and negligible in spring, summer and autumn.
 
-Using the CUSUMs of the monthly departures for all- and cloudy-skies, we
+Using the CUSUMs of the monthly departures for all and cloudy skies, we
 observed a 20-year period starting around 2000 where the CUSUMs remain
 relatively stable, with a steep decline before and a steep increase
 after. The rather smooth course of the CUSUMs suggests that no important
@@ -867,7 +848,7 @@ Continued observations with a collocated pyrheliometer, which started in
 2016, will allow us to further investigate the variability of solar
 radiation at ground level in Thessaloniki. Also, additional data of
 cloudiness, aerosols, atmospheric water vapour, etc., will allow better
-attribution and quantification of the effects of these factors on SRD.
+attribution and quantification of the effects of these factors on SDR.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -881,6 +862,10 @@ attribution and quantification of the effects of these factors on SRD.
 % \supplementary{The following supporting information can be downloaded at: \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title. A supporting video article is available at doi: link.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\authorcontributions{Conceptualization, methodology, software, data
+analysis and original writing---draft preparation A.N.; writing---review
+and editing, supervision, A.B.; data curation, C.M. All authors have
+read and agreed to the published version of the manuscript.}
 
 \funding{This research received no external funding.}
 
