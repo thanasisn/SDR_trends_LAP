@@ -920,7 +920,7 @@ x_latex %>%
 
 # Conclusions
 
-We have analyzed a 30-year dataset of SRD measurements in Thessaloniki, Greece 
+We have analyzed a 30-year dataset of SDR measurements in Thessaloniki, Greece 
 (`r paste(year(min(ALL_1_daily_DESEAS$Date)), " -- ", year(max(ALL_1_daily_DESEAS$Date)))`), aiming to identify the long-term 
 variability of solar irradiance under different sky conditions.
 Under all-sky conditions, there is a positive trend in SDR of 
