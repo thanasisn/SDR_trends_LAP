@@ -374,7 +374,7 @@ respective parameter should fall in order to raise the clear-sky flag:
 \end{equation}
 <!-- 2. MaxVIP -->
 <!-- ### Max value of irradiance during the time period. -->
-(b) Maximum measured value $M_{i}$ (Equation\ (\ref{eq:MaxVIP})):
+(b) Maximum measured value of SDR, $M_{i}$ (Equation\ (\ref{eq:MaxVIP})):
 \begin{equation}
 `r MaxVIP_fct` \times M_{\text{CSref},i} - `r MaxVIP_off_low`\,Wm^{-2}
 < M_{i} <
