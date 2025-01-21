@@ -1,19 +1,5 @@
 
-# SDR trends 1993-2023 Thessaloniki
+# Trends from 30-Year Observations of Downward Solar Irradiance in Thessaloniki, Greece
 
-[]()
-
-## This is...
-
-Source files of a paper
-
-## Abstruct
-
-## Citation
-
-## Licence
-
-## Why?
-
-Towards reproducible results in research.
+Source files of the article: [Trends from 30-Year Observations of Downward Solar Irradiance in Thessaloniki, Greece](https://www.mdpi.com/2076-3417/14/1/252)
 
